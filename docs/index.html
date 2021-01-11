@@ -110,7 +110,8 @@
       auto2top: true,
       fallbackLanguages: ["zh"],
       alias: {
-        "v2.5.6/": "latest/",
+        "/zh/latest/(.*)": "/zh/v2.5.6/$1",
+        "/en/latest/(.*)": "/en/v2.5.6/$1"
       },
       //不开启首页
       //coverpage: ["/","/zh/", "/en/"], 
