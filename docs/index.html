@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!--suppress CssUnusedSymbol, JSUnfilteredForInLoop -->
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>HotDB Documents</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="keywords" content="hotpu,热璞,hotdb,热璞网络科技,数据库,云计算,数据库中间件">
+  <meta name="author" content="shicheng">
+  <meta name="description" content="上海热璞网络科技有限公司总部位于上海，在北京、南京和深圳设有分部，是一家专注基础软件分布式事务数据库产品和关系型云数据库产品的研发厂商，致力成为分布式事务数据库与私有云数据库行业的领导者，帮助企业零门槛使用分布式事务数据库和关系型云数据库。">
+  <link rel="shortcut icon" type="image/ico" href="assets/favicon-colorful.png">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  <!--Vue主题-->
+  <link rel="stylesheet" href="assets/themes/vue.css">
+  <!--侧边栏可折叠插件：https://github.com/iPeng6/docsify-sidebar-collapse -->
+  <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />-->
+  <!--font awesome图标：https://github.com/erickjx/docsify-fontawesome -->
+  <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css"/>
+  <script src="https://unpkg.com/docsify-fontawesome/dist/docsify-fontawesome.min.js"></script>
+  <!--自定义样式-->
+  <style>
+    body {
+      font-family: "Source Sans Pro", Arial, sans-serif;
+    }
+    .app-name {
+      font-weight: bold !important;
+    }
+    .app-nav {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      min-height: 60px;
+      margin-top: 0;
+      /*margin: 0 0 0 0 !important;*/
+      padding: 10px 75px 10px 75px !important;
+      z-index: 100;
+      border-bottom: 1px solid rgba(0, 0, 0, .07);
+      transition: transform .25s ease-out;
+      background-color: #fff;
+      display: block;
+    }
+    .navicon {
+      height: 60px;
+      float: left;
+    }
+    .app-nav > ul {
+      height: 60px;
+    }
+    .app-nav > ul > li {
+      padding-top: 20px;
+    }
+    .content {
+      margin-top: 80px !important;
+      padding-top: 0 !important;
+    }
+    .sidebar {
+      margin-top: 80px !important;
+      padding-top: 0 !important;
+    }
+    .search input {
+      border-radius: 5px;
+    }
+
+    .topbar {
+      overflow: auto;
+    }
+    .topbar-link {
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 5px 5px;
+    }
+    
+    /*作为文档标题的侧边栏TOC调小*/
+    .app-sub-sidebar>li{
+      font-size: 12px !important;
+      margin: 2px 0 !important;
+    }
+    .app-sub-sidebar>li>a{
+      font-size: 12px !important;
+    }
+    
+    /*表格居中显示 - 不好调整*/
+    /*#main thead{*/
+    /*    margin: 0 auto;*/
+    /*  }*/
+    /*  #main tbody{*/
+    /*    margin: 0 auto;*/
+    /*  }*/
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    const repositoryUrl = "https://github.com/DragonKnightOfBreeze/HotDB-Document"
+
+    window.$docsify = {
+      name: "HotDB Documents",
+      nameLink: {
+        "/zh/": "/zh/latest/",
+        "/en/": "/en/latest/"
+      },
+      repo: repositoryUrl,
+      routeMode: "history",
+      //可以是其他网站或Github仓库
+      //basePath: "https://raw.githubusercontent.com/DragonKnightOfBreeze/HotDB-Document/master/docs", 
+      //使用相对路径规范文件目录结构
+      relativePath: true,
+      auto2top: true,
+      fallbackLanguages: ["zh"],
+      alias: {
+        "v2.5.6/": "latest/",
+      },
+      //不开启首页
+      //coverpage: ["/","/zh/", "/en/"], 
+      //onlyCover: true,
+      loadSidebar: true,
+      loadNavbar: true,
+      mergeNavbar: true,
+      maxLevel: 3,
+      subMaxLevel: 3,
+      notFoundPage: true,
+      search: {
+        noData: {
+          "/zh/": "没有结果！",
+          "/en/": "No results!"
+        },
+        path: "auto",
+        placeholder: {
+          "/zh/": "搜索",
+          "/en/": "Search"
+        }
+      },
+      pagination: {
+        previousText: {
+          "/zh/": "上一章节",
+          "/en/": "Previous Chapter",
+        },
+        nextText: {
+          "/zh/": "下一章节",
+          "/en/": "Next Chapter",
+        },
+        crossChapter: true,
+        crossChapterText: true
+      },
+      "flexible-alerts": {
+        style: 'flat', //flat, callout
+        note: {
+          label: "Note"
+        },
+        tip: {
+          label: "Tip"
+        },
+        warning: {
+          label: "Warning"
+        },
+        attention: {
+          label: "Attention"
+        }
+      },
+
+      topbar: {
+        downloadUrl: "javascript:void(0)", //TODO
+        downloadText: {
+          "/zh/": "<i class='fa fa-download'></i> 下载文档",
+          "/en/": "<i class='fa fa-download'></i> Download Document"
+        },
+        editUrl: `${repositoryUrl}/blob/master/docs`,
+        editText: {
+          "/zh/": "<i class='fa fa-edit'></i> 编辑文档",
+          "/en/": "<i class='fa fa-edit'></i> Edit Document"
+        },
+        issuesUrl: `${repositoryUrl}/issues`,
+        issuesText: {
+          "/zh/": "<i class='fa fa-comment'></i> 反馈问题",
+          "/en/": "<i class='fa fa-comment'></i> Report Issues"
+        }
+      },
+      fileName: "",
+
+      plugins: [
+        //绑定window.$docsify.fileName，以斜线开始
+        function(hook, vm) {
+          hook.beforeEach(function(html) {
+            window.$docsify.fileName = `/${vm.route.file}`
+          })
+        },
+        function(hook, vm) {
+          hook.afterEach(function(html) {
+            $(document).ready(function() {
+              $(".app-nav").prepend(createNavIcon())
+            })
+            return createTopBar() + html
+          })
+        }
+      ]
+    }
+
+    function createNavIcon() {
+      return `<a href="https://hotdb.com">
+        <img class="navicon" src="assets/navicon-colorful.png" alt="hotdb.com"/>
+      </a>`
+    }
+
+    function createTopBar() {
+      return `<div class="topbar">
+        <p style="float: right">
+          <a class="topbar-link" href="${window.$docsify.topbar.downloadUrl}" target="_blank">
+            ${getText(window.$docsify.topbar.downloadText)}
+          </a class="topbar-link">
+          <a class="topbar-link" href="${window.$docsify.topbar.editUrl}${window.$docsify.fileName}" target="_blank">
+            ${getText(window.$docsify.topbar.editText)}
+          </a class="topbar-link">
+          <a class="topbar-link" href="${window.$docsify.topbar.issuesUrl}" target="_blank">
+            ${getText(window.$docsify.topbar.issuesText)}
+          </a>
+        </p>
+      </div>`
+    }
+
+    function getText(text) {
+      if(typeof text === "string") {
+        return text
+      } else if(typeof text === "object") {
+        const url = window.location.href
+        for(const key in text) {
+          if(url.indexOf(`/#${key}`) !== -1) {
+            return text[key]
+          }
+        }
+      }
+    }
+
+    //地址重定向
+    function redirectLocation() {
+      let url = window.location.href
+      if(url.charAt(url.length - 1) !== "/") url += "/"
+      if(url.endsWith("/#/")) {
+        window.location.href = `${url}zh/latest/`
+      } else if(url.endsWith("/#/zh/")) {
+        window.location.href = `${url}latest/`
+      } else if(url.endsWith("/#/en/")) {
+        window.location.href = `${url}latest/`
+      } else {
+        const matchGroup = url.match(/(.*?\/#\/)((latest)|(v[\w-]+?))/)
+        if(matchGroup != null) {
+          window.location.href = matchGroup[1] + "zh/" + matchGroup[2] + "/"
+        }
+      }
+    }
+
+    window.onload = function() {
+      redirectLocation()
+    }
+  </script>
+
+  <!--docsify-->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@latest/lib/docsify.min.js"></script>
+  <!--术语表插件：https://github.com/TheGreenToaster/docsify-glossary -->
+  <!--<script src="https://unpkg.com/docsify-glossary@latest/dist/docsify-glossary.min.js"></script>-->
+  <!--全局搜索插件-->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/search.min.js"></script>
+  <!--emoji插件-->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/emoji.min.js"></script>
+  <!--外部脚本插件-->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/external-script.min.js"></script>
+  <!--图片缩放插件-->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/zoom-image.min.js"></script>
+  <!--复制代码到剪切板插件-->
+  <script src="https://unpkg.com/docsify-copy-code@latest/dist/docsify-copy-code.min.js"></script>
+  <!--分页插件：https://github.com/imyelo/docsify-pagination -->
+  <!--<script src="//cdn.jsdelivr.net/npm/docsify-pagination@latest/dist/docsify-pagination.min.js"></script>-->
+  <!--警告框插件：https://github.com/fzankl/docsify-plugin-flexible-alerts -->
+  <script src="https://unpkg.com/docsify-plugin-flexible-alerts@latest/dist/docsify-plugin-flexible-alerts.min.js"></script>
+  <!--侧边栏可折叠插件：https://github.com/iPeng6/docsify-sidebar-collapse -->
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse@latest/dist/docsify-sidebar-collapse.min.js"></script>-->
+  <!--嵌入式pdf插件：https://github.com/lazypanda10117/docsify-pdf-embed -->
+  <script src="https://unpkg.com/docsify-pdf-embed-plugin@latest/src/docsify-pdf-embed.js"></script>
+  <!--PDF转化插件：https://github.com/meff34/docsify-to-pdf-converter -->
+
+  <!--代码高亮支持-->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-markdown.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-sql.min.js"></script>
+
+  <script src="https://unpkg.com/jquery@latest/dist/jquery.min.js"></script>
+</body>
+</html>
