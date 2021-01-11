@@ -76,6 +76,7 @@ fun handleWordSourceMarkdown(parent: String, fileName: String) {
 		.removePrefixContent(fileName)
 		.changeImageRelUrl(fileName)
 		.removeImageSizeAttributes()
+		.removeHeadingAttributes()
 		.replaceToHeadingLink()
 		.removeDuplicates()
 		.trimLineBreak()
@@ -115,6 +116,7 @@ private fun String.removeImageSizeAttributes(): String {
 	return this.replace(removeImageSizeAttributesRegex, "")
 }
 
+//{#基本信息 .list-paragraph}
 private fun String.removeHeadingAttributes(): String {
 	return this.lines().joinToString("\n") { line ->
 		if(line.startsWith('#')) line.substringBefore('{') else line
