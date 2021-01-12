@@ -1211,7 +1211,7 @@ Parameter description: a set of pem file related to server.jks and client is pro
 
 \<property name=\"keyStorePass\"\>BB5A70F75DD5FEB214A5623DD171CEEB\</property\>\<!\-- Password of the data certificate .jks file for TLS connection \--\>
 
-Parameter description: the password in the key file that comes with the program is hotdb.com, which can be encrypted by users through select hex(aes_encrypt(\'hotdb.com\',unhex(md5(\'Hotpu\@2013\# shanghai\# 2017\')))); to get the default value BB5A70F75DD5FEB214A5623DD171CEEB and fill the value in keyStorePass. If users use their own generated key file, the value be filled is based on the password which is actually entered. If SDcrtest is entered as password, users can get the value of keyStorePass through select hex(aes_encrypt(\'SDcrtest\',unhex(md5(\'Hotpu\@2013\# shanghai\# 2017\')))) and fill the value C43BD9DDE9C908FEE7683AED7A301E33 in keyStorePass.
+Parameter description: the password in the key file that comes with the program is hotdb.com, which can be encrypted by users through select hex(aes_encrypt(\'hotdb.com\',unhex(md5(\'Hotpu\@2013\# shanghai\#\')))); to get the default value BB5A70F75DD5FEB214A5623DD171CEEB and fill the value in keyStorePass. If users use their own generated key file, the value be filled is based on the password which is actually entered. If SDcrtest is entered as password, users can get the value of keyStorePass through select hex(aes_encrypt(\'SDcrtest\',unhex(md5(\'Hotpu\@2013\# shanghai\#\')))) and fill the value C43BD9DDE9C908FEE7683AED7A301E33 in keyStorePass.
 
 The configured parameters are as follows:
 

@@ -2,7 +2,7 @@
 
 In order to facilitate the operation and maintenance personnel to detect whether there are hidden dangers or exceptions in the database cluster, we add the intelligent inspection function in v.2.5.6 and above. Through this function, you can carry out the day-to-day database inspection of the compute node cluster, and avoid the hidden trouble existing in the running process of the current database service in time.
 
-**Function Entry:** log in to the common role of the management platform, and click "Tool" -\> "Intelligent inspection" to enter the intelligent inspection page.
+**Function Entry:** log in to the common role of the management platform, and click "Tool" -\> [Intelligent inspection](#Intelligent%20inspection) to enter the intelligent inspection page.
 
 ## Premise of use
 
@@ -30,21 +30,21 @@ Intelligent inspection mainly includes three TABs: patrol report, patrol indicat
 
 -   The report is divided into basic information and detailed report. The basic information shows information about the current cluster group, and the detailed report is divided into 7 modules, namely:
 
-    -   Server hardware and software configuration
+-   Server hardware and software configuration
 
-    -   Server resource usage
+-   Server resource usage
 
-    -   Server resource reliability
+-   Server resource reliability
 
-    -   Compute node running status and statistics
+-   Compute node running status and statistics
 
-    -   Data source running status and statistics
+-   Data source running status and statistics
 
-    -   Data verification and detection
+-   Data verification and detection
 
-    -   Others
+-   Others
 
-        1.  #### Start a patrol
+#### Start a patrol
 
 **(1) Start a patrol**
 

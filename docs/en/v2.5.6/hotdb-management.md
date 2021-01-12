@@ -704,7 +704,7 @@ The operation logs related to security protection performed by all general users
 
 **Note**: If the compute node version is below V2.5.0, the page does not display the security audit log record.
 
-#### 3 Management port operation
+#### Management port operation
 
 The operation records of all general users on the management port can be viewed. The operation type specifically recorded can be viewed in the operation type drop-down box on the page. Access IP and Intercept Details input boxes support fuzzy query. If the compute node group is selected, only the operation records of the selected compute node group are displayed, and a specific compute node can also be selected. All compute nodes are selected by default.
 
@@ -734,9 +734,9 @@ The operation records of all general users on the management port can be viewed.
 
 Provide users with operations such as platform license, compute node license, update license and obtain the existing license information.
 
-#### 1 Platform license
+#### Platform license
 
-##### 1 Update entry
+##### Update entry
 
 - "License Management" in the [Tool](#Tool) menu under admin role.
 
@@ -746,7 +746,7 @@ Provide users with operations such as platform license, compute node license, up
 
 ![](assets/hotdb-management/image43.png)
 
-##### 2 Generate fingerprint
+##### Generate fingerprint
 
 - Enter the license management page, select \[Generate license\] for operation type, select \[Platform license\] for license type, and click \[Generate\].
 
@@ -766,7 +766,7 @@ Provide users with operations such as platform license, compute node license, up
 
 ![](assets/hotdb-management/image47.png)
 
-##### 3 Update license
+##### Update license
 
 - Enter the license management page, select \[Update license\] for operation type, select \[Platform license\] for license type, and click \[Select\] to upload the license file.
 
@@ -778,7 +778,7 @@ Provide users with operations such as platform license, compute node license, up
 
 ![](assets/hotdb-management/image49.png)
 
-##### 4 Obtain existing license information
+##### Obtain existing license information
 
 - Enter the license management page, select \[Obtain the existing license information\] for operation type, select \[Platform license\] for license type, and click \[Acquire\] to obtain the existing license information.
 
@@ -806,7 +806,7 @@ customer info: customer info
 
 ![](assets/hotdb-management/image51.png)
 
-##### 5 Other instructions
+##### Other instructions
 
 **(1) The default address of the supplier can be configured.**
 
@@ -866,9 +866,9 @@ update \`hotdb_setting\` set \`value\` =\'new_email\@xx.cn\' where \`key\`=\'ema
 
 ![](assets/hotdb-management/image57.png)
 
-#### 2 Compute node license
+#### Compute node license
 
-##### 1 Update entry
+##### Update entry
 
 - "License Management" in the [Tool](#Tool) menu under admin role.
 
@@ -882,7 +882,7 @@ update \`hotdb_setting\` set \`value\` =\'new_email\@xx.cn\' where \`key\`=\'ema
 
 ![](assets/hotdb-management/image60.png)
 
-##### 2 Generate fingerprint
+##### Generate fingerprint
 
 ![](assets/hotdb-management/image61.png)
 
@@ -908,7 +908,7 @@ update \`hotdb_setting\` set \`value\` =\'new_email\@xx.cn\' where \`key\`=\'ema
 
 ![](assets/hotdb-management/image63.png)
 
-##### 3 Update license
+##### Update license
 
 ![](assets/hotdb-management/image64.png)
 
@@ -926,7 +926,7 @@ update \`hotdb_setting\` set \`value\` =\'new_email\@xx.cn\' where \`key\`=\'ema
 
 **Step 7**: the corresponding update information will be output in the information column;
 
-##### 4 Obtain existing license information
+##### Obtain existing license information
 
 ![](assets/hotdb-management/image65.png)
 
@@ -942,7 +942,7 @@ update \`hotdb_setting\` set \`value\` =\'new_email\@xx.cn\' where \`key\`=\'ema
 
 **Step 6**: after successful acquisition, the information all available licenses of the corresponding compute node will be output in the information column, among which the one marked in blue is the license currently being used;
 
-##### 5 Other instructions
+##### Other instructions
 
 - When the compute node version is lower than V2.5.6, the license management activates and updates the license according to the historical logic;
 
@@ -960,7 +960,7 @@ update \`hotdb_setting\` set \`value\` =\'new_email\@xx.cn\' where \`key\`=\'ema
 
 - If sudo mode is used for license management, sudo users and privileges should be configured in advance. In particular, the java environment variables of sudo users also need to be configured.
 
-#### 2 Update record
+#### Update record
 
 ![](assets/hotdb-management/image69.png)
 
@@ -980,7 +980,7 @@ The platform ConfigDB supports the high availability mode. When the platform Con
 
 ![](assets/hotdb-management/image70.png)
 
-#### 1 ConfigDB file management
+#### ConfigDB file management
 
 Add three parameters in the configuration file application.properties: spring.datasource.bakurl/spring.datasource.bakusername/spring.datasource.bakpassword. When spring.datasource.bakurl and spring.datasource.url correspond to the same ConfigDB instance, it is regarded as single-node mode. In high availability mode, the two parameters need to be configured as master and standby master or master and slave respectively.
 
@@ -1002,7 +1002,7 @@ spring.datasource.bakpassword=hotdb_cloud
 
 When starting the management platform service program, if the master ConfigDB is not available, it will fail after reconnection for 30 minutes (reconnection every 10 seconds, timeout for 5 seconds will be judged as failure). If the master ConfigDB is available and the slave ConfigDB is not available, the slave ConfigDB can be reconnected for 10 minutes at most. If it is unable to connect eventually, the slave ConfigDB will be set to \"not available\" and the master ConfigDB will be started in \"available\" status.
 
-#### 2 Platform ConfigDB Status and Operation
+#### Platform ConfigDB Status and Operation
 
 Users can perform switching, enabling, disabling, deletion and other operations to the platform ConfigDB on the platform configuration data management page.
 
@@ -1056,7 +1056,7 @@ Click "Enable", the availability status, master-slave replication status and ope
 
 ![](assets/hotdb-management/image76.png)
 
-#### 3 Platform configuration backup data
+#### Platform configuration backup data
 
 The function supports manual and scheduled backup for the platform ConfigDB and ConfigDB files. For scheduled backup, the backup task is performed by the scheduled plan instead of manual operation.
 
@@ -1094,7 +1094,7 @@ Add a scheduled backup task, and backup the platform ConfigDB and ConfigFile reg
 
 For backup data, you can select ConfigDB and ConfigFile. When "ConfigDB" is selected, you shall select the "Backup range" and "Backup to remote simultaneously"; when "ConfigFile" is selected, you shall fill in the remote backup server information.
 
-#### 4 Backup record & restore
+#### Backup record & restore
 
 When a manual or scheduled task is performed, the corresponding backup record will be generated. After the backup succeeds, the backup can be restored.
 
@@ -1128,7 +1128,7 @@ After the backup, find the corresponding record and click Restore to restore the
 
 Click Delete to delete the backup record. After deletion, the corresponding backup files in the platform service program directory will also be deleted.
 
-#### 5 Other instructions
+#### Other instructions
 
 **（1）Notice alert**
 
@@ -2847,7 +2847,7 @@ Move the mouse cursor into the \[\<\] button to activate the Topological Graph I
 
 The information recorded in the Topological Graph Info Panel cannot be deleted manually. However, the window period (local retention time) of the recorded information can be set using the \[Setting\] button in the upper right corner of the Info Panel. In order to reduce the excessive information at the WARNING level, the information can be set to be recorded only when the warning occurs for three consecutive times.
 
-#### 5D topological graph
+####D topological graph
 
 2.5D topological graph is a visual upgrade based on the original basic topological graph content. The component and component information displayed by this function are consistent with that of the above-mentioned "General View" topological graph, and the functions are similar.
 
