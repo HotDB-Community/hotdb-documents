@@ -19,7 +19,7 @@
   * [管理平台](hotdb-management.md)<!--内容来自：分布式事务数据库HotDB Server-v2.5.6.1【管理平台】功能使用手册v1.0.doc-->
   * [智能巡检](intelligent-inspection.md)<!--内容来自：分布式事务数据库HotDB Server-v2.5.6【智能巡检】功能使用手册v1.0.doc-->
 * **容灾功能使用手册**
-  * [跨机房灾备](cross-idc-dr.md)<!--内容来自：分布式事务数据库HotDB Server-v2.5.6【跨机房灾备】功能使用手册v1.0.doc-->
+  * [跨机房灾备](cross-idc-disaster-recovery.md)<!--内容来自：分布式事务数据库HotDB Server-v2.5.6【跨机房灾备】功能使用手册v1.0.doc-->
   * [可视化机房](visual-idc.md)<!--内容来自：分布式事务数据库HotDB Server-v2.5.6【可视化机房切换、修复、移除、演练】功能使用手册v1.0.doc-->
 * **附录**
   * [名词解释](glossary.md)<!--内容来自：分布式事务数据库HotDB Server-v2.5.6【名词解释】功能使用手册v1.0.doc-->

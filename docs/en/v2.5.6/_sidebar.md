@@ -8,7 +8,7 @@
   * [Basic Operations](basic-operations.md)
 * **Install, Deploy and Update**
   * [Install and Deploy](install-and-deploy.md)
-  * [Service License](service-license.md)<!--内容来自：5.分布式事务数据库HotDB Server-v2.5.6.1【服务授权】功能使用手册v1.0.doc-->
+  * [Service License](service-license.md)
   * [Manual Update](manual-update.md)
   * [Cluster Environment Requirement](cluster-environment-requirement.md)
   * [Hardware Config Recommendation](hardware-config-recommendation.md)
@@ -19,8 +19,8 @@
   * [HotDB Management](hotdb-management.md)
   * [Intelligent Inspection](intelligent-inspection.md)
 * **Disaster recovery Tutorial**
-  * [跨机房灾备](cross-idc-dr.md)
-  * [可视化机房切换、修复、移除、演练](visual-idc.md) 
+  * [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md)
+  * [Visual IDC](visual-idc.md) 
 * **Appendix**
   * [Glossary](glossary.md)
   * [HotDB Management Parameter Explanation](hotdb-management-parameters.md)

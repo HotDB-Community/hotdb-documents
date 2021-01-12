@@ -74,9 +74,9 @@ fun handleWordSourceMarkdown(parent: String, fileName: String) {
 	val text = file.readText()
 		.replaceToNormalWhiteSpace()
 		.removePrefixContent(fileName)
+		.optimizeHeading()
 		.changeImageRelUrl(fileName)
 		.removeImageSizeAttributes()
-		.removeHeadingAttributes()
 		.replaceToHeadingLink()
 		.removeDuplicates()
 		.trimLineBreak()
@@ -90,6 +90,7 @@ private fun String.replaceToNormalWhiteSpace(): String {
 }
 
 private fun String.removePrefixContent(fileName: String): String {
+	//TODO 
 	//到类似以下两行为止	
 	//[[reset @\@dberrorcount]{.ul}](#reset-dberrorcount将所有逻辑库报错信息清空)将逻辑库的报错信息清空
 	//#
@@ -104,6 +105,16 @@ private fun String.removePrefixContent(fileName: String): String {
 	return lines.joinToString("\n")
 }
 
+private val optimizeHeadingRegex = """\d+(?:\.\d+)*\.\s*(#+)\s*\d+(?:\.\d+)*\.\s*""".toRegex()
+
+private fun String.optimizeHeading(): String {
+	return this.lines().joinToString("\n") { line ->
+		val l1 =line.replace(optimizeHeadingRegex,"$1 ") //去除标题中的序号
+		val l2= if(line.startsWith('#')) l1.substringBefore('{') else l1  //移除末尾的attributes
+		l2
+	}
+}
+
 private val changeImageRelUrlRegex = """!\[[^]]*]\(media""".toRegex()
 
 private fun String.changeImageRelUrl(fileName: String, relPath: String = "assets/${fileName.substringBeforeLast('.')}"): String {
@@ -114,13 +125,6 @@ private val removeImageSizeAttributesRegex = """\{width="[\w.]*?" height="[\w.]*
 
 private fun String.removeImageSizeAttributes(): String {
 	return this.replace(removeImageSizeAttributesRegex, "")
-}
-
-//{#基本信息 .list-paragraph}
-private fun String.removeHeadingAttributes(): String {
-	return this.lines().joinToString("\n") { line ->
-		if(line.startsWith('#')) line.substringBefore('{') else line
-	}
 }
 
 private val replaceToHeadingLinkRegex = """"(.*?)"""".toRegex()
