@@ -42,7 +42,6 @@
         <option name="NO_TEXT_ATTRIBUTES" value="true" />
         <option name="PARSE_HTML_ANCHOR_ID" value="true" />
         <option name="PRODUCTION_SPEC_PARSER" value="true" />
-        <option name="PUML_FENCED_CODE" value="true" />
         <option name="SIM_TOC_BLANK_LINE_SPACER" value="true" />
       </ParserOptions>
     </ParserSettings>
@@ -72,12 +71,14 @@
         <option name="wavedrom" value="NONE" />
       </fencedCodeConversions>
     </HtmlSettings>
-    <CssSettings previewScheme="UI_SCHEME" cssUri="" isCssUriEnabled="false" isCssUriSerial="true" isCssTextEnabled="false" isDynamicPageWidth="true">
+    <CssSettings previewScheme="DARK_SCHEME" cssUri="" isCssUriEnabled="false" isCssUriSerial="true" isCssTextEnabled="false" isDynamicPageWidth="false">
       <StylesheetProvider>
         <provider providerId="com.vladsch.md.nav.editor.javafx.html.css" providerName="Default JavaFx/Chromium Stylesheet" />
       </StylesheetProvider>
       <ScriptProviders>
         <provider providerId="com.vladsch.md.nav.editor.hljs.html.script" providerName="HighlightJS Script" />
+        <provider providerId="com.vladsch.md.nav.editor.katex.html.script" providerName="Katex Script" />
+        <provider providerId="com.vladsch.md.nav.editor.mermaid.html.script" providerName="Mermaid Script" />
       </ScriptProviders>
       <cssText />
       <cssUriHistory />
