@@ -120,13 +120,14 @@ private val optimizeHeadingRegex = """(?:\d+(?:\.\d+)*\.)?\s*(#+)(?:\s*\d+(?:\.\
 
 private fun String.optimizeHeading(): String {
 	return this.lineSequence().joinToString("\n") { line ->
-		val l1 =line.replace(optimizeHeadingRegex,"$1") //去除标题中的序号
-		val l2= if(line.startsWith('#')) l1.substringBefore('{') else l1  //移除末尾的attributes
-		l2
+		var l =line.replace(optimizeHeadingRegex,"$1") //去除标题中的序号
+		//不能这样做，有时就是需要指定
+		//l= if(line.startsWith('#')) l1.substringBefore('{') else l1  //移除末尾的attributes
+		l
 	}
 }
 
-private	val orderRegex = """(\d+)、""".toRegex()
+private	val orderRegex = """^(\d+)、""".toRegex()
 
 private fun String.optimizeOrderedList():String{
 	return this.lineSequence().joinToString("\n"){line->
