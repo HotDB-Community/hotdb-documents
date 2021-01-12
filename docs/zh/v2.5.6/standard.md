@@ -1,6 +1,6 @@
 # 标准
 
-## 1. 基本信息 {#基本信息 .list-paragraph}
+## 1. 基本信息
 
 此手册基于分布式事务数据库产品 HotDB Server - V2.5.6版本编写，主要说明计算节点的基本使用方法及操作流程，供使用者参考与学习。
 
@@ -10,7 +10,7 @@ HotDB Server在2.5.3.1及以上版本时提供基于MySQL原生复制功能解�
 
 部分截图的版本细节差异无需特别关注，以文档描述的版本号为准。文档内容较多，建议开启文档结构图，方便阅读。
 
-### 1.1. HotDB Server 简述 {#hotdb-server-简述 .list-paragraph}
+### 1.1. HotDB Server 简述
 
 HotDB Server是一款实现数据容量和性能横向扩展的分布式事务数据库产品，可解决实时交易业务系统的"两大三高"（即大规模用户、大规模数据、高可用、高并发、高吞吐）问题。
 
@@ -24,7 +24,7 @@ HotDB Server提供数据库服务自动切换功能，可有效地解决数据�
 
 与计算节点配套使用的管理平台（也称为HotDB Management）也是产品重要组成部分。
 
-#### 1.1.1. HotDB Server组件架构 {#hotdb-server组件架构 .list-paragraph}
+#### 1.1.1. HotDB Server组件架构
 
 > ![](assets/standard/image3.png)
 >
@@ -54,11 +54,11 @@ HotDB Server提供数据库服务自动切换功能，可有效地解决数据�
 
 **HotDB Listener：**热璞科技自研的一个可拔插组件，需要单独进行部署，并以独立的进程运行，从而解决集群强一致（XA）模式下的性能线性扩展问题。
 
-#### 1.1.2. 专业名词解释 {#专业名词解释 .list-paragraph}
+#### 1.1.2. 专业名词解释
 
 若想要了解HotDB Server集群体系相关术语及关系，请参考《分布式事务数据库HotDB Server【名词解释】功能使用手册》。
 
-#### 1.1.3. 计算节点 {#计算节点 .list-paragraph}
+#### 1.1.3. 计算节点
 
 计算节点是数据服务提供端，默认服务端口为3323，登录命令如下：
 
@@ -150,7 +150,7 @@ destroy-method=\"close\"\>
 
 同时，计算节点默认管理端口为3325，在管理端口中可使用命令对当前服务进行监控与管理。若需要了解更多信息，请参考[管理端信息监控](#管理端信息监控)。
 
-#### 1.1.4. 管理平台 {#管理平台 .list-paragraph}
+#### 1.1.4. 管理平台
 
 管理平台为计算节点提供用户信息、节点信息、表信息、分片等信息的配置，默认端口为3324，在浏览器中输入HTTP链接地址，即可访问管理平台（建议使用Chrome或者FireFox浏览器），如：http://*192.168.200.191:3324*/login，访问页面如下所示：
 
@@ -160,7 +160,7 @@ destroy-method=\"close\"\>
 
 如果需要了解管理平台详细使用方法，请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》。
 
-### 1.2. 版本2.5.6新功能与新特性 {#版本2.5.6新功能与新特性 .list-paragraph}
+### 1.2. 版本2.5.6新功能与新特性
 
 本章节将简单介绍在HotDB Server -- V2.5.6中新增、禁止或删除的功能概要，详细功能使用方法可点击超链接查看详情：
 
@@ -194,7 +194,7 @@ destroy-method=\"close\"\>
 
 -   支持使用SQL语句创建/删除/修改 VIEW (视图)。
 
-### 1.3. 版本2.5.6新计算节点参数 {#版本2.5.6新计算节点参数 .list-paragraph}
+### 1.3. 版本2.5.6新计算节点参数
 
 此小节将介绍在计算节点-- V2.5.6中优化与新增的计算节点参数，列举如下：
 
@@ -209,7 +209,7 @@ destroy-method=\"close\"\>
   [crossDbXa](#crossdbxa)                                          跨逻辑库是否采用XA事务                               false        N                      2.5.5
 ---------------------------------------------------------------- ---------------------------------------------------- ------------ ---------------------- -----------------
 
-## 2. HotDB Server安装部署与升级 {#hotdb-server安装部署与升级 .list-paragraph}
+## 2. HotDB Server安装部署与升级
 
 ### 服务授权
 
@@ -595,9 +595,6 @@ INSERT INTO customer VALUES (100,\'尹杭州\',\'13912340100\',34,\'Zhejiang\',\
 
 -   影响计算节点启动失败的原因可能是多种多样的，包括但不限于：
 
-```{=html}
-<!-- -->
-```
 -   软硬件环境异常：例如脚本校验无法通过，磁盘空间不足，可用内存不足，Java版本不匹配等
 
 -   配置库异常：例如配置库无法连接，配置错误等
@@ -614,7 +611,7 @@ INSERT INTO customer VALUES (100,\'尹杭州\',\'13912340100\',34,\'Zhejiang\',\
 
 -   集群异常：例如集群无法达成共识，启动时存在网络分区，各节点时间不同步等
 
-    1.  #### 计算节点启动时对逻辑库可用的判断
+1.  #### 计算节点启动时对逻辑库可用的判断
 
 为保证垂直拆分场景下，出现数据节点不可用状态时，与之不相关的不同逻辑库之间的业务场景不受影响，计算节点在启动时，对所有逻辑库的可用状态做了特殊判断处理，说明如下：
 
@@ -672,7 +669,7 @@ INSERT INTO customer VALUES (100,\'尹杭州\',\'13912340100\',34,\'Zhejiang\',\
 
 -   如果从机的参数read_only=1且没有配置切换到该从机的配置规则，计算节点可以启动，reload如果无其它错误则成功。
 
-    1.  #### 要求所有节点配置一致的参数
+1.  #### 要求所有节点配置一致的参数
 
 对于下列MySQL存储节点实例的参数，计算节点要求存储节点间的参数值设置为一致：
 
@@ -1475,7 +1472,7 @@ mysql\> show @\@masterslaveconsistency;
 
 -   info：当主从数据一致时，无信息输出；当主从数据不一致时，会有以下几种信息：
 
-  --------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------
   表的大量数据不一致                                  Table: ... in datanode: ... exist a large amount of data inconsistency
   表的部分数据不一致                                  Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows\' primary key (...)：
   从库表不存在                                        exist data inconsistency, because DS: ... Table \'...\' doesn\'t exist
@@ -2008,9 +2005,6 @@ SELECT \* FROM table01 WHERE unique_col = 100; //unique_col是唯一约束列
 
 -   若原主库在心跳检测时重试超过10080次，仍然为不可用状态，此时，参数为开启状态，也会自动重置主从复制关系。
 
-```{=html}
-<!-- -->
-```
 -   若发生自动重置复制关系后，计算节点记录warning级别的报警日志如下：
 
 you should decide whether to manually execute the unexecuted part of binlog or rebuild the replication according to the actual situation.
@@ -3043,7 +3037,7 @@ DNID只适用于SELECT，UPDATE，DELETE的简单单表语句；并且，DNID只
 
 HINT语句支持指定datasource_id跳过计算节点直接向存储节点发送语句。可利用[服务端口命令](#使用已有分片规则建表相关命令)查看存储节点datasource_id：
 
-语法：SHOW \[full\] HOTDB ｛datasources｝ \[LIKE \'pattern\' \| WHERE expr\]  
+语法：SHOW \[full\] HOTDB ｛datasources｝ \[LIKE \'pattern\' \| WHERE expr\]
 
 示例：
 
@@ -3426,9 +3420,9 @@ mysql\> show @\@onlineddl;
 ------------------- ---------------------------------- -------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **MySQL语句类型**   **子句类型**                       **功能**                                     **说明**
 
-  SELECT              INNER/LEFT JOIN/RIGHT JOIN WHERE   运算表达式                                   column1+column2、column1-column2、column1\*column2、column1/column2
+SELECT              INNER/LEFT JOIN/RIGHT JOIN WHERE   运算表达式                                   column1+column2、column1-column2、column1\*column2、column1/column2
 
-                                                         \<=\>或\<\>                                  
+\<=\>或\<\>                                  
     
                                                          \% 或 MOD                                    仅支持column%常量；不支持column1%column2
     
@@ -4952,7 +4946,7 @@ CREATE {DATABASE \| SCHEMA} \[IF NOT EXISTS\] db_name \[create_option\] \... \[D
 
 create_option: \[DEFAULT\] { CHARACTER SET \[=\] charset_name \| COLLATE \[=\] collation_name }
 
-\[DEFAULT DATANODE \'datanodeid\'\] 可以指定默认分片节点。当不单独指定时，默认关联所有数据节点；当指定时，按指定数据节点关联成逻辑库默认分片节点；当指定的datanodeid不存在时，提示：datanodeid not exists。 
+\[DEFAULT DATANODE \'datanodeid\'\] 可以指定默认分片节点。当不单独指定时，默认关联所有数据节点；当指定时，按指定数据节点关联成逻辑库默认分片节点；当指定的datanodeid不存在时，提示：datanodeid not exists。
 
 服务端创建逻辑库语法示例：
 
@@ -5165,7 +5159,7 @@ HotDB Server实现了一套自己的用户名与权限管理的系统，可以�
 
 计算节点版本高于2.5.6版本时，支持使用SQL语句创建/删除用户，并给用户赋权/解权。
 
-##### 创建用户 
+##### 创建用户
 
 创建用户语法：
 
@@ -5217,7 +5211,7 @@ drop user \'jingjingjing\'@\'%\';
 
 GRANT赋权语法：
 
-GRANT 
+GRANT
 
 priv_type\[, priv_type \] \...
 
@@ -7457,21 +7451,12 @@ begin;select \* from A.a;select \* from B.b;
 
 -   True状态：
 
-```{=html}
-<!-- -->
-```
 -   存储节点密码为明文的时候，计算节点会无法连接该存储节点
 
 -   存储节点密码为密文的时候，计算节点能够连接该存储节点
 
-```{=html}
-<!-- -->
-```
 -   False状态：
 
-```{=html}
-<!-- -->
-```
 -   存储节点密码为明文的时候，计算节点能够连接该存储节点
 
 -   存储节点密码为密文的时候，计算节点能够连接该存储节点

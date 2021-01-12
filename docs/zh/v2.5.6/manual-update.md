@@ -226,13 +226,13 @@ JAVA_VERSION=\"1.8.0_252\"
 
 #### 替换程序包
 
-##### 备份计算节点目录 {#备份计算节点目录 .list-paragraph}
+##### 备份计算节点目录
 
 \#cd /usr/local/hotdb/
 
 \#mv hotdb-server hotdb_server_253
 
-##### 上传并解压新版本包 {#上传并解压新版本包 .list-paragraph}
+##### 上传并解压新版本包
 
 **上传新版本包**
 
@@ -250,7 +250,7 @@ JAVA_VERSION=\"1.8.0_252\"
 
 \#restorecon -R /usr/local/hotdb/hotdb-server
 
-##### NDB SQL服务 {#ndb-sql服务 .list-paragraph}
+##### NDB SQL服务
 
 若升级前的计算节点版本大于等于V2.5.3需要注意，之前备份的计算节点目录中是否包含NDB SQL服务（以ndbsql开头的目录）。若存在则需要将之前备份的计算节点目录中的NDB SQL目录重新拷贝到升级后的计算节点目录中。
 
@@ -284,7 +284,7 @@ drwxr-xr-x. 2 hotdb hotdb 4096 Aug 19 10:35 utils
 
 #### 更新配置文件
 
-##### server.xml配置文件 {#server.xml配置文件 .list-paragraph}
+##### server.xml配置文件
 
 建议打开备份的计算节点目录中的server.xml配置文件，对照着将变更的参数值同步更新至新版本目录下的配置文件中。
 
@@ -350,7 +350,7 @@ drwxr-xr-x. 2 hotdb hotdb 4096 Aug 19 10:35 utils
 
 \</hotdb:server\>
 
-##### 计算节点启动脚本 {#计算节点启动脚本 .list-paragraph}
+##### 计算节点启动脚本
 
 建议打开备份的计算节点bin/目录下的hotdb_server脚本，对照着将变更的参数值同步更新至新版本目录下的脚本文件中。
 
@@ -388,19 +388,19 @@ JAVA_OPTS=\"-server -Xms4G -Xmx4G -XX:MaxDirectMemorySize=24G\"
 
 HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
-##### 其他配置文件 {#其他配置文件 .list-paragraph}
+##### 其他配置文件
 
 除server.xml与计算节点启动脚本需要与旧版本中计算节点配置文件设置的值保持同步外，还需关注conf/目录下log4j2.xml的相关参数设置是否有变更。
 
 #### 启动计算节点与启动异常处理
 
-##### 启动计算节点服务 {#启动计算节点服务 .list-paragraph}
+##### 启动计算节点服务
 
 \#cd /usr/local/hotdb/hotdb-server/bin
 
 \#sh hotdb_server start
 
-##### 启动异常处理 {#启动异常处理-1 .list-paragraph}
+##### 启动异常处理
 
 **问题与处理方案**
 
@@ -494,7 +494,7 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 计算节点升级时需要进行一次高可用切换操作，为保证切换顺利完成需人工检查当前高可用环境是否符合切换条件。以下检查项要求所有都满足要求，否则可能导致高可用切换失败。
 
-##### 高可用切换检查项 {#高可用切换检查项 .list-paragraph}
+##### 高可用切换检查项
 
 1.  **主备计算节点服务正常**
 
@@ -746,19 +746,19 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 #### 备计算节点升级
 
-##### 停止备计算节点服务 {#停止备计算节点服务 .list-paragraph}
+##### 停止备计算节点服务
 
 登录备计算节点服务器执行停止服务命令：
 
 \#sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
-##### 备份备计算节点目录 {#备份备计算节点目录 .list-paragraph}
+##### 备份备计算节点目录
 
 \#cd /usr/local/hotdb/
 
 \#mv hotdb-server hotdb_server_249
 
-##### 上传并解压新版本包 {#上传并解压新版本包-1 .list-paragraph}
+##### 上传并解压新版本包
 
 **上传新版本包**
 
@@ -776,13 +776,13 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 \#restorecon -R /usr/local/hotdb/hotdb-server
 
-##### NDB SQL服务 {#ndb-sql服务-2 .list-paragraph}
+##### NDB SQL服务
 
 若升级前的计算节点版本大于等于V2.5.3需要注意，之前备份的计算节点目录中是否包含NDB SQL服务（以ndbsql开头的目录）。若存在则需要将之前备份的计算节点目录中的NDB SQL目录重新拷贝到升级后的计算节点目录中。
 
 具体操作方式请参照[单节点集群计算节点升级NDB SQL服务](#ndb-sql服务-2)处理说明。
 
-##### server.xml配置文件 {#server.xml配置文件-1 .list-paragraph}
+##### server.xml配置文件
 
 建议打开旧计算节点目录中的server.xml配置文件，对照着将变更的参数值同步更新至新版本目录下的配置文件中。
 
@@ -794,7 +794,7 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 **注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中[更新server.xml配置文件](#server.xml配置文件)说明。
 
-##### 计算节点启动脚本 {#计算节点启动脚本-1 .list-paragraph}
+##### 计算节点启动脚本
 
 建议打开备份的计算节点bin/目录下的hotdb_server脚本，对照着将变更的参数值同步更新至新版本目录下的脚本文件中。
 
@@ -806,11 +806,11 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 **注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中更新[计算节点启动脚本](#计算节点启动脚本)说明。
 
-##### 其他配置文件 {#其他配置文件-1 .list-paragraph}
+##### 其他配置文件
 
 除server.xml与计算节点启动脚本需要与旧版本中计算节点配置文件设置的值保持同步外，还需关注conf/目录下log4j2.xml的相关参数设置是否有变更。
 
-##### 启动备计算节点服务 {#启动备计算节点服务 .list-paragraph}
+##### 启动备计算节点服务
 
 \#cd /usr/local/hotdb/hotdb-server/bin
 
@@ -820,7 +820,7 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 #### 主计算节点升级
 
-##### 停止主计算节点服务 {#停止主计算节点服务 .list-paragraph}
+##### 停止主计算节点服务
 
 **登录主计算节点服务器执行停止服务命令：**
 
@@ -828,7 +828,7 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 \#sh hotdb_server stop
 
-##### 检查高可用是否切换成功 {#检查高可用是否切换成功 .list-paragraph}
+##### 检查高可用是否切换成功
 
 主计算节点服务关闭后，程序会发生高可用切换，切换后备计算节点的**服务端口（默认3323）会被启动**，
 
@@ -836,13 +836,13 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 **注：**若以上任一要求未满足则代表高可用切换失败，则需要由非停机升级转为[停机升级](#多节点集群模式停机升级)。
 
-##### 备份主计算节点目录 {#备份主计算节点目录 .list-paragraph}
+##### 备份主计算节点目录
 
 \#cd /usr/local/hotdb/
 
 \#mv hotdb-server hotdb-server_249
 
-##### 上传并解压新版本包 {#上传并解压新版本包-2 .list-paragraph}
+##### 上传并解压新版本包
 
 **上传新版本包**
 
@@ -860,13 +860,13 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 \#restorecon -R /usr/local/hotdb/hotdb-server
 
-##### NDB SQL服务 {#ndb-sql服务-3 .list-paragraph}
+##### NDB SQL服务
 
 若升级前的计算节点版本大于等于V2.5.3需要注意，之前备份的计算节点目录中是否包含NDB SQL服务（以ndbsql开头的目录）。若存在则需要将之前备份的计算节点目录中的NDB SQL目录重新拷贝到升级后的计算节点目录中。
 
 具体操作方式请参照[单节点集群计算节点升级NDB SQL服务](#ndb-sql服务-2)处理说明。
 
-##### server.xml配置文件 {#server.xml配置文件-2 .list-paragraph}
+##### server.xml配置文件
 
 建议打开旧计算节点目录中的server.xml配置文件，对照着将变更的参数值同步更新至新版本目录下的配置文件中。
 
@@ -878,7 +878,7 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 **注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中[更新server.xml配置文件](#server.xml配置文件)说明。
 
-##### 计算节点启动脚本 {#计算节点启动脚本-2 .list-paragraph}
+##### 计算节点启动脚本
 
 建议打开备份的计算节点bin/目录下的hotdb_server脚本，对照着将变更的参数值同步更新至新版本目录下的脚本文件中。
 
@@ -890,11 +890,11 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 **注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中更新[计算节点启动脚本](#计算节点启动脚本)说明。
 
-##### 其他配置文件 {#其他配置文件-2 .list-paragraph}
+##### 其他配置文件
 
 除server.xml与计算节点启动脚本需要与旧版本中计算节点配置文件设置的值保持同步外，还需关注conf/目录下log4j2.xml的相关参数设置是否有变更。
 
-##### 手动执行高可用环境重建 {#手动执行高可用环境重建 .list-paragraph}
+##### 手动执行高可用环境重建
 
 为保证当前备计算节点启动正常，需进行手动执行高可用环境重建操作。若使用的管理平台为V2.4.8及以上版本时可使用"高可用重建"功能替代以下操作。
 
@@ -1132,7 +1132,7 @@ notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.s
 
 \#service keepalived reload
 
-##### 启动当前备（无VIP）计算节点服务与keepalived {#启动当前备无vip计算节点服务与keepalived .list-paragraph}
+##### 启动当前备（无VIP）计算节点服务与keepalived
 
 **启动计算节点服务**
 
@@ -1144,7 +1144,7 @@ notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.s
 
 \#service keepalived start
 
-##### 特殊说明 {#特殊说明 .list-paragraph}
+##### 特殊说明
 
 -   按不停机升级流程完成后，keepalived的虚拟IP会发生漂移。集群中的主备计算节点角色会进行互换。
 
@@ -1156,7 +1156,7 @@ notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.s
 
 以下将介绍多节点集群模式中三个计算节点的版本升级操作，若为三个以上计算节点的多节点集群升级也可以参照以下操作说明进行。
 
-##### 停止计算节点服务 {#停止计算节点服务-1 .list-paragraph}
+##### 停止计算节点服务
 
 **停止secondary1计算节点服务**
 
@@ -1170,15 +1170,15 @@ notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.s
 
 \#sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
-##### 升级配置库 {#升级配置库 .list-paragraph}
+##### 升级配置库
 
 计算节点配置库升级与管理平台配置库升级步骤一致，区别在于执行的升级SQL内容与连接的配置库地址不同。具体操作步骤请参考管理平台[配置库升级说明](#配置库升级)。
 
-##### 替换升级包与更新配置文件 {#替换升级包与更新配置文件 .list-paragraph}
+##### 替换升级包与更新配置文件
 
 参照单节点集群模式中[计算节点版本升级](#单节点集群模式升级)操作说明为集群中的计算节点依次替换版本包以及更新对应的配置文件内容。
 
-##### 启动计算节点服务 {#启动计算节点服务-1 .list-paragraph}
+##### 启动计算节点服务
 
 计算节点服务程序启动不分先后顺序，可依次启动完成后登录任一计算节点管理端口（默认3325）执行"show @\@cluster"命令查询当前集群中计算节点运行状态与角色信息。
 
@@ -1220,7 +1220,7 @@ notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.s
 
 #### Primary计算节点升级
 
-##### 停止primary计算节点服务 {#停止primary计算节点服务 .list-paragraph}
+##### 停止primary计算节点服务
 
 \#cd /usr/local/hotdb/hotdb-server/bin
 

@@ -54,14 +54,14 @@ fun handleWordSourceMarkdowns(parent: String, fileNames: List<String>) {
 	val fileSize = fileNames.size
 	val countDown = CountDownLatch(fileSize)
 	fileNames.forEach { fileName ->
-		executor.submit {
+		executor.execute {
 			try {
 				handleWordSourceMarkdown("docs/${parent}", fileName)
 				countDown.countDown()
 			} catch(e: Exception) {
 				e.printStackTrace()
 			}
-		}.get()
+		}
 	}
 	countDown.await()
 	println("Handle word source markdowns finished.")
@@ -105,7 +105,7 @@ private fun String.removePrefixContent(fileName: String): String {
 	return lines.joinToString("\n")
 }
 
-private val optimizeHeadingRegex = """\d+(?:\.\d+)*\.\s*(#+)\s*\d+(?:\.\d+)*\.\s*""".toRegex()
+private val optimizeHeadingRegex = """\s*\d+(?:\.\d+)*\.\s*(#+)\s*\d+(?:\.\d+)*\.\s*""".toRegex()
 
 private fun String.optimizeHeading(): String {
 	return this.lines().joinToString("\n") { line ->
