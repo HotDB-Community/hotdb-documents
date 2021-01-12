@@ -54,7 +54,7 @@ yum -y install grep procps coreutils initscripts xfsprogs util-linux-ng e2fsprog
 
 日志打印如下标记则为安装成功正常结束。
 
-\[INFO\] hotdbinstall finished without error, but you should check if there is any warn
+[INFO] hotdbinstall finished without error, but you should check if there is any warn
 
 ings
 
@@ -378,7 +378,7 @@ mysql -uroot -proot -h192.168.210.97 -P3323 -Dtest
 
 root> mysql -h192.168.210.97 -uroot -proot -P3323 -Dtest
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 

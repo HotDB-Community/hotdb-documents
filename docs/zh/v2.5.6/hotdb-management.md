@@ -200,7 +200,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 - 用户名目前没有具体限制，只要求不能与已有的名称重复即可。
 
-- 新增用户的初始密码默认为[service](mailto:hotpu@hotpu.cn)_hotdb\@hotdb.com，通过新增账户在管理平台首次登录时会强制要求用户修改密码。
+- 新增用户的初始密码默认为[service](mailto:hotpu@hotpu.cn)_hotdb@hotdb.com，通过新增账户在管理平台首次登录时会强制要求用户修改密码。
 
 - 添加的用户需要赋予具体角色，默认为普通用户角色。两类角色区别如下说明：
 
@@ -766,7 +766,7 @@ server.xml
 
 ![](assets/hotdb-management/image48.png)
 
-- 点击供应商默认收件地址超链接（[service\@hotdb.com），调用本地邮箱](mailto:点击供应商默认收件地址超链接（service@hotdb.com），调用本地邮箱)
+- 点击供应商默认收件地址超链接（[service@hotdb.com），调用本地邮箱](mailto:点击供应商默认收件地址超链接（service@hotdb.com），调用本地邮箱)
 
 ![](assets/hotdb-management/image49.png)
 
@@ -822,11 +822,11 @@ customer info：用户信息备注
 
 连接管理平台配置库，首次配置SQL如下：
 
-insert into hotdb_setting values('emailAddress',1,'your_email\@xx.cn',1,1);
+insert into hotdb_setting values('emailAddress',1,'your_email@xx.cn',1,1);
 
 后续更改配置SQL如下：
 
-update \`hotdb_setting\` set \`value\` ='new_email\@xx.cn' where \`key\`='emailAddress';
+update \`hotdb_setting\` set \`value\` ='new_email@xx.cn' where \`key\`='emailAddress';
 
 2. **更新平台许可证注意事项**
 
@@ -1340,7 +1340,7 @@ spring.datasource.bakpassword=hotdb_cloud
 
 ![](assets/hotdb-management/image122.png)
 
-对于首次登录的普通用户，HotDB Management强制要求修改密码，初始密码默认为"hotdb\@hotpu.cn"。
+对于首次登录的普通用户，HotDB Management强制要求修改密码，初始密码默认为"hotdb@hotpu.cn"。
 
 ### 集群选择
 
@@ -2042,7 +2042,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 - 若勾选"已创建的表导出表结构"，则导出的内容中自动加入"表结构详情"一列，展示已创建表的"建表语句"。
 
-- 导出记录中的"表结构详情"从计算节点管理端口（3325）中的show @\@ddl命令中获取，水平分片表与全局表取所属数据节点中DNID最小的结果。若当前主3325端口无法连接则"表结构"、"表结构详情"两列内容为空。
+- 导出记录中的"表结构详情"从计算节点管理端口（3325）中的show @@ddl命令中获取，水平分片表与全局表取所属数据节点中DNID最小的结果。若当前主3325端口无法连接则"表结构"、"表结构详情"两列内容为空。
 
 #### 删除表
 
@@ -2560,9 +2560,9 @@ statisticsUpdatePeriod-> 0为不进行持久化
 
 ![](assets/hotdb-management/image229.png)
 
-2、若确定主配置库已恢复正常且与备配置库数据一致且最新时，可点击[计算节点参数配置](#计算节点参数配置)页面启用按钮对主配置库进行启用。
+2.若确定主配置库已恢复正常且与备配置库数据一致且最新时，可点击[计算节点参数配置](#计算节点参数配置)页面启用按钮对主配置库进行启用。
 
-3、点击![](assets/hotdb-management/image230.png)启用按钮后，再点击【动态加载】按钮，即可将主配置库重新启用
+3.点击![](assets/hotdb-management/image230.png)启用按钮后，再点击【动态加载】按钮，即可将主配置库重新启用
 
 ![](assets/hotdb-management/image231.png)
 
@@ -2658,15 +2658,15 @@ HotDB Server对计算节点用户权限控制到表级别，支持配置计算�
 
 - 用户test通过主机192.168.200.51登录，执行INSERT/ALTER操作，由于匹配最具体的Host，ALTER无权限操作被拒绝，如下图：
 
-test\@192.168.220.104 : TEST_ZY 08:54:51> insert into join_cross_a_jwy(adnid) value
+test@192.168.220.104 : TEST_ZY 08:54:51> insert into join_cross_a_jwy(adnid) value
 
 (101);
 
 Query OK, 1 row affected (0.05 sec)
 
-test\@192.168.220.104 : TEST_ZY 08:56:11> alter table join_cross_a_jwy add column apassword int after aname;
+test@192.168.220.104 : TEST_ZY 08:56:11> alter table join_cross_a_jwy add column apassword int after aname;
 
-ERROR 1045 (HY000): \[ALTER\] command denied to user 'test' to logic database 'TEST_ZY'
+ERROR 1045 (HY000): [ALTER] command denied to user 'test' to logic database 'TEST_ZY'
 
 - 配置的表级拒绝权限与全局、逻辑库、表级允许权限不冲突且优先级高于全部，例如：test用户设置了全局权限ALL，如下图：
 
@@ -2678,17 +2678,17 @@ ERROR 1045 (HY000): \[ALTER\] command denied to user 'test' to logic database 'T
 
 - 用户test登录服务端口对test_temp表进行DELETE,DROP操作被拒绝，示例如下：
 
-test\@192.168.200.51 : (none) 08:53:25> use test_ct
+test@192.168.200.51 : (none) 08:53:25> use test_ct
 
 Database changed
 
-test\@192.168.200.51 : test_ct 08:53:32> insert into test_temp(a) values(30);
+test@192.168.200.51 : test_ct 08:53:32> insert into test_temp(a) values(30);
 
 Query OK, 1 row affected (0.09 sec)
 
-test\@192.168.200.51 : test_ct 08:53:51> delete from test_temp where a=30;
+test@192.168.200.51 : test_ct 08:53:51> delete from test_temp where a=30;
 
-ERROR 1045 (HY000): \[DELETE\] command refused to user 'test' to table 'TEST_TEMP' of logic database 'TEST_CT'
+ERROR 1045 (HY000): [DELETE] command refused to user 'test' to table 'TEST_TEMP' of logic database 'TEST_CT'
 
 ### 服务器
 
@@ -3326,13 +3326,13 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 - show processlis查询后，鼠标移入表头会显示具体字段的解释信息
 
-- 操作栏中的connection链接：鼠标悬停提示如下图所示，点击链接将取该连接的ID到命令"show @\@connection"[（即前端链接状态）](#前端连接状态show-connection)中做筛选查询，注意：计算节点用户的登录信息若过期，需要重新登录
+- 操作栏中的connection链接：鼠标悬停提示如下图所示，点击链接将取该连接的ID到命令"show @@connection"[（即前端链接状态）](#前端连接状态show-connection)中做筛选查询，注意：计算节点用户的登录信息若过期，需要重新登录
 
 ![](assets/hotdb-management/image294.png)
 
 -
 
-##### 前端连接状态show @\@connection
+##### 前端连接状态show @@connection
 
 显示计算节点前端连接（包括服务端、管理端）的连接状态。
 
@@ -3340,7 +3340,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 - 该命令完成查询后，可选择连接ID，通过【关闭连接】按钮手动关闭对应连接
 
-- 操作栏session链接：鼠标悬停显示提示如下图，可查看该connection ID的[当前会话信息show @\@session](#当前会话信息show-session)，点击链接取该连接的connection ID值跳转到会话信息查看窗口
+- 操作栏session链接：鼠标悬停显示提示如下图，可查看该connection ID的[当前会话信息show @@session](#当前会话信息show-session)，点击链接取该连接的connection ID值跳转到会话信息查看窗口
 
 ![](assets/hotdb-management/image296.png)![](assets/hotdb-management/image297.png)
 
@@ -3360,7 +3360,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 -
 
-##### 当前会话信息show @\@session
+##### 当前会话信息show @@session
 
 显示计算节点当前会话处理信息。
 
@@ -3368,17 +3368,17 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 - 操作栏中connection、backend、lastsql链接：鼠标悬停提示："查看该会话ID对应的[前端连接状态](#前端连接状态show-connection)、[后端连接状态](#后端连接状态show-backend)、[最后执行的SQL](#borrowed连接最后执行的sql信息)。点击链接取该会话的关联信息跳转到对应查询命令
 
-- 点击connection取该记录的id值跳转到show @\@connection：
+- 点击connection取该记录的id值跳转到show @@connection：
 
 ![](assets/hotdb-management/image302.png)
 
-- 点击backend取bk_id字段值跳转到show @\@backend
+- 点击backend取bk_id字段值跳转到show @@backend
 
 ![](assets/hotdb-management/image303.png)
 
 ![](assets/hotdb-management/image304.png)
 
-- 点击lastsql取bk_id字段值跳转到show @\@lastsql：
+- 点击lastsql取bk_id字段值跳转到show @@lastsql：
 
 ![](assets/hotdb-management/image305.png)
 
@@ -3386,15 +3386,15 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 -
 
-##### 后端连接状态show @\@backend
+##### 后端连接状态show @@backend
 
 显示计算节点的后端（即计算节点与存储节点之间）的连接情况。
 
 ![](assets/hotdb-management/image307.png)
 
-- 该命令执行后，可通过面板中【重建连接池】按钮重建后端连接，同管理端rebuild @\@pool命令，执行后提示："重建成功/失败"
+- 该命令执行后，可通过面板中【重建连接池】按钮重建后端连接，同管理端rebuild @@pool命令，执行后提示："重建成功/失败"
 
-- 操作栏中session、lastsql链接：鼠标悬停提示提示："查看对应的会话信息、查看最后执行SQL"，点击链接取该后端连接的id字段值到命令"show @\@session、show @\@lastsql"中进行筛选。（show @\@session记录中bk_id与之对应、show @\@lastsql记录中id与之对应）。点击操作栏中session按钮：
+- 操作栏中session、lastsql链接：鼠标悬停提示提示："查看对应的会话信息、查看最后执行SQL"，点击链接取该后端连接的id字段值到命令"show @@session、show @@lastsql"中进行筛选。（show @@session记录中bk_id与之对应、show @@lastsql记录中id与之对应）。点击操作栏中session按钮：
 
 ![](assets/hotdb-management/image308.png)
 
@@ -3408,7 +3408,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 -
 
-##### 数据节点信息show @\@datanode
+##### 数据节点信息show @@datanode
 
 显示当前集群中所有数据节点的信息：查询结果信息包含："节点的当前数据源信息"、"活动的连接数"、"节点状态"等信息。
 
@@ -3416,7 +3416,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 -
 
-##### 存储节点信息show @\@datasource
+##### 存储节点信息show @@datasource
 
 显示当前集群中所有存储节点的信息：查询结果包含："主机IP地址"、"端口"、"物理数据库名"、"数据源不可用原因"等。
 
@@ -3424,7 +3424,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 -
 
-##### 后端心跳状态show @\@heartbeat
+##### 后端心跳状态show @@heartbeat
 
 显示当前集群后端心跳状态：查询结果数据源类型、主机地址、物理数据库名、心跳状态、心跳周期等。
 
@@ -3432,7 +3432,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 -
 
-##### 同步延迟情况show @\@latency
+##### 同步延迟情况show @@latency
 
 显示同步延迟情况，查询结果包含 "当前数据源路径"、"备库数据源路径"、"同步延迟时间(单位ms)"。
 
@@ -3440,7 +3440,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 -
 
-##### 缓冲池状态show @\@bufferpool
+##### 缓冲池状态show @@bufferpool
 
 查询缓冲池状态，查询结果包含 "线程名"、"缓冲池大小"、"线程从本地缓存池申请缓存次数"等。
 
@@ -3448,7 +3448,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 -
 
-##### 处理线程信息show @\@processor
+##### 处理线程信息show @@processor
 
 显示当前处理线程信息：查询结果包含 "线程名"、"前/后端接收字节数"、"前/后端发送字节数"等 。
 
@@ -3456,7 +3456,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 -
 
-##### 线程池状态show @\@threadpool
+##### 线程池状态show @@threadpool
 
 显示当前线程池状态：查询结果包含 "线程池名称"、"线程池大小"、"活跃线程数"等,鼠标移动到列名上会有中文提示。
 
@@ -3464,7 +3464,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 -
 
-##### 长事物信息show @\@longtransaction
+##### 长事物信息show @@longtransaction
 
 显示长事务信息，查询结果包含 "主机IP地址"、"端口"、"长事物id"等,鼠标移动到列名上会有中文提示。
 
@@ -3472,7 +3472,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 -
 
-##### 计算节点服务器状态show @\@server
+##### 计算节点服务器状态show @@server
 
 显示计算节点服务器状态：查询结果包含计算节点服务器的运行启动信息，有："内存使用情况"、"读写模式"、"启动用时"、"高可用使用角色"等,鼠标移动到列名上会有中文提示。
 
@@ -3662,7 +3662,7 @@ select * from table01 join table02 on table02.i=10;
 
 - 图形支持柱图和饼图，可以选择切换
 
-- 表名以\[逻辑库名\].\[表名\]的方式显示，通常比较长，因此柱图采用横向
+- 表名以[逻辑库名].[表名]的方式显示，通常比较长，因此柱图采用横向
 
 - 支持放大图形到全屏
 
@@ -3756,7 +3756,7 @@ select * from table01 join table02 on table02.i=10;
 
 - 图为堆积柱图，各个层均显示数值。坐标轴为表和吞吐量
 
-- 表名以\[逻辑库名\].\[表名\]的方式显示
+- 表名以[逻辑库名].[表名]的方式显示
 
 - 支持放大图形到全屏，允许进行筛选表显示
 
@@ -3790,7 +3790,7 @@ select * from table01 join table02 on table02.i=10;
 
 - 导出文件支持CSV、XLS
 
-- 表名以\[逻辑库名\].\[表名\]的方式显示
+- 表名以[逻辑库名].[表名]的方式显示
 
 ### 数据节点吞吐量
 
@@ -3868,7 +3868,7 @@ select * from table01 join table02 on table02.i=10;
 
 - 图为堆积柱图，各个层均显示数值。坐标轴为表和吞吐量
 
-- 表名以\[逻辑库名\].\[表名\]的方式显示
+- 表名以[逻辑库名].[表名]的方式显示
 
 - 支持放大图形到全屏
 
@@ -5066,7 +5066,7 @@ HotDB Management提供的[SQL防火墙](#SQL防火墙)功能可为用户拦截�
 
 - 检测的数据节点下的主备存储节点是否配置了"[切换规则](#切换规则)"
 
-- 检测的数据节点下的主备存储节点是否存在延迟。（3325管理端执行show @\@latency命令查看）
+- 检测的数据节点下的主备存储节点是否存在延迟。（3325管理端执行show @@latency命令查看）
 
 - 配置是否已动态加载
 
@@ -6081,7 +6081,7 @@ HotDB Management支持通过邮件的方式对集群运行中发生的故障或�
 
 - **SMTP验证：**SMTP服务器是否要求验证，默认勾选。如果勾选------>SMTP用户名及SMTP密码为必填项；如果未勾选------>SMTP用户名、SMTP密码不可编辑（如果管理平台在邮箱服务器免密范围内，可不勾选SMTP验证）
 
-- **SMTP用户名**：一般为发信人邮箱地址\@的左侧部分，部分邮箱厂商要求填写完整的电子邮箱地址
+- **SMTP用户名**：一般为发信人邮箱地址@的左侧部分，部分邮箱厂商要求填写完整的电子邮箱地址
 
 - **密码**：SMTP用户密码，用于验证SMTP服务器用户的身份
 
@@ -6147,7 +6147,7 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 2. 根据实际情况选择打开或关闭收集设置
 
-**计算节点服务器导出整个JVM内存信息：**该开关为在"集群运行状况"场景收集时需要注意的，页面默认关闭。若打开需要考虑可能导致的full GC问题，生产环境不建议打开该开关。若打开，则在收集计算节点相关信息时会执行：jmap -dump:live,format=b,file=dump.bin \[pid\] 2>&1（注：pid为计算节点进程ID）
+**计算节点服务器导出整个JVM内存信息：**该开关为在"集群运行状况"场景收集时需要注意的，页面默认关闭。若打开需要考虑可能导致的full GC问题，生产环境不建议打开该开关。若打开，则在收集计算节点相关信息时会执行：jmap -dump:live,format=b,file=dump.bin [pid] 2>&1（注：pid为计算节点进程ID）
 
 **允许使用smartctl与MegaCli命令搜集服务器相关信息：**该开关为在"性能测试"场景收集时需要注意的，页面默认打开。若在执行smartctl与MegaCli命令时发现服务器未安装对应组件，程序将通过yum方式自动安装对应命令
 

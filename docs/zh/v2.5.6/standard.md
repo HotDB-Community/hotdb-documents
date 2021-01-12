@@ -68,7 +68,7 @@ HotDB Server提供数据库服务自动切换功能，可有效地解决数据�
 
 root> mysql -uroot -proot -h127.0.0.1 -P3323
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -144,7 +144,7 @@ destroy-method="close">
 
 ![](assets/standard/image5.png)
 
-管理员用户名与密码都默认为：admin，其他用户账号由管理员创建，初始密码为service_hotdb\@hotdb.com。
+管理员用户名与密码都默认为：admin，其他用户账号由管理员创建，初始密码为service_hotdb@hotdb.com。
 
 如果需要了解管理平台详细使用方法，请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》。
 
@@ -231,7 +231,7 @@ server.xml的部分参数修改后需要重新启动计算节点才能生效，�
 
 在浏览器中输入管理平台的HTTP链接地址，并登录到管理平台；HTTP链接地址通常为部署管理平台的服务器IP，端口默认为3324，如http://192.168.200.89:3324/login.html。
 
-管理平台提供了两类用户角色：超级管理员与普通用户，超级管理员默认初始用户名和密码都为：admin；普通用户由超级管理员创建，默认密码为：hotdb\@hotpu.cn。
+管理平台提供了两类用户角色：超级管理员与普通用户，超级管理员默认初始用户名和密码都为：admin；普通用户由超级管理员创建，默认密码为：hotdb@hotpu.cn。
 
 超级管理员登录后主要有"计算节点集群管理"、"用户管理"功能，管理员可以创建、编辑计算节点集群，并配置计算节点连接信息，添加管理平台用户以及为用户添加权限等。
 
@@ -475,7 +475,7 @@ mysql -uroot -proot -h127.0.0.1 -P3323 -Dtest
 
 root> mysql -h127.0.0.1 -uroot -proot -P3323 -Dtest
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -605,9 +605,9 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 -   若配置的主存储节点为可用状态，实际该存储节点无法连接，则计算节点启动时，会等待[masterSourceInitWaitTimeout](#lockwaittimeout)配置的时间（默认：300s）,判断该存储节点是否真实不可连接，若在此期间，该存储节点重连无异常，则该节点初始化成功；
 
--   如果数据节点初始化失败且无可用逻辑库，或数据节点下无存储节点，则计算节点无法启动，日志提示：04/13 10:50:54.644 ERROR \[main\] (HotdbServer.java:436) -datanodes:\[3\] init failed. System exit.
+-   如果数据节点初始化失败且无可用逻辑库，或数据节点下无存储节点，则计算节点无法启动，日志提示：04/13 10:50:54.644 ERROR [main] (HotdbServer.java:436) -datanodes:[3] init failed. System exit.
 
--   只要存在某个逻辑库对应的数据节点均可用，则可以启动计算节点，对应逻辑下的表可以正常操作。如果其他逻辑库下有不可用的节点，则该逻辑库下的表不能正常读写，客户端提示：ERROR 1003 (HY000): DATABASE is unavailable when datanodes:\[datanode_id \] unavailable.
+-   只要存在某个逻辑库对应的数据节点均可用，则可以启动计算节点，对应逻辑下的表可以正常操作。如果其他逻辑库下有不可用的节点，则该逻辑库下的表不能正常读写，客户端提示：ERROR 1003 (HY000): DATABASE is unavailable when datanodes:[datanode_id ] unavailable.
 
 > 例如：A逻辑库包含1,2两个节点，B逻辑库包含3,4两个节点。如果1、2节点不可用，3、4节点可用，则计算节点可以启动，B逻辑库下的表可以正常操作，A逻辑库下的表无法进行读写；如果1、3节点不可用，则计算节点无法启动。
 
@@ -635,7 +635,7 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 1. **completion_type必须为NO_CHAN**, 如果出现该参数不符合规范，则动态加载失败；
 
-2. **innodb_rollback_on_timeout 需要为ON，**且任何时候SHOW \[GLOBAL|SESSION\] VARIABLES显示出来的innodb_rollback_on_timeout参数都为on，说明如下：
+2. **innodb_rollback_on_timeout 需要为ON，**且任何时候SHOW [GLOBAL|SESSION] VARIABLES显示出来的innodb_rollback_on_timeout参数都为on，说明如下：
 
 -   如果innodb_rollback_on_timeout参数全为off， 则计算节点允许加载成功，但计算节点的行为将等同于innodb_rollback_on_timeout参数为on时的事务回滚方式，且配置校验时给出如下提示：
 
@@ -681,11 +681,11 @@ HotDB Server为客户提供了一套功能完善、操作便捷的信息监控�
 
 #### 管理端命令
 
-用户可以登录管理端（默认端口：3325）使用show @\@help命令查看支持的管理端命令和相应的作用。
+用户可以登录管理端（默认端口：3325）使用show @@help命令查看支持的管理端命令和相应的作用。
 
 root> mysql -uroot -proot -P3325 -h192.168.200.201
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -703,21 +703,21 @@ owners.
 
 Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
-mysql> show @\@help;
+mysql> show @@help;
 
 | statement | description |
 
-| check @\@datasource_config | 检查MySQL参数配置信息 |
+| check @@datasource_config | 检查MySQL参数配置信息 |
 
-| check @\@route \[db_name.tb_name | tb_name\] | 检测分片表数据路由正确性 |
+| check @@route [db_name.tb_name | tb_name] | 检测分片表数据路由正确性 |
 
-| kill @\@connection \[connection_id\] | 将某个指定的连接关闭 |
+| kill @@connection [connection_id] | 将某个指定的连接关闭 |
 
-| onlineddl "\[DDLSTATEMENT\]" | 执行onlineddl |
+| onlineddl "[DDLSTATEMENT]" | 执行onlineddl |
 
-| rebuild @\@pool | 重建所有节点当前可用存储节点 |
+| rebuild @@pool | 重建所有节点当前可用存储节点 |
 
-| reload @\@config | 重新读取配置信息 |
+| reload @@config | 重新读取配置信息 |
 
 ...省略更多内容，可自行登陆查看...
 
@@ -725,7 +725,7 @@ mysql> show @\@help;
 
 用户可以输入相应的命令以监控计算节点的服务情况，如显示存储节点信息：
 
-mysql> show @\@datasource;
+mysql> show @@datasource;
 
 | dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
 
@@ -733,9 +733,9 @@ mysql> show @\@datasource;
 
 ...省略更多内容，可自行登陆查看...
 
-show @\@命令后接的为一个表的表名，例如上个例子中，"show @\@datasource;"，datasource为一个表的表名。
+show @@命令后接的为一个表的表名，例如上个例子中，"show @@datasource;"，datasource为一个表的表名。
 
-用户也可以对show @\@命令后的表名进行DESC操作以查看该表各个字段的含义，如查看存储节点信息中各个字段的含义：
+用户也可以对show @@命令后的表名进行DESC操作以查看该表各个字段的含义，如查看存储节点信息中各个字段的含义：
 
 mysql> desc datasource;
 
@@ -775,7 +775,7 @@ mysql> desc datasource;
 
 16 rows in set (0.00 sec)
 
-用户还可以对show @\@命令后的表名进行SELECT操作以进行任意条件的SQL查询，如查看11号数据节点上的存储节点：
+用户还可以对show @@命令后的表名进行SELECT操作以进行任意条件的SQL查询，如查看11号数据节点上的存储节点：
 
 mysql> select * from datasource where dn=11;
 
@@ -823,9 +823,9 @@ maxUserConnections为前端最大用户连接数，默认0为不限制；
 
 此时若有一个2048并发的场景对计算节点压测，会发现连接池可用连接数不够用，计算节点会自动增加与存储节点的连接数。
 
-当压测结束后，这些连接不会立即销毁，会等到空闲检测周期检测：如果空闲状态（即管理端show @\@backend标记为Idle状态）的连接大于512 ，则销毁多余的连接到512个；如果小于512 就保持原样。
+当压测结束后，这些连接不会立即销毁，会等到空闲检测周期检测：如果空闲状态（即管理端show @@backend标记为Idle状态）的连接大于512 ，则销毁多余的连接到512个；如果小于512 就保持原样。
 
-若需要空闲连接状态回到初始化状态，可以在计算节点运行过程中，参考《分布式事务数据库HotDB Server【管理端命令】功能使用手册》重建连接池rebuild @\@pool 相关章节重建连接池，即恢复到初始连接状态。
+若需要空闲连接状态回到初始化状态，可以在计算节点运行过程中，参考《分布式事务数据库HotDB Server【管理端命令】功能使用手册》重建连接池rebuild @@pool 相关章节重建连接池，即恢复到初始连接状态。
 
 ### 磁盘空间使用限制
 
@@ -835,7 +835,7 @@ maxUserConnections为前端最大用户连接数，默认0为不限制；
 
 计算节点日志记录error级别日志如下，终止会话时提示信息与之相同：
 
-2019-06-10 18:03:24.423 \[ERROR\] \[DISKSPACE\] \[Employee-2\] cn.hotpu.hotdb.mysql.nio.handler.MultiNodeHandler(88) - session\[1606\] was killed,due to less than 1G space left on device,and the size of temp-file is larger than the usable space.
+2019-06-10 18:03:24.423 [ERROR] [DISKSPACE] [Employee-2] cn.hotpu.hotdb.mysql.nio.handler.MultiNodeHandler(88) - session[1606] was killed,due to less than 1G space left on device,and the size of temp-file is larger than the usable space.
 
 ### 错误码
 
@@ -849,7 +849,7 @@ maxUserConnections为前端最大用户连接数，默认0为不限制；
 
 计算节点可在不重启服务的情况下，在线加载配置信息。通过"动态加载"功能可立即生效的参数请参考[计算节点参数使用说明](#计算节点参数使用说明)。
 
-动态加载有两种方式，一种是登录[管理端（3325）](#管理端信息监控)执行：reload @\@config命令；一种是登录管理平台，点击菜单栏右上角"动态加载"按钮，将新增配置项目动态加载到计算节点中进行使用。如下图所示：
+动态加载有两种方式，一种是登录[管理端（3325）](#管理端信息监控)执行：reload @@config命令；一种是登录管理平台，点击菜单栏右上角"动态加载"按钮，将新增配置项目动态加载到计算节点中进行使用。如下图所示：
 
 ![](assets/standard/image29.jpeg)
 
@@ -869,7 +869,7 @@ maxUserConnections为前端最大用户连接数，默认0为不限制；
 
 ![](assets/standard/image32.png)
 
-通过计算节点管理端执行reload @\@config命令动态加载时，默认也会先进行配置校验，校验通过后才允许动态加载。
+通过计算节点管理端执行reload @@config命令动态加载时，默认也会先进行配置校验，校验通过后才允许动态加载。
 
 ### 死锁检测
 
@@ -999,7 +999,7 @@ ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'
 
 查看计算节点日志（hotdb-unusualsql.log）：
 
-2019-10-12 15:27:45.051 \[INFO\] **\[UNUSUALSQL\]** \[\$NIOREACTOR-7-RW\] cn.hotpu.hotdb.mysql.nio.MySQLConnection(415) - ERROR 1062:Duplicate entry '3' for key 'PRIMARY' \[frontend:\[thread=\$NIOREACTOR-7-RW,id=453,user=root,host=192.168.210.225,port=3323,localport=65442,schema=DBY\]; backend:null; frontend_sql:insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');backend_sql:null\]
+2019-10-12 15:27:45.051 [INFO] **[UNUSUALSQL]** [\$NIOREACTOR-7-RW] cn.hotpu.hotdb.mysql.nio.MySQLConnection(415) - ERROR 1062:Duplicate entry '3' for key 'PRIMARY' [frontend:[thread=\$NIOREACTOR-7-RW,id=453,user=root,host=192.168.210.225,port=3323,localport=65442,schema=DBY]; backend:null; frontend_sql:insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');backend_sql:null]
 
 又如，执行一条被SQL防火墙拦截SQL如下：
 
@@ -1009,7 +1009,7 @@ ERROR 1064 (HY000): Intercepted by sql firewall, because: not allowed to execute
 
 查看计算节点日志（hotdb-unusualsql.log）：
 
-2019-10-14 15:41:42.246 \[INFO\] **\[UNUSUALSQL\]** \[\$NIOExecutor-1-2\] cn.hotpu.hotdb.route.RouteService(415) - ERROR 10029:not pass sql firewall \[frontend:\[thread=\$NIOExecutor-1-2,id=1433,user=root,host=192.168.210.225,port=3323,localport=64658,schema=DBY\]; backend:null; frontend_sql:null; backend_sql:null\] \[DBY.count\]=33
+2019-10-14 15:41:42.246 [INFO] **[UNUSUALSQL]** [\$NIOExecutor-1-2] cn.hotpu.hotdb.route.RouteService(415) - ERROR 10029:not pass sql firewall [frontend:[thread=\$NIOExecutor-1-2,id=1433,user=root,host=192.168.210.225,port=3323,localport=64658,schema=DBY]; backend:null; frontend_sql:null; backend_sql:null] [DBY.count]=33
 
 注：
 
@@ -1029,7 +1029,7 @@ filepattern="\${sys:HOTDB_HOME}/logs/extra/unusualsql/hotdb-unusualsql-%d{yyyy-M
 
 <PatternLayout
 
-pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} \[%-4p\] \[%marker\] \[%t\] %c(%L) - %msg%n"/>
+pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-4p] [%marker] [%t] %c(%L) - %msg%n"/>
 
 <Policies>
 
@@ -1183,11 +1183,11 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 
 <property name=[keyStorePass](#keyStorePass)>BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- 用于TLS连接的数据证书.jks文件的密码(Password of the data certificate .jks file for TLS connection) -->
 
-参数说明：程序自带的密钥文件中密码是hotdb.com，通过select hex(aes_encrypt('hotdb.com',unhex(md5('Hotpu\@2013\#shanghai\#'))));加密得到默认keyStorePass：BB5A70F75DD5FEB214A5623DD171CEEB。若使用自己生成的密钥文件，需根据实际输入的密码来填写。例如：前文输入密码SDcrtest，通过select hex(aes_encrypt('SDcrtest',unhex(md5('Hotpu\@2013\#shanghai\#'))))查询到keyStorePass值，然后填写C43BD9DDE9C908FEE7683AED7A301E33。
+参数说明：程序自带的密钥文件中密码是hotdb.com，通过select hex(aes_encrypt('hotdb.com',unhex(md5('Hotpu@2013\#shanghai\#'))));加密得到默认keyStorePass：BB5A70F75DD5FEB214A5623DD171CEEB。若使用自己生成的密钥文件，需根据实际输入的密码来填写。例如：前文输入密码SDcrtest，通过select hex(aes_encrypt('SDcrtest',unhex(md5('Hotpu@2013\#shanghai\#'))))查询到keyStorePass值，然后填写C43BD9DDE9C908FEE7683AED7A301E33。
 
 配置好的参数如下图：
 
-![}\]2__08H0B\`61\[421T9YIBK](media/image40.png)
+![}]2__08H0B\`61[421T9YIBK](media/image40.png)
 
 参数的修改无需重启计算节点服务， 动态加载时会重新读取server.jks文件。若SSL相关逻辑初始化失败，动态加载不会失败，但后续的SSL连接无法正常建立，非SSL连接不受影响。
 
@@ -1260,11 +1260,11 @@ HotDB Server支持mysqldump功能，用法同MySQL一样。
 
 使用mysqldump从计算节点导出数据时，要求指定添加如下参数：
 
---set-gtid-purged=OFF --no-tablespaces --skip-triggers --single-transaction --default-character-set=utf8mb4 --complete-insert --compact --skip-tz-utc \[--replace|--insert-ignore\] \[--hex-blob\] \[--where=xxx\]
+--set-gtid-purged=OFF --no-tablespaces --skip-triggers --single-transaction --default-character-set=utf8mb4 --complete-insert --compact --skip-tz-utc [--replace|--insert-ignore] [--hex-blob] [--where=xxx]
 
 使用mysqldump从MySQL导出数据，再导入计算节点时，要求添加如下参数：
 
---no-defaults --no-tablespaces --complete-insert --default-character-set=utf8mb4 --hex-blob --master-data=2 --no-create-db --set-gtid-purged=OFF --single-transaction --skip-add-locks --skip-disable-keys --skip-triggers --skip-tz-utc \[--replace|--insert-ignore\] \[--no-create-info|--no-data\] \[--where=xxx\] --databases xxx
+--no-defaults --no-tablespaces --complete-insert --default-character-set=utf8mb4 --hex-blob --master-data=2 --no-create-db --set-gtid-purged=OFF --single-transaction --skip-add-locks --skip-disable-keys --skip-triggers --skip-tz-utc [--replace|--insert-ignore] [--no-create-info|--no-data] [--where=xxx] --databases xxx
 
 注意：default-character-set参数的值请根据实际情况填写，例如utf8或utf8mb4等。
 
@@ -1276,7 +1276,7 @@ HotDB Server支持mysqldump功能，用法同MySQL一样。
 
 计算节点支持mysqlbinlog命令，mysqlbinlog命令能够解析binlog文件用于同步增量数据，从而减少了将单机MySQL数据迁移至计算节点时的停机时间。使用mysqlbinlog连接远程mysql实例获取binlog文件并解析出其中的SQL语句，然后交由计算节点执行，从而将某个数据库的增量数据导入到计算节点某个逻辑库下。首先，登入到[管理端口](#管理端信息监控)（默认端口为3325），执行dbremapping命令添加数据库映射关系，关于dbremapping命令用法，请参考《分布式事务数据库HotDB Server【管理端命令】功能使用手册》。
 
-dbremapping @\@add\@期望被导入的数据库名:逻辑库名
+dbremapping @@add@期望被导入的数据库名:逻辑库名
 
 然后使用mysqlbinlog语句执行选中部分的binlog中SQL语句，要求使用如下语法与参数：
 
@@ -1288,7 +1288,7 @@ mysqlbinlog -R -h主机名 -P端口号 -v --base64-output=decode-rows --skip-gti
 
 1. 先至192.168.210.30登入到[管理端口3325](#数据一致性保障)，执行：
 
-dbremapping @\@add\@db01:logicdb01
+dbremapping @@add@db01:logicdb01
 
 2. 然后在192.168.210.30服务器上执行如下命令：
 
@@ -1334,7 +1334,7 @@ Tips：如果业务数据没有数据乱码问题，可以考虑split切分文�
 
 6. 使用mysqlbinlog做增量数据同步。若源端数据库名与计算节点的逻辑库名不相同，则需要在管理端口先添加数据库映射关系，例如：
 
-dbremapping @\@add\@db01:logicdb01
+dbremapping @@add@db01:logicdb01
 
 然后到计算节点（192.168.210.32）所在服务器上执行如下命令，binlog开始位置为第四步记录的位置（此例子中为2410，binlog文件为mysql-bin.000076）：
 
@@ -1350,11 +1350,11 @@ use xxx //逻辑库名
 
 set session group_concat_max_len=1048576;
 
-set \@mytablename='xxx'; //表名
+set @mytablename='xxx'; //表名
 
-set \@mydbname=database();
+set @mydbname=database();
 
-select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=\@mydbname and table_name=\@mytablename \\G
+select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ','NULL'),ifnull('),','NULL')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
 
 若执行结果一致，则表数据大概率一致。
 
@@ -1368,15 +1368,15 @@ mysql> set session group_concat_max_len=1048576;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql> set \@mytablename='table02';
+mysql> set @mytablename='table02';
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql> set \@mydbname=database();
+mysql> set @mydbname=database();
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=\@mydbname and table_name=\@mytablename \\G
+mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ','NULL'),ifnull('),','NULL')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
 
 *************************** 1. row ***************************
 
@@ -1402,9 +1402,9 @@ HotDB Server提供数据节点中的主从存储节点一致性校验的功能�
 
 主从数据一致性检查，可校验主库与从库各个表的表结构是否相同，表数据是否一致，主从是否延迟。当表数据在主库与从库间仅有少量的数据不一致时，主从数据一致性检查可定位到不一致的数据行主键值。
 
-登录计算节点的[管理端(3325端口)](#管理端信息监控)，执行show @\@masterslaveconsistency命令，即可查看表在主库和备库上是否一致：
+登录计算节点的[管理端(3325端口)](#管理端信息监控)，执行show @@masterslaveconsistency命令，即可查看表在主库和备库上是否一致：
 
-mysql> show @\@masterslaveconsistency;
+mysql> show @@masterslaveconsistency;
 
 | db | table | dn | result | info |
 
@@ -1517,7 +1517,7 @@ Warning (Code 10212): auto_increment column must be bigint or int
 
 若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为2，则由计算节点接管所有表的自增。在此模式下，当计算节点模式为集群模式且表中包含自增序列时，仅保证自增序列全局唯一与长期看相对递增且递增，但不保证自增的连续性（短时间内不同节点间自增值会交错）。计算节点智能控制自增特性，进而帮助提升集群模式下计算节点的性能。若计算节点模式为高可用或单节点模式，则设置为2与设置为1的结果相同。
 
-例如：若现有Primary计算节点A，Secondary计算节点B和Secondary计算节点C，设置批次大小（[prefetchBatchInit](#prefetchbatchinit)）初始值为100，则计算节点A的自增序列预取区间为\[1,100\]，计算节点B的预取区间为\[101,200\]以及计算节点C的预取区间为\[201,300\]，即：
+例如：若现有Primary计算节点A，Secondary计算节点B和Secondary计算节点C，设置批次大小（[prefetchBatchInit](#prefetchbatchinit)）初始值为100，则计算节点A的自增序列预取区间为[1,100]，计算节点B的预取区间为[101,200]以及计算节点C的预取区间为[201,300]，即：
 
 mysql> create table test(id int auto_increment primary key,num int);
 
@@ -1537,7 +1537,7 @@ mysql> select * from test order by id;
 
 | 4 | 4 |
 
-//自增序列预取范围为\[1,100\]
+//自增序列预取范围为[1,100]
 
 在计算节点B上执行：
 
@@ -1563,7 +1563,7 @@ mysql> select * from test order by id;
 
 | 104 | 4 |
 
-//自增序列预取范围为\[101,200\]
+//自增序列预取范围为[101,200]
 
 在计算节点C上执行：
 
@@ -1597,7 +1597,7 @@ mysql> select * from test order by id;
 
 | 204 | 4 |
 
-//自增序列预取范围为\[201,300\]
+//自增序列预取范围为[201,300]
 
 在以下两种情况会判断是否重新预取批次并重新计算下一批次大小，由此来调整合适当前业务环境的批次大小：
 
@@ -1687,11 +1687,11 @@ XA模式下：参照SQL99标准，begin\\start transaction会立即开启一个�
 
 在计算节点版本高于2.5.6 （包含）时，XA模式下前端连接断开时会将事务的状态记录到日志及配置库中，也可以直接通过服务端口执行SHOW ABNORMAL_XA_TRX查看是否需要重做事务。
 
-2020-10-30 15:42:29.857 \[WARN\] \[MANAGER\] \[\$NIOExecutor-2-10\] cn.hotpu.hotdb.manager.response.v(39) - \[thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT\]killed by manager
+2020-10-30 15:42:29.857 [WARN] [MANAGER] [\$NIOExecutor-2-10] cn.hotpu.hotdb.manager.response.v(39) - [thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT]killed by manager
 
-2020-10-30 15:42:29.857 \[INFO\] \[INNER\] \[\$NIOExecutor-2-10\] cn.hotpu.hotdb.server.d.c(1066) - XATransactionSession in \[thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT\]'s query will be killed due to a kill command, current sql:null
+2020-10-30 15:42:29.857 [INFO] [INNER] [\$NIOExecutor-2-10] cn.hotpu.hotdb.server.d.c(1066) - XATransactionSession in [thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT]'s query will be killed due to a kill command, current sql:null
 
-2020-10-30 15:42:29.859 \[INFO\] \[CONNECTION\] \[\$NIOExecutor-2-10\] cn.hotpu.hotdb.server.b(3599) - \[thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT\] will be closed because a kill command.
+2020-10-30 15:42:29.859 [INFO] [CONNECTION] [\$NIOExecutor-2-10] cn.hotpu.hotdb.server.b(3599) - [thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT] will be closed because a kill command.
 
 ![](assets/standard/image49.png)
 
@@ -1787,13 +1787,13 @@ HotDB Server 2.5.3将全局唯一约束优化精确到表级别，默认为所�
 
 垂直分片表与全局表没有此入口，因为不需要对唯一约束做额外处理。添加完表配置后即可使用建表语句添加表结构后使用。
 
-2.使用[自动建表](#_建表即分片)功能，可通过table option GLOBAL_UNIQUE \[=\] {0 | 1}设置全局唯一约束的开关。例如：
+2.使用[自动建表](#_建表即分片)功能，可通过table option GLOBAL_UNIQUE [=] {0 | 1}设置全局唯一约束的开关。例如：
 
 mysql> create table test02(id not null auto_increment primary key,a char(8),b decimal(4,2),c int) **GLOBAL_UNIQUE=0**;
 
 mysql> create table test03(id int primary key,id1 int) **GLOBAL_UNIQUE =1**;
 
-若不使用GLOBAL_UNIQUE \[=\] {0 | 1}，则默认根据计算节点参数配置的默认值或在管理平台上添加的表配置设置开启或关闭；若GLOBAL_UNIQUE=1则判断为开启；若GLOBAL_UNIQUE=0则判断为关闭。
+若不使用GLOBAL_UNIQUE [=] {0 | 1}，则默认根据计算节点参数配置的默认值或在管理平台上添加的表配置设置开启或关闭；若GLOBAL_UNIQUE=1则判断为开启；若GLOBAL_UNIQUE=0则判断为关闭。
 
 -   若GLOBAL_UNIQUE设置与默认值不同，则以GLOBAL_UNIQUE为准；
 
@@ -1843,11 +1843,11 @@ mysql> create table test02(id not null auto_increment primary key,a char(8),b de
 
 ![](assets/standard/image54.png)
 
-若表结构为已创建的表，全局唯一约束修改为开启状态后，点击动态加载并刷新页面，若出现如下图提示，说明需要到管理端口执行unique @\@create，检查此表唯一约束键的历史数据，返回结果是唯一后，计算节点自动创建辅助索引，全局唯一约束方能生效，此命令详情请参考《分布式事务数据库HotDB Server【管理端命令】功能使用手册》：
+若表结构为已创建的表，全局唯一约束修改为开启状态后，点击动态加载并刷新页面，若出现如下图提示，说明需要到管理端口执行unique @@create，检查此表唯一约束键的历史数据，返回结果是唯一后，计算节点自动创建辅助索引，全局唯一约束方能生效，此命令详情请参考《分布式事务数据库HotDB Server【管理端命令】功能使用手册》：
 
 ![](assets/standard/image55.png)
 
-2. 在计算节点通过ALTER TABLE使用GLOBAL_UNIQUE语法，开启全局唯一，同理，出现warning信息说明需要执行unique @\@create后方能生效：
+2. 在计算节点通过ALTER TABLE使用GLOBAL_UNIQUE语法，开启全局唯一，同理，出现warning信息说明需要执行unique @@create后方能生效：
 
 mysql> alter table keevey01 global_unique=1;
 
@@ -1857,7 +1857,7 @@ mysql> show warnings;
 
 | Level | Code | Message |
 
-| Note | 10210 | please go to HotDB Server manager port and execute this command: unique @\@create, otherwise this global_unique setting doesn't work. |
+| Note | 10210 | please go to HotDB Server manager port and execute this command: unique @@create, otherwise this global_unique setting doesn't work. |
 
 1 row in set (0.00 sec)
 
@@ -1929,7 +1929,7 @@ DBA is required to deal with the new master, which is the original slave before 
 
 5. 设置server.xml 参数checkUpdate=false时，即允许更新分片字段，可能导致路由不正确，进而导致数据操作时存在与预期不一致的问题；
 
-6. 未use逻辑库的情况下，执行了连接绑定语句（包括HINT、set \[session\] foreign_key_checks=0、START TRANSACTION /*!40100 WITH CONSISTENT SNAPSHOT */、set \[session\] UNIQUE_CHECKS=0等），导致其SQL语句均直接下发至存储节点执行，进而可能导致任意类型的不一致；
+6. 未use逻辑库的情况下，执行了连接绑定语句（包括HINT、set [session] foreign_key_checks=0、START TRANSACTION /*!40100 WITH CONSISTENT SNAPSHOT */、set [session] UNIQUE_CHECKS=0等），导致其SQL语句均直接下发至存储节点执行，进而可能导致任意类型的不一致；
 
 -   **环境配置**
 
@@ -2037,11 +2037,11 @@ MySQL数据库主从的配置方式，请参考MySQL的官方网站（注意对�
 
 -   切换成功时，计算节点记录切换过程日志：
 
-INFO \[pool-1-thread-1064\] (SwitchDataSource.java:78) -received switch datasourceid command from Manager : \[连接信息\]
+INFO [pool-1-thread-1064] (SwitchDataSource.java:78) -received switch datasourceid command from Manager : [连接信息]
 
-WARN \[pool-1-thread-1339\] (BackendDataNode.java:263) -datanode id switch datasource:id to datasource:id in failover. due to: Manual Switch by User: username
+WARN [pool-1-thread-1339] (BackendDataNode.java:263) -datanode id switch datasource:id to datasource:id in failover. due to: Manual Switch by User: username
 
-INFO \[pool-1-thread-1339\] (SwitchDataSource.java:68) -switch datasource:id for datanode:id successfully by Manager.
+INFO [pool-1-thread-1339] (SwitchDataSource.java:68) -switch datasource:id for datanode:id successfully by Manager.
 
 -   在没有配置切换规则时，不会进行切换，提示错误: switch datasource id failed due to:found no backup information）
 
@@ -2053,17 +2053,17 @@ INFO \[pool-1-thread-1339\] (SwitchDataSource.java:68) -switch datasource:id for
 
 -   如果从库状态为不可用，则不切换，计算节点记录日志
 
-WARN \[pool-1-thread-2614\] datanode id failover failed due to found no available backup
+WARN [pool-1-thread-2614] datanode id failover failed due to found no available backup
 
 -   在server.xml可以配置参数waitForSlaveInFailover控制切换是否等待从库追上复制，该参数默认为true等待，在切换过程中，会等待从库追上复制，如果设置为false不等待，则会立即切换。（立即切换存在数据丢失的风险，不建议设置）。
 
--   一主多从的情况下，计算节点选择优先级最高的从库进行切换，如果优先级最高从库不可用，依次选择剩余从库中优先级较高的进行切换，如果均不可用，则不切换，计算节点记录日志WARN \[pool-1-thread-2614\] -datanode id failover failed due to found no available backup；
+-   一主多从的情况下，计算节点选择优先级最高的从库进行切换，如果优先级最高从库不可用，依次选择剩余从库中优先级较高的进行切换，如果均不可用，则不切换，计算节点记录日志WARN [pool-1-thread-2614] -datanode id failover failed due to found no available backup；
 
 -   在HotDB Server 版本高于2.5.6 （包含）故障切换时，在新备存储节点接管前会将被接管的存储节点更新为主库，原主库更新为双主备库或从库，并置为不可用，原主库相关的从节点均被级联置为不可用（注：若为主从关系，切换时会同步清理原复制关系，且将原主库与原从库的故障切换规则进行互换，待人工进行线下的复制关系重建）
 
 -   故障切换过程中，主库心跳不停，如果连续两次成功，则放弃切换，计算节点记录日志
 
-INFO \[\$NIOREACTOR-6-RW\] (Heartbeat.java:502) -heartbeat continue success twice for datasource 5 192.168.200.52:3310/phy243_05, give up failover.
+INFO [\$NIOREACTOR-6-RW] (Heartbeat.java:502) -heartbeat continue success twice for datasource 5 192.168.200.52:3310/phy243_05, give up failover.
 
 -   切换成功时，计算节点记录日志，并记录切换原因：
 
@@ -2075,21 +2075,21 @@ INFO \[\$NIOREACTOR-6-RW\] (Heartbeat.java:502) -heartbeat continue success twic
 
 例如：存储节点服务关掉时，整个切换过程提示如下：
 
-02/21 15:57:29.342 INFO \[HeartbeatTimer\] (BackendDataNode.java:396) -start failover for datanode:5
+02/21 15:57:29.342 INFO [HeartbeatTimer] (BackendDataNode.java:396) -start failover for datanode:5
 
-02/21 15:57:29.344 INFO \[HeartbeatTimer\] (BackendDataNode.java:405) -found candidate backup for datanode 5 :\[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1\] in failover, start checking slave status.
+02/21 15:57:29.344 INFO [HeartbeatTimer] (BackendDataNode.java:405) -found candidate backup for datanode 5 :[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1] in failover, start checking slave status.
 
-02/21 15:57:29.344 WARN \[\$NIOREACTOR-0-RW\] (HeartbeatInitHandler.java:44) -datasoruce 5 192.168.200.52:331001_3310_ms init heartbeat failed due to:MySQL Error Packet{length=36,id=1}
+02/21 15:57:29.344 WARN [\$NIOREACTOR-0-RW] (HeartbeatInitHandler.java:44) -datasoruce 5 192.168.200.52:331001_3310_ms init heartbeat failed due to:MySQL Error Packet{length=36,id=1}
 
-02/21 15:57:29.344 INFO \[pool-1-thread-1020\] (CheckSlaveHandler.java:241) -slave_sql_running is Yes in :\[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1\] during failover of datanode 5
+02/21 15:57:29.344 INFO [pool-1-thread-1020] (CheckSlaveHandler.java:241) -slave_sql_running is Yes in :[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1] during failover of datanode 5
 
-02/21 15:57:29.424 WARN \[pool-1-thread-1066\] (BackendDataNode.java:847) -datanode 5 switch datasource 5 to 9 in failover. due to: MySQL Service Stopped
+02/21 15:57:29.424 WARN [pool-1-thread-1066] (BackendDataNode.java:847) -datanode 5 switch datasource 5 to 9 in failover. due to: MySQL Service Stopped
 
-02/21 15:57:29.429 WARN \[pool-1-thread-1066\] (Heartbeat.java:416) -datasource 5 192.168.200.52:331001_3310_ms heartbeat failed and will be no longer used.
+02/21 15:57:29.429 WARN [pool-1-thread-1066] (Heartbeat.java:416) -datasource 5 192.168.200.52:331001_3310_ms heartbeat failed and will be no longer used.
 
 -   在没有配置切换规则时，不会进行切换，计算节点记录日志
 
-WARN \[pool-1-thread-177\] (?:?) -datanode id failover failed due to found no backup information
+WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no backup information
 
 -   在存储节点发生故障切换后，不论主从还是双主，我们统一要求，手动将存储节点置为可用的前提是操作人员必须清楚当前主从服务无异常，数据同步无异常，特别是主从模式，要保证期间备提供服务时的数据同步到了主存储节点。存储节点启用时，我们要养成习惯，不要跳过主备一致性检测。
 
@@ -2165,9 +2165,9 @@ HotDB Server支持高可用架构部署，利用keepalived高可用服务原理�
 
 查看计算节点日志：
 
-2018-06-13 09:40:04.408 \[INFO\] \[INIT\] \[Labor-3\] j(-1) -- HotDB-Manager listening on 3325
+2018-06-13 09:40:04.408 [INFO] [INIT] [Labor-3] j(-1) -- HotDB-Manager listening on 3325
 
-2018-06-13 09:40:04.412 \[INFO\] \[INIT\] \[Labor-3\] j(-1) -- HotDB-Server listening on 3323
+2018-06-13 09:40:04.412 [INFO] [INIT] [Labor-3] j(-1) -- HotDB-Server listening on 3323
 
 查看端口监听状态：
 
@@ -2211,11 +2211,11 @@ valid_lft forever preferred_lft forever
 
 查看计算节点日志：
 
-2018-06-04 18:14:32:321 \[INFO\] \[INIT\] \[main\] j(-1) -- Using nio network handler
+2018-06-04 18:14:32:321 [INFO] [INIT] [main] j(-1) -- Using nio network handler
 
-2018-06-04 18:14:32:356 \[INFO\] \[INIT\] \[main\] j(-1) -- HotDB-Manager listening on 3325
+2018-06-04 18:14:32:356 [INFO] [INIT] [main] j(-1) -- HotDB-Manager listening on 3325
 
-2018-06-04 18:14:32:356 \[INFO\] \[AUTHORITY\] \[checker\] Z(-1) -- Thanks for choosing HotDB
+2018-06-04 18:14:32:356 [INFO] [AUTHORITY] [checker] Z(-1) -- Thanks for choosing HotDB
 
 查看端口监听状态：
 
@@ -2235,15 +2235,15 @@ root 11603 12.0 13.6 3788976 1086196 ? Sl Jun04 1389:44 /usr/java/jdk1.7.0_80/bi
 
 备计算节点（以192.168.200.191为例）服务上的 keepalived 收到比自己优先级低的 vrrp 包(192.168.200.191上优先级为 95)后，将切换到 master 状态，抢占 vip(以192.168.200.140为例)。同时在进入 master 状态后，执行 notify_master 脚本，访问192.168.200.191上的计算节点管理端口执行 online 命令启动并初始化192.168.200.191上的计算节点服务端口。若该计算节点启动成功，则主备切换成功继续提供服务。192.168.200.191上的计算节点日志如下：
 
-2018-06-12 21:54:45.128 \[INFO\] \[INIT\] \[Labor-3\] j(-1) -- HotDB-Server listening on 3323
+2018-06-12 21:54:45.128 [INFO] [INIT] [Labor-3] j(-1) -- HotDB-Server listening on 3323
 
-2018-06-12 21:54:45.128 \[INFO\] \[INIT\] \[Labor-3\] j(-1) -- =============================================
+2018-06-12 21:54:45.128 [INFO] [INIT] [Labor-3] j(-1) -- =============================================
 
-2018-06-12 21:54:45.141 \[INFO\] \[MANAGER\] \[Labor-4\] q(-1) -- Failed to offline master Because mysql: \[Warning\] Using a password on the command line interface can be insecure.
+2018-06-12 21:54:45.141 [INFO] [MANAGER] [Labor-4] q(-1) -- Failed to offline master Because mysql: [Warning] Using a password on the command line interface can be insecure.
 
 ERROR 2003 (HY000): Can't connect to MySQL server on '192.168.200.190' (111)
 
-2018-06-12 21:54:45.141 \[INFO\] \[RESPONSE\] \[\$NIOREACTOR-8-RW\] af(-1) -- connection killed for HotDB backup startup
+2018-06-12 21:54:45.141 [INFO] [RESPONSE] [\$NIOREACTOR-8-RW] af(-1) -- connection killed for HotDB backup startup
 
 ...省略更多...
 
@@ -2287,7 +2287,7 @@ HotDB Server支持多计算节点集群的节点自治。以下简称计算节�
 
 HotDB Server支持负载均衡：可选择使用LVS等方式，进行SQL请求的分发。应用端可借助LVS的VIP访问HotDB Server的数据库服务，同时保证使用透明与服务不间断。也可使用其余负载均衡方案进行处理，例如F5加自定义检测；应用直连计算节点，但发生异常时更换节点等方式。
 
-![9R8QD\$VPCV%J\$4_\]YYIOGHX](media/image65.png)
+![9R8QD\$VPCV%J\$4_]YYIOGHX](media/image65.png)
 
 ##### 启动说明
 
@@ -2421,7 +2421,7 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 执行动态加载，若节点管理列表的状态列为绿色可用![](assets/standard/image79.png)，代表监听程序可以连接；若状态为橙色可用![](assets/standard/image80.png)，代表监听程序无法连接，需检查：enableXA是否为true，enableListener是否为true。
 
-验证Listener服务是否被启用：在3325端口执行show @\@datasource即可查看。
+验证Listener服务是否被启用：在3325端口执行show @@datasource即可查看。
 
 ####### 编辑存储节点配置Listener
 
@@ -2453,7 +2453,7 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 执行动态加载，若节点管理列表的状态列为绿色可用![](assets/standard/image79.png)，代表监听程序可以连接；若状态为橙色可用![](assets/standard/image80.png)，代表监听程序无法连接，需检查：enableXA是否为true，enableListener是否为true。
 
-验证Listener服务是否被启用：在3325端口执行show @\@datasource即可查看。
+验证Listener服务是否被启用：在3325端口执行show @@datasource即可查看。
 
 ###### 注意事项
 
@@ -2461,17 +2461,17 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 2.  Listener组件尽可能和存储节点安装在同一台服务器上；
 
-3、若一个监听程序需要监听多个存储节点，则需要为其分别填写不同的服务端口；
+3.若一个监听程序需要监听多个存储节点，则需要为其分别填写不同的服务端口；
 
-4、当某个存储节点取消被Listener监听时，已分配的监听程序服务端口会一直存在，原存储节点可再次使用该监听程序服务端口绑定Listener。
+4.当某个存储节点取消被Listener监听时，已分配的监听程序服务端口会一直存在，原存储节点可再次使用该监听程序服务端口绑定Listener。
 
-5、当某个存储节点取消被Listener监听时，已分配的监听程序服务端口会一直存在，此时其他存储节点使用该监听程序服务端口，Listener日志会报错：端口冲突，端口已存在。因此需要重启Listener后才能使用该监听程序服务端口。
+5.当某个存储节点取消被Listener监听时，已分配的监听程序服务端口会一直存在，此时其他存储节点使用该监听程序服务端口，Listener日志会报错：端口冲突，端口已存在。因此需要重启Listener后才能使用该监听程序服务端口。
 
-6、当集群需要重启时，建议Listener组件也一同重启，重启顺序为：先重启Listener，后重启集群，以便集群更快的识别Listener；
+6.当集群需要重启时，建议Listener组件也一同重启，重启顺序为：先重启Listener，后重启集群，以便集群更快的识别Listener；
 
-7、Listener作为可插拔组件，当Listener不可用时，集群和存储节点仍然可以正常提供服务。
+7.Listener作为可插拔组件，当Listener不可用时，集群和存储节点仍然可以正常提供服务。
 
-8、若Listener单独重启，则需至少等待2分钟，计算节点会自动与Listener再次重连。
+8.若Listener单独重启，则需至少等待2分钟，计算节点会自动与Listener再次重连。
 
 #### 计算节点水平弹性伸缩
 
@@ -2552,7 +2552,7 @@ HotDB_03的参数参考框选区域的配置：
 
 ![](assets/standard/image88.png)
 
-（2）HotDB_01管理端执行reload @\@config操作，show @\@cluster可看到HotDB_01作为PRIMARY角色加入集群。
+（2）HotDB_01管理端执行reload @@config操作，show @@cluster可看到HotDB_01作为PRIMARY角色加入集群。
 
 ![](assets/standard/image89.png)
 
@@ -2562,7 +2562,7 @@ service keepalived stop
 
 ![](assets/standard/image90.png)
 
-（4）启动HotDB_02、HotDB_03，然后在HotDB_01管理端执行show @\@cluster;可看到集群成员全部加入。
+（4）启动HotDB_02、HotDB_03，然后在HotDB_01管理端执行show @@cluster;可看到集群成员全部加入。
 
 ![](assets/standard/image91.png)
 
@@ -2617,7 +2617,7 @@ sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-
 
 **第四步：Reload操作使配置生效**
 
-主计算节点（HotDB_01）管理端执行reload @\@config，可看到HotDB_04加入集群：
+主计算节点（HotDB_01）管理端执行reload @@config，可看到HotDB_04加入集群：
 
 ![](assets/standard/image97.png)
 
@@ -2633,7 +2633,7 @@ sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-
 
 -   若集群继续引入新计算节点，按第一步开始重复操作；
 
--   若计算节点的clusterSize、haMode值与实际配置的集群不匹配，第四步reload @\@config会失败，需保证配置与实际情况吻合；
+-   若计算节点的clusterSize、haMode值与实际配置的集群不匹配，第四步reload @@config会失败，需保证配置与实际情况吻合；
 
 -   新计算节点的参数serverId需保证编号唯一不重复且跟原集群连续不间断，否则会导致启动异常；
 
@@ -2691,7 +2691,7 @@ sh hotdbinstall_v*.sh --dry-run=no --install-keepalived=backup --keepalived-vip-
 
 ![](assets/standard/image102.png)
 
-**（5）**HotDB_01服务器管理端执行reload @\@config操作，使当前剩余的计算节点成为HA主计算节点。
+**（5）**HotDB_01服务器管理端执行reload @@config操作，使当前剩余的计算节点成为HA主计算节点。
 
 ![](assets/standard/image103.png)
 
@@ -2909,7 +2909,7 @@ DNID只适用于SELECT，UPDATE，DELETE的简单单表语句；并且，DNID只
 
 HINT语句支持指定datasource_id跳过计算节点直接向存储节点发送语句。可利用[服务端口命令](#使用已有分片规则建表相关命令)查看存储节点datasource_id：
 
-语法：SHOW \[full\] HOTDB ｛datasources｝ \[LIKE 'pattern' | WHERE expr\]
+语法：SHOW [full] HOTDB ｛datasources｝ [LIKE 'pattern' | WHERE expr]
 
 示例：
 
@@ -3051,11 +3051,11 @@ mysql> /*!hotdb: table=customer:1*/ select count(*) from customer;
 
 涉及到连接绑定的语句除了HINT，还包括如下语句：
 
-set \[session\] foreign_key_checks=0;
+set [session] foreign_key_checks=0;
 
 START TRANSACTION /*!40100 WITH CONSISTENT SNAPSHOT */
 
-set \[session\] UNIQUE_CHECKS=0;
+set [session] UNIQUE_CHECKS=0;
 
 计算节点在这种连接被绑定的SQL执行后，会输出Warning及日志提醒：
 
@@ -3085,7 +3085,7 @@ Warning (Code 10041): The current session has been bound to the backend connecti
 
 同时日志会有info信息：
 
-2019-04-01 19:11:29.662 \[INFO\] \[CONNECTION\] \[\$NIOEecutor-3-1\] ServerConnection(1565) -- 31 has been bound to the backend connection:\[2,1\]
+2019-04-01 19:11:29.662 [INFO] [CONNECTION] [\$NIOEecutor-3-1] ServerConnection(1565) -- 31 has been bound to the backend connection:[2,1]
 
 当操作涉及到与原逻辑库绑定的后端连接之外的新的数据节点时,SHOW WARNINGS会有如下提示且连接会断开：
 
@@ -3119,7 +3119,7 @@ Current database: db_b
 
 例如：登录服务端口，未use逻辑库，执行连接绑定语句：
 
-set \[session\] foreign_key_checks=0;
+set [session] foreign_key_checks=0;
 
 之后直接执行
 
@@ -3205,11 +3205,11 @@ EXPLAIN语句只适用于INSERT，SELECT，UPDATE，DELETE的简单单表语句�
 
 计算节点[管理端（3325）](#管理端信息监控)支持OnlineDDL功能，保证了在进行表变更时，不会阻塞线上业务读写，库依然能正常对外提供访问，具体使用方法如下：
 
--   登录3325端管理端口，使用onlineddl "\[DDLSTATEMENT\]"语法可以执行onlineddl语句，例如：onlineddl "alter table customer add column testddl varchar(20) default '测试onlineddl'";
+-   登录3325端管理端口，使用onlineddl "[DDLSTATEMENT]"语法可以执行onlineddl语句，例如：onlineddl "alter table customer add column testddl varchar(20) default '测试onlineddl'";
 
--   执行show @\@onlineddl语句，即可显示当前正在运行的OnlineDDL语句及语句执行速度，progress显示当前DDL执行进度（单位：%），speed显示为当前DDL运行速度（单位：行/ms），例如：
+-   执行show @@onlineddl语句，即可显示当前正在运行的OnlineDDL语句及语句执行速度，progress显示当前DDL执行进度（单位：%），speed显示为当前DDL运行速度（单位：行/ms），例如：
 
-mysql> show @\@onlineddl;
+mysql> show @@onlineddl;
 
 | schema | onlineddl
 
@@ -3217,7 +3217,7 @@ mysql> show @\@onlineddl;
 
 | TEST_DML_JWY | ALTER TABLE CUSTOMER ADD COLUMN TESTDDL VARCHAR(20) DEFAULT '测试ONLINEDDL' | 0.2300 | 23.3561 |
 
-特殊说明：onlineddl 语句不是执行下去就代表DDL完成， 返回了"Query OK, 0 rows affected "仅代表DDL语句可以执行， 如果想看是否执行完成，要查看 show @\@onlineddl中progress 显示的进度。show @\@onlineddl结果为空时，代表所有DDL执行完毕且当前无其他DDL任务，如果中途因为网络或其他异常DDL中断，会回滚整个DDL。
+特殊说明：onlineddl 语句不是执行下去就代表DDL完成， 返回了"Query OK, 0 rows affected "仅代表DDL语句可以执行， 如果想看是否执行完成，要查看 show @@onlineddl中progress 显示的进度。show @@onlineddl结果为空时，代表所有DDL执行完毕且当前无其他DDL任务，如果中途因为网络或其他异常DDL中断，会回滚整个DDL。
 
 ### NDB Cluster SQL节点服务
 
@@ -3289,7 +3289,7 @@ alter table table_name change shard column new_column；
 
 例如将源表sbtest1分片字段id修改为k，执行：
 
-root\@127.0.0.1:hotdb 5.7.25 06:44:26> alter table sbtest1 change shard column k;
+root@127.0.0.1:hotdb 5.7.25 06:44:26> alter table sbtest1 change shard column k;
 
 Query OK, 0 rows affected (2 min 2.27 sec)
 
@@ -3408,13 +3408,13 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 与字符集相关的语法如下，HotDB Server也可同步支持，功能同MySQL一致：
 
 | **功能分类** | **语法相关**                                                                                                         |
-| CREATE TABLE | col_name {CHAR | VARCHAR | TEXT} (col_length) \[CHARACTER SET charset_name\] \[COLLATE collation_name\] col_name {ENUM | SET} (val_list) \[CHARACTER SET charset_name\] \[COLLATE collation_name\]                                                                                           |
-| ALTER TABLE  | ALTER TABLE tbl_name CONVERT TO CHARACTER SET charset_name \[COLLATE collation_name\];                               |
-|              | ALTER TABLE tbl_name DEFAULT CHARACTER SET charset_name \[COLLATE collation_name\];                                  |
-|              | ALTER TABLE tbl_name MODIFY col_name column_definition CHARACTER SET charset_name \[COLLATE collation_name\];        |
-| SET          | SET NAMES 'charset_name' \[COLLATE 'collation_name'\]                                                            |
+| CREATE TABLE | col_name {CHAR | VARCHAR | TEXT} (col_length) [CHARACTER SET charset_name] [COLLATE collation_name] col_name {ENUM | SET} (val_list) [CHARACTER SET charset_name] [COLLATE collation_name]                                                                                           |
+| ALTER TABLE  | ALTER TABLE tbl_name CONVERT TO CHARACTER SET charset_name [COLLATE collation_name];                               |
+|              | ALTER TABLE tbl_name DEFAULT CHARACTER SET charset_name [COLLATE collation_name];                                  |
+|              | ALTER TABLE tbl_name MODIFY col_name column_definition CHARACTER SET charset_name [COLLATE collation_name];        |
+| SET          | SET NAMES 'charset_name' [COLLATE 'collation_name']                                                            |
 |              | SET CHARACTER SET charset_name                                                                                       |
-|              | set \[session\] {character_set_client|character_set_results|character_set_connection|collation_connection} = xxx; |
+|              | set [session] {character_set_client|character_set_results|character_set_connection|collation_connection} = xxx; |
 | WITH         | With ORDER BY: SELECT k FROM t1 ORDER BY k COLLATE latin1_swedish_ci;                                                               |
 |              | With AS: SELECT k COLLATE latin1_swedish_ci AS k1 FROM t1 ORDER BY k1;                                                        |
 |              | With GROUP BY: SELECT k FROM t1 GROUP BY k COLLATE latin1_swedish_ci;                                                               |
@@ -3581,13 +3581,13 @@ Query OK, 0 rows affected (2 min 2.27 sec)
   [IsEmpty()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                         支持           否             　
   [ISNULL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    支持           否             　
   [IsSimple()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                        支持           否             　
-  [JSON_ARRAYAGG(col_or_expr) \[over_clause\]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                            不支持         是             MySQL8.0与5.7新增功能
-  [JSON_OBJECTAGG(key, value) \[over_clause\]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                            不支持         是             MySQL8.0与5.7新增功能
+  [JSON_ARRAYAGG(col_or_expr) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                            不支持         是             MySQL8.0与5.7新增功能
+  [JSON_OBJECTAGG(key, value) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                            不支持         是             MySQL8.0与5.7新增功能
   [JSON_PRETTY(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-pretty)                                               不支持         是             MySQL8.0与5.7新增功能
   [JSON_STORAGE_FREE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                                   不支持         是             MySQL8.0新增功能
   [JSON_STORAGE_SIZE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                                   不支持         是             MySQL8.0与5.7新增功能
-  [JSON_MERGE_PATCH(json_doc, json_doc\[, json_doc\] ...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch)   不支持         是             MySQL8.0与5.7新增功能
-  [JSON_TABLE(expr, path COLUMNS (column_list) \[AS\] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html#function_json-table)              不支持         是             MySQL8.0新增功能
+  [JSON_MERGE_PATCH(json_doc, json_doc[, json_doc] ...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch)   不支持         是             MySQL8.0与5.7新增功能
+  [JSON_TABLE(expr, path COLUMNS (column_list) [AS] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html#function_json-table)              不支持         是             MySQL8.0新增功能
   [LAST_DAY](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 支持           否             　
   [LAST_INSERT_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                           支持           否             　
   [LCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
@@ -3890,13 +3890,13 @@ DELETE FROM t PARTITION(p0);
 
 在跨库的DELETE中语句，下面的多表语句不被支持：
 
-DELETE \[LOW_PRIORITY\] \[QUICK\] \[IGNORE\]
+DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
 
-FROM tbl_name\[.*\] \[, tbl_name\[.*\]\] ...
+FROM tbl_name[.*] [, tbl_name[.*]] ...
 
 USING table_references
 
-\[WHERE where_condition\]
+[WHERE where_condition]
 
 #### INSERT语句
 
@@ -4012,7 +4012,7 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 |                   | PARTITION                               |          | 不支持       |                                                                                                                                                                  |
 |                   | CHARACTER SET                           |          | 不支持       |                                                                                                                                                                  |
 |                   | {FIELDS | COLUMNS}                     |          | 支持              |                                                                                                                                                                  |
-|                   | \[TERMINATED BY 'string'\] \[\[OPTIONALLY\] ENCLOSED BY 'char'\] \[ESCAPED BY 'char'\] LINES STARTING BY 'string'            |          | 不支持       |                                                                                                                                                                  |
+|                   | [TERMINATED BY 'string'] [[OPTIONALLY] ENCLOSED BY 'char'] [ESCAPED BY 'char'] LINES STARTING BY 'string'            |          | 不支持       |                                                                                                                                                                  |
 |                   | LINES TERMINATED BY 'string'          |          | 支持         |                                                                                                                                                                  |
 |                   | 导入指定字段                            |          | 支持         |                                                                                                                                                                  |
 |                   | SET                                     |          | 支持         |                                                                                                                                                                  |
@@ -4197,7 +4197,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 |              |                      | ENUM类型                               | 支持         |                                                                                                                                                                                   |
 |              |                      | 函数                                   | 支持         |                                                                                                                                                                                   |
 |              | OR                   |                                        | 限制支持     | 跨库JOIN支持能转换成in条件的情况； 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
-|              | WHERE                | 不同字段OR条件                         | 限制支持     | 类似 a=x and b=x or c=x的形式不支持；仅支持OR表达式为AND表达式的子节点的情况以及不限OR个数的情况，例如：select xxx from a,b where (a.c1 OR a.c2) and b.c1=100 and (a.c4 OR a.c6): 其中OR子句中每个条件(c1、c2等)仅支持table.column \[=|<|<=|>|>=|!=\] value 或 IS \[NOT\] NULL 或 具体的值(0/1/TRUE/FALSE/字符串等)； 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
+|              | WHERE                | 不同字段OR条件                         | 限制支持     | 类似 a=x and b=x or c=x的形式不支持；仅支持OR表达式为AND表达式的子节点的情况以及不限OR个数的情况，例如：select xxx from a,b where (a.c1 OR a.c2) and b.c1=100 and (a.c4 OR a.c6): 其中OR子句中每个条件(c1、c2等)仅支持table.column [=|<|<=|>|>=|!=] value 或 IS [NOT] NULL 或 具体的值(0/1/TRUE/FALSE/字符串等)； 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
 |              |                      | 单个字段的or条件                       | 限制支持     | left join中的or表达式不为and表达式子节点的不支持； 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
 |              |                      | IN                                     | 支持         | 　                                                                                                                                                                                |
 |              |                      | AND                                    | 支持         | 　                                                                                                                                                                                |
@@ -4298,19 +4298,19 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | **MySQL语句类型** | **子句类型**                                                                | **支持状态** | **说明**                                                                                                                                                                                                                                            |
 | ALTER TABLE       | ADD COLUMN                                                                  | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY                       | 支持         | 支持 ADD UNIQUE \[index_name\]\[index_type\]index_col_name                                                                                                                                                                                          |
+|                   | ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY                       | 支持         | 支持 ADD UNIQUE [index_name][index_type]index_col_name                                                                                                                                                                                          |
 |                   | 父子表的ADD FOREIGN KEY                                                     | 限制支持     | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
 |                   |                                                                             |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式环境中，当非分片字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
 |                   |                                                                             |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
-|                   | ADD SPATIAL \[INDEX|KEY\]                                                  | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | ADD CONSTRAINT \[CONSTRAINT \[symbol\]\] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | 父子表的ADD CONSTRAINT \[CONSTRAINT \[symbol\]\] FOREIGN KEY                | 限制支持     | 非字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
+|                   | ADD SPATIAL [INDEX|KEY]                                                  | 支持         | 　                                                                                                                                                                                                                                                  |
+|                   | ADD CONSTRAINT [CONSTRAINT [symbol]] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY | 支持         | 　                                                                                                                                                                                                                                                  |
+|                   | 父子表的ADD CONSTRAINT [CONSTRAINT [symbol]] FOREIGN KEY                | 限制支持     | 非字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
 |                   |                                                                             |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
 |                   |                                                                             |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
 |                   | ALGORITHM                                                                   | 支持         | MySQL8.0新增INSTANT，且默认使用INSTANT                                                                                                                                                                                                              |
 |                   | ALTER COLUMN                                                                | 支持         | 　                                                                                                                                                                                                                                                  |
 |                   | LOCK                                                                        | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | MODIFY/CHANGE \[COLUMN\]                                                    | 支持         | 　                                                                                                                                                                                                                                                  |
+|                   | MODIFY/CHANGE [COLUMN]                                                    | 支持         | 　                                                                                                                                                                                                                                                  |
 |                   | DROP COLUMN                                                                 | 支持         | 　                                                                                                                                                                                                                                                  |
 |                   | DROP PRIMARY KEY/KEY/INDEX/FOREIGN KEY                                      | 支持         | 　                                                                                                                                                                                                                                                  |
 |                   | DISABLE KEYS                                                                | 支持         | 　                                                                                                                                                                                                                                                  |
@@ -4342,10 +4342,10 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 |                   | FUNCTIONAL KEYS                | 支持         | MySQL8.0新增功能                                                                                                                                                                                                                                    |
 | 　                |                                |              |                                                                                                                                                                                                                                                     |
 | CREATE TABLE      | CREATE TEMPORARY TABLE         | 禁用         |                                                                                                                                                                                                                                                     |
-|                   | CREATE TABLE \[IF NOT EXISTS\] | 支持         | 　                                                                                                                                                                                                                                                  |
+|                   | CREATE TABLE [IF NOT EXISTS] | 支持         | 　                                                                                                                                                                                                                                                  |
 |                   | CREATE TABLE LIKE              | 支持         | 　                                                                                                                                                                                                                                                  |
 |                   | CREATE TABLE AS SELECT ...     | 支持         | 1.要求存储节点用户拥有CREATE TEMPORARY TABLE权限。
-|                   |                                |              | 2. 要求CREATE的表和SELECT的表关联至少一个相同的数据节点，否则执行不成功：ERROR 10215 (HY000): \[LOADTEST1\] no overlapping datanode
+|                   |                                |              | 2. 要求CREATE的表和SELECT的表关联至少一个相同的数据节点，否则执行不成功：ERROR 10215 (HY000): [LOADTEST1] no overlapping datanode
 |                   |                                |              | 3. 不支持CREATE TABLE ... IGNORE SELECT 和 CREATE TABLE ... REPLACE SELECT                                                                                                                                                                       |
 |                   | GENERATED COLUMNS              | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
 |                   | SECONDARY INDEXES              | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
@@ -4356,13 +4356,13 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 CREATE DATABASE 在计算节点使用时对应为创建逻辑库的功能，语法使用说明如下：
 
-CREATE {DATABASE | SCHEMA} \[IF NOT EXISTS\] db_name \[create_option\] ... \[DEFAULT DATANODE 'datanodeid'\]
+CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name [create_option] ... [DEFAULT DATANODE 'datanodeid']
 
 **说明：**
 
-create_option: \[DEFAULT\] { CHARACTER SET \[=\] charset_name | COLLATE \[=\] collation_name }
+create_option: [DEFAULT] { CHARACTER SET [=] charset_name | COLLATE [=] collation_name }
 
-\[DEFAULT DATANODE 'datanodeid'\] 可以指定默认分片节点。当不单独指定时，默认关联所有数据节点；当指定时，按指定数据节点关联成逻辑库默认分片节点；当指定的datanodeid不存在时，提示：datanodeid not exists。
+[DEFAULT DATANODE 'datanodeid'] 可以指定默认分片节点。当不单独指定时，默认关联所有数据节点；当指定时，按指定数据节点关联成逻辑库默认分片节点；当指定的datanodeid不存在时，提示：datanodeid not exists。
 
 服务端创建逻辑库语法示例：
 
@@ -4393,10 +4393,10 @@ create database if not exists zjj_d3 default datanode '1,4';
                       SPATIAL                                         支持           　
                       ALGORITHM                                       支持           　
                       LOCK                                            支持           　
-  DROP TABLE          DROP \[TEMPORARY\] TABLE \[IF EXISTS\]          禁用           　
+  DROP TABLE          DROP [TEMPORARY] TABLE [IF EXISTS]          禁用           　
                       DROP TABLE                                      支持           　
                       DROP TABLE 多表                                 支持           必须保证多表在相同节点
-                      DROP TABLE table_name \[RESTRICT | CASCADE\]   支持           　
+                      DROP TABLE table_name [RESTRICT | CASCADE]   支持           　
   DROP TRIGGER        　                                              支持           需要赋予DROP权限
   DROP VIEW           　                                              支持           　
 ------------------- ----------------------------------------------- -------------- ------------------------
@@ -4418,15 +4418,15 @@ create database if not exists zjj_d3 default datanode '1,4';
 |                  |                          | READ ONLY                               | 支持     |                                                                                                                                                                                                                                                                               |
 |                  | BEGIN                    |                                         | 支持     |                                                                                                                                                                                                                                                                               |
 |                  | COMMIT                   |                                         | 支持     |                                                                                                                                                                                                                                                                               |
-|                  | COMMIT                   | \[AND \[NO\] CHAIN\] \[\[NO\] RELEASE\] | 支持     |                                                                                                                                                                                                                                                                               |
+|                  | COMMIT                   | [AND [NO] CHAIN] [[NO] RELEASE] | 支持     |                                                                                                                                                                                                                                                                               |
 |                  | ROLLBACK                 |                                         | 支持     |                                                                                                                                                                                                                                                                               |
-|                  | ROLLBACK                 | \[AND \[NO\] CHAIN\] \[\[NO\] RELEASE\] | 支持     |                                                                                                                                                                                                                                                                               |
+|                  | ROLLBACK                 | [AND [NO] CHAIN] [[NO] RELEASE] | 支持     |                                                                                                                                                                                                                                                                               |
 |                  | SET autocommit           | 0|1                                    | 支持     |                                                                                                                                                                                                                                                                               |
 | SAVEPOINT        | SAVEPOINT                |                                         | 支持     |                                                                                                                                                                                                                                                                               |
 |                  | ROLLBACK ... TO ...      |                                         | 支持     |                                                                                                                                                                                                                                                                               |
 |                  | RELEASE SAVEPOINT        |                                         | 支持     |                                                                                                                                                                                                                                                                               |
-| LOCK             | LOCK TABLES              | READ \[LOCAL\]                          | 禁用     |                                                                                                                                                                                                                                                                               |
-|                  |                          | \[LOW_PRIORITY\] WRITE                  | 禁用     |                                                                                                                                                                                                                                                                               |
+| LOCK             | LOCK TABLES              | READ [LOCAL]                          | 禁用     |                                                                                                                                                                                                                                                                               |
+|                  |                          | [LOW_PRIORITY] WRITE                  | 禁用     |                                                                                                                                                                                                                                                                               |
 |                  | UNLOCK TABLES            |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
 |                  | LOCK INSTANCE FOR BACKUP |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
 |                  | UNLOCK INSTANCE;         |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
@@ -4442,13 +4442,13 @@ create database if not exists zjj_d3 default datanode '1,4';
 |                  |                          | READ WRITE                              | 支持     |                                                                                                                                                                                                                                                                               |
 |                  | SET GLOBAL TRANSACTION   | READ ONLY                               | 不支持   |                                                                                                                                                                                                                                                                               |
 |                  |                          | READ WRITE                              | 不支持   |                                                                                                                                                                                                                                                                               |
-| 分布式事务       | XA START|BEGIN ...      | \[JOIN|RESUME\]                        | 禁用     |                                                                                                                                                                                                                                                                               |
-|                  | XA END                   | \[SUSPEND \[FOR MIGRATE\]\]             | 禁用     |                                                                                                                                                                                                                                                                               |
+| 分布式事务       | XA START|BEGIN ...      | [JOIN|RESUME]                        | 禁用     |                                                                                                                                                                                                                                                                               |
+|                  | XA END                   | [SUSPEND [FOR MIGRATE]]             | 禁用     |                                                                                                                                                                                                                                                                               |
 |                  | XA PREPARE               |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
-|                  | XA COMMIT                | \[ONE PHASE\]                           | 禁用     |                                                                                                                                                                                                                                                                               |
+|                  | XA COMMIT                | [ONE PHASE]                           | 禁用     |                                                                                                                                                                                                                                                                               |
 |                  | XA ROLLBACK              |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
 |                  | XA RECOVER               |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
-|                  | XA RECOVER               | \[CONVERT XID\]                         | 禁用     | 5.7新增参数                                                                                                                                                                                                                                                                   |
+|                  | XA RECOVER               | [CONVERT XID]                         | 禁用     | 5.7新增参数                                                                                                                                                                                                                                                                   |
 
 ### 其他MySQL语句
 
@@ -4473,7 +4473,7 @@ HotDB Server当前仅支持垂直库（即逻辑库仅关联一个数据节点�
 |                                       | GET DIAGNOSTICS                                                                      | 限制支持     | **　**                     |
 |                                       | RESIGNAL                                                                             | 限制支持     | **　**                     |
 |                                       | SIGNAL                                                                               | 限制支持     | **　**                     |
-| Plugin and User-Defined Function 语句 | CREATE \[AGGREGATE\] FUNCTION function_name RETURNS {STRING|INTEGER|REAL|DECIMAL} | 限制支持                            |
+| Plugin and User-Defined Function 语句 | CREATE [AGGREGATE] FUNCTION function_name RETURNS {STRING|INTEGER|REAL|DECIMAL} | 限制支持                            |
 |                                       | SONAME shared_library_name                                                           |              |                            |
 |                                       | DROP FUNCTION                                                                        | 限制支持     |                            |
 |                                       | INSTALL PLUGIN                                                                       | 禁用         |                            |
@@ -4509,7 +4509,7 @@ HotDB Server实现了一套自己的用户名与权限管理的系统，可以�
 
 创建用户语法：
 
-CREATE USER \[IF NOT EXISTS\] 'user_name'@'host_name'   IDENTIFIED BY  'password_auth_string'\[,'user_name'@'host_name'   IDENTIFIED BY  'password_auth_string'\]...
+CREATE USER [IF NOT EXISTS] 'user_name'@'host_name'   IDENTIFIED BY  'password_auth_string'[,'user_name'@'host_name'   IDENTIFIED BY  'password_auth_string']...
 
 服务端创建用户语法示例：
 
@@ -4537,7 +4537,7 @@ create user 'jingjingjing'@'%' identified by 'jing' with max_user_connections 3;
 
 删除用户语法：
 
-DROP USER \[IF EXISTS\] 'user_name'@'host_name' \[,'user_name'@'host_name'\]...
+DROP USER [IF EXISTS] 'user_name'@'host_name' [,'user_name'@'host_name']...
 
 服务端删除用户语法示例：
 
@@ -4559,17 +4559,17 @@ GRANT赋权语法：
 
 GRANT
 
-priv_type\[, priv_type \] ...
+priv_type[, priv_type ] ...
 
-ON  priv_level TO 'user_name'@'host_name'\[,'user_name'@'host_name'\] ...
+ON  priv_level TO 'user_name'@'host_name'[,'user_name'@'host_name'] ...
 
-\[WITH MAX_USER_CONNECTIONS con_num \]
+[WITH MAX_USER_CONNECTIONS con_num ]
 
 **说明：**
 
 可授权的权限类型priv_type 包括：SELECT、 UPDATE、 DELETE、 INSERT 、CREATE 、DROP 、ALTER 、FILE 、 SUPER
 
-可使用[ALL \[PRIVILEGES\]](https://dev.mysql.com/doc/refman/5.6/en/privileges-provided.html#priv_all) 为用户赋予所有权限（包括SUPER权限）在内，用法等同MySQL。
+可使用[ALL [PRIVILEGES]](https://dev.mysql.com/doc/refman/5.6/en/privileges-provided.html#priv_all) 为用户赋予所有权限（包括SUPER权限）在内，用法等同MySQL。
 
 可授权的权限范围priv_level包括： *  | *.*  | db_name.*  |db_name.tbl_name  | tbl_name  | db_name.routine_name
 
@@ -4629,7 +4629,7 @@ grant update on test_ct.test_aa to 'test_ct'@'localhost' identified by 'test_ct'
 
 REVOKE删除权限语法：
 
-REVOKE priv_type \[, priv_type \] ...ON priv_level FROM 'user_name'@'host_name' \[, 'user_name'@'host_name'\] ...
+REVOKE priv_type [, priv_type ] ...ON priv_level FROM 'user_name'@'host_name' [, 'user_name'@'host_name'] ...
 
 服务端REVOKE语法示例：
 
@@ -4687,8 +4687,8 @@ revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jing
 | **语句类型** | **SQL语句**                     | **支持状态** | **说明**                                                                                             |
 | SET语句      | SET GLOBAL                      | 不支持       | 　                                                                                                   |
 |              | SET SESSION                     | 部分支持     | 如:SET SESSION TRANSACTION/SET TX_READONLY/SET NAMES等                                               |
-|              | SET @\@global.                  | 不支持       | 　                                                                                                   |
-|              | SET @\@session.                 | 部分支持     | 例如支持设置字符集相关（连接字符集、查询结果字符集、字符集校对规则），最大连接数、是否进行外键约束等 |
+|              | SET @@global.                  | 不支持       | 　                                                                                                   |
+|              | SET @@session.                 | 部分支持     | 例如支持设置字符集相关（连接字符集、查询结果字符集、字符集校对规则），最大连接数、是否进行外键约束等 |
 |              | SET @@                          | 不支持       | 　                                                                                                   |
 |              | SET ROLE                        | 禁用         | 计算节点不支持MySQL8.0新增角色功能                                                                   |
 |              | 用户自定义变量                  | 支持         | 仅支持单库下调用                                                                                     |
@@ -4733,7 +4733,7 @@ revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jing
 |              | SHOW PROCEDURE STATUS                                                                 | 支持         | 返回空集                                                              |
 |              | SHOW PROCESSLIST                                                                      | 支持         | 显示计算节点的连接情况                                                |
 |              | SHOW PROFILES                                                                         | 支持         | 返回空集                                                              |
-|              | SHOW RELAYLOG EVENTS \[IN 'log_name'\] \[FROM pos\] \[LIMIT \[offset,\] row_count\] | 支持         | 返回空集                                                              |
+|              | SHOW RELAYLOG EVENTS [IN 'log_name'] [FROM pos] [LIMIT [offset,] row_count] | 支持         | 返回空集                                                              |
 |              | SHOW SLAVE HOSTS                                                                      | 支持         | 返回空集                                                              |
 |              | SHOW SLAVE STATUS                                                                     | 支持         | 返回空集                                                              |
 |              | SHOW GLOBAL STATUS                                                                    | 支持         | 　                                                                    |
@@ -4745,16 +4745,16 @@ revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jing
 |              | SHOW TRIGGERS                                                                         | 支持         | 返回空集　                                                            |
 |              | SHOW GLOBAL|SESSION VARIABLES                                                        | 支持         | 　                                                                    |
 |              | SHOW WARNINGS                                                                         | 支持         |                                                                       |
-|              | SHOW HOTDB TABLES                                                                     | 支持         | 支持\[{FROM | IN} *db_name*\] \[LIKE '*pattern*' | WHERE *expr*\]
+|              | SHOW HOTDB TABLES                                                                     | 支持         | 支持[{FROM | IN} *db_name*] [LIKE '*pattern*' | WHERE *expr*]
 |              |                                                                                       |              | 显示计算节点的分片信息                                                |
 
 #### HotDB PROFILE
 
 -------------- ------------------------------------------------------------- -------------- --------------------------------------
   **语句类型**   **SQL语句**                                                   **支持状态**   **说明**
-  SET语句        SET hotdb_profiling={0|1|on|off}                           支持           支持 set \[session\] hotdb_profiling
+  SET语句        SET hotdb_profiling={0|1|on|off}                           支持           支持 set [session] hotdb_profiling
   SHOW语句       SHOW HOTDB_PROFILES                                           支持           　
-                 SHOW HOTDB_PROFILE FOR QUERY N \[relative time|real time\]   支持           N代表执行的SQL id
+                 SHOW HOTDB_PROFILE FOR QUERY N [relative time|real time]   支持           N代表执行的SQL id
 -------------- ------------------------------------------------------------- -------------- --------------------------------------
 
 **功能说明**：该功能仅限session级别
@@ -4779,7 +4779,7 @@ mysql> show hotdb_profiles;
 
 2 rows in set (0.01 sec)
 
-SHOW HOTDB_PROFILE FOR QUERY N \[relative time|real time\]与MySQL相似：
+SHOW HOTDB_PROFILE FOR QUERY N [relative time|real time]与MySQL相似：
 
 第一列Status，即SQL 语句执行的状态；
 
@@ -4863,7 +4863,7 @@ result send end time：计算节点完成向前端写出最后一个结果集的
   **语句类型**               **SQL语句**                    **支持状态**   **说明**
   其他管理语句               BINLOG 'str'                 禁用           　
                              CACHE INDEX                    禁用           　
-                             KILL \[CONNECTION | QUERY\]   支持           
+                             KILL [CONNECTION | QUERY]   支持           
                              LOAD INDEX INTO CACHE          禁用           　
                              RESET MASTER                   禁用           　
                              RESET QUERY CACHE              禁用           　
@@ -4917,7 +4917,7 @@ HotDB Server对MySQL部分variables及status的显示结果做了支持，可通
 | COLLATION_CONNECTION     | 目前仅支持：latin1_swedish_ci latin1_bin gbk_chinese_ci gbk_bin utf8_general_ci utf8_bin utf8mb4_general_ci utf8mb4_bin                                                                                                                                               |
 | FOREIGN_KEY_CHECKS       | 显示ON                                                                                                                                                    |
 | CHARACTER_SET_CLIENT     | 仅支持utf8/gbk/latin1/utf8mb4字符集                                                                                                                       |
-| TIME_ZONE                | time_zone参数为具体的相同值，或全为SYSTEM并且system_time_zone全相同的具体值。计算节点在SHOW \[GLOBAL\] VARIABLES时，将time_zone统一显示为+08:00这个字符串 |
+| TIME_ZONE                | time_zone参数为具体的相同值，或全为SYSTEM并且system_time_zone全相同的具体值。计算节点在SHOW [GLOBAL] VARIABLES时，将time_zone统一显示为+08:00这个字符串 |
 | MAX_ALLOWED_PACKET       | 计算节点控制，默认：64M                                                                                                                                   |
 | ADMIN_ADDRESS            | 始终显示空字符串，MySQL8.0新增                                                                                                                            |
 | INNODB_BUFFER_POOL_SIZE  | 逻辑库下所有节点总和，主备节点按主节点算                                                                                                                  |
@@ -5078,13 +5078,13 @@ mysql> show hotdb rules;
 
 水平分片表创建语法如下：
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functionid | functionname} 'functionid | functionname' USING COLUMN 'shardcolumnname' **（table define...）**
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {functionid | functionname} 'functionid | functionname' USING COLUMN 'shardcolumnname' **（table define...）**
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid' **（table define...）**
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid' **（table define...）**
 
 同时也可以将SHARD BY 之后的关键字放置表定义之后（垂直分片表、全局表亦同），示例：
 
-CREATE TABLE \[IF NOT EXISTS\] tbl_name **（table define...）** SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid'(.....);
+CREATE TABLE [IF NOT EXISTS] tbl_name **（table define...）** SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid'(.....);
 
 水平分片表创建语法说明：
 
@@ -5162,7 +5162,7 @@ ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
 
 表结构类似的表可以使用相同的分片规则，使用如下语法可直接引用分片规则创建水平分片表：
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {ruleid | rulename} 'ruleid\\rulename' \[on datanode 'datanodes'\] (......
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleid\\rulename' [on datanode 'datanodes'] (......
 
 登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)，show hotdb rules;和show hotdb functions;可以看到与之分片函数关联的分片规则：
 
@@ -5230,7 +5230,7 @@ Query OK, 0 rows affected (0.13 sec)
 
 创建垂直分片表语法：
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY vertical on datanode 'datanodeid'(.....
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY vertical on datanode 'datanodeid'(.....
 
 语法说明：
 
@@ -5260,13 +5260,13 @@ ERROR 10090 (HY000): Can only specify one datanodes.
 
 创建全局表语法如下：
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY global on datanode 'datanodeid'(.....
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY global on datanode 'datanodeid'(.....
 
 语法说明：
 
 SHARD BY GLOBAL：是全局表关键字。
 
-\[ON DATANODE 'datanodeid'\]：是指定数据节点的语法。计算节点版本高于（包含）2.5.6时，不指定datanodeid则默认按逻辑库默认分片节点+逻辑库下所有表关联节点的并集建表；指定则必须包括全部数据节点，指定部分数据节点会报错。
+[ON DATANODE 'datanodeid']：是指定数据节点的语法。计算节点版本高于（包含）2.5.6时，不指定datanodeid则默认按逻辑库默认分片节点+逻辑库下所有表关联节点的并集建表；指定则必须包括全部数据节点，指定部分数据节点会报错。
 
 mysql> CREATE TABLE tb_quan shard by global(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,I char(20) null,j varchar(30),k blob,l text, m enum('','null','1','2','3'),n set('','null','1','2','3'));
 
@@ -5296,7 +5296,7 @@ ERROR 10090 (HY000): The specified datanodes must cover all datanodes of the log
 
 此命令用于查看配置库中hotdb_datanodes表，语法：
 
-mysql> show hotdb datanodes \[LIKE 'pattern' | WHERE expr\];
+mysql> show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 
 **命令包含参数及其说明：**
 
@@ -5427,7 +5427,7 @@ mysql> show hotdb functions where function_name like '%range%';
 
 此命令用于查看配置库中hotdb_function_info 表，语法：
 
-mysql> show hotdb function infos \[WHERE expr\];
+mysql> show hotdb function infos [WHERE expr];
 
 **命令包含参数及其说明：**
 
@@ -5497,7 +5497,7 @@ mysql> show hotdb function infos where function_id=38;
 
 此命令用于查看配置库中hotdb_rule 表，语法：
 
-mysql> show hotdb rules \[LIKE 'pattern' | WHERE expr\];
+mysql> show hotdb rules [LIKE 'pattern' | WHERE expr];
 
 **命令包含参数及其说明：**
 
@@ -5696,7 +5696,7 @@ INFORMATION_SCHEMA库提供当前计算节点的信息与数据，例如数据�
 
 ## 计算节点参数使用说明
 
-计算节点使用过程中，维护了许多系统配置参数，本文描述这些参数如何使用以及对功能带来什么影响。每个参数都有一个默认值，可以在服务启动时在server.xml配置文件中修改，也可以登录管理平台在参数配置页面进行修改。这些参数大多数可以在运行时使用动态加载（reload @\@config）操作动态更改，无需停止并重新启动服务。部分参数也可以使用set方式修改。
+计算节点使用过程中，维护了许多系统配置参数，本文描述这些参数如何使用以及对功能带来什么影响。每个参数都有一个默认值，可以在服务启动时在server.xml配置文件中修改，也可以登录管理平台在参数配置页面进行修改。这些参数大多数可以在运行时使用动态加载（reload @@config）操作动态更改，无需停止并重新启动服务。部分参数也可以使用set方式修改。
 
 #### adaptiveProcessor
 
@@ -5730,9 +5730,9 @@ adaptiveProcessor参数默认为true，即开启自动适配，包括[processor]
 
 <property name=[timerExecutor](#timerExecutor)>4</property><!--定时器线程数-->
 
-登录3325端口，执行show @\@threadpool;命令，查看当前processor、processorExecutor和timerExecutor值。例如：
+登录3325端口，执行show @@threadpool;命令，查看当前processor、processorExecutor和timerExecutor值。例如：
 
-mysql> show @\@threadpool;
+mysql> show @@threadpool;
 
 | name | pool_size | active_count | task_queue_size | completed_task | total_task |
 
@@ -5760,9 +5760,9 @@ mysql> show @\@threadpool;
 
 cat /proc/cpuinfo| grep "processor"| wc -l
 
-注意：计算节点在刚刚启动时并不会生成所有线程，而是用多少创建多少，因此执行show @\@threadpool;命令，可能会显示如下图：
+注意：计算节点在刚刚启动时并不会生成所有线程，而是用多少创建多少，因此执行show @@threadpool;命令，可能会显示如下图：
 
-mysql> show @\@threadpool;
+mysql> show @@threadpool;
 
 | name | pool_size | active_count | task_queue_size | completed_task | total_task |
 
@@ -5816,7 +5816,7 @@ Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
 当计算节点版本高于（包含）2.5.3.1时，若参数allowRCWithoutReadConsistentInXA设置成0，XA模式下允许使用保证事务读写一致性的READ COMMITTED隔离级别，其行为等同于MySQL（但须注意原SQL涉及跨库查询被拆分多条语句多次查询时，会不停读到最新事务，故该模式下需尽量使用单库查询） ；若参数allowRCWithoutReadConsistentInXA设置成1，也允许XA模式下使用READ COMMITTED隔离级别，但是不能保证事务读写一致性，隔离级别实质介于READ COMMITED和READ UNCOMMITED之间，其性能优于设置成0的情况，且启动和同步加载时时会有日志提示，如下：
 
-2020-03-12 15:36:03.719 \[WARN\]\[INIT\]\[main\] cn.hotpu.hotdb.a(519) -- Note that the READ COMMITTED isolation level in XA mode is essentially between READ COMMITTED and READ UNCOMMITTED at this time, which does not guarantee strong consistency of reading and writing.
+2020-03-12 15:36:03.719 [WARN][INIT][main] cn.hotpu.hotdb.a(519) -- Note that the READ COMMITTED isolation level in XA mode is essentially between READ COMMITTED and READ UNCOMMITTED at this time, which does not guarantee strong consistency of reading and writing.
 
 #### autoIncrement
 
@@ -5928,7 +5928,7 @@ bakUrl和bakUsername以及bakPassword属于配套参数，用于配置库高可�
 
 <property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
 
-当配置库因主库故障发生切换后，主库恢复正常且检测过数据主从一致，此时可恢复主备配置库重新到可切换状态，需要将配置库里的houdb_config_info表里k字段为hotdb_master_config_status这一行的v值从0更新为1，并在管理端执行reload @\@config，才会重新使用主配置库（使用管理平台启用主配置库的操作方法请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》）。
+当配置库因主库故障发生切换后，主库恢复正常且检测过数据主从一致，此时可恢复主备配置库重新到可切换状态，需要将配置库里的houdb_config_info表里k字段为hotdb_master_config_status这一行的v值从0更新为1，并在管理端执行reload @@config，才会重新使用主配置库（使用管理平台启用主配置库的操作方法请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》）。
 
 mysql> select * from hotdb_config_info\\G
 
@@ -5964,7 +5964,7 @@ description: NULL
 
 后端连接超过此参数配置的时长没有被使用过，计算节点从连接池获取连接时会先校验该连接的连通性，保证获取到的连接可用。
 
-mysql> show @\@session;
+mysql> show @@session;
 
 | id | running | trx_started | trx_time | trx_query | bk_count | bk_dnid | bk_dsid | bk_id | bk_mysqlid | bk_state | bk_closed | bk_autocommit | bk_host | bk_port | bk_db | bk_query | bk_last_read_time | **bk_last_write_time** |
 
@@ -6530,7 +6530,7 @@ begin;select * from A.a;select * from B.b;
 
 用于设置数据节点空闲检查的定时任务的时间。计算节点会定时检查后端存储节点连接情况，关闭多余的空闲连接或者补足连接池的可用连接，保持连接不被MySQL关闭，维护连接池的正常运作。
 
-例如：在3323服务端口进行大并发的插入操作，在3325管理端口执行Show @\@backend监控后端连接数量，大并发操作执行完毕以后，当计算节点检测到数据节点有超过配置数量的处于空闲的后端连接，计算节点会去清理掉这些连接。
+例如：在3323服务端口进行大并发的插入操作，在3325管理端口执行Show @@backend监控后端连接数量，大并发操作执行完毕以后，当计算节点检测到数据节点有超过配置数量的处于空闲的后端连接，计算节点会去清理掉这些连接。
 
 #### deadlockCheckPeriod
 
@@ -6586,7 +6586,7 @@ server.xml中defaultMaxLimit参数配置 如下配置：
 
 体现在show processlist中State为Flow control，等待下一批执行。下图为方便测试，设置defaultMaxLimit=5，highCostSqlConcurrency=10，采用20并发执行跨库update limit n场景，可见10个连接在执行，另外的10个连接已经被限制。
 
-ztm\@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45> show processlist;
+ztm@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45> show processlist;
 
 | Id | User | Host | db | Command | Time | State | Info |
 
@@ -6786,9 +6786,9 @@ server.xml的enableCursor参数：
 
 **参数作用：**
 
-在2.4.8版本以后默认开启，开启后将智能控制后端流量，可以控制存储节点的压力，使存储节点在最佳状态下运行。通过管理端show @\@datasource查看流控状态flow_control。
+在2.4.8版本以后默认开启，开启后将智能控制后端流量，可以控制存储节点的压力，使存储节点在最佳状态下运行。通过管理端show @@datasource查看流控状态flow_control。
 
-mysql> show @\@datasource;
+mysql> show @@datasource;
 
 | dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | **flow_control** | idc_id | listener_id | listener_status |
 
@@ -6864,7 +6864,7 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 
 心跳超时时间：心跳开启的情况下，出现存储节点故障或心跳操作执行过慢超出阈值，会有日志heartbeat time out输出:
 
-2018-05-29 16:32:52.924 \[WARN\] \[HEARTBEAT\] \[HeartbeatTimer\] a(-1) -- Datasource:-1 128.0.0.1:3306/hotdb_config time out! Last packet sent at:2018-05-29 04:32:49:886...省略...
+2018-05-29 16:32:52.924 [WARN] [HEARTBEAT] [HeartbeatTimer] a(-1) -- Datasource:-1 128.0.0.1:3306/hotdb_config time out! Last packet sent at:2018-05-29 04:32:49:886...省略...
 
 注：若当前存储节点为数据节点最后一个存储节点，存储节点不会置为不可用。且会尝试一直连接；若为纯备存储节点，即使心跳失败次数已经超过阈值，只要心跳检测时能够连接存储节点成功就不标记为不可用。
 
@@ -6896,9 +6896,9 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 
 延迟检测依赖于心跳表。启用主从延迟检测，检测从库是否存在复制延迟，是否同步追上复制。此参数在存储节点/配置库切换时、计算节点启动时具有一定影响作用，例如，在存储节点故障切换之前要进行主从延迟校验（前提是需要配置故障切换规则，若没有配置切换规则，则不会进行主备存储节点之间的切换以及主从延迟校验），请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》。
 
-登录管理端口，使用show @\@latency; 可以查看主从延迟时间。
+登录管理端口，使用show @@latency; 可以查看主从延迟时间。
 
-mysql> show @\@latency;
+mysql> show @@latency;
 
 | dn | info | backup_info | latency |
 
@@ -6936,7 +6936,7 @@ mysql> show @\@latency;
 
 HotDB Listener是计算节点一个可拔插组件，开启后可解决集群强一致模式下的性能线性扩展问题。要使用Listener需满足：计算节点是多节点集群模式并开启XA、在存储节点服务器上成功部署Listener并启用enableListener参数。执行动态加载，在计算节点管理端执行以下命令可通过listener_status一列查看是否识别成功以及Listener的实时状态。
 
-MySQL \[(none)\]> show @\@datasource;
+MySQL [(none)]> show @@datasource;
 
 | dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
 
@@ -7006,7 +7006,7 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 
 设置为true时，Oracle函数解析识别支持改写，执行成功。示例：
 
-> root\@192.168.210.202:cc 5.7.23 05:09:07> select to_char(sysdate,'yyyy-MM-dd H
+> root@192.168.210.202:cc 5.7.23 05:09:07> select to_char(sysdate,'yyyy-MM-dd H
 >
 > H24:mi:ss') from dual;
 >
@@ -7024,7 +7024,7 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 
 设置为false时，对于MySQL不支持的函数报不支持或函数不存在
 
-> root\@192.168.210.225:cc 5.7.23 05:09:11> select to_char(sysdate,'yyyy-MM-dd H
+> root@192.168.210.225:cc 5.7.23 05:09:11> select to_char(sysdate,'yyyy-MM-dd H
 >
 > H24:mi:ss') from dual;
 >
@@ -7034,7 +7034,7 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 
 设置为true时，sequence相关能执行成功。示例：
 
-> root\@192.168.210.202:cc 5.7.23 11:30:09> create sequence sequence_test
+> root@192.168.210.202:cc 5.7.23 11:30:09> create sequence sequence_test
 >
 > -> minvalue 1
 >
@@ -7048,7 +7048,7 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 
 设置为false时，当前是提示语法错误：
 
-> root\@192.168.210.225:cc 5.7.23 11:43:11> create sequence sequence_256
+> root@192.168.210.225:cc 5.7.23 11:43:11> create sequence sequence_256
 >
 > -> minvalue 1
 >
@@ -7182,49 +7182,49 @@ mysql> select * from test3 where id in (select id from test31);
 
 root> cat hotdb.log|grep 'watchdog'
 
-2018-06-01 18:26:50.983 \[WARN\] \[WATCHDOG\] \[\$NIOREACTOR-7-RW\] watchdogTableCheckHandler(78) - Table TABLEB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection \[node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false\]. You may need to contact HotDB administrator to get help.
+2018-06-01 18:26:50.983 [WARN] [WATCHDOG] [\$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TABLEB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
 
-2018-06-01 18:26:50.986 \[WARN\] \[WATCHDOG\] \[\$NIOREACTOR-7-RW\] watchdogTableCheckHandler(78) - Table TESTB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection \[node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false\]. You may need to contact HotDB administrator to get help.
+2018-06-01 18:26:50.986 [WARN] [WATCHDOG] [\$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TESTB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
 
-2018-06-01 18:26:50.988 \[WARN\] \[WATCHDOG\] \[\$NIOREACTOR-7-RW\] watchdogTableCheckHandler(78) - Table JOIN_DN02 not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection \[node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false\]. You may need to contact HotDB administrator to get help.
+2018-06-01 18:26:50.988 [WARN] [WATCHDOG] [\$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table JOIN_DN02 not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
 
 ...省略更多...
 
 可以通过日志查看表结构与内存中不一致检测信息：
 
-2018-10-3118:46:44.834 \[WARN\] \[WATCHDOG\] \[\$NIOREACTOR-0-RW\] WatchdogTableCheckHandler(85) - Table CCC is inconsistent in watchdog table structure check between HotDB memory and MySQL: MySQLConnection \[node=20, id=299, threadId=3748, state=running, closed=false, autocommit=true, host=192.168.210.41. port=3310, database=rmb0l, localPort=58808, isClose:false, toBeClose:false\]. You may need to contact HOtDB administrator to get help.
+2018-10-3118:46:44.834 [WARN] [WATCHDOG] [\$NIOREACTOR-0-RW] WatchdogTableCheckHandler(85) - Table CCC is inconsistent in watchdog table structure check between HotDB memory and MySQL: MySQLConnection [node=20, id=299, threadId=3748, state=running, closed=false, autocommit=true, host=192.168.210.41. port=3310, database=rmb0l, localPort=58808, isClose:false, toBeClose:false]. You may need to contact HOtDB administrator to get help.
 
 可以通过日志查看配置库与内存中不一致检测信息：
 
-2018-10-31 17:45:39.617 \[INFO\] \[WATCHDOG\] \[Watchdog\] WatchDog(500) -- HotDB user config is inconsistent between config database and HotDB memory, Logic tables are not the same in FUN_RMB. you may need to reload HotDB config to bring into effect.
+2018-10-31 17:45:39.617 [INFO] [WATCHDOG] [Watchdog] WatchDog(500) -- HotDB user config is inconsistent between config database and HotDB memory, Logic tables are not the same in FUN_RMB. you may need to reload HotDB config to bring into effect.
 
 可以通过日志查看超过24小时未提交的事务检测信息：
 
-2018-10-26 16:14:55.787 \[INFO\] \[WATCHDOG\] \[\$NIOREACTOR-0-RW\] WatchDogLongTransactionCheckHandler(123) - Session \[thread=Thread-5,id=1720,user=rmb,host=192.168.200.3,port=3323,localport=54330,schema=FUNTEST_RMB\] has not been queryed for 839s. executed IUD5:\[INSERT INTO rmb_cbc VALUES (tuanjian, 4000)\]. binded connection:\[MySQLConnection \[node=11, id=1330, threadld=18085, state=borrowed, closed=false, autocommit=false, host=192.168.210.42, port=3307, database=db251, localPort=15722, isCiose:false, toBeClose:false\] lastSQL:INSERT INTO rmb_cbc VALUES (tuanjian, 4000)\]. innodb_trx:\[(ds:11 trx_id:25765462 trx_state:RUNNING trx_started:2018-10-26 16:00:56 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:2 trx_mysql._thread_id:18085 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:1 trx_lock_memory_bytes:1136 trx_rows_locked:0 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )\]. we will close this session now.
+2018-10-26 16:14:55.787 [INFO] [WATCHDOG] [\$NIOREACTOR-0-RW] WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-5,id=1720,user=rmb,host=192.168.200.3,port=3323,localport=54330,schema=FUNTEST_RMB] has not been queryed for 839s. executed IUD5:[INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. binded connection:[MySQLConnection [node=11, id=1330, threadld=18085, state=borrowed, closed=false, autocommit=false, host=192.168.210.42, port=3307, database=db251, localPort=15722, isCiose:false, toBeClose:false] lastSQL:INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. innodb_trx:[(ds:11 trx_id:25765462 trx_state:RUNNING trx_started:2018-10-26 16:00:56 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:2 trx_mysql._thread_id:18085 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:1 trx_lock_memory_bytes:1136 trx_rows_locked:0 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now.
 
 可以通过日志查看存储节点切换检测信息：
 
-2018-10-26 19:29:01.146 \[INFO\] \[MANAGER\] \[Labor-478\] HotdbConfig(2164) - reload config successfully for connection:\[thread=Labor-478,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440.schema=null\]
+2018-10-26 19:29:01.146 [INFO] [MANAGER] [Labor-478] HotdbConfig(2164) - reload config successfully for connection:[thread=Labor-478,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440.schema=null]
 
-2018-10-26 19:30:24.384 \[INFO\] \[FAILOVER\] \[\$NlOExecutor-7-2\] SwitchDataSource(111) - received switch datasource 24 command from Manager: \[thread=\$NIOExecutor-7-2,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440,schema=null\]
+2018-10-26 19:30:24.384 [INFO] [FAILOVER] [\$NlOExecutor-7-2] SwitchDataSource(111) - received switch datasource 24 command from Manager: [thread=\$NIOExecutor-7-2,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440,schema=null]
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-484\] InitSequenceHandler(270) - FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-484] InitSequenceHandler(270) - FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-474\] InitSequenceHandler(270) - FUN_RMB.CBC's sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-474] InitSequenceHandler(270) - FUN_RMB.CBC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-484\] InitSequenceHandler(270) • FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-484] InitSequenceHandler(270) • FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-474\] InitSequenceHandler(270) - FUN_RMB.CBC's sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-474] InitSequenceHandler(270) - FUN_RMB.CBC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.407 \[INFO\] \[FAILOVER\] \[Labor-464\] CheckSlaveHandler(852) - DN:20(dn_rmb_01) switch datasource 24(192.168.210.41_3310_rmbol)->25(192.168.210.42_3310_rmb0l). current slave status:Slave_IO_State:Waiting for master to send event Master_Host:192.168.210.41 Master_User:hotdb_datasource Master_Port:3310 Connect_Retry:60 Master_Log_File:mysql-bin.000002 Read_Master_Log_Pos:3871570 Relay_Log_File:mysql-relay-bin.000006 Relay_Log_Pos:3871783 Relay_Master_Log_File:mysql-bin.000002 Slave_IO_Running:Yes Slave_SQL_Running:Yes Replicate_Do_DB: Replicate_Ignore_DB: Replicate_Do_Table: Replicate_Ignore_Table: Replicate_Wild_Do_Table: Replicate_Wild_Ignore_Table: Last_Errno:0 Last_Error: Skip_Counter:0 Exec_Master_Log_Pos:3871570 Relay_Log_Space:5058376 Until_Condition:None Until_Log_File: Until_Log_Pos:0 Master_SSL_Allowed:No Master_SSL_CA_File: Master_SSL_CA_Path: Master_SSL_Cert: Master_SSL_Cipher: Master_SSL_Key: Seconds_Behind_Master:0 Master_SSL_Verify_Server_Cert:No Last_IO_Errno:0 Last_IO_Error: Last_SQL_Errno:0 Last_SQL_Error: Replicate_Ignore_Server_Ids: Master_Server_Id:210413310 Master_UUID:919cbf03-9f2d-11e8-b8af-525400636cd2 Master_Info_File:mysql.slave_master_info SQL_Delay:0 SQL_Remaining_Delay:NULL Slave_SQL_Running_State:Slave has read all relay log; waiting for more updates Master_Retry_Count:86400 Master_Bind: Last_IO_Error_Timestamp: Last_SQL_Error_Timestamp: Master_SSL_Crl: Master_SSL_Crlpath: Retrieved_Gtid_Set:919cbf03-9f2d-11e8-b8af-525400636cd2:22735-1367727 Executed_Gtid_Set:1aef7172-9f2e-11e8-b62c-525400fcfb5b: 1-3281,919cbf03-9f2d-11e8-b8af-525400636cd2:1-1367727 Auto_Position:1 Replicate_Rewrite_DB: Channel_Name: Master_TLS_Version:
+2018-10-26 19:30:24.407 [INFO] [FAILOVER] [Labor-464] CheckSlaveHandler(852) - DN:20(dn_rmb_01) switch datasource 24(192.168.210.41_3310_rmbol)->25(192.168.210.42_3310_rmb0l). current slave status:Slave_IO_State:Waiting for master to send event Master_Host:192.168.210.41 Master_User:hotdb_datasource Master_Port:3310 Connect_Retry:60 Master_Log_File:mysql-bin.000002 Read_Master_Log_Pos:3871570 Relay_Log_File:mysql-relay-bin.000006 Relay_Log_Pos:3871783 Relay_Master_Log_File:mysql-bin.000002 Slave_IO_Running:Yes Slave_SQL_Running:Yes Replicate_Do_DB: Replicate_Ignore_DB: Replicate_Do_Table: Replicate_Ignore_Table: Replicate_Wild_Do_Table: Replicate_Wild_Ignore_Table: Last_Errno:0 Last_Error: Skip_Counter:0 Exec_Master_Log_Pos:3871570 Relay_Log_Space:5058376 Until_Condition:None Until_Log_File: Until_Log_Pos:0 Master_SSL_Allowed:No Master_SSL_CA_File: Master_SSL_CA_Path: Master_SSL_Cert: Master_SSL_Cipher: Master_SSL_Key: Seconds_Behind_Master:0 Master_SSL_Verify_Server_Cert:No Last_IO_Errno:0 Last_IO_Error: Last_SQL_Errno:0 Last_SQL_Error: Replicate_Ignore_Server_Ids: Master_Server_Id:210413310 Master_UUID:919cbf03-9f2d-11e8-b8af-525400636cd2 Master_Info_File:mysql.slave_master_info SQL_Delay:0 SQL_Remaining_Delay:NULL Slave_SQL_Running_State:Slave has read all relay log; waiting for more updates Master_Retry_Count:86400 Master_Bind: Last_IO_Error_Timestamp: Last_SQL_Error_Timestamp: Master_SSL_Crl: Master_SSL_Crlpath: Retrieved_Gtid_Set:919cbf03-9f2d-11e8-b8af-525400636cd2:22735-1367727 Executed_Gtid_Set:1aef7172-9f2e-11e8-b62c-525400fcfb5b: 1-3281,919cbf03-9f2d-11e8-b8af-525400636cd2:1-1367727 Auto_Position:1 Replicate_Rewrite_DB: Channel_Name: Master_TLS_Version:
 
-2018-10-26 19:30:24.407 \[WARN\] \[FAILOVER\] \[Labor-484\] BackendDataNode(726) - datanode 20 switch datasource 24 to 25 in failover. due to: Manual Switch by User: root
+2018-10-26 19:30:24.407 [WARN] [FAILOVER] [Labor-484] BackendDataNode(726) - datanode 20 switch datasource 24 to 25 in failover. due to: Manual Switch by User: root
 
-2018-10-26 19:30:24.408 \[INFO\] \[FAILOVER\] \[Labor-484\] BackendDataNode(762) - datasource:\[id:24,nodeld:20 192.168.210.41:3310/rmb0l status:1,charset:utf8mb4\] will be set to unavailable due to datanode switch datasource.
+2018-10-26 19:30:24.408 [INFO] [FAILOVER] [Labor-484] BackendDataNode(762) - datasource:[id:24,nodeld:20 192.168.210.41:3310/rmb0l status:1,charset:utf8mb4] will be set to unavailable due to datanode switch datasource.
 
-2018-10-26 19:30:24.410 \[INFO\] \[FAILOVER\] \[Thread-55\] BackendDataNode(834) - starting updating datasource_status in failover of datanode:20
+2018-10-26 19:30:24.410 [INFO] [FAILOVER] [Thread-55] BackendDataNode(834) - starting updating datasource_status in failover of datanode:20
 
-2018-10-26 19:30:24.415 \[INFO\] \[FAILOVER\] \[Labor-484\] SwitchDataSource(94) - switch datasource:24 for datanode:20 successfully by Manager.
+2018-10-26 19:30:24.415 [INFO] [FAILOVER] [Labor-484] SwitchDataSource(94) - switch datasource:24 for datanode:20 successfully by Manager.
 
 #### enableXA
 
@@ -7392,7 +7392,7 @@ mysql> select * from ss where id=1;
 
 前端连接写阻塞超时时，会关闭前端连接，然后输出对应的日志提示" closed, due to write block timeout"，如下：
 
-2018-06-14 13:46:48.355 \[INFO\] \[\] \[TimerExecutor1\] FrontendConnection(695) -- \[thread=TimerExecutori,id=9,user=cara,host=192.168.200.82,port=8883,localport=61893,schema=TEST_LGG\] closed, due to write block timeout, executing SQL: select * from customer_auto_1
+2018-06-14 13:46:48.355 [INFO] [] [TimerExecutor1] FrontendConnection(695) -- [thread=TimerExecutori,id=9,user=cara,host=192.168.200.82,port=8883,localport=61893,schema=TEST_LGG] closed, due to write block timeout, executing SQL: select * from customer_auto_1
 
 #### generatePrefetchCostRatio
 
@@ -7556,7 +7556,7 @@ Show processlist中的flow control为lock状态，等待下一批执行。
 
 ...省略更多...
 
-mysql> show @\@debug;
+mysql> show @@debug;
 
 | join_limit | committing |
 
@@ -7920,11 +7920,11 @@ session B执行：等待超过lockWaitTimeout设置参数值，则给出如下�
 
 启动时，主存储节点在首次初始化失败后，会一直重连；若存在备存储节点且超过主存储节点初始化超时时间，则会切换到可用的备存储节点，若该节点所有存储节点都初始化失败，则整个节点不可用。如果数据节点初始化失败且无可用逻辑库，或数据节点下无存储节点，则计算节点无法启动。
 
-2018-05-28 18:07:29.719 \[WARN\] \[INIT\] \[main\] r(-1) -- failed in connecting datasource:\[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8\], exception:...省略...
+2018-05-28 18:07:29.719 [WARN] [INIT] [main] r(-1) -- failed in connecting datasource:[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8], exception:...省略...
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the sever.
 
-2018-05-28 18:07:31.719 \[INFO\] \[INIT\] \[main\] b(-1) -- try reinit datasource:\[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8\]
+2018-05-28 18:07:31.719 [INFO] [INIT] [main] b(-1) -- try reinit datasource:[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8]
 
 引起存储节点超时的原因有：超出系统或者数据库连接限制、存储节点用户密码认证失败、网络延迟过大等。
 
@@ -8044,13 +8044,13 @@ mysql> show variables like '%max_user_connections%;
 
 <property name=[maxIdleTransactionTimeout](#maxIdleTransactionTimeout)>864000000</property>
 
-maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示事务内最后一次SQL完成后超过24小时未提交事务，则判定为超时事务，HotDB在hotdb.log中以\[INFO\] \[WATCHDOG\] WatchDogLongTransactionCheckHandler标签记录连接IP、端口、用户名、逻辑库、lastsql、是否autocommit、后端连接的innodb_trx等信息，并关闭连接，自动回滚事务。
+maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示事务内最后一次SQL完成后超过24小时未提交事务，则判定为超时事务，HotDB在hotdb.log中以[INFO] [WATCHDOG] WatchDogLongTransactionCheckHandler标签记录连接IP、端口、用户名、逻辑库、lastsql、是否autocommit、后端连接的innodb_trx等信息，并关闭连接，自动回滚事务。
 
 参数仅在enableWatchdog=true时生效。Watchdog中maxIdleTransactionTimeout每10分钟检测一次，在Watchdog对maxIdleTransactionTimeout的检测中判断连接的事务空闲时间，如果超出设定的阈值，则关闭连接；故实际的事务空闲时间不等于设定的阈值。
 
 例如，事务空闲时间超出设定的阈值，将关闭连接，此时查看日志：
 
-2019-07-01 18:09:24.528 \[INFO\] \[WATCHDOG\] \[\$NIOREACTOR-20-RW\] cn.hotpu.hotdb.mysql.nio.handler.WatchDogLongTransactionCheckHandler(123) - Session \[thread=Thread-13,id=1,user=ztm,host=127.0.0.1,port=3323,localport=46138,schema=PM\] has not been queryed for 593s. executed IUDs:\[UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1\]. binded connection:\[MySQLConnection \[node=2, id=59, threadId=14921, state=borrowed, closed=false, autocommit=false, host=10.10.0.202, port=3307, database=db_test251, localPort=52736, isClose:false, toBeClose:false\] lastSQL:SET autocommit=0;UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1\]. innodb_trx:\[(ds:2 trx_id:3435056156 trx_state:RUNNING trx_started:2019-07-01 17:59:33 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:3 trx_mysql_thread_id:14921 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:2 trx_lock_memory_bytes:1136 trx_rows_locked:1 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )\]. we will close this session now.
+2019-07-01 18:09:24.528 [INFO] [WATCHDOG] [\$NIOREACTOR-20-RW] cn.hotpu.hotdb.mysql.nio.handler.WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-13,id=1,user=ztm,host=127.0.0.1,port=3323,localport=46138,schema=PM] has not been queryed for 593s. executed IUDs:[UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. binded connection:[MySQLConnection [node=2, id=59, threadId=14921, state=borrowed, closed=false, autocommit=false, host=10.10.0.202, port=3307, database=db_test251, localPort=52736, isClose:false, toBeClose:false] lastSQL:SET autocommit=0;UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. innodb_trx:[(ds:2 trx_id:3435056156 trx_state:RUNNING trx_started:2019-07-01 17:59:33 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:3 trx_mysql_thread_id:14921 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:2 trx_lock_memory_bytes:1136 trx_rows_locked:1 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now.
 
 参数设置为0时，代表永不超时，即对事务提交时间不做限制。
 
@@ -8208,13 +8208,13 @@ mysql> select * from customer_route_2 a where a.postcode not in (select postcode
 
 ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml
 
-日志中会以\[INFO\] \[SQL\]标签记录对应信息
+日志中会以[INFO] [SQL]标签记录对应信息
 
-2019-10-08 14:33:41.725 \[INFO\] \[SQL\] \[\$NIOExecutor-3-2\] cn.hotpu.hotdb.j.h(2626) - unsupported subquery:\[thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM\] AutoCommitTransactionSession in \[thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM\], sql:select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20), error code:1104, error msg:The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml
+2019-10-08 14:33:41.725 [INFO] [SQL] [\$NIOExecutor-3-2] cn.hotpu.hotdb.j.h(2626) - unsupported subquery:[thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM] AutoCommitTransactionSession in [thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM], sql:select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20), error code:1104, error msg:The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml
 
-同时，在日志和3325端口show @\@systemconfig能够查看配置的值，该参数在修改后可reload生效。
+同时，在日志和3325端口show @@systemconfig能够查看配置的值，该参数在修改后可reload生效。
 
-mysql> show @\@systemconfig;
+mysql> show @@systemconfig;
 
 config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql):"false",[defaultMaxLimit](#defaultMaxLimit):"10000","bakPassword":"hotdb_config","bakUrl":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha","managerPort":"3325","heartbeatPeriod":"2",[cryptMandatory](#cryptMandatory):"false","password":"hotdb_config",[enableCursor](#enableCursor):"false","username":"hotdb_config",[enableXA](#enableXA):"false",[errorsPermittedInTransaction](#errorsPermittedInTransaction):"true",[strategyForRWSplit](#strategyForRWSplit):"0",[enableWatchdog](#enableWatchdog):"false","haNodeHost":"192.168.220.139:3325",[maxJoinSize](#maxJoinSize):"9148M",[maxNotInSubquery](#maxNotInSubquery):"10",[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit):"0",[clientFoundRows](#clientFoundRows):"false",[joinCacheSize](#joinCacheSize):"236","enableHeartbeat":"true","url":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha",[parkPeriod](#parkPeriod):"100000",[maxSqlRecordLength](#maxSqlRecordLength):"4000",[joinBatchSize](#joinBatchSize):"46000",[enableSubquery](#enableSubquery):"true","heartbeatTimeoutMs":"500",[pingPeriod](#pingPeriod):"300",[joinLoopSize](#joinLoopSize):"18500","VIP":"192.168.220.171",[joinable](#joinable):"true","maxUserConnections":"4900",[pingLogCleanPeriod](#pingLogCleanPeriod):"1",[dataNodeIdleCheckPeriod](#dataNodeIdleCheckPeriod):"120",[deadlockCheckPeriod](#deadlockCheckPeriod):"3000",[sqlTimeout](#sqlTimeout):"3600","bakUsername":"hotdb_config","enableLatencyCheck":"true",[waitSyncFinishAtStartup](#waitSyncFinishAtStartup):"true","checkVIPPeriod":"500",[statisticsUpdatePeriod](#statisticsUpdatePeriod):"0",[usingAIO](#usingAIO):"0",[showAllAffectedRowsInGlobalTable](#showAllAffectedRowsInGlobalTable):"false",[maxLatencyForRWSplit](#maxLatencyForRWSplit):"1000","maxConnections":"5000",[enableSleep](#enableSleep):"false",[waitForSlaveInFailover](#waitForSlaveInFailover):"true",[autoIncrement](#autoIncrement):"true",[processorExecutor](#processorExecutor):"4",[highCostSqlConcurrency](#highCostSqlConcurrency):"400","latencyCheckPeriod":"500","processors":"16",[weightForSlaveRWSplit](#weightForSlaveRWSplit):"50","haState":"master",[readOnly](#readOnly):"false",[timerExecutor](#timerExecutor):"4","serverPort":"3323",[frontWriteBlockTimeout](#frontWriteBlockTimeout):"10000",[switchoverTimeoutForTrans](#switchoverTimeoutForTrans):"3000"}
 
@@ -8452,7 +8452,7 @@ recordSqlAuditlog
 
 在正常模式下，计算节点按照server.xml文件的参数配置进行启动，不受operateMode参数影响。
 
-当设置计算节点工作模式为性能最大化模式时，即修改server.xml文件，添加operateMode=1配置参数，然后在3325端口执行reload @\@config使之生效，此时计算节点会在hotdb.log中输出相应的信息，如下所示：
+当设置计算节点工作模式为性能最大化模式时，即修改server.xml文件，添加operateMode=1配置参数，然后在3325端口执行reload @@config使之生效，此时计算节点会在hotdb.log中输出相应的信息，如下所示：
 
 ![](assets/standard/image148.png)
 
@@ -8590,9 +8590,9 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数作用：**
 
-自增长序列号预取批次大小的初始值，如果设置初始值为100，则预取默认区间的范围差值为100，例如若预取从123开始，则预取区间为\[123，223\]。
+自增长序列号预取批次大小的初始值，如果设置初始值为100，则预取默认区间的范围差值为100，例如若预取从123开始，则预取区间为[123，223]。
 
-初始值可配置范围在实际配置的自增长批次大小上下限（[prefetchBatchMax](#prefetchbatchmax)和[prefetchBatchMin](#prefetchbatchmin)）的范围内，默认范围为\[10,10000\]。
+初始值可配置范围在实际配置的自增长批次大小上下限（[prefetchBatchMax](#prefetchbatchmax)和[prefetchBatchMin](#prefetchbatchmin)）的范围内，默认范围为[10,10000]。
 
 #### prefetchBatchMax
 
@@ -8616,7 +8616,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数作用：**
 
-自增长序列号预取批次大小的上限，如果设置成1000，每次预取区间范围差值的最大值为1000，例如若预取从123开始，则预取区间中最大值不超过1123，即范围不超过\[123，1123\]。
+自增长序列号预取批次大小的上限，如果设置成1000，每次预取区间范围差值的最大值为1000，例如若预取从123开始，则预取区间中最大值不超过1123，即范围不超过[123，1123]。
 
 #### prefetchBatchMin
 
@@ -8640,7 +8640,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数作用：**
 
-自增长序列号预取批次大小的下限，如果设置了100，每次预取区间范围差值的最小值为100，例如若预取从123开始，则预取区间中最大值不小于223，即下一批的预取批次至少从223开始预取，下一个预取批次\[>=223，223+预取批次大小\]。
+自增长序列号预取批次大小的下限，如果设置了100，每次预取区间范围差值的最小值为100，例如若预取从123开始，则预取区间中最大值不小于223，即下一批的预取批次至少从223开始预取，下一个预取批次[>=223，223+预取批次大小]。
 
 #### prefetchValidTimeout
 
@@ -8690,7 +8690,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 此参数用于设置计算节点内部线程池里的每处理器线程各自的执行线程数。参数[adaptiveProcessor](#adaptiveprocessor)默认开启，开启时将由计算节点自动适配最大processorExecutor数。
 
-登录3325端口，执行show @\@threadpool;命令，可查看当前processorExecutor数。
+登录3325端口，执行show @@threadpool;命令，可查看当前processorExecutor数。
 
 #### Processors
 
@@ -8716,7 +8716,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 此参数用于设置计算节点内部线程池里的处理器线程数。参数[adaptiveProcessor](#adaptiveprocessor)默认开启，开启时将由计算节点自动适配processor数。
 
-登录3325端口，执行show @\@threadpool;命令，可查看当前processor数。
+登录3325端口，执行show @@threadpool;命令，可查看当前processor数。
 
 #### readOnly
 
@@ -8738,7 +8738,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数作用：**
 
-用于设置当前计算节点为只读模式，在readonly模式下，计算节点只接收DQL（SELECT语句）操作，及SET命令行和SHOW类型操作，拒绝执行DDL（CREATE TABLE/VIEW/INDEX/SYN/CLUSTER语句）、DML（INSERT，UPDATE，DELETE）和DCL（GRANT，ROLLBACK \[WORK\] TO \[SAVEPOINT\]，COMMIT）等修改性操作命令
+用于设置当前计算节点为只读模式，在readonly模式下，计算节点只接收DQL（SELECT语句）操作，及SET命令行和SHOW类型操作，拒绝执行DDL（CREATE TABLE/VIEW/INDEX/SYN/CLUSTER语句）、DML（INSERT，UPDATE，DELETE）和DCL（GRANT，ROLLBACK [WORK] TO [SAVEPOINT]，COMMIT）等修改性操作命令
 
 **注意事项：**该参数仍然是为单计算节点服务提供的，不允许多计算节点同时提供服务，也即不允许同时开启多个计算节点并同时对外进行服务。
 
@@ -8810,7 +8810,7 @@ mysql> SELECT * FROM account a JOIN borrower b;
 
 查看计算节点安装目录的/logs/sql.log日志。
 
-2018-05-22 16:17:11.607 \[INFO\] \[CROSSDNJOIN\] \[\$NIOExecutor-6-2\] JoinVisitor(4947) -- SELECT * FROM account a JOIN borrower b
+2018-05-22 16:17:11.607 [INFO] [CROSSDNJOIN] [\$NIOExecutor-6-2] JoinVisitor(4947) -- SELECT * FROM account a JOIN borrower b
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8842,9 +8842,9 @@ mysql> create table abc(id int);
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-23 14:23:52.697 \[INFO\] \[HOTDBWARNING\] \[\$NIOExecutor-6-2\] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique key}
+2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [\$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique key}
 
-2018-05-23 14:23:52.698 \[INFO\] \[DDL\] \[\$NIOExecutor-6-2\] ServerConnection(123) -- sql: create table abc(id int)
+2018-05-23 14:23:52.698 [INFO] [DDL] [\$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int)
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8876,7 +8876,7 @@ recordDeadLockSQL日志中记录引发死锁的语句：
 
 2. 查看计算节点安装目录的/logs/hotdb.log日志：
 
-2018-05-23 14:54:30.865 \[INFO\] \[DEADLOCK\] \[\$NIOREACTOR-1-RW\] am(-1) -- sql: INSERT INTO table2000 VALUES (3); error response from MySQLConnection \[node=4, id=277, threadId=133815, state=borrowed, close=false, autocommit=false, host=192.168.220.102, port=3309, database=db249, localPort=15332, isClose:false, toBeClose:false\], err: Lock wait timeout exceeded; try restarting transaction, code: 1205
+2018-05-23 14:54:30.865 [INFO] [DEADLOCK] [\$NIOREACTOR-1-RW] am(-1) -- sql: INSERT INTO table2000 VALUES (3); error response from MySQLConnection [node=4, id=277, threadId=133815, state=borrowed, close=false, autocommit=false, host=192.168.220.102, port=3309, database=db249, localPort=15332, isClose:false, toBeClose:false], err: Lock wait timeout exceeded; try restarting transaction, code: 1205
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8906,7 +8906,7 @@ recordHotDBErrors日志中记录计算节点返回的错误信息。
 
 例：使用没有create权限的用户执行create语句，提示如下：
 
-2018-06-04 10:43:07.316 \[INFO\] \[HOTDBERROR\] \[\$NIOExecutor-3-0\] ServerConnection(155) -- sql: create table a001(id int), err: \[CREATE\] command denied to user 'jzl' to logic database 'TEST_JZL'
+2018-06-04 10:43:07.316 [INFO] [HOTDBERROR] [\$NIOExecutor-3-0] ServerConnection(155) -- sql: create table a001(id int), err: [CREATE] command denied to user 'jzl' to logic database 'TEST_JZL'
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8938,9 +8938,9 @@ create table abc(id int);
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-23 14:23:52.697 \[INFO\] \[HOTDBWARNING\] \[\$NIOExecutor-6-2\] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique key}
+2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [\$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique key}
 
-2018-05-23 14:23:52.698 \[INFO\] \[DDL\] \[\$NIOExecutor-6-2\] ServerConnection(123) -- sql: create table abc(id int)
+2018-05-23 14:23:52.698 [INFO] [DDL] [\$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int)
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8974,9 +8974,9 @@ mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM 
 
 查看计算节点安装目录的/logs/sql.log日志
 
-2018-05-23 14:05:14.915 \[INFO\] \[LIMITOFFSETWITHOUTORDERBY\] \[\$NIOExecutor-6-l\] SubqueryExecutor(97) - sql: select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3
+2018-05-23 14:05:14.915 [INFO] [LIMITOFFSETWITHOUTORDERBY] [\$NIOExecutor-6-l] SubqueryExecutor(97) - sql: select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3
 
-2018-05-23 14:05:14.922 \[INFO\] \[LIMITOFFSETWITHOUTORDERBY\] \[\$NIOExecutor-2-3\] BaseSession(97) - sql: SELECT A.\`Balance\`, A.\`Branch_name\`, A.\`Account_number\`, A.\`account_date\` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776
+2018-05-23 14:05:14.922 [INFO] [LIMITOFFSETWITHOUTORDERBY] [\$NIOExecutor-2-3] BaseSession(97) - sql: SELECT A.\`Balance\`, A.\`Branch_name\`, A.\`Account_number\`, A.\`account_date\` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776
 
 F6f64'), NULL) LIMIT 1 , 3
 
@@ -9012,7 +9012,7 @@ msyql> select form;
 
 查看计算节点安装目录的/logs/hotdb.log日志：
 
-2018-05-23 14:38:55.843 \[INFO\] \[MYSQLERROR\] \[\$NIOREACTOR-7-RW\] MySQLConnection(56) -- sql: select form, error response from MySQLConnection \[node=4, id=223, threadId=118551, state=borrowed, close=false, autocommit=true, host=192.168.220.103, port=3309, database=db249, localPort=27007, isClose:false, toBeClose:false\], err: Unknown column 'form' in 'field list', code: 1054
+2018-05-23 14:38:55.843 [INFO] [MYSQLERROR] [\$NIOREACTOR-7-RW] MySQLConnection(56) -- sql: select form, error response from MySQLConnection [node=4, id=223, threadId=118551, state=borrowed, close=false, autocommit=true, host=192.168.220.103, port=3309, database=db249, localPort=27007, isClose:false, toBeClose:false], err: Unknown column 'form' in 'field list', code: 1054
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9042,17 +9042,17 @@ recordMySQLWarnings记录MySQL返回的警告信息。
 
 举例如下：
 
-mysql> update account set Account_number="\$!\\\''\#\#";
+mysql> update account set Account_number="\$!\\''\#\#";
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-06-12 10:52:07.011 \[INFO\] \[MYSQLWARNING\] |\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\\'\'\#\#', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column 'Account_number' at row 1, code: 1265
+2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\''\#\#', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
 
-2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] |\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\\'\'\#\#', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column 'Account_number' at row 2, code: 1265
+2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\''\#\#', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
 
-2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] |\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\\'\'\#\#', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column 'Account_number' at row 1, code: 1265
+2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\''\#\#', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
 
-2018-06-12 10:52:07.013 \[INFO\] \[MYSQLWARNING\] |\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\\'\'\#\#', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column 'Account_number' at row 2, code: 1265
+2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\''\#\#', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9254,7 +9254,7 @@ recordSQLIntercepted记录被拦截的SQL语句，拦截的语句配置在中间
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-06-01 14:17:45.669 \[INFO\] \[SQLINTERCEPTED\] \[\$NIOExecutor-1-2\] g(-1) -- sql: DELETE FROM sql_intercept_tab, user:zy, ip: 192.168.200.45, db: TEST_JZL, intercepted by filewall: not allowed to execute delete without where expression
+2018-06-01 14:17:45.669 [INFO] [SQLINTERCEPTED] [\$NIOExecutor-1-2] g(-1) -- sql: DELETE FROM sql_intercept_tab, user:zy, ip: 192.168.200.45, db: TEST_JZL, intercepted by filewall: not allowed to execute delete without where expression
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9298,7 +9298,7 @@ mysql> insert into vtab001 values(1,'aaa');
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-06-01 14:09:47.139 \[INFO\] \[SQLKEYCONFLICT\] \[\$NIOREACTOR-1-RW\] MySQLConnection(65) -- sql: insert into vtab001 values(1,'aaa'), error response from MySQLConnection \[node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false\], err: Duplicate entry '1' for key 'PRIMARY', CODE: 1062
+2018-06-01 14:09:47.139 [INFO] [SQLKEYCONFLICT] [\$NIOREACTOR-1-RW] MySQLConnection(65) -- sql: insert into vtab001 values(1,'aaa'), error response from MySQLConnection [node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false], err: Duplicate entry '1' for key 'PRIMARY', CODE: 1062
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9332,7 +9332,7 @@ mysql> SELECT * FROM;
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-22 16:12:42.686 \[INFO\] \[SQLSYNTAXERROR\] \[\$NIOExecutor-6-3\] ServerConnection(671) - SELECT * FROM
+2018-05-22 16:12:42.686 [INFO] [SQLSYNTAXERROR] [\$NIOExecutor-6-3] ServerConnection(671) - SELECT * FROM
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9368,7 +9368,7 @@ recordSQLUnsupported记录不支持的语句。
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-22 14:19:54.395 \[INFO\] \[SQLUNSUPPORTED\] \[\$NIOExecutor-6-2\] ServerConnection(110) -- sql: select * into vtab001_bak from vtab001
+2018-05-22 14:19:54.395 [INFO] [SQLUNSUPPORTED] [\$NIOExecutor-6-2] ServerConnection(110) -- sql: select * into vtab001_bak from vtab001
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9402,7 +9402,7 @@ mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM 
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-23 13:56:11.714 \[INFO\] \[SUBQUERY\] \[\$NIOExecutor-6-0\] SubqueryExecutor(169) -- select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b )
+2018-05-23 13:56:11.714 [INFO] [SUBQUERY] [\$NIOExecutor-6-0] SubqueryExecutor(169) -- select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b )
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9436,7 +9436,7 @@ mysql> SELECT * FROM trends UNION SELECT * from trends_uint;
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-23 13:30:27.156 \[INFO\] \[UNION\] \[\$NIOREACTOR-5-RW\] UnionExecutor(162) - SELECT * FROM trends UNION SELECT * from trends_uint
+2018-05-23 13:30:27.156 [INFO] [UNION] [\$NIOREACTOR-5-RW] UnionExecutor(162) - SELECT * FROM trends UNION SELECT * from trends_uint
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10005,7 +10005,7 @@ mysql> select * from TEST_001;
 
 **参数作用：**
 
-参数[adaptiveProcessor](#adaptiveprocessor)默认开启，开启时将由计算节点自动适配最大timerExecutor数。登录3325端口，执行show @\@threadpool;命令，可查看当前timerExecutor数。
+参数[adaptiveProcessor](#adaptiveprocessor)默认开启，开启时将由计算节点自动适配最大timerExecutor数。登录3325端口，执行show @@threadpool;命令，可查看当前timerExecutor数。
 
 #### timestampProxy
 
@@ -10093,7 +10093,7 @@ Query OK, 0 row affected (0.00 sec)
 
 root> mysql -uhotdb_config_9 -photdb_config_9 -h127.0.0.1 -P3306
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -10115,7 +10115,7 @@ Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
 The last packet set successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
 
-2018-06-12 15:25:56.789 \[ERROR\] \[INIT\] \[main\] HotdbConfig(275) -- no available config datasources. retry in 3 seconds.
+2018-06-12 15:25:56.789 [ERROR] [INIT] [main] HotdbConfig(275) -- no available config datasources. retry in 3 seconds.
 
 #### usingAIO
 
@@ -10145,9 +10145,9 @@ AIO：异步非阻塞，服务器实现模式为一个有效请求创建一个�
 
 root> tail -n 300 hotdb.log | grep 'aio'
 
-2018-06-01 13:51:18.961 \[INFO\] \[INIT\] \[main\] j(-1) -- using aio network handler
+2018-06-01 13:51:18.961 [INFO] [INIT] [main] j(-1) -- using aio network handler
 
-2018-06-01 13:52:19.644 \[INFO\] \[INIT\] \[main\] j(-1) -- using aio network handler
+2018-06-01 13:52:19.644 [INFO] [INIT] [main] j(-1) -- using aio network handler
 
 #### version
 
@@ -10158,7 +10158,7 @@ root> tail -n 300 hotdb.log | grep 'aio'
   参数值           version
   是否可见         隐藏
   参数说明         计算节点对外显示的版本号
-  默认值           与计算节点show @\@version 的结果同步，例如：5.6.29-HotDB-2.5.1。
+  默认值           与计算节点show @@version 的结果同步，例如：5.6.29-HotDB-2.5.1。
   Reload是否生效   是
   最低兼容版本     2.4.3
 ---------------- ------------------------------------------------------------------
@@ -10173,7 +10173,7 @@ root> tail -n 300 hotdb.log | grep 'aio'
 
 root> mysql -uct -pct -h127.0.0.1 -P2473
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -10191,7 +10191,7 @@ owners.
 
 Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
-root\@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
+root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
 | VERSION() |
 
@@ -10223,9 +10223,9 @@ root\@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
 配置为空：<property name=[versionComment](#versionComment)></property>，连接计算节点：
 
-\[root\@hotdb\]\## mysql -uroot -proot -P3323 -h192.168.210.49
+[root@hotdb]\## mysql -uroot -proot -P3323 -h192.168.210.49
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -10237,9 +10237,9 @@ Your MySQL connection id is 235
 
 配置为空格： <property name=[versionComment](#versionComment)> </property>，连接计算节点：
 
-\[root\@hotdb\]\## mysql -uroot -proot -P3323 -h192.168.210.49
+[root@hotdb]\## mysql -uroot -proot -P3323 -h192.168.210.49
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -10251,9 +10251,9 @@ Your MySQL connection id is 235
 
 配置为自定义字符串： <property name=[versionComment](#versionComment)>hotpu</property>，连接计算节点：
 
-\[root\@hotdb\]\## mysql -uroot -proot -P3323 -h192.168.210.49
+[root@hotdb]\## mysql -uroot -proot -P3323 -h192.168.210.49
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -10267,7 +10267,7 @@ Your MySQL connection id is 235
 
 ......
 
-root\@192.168.210.49:(none) 5.7.23 08:41:42> status;
+root@192.168.210.49:(none) 5.7.23 08:41:42> status;
 
 --------------
 
@@ -10277,7 +10277,7 @@ Connection id: 444
 
 Current database:
 
-Current user: root\@192.168.210.49
+Current user: root@192.168.210.49
 
 SSL: Not in use
 
@@ -10349,47 +10349,47 @@ virtual_ipaddress {
 
 主计算节点：
 
-2019-12-19 15:08:49.595 \[INFO\] \[EXIT\[ FLOW \]\] \[ShutdownHook\] cn.hotpu.hotdb.c(691) - begin to exit...
+2019-12-19 15:08:49.595 [INFO] [EXIT[ FLOW ]] [ShutdownHook] cn.hotpu.hotdb.c(691) - begin to exit...
 
-2019-12-19 15:08:49.596 \[WARN\] \[CONNECTION\] \[ShutdownHook\] cn.hotpu.hotdb.net.t(175) - HotDB SocketChannel close due to:System exit
+2019-12-19 15:08:49.596 [WARN] [CONNECTION] [ShutdownHook] cn.hotpu.hotdb.net.t(175) - HotDB SocketChannel close due to:System exit
 
-2019-12-19 15:08:49.597 \[WARN\] \[CONNECTION\] \[ShutdownHook\] cn.hotpu.hotdb.net.t(175) - HotDB SocketChannel close due to:System exit
+2019-12-19 15:08:49.597 [WARN] [CONNECTION] [ShutdownHook] cn.hotpu.hotdb.net.t(175) - HotDB SocketChannel close due to:System exit
 
-2019-12-19 15:08:49.598 \[WARN\] \[CONNECTION\] \[ShutdownHook\] cn.hotpu.hotdb.net.q(349) - processor close due to:System exit
+2019-12-19 15:08:49.598 [WARN] [CONNECTION] [ShutdownHook] cn.hotpu.hotdb.net.q(349) - processor close due to:System exit
 
-2019-12-19 15:08:49.598 \[WARN\] \[CONNECTION\] \[ShutdownHook\] cn.hotpu.hotdb.net.q(349) - processor close due to:System exit
+2019-12-19 15:08:49.598 [WARN] [CONNECTION] [ShutdownHook] cn.hotpu.hotdb.net.q(349) - processor close due to:System exit
 
-2019-12-19 15:08:49.599 \[WARN\] \[CONNECTION\] \[ShutdownHook\] cn.hotpu.hotdb.net.q(349) - processor close due to:System exit
+2019-12-19 15:08:49.599 [WARN] [CONNECTION] [ShutdownHook] cn.hotpu.hotdb.net.q(349) - processor close due to:System exit
 
 备计算节点：
 
-2019-12-19 15:09:02.911 \[INFO\] \[MANAGER\] \[Labor-2\] cn.hotpu.hotdb.c(2165) - MANAGER online end
+2019-12-19 15:09:02.911 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.c(2165) - MANAGER online end
 
-2019-12-19 15:09:02.911 \[INFO\] \[MANAGER\] \[Labor-2\] cn.hotpu.hotdb.c(2134) - VIP online start
+2019-12-19 15:09:02.911 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.c(2134) - VIP online start
 
-2019-12-19 15:09:02.911 \[INFO\] \[TIMER\] \[Labor-2\] cn.hotpu.hotdb.c(2148) - CheckVIP timer execute online...
+2019-12-19 15:09:02.911 [INFO] [TIMER] [Labor-2] cn.hotpu.hotdb.c(2148) - CheckVIP timer execute online...
 
-2019-12-19 15:09:03.142 \[INFO\] \[INIT\] \[\$I-NIOREACTOR-1-RW\] cn.hotpu.hotdb.c(3594) - persist sequence at abnormal starting server.
+2019-12-19 15:09:03.142 [INFO] [INIT] [\$I-NIOREACTOR-1-RW] cn.hotpu.hotdb.c(3594) - persist sequence at abnormal starting server.
 
-2019-12-19 15:09:03.143 \[INFO\] \[INIT\] \[Labor-7\] cn.hotpu.hotdb.c(1300) - start xa recover in starter
+2019-12-19 15:09:03.143 [INFO] [INIT] [Labor-7] cn.hotpu.hotdb.c(1300) - start xa recover in starter
 
-2019-12-19 15:09:03.150 \[INFO\] \[INIT\] \[\$I-NIOREACTOR-1-RW\] cn.hotpu.hotdb.g.c.a.a.g(205) - wait datanodes synchronizing to recover XA transactions.
+2019-12-19 15:09:03.150 [INFO] [INIT] [\$I-NIOREACTOR-1-RW] cn.hotpu.hotdb.g.c.a.a.g(205) - wait datanodes synchronizing to recover XA transactions.
 
-2019-12-19 15:09:03.207 \[INFO\] \[INIT\] \[\$NIOREACTOR-6-RW\] cn.hotpu.hotdb.g.c.a.a.k(130) - no xa recover result
+2019-12-19 15:09:03.207 [INFO] [INIT] [\$NIOREACTOR-6-RW] cn.hotpu.hotdb.g.c.a.a.k(130) - no xa recover result
 
-2019-12-19 15:09:03.249 \[INFO\] \[INIT\] \[\$NIOREACTOR-1-RW\] cn.hotpu.hotdb.c(1442) - persist XID at abnormal starting server.
+2019-12-19 15:09:03.249 [INFO] [INIT] [\$NIOREACTOR-1-RW] cn.hotpu.hotdb.c(1442) - persist XID at abnormal starting server.
 
-2019-12-19 15:09:03.257 \[INFO\] \[MANAGER\] \[Labor-7\] cn.hotpu.hotdb.a(5360) - Some sharding table have unique key, and the unique key don't contain rule column, you can turn on global unique key according to the actual.
+2019-12-19 15:09:03.257 [INFO] [MANAGER] [Labor-7] cn.hotpu.hotdb.a(5360) - Some sharding table have unique key, and the unique key don't contain rule column, you can turn on global unique key according to the actual.
 
-2019-12-19 15:09:03.340 \[INFO\] \[INIT\] \[Labor-7\] cn.hotpu.hotdb.c(1808) - HotDB-Server listening on 3323
+2019-12-19 15:09:03.340 [INFO] [INIT] [Labor-7] cn.hotpu.hotdb.c(1808) - HotDB-Server listening on 3323
 
-2019-12-19 15:09:03.340 \[INFO\] \[INIT\] \[Labor-7\] cn.hotpu.hotdb.c(1809) - ===============================================
+2019-12-19 15:09:03.340 [INFO] [INIT] [Labor-7] cn.hotpu.hotdb.c(1809) - ===============================================
 
-2019-12-19 15:09:03.350 \[INFO\] \[WATCHDOG\] \[Labor-7\] cn.hotpu.hotdb.f(197) - Watchdog started.
+2019-12-19 15:09:03.350 [INFO] [WATCHDOG] [Labor-7] cn.hotpu.hotdb.f(197) - Watchdog started.
 
-2019-12-19 15:09:03.712 \[INFO\] \[TIMER\] \[Labor-2\] cn.hotpu.hotdb.c(2150) - CheckVIP timer finish online.
+2019-12-19 15:09:03.712 [INFO] [TIMER] [Labor-2] cn.hotpu.hotdb.c(2150) - CheckVIP timer finish online.
 
-2019-12-19 15:09:03.713 \[INFO\] \[MANAGER\] \[Labor-2\] cn.hotpu.hotdb.c(2165) - VIP online end
+2019-12-19 15:09:03.713 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.c(2165) - VIP online end
 
 #### waitConfigSyncFinish
 
@@ -10417,27 +10417,27 @@ virtual_ipaddress {
 
 关闭状态：启动时若连上主配置库，则若当前配置库存在延迟的情况下也直接继续启动：
 
-2018-06-01 16:21:14.958 \[INFO\] \[INIT\] \[main\] j(-1) - reading config...
+2018-06-01 16:21:14.958 [INFO] [INIT] [main] j(-1) - reading config...
 
-2018-06-01 16:21:15.170 \[info\] \[INIT\] \[main\] a(-1) - using config datasource in start up:\[id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8\]
+2018-06-01 16:21:15.170 [info] [INIT] [main] a(-1) - using config datasource in start up:[id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8]
 
-2018-06-01 16:21:15.518 \[info\] \[INIT\] \[main\] a(-1) - master config datasource \[id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8\] connect success.
+2018-06-01 16:21:15.518 [info] [INIT] [main] a(-1) - master config datasource [id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8] connect success.
 
-2018-06-01 16:21:16.892 \[info\] \[INIT\] \[main\] j(-1) - ===============================================
+2018-06-01 16:21:16.892 [info] [INIT] [main] j(-1) - ===============================================
 
-2018-06-01 16:21:16.893 \[info\] \[INIT\] \[main\] j(-1) - HotDB-2.4.9 is ready to startup ...
+2018-06-01 16:21:16.893 [info] [INIT] [main] j(-1) - HotDB-2.4.9 is ready to startup ...
 
-2018-06-01 16:21:16.894 \[info\] \[INIT\] \[main\] j(-1) - Sysconfig params:SystemConfig \[ frontwriteQueueSize=2048, serverPort=9993, managerPort=999S, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferchunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://l27.0.0.l:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://l27.0.0.l:3306/botdb_config_249, usingAIO=0, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=1, heartbeatTimeoutMs=100, joinable=true, joincachesize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,viP=nul1,checkVIPPeriod=l600\]
+2018-06-01 16:21:16.894 [info] [INIT] [main] j(-1) - Sysconfig params:SystemConfig [ frontwriteQueueSize=2048, serverPort=9993, managerPort=999S, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferchunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://l27.0.0.l:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://l27.0.0.l:3306/botdb_config_249, usingAIO=0, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=1, heartbeatTimeoutMs=100, joinable=true, joincachesize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,viP=nul1,checkVIPPeriod=l600]
 
-2018-06-01 16:21:17.210 \[info\] \[INIT\] \[main\] BufferPool(-1) - total buffer:163840000,every chunk bytes:16384,chunk number:10000,every threadLocalMaxNumber:10000
+2018-06-01 16:21:17.210 [info] [INIT] [main] BufferPool(-1) - total buffer:163840000,every chunk bytes:16384,chunk number:10000,every threadLocalMaxNumber:10000
 
-2018-06-01 16:21:17.216 \[INFO\] \[INIT\] \[main\] j(-1) - usinq aio network handler
+2018-06-01 16:21:17.216 [INFO] [INIT] [main] j(-1) - usinq aio network handler
 
 开启的状态下：
 
 需要等到复制同步后才继续启动：
 
-2018-07-12 14:28:52.019 \[INFO\] \[INIT\] \[\$NIOREACTOR-9-RW\] XAInitRecoverHandler(125) -- wait for config datasource synchronizing...
+2018-07-12 14:28:52.019 [INFO] [INIT] [\$NIOREACTOR-9-RW] XAInitRecoverHandler(125) -- wait for config datasource synchronizing...
 
 #### waitForSlaveInFailover
 
@@ -10465,7 +10465,7 @@ virtual_ipaddress {
 
 当从机存在复制延迟时，无法切换到从机上, 计算节点会一直检测，等到复制追平才能进行切换：
 
-mysql> show @\@latency;
+mysql> show @@latency;
 
 | dn | info | | latency |
 
@@ -10481,15 +10481,15 @@ mysql> show @\@latency;
 
 日志能够看到提示不再用故障的主存储节点，并且不会启用没有复制同步追上的存储节点：
 
-2018-06-08 10:36:47.921 \[INFO\] \[FAILOVER\] \[Labor-1552\] j(-1) - slave_sql_running is Yes in :\[id:178,nodeId:6 192.168.200.52:3312/phy248 status:1,charset:utf8\] during failover of datanode 6
+2018-06-08 10:36:47.921 [INFO] [FAILOVER] [Labor-1552] j(-1) - slave_sql_running is Yes in :[id:178,nodeId:6 192.168.200.52:3312/phy248 status:1,charset:utf8] during failover of datanode 6
 
-2018-06-0810:36:48.982 \[INFO\] \[FAILOVER\] \[Labor-1552\] j(-1) - masterLogFile:mysql-bin.000518,readMasterLogFile:mysql-bin.000518,readMasterLogPos:384545127,execMaster LogPos:384512435,relayLogFiTe:mysql-relay-bin.000002,relayLogPos; 248414,secondBehindMaster:19,execLogchanged:true in slave：MySQLConnection \[node=6, id=140, threadId=3 15945, state=borrowed, closed=false, autocommit=true, host=192.168.200.52, port=3312, database=phy248, localPort=64694, isClose:false, toBeclose:false\]
+2018-06-0810:36:48.982 [INFO] [FAILOVER] [Labor-1552] j(-1) - masterLogFile:mysql-bin.000518,readMasterLogFile:mysql-bin.000518,readMasterLogPos:384545127,execMaster LogPos:384512435,relayLogFiTe:mysql-relay-bin.000002,relayLogPos; 248414,secondBehindMaster:19,execLogchanged:true in slave：MySQLConnection [node=6, id=140, threadId=3 15945, state=borrowed, closed=false, autocommit=true, host=192.168.200.52, port=3312, database=phy248, localPort=64694, isClose:false, toBeclose:false]
 
 关闭状态：
 
 当主从存储节点存在复制延迟时，可以直接切换到从机，不再等待复制追上：
 
-2018-06-08 16:19:22.864 \[INFO\] \[FAILOVER\] \[Labor-1852\] bh(-1) -- switch datasource:6 for datanode:6 successfully by Manager.
+2018-06-08 16:19:22.864 [INFO] [FAILOVER] [Labor-1852] bh(-1) -- switch datasource:6 for datanode:6 successfully by Manager.
 
 特殊说明： 在计算节点版本高于2.5.6 （包含）调整了master_delay对切换的影响，waitForSlaveInFailover参数（高可用切换是否等待从机追上复制）开启，当切换时检测到有master_delay的延时设置，会自动在追复制前取消，切换成功后恢复延时复制的设置。若取消master_delay后的复制延迟仍大于10s，则不允许切换，master_delay也会恢复之前设置的值。
 
@@ -10521,11 +10521,11 @@ mysql> show @\@latency;
 
 开启开关：启动计算节点时，等待存储节点主从复制追平，从而保证存储节点数据一致且为最新：
 
-2018-06-01 17:15:12.990 \[info\] \[INIT\] \[\$NIOREACTOR-3-RW\] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos:4668659,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection \[node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false\]
+2018-06-01 17:15:12.990 [info] [INIT] [\$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos:4668659,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false]
 
-2018-06-01 17:15:12.990 \[info\] \[INIT\] \[\$NIOREACTOR-3-RW\] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4669275,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection \[node=3, id=50, threadId=l7084, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=20329, isClose:false, toBeClose:false\]
+2018-06-01 17:15:12.990 [info] [INIT] [\$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4669275,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=50, threadId=l7084, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=20329, isClose:false, toBeClose:false]
 
-2018-06-01 17:15:12.990 \[info\] \[INIT\] \[\$NIOREACTOR-3-RW\] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4670199,execMasterLogPos: 4557471,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2122521,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection \[node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false\]
+2018-06-01 17:15:12.990 [info] [INIT] [\$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4670199,execMasterLogPos: 4557471,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2122521,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false]
 
 关闭开关：无其他异常，可以直接初始化存储节点
 

@@ -132,7 +132,7 @@ private	val orderRegex = """^(\d+)、""".toRegex()
 private fun String.optimizeOrderedList():String{
 	return this.lineSequence().joinToString("\n"){line->
 		//不要转义序号中的点
-		line.replace("\\.",".").replace(orderRegex,"$1.")
+		line.replace("\\.",".").replace(orderRegex,"$1. ")
 	} 
 }
 

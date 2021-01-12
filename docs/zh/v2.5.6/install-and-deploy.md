@@ -332,11 +332,11 @@ mariadb-libs-5.5.44-2.el7.centos.x86_64
 
 将下列内容复制并替换服务器的/etc/my.cnf文件中的原有内容
 
-\[client\]
+[client]
 
 default-character-set=utf8
 
-\[mysqld_safe\]
+[mysqld_safe]
 
 ledir=/usr/sbin
 
@@ -344,7 +344,7 @@ user=mysql
 
 open-files-limit=8192
 
-\[mysqld_multi\]
+[mysqld_multi]
 
 mysqld = /usr/bin/mysqld_safe
 
@@ -352,7 +352,7 @@ user = root
 
 log = /data/multi.log
 
-\[mysqld\]
+[mysqld]
 
 \#***********************************common parameters******************************
 
@@ -586,7 +586,7 @@ innodb_lock_wait_timeout=120
 
 innodb_rollback_on_timeout=1
 
-\[mysqldump\]
+[mysqldump]
 
 quick
 
@@ -594,7 +594,7 @@ max_allowed_packet=2G
 
 default-character-set=utf8
 
-\[mysql\]
+[mysql]
 
 no-auto-rehash
 
@@ -604,7 +604,7 @@ default-character-set=utf8
 
 show-warnings
 
-\[myisamchk\]
+[myisamchk]
 
 key_buffer=512M
 
@@ -614,7 +614,7 @@ read_buffer=8M
 
 write_buffer=8M
 
-\[mysqlhotcopy\]
+[mysqlhotcopy]
 
 interactive-timeout
 
@@ -1191,7 +1191,7 @@ sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
 
 - NDB SQL服务安装完成后需要在对应的计算节点安装conf目录下修改server.xml文件配置。需将配置文件中的ndbSqlMode修改为local。具体如下所示：
 
-![%\[7%3OP7(I(A\]7I95QGAG0H](media/image9.png)
+![%[7%3OP7(I(A]7I95QGAG0H](media/image9.png)
 
 5. **NDB SQL启动关闭说明**
 
@@ -1253,7 +1253,7 @@ host默认0.0.0.0，无需修改；port默认3330，不建议修改，除非被�
 
 \#sh hotdb_listener
 
-Usage: sh hotdb_listener \[start|stop|restart\]
+Usage: sh hotdb_listener [start|stop|restart]
 
 example:
 
@@ -1267,7 +1267,7 @@ HotDB-Listener restart : sh hotdb_listener restart
 
 \#tailf listener.log
 
-2020-05-25 12:09:54.089 \[INFO\] \[INIT\] \[main\] cn.hotpu.hotdb.ListenerServer(158) - Listener-Manager start listening on host 0.0.0.0 port 3330
+2020-05-25 12:09:54.089 [INFO] [INIT] [main] cn.hotpu.hotdb.ListenerServer(158) - Listener-Manager start listening on host 0.0.0.0 port 3330
 
 ### 自动部署
 
@@ -1333,7 +1333,7 @@ HotDB-Listener restart : sh hotdb_listener restart
 
 4. **日志打印如下标记则为安装成功正常结束**
 
-\[INFO\] hotdbinstall finished without error, but you should check if there is any warn
+[INFO] hotdbinstall finished without error, but you should check if there is any warn
 
 ings
 

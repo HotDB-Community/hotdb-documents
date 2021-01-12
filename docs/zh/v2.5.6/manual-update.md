@@ -728,7 +728,7 @@ HOTDB_CLASSPATH="\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes"
 
 -   配置校验正常通过，可在管理平台中"配置->配置校验"菜单中检测配置库配置是否正确
 
--   计算节点内存信息与配置库保持一致，可通过管理平台"动态加载"功能或登录管理端口（默认3325）执行reload @\@config命令确保两者信息一致
+-   计算节点内存信息与配置库保持一致，可通过管理平台"动态加载"功能或登录管理端口（默认3325）执行reload @@config命令确保两者信息一致
 
 5.  **Keepalived程序运行正常**
 
@@ -1180,7 +1180,7 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 ##### 启动计算节点服务
 
-计算节点服务程序启动不分先后顺序，可依次启动完成后登录任一计算节点管理端口（默认3325）执行"show @\@cluster"命令查询当前集群中计算节点运行状态与角色信息。
+计算节点服务程序启动不分先后顺序，可依次启动完成后登录任一计算节点管理端口（默认3325）执行"show @@cluster"命令查询当前集群中计算节点运行状态与角色信息。
 
 ### 多节点集群模式不停机升级
 
@@ -1204,7 +1204,7 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 升级集群中的secondary计算节点会导致连接在该secondary计算节点上的客户端连接中断，升级primary计算节点除对客户端连接会造成中断外还包括部分进行中的事务中断的问题，生产环境建议在业务低峰期进行升级操作。
 
-**特殊说明：**primary与secondary是计算节点在管理端口（默认3325）中执行"show @\@cluster"命令显示的当前计算节点的角色。以下secondary1与secondary2代指三个计算节点集群中secondary属性的计算节点，末尾的数字标识不分先后顺序，可代指任一secondary计算节点。
+**特殊说明：**primary与secondary是计算节点在管理端口（默认3325）中执行"show @@cluster"命令显示的当前计算节点的角色。以下secondary1与secondary2代指三个计算节点集群中secondary属性的计算节点，末尾的数字标识不分先后顺序，可代指任一secondary计算节点。
 
 #### 配置库升级
 

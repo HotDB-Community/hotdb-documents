@@ -1216,34 +1216,34 @@ mysql> start slave;
 灾备机房的主备计算节点在服务未发生机房级别切换之前，均禁用online命令，主要为区别于中心机房的切换操作，当执行online命令时，会提示如下：
 
 ```
-root\@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 07:58:26> online;
+root@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 07:58:26> online;
 ERROR 10192 (HY000): access denied. online is not allowed in a DR HotDB Server.
 ```
 
 灾备机房的主计算节点不参与中心机房HA高可用切换及选主动作，除可执行一些show命令以外，只接受人工命令：online_dr切换机房。
 
 ```
-root\@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 08:12:31> online_dr;
+root@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 08:12:31> online_dr;
 Query OK, 1 row affected (5 min 4.35 sec)
 ```
 
 灾备机房的主计算节点一旦执行online_dr该命令，将发生机房级别的计算节点服务切换，灾备机房的主计算节点将提供服务，其他情况参考[跨机房故障](#跨机房故障)相关章节详细说明。同时，灾备机房计算节点日志输出如下标记，代表灾备机房服务开始启动并启动成功：
 
 ```
-2019-12-12 19:50:47.257 \[INFO\] \[MANAGER\] \[\$NIOExecutor-1-0\] cn.hotpu.hotdb.manager.ManagerQueryHandler(178) - online_dr by \[thread=\$NIOExecutor-1-0,id=8514,user=root,host=192.168.220.183,port=3325,localport=13838,schema=null\]
-2019-12-12 19:50:47.258 \[INFO\] \[MANAGER\] \[Labor-2\] cn.hotpu.hotdb.HotdbServer(2111) - DR online start
+2019-12-12 19:50:47.257 [INFO] [MANAGER] [\$NIOExecutor-1-0] cn.hotpu.hotdb.manager.ManagerQueryHandler(178) - online_dr by [thread=\$NIOExecutor-1-0,id=8514,user=root,host=192.168.220.183,port=3325,localport=13838,schema=null]
+2019-12-12 19:50:47.258 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.HotdbServer(2111) - DR online start
 ......
-2019-12-12 19:50:50.587 \[INFO\] \[MANAGER\] \[Labor-2\] cn.hotpu.hotdb.HotdbServer(2142) - DR online end
+2019-12-12 19:50:50.587 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.HotdbServer(2142) - DR online end
 ......
-2019-12-12 19:50:50.689 \[INFO\] \[INIT\] \[Labor-2\] cn.hotpu.hotdb.HotdbServer(1789) - HotDB-Server listening on 3323
+2019-12-12 19:50:50.689 [INFO] [INIT] [Labor-2] cn.hotpu.hotdb.HotdbServer(1789) - HotDB-Server listening on 3323
 ```
 
 灾备机房的备计算节点亦不参与中心机房HA高可用切换或选主动作，当计算节点发生机房级别切换后，即灾备机房的主计算节点提供服务时，若此时灾备机房主计算节点也发生故障，可执行enable_online；命令之后，再执行online或online_dr命令启动灾备机房备计算节点。命令执行后，灾备机房备计算节点通过启动流程判断后，可自动开启服务端口（默认3323）继续服务。
 
 ```
-root\@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:10:31> enable_online;
+root@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:10:31> enable_online;
 Query OK, 1 row affected (11 min 5.39 sec)
-root\@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:22:27> online;
+root@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:22:27> online;
 Query OK, 1 row affected (0.01 sec)
 ```
 
@@ -1402,29 +1402,18 @@ hc01与hc02之间搭建双主复制关系；hc01与hc03之间搭建主备关系�
 
 切换预检测内容确认无误后，可以在灾备机房主计算节点管理端执行online_dr命令；计算节点接收到命令后会依次进行如下判断：
 
-1、再次向中心机房的主计算节点服务发送offline命令，以尽力规避多个计算节点服务同时运行；
-
-2、等待灾备机房所有主存储节点、配置库复制延迟追上；
-
-3、自动清除所有灾备机房与中心机房间的存储节点、配置库复制关系；
-
-4、将所有中心机房的存储节点、配置库标记为不可用；
-
-5、通过其他启动服务端口必须做的校验之后，启动灾备机房主计算节点服务端口提供服务；
-
-6、同时，单数据节点内的各存储节点复制关系由计算节点自动进行判断，计算节点会根据灾备机房的存储节点角色配置，对灾备机房的复制关系进行搭建或重置：
-
-- 若存储节点配置为"双主备库"，则会对比GTID复制位置：主存储节点比双主备存储节点GTID位置多或者相等时，则计算节点会自动搭建双主备库存储节点到主存储节点的复制关系（双主备存储节点为主机）；主存储节点比双主备库存储节点GTID位置少时（一般情况下不会出现这类情形，人为操作可能性较大），则对双主备库存储节点进行reset slave all操作且将双主备库置为不可用；
-
-- 若灾备机房其他存储节点配置为"从库"，则仅检查GTID复制位置，若主存储节点比从存储节点GITD少，则对灾备机房"从库"类型的存储节点执行reset slave all操作清理复制关系；
-
-- 其他复制架构（例如：双主带从），同上述逻辑一致，根据具体角色配置确认是否对复制关系进行搭建或重置。
-
+1. 再次向中心机房的主计算节点服务发送offline命令，以尽力规避多个计算节点服务同时运行；
+2. 等待灾备机房所有主存储节点、配置库复制延迟追上；
+3. 自动清除所有灾备机房与中心机房间的存储节点、配置库复制关系；
+4. 将所有中心机房的存储节点、配置库标记为不可用；
+5. 通过其他启动服务端口必须做的校验之后，启动灾备机房主计算节点服务端口提供服务；
+6. 同时，单数据节点内的各存储节点复制关系由计算节点自动进行判断，计算节点会根据灾备机房的存储节点角色配置，对灾备机房的复制关系进行搭建或重置：
+  - 若存储节点配置为"双主备库"，则会对比GTID复制位置：主存储节点比双主备存储节点GTID位置多或者相等时，则计算节点会自动搭建双主备库存储节点到主存储节点的复制关系（双主备存储节点为主机）；主存储节点比双主备库存储节点GTID位置少时（一般情况下不会出现这类情形，人为操作可能性较大），则对双主备库存储节点进行reset slave all操作且将双主备库置为不可用；
+  - 若灾备机房其他存储节点配置为"从库"，则仅检查GTID复制位置，若主存储节点比从存储节点GITD少，则对灾备机房"从库"类型的存储节点执行reset slave all操作清理复制关系；
+  - 其他复制架构（例如：双主带从），同上述逻辑一致，根据具体角色配置确认是否对复制关系进行搭建或重置。
 7. 若当前灾备机房有搭建计算节点高可用服务，则需要继续在灾备机房的备计算节点服务管理端口执行enable_online命令，保证当前主计算节点故障时，可以通过keepalived的高可用判断逻辑进行灾备机房内的计算节点服务切换。
-
 8. 最终检查灾备机房的keepalived状态是否正常，VIP在当前主计算节点上，主备keepalived、主备计算节点服务状态、角色状态无异常。
-
-9、必要时对当前正在提供服务的计算节点执行SQL操作，确认服务正常。
+9. 必要时对当前正在提供服务的计算节点执行SQL操作，确认服务正常。
 
 #### 跨机房故障修复和回切
 
@@ -1462,17 +1451,21 @@ hc01与hc02之间搭建双主复制关系；hc01与hc03之间搭建主备关系�
 
 第8步、进入当前主机房主配置库，将hotdb_datasource 表内所有的机房ID都更换为1（1代表中心机房，在不开启灾备情况下，无实际意义）
 
+```
 update hotdb_datasource set idc_id=1;
+```
 
 第9步、进入当前主机房主配置库，检查hotdb_config_info表的结果，确认当前k列为hotdb_master_config_status的一行数据其v值为1（该行数据代表当前主配置库是否可用，发生机房级别灾备切换后不会将该行数据做更新，此处仅确认即可，以保证可以正常读取当前配置库信息），若不为1，将该行数据更新为1；
 
-root\@localhost:hotdb_config 5.7.25-log 07:47:19> select * From hotdb_config_info where k='hotdb_master_config_status' ;
-
-| k | v | description |
-
-| hotdb_master_config_status | 1 | 主配置库状态(Master configuration database status) |
-
+```
+root@localhost:hotdb_config 5.7.25-log 07:47:19> select * From hotdb_config_info where k='hotdb_master_config_status' ;
++----------------------------+---+----------------------------------------------------------+
+| k                          | v | description                                              |
++----------------------------+---+----------------------------------------------------------+
+| hotdb_master_config_status | 1 | 主配置库状态(Master configuration database status)       |
++----------------------------+---+----------------------------------------------------------+
 1 row in set (0.00 sec)
+```
 
 第10步、执行动态加载；
 
@@ -1583,7 +1576,7 @@ select * From hotdb_config_info limit 1,5;
 
 第11步、动态加载
 
-第12步、检查拓扑图及各项监控指标是否正常，以及通过当前主机房计算节点查看管理端show @\@heartbeat命令出来的结果心跳是否均已在监控状态。
+第12步、检查拓扑图及各项监控指标是否正常，以及通过当前主机房计算节点查看管理端show @@heartbeat命令出来的结果心跳是否均已在监控状态。
 
 ##### 场景三：原中心机房服务切回角色不变
 
@@ -1725,7 +1718,7 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 
 第10步、动态加载
 
-第12步、检查拓扑图及各项监控指标是否正常，以及通过当前主机房计算节点查看管理端`show @\@heartbeat`命令出来的结果心跳是否均已在监控状态，且`show @\@configurl`、`show @\@datanode `均已显示机房角色进行了互换。示例：
+第12步、检查拓扑图及各项监控指标是否正常，以及通过当前主机房计算节点查看管理端`show @@heartbeat`命令出来的结果心跳是否均已在监控状态，且`show @@configurl`、`show @@datanode `均已显示机房角色进行了互换。示例：
 
 ![](assets/cross-idc-disaster-recovery/image113.png)
 
@@ -1740,25 +1733,25 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 示例1：配置库复制位置日志提醒
 
 ```
-2019-12-14 19:07:58.317 \[INFO\] \[INNER\] \[\$I-NIOREACTOR-3-RW\] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master(\[id:-4,nodeId:-1 192.168.220.183:3306/hotdb_config status:1,charset:utf8\], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2) change master to master_standby(\[id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8\], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2).
+2019-12-14 19:07:58.317 [INFO] [INNER] [\$I-NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:-4,nodeId:-1 192.168.220.183:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2) change master to master_standby([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2).
 ```
 
 示例2：存储节点复制位置
 
 ```
-2019-12-14 19:08:00.546 \[INFO\] \[INNER\] \[\$NIOREACTOR-2-RW\] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master(\[id:192,nodeId:46 192.168.220.183:3308/db2531 status:1,charset:utf8mb4\], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3) change master to master_standby(\[id:193,nodeId:46 192.168.220.184:3308/db2531 status:1,charset:utf8mb4\], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3).
+2019-12-14 19:08:00.546 [INFO] [INNER] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:192,nodeId:46 192.168.220.183:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3) change master to master_standby([id:193,nodeId:46 192.168.220.184:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3).
 ```
 
 示例3：从机GTID比主机多
 
 ```
-2019-12-14 19:08:00.546 \[WARN\] \[INNER\] \[\$NIOREACTOR-2-RW\] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(329) - Slave(\[id:189,nodeId:45 192.168.220.184:3307/db2531 status:1,charset:utf8mb4\])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1,7afdc35d-0b87-11ea-91a3-52540073fb81:1) is **greater than** master(\[id:188,nodeId:45 192.168.220.183:3307/db2531 status:1,charset:utf8mb4\])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1).
+2019-12-14 19:08:00.546 [WARN] [INNER] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(329) - Slave([id:189,nodeId:45 192.168.220.184:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1,7afdc35d-0b87-11ea-91a3-52540073fb81:1) is **greater than** master([id:188,nodeId:45 192.168.220.183:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1).
 ```
 
 示例4：半同步复制状态监测
 
 ```
-2019-12-14 19:07:57.820 \[WARN\] \[INIT\] \[Labor-26\] cn.hotpu.hotdb.backend.BackendDatasource(806) - \[id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8\], Rpl_semi_sync_master_status or Rpl_semi_sync_slave_status must be 'ON' in DR mode
+2019-12-14 19:07:57.820 [WARN] [INIT] [Labor-26] cn.hotpu.hotdb.backend.BackendDatasource(806) - [id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8], Rpl_semi_sync_master_status or Rpl_semi_sync_slave_status must be 'ON' in DR mode
 ```
 
 该[运维管理](#运维管理)章节所有描述均以开启GTID和半同步复制的情况做说明。若考虑主备机房内存储节点、配置库主从复制开启半同步，机房间主从灾备复制为异步复制，则建议按如下建议进行相关配置：
@@ -1848,7 +1841,7 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 - 存储节点从机半同步复制状态降级（可能RPO导致不为0）：
 
 ```
-2019-12-10 12:17:00.630 \[WARN\] \[TIMER\] \[\$NIOExecutor-5-1\] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - DR_IDC's datasource: -5(\[id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8\])'s RPL_SEMI_SYNC_SLAVE_STATUS is OFF
+2019-12-10 12:17:00.630 [WARN] [TIMER] [\$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - DR_IDC's datasource: -5([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8])'s RPL_SEMI_SYNC_SLAVE_STATUS is OFF
 ```
 
 - 存储节点从机半同步复制设置等待从机返回ack个数与与实际个数不一致（可能导致RPO不为0）：
@@ -1858,37 +1851,37 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 ![](assets/cross-idc-disaster-recovery/image122.png)
 
 ```
-2019-12-10 12:16:00.634 \[WARN\] \[TIMER\] \[\$NIOExecutor-5-1\] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - datasource: 169(\[id:169,nodeId:43 192.168.220.181:3307/db2531 status:1,charset:utf8mb4\])'s RPL_SEMI_SYNC_MASTER_WAIT_FOR_SLAVE_COUNT=2, real slave count=1
+2019-12-10 12:16:00.634 [WARN] [TIMER] [\$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - datasource: 169([id:169,nodeId:43 192.168.220.181:3307/db2531 status:1,charset:utf8mb4])'s RPL_SEMI_SYNC_MASTER_WAIT_FOR_SLAVE_COUNT=2, real slave count=1
 ```
 
 - 实际存储节点或配置库复制关系与实际配置不一致
 
 ```
-2019-12-14 19:08:00.426 \[WARN\] \[INNER\] \[\$NIOREACTOR-3-RW\] cn.hotpu.hotdb.mysql.nio.handler.InitSlaveStatusHandler(99) - Datasource: 188's master datasource: 192.168.220.183:3307 not in datanode: 45
+2019-12-14 19:08:00.426 [WARN] [INNER] [\$NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.InitSlaveStatusHandler(99) - Datasource: 188's master datasource: 192.168.220.183:3307 not in datanode: 45
 ```
 
 - 机房发生切换或正在提供服务的计算节点offline ,则当前与之相关的后端连接也会关闭，相关日志记录信息可参考：
 
 ```
-2019-12-14 19:08:00.978 \[WARN\] \[CONNECTION\] \[\$NIOREACTOR-2-RW\] cn.hotpu.hotdb.net.NIOSocketWR(181) - exception(stream closed) in reading backend connection: \[id:196,nodeId:47 192.168.220.181:3309/db2531 status:1,charset:utf8mb4\] id=931
+2019-12-14 19:08:00.978 [WARN] [CONNECTION] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.net.NIOSocketWR(181) - exception(stream closed) in reading backend connection: [id:196,nodeId:47 192.168.220.181:3309/db2531 status:1,charset:utf8mb4] id=931
 threadId=5801 isAuthenticated=true responseHandler=null isNetFull=false bufferInFullNet=false lastUsedTime=1576321520613 tookTime=1576321520605 sendingData=false inFlowControl=false maybeSlow=false heavyRowEof=false inFieldPacket=false
-needSyncAutocommit=false syncAutocommitValue=true usingReadBuffer=false usingWriteBuffer=false readBuffer=java.nio.DirectByteBuffer\[pos=0 lim=16384 cap=16384\] writeBuffer=null writeQueue=0 host=192.168.220.181 port=3309 localPort=22248
-connectionVars=\[dsCharset=utf8mb4 autocommit=true savepointChecked=false txIsolation=2 charsetIndex=45 characterSetClient=utf8mb4 characterSetResults=utf8mb4 characterSetConnection=utf8mb4 collationConnection=utf8mb4_general_ci foreignK
-eyChecks=true uniqueChecks=true txReadOnly=false\] connectionStat=\[startupTime=1576320655994 lastReadTime=1576321520594 lastWriteTime=1576321520594 netInBytes=5533 netOutBytes=1477\] state=idle pauseTime=0 usedMemory=16384 lastSQL=\[null\]
+needSyncAutocommit=false syncAutocommitValue=true usingReadBuffer=false usingWriteBuffer=false readBuffer=java.nio.DirectByteBuffer[pos=0 lim=16384 cap=16384] writeBuffer=null writeQueue=0 host=192.168.220.181 port=3309 localPort=22248
+connectionVars=[dsCharset=utf8mb4 autocommit=true savepointChecked=false txIsolation=2 charsetIndex=45 characterSetClient=utf8mb4 characterSetResults=utf8mb4 characterSetConnection=utf8mb4 collationConnection=utf8mb4_general_ci foreignK
+eyChecks=true uniqueChecks=true txReadOnly=false] connectionStat=[startupTime=1576320655994 lastReadTime=1576321520594 lastWriteTime=1576321520594 netInBytes=5533 netOutBytes=1477] state=idle pauseTime=0 usedMemory=16384 lastSQL=[null]
 readData=1576321520613 lastWritten=184 inner=false toBeClosed=false isClosed=false closeReason=null MySQLVersion=5.7.25
 ```
 
 - 服务端口被关闭日志标记：
 
 ```
-2019-12-14 19:07:56.610 \[INFO\] \[MANAGER\] \[\$NIOExecutor-0-2\] cn.hotpu.hotdb.manager.response.Offline(66) - received offline command from:\[thread=\$NIOExecutor-0-2,id=1056,user=root,host=192.168.220.181,port=3325,localport=16928,schema=null]
-2019-12-14 19:07:56.612 \[INFO\] \[MANAGER\] \[Labor-10\] cn.hotpu.hotdb.HotdbServer(2149) - MANAGER offline start
+2019-12-14 19:07:56.610 [INFO] [MANAGER] [\$NIOExecutor-0-2] cn.hotpu.hotdb.manager.response.Offline(66) - received offline command from:[thread=\$NIOExecutor-0-2,id=1056,user=root,host=192.168.220.181,port=3325,localport=16928,schema=null]
+2019-12-14 19:07:56.612 [INFO] [MANAGER] [Labor-10] cn.hotpu.hotdb.HotdbServer(2149) - MANAGER offline start
 ```
 
 - 灾备机房服务开始启动日志标记：
 
 ```
-2019-12-14 19:07:56.552 \[INFO\] \[MANAGER\] \[Labor-26\] cn.hotpu.hotdb.HotdbServer(2115) - DR online start
+2019-12-14 19:07:56.552 [INFO] [MANAGER] [Labor-26] cn.hotpu.hotdb.HotdbServer(2115) - DR online start
 ```
 
 ### 主从复制搭建建议步骤
@@ -1920,12 +1913,12 @@ mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single
 
 示例：mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup > backup_data.sql ;echo \$?
 
-mysqldump: \[Warning\] Using a password on the command line interface can be insecure.
+mysqldump: [Warning] Using a password on the command line interface can be insecure.
 ```
 
-导出命令不报错，\$?返回值为0 （出现mysqldump: \[Warning\] Using a password on the command line interface can be insecure.这个是正常的）。
+导出命令不报错，`$?`返回值为0 （出现`mysqldump: [Warning] Using a password on the command line interface can be insecure.`这个是正常的）。
 
-注意：采取如上方式导出导入数据，默认会设置了SET @\@SESSION.SQL_LOG_BIN= 0;，因此中心机房主实例与灾备机房的复制关系， 和灾备机房本身的复制关系搭建一定要保证千万不能采取先搭好灾备机房间的复制，再导数据的方式，必须将主实例数据先导出，再导入目标新实例之后搭建复制关系。
+注意：采取如上方式导出导入数据，默认会设置了`SET @@SESSION.SQL_LOG_BIN= 0;`，因此中心机房主实例与灾备机房的复制关系， 和灾备机房本身的复制关系搭建一定要保证千万不能采取先搭好灾备机房间的复制，再导数据的方式，必须将主实例数据先导出，再导入目标新实例之后搭建复制关系。
 
 第3步、文件导出后，检查文件内容是否可用。将文件SCP至即将作为从机的新实例所在的服务器。SCP之前检查新实例的数据目录剩余磁盘空间是否足够，要求目标数据目录剩余磁盘空间大于导出的文件大小的2.5倍+10GB。检查新实例数据目录的命令可参考：
 
@@ -1939,11 +1932,11 @@ show global variables like 'datadir'
 
 ```
 mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < 不重名文件 ;echo \$?
-示例：\[root\@hotdb-220-182 \~\]\## mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup < /data/mysql/mysqldata3306/backup_data.sql ;echo \$?
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+示例：[root@hotdb-220-182 \~]\## mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup < /data/mysql/mysqldata3306/backup_data.sql ;echo \$?
+mysql: [Warning] Using a password on the command line interface can be insecure.
 ```
 
-命令不报错，\$?返回值为0（出现mysql: \[Warning\] Using a password on the command line interface can be insecure.这个是正常）。
+命令不报错，`$?`返回值为0（出现`mysql: [Warning] Using a password on the command line interface can be insecure.`这个是正常）。
 
 第6步、执行如下命令刷新权限，注意刷新后，如果重新连接实例，则连接的用户名密码，和旧主实例相同。
 
