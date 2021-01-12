@@ -3,6 +3,7 @@
 package com.windea.word
 
 import java.io.*
+import java.nio.file.*
 import java.util.*
 import java.util.concurrent.*
 import kotlin.system.*
@@ -40,7 +41,7 @@ fun main(args: Array<String>) {
 		try {
 			val arguments = args
 			val parent = arguments[0]
-			val fileNames = arguments.drop(1)
+			val fileNames = if(arguments.size == 1) File("docs/$parent").list()?.filter { it.endsWith(".md") } ?: emptyList() else arguments.drop(1)
 			handleWordSourceMarkdowns(parent, fileNames)
 		} catch(e: Exception) {
 			e.printStackTrace()
@@ -50,13 +51,14 @@ fun main(args: Array<String>) {
 
 
 fun handleWordSourceMarkdowns(parent: String, fileNames: List<String>) {
-	println("Handle word source markdowns...")
+	val parentPath = "docs/${parent}"
+	println("Handle word source markdowns in path ${parentPath}...")
 	val fileSize = fileNames.size
 	val countDown = CountDownLatch(fileSize)
 	fileNames.forEach { fileName ->
 		executor.execute {
 			try {
-				handleWordSourceMarkdown("docs/${parent}", fileName)
+				handleWordSourceMarkdown(parentPath, fileName)
 				countDown.countDown()
 			} catch(e: Exception) {
 				e.printStackTrace()
@@ -82,7 +84,6 @@ fun handleWordSourceMarkdown(parent: String, fileName: String) {
 		.trimLineBreak()
 	file.writeText(text)
 	println("Handle word source markdown: ${parent}/${fileName} finished.")
-	println()
 }
 
 private fun String.replaceToNormalWhiteSpace(): String {
@@ -105,7 +106,7 @@ private fun String.removePrefixContent(fileName: String): String {
 	return lines.joinToString("\n")
 }
 
-private val optimizeHeadingRegex = """\s*\d+(?:\.\d+)*\.\s*(#+)\s*\d+(?:\.\d+)*\.\s*""".toRegex()
+private val optimizeHeadingRegex = """(?:\d+(?:\.\d+)*\.)?\s*(#+)\s*(?:\d+(?:\.\d+)*\.\s*)?""".toRegex()
 
 private fun String.optimizeHeading(): String {
 	return this.lines().joinToString("\n") { line ->
@@ -129,7 +130,7 @@ private fun String.removeImageSizeAttributes(): String {
 
 private val replaceToHeadingLinkRegex = """"(.*?)"""".toRegex()
 
-//TODO 不准确
+//TODO 不准确，可能会是其他文档的
 private fun String.replaceToHeadingLink(): String {
 	//不替换未在统一文档中找到的标题
 	val lines = this.lineSequence()
