@@ -6,7 +6,7 @@
 
 As the Internet rises, demand for the storage, calculation, and analysis of massive data are becoming more and more common. In all kinds of computer application scenarios, the traditional centralized database is faced with two major problems: theory upgrading and technology upgrading. Since the 21st century, with the rise of large-scale data processing technology represented by Hadoop and its derivative technology, database technology began to move from centralized to distributed compute and storage mode. After more than 10 years of industrial practice, various architectures of distributed transactional database gradually mature.
 
-In recent years, the international information security situation has become increasingly severe, and the national information security strategy has gradually deepened. In order to cope with the severe situation that the core technology is enslaved by foreign countries, the government has successively launched plans to accelerate independence of core technology, so as to build a safe and independent information technology system. However, at present, the core systems of many enterprises still rely on the centralized database products and supporting underlying hardware of foreign IT giants. Lack of breakthrough and independence in the core technology requires urgent innovation of the enterprise\'s information technology and comprehensive improvement of the ability of serving massive users and processing massive data, so as to ensure that the information system is independent, stable and reliable.
+In recent years, the international information security situation has become increasingly severe, and the national information security strategy has gradually deepened. In order to cope with the severe situation that the core technology is enslaved by foreign countries, the government has successively launched plans to accelerate independence of core technology, so as to build a safe and independent information technology system. However, at present, the core systems of many enterprises still rely on the centralized database products and supporting underlying hardware of foreign IT giants. Lack of breakthrough and independence in the core technology requires urgent innovation of the enterprise's information technology and comprehensive improvement of the ability of serving massive users and processing massive data, so as to ensure that the information system is independent, stable and reliable.
 
 ### Distributed Relational Database Service
 
@@ -248,7 +248,7 @@ HotDB Server supports the subquery function in some scenarios.
 
 - It supports session-level transactional isolation levels: READ COMMITE, REPEATABLE READ, and SERIALIZABLE.
 
-- It supports defining SAVEPOINT and setting transaction commit rollback attributes, such as COMMIT \[WORK\] \[AND \[NO\] CHAIN\] \[\[NO\] RELEASE\] and ROLLBACK \[WORK\] \[AND \[NO\] CHAIN\] \[\[NO\] RELEASE\].
+- It supports defining SAVEPOINT and setting transaction commit rollback attributes, such as COMMIT [WORK] [AND [NO] CHAIN] [[NO] RELEASE] and ROLLBACK [WORK] [AND [NO] CHAIN] [[NO] RELEASE].
 
 ###### Distributed transactions with Strong consistency(XA)
 
@@ -316,7 +316,7 @@ Multi-source replication is compatible with HotDB Server, but does not support d
 
 #### Data catch-up
 
-In the high availability of data sources in the distributed transactional database, when the master data source goes down, the compute node will execute switch according to the priority of slave data source, and ensure that the service is switched to the slave data source only after the available slave data sources catch up with all applicable relaylogs. Combined with semi-synchronous replication, it can ensure that \"the transaction that has received the commit ok will not be lost, and the transaction that has not issued commit will be rolled back\"; on this basis, by enabling the strong consistency mode of HotDB Server, it can additionally guarantee that \"the transaction that has issued commit but has not received commit ok will be all committed or rolled back\".
+In the high availability of data sources in the distributed transactional database, when the master data source goes down, the compute node will execute switch according to the priority of slave data source, and ensure that the service is switched to the slave data source only after the available slave data sources catch up with all applicable relaylogs. Combined with semi-synchronous replication, it can ensure that "the transaction that has received the commit ok will not be lost, and the transaction that has not issued commit will be rolled back"; on this basis, by enabling the strong consistency mode of HotDB Server, it can additionally guarantee that "the transaction that has issued commit but has not received commit ok will be all committed or rolled back".
 
 ![](assets/white-paper/image6.png)
 
@@ -366,7 +366,7 @@ It provides online modification support for four dimensions of business table, n
 
 ###### Regular DDL
 
-The management platform supports the execution of Regular DDL and the creation and modification of database tables. At the same time, for sensitive operations, such as \"drop, truncate\" and other SQL, the second password verification is carried out to prevent misoperation and malicious operation.
+The management platform supports the execution of Regular DDL and the creation and modification of database tables. At the same time, for sensitive operations, such as "drop, truncate" and other SQL, the second password verification is carried out to prevent misoperation and malicious operation.
 
 ![](assets/white-paper/image13.png)
 
@@ -390,7 +390,7 @@ HotDB Server supports one key detection of currently configured data nodes, data
 
 #### Multi-cluster service management
 
-The management platform supports the management of multiple sets of compute node clusters. After logging in to the management platform, users can select specific clusters on the \"compute node selection\" page to enter the management. At the same time, the \"compute node selection\" page supports real-time display of the running status of all compute node instances in the cluster and all instances in the ConfigDB.
+The management platform supports the management of multiple sets of compute node clusters. After logging in to the management platform, users can select specific clusters on the "compute node selection" page to enter the management. At the same time, the "compute node selection" page supports real-time display of the running status of all compute node instances in the cluster and all instances in the ConfigDB.
 
 ![](assets/white-paper/image17.png)
 
@@ -580,7 +580,7 @@ HotDB Server supports data restore request in the interface after data backup. T
 
 #### SQL firewall and white list
 
-Users can set SQL firewall to intercept suspicious operations, such as \"DELETE without WHERE condition, and UPDATE without WHERE condition.\"; they can also set IP access white list to limit the range of IP addresses allowed to connect to HotDB Server service.
+Users can set SQL firewall to intercept suspicious operations, such as "DELETE without WHERE condition, and UPDATE without WHERE condition."; they can also set IP access white list to limit the range of IP addresses allowed to connect to HotDB Server service.
 
 ![](assets/white-paper/image45.png)
 
@@ -632,7 +632,7 @@ General users are the users who actually manage the compute node cluster and hav
 
 ###### LogicDB users
 
-LogicDB users are the users who access the compute node service. HotDB Server\'s user privilege system is compatible with MySQL and provides multi-dimensional configuration of global privilege, LogicDB privilege, and table privilege. Besides, the table denied privilege is added to facilitate the manager user to quickly isolate users from operating the business tables with higher security level.
+LogicDB users are the users who access the compute node service. HotDB Server's user privilege system is compatible with MySQL and provides multi-dimensional configuration of global privilege, LogicDB privilege, and table privilege. Besides, the table denied privilege is added to facilitate the manager user to quickly isolate users from operating the business tables with higher security level.
 
 ![](assets/white-paper/image49.png)
 
@@ -722,7 +722,7 @@ DNID stands for DATANODE_ID. You can use the DNID-related syntax in hint to cont
 
 - The separable read requests are sent to all available slave data sources.
 
-Note: the above \"separable read requests\" mainly refers to the automatically submitted read requests without hint and the requests in the explicit read-only transactions. The remaining read requests without hint are \"inseparable read requests\".
+Note: the above "separable read requests" mainly refers to the automatically submitted read requests without hint and the requests in the explicit read-only transactions. The remaining read requests without hint are "inseparable read requests".
 
 - The read requests before write and the automatically submitted read requests in the transaction (non XA mode) are sent to the available slave data sources. The remaining requests are on the master data source.
 
@@ -762,11 +762,11 @@ Cluster of Load Balancing Mode Deployment Architecture Diagram
 
 #### Compute node server (and compute node ConfigDB)
 
-Processor: Gold 6130\*2
+Processor: Gold 6130*2
 
-Memory: 8g\*12 (4G \* 12 is recommended if there is a single 4G memory)
+Memory: 8g*12 (4G * 12 is recommended if there is a single 4G memory)
 
-Hard disk: 2.5\'800G write-intensive SATA\\SAS SSD \*2 RAID 1 (800G is selected because of longer write life)
+Hard disk: 2.5'800G write-intensive SATA\\SAS SSD *2 RAID 1 (800G is selected because of longer write life)
 
 RAID card: H730P
 
@@ -774,17 +774,17 @@ Network card: 10G optical network card
 
 Number of servers: 2 (at least 3 and at most 9 in the cluster load balancing mode)
 
-Note: in the cluster load balancing mode, it is recommended that the compute node ConfigDB occupy the server separately and do not share with the compute node or data source server. When compute node ConfigDB occupies server exclusively, please refer to \"management platform ConfigDB server\" for configuration.
+Note: in the cluster load balancing mode, it is recommended that the compute node ConfigDB occupy the server separately and do not share with the compute node or data source server. When compute node ConfigDB occupies server exclusively, please refer to "management platform ConfigDB server" for configuration.
 
 #### Data source server
 
-Processor: Silver 4116\*2
+Processor: Silver 4116*2
 
-Memory: 16G\*12
+Memory: 16G*12
 
-Hard disk: 2.5\' 2.4T 10K SAS HDD \*2 RAID 1 (for system and backup file storage)
+Hard disk: 2.5' 2.4T 10K SAS HDD *2 RAID 1 (for system and backup file storage)
 
-\+ 2.5\' 800G write-intensive SATA\\SAS SSD \*6 RAID 5 (for MySQL)
+\+ 2.5' 800G write-intensive SATA\\SAS SSD *6 RAID 5 (for MySQL)
 
 RAID card: H730P
 
@@ -794,11 +794,11 @@ Number of servers: at least 2 (add as needed)
 
 #### Management platform server
 
-Processor: Silver 4108\*2
+Processor: Silver 4108*2
 
-Memory: 8G\*12 (4G\*12 is recommended if there is a single 4G memory)
+Memory: 8G*12 (4G*12 is recommended if there is a single 4G memory)
 
-Hard disk: 2.5\' 240G SATA SSD \*2 RAID 1
+Hard disk: 2.5' 240G SATA SSD *2 RAID 1
 
 RAID card: H330
 
@@ -808,11 +808,11 @@ Number of servers: 1 or reused
 
 #### Management platform ConfigDB server
 
-Processor: Silver 4110\*2
+Processor: Silver 4110*2
 
-Memory: 8G\*12 (4G\*12 is recommended if there is a single 4G memory)
+Memory: 8G*12 (4G*12 is recommended if there is a single 4G memory)
 
-Hard disk: 2.5 \'400G write-intensive SATA\\SAS SSD \*2 RAID 1
+Hard disk: 2.5 '400G write-intensive SATA\\SAS SSD *2 RAID 1
 
 RAID card: H730P
 
@@ -822,11 +822,11 @@ Number of servers: 1 or reused
 
 #### LVS server (cluster load balancing mode)
 
-Processor: Silver 4116\*2
+Processor: Silver 4116*2
 
-Memory: 8G\*12 (4G\*12 is recommended if there is a single 4G memory)
+Memory: 8G*12 (4G*12 is recommended if there is a single 4G memory)
 
-Hard disk: 2.5\' 240G SATA SSD \*2 RAID 1
+Hard disk: 2.5' 240G SATA SSD *2 RAID 1
 
 RAID card: H330
 
@@ -876,11 +876,11 @@ After years of grinding and overcoming difficulties, HotDB Server has built a go
 
 **Case profile:**
 
-YTO Express\'s original Jingang core system went down when its capacity peaked at 6.5 million units / day. After being transformed into the distributed transactional database, it successfully supported 13.5 million units / day in 2013, 23 million units / day in 2014, 53 million units / day in 2015 and 89 million units / day in 2016. The core components of Jingang system, namely high-end minicomputer, high-end storage device, WAS middleware and Oracle database are transformed into a distributed architecture composed of X86 server, JBOSS middleware, Redis, distributed transactional database HotDB Server and Hadoop big data platform, which supports the rapid growth of business volume.
+YTO Express's original Jingang core system went down when its capacity peaked at 6.5 million units / day. After being transformed into the distributed transactional database, it successfully supported 13.5 million units / day in 2013, 23 million units / day in 2014, 53 million units / day in 2015 and 89 million units / day in 2016. The core components of Jingang system, namely high-end minicomputer, high-end storage device, WAS middleware and Oracle database are transformed into a distributed architecture composed of X86 server, JBOSS middleware, Redis, distributed transactional database HotDB Server and Hadoop big data platform, which supports the rapid growth of business volume.
 
 ![](assets/white-paper/image68.png)
 
-### The People\'s Bank of China（PBC）
+### The People's Bank of China（PBC）
 
 **Industry:** finance
 

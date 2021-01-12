@@ -48,7 +48,7 @@ LogicDB (LogicDatabase, LDB for short) refers to a collection of database that c
 
 ### Table Configuration
 
-Table Configuration refers to the configuration rule information for database tables of the user\'s own business defined in management platform. The defined table can be normally used after the table structure is created in [compute node](#compute-node) data service port. The following types of tables can be created currently: Sharding Table, Vertical Sharding Table, Global Table, and Child Table.
+Table Configuration refers to the configuration rule information for database tables of the user's own business defined in management platform. The defined table can be normally used after the table structure is created in [compute node](#compute-node) data service port. The following types of tables can be created currently: Sharding Table, Vertical Sharding Table, Global Table, and Child Table.
 
 ------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

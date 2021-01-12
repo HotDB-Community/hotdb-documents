@@ -12,13 +12,13 @@ When there are both trial license and official license on the server, the licens
 
 If the one-click deployment is used to install management platform, a cluster of available 1 group of compute nodes is attached by default under the hotdb-management/keys directory, and each cluster can use the trial license of 3 compute nodes. The file name is management-license, as shown below:
 
-\[root\@hotdb_171_221 keys\]\# cd /usr/local/hotdb/hotdb-management/keys
+[root@hotdb_171_221 keys]\# cd /usr/local/hotdb/hotdb-management/keys
 
-\[root\@hotdb_171_221 keys\]\# ll
+[root@hotdb_171_221 keys]\# ll
 
 total 4
 
-**-rw-r\--r\--. 1 root root 1313 Dec 25 17:57 management-license**
+**-rw-r--r--. 1 root root 1313 Dec 25 17:57 management-license**
 
 #### Activate trial license
 
@@ -28,7 +28,7 @@ The trial license requires no additional activation steps. Put the license file 
 
 If you want to view the details, you can execute the following command under the /directory hotdb- management/keys:
 
-\[root\@hotdb_171_221 keys\]\# **java -jar ../utils/hotdb_management_license.jar -l management-license**
+[root@hotdb_171_221 keys]\# **java -jar ../utils/hotdb_management_license.jar -l management-license**
 
 License info of file management-license:
 
@@ -56,43 +56,43 @@ customer info: customer info
 
 If it prompts: ERROR: LICENSE TAMPERED! it represents that the license has been tampered with and cannot be used.
 
-Or after the management platform is started, log in to the management platform, and place the cursor over \"certified\" next to the version number, and view the license details, as shown below:
+Or after the management platform is started, log in to the management platform, and place the cursor over "certified" next to the version number, and view the license details, as shown below:
 
 ![](assets/service-license/image3.jpeg)
 
 ### Official license
 
-To apply for the official license, the server\'s fingerprint is required. One unique fingerprint corresponds to one only official license. Therefore, the official license can only be activated and used on the corresponding server.
+To apply for the official license, the server's fingerprint is required. One unique fingerprint corresponds to one only official license. Therefore, the official license can only be activated and used on the corresponding server.
 
 #### Generate fingerprint
 
 Execute the following command under the /directory hotdb-management/utils to generate the fingerprint:
 
-\[root\@hotdb_171_221 utils\]\# cd /usr/local/hotdb/hotdb-management/utils
+[root@hotdb_171_221 utils]\# cd /usr/local/hotdb/hotdb-management/utils
 
-\[root\@hotdb_171_221 utils\]\# ll
+[root@hotdb_171_221 utils]\# ll
 
 total 144
 
--rw-r\--r\--. 1 hotdb hotdb 145748 Nov 25 10:43 hotdb_management_license.jar
+-rw-r--r--. 1 hotdb hotdb 145748 Nov 25 10:43 hotdb_management_license.jar
 
-\[root\@hotdb_171_221 utils\]\# **java -jar hotdb_management_license.jar -f**
+[root@hotdb_171_221 utils]\# **java -jar hotdb_management_license.jar -f**
 
 trying to generate fingerprint on Linux amd64
 
 The fingerprint file was successfully generated in ./management-fingerprint-2020-12-28-10-17-08
 
-\[root\@hotdb_171_221 utils\]\# ll
+[root@hotdb_171_221 utils]\# ll
 
 total 148
 
--rw-r\--r\--. 1 hotdb hotdb 145748 Nov 25 10:43 hotdb_management_license.jar
+-rw-r--r--. 1 hotdb hotdb 145748 Nov 25 10:43 hotdb_management_license.jar
 
--rw-r\--r\--. 1 root root 1025 Dec 28 10:17 management-fingerprint-2020-12-28-10-17-08
+-rw-r--r--. 1 root root 1025 Dec 28 10:17 management-fingerprint-2020-12-28-10-17-08
 
 #### Apply for official license
 
-Send HotDB (service\@hotdb.com) a license application email with the generated file management-fingerprint-2020-12-28-10-17-08 as an attachment and obtain the official license with the assistance offered by counterparts.
+Send HotDB (service@hotdb.com) a license application email with the generated file management-fingerprint-2020-12-28-10-17-08 as an attachment and obtain the official license with the assistance offered by counterparts.
 
 #### Update official license
 
@@ -108,7 +108,7 @@ Start the management platform, the official license will be activated automatica
 
 If you want to view the details, you can execute the following command under the /directory hotdb-management/keys:
 
-\[root\@hotdb_171_221 keys\]\# **java -jar ../utils/hotdb_management_license.jar -l management-license-official-2020-12-23-15-40-55**
+[root@hotdb_171_221 keys]\# **java -jar ../utils/hotdb_management_license.jar -l management-license-official-2020-12-23-15-40-55**
 
 License info of file management-license-official-2020-12-23-15-40-55:
 
@@ -132,7 +132,7 @@ create time: 2020-12-23
 
 customer info: poc_license_for_bank_of_256test
 
-Or after the management platform is started, log in to the management platform, and place the cursor over \"certified\" next to the version number, and view the license details, as shown below:
+Or after the management platform is started, log in to the management platform, and place the cursor over "certified" next to the version number, and view the license details, as shown below:
 
 ![](assets/service-license/image4.jpeg)
 
@@ -140,7 +140,7 @@ Or after the management platform is started, log in to the management platform, 
 
 If there are multiple licenses under the /directory hotdb-management/keys, you can execute the following command to view the currently used license:
 
-\[root\@hotdb_171_221 keys\]\# **java -jar ../utils/hotdb_management_license.jar -i**
+[root@hotdb_171_221 keys]\# **java -jar ../utils/hotdb_management_license.jar -i**
 
 The License currently in use is:
 
@@ -180,9 +180,9 @@ When you get the official license file, you should keep the file properly to avo
 
 #### Out of the scope of license
 
--   If the number of compute node cluster groups or compute nodes currently managed by the management platform reaches the upper limit of the number of cluster groups or compute nodes authorized by the license, it is not allowed to add new clusters, and it will prompt \"it is not allowed to add because the number of compute nodes exceeds the number of available compute nodes authorized by the platform.\"
+-   If the number of compute node cluster groups or compute nodes currently managed by the management platform reaches the upper limit of the number of cluster groups or compute nodes authorized by the license, it is not allowed to add new clusters, and it will prompt "it is not allowed to add because the number of compute nodes exceeds the number of available compute nodes authorized by the platform."
 
--   If the number of compute node cluster groups or compute nodes currently managed by the management platform reaches the upper limit of the number of cluster groups or compute nodes authorized by the license, it is not allowed to deploy new clusters, and it will prompt \"it is not allowed to add clusters through the parameter configuration function because the number of compute node cluster groups exceeds the number of available compute node cluster groups authorized by the platform.\"
+-   If the number of compute node cluster groups or compute nodes currently managed by the management platform reaches the upper limit of the number of cluster groups or compute nodes authorized by the license, it is not allowed to deploy new clusters, and it will prompt "it is not allowed to add clusters through the parameter configuration function because the number of compute node cluster groups exceeds the number of available compute node cluster groups authorized by the platform."
 
 -   If the number of cluster groups or compute nodes currently managed by the management platform exceeds the max number of cluster groups or compute nodes authorized by the license, it is not allowed to enter the operating page after refreshing the page after 1 minute or restarting the management platform, and the license needs to be updated to meet the number of cluster groups or compute nodes currently managed;
 
@@ -190,7 +190,7 @@ Distributed Transactional Database
 
 HotDB Server -
 
-\[Service License\]
+[Service License]
 
 Function Manual
 
@@ -218,7 +218,7 @@ Postcode: 200050
 
 Website: www.hotdb.com
 
-Service email: service_hotdb\@hotdb.cm
+Service email: service_hotdb@hotdb.cm
 
 Service Tel: 021-5218 0789
 
@@ -260,7 +260,7 @@ Contents
 
 The HotDB compute node needs to be activated using the official license before providing services. Starting from HotDB server v2.5.6, a new self-developed encrypted license is put into use for compute nodes.
 
-The new self-developed encrypted license has only soft lock rather than the hard lock. The soft lock includes \"official soft lock license\" (hereinafter referred to as \"official license\") and \"trial license\". The official license can control the validity period and the number of nodes, and one unique fingerprint corresponds to one only official soft lock. The trial license can be activated on any machine without the fingerprint. It can control the number of nodes, and the validity period can be up to 90 days. Currently, the trial license is only allowed for once. After expiration, only the official license is allowed.
+The new self-developed encrypted license has only soft lock rather than the hard lock. The soft lock includes "official soft lock license" (hereinafter referred to as "official license") and "trial license". The official license can control the validity period and the number of nodes, and one unique fingerprint corresponds to one only official soft lock. The trial license can be activated on any machine without the fingerprint. It can control the number of nodes, and the validity period can be up to 90 days. Currently, the trial license is only allowed for once. After expiration, only the official license is allowed.
 
 When there are both trial license and official license on the server, the license with more authorized nodes is preferred; if the number of authorized nodes is the same, the license with longer license validity is preferred.
 
@@ -268,13 +268,13 @@ When there are both trial license and official license on the server, the licens
 
 If one-click deployment is used to install the compute node, a 64-node trial license with an authorized validity period of 90 days will be attached by default under the /directory hotdb-server/keys. The file name is license-trail, as shown below:
 
-\[root\@localhost keys\]\# cd /usr/local/hotdb/hotdb-server/keys
+[root@localhost keys]\# cd /usr/local/hotdb/hotdb-server/keys
 
-\[root\@localhost keys\]\# ll
+[root@localhost keys]\# ll
 
 total 4
 
--rw-r\--r\-- 1 root root 1369 Aug 6 16:21 **license-trail**
+-rw-r--r-- 1 root root 1369 Aug 6 16:21 **license-trail**
 
 #### Activate trial license
 
@@ -284,7 +284,7 @@ The new self-developed encrypted license requires no additional activation steps
 
 If you want to view the details, you can execute the following command under the /directory hotdb-server/keys:
 
-\[root\@localhost keys\]\# **java -jar ../utils/hotdb_license.jar -l license-trail**
+[root@localhost keys]\# **java -jar ../utils/hotdb_license.jar -l license-trail**
 
 License info of file license-trail:
 
@@ -314,17 +314,17 @@ customer info: hotdb.com
 
 Or view the license info output from the hotdb.log file after the compute node is started:
 
-2020-09-15 14:03:17.949 \[INFO\] \[AUTHORITY\] \[checker-1\] cn.hotpu.hotdb.util.V(262) - Thanks for chooising HotDB.
+2020-09-15 14:03:17.949 [INFO] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(262) - Thanks for chooising HotDB.
 
-2020-09-15 14:03:17.957 \[INFO\] \[AUTHORITY\] \[checker-1\] cn.hotpu.hotdb.util.V(269) - HotDB license expire time: 2020-12-14, datanode limit to: 64
+2020-09-15 14:03:17.957 [INFO] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(269) - HotDB license expire time: 2020-12-14, datanode limit to: 64
 
-2020-09-15 14:03:17.957 \[INFO\] \[AUTHORITY\] \[checker-1\] cn.hotpu.hotdb.util.V(274) - HotDB trial expires in 89 days 23 hours 59 minutes 39 seconds.
+2020-09-15 14:03:17.957 [INFO] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(274) - HotDB trial expires in 89 days 23 hours 59 minutes 39 seconds.
 
-You can also view the license info by executing show @\@usbkey\\G on port 3325.
+You can also view the license info by executing show @@usbkey\\G on port 3325.
 
-root\@127.0.0.1:(none) 5.7.22 01:57:34\> show @\@usbkey\\G
+root@127.0.0.1:(none) 5.7.22 01:57:34> show @@usbkey\\G
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* 1. row \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+*************************** 1. row ***************************
 
 left_time: 7775979
 
@@ -352,27 +352,27 @@ comment: NULL
 
 When the trial license is expired, it needs to be updated to an official license to continue the compute node service. The official license can be divided into term official license and permanent official license according to the validity period of license, with the same update and activation steps.
 
-To update to the official license, the server\'s fingerprint is required. One unique fingerprint corresponds to one only official soft lock. Therefore, the official license can only be activated and used on the corresponding server.
+To update to the official license, the server's fingerprint is required. One unique fingerprint corresponds to one only official soft lock. Therefore, the official license can only be activated and used on the corresponding server.
 
 #### Generate fingerprint
 
 Execute the following command under the /directory hotdb-server/utils to generate the fingerprint:
 
-\[root\@localhost utils\]\# **java -jar hotdb_license.jar -f**
+[root@localhost utils]\# **java -jar hotdb_license.jar -f**
 
 trying to generate fingerprint on Linux amd64
 
 The fingerprint file was successfully generated in ./fingerprint-2020-09-15-14-41-53
 
-\[root\@localhost utils\]\# ll
+[root@localhost utils]\# ll
 
 total 136
 
--rw-r\--r\-- 1 root root 2049 Sep 15 14:41 fingerprint-2020-09-15-14-41-53
+-rw-r--r-- 1 root root 2049 Sep 15 14:41 fingerprint-2020-09-15-14-41-53
 
--rw-r\--r\-- 1 root root 98165 Aug 25 14:43 hotdb_license.jar
+-rw-r--r-- 1 root root 98165 Aug 25 14:43 hotdb_license.jar
 
--rw-r\--r\-- 1 root root 34976 Aug 25 14:43 SM4-1.0.jar
+-rw-r--r-- 1 root root 34976 Aug 25 14:43 SM4-1.0.jar
 
 #### Apply for official license
 
@@ -390,7 +390,7 @@ Start the compute node, the official license will be activated automatically. If
 
 If you want to view the details, you can execute the following command under the /directory hotdb-server/keys:
 
-\[root\@localhost keys\]\# **java -jar ../utils/hotdb_license.jar -l license-expiration-2020-09-15-14-53-39**
+[root@localhost keys]\# **java -jar ../utils/hotdb_license.jar -l license-expiration-2020-09-15-14-53-39**
 
 License info of file license-expiration-2020-09-15-14-53-39:
 
@@ -420,17 +420,17 @@ customer info: license_for_test
 
 Or view the license info output from the hotdb.log file after the compute node is started:
 
-2020-09-15 15:00:03.706 \[INFO\] \[AUTHORITY\] \[checker-1\] cn.hotpu.hotdb.util.V(262) - Thanks for chooising HotDB.
+2020-09-15 15:00:03.706 [INFO] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(262) - Thanks for chooising HotDB.
 
-2020-09-15 15:00:03.710 \[INFO\] \[AUTHORITY\] \[checker-1\] cn.hotpu.hotdb.util.V(269) - HotDB license expire time: 2020-09-22, datanode limit to: 64
+2020-09-15 15:00:03.710 [INFO] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(269) - HotDB license expire time: 2020-09-22, datanode limit to: 64
 
-2020-09-15 15:00:03.710 \[INFO\] \[AUTHORITY\] \[checker-1\] cn.hotpu.hotdb.util.V(274) - HotDB trial expires in 6 days 8 hours 59 minutes 56 seconds.
+2020-09-15 15:00:03.710 [INFO] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(274) - HotDB trial expires in 6 days 8 hours 59 minutes 56 seconds.
 
-You can also view the license info by executing show @\@usbkey\\G at port 3325.
+You can also view the license info by executing show @@usbkey\\G at port 3325.
 
-root\@127.0.0.1:(none) 5.7.22 03:00:56\> show @\@usbkey\\G
+root@127.0.0.1:(none) 5.7.22 03:00:56> show @@usbkey\\G
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* 1. row \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+*************************** 1. row ***************************
 
 left_time: 550796
 
@@ -458,7 +458,7 @@ comment: NULL
 
 If there are multiple licenses under the /directory hotdb-server/keys, you can execute the following command to view the currently used license:
 
-\[root\@localhost keys\]\# **java -jar ../utils/hotdb_license.jar -i**
+[root@localhost keys]\# **java -jar ../utils/hotdb_license.jar -i**
 
 The License currently in use is:
 
@@ -502,23 +502,23 @@ When you get the official license file, you should keep the file properly to avo
 
 #### License expiration
 
-After the compute node is started, the license status will be detected once every 5 minutes by default. When the license is expired, the compute node service will not stop immediately, however the number of nodes will be limited to 0, and reload @\@config will not be allowed for execution, and the license expiration warning will be output once every 5 minutes by the hotdb.log.
+After the compute node is started, the license status will be detected once every 5 minutes by default. When the license is expired, the compute node service will not stop immediately, however the number of nodes will be limited to 0, and reload @@config will not be allowed for execution, and the license expiration warning will be output once every 5 minutes by the hotdb.log.
 
-2020-12-15 00:02:52.113 \[ERROR\] \[AUTHORITY\] \[checker-1\] cn.hotpu.hotdb.util.V(163) - no matched license detected. Datanode limit to 0.
+2020-12-15 00:02:52.113 [ERROR] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(163) - no matched license detected. Datanode limit to 0.
 
-2020-12-15 00:02:52.114 \[ERROR\] \[AUTHORITY\] \[checker-1\] cn.hotpu.hotdb.a(5540) - Number of Datanodes Exceeded Maximum Size Limit. expect:4 limit:0
+2020-12-15 00:02:52.114 [ERROR] [AUTHORITY] [checker-1] cn.hotpu.hotdb.a(5540) - Number of Datanodes Exceeded Maximum Size Limit. expect:4 limit:0
 
-Under this circumstance, failure will be reported when you execute reload @\@config on port 3325:
+Under this circumstance, failure will be reported when you execute reload @@config on port 3325:
 
-root\@127.0.0.1:(none) 5.7.22 12:06:55\> reload @\@config;
+root@127.0.0.1:(none) 5.7.22 12:06:55> reload @@config;
 
 ERROR 10190 (HY000): Reload config failure, Number of Datanodes Exceeded Maximum Size Limit. For more details, please check the log
 
 With an expired license, the service will be failed to start and a message of no available license will be prompted, as shown below:
 
-2020-12-15 00:10:47.388 \[ERROR\] \[AUTHORITY\] \[checker-1\] cn.hotpu.hotdb.util.V(158) - no available matched license detected. we will shutdown now.
+2020-12-15 00:10:47.388 [ERROR] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(158) - no available matched license detected. we will shutdown now.
 
-2020-12-15 00:10:47.389 \[INFO\] \[EXIT\[ FLOW \]\] \[ShutdownHook\] cn.hotpu.hotdb.c(770) - begin to exit\...
+2020-12-15 00:10:47.389 [INFO] [EXIT[ FLOW ]] [ShutdownHook] cn.hotpu.hotdb.c(770) - begin to exit...
 
 Therefore, when the license is about to expire, you should apply for a new license and update it as soon as possible.
 
@@ -528,16 +528,16 @@ When the compute node restarts, if the number of authorized nodes and LogicDBs i
 
 Prompt when the number of authorized LogicDBs exceeds the existing configuration limit
 
-root\> show databases;
+root> show databases;
 
 ERROR 10161 (HY000): Wrong HotDB Config, due to: Number of Logic Database Exceeded Maximum Size Limit. expect:3 limit:2
 
 Log reminder:\
-2020-12-22 14:13:06.231 \[ERROR\] \[AUTHORITY\] \[checker-1\] cn.hotpu.hotdb.a(5844) - Number of Logic Database Exceeded Maximum Size Limit. expect:3 limit:2
+2020-12-22 14:13:06.231 [ERROR] [AUTHORITY] [checker-1] cn.hotpu.hotdb.a(5844) - Number of Logic Database Exceeded Maximum Size Limit. expect:3 limit:2
 
 When using the compute node, the number of authorized nodes and LogicDBs is less than the number of data nodes and LogicDBs currently configured, the dynamic loading is not allowed. The prompt is as follows:
 
-root\> reload @\@config;
+root> reload @@config;
 
 ERROR 10190 (HY000): Reload config failure, Number of Logic Database Exceeded Maximum Size Limit. For more details, please check the log
 

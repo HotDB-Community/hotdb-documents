@@ -4,7 +4,7 @@
 
 This Manual is compiled based on *Distributed Transactional Database Product HotDB Server - V2.5.6*, and it mainly introduces basic use method and operating procedures of compute node, for reference and learning by the users.
 
-Some functions in this manual could be used in combination with distributed transactional database management platform (hereinafter referred to as management platform), and if to know use method of management platform, please refer to *Distributed Transactional Database HotDB Server \[Management Platform\] Function Manual*.
+Some functions in this manual could be used in combination with distributed transactional database management platform (hereinafter referred to as management platform), and if to know use method of management platform, please refer to *Distributed Transactional Database HotDB Server [Management Platform] Function Manual*.
 
 HotDB Server V.2.5.3.1 and above provide a solution based on MySQL native replication function to solve the problem of HotDB Server cross-IDC disaster recovery, which can realize the cross-IDC data synchronization function and solve the problem of cross-IDC distributed transactional database service disaster recovery. This document only describes the functions and features of HotDB Server in general mode in detail. To understand the functions and features in disaster recovery mode, please refer to the *[Distributed Transactional Database HotDB Server - Cross-IDC Disaster Recovery Function Specification](file:////Users/anita/Desktop/2.5.4/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3.1%20%5bManagement%20Platform%5d%20Function%20Manual.doc).*
 
@@ -56,7 +56,7 @@ The distributed transactional database cluster (HotDB Server) is a database mana
 
 #### Explanation of technical terms
 
-If to know relevant terms and relation of HotDB Server cluster system, please refer to *Distributed Transactional Database HotDB Server \[Explanation of Terms\] Function Manual*.
+If to know relevant terms and relation of HotDB Server cluster system, please refer to *Distributed Transactional Database HotDB Server [Explanation of Terms] Function Manual*.
 
 #### Compute node
 
@@ -66,9 +66,9 @@ Compute node is data service provider, and its default service port is 3323, and
 
 After login, compute node could be used the same as MySQL database, for example:
 
-root\> mysql -uroot -proot -h127.0.0.1 -P3323
+root> mysql -uroot -proot -h127.0.0.1 -P3323
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -84,73 +84,73 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type \'help;\' or \'\\h\' for help. Type \'\\c\' to clear the current input statement.
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
-mysql\> show databases;
+mysql> show databases;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-----------------+
 
-\| DATABASE \|
+| DATABASE |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-----------------+
 
-\| CLASSIC_LOGICDB \|
+| CLASSIC_LOGICDB |
 
-\| HotDB \|
+| HotDB |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-----------------+
 
 2 rows in set (0.01 sec)
 
-mysql\> use CLASSIC_LOGICDB
+mysql> use CLASSIC_LOGICDB
 
 Database changed
 
-mysql\> show tables;
+mysql> show tables;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------------------------+
 
-\| Tables_in_CLASSIC_LOGICDB \|
+| Tables_in_CLASSIC_LOGICDB |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------------------------+
 
-\| customer \|
+| customer |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------------------------+
 
 1 row in set (0.03 sec)
 
 The application program connection of compute node is consistent with connection of MySQL, and only host, port, database, user and password information of the database Config File in the application program need to be modified. MySQL database drive and connection pool under different development platforms are supported, such as JDBC, c3p0, DHCP, DRUID connection pool of JAVA development platform. The following is configuration instance of c3p0 connection pool:
 
-\<!\--database mapping\--\>
+<!--database mapping-->
 
-\<!\-- com.mchange.v2.c3p0.ComboPooledDataSource, org.apache.commons.dbcp.BasicDataSource \--\>
+<!-- com.mchange.v2.c3p0.ComboPooledDataSource, org.apache.commons.dbcp.BasicDataSource -->
 
-\<bean id=\"dataSource1\" class=\"com.mchange.v2.c3p0.ComboPooledDataSource\"
+<bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 
-destroy-method=\"close\"\>
+destroy-method="close">
 
-\<property name=\"driverClass\" value=\"com.mysql.jdbc.Driver\" /\>
+<property name="driverClass" value="com.mysql.jdbc.Driver" />
 
-\<property name=\"driverClass\" value=\"com.mysql.jdbc.Driver\" /\>
+<property name="driverClass" value="com.mysql.jdbc.Driver" />
 
-\<property name=\"jdbcUrl\" value=\"jdbc:mysql://192.168.137.101:**3323**.cloth?characterEncoding=UTF-8\" /\> Where, port 3323 should be changed to the service port of the compute node.
+<property name="jdbcUrl" value="jdbc:mysql://192.168.137.101:**3323**.cloth?characterEncoding=UTF-8" /> Where, port 3323 should be changed to the service port of the compute node.
 
-\<!\--database mapping\--\>
+<!--database mapping-->
 
-\<property name=\"user\" value=\"root\" /\>
+<property name="user" value="root" />
 
-\<property name=\"password\" value=\"\$root\" /\>
+<property name="password" value="\$root" />
 
-\<property name=\"initialPoolSize\" value=\"10\" /\>
+<property name="initialPoolSize" value="10" />
 
-\<property name=\"maxPoolSize\" value=\"\$256\" /\>
+<property name="maxPoolSize" value="\$256" />
 
-\<property name=\"minPoolSize\" value=\"10\" /\>
+<property name="minPoolSize" value="10" />
 
-\<property name=\"maxIdleTime\" value=\"1800\" /\>
+<property name="maxIdleTime" value="1800" />
 
-\<property name=\"maxStatements\" value=\"1000\" /\>
+<property name="maxStatements" value="1000" />
 
 Meanwhile, compute node provides management port as 3325 by default, and the current service could be monitored and managed using command in management port. To know more information, please refer to [management port Information Monitoring](#management-port-information-monitoring).
 
@@ -164,7 +164,7 @@ For example: http://*192.168.200.191:3324*/login, the accesss page is shown as f
 
 Both manager username and password are: admin by default, while other user accounts are created by the manager user, with the initial password being: <service_hotdb@hotdb.com>.
 
-If to know detailed use method of the management platform, please refer to *Distributed Transactional Database HotDB Server \[Management Platform\] Function Manual*.
+If to know detailed use method of the management platform, please refer to *Distributed Transactional Database HotDB Server [Management Platform] Function Manual*.
 
 ### New functions and new features of Version 2.5.6
 
@@ -172,7 +172,7 @@ This chapter will briefly introduce the summary of functions which are added, pr
 
 -   Support [the online expansion/reduction of compute node services](#compute-node-auto-scaling), that is, the number of online compute node instances;
 
--   Multi-node mode is supported for the cross-IDC disaster recovery function. For more details, please refer to the \"[Distributed Transactional Database HotDB Server - V2.5.5 Cross-IDC Disaster Recovery Function Specification](file:////Users/anita/Desktop/英文文档/管理平台文档/2.5.5/英文2.5.5/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.5%20%5bManagement%20Platform%5d%20Function%20Manual.doc)".
+-   Multi-node mode is supported for the cross-IDC disaster recovery function. For more details, please refer to the "[Distributed Transactional Database HotDB Server - V2.5.5 Cross-IDC Disaster Recovery Function Specification](file:////Users/anita/Desktop/英文文档/管理平台文档/2.5.5/英文2.5.5/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.5%20%5bManagement%20Platform%5d%20Function%20Manual.doc)".
 
 -   Support direct parsing and identifying some [Oracle functions and Sequence syntax](#enableoraclefunction) to reduce the amount of code modification when Oracle migrates to HotDB Server;
 
@@ -184,7 +184,7 @@ This chapter will briefly introduce the summary of functions which are added, pr
 
 -   Add parameter [operateMode](#operatemode) to meet one-click configuration of parameter combination under different scenarios, such as performance maximization, debugging mode, etc;
 
--   Support [modification of sharding key](#online-modification-of-sharding-key) directly through SQL statements (alter table\... change shard column\...);
+-   Support [modification of sharding key](#online-modification-of-sharding-key) directly through SQL statements (alter table... change shard column...);
 
 -   Optimized [deadlock check](#deadlock-check) logic: control whether to roll back the transaction and start new transactions when deadlock occurs according to MySQL version number;
 
@@ -225,11 +225,11 @@ Parameter name of compute node                  Description of compute node para
 
 To make compute node of HotDB Server able to provide service normally, regular authorization license is required.
 
-If to know how to obtain service licensing, please refer to *Distributed Transactional Database HotDB Server \[Service Licensing\] Function Manual*.
+If to know how to obtain service licensing, please refer to *Distributed Transactional Database HotDB Server [Service Licensing] Function Manual*.
 
 ### Installation deployment and upgrading
 
-To deploy HotDB Server, JDK (JAVA operating environment), MySQL Database, USB KEY Driver Packet, Compute Node and Management Platform need to be installed. And a MySQL instance shall be configured as configDB of compute node. To deploy server operating system of compute node, 64-digit CentOS 6.x is recommended. If to know how to install, deploy and upgrade HotDB Server, or to know hardware configuration recommendation of HotDB Server, please refer to *Distributed Transactional Database HotDB Server \[Install Deploy\] Function Manual*.
+To deploy HotDB Server, JDK (JAVA operating environment), MySQL Database, USB KEY Driver Packet, Compute Node and Management Platform need to be installed. And a MySQL instance shall be configured as configDB of compute node. To deploy server operating system of compute node, 64-digit CentOS 6.x is recommended. If to know how to install, deploy and upgrade HotDB Server, or to know hardware configuration recommendation of HotDB Server, please refer to *Distributed Transactional Database HotDB Server [Install Deploy] Function Manual*.
 
 ### Config File
 
@@ -237,33 +237,33 @@ Config File of compute node is located under conf directory after installation o
 
 After modification of some server.xml parameters, they will take effect only after reenabling compute node, and some parameters could take effect via "[Reload](#reload)".
 
-If the parameters listed in [Instruction on use of compute node parameters](#_计算节点参数使用说明_2) do not exist in server.xml, that means the default value is used by the parameter; if you want to adjust a parameter value or add a parameter, please add the following code in server.xml, or add via "Configuration"-\>"Compute Node Parameters" page of the management platform.
+If the parameters listed in [Instruction on use of compute node parameters](#_计算节点参数使用说明_2) do not exist in server.xml, that means the default value is used by the parameter; if you want to adjust a parameter value or add a parameter, please add the following code in server.xml, or add via "Configuration"->"Compute Node Parameters" page of the management platform.
 
-\<property name=\" dropTableRetentionTime\"\>0\</property\>\<!---retention time of dropped table, o by default, not retained\--\>
+<property name=" dropTableRetentionTime">0</property><!---retention time of dropped table, o by default, not retained-->
 
 ## Rapid configuration of HotDB Server
 
-This section will introduce rapid configuration of HotDB Server. This section only introduces some necessary functions of Configuration to guarantee QuickStart, and to know more configuration functions, please refer to *Distributed Transactional Database HotDB Server \[management platform\] Function Manual*.
+This section will introduce rapid configuration of HotDB Server. This section only introduces some necessary functions of Configuration to guarantee QuickStart, and to know more configuration functions, please refer to *Distributed Transactional Database HotDB Server [management platform] Function Manual*.
 
-In the following example, a distributed transactional database cluster with three groups of data shardings (two data sources in each group) is configured. In this distributed transactional database cluster, a logicDB named \"test\" and a database table named \"customer\" is defined. This table is a sharding table; the sharding type is automatic sharding, and the sharding field is \"provinceid\".
+In the following example, a distributed transactional database cluster with three groups of data shardings (two data sources in each group) is configured. In this distributed transactional database cluster, a logicDB named "test" and a database table named "customer" is defined. This table is a sharding table; the sharding type is automatic sharding, and the sharding field is "provinceid".
 
 Before configuring HotDB Server, please ensure that the management platform and compute node have been normally enabled, and 6 MySQL database instances have been well prepared (In this case, configuration of master-master data node will be taken for instance, and if only single-node data node is needed, 3 instances shall be prepared).
 
-To know more about installation and deployment of HotDB Server and management platform, please refer to *Distributed Transactional Database HotDB Server \[Install Deploy\] Function Manual*.
+To know more about installation and deployment of HotDB Server and management platform, please refer to *Distributed Transactional Database HotDB Server [Install Deploy] Function Manual*.
 
 ### Log in to management platform
 
 Enter HTTP link address of management platform in browser, and log in to the management platform; HTTP link address is generally the server IP of the deployed management platform, the port is 3324 by default, for example, http://192.168.200.89:3324/login.html.
 
-The management platform provides two kinds of user roles: super manager user and general user, super manager user has both the initial username and password as: admin by default; while the general user is created by the super manager user, with the default password being: hotdb\@hotpu.cn.
+The management platform provides two kinds of user roles: super manager user and general user, super manager user has both the initial username and password as: admin by default; while the general user is created by the super manager user, with the default password being: hotdb@hotpu.cn.
 
 After the super manager user logs in, there are mainly "Compute Node Cluster Management" and "User Management" functions, the manager user could create and edit compute node cluster, and configure compute node connection information, add management platform user and add privilege for user, etc.
 
 ### Add compute node cluster
 
-Compute node cluster is a group of compute node services with high availability relation, add compute node cluster is to add the well deployed compute node to the management platform for management, and if to deploy a set of compute node cluster, please refer to *Distributed Transactional Database HotDB Server \[Install Deploy\] Function Manual*.
+Compute node cluster is a group of compute node services with high availability relation, add compute node cluster is to add the well deployed compute node to the management platform for management, and if to deploy a set of compute node cluster, please refer to *Distributed Transactional Database HotDB Server [Install Deploy] Function Manual*.
 
-Click "Cluster Deployment and Configuration"-\>"Add Compute Node Cluster" on compute node cluster management page, enter compute node's server IP service port, management port, username and password of management port connection, thus single compute node could be created, and after selecting master/slave node or multiple node, a group of high availability compute nodes could be added.
+Click "Cluster Deployment and Configuration"->"Add Compute Node Cluster" on compute node cluster management page, enter compute node's server IP service port, management port, username and password of management port connection, thus single compute node could be created, and after selecting master/slave node or multiple node, a group of high availability compute nodes could be added.
 
 After entry, click Test, and if connection succeeded, this compute node cluster could be assigned to the management platform user for configuration management.
 
@@ -281,29 +281,29 @@ Log in to management platform, and on the Management Platform User page, click "
 
 Create physical database and data source user respectively on 6 MySQL database instances (Data Source), log in to MySQL, and execute the following statements:
 
-CREATE DATABASE db01 CHARACTER SET \'utf8\' COLLATE \'utf8_general_ci\';
+CREATE DATABASE db01 CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
 
-GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,ALTER,PROCESS,REFERENCES,SUPER,LOCK TABLES,REPLICATION SLAVE,REPLICATION CLIENT,TRIGGER,SHOW VIEW,CREATE VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,EVENT,RELOAD ON \*.\* TO \'hotdb_datasource\'@\'%\' IDENTIFIED BY \'hotdb_datasource\';
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,ALTER,PROCESS,REFERENCES,SUPER,LOCK TABLES,REPLICATION SLAVE,REPLICATION CLIENT,TRIGGER,SHOW VIEW,CREATE VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,EVENT,RELOAD ON *.* TO 'hotdb_datasource'@'%' IDENTIFIED BY 'hotdb_datasource';
 
 Note:
 
 If MySQL version of the Data Source is 8.0 and above, authorization statements need to be added with XA_RECOVER_ADMIN privilege.
 
-hotdb\_ Datasource account is the only account for HotDB to connect to each MySQL instance, through which all added platform users can connect to MySQL instances. Operations of users of each platform are only on front-end business connection and user access control.
+hotdb_ Datasource account is the only account for HotDB to connect to each MySQL instance, through which all added platform users can connect to MySQL instances. Operations of users of each platform are only on front-end business connection and user access control.
 
-Generally, the database created by create database in MySQL is called "LogicDB\", while it is called \"database\" or \"certain sharding database\" in distributed transactional database system for it is where the data is actually saved.
+Generally, the database created by create database in MySQL is called "LogicDB", while it is called "database" or "certain sharding database" in distributed transactional database system for it is where the data is actually saved.
 
 For the convenience of configuration, the databases and users created on six MySQL database instances need to be consistent.
 
 ### Add LogicDB
 
-Usually, the database created by create database in MySQL is called \"LogicDB\". A \"LogicDB\" can provide database services for an application or a microservice. In order to maintain consistency, the distributed transactional database system also provides database services for an application or a microservice through the \"LogicDB\", but the distributed transactional database system is composed of multiple MySQL instances (in this case, 6 sets), so the \"LogicDB\" in HotDB Server is the \"global LogicDB\", that is, the set of \"LogicDB\" in 6 MySQL instances, which is still called LogicDB in HotDB Server.
+Usually, the database created by create database in MySQL is called "LogicDB". A "LogicDB" can provide database services for an application or a microservice. In order to maintain consistency, the distributed transactional database system also provides database services for an application or a microservice through the "LogicDB", but the distributed transactional database system is composed of multiple MySQL instances (in this case, 6 sets), so the "LogicDB" in HotDB Server is the "global LogicDB", that is, the set of "LogicDB" in 6 MySQL instances, which is still called LogicDB in HotDB Server.
 
 LogicDB is a virtual database in compute node, after logging in to compute node by MySQL command, display the LogicDB list via the following statements:
 
 show databases;
 
-Log in to management platform page, select "Configuration"-\>"LogicDB"-\>[Add LogicDB](#Add%20LogicDB). Click "**√**", save the configuration, and the LogicDB is successfully added.
+Log in to management platform page, select "Configuration"->"LogicDB"->[Add LogicDB](#Add%20LogicDB). Click "**√**", save the configuration, and the LogicDB is successfully added.
 
 ![](assets/standard/image8.png)
 
@@ -311,7 +311,7 @@ Log in to management platform page, select "Configuration"-\>"LogicDB"-\>[Add Lo
 
 Only the user granted with LogicDB privilege could use the LogicDB.
 
-Log in to the management platform page, select "Configuration"-\>"Database User Management", select Root User, and click "Edit" button. Jump to "Edit user privilege" page, and tick the created LogicDB"test" from the drop-down box, click "Save", and the privilege is successfully granted.
+Log in to the management platform page, select "Configuration"->"Database User Management", select Root User, and click "Edit" button. Jump to "Edit user privilege" page, and tick the created LogicDB"test" from the drop-down box, click "Save", and the privilege is successfully granted.
 
 Note:
 
@@ -323,7 +323,7 @@ After the management platform is installed, the system creates a platform user n
 
 Add Data Source Group could make it more convenient to Add or Modify a group of data sources with the same parameter value.
 
-Log in to Distributed Transactional Database Management Platform page, select "Configuration"-\>"Node Management"-\>"Data Source Group"-\>"Add Group":
+Log in to Distributed Transactional Database Management Platform page, select "Configuration"->"Node Management"->"Data Source Group"->"Add Group":
 
 ![](assets/standard/image10.png)
 
@@ -363,17 +363,17 @@ When Add Node, the data source group is applied on several data sources, which w
 
 In this case, six MySQL instances are divided into three groups (three shardings) with two MySQL instances in each group (one active and one standby). The above description corresponds to the distributed transactional database system: the total data consists of three data nodes, each of which has two data sources. We need to do the following operations on the platform: add three data nodes and add two data sources for the three data nodes.
 
-Log in to management platform page, select "Configuration"-\>"Node Management"-\>"Add Node":
+Log in to management platform page, select "Configuration"->"Node Management"->"Add Node":
 
 ![](assets/standard/image12.png)
 
 Either Add Data Node and its corresponding Data Source in batches or Add Data Source to existing Data Node is available, and only Add of Data Node and Data Source in batches is introduced here, and the operation is displayed as follow:
 
-1\. Fill in parameters of Data Node added: In this case, the Number of Data Nodes is 3, and the Data Node Type is Master-Master (other types could also be selected). In this case, Data Source Group selects not to use group, and you could also select to use the [Data Source Group](#add-data-source-group) added in previous section from the drop-down menu, and then Add in batches or Edit similar parameters. Without special requirements, the Node Prefix, Number of Encoding Bits and Start Encoding could use the default value. After filling in the parameters, click \[Generate\].
+1. Fill in parameters of Data Node added: In this case, the Number of Data Nodes is 3, and the Data Node Type is Master-Master (other types could also be selected). In this case, Data Source Group selects not to use group, and you could also select to use the [Data Source Group](#add-data-source-group) added in previous section from the drop-down menu, and then Add in batches or Edit similar parameters. Without special requirements, the Node Prefix, Number of Encoding Bits and Start Encoding could use the default value. After filling in the parameters, click [Generate].
 
 ![](assets/standard/image13.png)
 
-2\. Fill in Data Source Configuration Parameters according to the prompt message.
+2. Fill in Data Source Configuration Parameters according to the prompt message.
 
 ![](assets/standard/image14.png)![](assets/standard/image15.png)
 
@@ -411,11 +411,11 @@ Parameters include:
 
 -   Master Data Source: This parameter shall be filled in only when it needs to set up replication relation like master-master with slave(s) or multiple levels of slaves. The master data source name needing to be built replication relation in the current data source could be copied and pasted here. By default, the system will make auto judgement according to the configuration.
 
-Click \[...\] to unfold more parameters, including:
+Click [...] to unfold more parameters, including:
 
 ![](assets/standard/image16.png)
 
-3\. After completing the parameters, click \[Connection Test\] to verify that the entry is accurate and after all data sources are successfully connected, click \[Save and Return\], thus 3 data nodes and their respective corresponding 6 data sources have been successfully added.
+3. After completing the parameters, click [Connection Test] to verify that the entry is accurate and after all data sources are successfully connected, click [Save and Return], thus 3 data nodes and their respective corresponding 6 data sources have been successfully added.
 
 ![](assets/standard/image17.png)
 
@@ -423,7 +423,7 @@ Click \[...\] to unfold more parameters, including:
 
 The purpose of Add Sharding Function is to provide route method and algorithm of manual setting for table sharding, and if hoping to create table configuration by Auto Sharding, this step could be skipped.
 
-Log in to Management Platform page, select "Configuration"-\>"Sharding Function"-\>"Add Sharding Function".
+Log in to Management Platform page, select "Configuration"->"Sharding Function"->"Add Sharding Function".
 
 ![](assets/standard/image18.png)
 
@@ -431,7 +431,7 @@ According to business scenarios, enter configuration parameters, including:
 
 -   Sharding Function Name: Generate by default, Edit is available after un-checking
 
--   Sharding Type: includes ROUTE, RANGE, MATCH, SIMPLE_MOD, CRC32_MOD. Take RANGE for instance, to know more sharding functions, you could view more detailed function description document, and please refer to *Distributed Transactional Database HotDB Server \[Management Platform\] Function Manual*.
+-   Sharding Type: includes ROUTE, RANGE, MATCH, SIMPLE_MOD, CRC32_MOD. Take RANGE for instance, to know more sharding functions, you could view more detailed function description document, and please refer to *Distributed Transactional Database HotDB Server [Management Platform] Function Manual*.
 
 -   Setting Mode: includes Auto Setting and Manual Setting, and Auto Setting is taken for instance here. If selecting Auto Setting, the management platform will compute the Value Range automatically according to the configuration parameters, and partition the data nodes automatically; if selecting Manual Setting, the data nodes could be entered into corresponding Value Range manually.
 
@@ -441,15 +441,15 @@ According to business scenarios, enter configuration parameters, including:
 
 ![](assets/standard/image19.png)
 
-Click \[Preview\] to view the generated results, and click \[Modify\] to modify the Value Range or Data Node, in order to solve data skew problem.
+Click [Preview] to view the generated results, and click [Modify] to modify the Value Range or Data Node, in order to solve data skew problem.
 
 ![](assets/standard/image20.png)
 
-Click \[Save and Return\] to add sharding function.
+Click [Save and Return] to add sharding function.
 
 ### Add table configuration
 
-Log in to Management Platform page, select "Configuration"-\>"Table Configuration"-\>"Add Table Configuration"
+Log in to Management Platform page, select "Configuration"->"Table Configuration"->"Add Table Configuration"
 
 ![](assets/standard/image21.png)
 
@@ -467,7 +467,7 @@ According to business scenarios, after selecting the Table Type, enter the confi
 
 ![](assets/standard/image22.png)
 
-Click \[Save\], and Customer Auto Sharding Table is successfully added. Note: The Sharding Function cited in this table is AUTO_CRC32 type (for difference of the sharding types AUTO_MOD and AUTO_CRC32, the "Mode Declaration" in the page could be viewed).
+Click [Save], and Customer Auto Sharding Table is successfully added. Note: The Sharding Function cited in this table is AUTO_CRC32 type (for difference of the sharding types AUTO_MOD and AUTO_CRC32, the "Mode Declaration" in the page could be viewed).
 
 ### Check and reload configuration information
 
@@ -475,7 +475,7 @@ Log in to Management Platform page, and for any modification made to the HotDB S
 
 If Compute Node is not enabled, reload can't be executed, therefore, Compute Node shall be enabled first.
 
-Log in to Management Platform page, select "Configuration"-\>[Config Checking](#Config%20Checking), and click "Start Checking" in the page, if there is no prompt of configuration error, it means that the configuration information is correct:
+Log in to Management Platform page, select "Configuration"->[Config Checking](#Config%20Checking), and click "Start Checking" in the page, if there is no prompt of configuration error, it means that the configuration information is correct:
 
 Click [Reload](#Reload) in the page, if it's promoted "Reload Succeeded" in the page, then the configuration information has taken effect successfully in the compute node:
 
@@ -489,9 +489,9 @@ mysql -uroot -proot -h127.0.0.1 -P3323 -Dtest
 
 For example:
 
-root\> mysql -h127.0.0.1 -uroot -proot -P3323 -Dtest
+root> mysql -h127.0.0.1 -uroot -proot -P3323 -Dtest
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -507,9 +507,9 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type \'help;\' or \'\\h\' for help. Type \'\\c\' to clear the current input statement.
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
-mysql\>
+mysql>
 
 Execute customer Create Table statement:
 
@@ -523,9 +523,9 @@ CREATE TABLE \`customer\`(
 
 \`provinceid\` TINYINT UNSIGNED NOT NULL DEFAULT 0,
 
-\`province\` ENUM (\'Anhui\',\'Aomen\',\'Beijing\',\'Chongqing\',\'Fujian\',\'Gansu\',\'Guangdong\',\'Guangxi\',\'Guizhou\',\'Hainan\',\'Hebei\',\'Heilongjiang\',\'Henan\',\'Hubei\',\'Hunan\',\'Jiangsu\',\'Jiangxi\',\'Jilin\',\'Liaoning\',\'Neimenggu\',\'Ningxia\',\'Qinghai\',\'Shaanxi\',\'Shandong\',\'Shanghai\',\'Shanxi\',\'Sichuan\',\'Taiwan\',\'Tianjin\',\'Xianggang\',\'Xinjiang\',\'Xizang\',\'Yunnan\',\'Zhejiang\') NULL,
+\`province\` ENUM ('Anhui','Aomen','Beijing','Chongqing','Fujian','Gansu','Guangdong','Guangxi','Guizhou','Hainan','Hebei','Heilongjiang','Henan','Hubei','Hunan','Jiangsu','Jiangxi','Jilin','Liaoning','Neimenggu','Ningxia','Qinghai','Shaanxi','Shandong','Shanghai','Shanxi','Sichuan','Taiwan','Tianjin','Xianggang','Xinjiang','Xizang','Yunnan','Zhejiang') NULL,
 
-\`city\` VARCHAR(16) NULL default \'\',
+\`city\` VARCHAR(16) NULL default '',
 
 \`address\` VARCHAR(64) NULL,
 
@@ -537,51 +537,51 @@ UNIQUE KEY(\`telephone\`)
 
 Compute node will Create Customer Table in various data nodes. You can log in to various MySQL data sources, to verify whether customer has been created or not.
 
-Or find the [Table Configuration](#add-table-configuration) added in previous section on the "Configuration"-\>"Table Configuration" page, and click \[Not Created\] in the Table Structure column to jump to Ordinary DDL page.
+Or find the [Table Configuration](#add-table-configuration) added in previous section on the "Configuration"->"Table Configuration" page, and click [Not Created] in the Table Structure column to jump to Ordinary DDL page.
 
 ![](assets/standard/image24.png)
 
-Enter [LogicDB Username Password](#grant-user-logicdb-privilege), and after selecting Test LogicDB, enter Create Table statement, click \[Execute\] to Add Table Structure.
+Enter [LogicDB Username Password](#grant-user-logicdb-privilege), and after selecting Test LogicDB, enter Create Table statement, click [Execute] to Add Table Structure.
 
 ![](assets/standard/image25.png)
 
 After the Sharding Table Customer is successfully created, you could execute the following SQL statements in Compute Node, and write in data:
 
-INSERT INTO customer VALUES (21,\'何重庆\',\'13912340021\',4,\'Chongqing\',\'重庆\',\'某某街某某号\');
+INSERT INTO customer VALUES (21,'何重庆','13912340021',4,'Chongqing','重庆','某某街某某号');
 
-INSERT INTO customer VALUES (22,\'吕重庆\',\'13912340022\',4,\'Chongqing\',\'重庆\',\'某某街某某号\');
+INSERT INTO customer VALUES (22,'吕重庆','13912340022',4,'Chongqing','重庆','某某街某某号');
 
-INSERT INTO customer VALUES (25,\'孔福州\',\'13912340025\',5,\'Fujian\',\'福州\',\'某某街某某号\');
+INSERT INTO customer VALUES (25,'孔福州','13912340025',5,'Fujian','福州','某某街某某号');
 
-INSERT INTO customer VALUES (26,\'曹兰州\',\'13912340026\',6,\'Gansu\',\'兰州\',\'某某街某某号\');
+INSERT INTO customer VALUES (26,'曹兰州','13912340026',6,'Gansu','兰州','某某街某某号');
 
-INSERT INTO customer VALUES (67,\'岑南昌\',\'13912340067\',17,\'Jiangxi\',\'南昌\',\'某某街某某号\');
+INSERT INTO customer VALUES (67,'岑南昌','13912340067',17,'Jiangxi','南昌','某某街某某号');
 
-INSERT INTO customer VALUES (68,\'薛长春\',\'13912340068\',18,\'Jilin\',\'长春\',\'某某街某某号\');
+INSERT INTO customer VALUES (68,'薛长春','13912340068',18,'Jilin','长春','某某街某某号');
 
-INSERT INTO customer VALUES (69,\'雷沈阳\',\'13912340069\',19,\'Liaoning\',\'沈阳\',\'某某街某某号\');
+INSERT INTO customer VALUES (69,'雷沈阳','13912340069',19,'Liaoning','沈阳','某某街某某号');
 
-INSERT INTO customer VALUES (70,\'贺呼和浩特\',\'13912340070\',20,\'Neimenggu\',\'呼和浩特\',\'某某街某某号\');
+INSERT INTO customer VALUES (70,'贺呼和浩特','13912340070',20,'Neimenggu','呼和浩特','某某街某某号');
 
-INSERT INTO customer VALUES (71,\'倪银川\',\'13912340071\',21,\'Ningxia\',\'银川\',\'某某街某某号\');
+INSERT INTO customer VALUES (71,'倪银川','13912340071',21,'Ningxia','银川','某某街某某号');
 
-INSERT INTO customer VALUES (72,\'汤西宁\',\'13912340072\',22,\'Qinghai\',\'西宁\',\'某某街某某号\');
+INSERT INTO customer VALUES (72,'汤西宁','13912340072',22,'Qinghai','西宁','某某街某某号');
 
-INSERT INTO customer VALUES (73,\'滕西安\',\'13912340073\',23,\'Shaanxi\',\'西安\',\'某某街某某号\');
+INSERT INTO customer VALUES (73,'滕西安','13912340073',23,'Shaanxi','西安','某某街某某号');
 
-INSERT INTO customer VALUES (74,\'殷济南\',\'13912340074\',24,\'Shandong\',\'济南\',\'某某街某某号\');
+INSERT INTO customer VALUES (74,'殷济南','13912340074',24,'Shandong','济南','某某街某某号');
 
-INSERT INTO customer VALUES (93,\'顾台北\',\'13912340093\',28,\'Taiwan\',\'台北\',\'某某街某某号\');
+INSERT INTO customer VALUES (93,'顾台北','13912340093',28,'Taiwan','台北','某某街某某号');
 
-INSERT INTO customer VALUES (94,\'孟天津\',\'13912340094\',29,\'Tianjin\',\'天津\',\'某某街某某号\');
+INSERT INTO customer VALUES (94,'孟天津','13912340094',29,'Tianjin','天津','某某街某某号');
 
-INSERT INTO customer VALUES (95,\'平香港\',\'13912340095\',30,\'Xianggang\',\'香港\',\'某某街某某号\');
+INSERT INTO customer VALUES (95,'平香港','13912340095',30,'Xianggang','香港','某某街某某号');
 
-INSERT INTO customer VALUES (96,\'黄乌鲁木齐\',\'13912340096\',31,\'Xinjiang\',\'乌鲁木齐\',\'某某街某某号\');
+INSERT INTO customer VALUES (96,'黄乌鲁木齐','13912340096',31,'Xinjiang','乌鲁木齐','某某街某某号');
 
-INSERT INTO customer VALUES (99,\'萧杭州\',\'13912340099\',34,\'Zhejiang\',\'杭州\',\'某某街某某号\');
+INSERT INTO customer VALUES (99,'萧杭州','13912340099',34,'Zhejiang','杭州','某某街某某号');
 
-INSERT INTO customer VALUES (100,\'尹杭州\',\'13912340100\',34,\'Zhejiang\',\'杭州\',\'某某街某某号\');
+INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州','某某街某某号');
 
 Next, you could log in to Compute Node Service, to execute DELETE, UPDATE and SELECT operations toward the Customer Sharding Table.
 
@@ -605,23 +605,23 @@ In order to ensure that in case of Unavailable Status of Data Node in Vertical s
 
 -   If the configured Master Data Source is in Available status, but this data source can't be connected in reality, then at the time of Compute Node Enable, it will wait for configuration time of [masterSourceInitWaitTimeout](#keystore) (default:300s), to judge whether the data source is really un-connectable or not, and if during this period, the data source comes into reconnection without abnormality, then this node is successfully initialized;
 
--   If there are Unavailable nodes under all LogicDB, then the compute node can't be enabled, log prompt: 04/13 10:50:54.644 ERROR \[main\] (HotdbServer.java:436) -datanodes:\[3\] init failed. System exit.
+-   If there are Unavailable nodes under all LogicDB, then the compute node can't be enabled, log prompt: 04/13 10:50:54.644 ERROR [main] (HotdbServer.java:436) -datanodes:[3] init failed. System exit.
 
--   As long as corresponding data node of a LogicDB is available, then the compute node could start, and the table under corresponding logic could come into normal operation. If there is unavailable node under other LogicDB, then the table under the LogicDB can't make normal Read/Write, Client prompt: ERROR 1003 (HY000): DATABASE is unavailable when datanodes: \[datanode_id\] unavailable.
+-   As long as corresponding data node of a LogicDB is available, then the compute node could start, and the table under corresponding logic could come into normal operation. If there is unavailable node under other LogicDB, then the table under the LogicDB can't make normal Read/Write, Client prompt: ERROR 1003 (HY000): DATABASE is unavailable when datanodes: [datanode_id] unavailable.
 
 > For example: ALogicDB includes Node 1, 2, and BLogicDB includes Node 3, 4. If Node 1, 2 are Unavailable, but Node 3, 4 are available, then compute node could start, the table under BLogicDB could come into normal operation, the table under ALogicDB can't make Read/Write; if Node 1, 3 are Unavailable, then the compute node can't be enabled.
 
 -   Judgment of whether a node is available or not, is related with the status of the data source in configDB and the actual available status of the data source, and it's required that the configuration status shall be consistent with the data source status. Otherwise, Compute Node Enable will be influenced, and when compute node is enabled, connect configured available data source of configDB. If connection succeeded, it shall be deemed as available; if a data source configured available cannot be connected, even if the node has other available data sources which could be connected, the node shall be deemed as Unavailable, and each node shall be configured with at least one available data source, otherwise compute node can't be enabled. The specific conditions are as follow:
 
-1\. Master/slave data source is configured available
+1. Master/slave data source is configured available
 
 > If master/slave data source could be connected, then the node is available. If Active Master can't be connected, Standby Slave could be connected, then there will be Switch, and the Active Master will be set Unavailable, and the Standby Slave will be used, but the compute node shall still judge that the node is Unavailable. If Active Master could be connected, but Standby Slave can't be connected, then Active Master will be used, and Standby Slave will be set Unavailable, and the compute node will judge that the node is Unavailable. If master/slave database can't be connected, then the node is Unavailable.
 
-2\. Active Master Configuration is Unavailable, Standby Slave Configuration is available
+2. Active Master Configuration is Unavailable, Standby Slave Configuration is available
 
 > If Standby Slave could be connected, then Standby Slave shall be used, and the node is available. If Standby Slave can't be connected, then the node is Unavailable
 
-3\. Active Master Configuration is available, but Standby Slave Configuration is Unavailable
+3. Active Master Configuration is available, but Standby Slave Configuration is Unavailable
 
 > If Active Master could be connected, then Active Master shall be used, and the node is available. If Active Master can't be connected, then the node is Unavailable
 
@@ -633,9 +633,9 @@ In order to guarantee data consistency, when compute node is enabled, it will ma
 
 As for following parameters of MySQL data source service port, they are required to be set as uniform fixed value by compute node:
 
-1\. **completion_type must be NO_CHAN**, if the parameter is not standard, then reload fails;
+1. **completion_type must be NO_CHAN**, if the parameter is not standard, then reload fails;
 
-2\. **innodb_rollback_on_timeout shall be ON,** and the innodb_rollback_on_timeout parameter shown by show \[global\|session\] variables at any time shall be on, the description is as follow:
+2. **innodb_rollback_on_timeout shall be ON,** and the innodb_rollback_on_timeout parameter shown by show [global|session] variables at any time shall be on, the description is as follow:
 
 -   If innodb_rollback_on_timeout parameters are all off, then compute node allows successful load, but the behavior of the compute node equals to the transaction rollback method when innodb_rollback_on_timeout parameter is on, and the following prompts will be given at the time of Config Checking:
 
@@ -647,9 +647,9 @@ And at the time of Reload, the log output will be: innodb_rollback_on_timeout=of
 
 ![](assets/standard/image27.png)
 
-And at the time of Reload, the data source being off will have log output: MySQL variables \'innodb_rollback_on_timeout\' is not consistent, the current value is OFF ,neet to bu changed to ON, and the data source being on will have log output: MySQL variables \'innodb_rollback_on_timeout\' is not consistent, the current value is ON
+And at the time of Reload, the data source being off will have log output: MySQL variables 'innodb_rollback_on_timeout' is not consistent, the current value is OFF ,neet to bu changed to ON, and the data source being on will have log output: MySQL variables 'innodb_rollback_on_timeout' is not consistent, the current value is ON
 
-3\. **read_only**, the parameter description is as follow:
+3. **read_only**, the parameter description is as follow:
 
 -   If for master data source, the parameter read_only=1, then compute node will refuse to start, and reload fails.
 
@@ -677,15 +677,15 @@ Considering that sending super-large SQL by Client may threaten HotDB Server (no
 
 ### Management port information monitoring
 
-HotDB Server provides the customer a set of information monitoring, statistics and service management functions which are perfect and easy to operate. The user could log in to monitoring management port of compute node via MySQL Client to view the detailed information, please refer to *Distributed Transactional Database HotDB Server \[management port Command\] Function Manual* for detailed description.
+HotDB Server provides the customer a set of information monitoring, statistics and service management functions which are perfect and easy to operate. The user could log in to monitoring management port of compute node via MySQL Client to view the detailed information, please refer to *Distributed Transactional Database HotDB Server [management port Command] Function Manual* for detailed description.
 
 #### Management port command
 
-The user could log in to management port (default port: 3325) to use show @\@help command to view the supported management port command and corresponding role.
+The user could log in to management port (default port: 3325) to use show @@help command to view the supported management port command and corresponding role.
 
-root\> mysql -uroot -proot -P3325 -h192.168.200.201
+root> mysql -uroot -proot -P3325 -h192.168.200.201
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -701,31 +701,31 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type \'help;\' or \'\\h\' for help. Type \'\\c\' to clear the current input statement.
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
-mysql\> show @\@help;
+mysql> show @@help;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------------------------------------+---------------------------------------------------------------------------+
 
-\| statement \| description \|
+| statement | description |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------------------------------------+---------------------------------------------------------------------------+
 
-\| check @\@datasource_config \| Inspect MySQL parameter configuration information \|
+| check @@datasource_config | Inspect MySQL parameter configuration information |
 
-\| check @\@route \[db_name.tb_name \| tb_name\] \| Detect the data routing correctness of Sharding Table \|
+| check @@route [db_name.tb_name | tb_name] | Detect the data routing correctness of Sharding Table |
 
-\| kill @\@connection \[connection_id\] \| Close one appointed connection \|
+| kill @@connection [connection_id] | Close one appointed connection |
 
-\| onlineddl \"\[DDLSTATEMENT\]\" \| Execution onlineddl \|
+| onlineddl "[DDLSTATEMENT]" | Execution onlineddl |
 
-\| rebuild @\@pool \| Rebuild currently available datasources of all nodes \|
+| rebuild @@pool | Rebuild currently available datasources of all nodes |
 
-\| reload @\@config \| Re-load the configuration information \|
+| reload @@config | Re-load the configuration information |
 
-\| restart @\@heartbeat \[datanode_id\] \| Recover the heartbeat detection on the appointed data node \|
+| restart @@heartbeat [datanode_id] | Recover the heartbeat detection on the appointed data node |
 
-\| show @\@auxtable \| Displays the created auxiliary table information \|
+| show @@auxtable | Displays the created auxiliary table information |
 
 ...more contents are omitted, and you could log in to view...
 
@@ -733,87 +733,87 @@ mysql\> show @\@help;
 
 The user can enter corresponding command to monitor service condition of compute node, such as showing the data source information:
 
-mysql\> show @\@datasource;
+mysql> show @@datasource;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+------------------------------+------+--------+-----------------+------+----------------------+--------+------+------+--------------------+--------------+
 
-\| dn \| ds \| name \| type \| status \| host \| port \| schema \| active \| idle \| size \| unavailable_reason \| flow_control \|
+| dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+------------------------------+------+--------+-----------------+------+----------------------+--------+------+------+--------------------+--------------+
 
-\| 186 \| 227 \| 192.168.210.68_3307_db252 \| 1 \| 1 \| 192.168.210.68 \| 3307 \| db252 \| 0 \| 512 \| 512 \| NULL \| 0/64 \|
+| 186 | 227 | 192.168.210.68_3307_db252 | 1 | 1 | 192.168.210.68 | 3307 | db252 | 0 | 512 | 512 | NULL | 0/64 |
 
-\| 186 \| 228 \| 192.168.210.68_3308_db252 \| 3 \| 1 \| 192.168.210.68 \| 3308 \| db252 \| 0 \| 512 \| 512 \| NULL \| 0/64 \|
+| 186 | 228 | 192.168.210.68_3308_db252 | 3 | 1 | 192.168.210.68 | 3308 | db252 | 0 | 512 | 512 | NULL | 0/64 |
 
-\| 1 \| 7 \| 192.168.210.41_3307_db252 \| 1 \| 1 \| 192.168.210.41 \| 3307 \| db252 \| 0 \| 512 \| 512 \| NULL \| 0/64 \|
+| 1 | 7 | 192.168.210.41_3307_db252 | 1 | 1 | 192.168.210.41 | 3307 | db252 | 0 | 512 | 512 | NULL | 0/64 |
 
-\| 2 \| 8 \| 192.168.210.42_3307_db252 \| 1 \| 1 \| 192.168.210.42 \| 3307 \| db252 \| 0 \| 512 \| 512 \| NULL \| 0/64 \|
+| 2 | 8 | 192.168.210.42_3307_db252 | 1 | 1 | 192.168.210.42 | 3307 | db252 | 0 | 512 | 512 | NULL | 0/64 |
 
-\| 101 \| 74 \| 192.168.210.41_3307_clu_db30 \| 1 \| 1 \| 192.168.210.41 \| 3307 \| clu_db30 \| 0 \| 512 \| 512 \| NULL \| 0/64 \|
+| 101 | 74 | 192.168.210.41_3307_clu_db30 | 1 | 1 | 192.168.210.41 | 3307 | clu_db30 | 0 | 512 | 512 | NULL | 0/64 |
 
 ...more contents are omitted, and you could log in to view...
 
-The content behind show @@ command is a table name, for example in the previous instance, "show @\@datasource;", datasource is a table name.
+The content behind show @@ command is a table name, for example in the previous instance, "show @@datasource;", datasource is a table name.
 
 The user could also make DESC operation of the table name behind show @@ command, to view meanings of various fields in this table, such as viewing the meaning of various fields in data source information:
 
-mysql\> desc datasource;
+mysql> desc datasource;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------+----------------------------------------------+
 
-\| filedname \| description \|
+| filedname | description |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------+----------------------------------------------+
 
-\| dn \| Datanode \|
+| dn | Datanode |
 
-\| ds \| Datasource \|
+| ds | Datasource |
 
-\| name \| Datasource name \|
+| name | Datasource name |
 
-\| type \| Datasource type \|
+| type | Datasource type |
 
-\| status \| Datasource status \|
+| status | Datasource status |
 
-\| host \| Host \|
+| host | Host |
 
-\| port \| Port \|
+| port | Port |
 
-\| schema \| Physical database name \|
+| schema | Physical database name |
 
-\| active \| Active connections \|
+| active | Active connections |
 
-\| idle \| Idle connections \|
+| idle | Idle connections |
 
-\| size \| Total connections \|
+| size | Total connections |
 
-\| unavailable_reason \| Reason for datasource unavailable \|
+| unavailable_reason | Reason for datasource unavailable |
 
-\| flow_control \| Remaining available quantity in flow control \|
+| flow_control | Remaining available quantity in flow control |
 
-\| idc_id \| ID of IDC \|
+| idc_id | ID of IDC |
 
-\| listener_id \| LISTENER ID(ID of LISTENER) \|
+| listener_id | LISTENER ID(ID of LISTENER) |
 
-\| listener_status \| LISTENER STATUS(STATUS of LISTENER) \|
+| listener_status | LISTENER STATUS(STATUS of LISTENER) |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------+----------------------------------------------+
 
 16 rows in set (0.00 sec)
 
 The user could also make SELECT operation of the table name behind show @@ command, to make SQL query under arbitrary condition, such as viewing the data source on No. 11 data node:
 
-mysql\> select \* from datasource where dn=11;
+mysql> select * from datasource where dn=11;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-----------------------------+------+--------+----------------+------+---------+--------+------+------+--------------------+--------------+
 
-\| dn \| ds \| name \| type \| status \| host \| port \| schema \| active \| idle \| size \| unavailable_reason \| flow_control \|
+| dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-----------------------------+------+--------+----------------+------+---------+--------+------+------+--------------------+--------------+
 
-\| 11 \| 9 \| 192.168.210.70_3310_yds_db1 \| 1 \| 1 \| 192.168.210.70 \| 3310 \| yds_db1 \| 2 \| 32 \| 34 \| NULL \| 0/16 \|
+| 11 | 9 | 192.168.210.70_3310_yds_db1 | 1 | 1 | 192.168.210.70 | 3310 | yds_db1 | 2 | 32 | 34 | NULL | 0/16 |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-----------------------------+------+--------+----------------+------+---------+--------+------+------+--------------------+--------------+
 
 1 row in set (0.00 sec)
 
@@ -821,9 +821,9 @@ mysql\> select \* from datasource where dn=11;
 
 Compute node supports the function of Limit on Number of Front-end Connections, which could provide guarantee in case of access overload, and the function is the same as MySQL. The use method is: make configuration in server.xml:
 
-\<property name=\"maxConnections\"\>5000\</property\>\<!\-- Front maximum connections \--\>
+<property name="maxConnections">5000</property><!-- Front maximum connections -->
 
-\<property name=\"maxUserConnections\"\>0\</property\>\<!\-- User's front maximum connections, Unlimited: 0 \--\>
+<property name="maxUserConnections">0</property><!-- User's front maximum connections, Unlimited: 0 -->
 
 maxConnections is front-end Max Connections, 5000 by default;
 
@@ -855,9 +855,9 @@ Then, when HotDB Server compute node is enabled, it will establish 32 back-end c
 
 At this time, if there is a 2048 Concurrent Pressurizing Scenario to impose pressure to compute node, it will be found that there are insufficient available connections in the connection pool, and the compute node will automatically increase the connections with data source, and the Max Connections could be up to 4200.
 
-After Pressurizing, these connections will not be destroyed immediately. Instead, they will wait until examination by Idle Examination Period: if Idle (that is the management port show @\@backend is marked as Idle) connections are bigger than 512, then the connections shall be destroyed to 512; if smaller than 512, they will be kept intact;
+After Pressurizing, these connections will not be destroyed immediately. Instead, they will wait until examination by Idle Examination Period: if Idle (that is the management port show @@backend is marked as Idle) connections are bigger than 512, then the connections shall be destroyed to 512; if smaller than 512, they will be kept intact;
 
-If to make Idle Connections back to Initial Connections, then during running process of compute node, you could rebuild connection pool by referring to rebuild connection pool rebuild @\@pool related chapters in *Distributed Transactional Database HotDB Server \[management port Command\] Function Manual*, then Initial Connections status shall be recovered.
+If to make Idle Connections back to Initial Connections, then during running process of compute node, you could rebuild connection pool by referring to rebuild connection pool rebuild @@pool related chapters in *Distributed Transactional Database HotDB Server [management port Command] Function Manual*, then Initial Connections status shall be recovered.
 
 ### Limit on use of disk space
 
@@ -867,13 +867,13 @@ When the user conducts operations such as SQL Query Insert, etc. after Create Se
 
 Error-level logs recorded by compute node logs are as follow, and when End Session, the prompt message is the same with it:
 
-2019-06-10 18:03:24.423 \[ERROR\] \[DISKSPACE\] \[Employee-2\] cn.hotpu.hotdb.mysql.nio.handler.MultiNodeHandler(88) - session\[1606\] was killed,due to less than 1G space left on device,and the size of temp-file is larger than the usable space.
+2019-06-10 18:03:24.423 [ERROR] [DISKSPACE] [Employee-2] cn.hotpu.hotdb.mysql.nio.handler.MultiNodeHandler(88) - session[1606] was killed,due to less than 1G space left on device,and the size of temp-file is larger than the usable space.
 
 ### Reload
 
 Compute node could make Online Reload of configuration information without re-enabling the service. For the parameters which could take effect immediately via [Reload](#Reload) function, please refer to [Instruction on use of compute node parameters](#_计算节点参数使用说明_2).
 
-There are two Reload methods, one is to log in to [[management port (3325)]{.ul}](#management-port-information-monitoring) to execute: reload @\@config command; the other is to log in to management platform, click [Reload](#Reload) button on top right corner of the menu bar, and reload the new configuration items to the compute node for use. As shown in the following figure:
+There are two Reload methods, one is to log in to [[management port (3325)]{.ul}](#management-port-information-monitoring) to execute: reload @@config command; the other is to log in to management platform, click [Reload](#Reload) button on top right corner of the menu bar, and reload the new configuration items to the compute node for use. As shown in the following figure:
 
 ![](assets/standard/image29.png)
 
@@ -883,7 +883,7 @@ In order to guarantee that compute node makes accurate loading of configuration 
 
 ### Config Checking
 
-Log in to management platform, select "Configuration"-\>[Config Checking](#Config%20Checking) to enter the Config Checking panel, click "Start Checking" button, and then it will check the configuration items in [Config Checking](#Config%20Checking) menu of Distributed Transactional Database Management Platform, as shown in the following figure:
+Log in to management platform, select "Configuration"->[Config Checking](#Config%20Checking) to enter the Config Checking panel, click "Start Checking" button, and then it will check the configuration items in [Config Checking](#Config%20Checking) menu of Distributed Transactional Database Management Platform, as shown in the following figure:
 
 ![](assets/standard/image31.png)
 
@@ -893,7 +893,7 @@ In case of inaccurate configuration items, modify correspondingly according to t
 
 ![](assets/standard/image32.png)
 
-When executing reload @\@config command to reload via compute node management port, Config Checking will be conducted first as well by default, and successful reload is allowed only after the checking passed.
+When executing reload @@config command to reload via compute node management port, Config Checking will be conducted first as well by default, and successful reload is allowed only after the checking passed.
 
 ### Deadlock Check
 
@@ -919,7 +919,7 @@ In Distributed Transactional Database system of HotDB Server, compute node could
 
 In Config File server.xml of compute node, set Deadlock Check Period at the value bigger than 0, which will enable Deadlock Auto Check function. By default, Deadlock Check is enabled, and the Check Period is 3000ms.
 
-\<property name=\" deadlockCheckPeriod \"\>3000\</property\>
+<property name=" deadlockCheckPeriod ">3000</property>
 
 When the value of deadlockCheckPeriod is set as 0, Deadlock Check function will not start.
 
@@ -927,41 +927,41 @@ When Start Deadlock Check of compute node, re-execute the above-mentioned DELETE
 
 Session 1, start transaction:
 
-mysql\> start transaction;
+mysql> start transaction;
 
 Query OK, 0 rows affected (0.00 sec)
 
 Session 2, start transaction:
 
-mysql\> start transaction;
+mysql> start transaction;
 
 Query OK, 0 rows affected (0.00 sec)
 
 Session 1, Execute DELETE statement on data node where DNID = 15:
 
-mysql\> delete from customer where dnid=15 and id=1;
+mysql> delete from customer where dnid=15 and id=1;
 
 Query OK, 1 row affected (0.00 sec)
 
 Session 2, Execute DELETE statement on data node where DNID = 13
 
-mysql\> delete from customer where dnid=13 and id=4;
+mysql> delete from customer where dnid=13 and id=4;
 
 Query OK, 1 row affected (0.00 sec)
 
 Session 1, Execute DELETE statement on data node where DNID = 13; DELETE operation will be blocked by Session 2:
 
-mysql\> delete from customer where dnid=13 and id=4;
+mysql> delete from customer where dnid=13 and id=4;
 
 Session 2, Execute DELETE statement on data node where DNID = 15; this operation will be blocked by Session 1; since Session 1 is blocked by Session 2, and Session 2 is also blocked by Session 1, therefore, there will be deadlock at this time
 
-mysql\> delete from customer where dnid=15 and id=1;
+mysql> delete from customer where dnid=15 and id=1;
 
 Query OK, 1 row affected (1.59 sec)
 
 Compute node checks deadlock, and rolls back to transaction in Session 1:
 
-mysql\> delete from customer where dnid=13 and id=4;
+mysql> delete from customer where dnid=13 and id=4;
 
 ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting transaction
 
@@ -1019,23 +1019,23 @@ If the following error information is returned during SQL execution, the compute
 
 For example, execute a SQL with primary key conflict as follows:
 
-mysql\> insert into table01 (id,title,author,submission_date) values (3,\"apple\", \"apple pie\", \'2019-10-11-20-05\');
+mysql> insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');
 
-ERROR 1062 (23000): Duplicate entry \'3\' for key \'PRIMARY\'
+ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'
 
 View the compute node log（hotdb-unusualsql.log）：
 
-2019-10-12 15:27:45.051 \[INFO\] **\[UNUSUALSQL\]** \[\$NIOREACTOR-7-RW\] cn.hotpu.hotdb.mysql.nio.MySQLConnection(415) - ERROR 1062:Duplicate entry \'3\' for key \'PRIMARY\' \[frontend:\[thread=\$NIOREACTOR-7-RW,id=453,user=root,host=192.168.210.225,port=3323,localport=65442,schema=DBY\]; backend:null; frontend_sql:insert into table01 (id,title,author,submission_date) values (3,\"apple\", \"apple pie\", \'2019-10-11-20-05\');backend_sql:null\]
+2019-10-12 15:27:45.051 [INFO] **[UNUSUALSQL]** [\$NIOREACTOR-7-RW] cn.hotpu.hotdb.mysql.nio.MySQLConnection(415) - ERROR 1062:Duplicate entry '3' for key 'PRIMARY' [frontend:[thread=\$NIOREACTOR-7-RW,id=453,user=root,host=192.168.210.225,port=3323,localport=65442,schema=DBY]; backend:null; frontend_sql:insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');backend_sql:null]
 
 For another example, execute a SQL intercepted by SQL firewall as follows:
 
-mysql\> select \* from test;
+mysql> select * from test;
 
 ERROR 1064 (HY000): Intercepted by sql firewall, because: not allowed to execute select without where expression
 
 View the compute node log（hotdb-unusualsql.log）：
 
-2019-10-14 15:41:42.246 \[INFO\] **\[UNUSUALSQL\]** \[\$NIOExecutor-1-2\] cn.hotpu.hotdb.route.RouteService(415) - ERROR 10029:not pass sql firewall \[frontend:\[thread=\$NIOExecutor-1-2,id=1433,user=root,host=192.168.210.225,port=3323,localport=64658,schema=DBY\]; backend:null; frontend_sql:null; backend_sql:null\] \[DBY.count\]=33
+2019-10-14 15:41:42.246 [INFO] **[UNUSUALSQL]** [\$NIOExecutor-1-2] cn.hotpu.hotdb.route.RouteService(415) - ERROR 10029:not pass sql firewall [frontend:[thread=\$NIOExecutor-1-2,id=1433,user=root,host=192.168.210.225,port=3323,localport=64658,schema=DBY]; backend:null; frontend_sql:null; backend_sql:null] [DBY.count]=33
 
 Note:
 
@@ -1043,45 +1043,45 @@ For MySQL error code explanations, please refer to the official document; <https
 
 By default, this type of log information is saved in the file hotdb_unusualsql.log under the HotDB Server installation directory /logs/extra/unusualsql/. If the log is not recorded to a file, check whether the following configuration exists under log4j2.xml in the HotDB Server installation directory /conf:
 
-\</RollingFile\>
+</RollingFile>
 
-\<RollingFile
+<RollingFile
 
-name=\"**Unusualsql**\"
+name="**Unusualsql**"
 
-filename=\"\${sys:HOTDB_HOME}**/logs/extra/unusualsql/hotdb-unusualsql.log**\"
+filename="\${sys:HOTDB_HOME}**/logs/extra/unusualsql/hotdb-unusualsql.log**"
 
-filepattern=\"\${sys:HOTDB_HOME}/logs/extra/unusualsql/hotdb-unusualsql-%d{yyyy-MM-dd-HH-mm-ss}.log\"\>
+filepattern="\${sys:HOTDB_HOME}/logs/extra/unusualsql/hotdb-unusualsql-%d{yyyy-MM-dd-HH-mm-ss}.log">
 
-\<PatternLayout
+<PatternLayout
 
-pattern=\"%d{yyyy-MM-dd HH:mm:ss.SSS} \[%-4p\] \[%marker\] \[%t\] %c(%L) - %msg%n\"/\>
+pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-4p] [%marker] [%t] %c(%L) - %msg%n"/>
 
-\<Policies\>
+<Policies>
 
-\<SizeBasedTriggeringPolicy size=\"100 MB\"/\>
+<SizeBasedTriggeringPolicy size="100 MB"/>
 
-\</Policies\>
+</Policies>
 
-\<!\-- only record unusual sql log \--\>
+<!-- only record unusual sql log -->
 
-\<filters\>
+<filters>
 
-\<MarkerFilter marker=\"U**NUSUALSQL**\" onMatch=\"ACCEPT\" onMismatch=\"DENY\"\>\</MarkerFilter\>
+<MarkerFilter marker="U**NUSUALSQL**" onMatch="ACCEPT" onMismatch="DENY"></MarkerFilter>
 
-\</filters\>
+</filters>
 
-\<DefaultRolloverStrategy max=\"1000\"/\>
+<DefaultRolloverStrategy max="1000"/>
 
-\</RollingFile\>
+</RollingFile>
 
-\</Appenders\>
+</Appenders>
 
-\<Loggers\>
+<Loggers>
 
-\<Root level=\"info\"\>
+<Root level="info">
 
-\<AppenderRef ref=\"**Unusualsql**\" /\>
+<AppenderRef ref="**Unusualsql**" />
 
 ## Safety
 
@@ -1101,7 +1101,7 @@ LogicDB must be accessed with granted compute node user privilege. Compute node 
   UPDATE               UPDATE
   DELETE               DELETE,REPLACE
   INSERT               INSERT,REPLACE,INSERT...SELECT
-  SUPER                management port statement, /\*!HotDB:dnid=?\*/
+  SUPER                management port statement, /*!HotDB:dnid=?*/
 
 -------------------- ---------------------------------------------------
 
@@ -1111,7 +1111,7 @@ The user with SUPER privilege, could log in to 3325port of compute node, and cou
 
 The user with SUPER privilege could execute hint statement at 3323port. For example:
 
-/\*!hotdb:dnid=1\*/select \* from table
+/*!hotdb:dnid=1*/select * from table
 
 **Privilege range:**
 
@@ -1143,9 +1143,9 @@ Since HotDB-Server v.2.5.5, SSL encrypted connection mode to log in to the compu
 
 ##### Generation of the certificate and key files
 
-Please refer to the [official MySQL documents](https://dev.mysql.com/doc/refman/5.7/en/creating-ssl-rsa-files.html) to generate a self-signed secret key. For example, you can generate the certificate and key files using MySQL\'s own command mysql_ssl_rsa_setup.
+Please refer to the [official MySQL documents](https://dev.mysql.com/doc/refman/5.7/en/creating-ssl-rsa-files.html) to generate a self-signed secret key. For example, you can generate the certificate and key files using MySQL's own command mysql_ssl_rsa_setup.
 
-mysql_ssl_rsa_setup \--datadir=/usr/local/crt/
+mysql_ssl_rsa_setup --datadir=/usr/local/crt/
 
 ![](assets/standard/image36.png)
 
@@ -1159,21 +1159,21 @@ Note: the certificate generated by the MySQL command cannot be CA certified, ple
 
 If you need to generate a self-signed certificate capable of CA authentication, you need to use openssl. Please refer to the following steps:
 
-1\. Generate CA root certificate private key: openssl genrsa 2048 \> ca-key.pem
+1. Generate CA root certificate private key: openssl genrsa 2048 > ca-key.pem
 
-2\. Generate CA root certificate: openssl req -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem. Please note that in the information filling step, Common Name is better to be filled in the valid domain name, and the name cannot be the same as Common Name in the issued certificate. Here we fill in 127.0.0.1
+2. Generate CA root certificate: openssl req -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem. Please note that in the information filling step, Common Name is better to be filled in the valid domain name, and the name cannot be the same as Common Name in the issued certificate. Here we fill in 127.0.0.1
 
-3\. Generate server certificate request file: openssl req -newkey rsa:2048 -days 3600 -nodes -keyout server-key.pem -out server-req.pem. Please note that in the information filling step, Common Name needs to be filled in the IP address/domain name monitored by HotDB-Server, and the client will use this IP for service connection. It cannot be the same as the information in CA certificate.
+3. Generate server certificate request file: openssl req -newkey rsa:2048 -days 3600 -nodes -keyout server-key.pem -out server-req.pem. Please note that in the information filling step, Common Name needs to be filled in the IP address/domain name monitored by HotDB-Server, and the client will use this IP for service connection. It cannot be the same as the information in CA certificate.
 
-4\. Use command openssl rsa to process the secret key to delete the password: openssl rsa -in server-key.pem -out server-key.pem
+4. Use command openssl rsa to process the secret key to delete the password: openssl rsa -in server-key.pem -out server-key.pem
 
-5\. Generate the self signed certificate for the server: openssl x509 -req -in server-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem
+5. Generate the self signed certificate for the server: openssl x509 -req -in server-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem
 
-6\. Generate the client certificate request file: openssl req -newkey rsa:2048 -days 3600 -nodes -keyout client-key.pem -out client-req.pem. Note that the Common Name in the information filling step cannot be the same as the information in the CA certificate.
+6. Generate the client certificate request file: openssl req -newkey rsa:2048 -days 3600 -nodes -keyout client-key.pem -out client-req.pem. Note that the Common Name in the information filling step cannot be the same as the information in the CA certificate.
 
-7\. Use command openssl rsa to process the secret key to delete password: openssl rsa -in client-key.pem -out client-key.pem
+7. Use command openssl rsa to process the secret key to delete password: openssl rsa -in client-key.pem -out client-key.pem
 
-8\. Generate self signed certificate for client: openssl x509 -req -in client-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out client-cert.pem
+8. Generate self signed certificate for client: openssl x509 -req -in client-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out client-cert.pem
 
 ##### Generation of server.jks file
 
@@ -1201,21 +1201,21 @@ Enter password SDcrtest
 
 After the TLS secret key is generated, the corresponding secret key file should be transferred to the server where the server and client of the compute node are located and configured with the following three parameters in the compute node as required before using:
 
-\<property name=\"enableSSL\"\>false\</property\>\<!\-- Enable SSL connection or not \--\>
+<property name=[enableSSL](#enableSSL)>false</property><!-- Enable SSL connection or not -->
 
 Parameter description: true means to enable SSL function; false means to disable SSL function; default value is false.
 
-\<property name=\"keyStore\"\>/server.jks\</property\>\<!\-- Path to the data certificate .jks file for TLS connection \--\>
+<property name=[keyStore](#keyStore)>/server.jks</property><!-- Path to the data certificate .jks file for TLS connection -->
 
 Parameter description: a set of pem file related to server.jks and client is provided by default by compute nodes under /conf directory, with password of hotdb.com, which can be used for simple connection testing. When you choose to use your own generated TLS certificate or pay-for-use TLS certificate to connect, you need to fill in according to the actual path and name. For example, /usr/local/crt/server.jks.
 
-\<property name=\"keyStorePass\"\>BB5A70F75DD5FEB214A5623DD171CEEB\</property\>\<!\-- Password of the data certificate .jks file for TLS connection \--\>
+<property name=[keyStorePass](#keyStorePass)>BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- Password of the data certificate .jks file for TLS connection -->
 
-Parameter description: the password in the key file that comes with the program is hotdb.com, which can be encrypted by users through select hex(aes_encrypt(\'hotdb.com\',unhex(md5(\'Hotpu\@2013\# shanghai\#\')))); to get the default value BB5A70F75DD5FEB214A5623DD171CEEB and fill the value in keyStorePass. If users use their own generated key file, the value be filled is based on the password which is actually entered. If SDcrtest is entered as password, users can get the value of keyStorePass through select hex(aes_encrypt(\'SDcrtest\',unhex(md5(\'Hotpu\@2013\# shanghai\#\')))) and fill the value C43BD9DDE9C908FEE7683AED7A301E33 in keyStorePass.
+Parameter description: the password in the key file that comes with the program is hotdb.com, which can be encrypted by users through select hex(aes_encrypt('hotdb.com',unhex(md5('Hotpu@2013\# shanghai\#')))); to get the default value BB5A70F75DD5FEB214A5623DD171CEEB and fill the value in keyStorePass. If users use their own generated key file, the value be filled is based on the password which is actually entered. If SDcrtest is entered as password, users can get the value of keyStorePass through select hex(aes_encrypt('SDcrtest',unhex(md5('Hotpu@2013\# shanghai\#')))) and fill the value C43BD9DDE9C908FEE7683AED7A301E33 in keyStorePass.
 
 The configured parameters are as follows:
 
-![}\]2\_\_08H0B\`61\[421T9YIBK](media/image40.png)
+![}]2__08H0B\`61[421T9YIBK](media/image40.png)
 
 Users have no need to restart the compute node service for the parameter modification, for server.jks documents will be read again during dynamic loading. If SSL-related logic initialization fails, the dynamic loading will not fail, though the subsequent SSL connections cannot be established normally. Non-SSL connections will not be affected.
 
@@ -1239,7 +1239,7 @@ Users have no need to restart the compute node service for the parameter modific
 
 For MySQL clients, users can specify a secret key file to connect using the following method:
 
-mysql -ujing01 -p123456 -h192.168.240.117 -P3323 \--ssl-ca=/usr/local/crt/ca.pem \--ssl-cert=/usr/local/crt/client-cert.pem \--ssl-key=/usr/local/crt/client-key.pem \--ssl-mode=verify_ca
+mysql -ujing01 -p123456 -h192.168.240.117 -P3323 --ssl-ca=/usr/local/crt/ca.pem --ssl-cert=/usr/local/crt/client-cert.pem --ssl-key=/usr/local/crt/client-key.pem --ssl-mode=verify_ca
 
 ![](assets/standard/image44.png)
 
@@ -1262,7 +1262,7 @@ jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/u
 
 2\) By using a certificate:
 
-openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name \"mysqlclient\" -out client-keystore.p12
+openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name "mysqlclient" -out client-keystore.p12
 
 keytool -importkeystore -srckeystore client-keystore.p12 -srcstoretype pkcs12 -destkeystore keystore -deststoretype JKS
 
@@ -1277,7 +1277,7 @@ For Navicat and other similar clients, users can configure the relevant file loc
 
 ![](assets/standard/image48.png)
 
-Note: for some versions of Navicat, it may be unable to connect after checking the CA certificate name verification, which may be because the DLL of this version is not compatible. For example, the following warning: \"2026 SSL connection error: ASN: bad other signature confirmation\". In this case, you need to replace the "libmysql.dll" with files with the same name in MySQL Workbench, or update it to a higher version. Please refer to the [link](https://www.heidisql.com/forum.php?t=19494).
+Note: for some versions of Navicat, it may be unable to connect after checking the CA certificate name verification, which may be because the DLL of this version is not compatible. For example, the following warning: "2026 SSL connection error: ASN: bad other signature confirmation". In this case, you need to replace the "libmysql.dll" with files with the same name in MySQL Workbench, or update it to a higher version. Please refer to the [link](https://www.heidisql.com/forum.php?t=19494).
 
 ## Data migration, backup and recovery
 
@@ -1289,11 +1289,11 @@ HotDB Server supports mysqldump function, and the usage is the same with MySQL.
 
 When using mysqldump to export data from compute node, it's required to Add the following specified parameters:
 
-\--set-gtid-purged=OFF \--no-tablespaces \--skip-triggers \--single-transaction \--default-character-set=utf8mb4 \--complete-insert \--compact \--skip-tz-utc \[\--replace\|\--insert-ignore\] \[\--hex-blob\] \[\--where=xxx\]
+--set-gtid-purged=OFF --no-tablespaces --skip-triggers --single-transaction --default-character-set=utf8mb4 --complete-insert --compact --skip-tz-utc [--replace|--insert-ignore] [--hex-blob] [--where=xxx]
 
 When using mysqldump to export data from MySQL and then import to compute node, it's required to Add the following parameters:
 
-\--no-defaults \--no-tablespaces \--complete-insert \--default-character-set=utf8mb4 \--hex-blob \--master-data=2 \--no-create-db \--set-gtid-purged=OFF \--single-transaction \--skip-add-locks \--skip-disable-keys \--skip-triggers \--skip-tz-utc \[\--replace\|\--insert-ignore\] \[\--no-create-info\|\--no-data\] \[--where=xxx\] \--databases xxx
+--no-defaults --no-tablespaces --complete-insert --default-character-set=utf8mb4 --hex-blob --master-data=2 --no-create-db --set-gtid-purged=OFF --single-transaction --skip-add-locks --skip-disable-keys --skip-triggers --skip-tz-utc [--replace|--insert-ignore] [--no-create-info|--no-data] [--where=xxx] --databases xxx
 
 Note: Please fill in value of default-character-set parameter according to actual conditions, for example utf8 or utf8mb4, etc.
 
@@ -1303,25 +1303,25 @@ If specified parameters are not used, there may be problem of time difference, a
 
 #### mysqlbinlog - utility program processing binary log files
 
-Compute node supports parsing mysqlbinlog syntax to synchronize incremental data, in order to reduce downtime for migrating standalone MySQL data to compute node. Use mysqlbinlog to execute SQL statement of a certain binlog file in MySQL connection, so as to import data from a certain database to a certain LogicDB of compute node. Firstly, log in to [management port](#management-port-information-monitoring) (default port: 3325), execute dbremapping command to Add database mapping relation, and for use method of dbremapping command, please refer to *Distributed Transactional Database HotDB Server \[management port Command\] Function Manual*.
+Compute node supports parsing mysqlbinlog syntax to synchronize incremental data, in order to reduce downtime for migrating standalone MySQL data to compute node. Use mysqlbinlog to execute SQL statement of a certain binlog file in MySQL connection, so as to import data from a certain database to a certain LogicDB of compute node. Firstly, log in to [management port](#management-port-information-monitoring) (default port: 3325), execute dbremapping command to Add database mapping relation, and for use method of dbremapping command, please refer to *Distributed Transactional Database HotDB Server [management port Command] Function Manual*.
 
-dbremapping @\@add@ database name: LogicDB name expected to be imported
+dbremapping @@add@ database name: LogicDB name expected to be imported
 
 Then use mysqlbinlog statement to execute SQL statement in binlog of the selected part, and it's required to use the following syntax and parameters:
 
-mysqlbinlog \--base64-output=decode-rows \--skip-gtids \--to-last-log \--stop-never \--database= database name \--start-position=binlog initial position binlog file name \| mysql -u username -p password -h server -Pservice port -c \--show-warnings=false
+mysqlbinlog --base64-output=decode-rows --skip-gtids --to-last-log --stop-never --database= database name --start-position=binlog initial position binlog file name | mysql -u username -p password -h server -Pservice port -c --show-warnings=false
 
-Note: \--to-last-log could be replaced with \--stop-position, specify end position of binlog instead of the latest execution position of binlog.
+Note: --to-last-log could be replaced with --stop-position, specify end position of binlog instead of the latest execution position of binlog.
 
 For example, if hoping to import physical database db01 in 192.168.200.77:3306 to LogicDB logicdb01 configured on the management platform, then the belonging compute node of the LogicDB is 192.168.210.30.
 
-1\. Firstly, go to 192.168.210.30 to log in to [management port 3325](#data-consistency-guarantee), and execute:
+1. Firstly, go to 192.168.210.30 to log in to [management port 3325](#data-consistency-guarantee), and execute:
 
-dbremapping @\@add\@db01:logicdb01
+dbremapping @@add@db01:logicdb01
 
-2\. Then, go to 192.168.210.30 server to make remote login to 192.168.200.77 to execute the following command:
+2. Then, go to 192.168.210.30 server to make remote login to 192.168.200.77 to execute the following command:
 
-mysqlbinlog -R -h 192.168.200.77 -P3306 -v \--base64-output=decode-rows \--skip-gtids \--to-last-log \--stop-never \--database=db01 \--start-position=0 mysql-bin.000009 \| mysql -uroot -proot --h192.168.210.30 --P3323 -c -A
+mysqlbinlog -R -h 192.168.200.77 -P3306 -v --base64-output=decode-rows --skip-gtids --to-last-log --stop-never --database=db01 --start-position=0 mysql-bin.000009 | mysql -uroot -proot --h192.168.210.30 --P3323 -c -A
 
 #### Practical application of mysqldump and mysqlbinlog
 
@@ -1331,47 +1331,47 @@ Notice: During the whole operation process, it's not recommended executing any D
 
 Scenario description: Hoping to import physical database db01 at source-end 192.168.210.45:3309 (this instance is ordinary MySQL instance with production data) to LogicDB logicdb01 configured on the management platform, and the belonging master compute node of the LogicDB is 192.168.210.32. Reference steps are as follow:
 
-1\. Use mysqldump to export table structure from source end of data migration (that is192.168.210.45:3309), and execute the following commands on 192.168.210.45 server (the following parameters must be added):
+1. Use mysqldump to export table structure from source end of data migration (that is192.168.210.45:3309), and execute the following commands on 192.168.210.45 server (the following parameters must be added):
 
-root\> mysqldump \--no-defaults -h127.0.0.1 -P3309 -uhotdb_datasource -photdb_datasource **\--no-data** \--skip-triggers \--set-gtid-purged=OFF \--no-tablespaces \--single-transaction \--default-character-set=utf8mb4 \--hex-blob \--master-data=2 \--no-create-db \--skip-add-locks \--skip-disable-keys \--skip-tz-utc \--databases db01 \>db01.sql
+root> mysqldump --no-defaults -h127.0.0.1 -P3309 -uhotdb_datasource -photdb_datasource **--no-data** --skip-triggers --set-gtid-purged=OFF --no-tablespaces --single-transaction --default-character-set=utf8mb4 --hex-blob --master-data=2 --no-create-db --skip-add-locks --skip-disable-keys --skip-tz-utc --databases db01 >db01.sql
 
-2\. After uploading SQL file of table structure to the server where compute node is, that is 192.168.210.32, log in to compute node to execute the following commands, and then Import Table Structure succeeded:
+2. After uploading SQL file of table structure to the server where compute node is, that is 192.168.210.32, log in to compute node to execute the following commands, and then Import Table Structure succeeded:
 
-mysql\> source /root/db01.sql
+mysql> source /root/db01.sql
 
-3\. Use mysqldump to export table data from source end of data migration (that is 192.168.210.45:3309), execute the following commands on 192.168.210.45 server (the following parameters must be added):
+3. Use mysqldump to export table data from source end of data migration (that is 192.168.210.45:3309), execute the following commands on 192.168.210.45 server (the following parameters must be added):
 
-root\> mysqldump \--no-defaults -h127.0.0.1 -P3309 -uhotdb_datasource -photdb_datasource **\--no-create-info** \--skip-triggers \--set-gtid-purged=OFF \--no-tablespaces \--single-transaction \--default-character-set=utf8mb4 \--hex-blob \--master-data=2 \--no-create-db \--skip-add-locks \--skip-disable-keys \--skip-tz-utc \--databases db01 \>db01-1.sql
+root> mysqldump --no-defaults -h127.0.0.1 -P3309 -uhotdb_datasource -photdb_datasource **--no-create-info** --skip-triggers --set-gtid-purged=OFF --no-tablespaces --single-transaction --default-character-set=utf8mb4 --hex-blob --master-data=2 --no-create-db --skip-add-locks --skip-disable-keys --skip-tz-utc --databases db01 >db01-1.sql
 
-4\. Open export file of table data, view the current binlog position, and the display below means that the binlog position is 2410, and binlog file is mysql-bin.000076:
+4. Open export file of table data, view the current binlog position, and the display below means that the binlog position is 2410, and binlog file is mysql-bin.000076:
 
-CHANGE MASTER TO MASTER_LOG_FILE=\'mysql-bin.000076\', MASTER_LOG_POS=2410;
+CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000076', MASTER_LOG_POS=2410;
 
-5\. After uploading SQL file of table structure to the server where compute node is, that is 192.168.210.32, log in to compute node to execute the following commands, and then Import Table Data succeeded:
+5. After uploading SQL file of table structure to the server where compute node is, that is 192.168.210.32, log in to compute node to execute the following commands, and then Import Table Data succeeded:
 
-mysql\> source /root/db01.sql
+mysql> source /root/db01.sql
 
 Pay attention: if foreign key is used, the following commands shall be executed additionally:
 
-mysql\> set foreign_key_checks=0
+mysql> set foreign_key_checks=0
 
-mysql\> source /root/db01.sql
+mysql> source /root/db01.sql
 
 During the execution process, pay close attention to whether there is Warning or Error, otherwise, there will be problem of data inconsistency.
 
 Tips: If transaction data is free of messy code problem, it could be considered splitting file and importing it to compute node in parallel, in order to accelerate the processing speed.
 
-6\. Use mysqlbinlog to make incremental data synchronization. If database name of the source end is different from LogicDB name of the compute node, then it needs to add database mapping relation in management port first, for example:
+6. Use mysqlbinlog to make incremental data synchronization. If database name of the source end is different from LogicDB name of the compute node, then it needs to add database mapping relation in management port first, for example:
 
-dbremapping @\@add\@db01:logicdb01
+dbremapping @@add@db01:logicdb01
 
 Add is unnecessary in this case, and go to the server where compute node is (192.168.210.32) directly to make remote login to the source end (192.168.200.77) to execute the following command, binlog initial position is the position recorded in Step 4 (in this case it is 2410, binlog file is mysql-bin.000076):
 
-mysqlbinlog -R -h192.168.210.45 -P3309 -uhotdb_datasource -photdb_datasource -v \--base64-output=decode-rows \--skip-gtids \--to-last-log \--stop-never \--database=db01 **\--start-position=2410 mysql-bin.000076** \| mysql -uroot -proot --h192.168.210.32 --P3323 -c -A
+mysqlbinlog -R -h192.168.210.45 -P3309 -uhotdb_datasource -photdb_datasource -v --base64-output=decode-rows --skip-gtids --to-last-log --stop-never --database=db01 **--start-position=2410 mysql-bin.000076** | mysql -uroot -proot --h192.168.210.32 --P3323 -c -A
 
 In order to accelerate data-catching speed, it's recommended that the server executing the mysqlbinlog command is the server where compute node is, which will save the time overhead of SQL and ok packet via network when the MySQL command line client executes SQL, and could greatly improve SQL execution speed of compute node single thread.
 
-7\. Check accuracy of data synchronization: at this time, it is necessary to stop service for a short time, interrupt the write-in operation of the transaction system toward database. After manual execution of a special data at the source end, view whether the data has been synchronized or not. After confirming that the compute node has been synchronized with the latest data, stop mysqlbinlog command, and if needed, cancel database name mapping.
+7. Check accuracy of data synchronization: at this time, it is necessary to stop service for a short time, interrupt the write-in operation of the transaction system toward database. After manual execution of a special data at the source end, view whether the data has been synchronized or not. After confirming that the compute node has been synchronized with the latest data, stop mysqlbinlog command, and if needed, cancel database name mapping.
 
 Tips: After both the source end and the compute node have executed the following commands, you could view whether the select results are consistent or not to approximately judge whether the data is consistent or not
 
@@ -1379,49 +1379,49 @@ use xxx
 
 set session group_concat_max_len=1048576;
 
-set \@mytablename=\'xxx\';
+set @mytablename='xxx';
 
-set \@mydbname=database();
+set @mydbname=database();
 
-select concat(\'select sum(crc32(concat(ifnull(\',group_concat(column_name separator \',\\\'NULL\\\'),ifnull(\'),\',\\\'NULL\\\')))) as sum from \',table_name,\';\') as sqltext from information_schema.columns where table_schema=\@mydbname and table_name=\@mytablename \\G
+select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\\'NULL\\'),ifnull('),',\\'NULL\\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
 
 If consistent, then data increment synchronization completed, for example, execute the following in the source end (192.168.200.77) MySQL instance:
 
-mysql\> use db01
+mysql> use db01
 
 Database changed
 
-mysql\> set session group_concat_max_len=1048576;
+mysql> set session group_concat_max_len=1048576;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> set \@mytablename=\'table02\';
+mysql> set @mytablename='table02';
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> set \@mydbname=database();
+mysql> set @mydbname=database();
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select concat(\'select sum(crc32(concat(ifnull(\',group_concat(column_name separator \',\\\'NULL\\\'),ifnull(\'),\',\\\'NULL\\\')))) as sum from \',table_name,\';\') as sqltext from information_schema.columns where table_schema=\@mydbname and table_name=\@mytablename \\G
+mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\\'NULL\\'),ifnull('),',\\'NULL\\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* 1. row \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+*************************** 1. row ***************************
 
-sqltext: select sum(crc32(concat(ifnull(id,\'NULL\'),ifnull(name,\'NULL\')))) as sum from table02;
+sqltext: select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
 
 1 row in set (0.00 sec)
 
-msyql\> select sum(crc32(concat(ifnull(id,\'NULL\'),ifnull(name,\'NULL\')))) as sum from table02;
+msyql> select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| sum \|
+| sum |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| 1812521567 \|
+| 1812521567 |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
 1 row in set (0.00 sec)
 
@@ -1435,23 +1435,23 @@ HotDB Server provides Master/Slave Data Source Consistency Detection function in
 
 Master/slave data consistency detection, could check whether table structure of various tables in Active Master and Standby Slave is the same or not, whether the table data is consistent or not, and whether the master/slave has delay or not. When there is a few data inconsistency in table data between Active Master and Standby Slave, Master/slave data consistency detection could locate the Primary Key value of the inconsistent data line.
 
-Log in to [management port (3325 Port)](#management-port-information-monitoring) of the compute node to execute show @\@masterslaveconsistency command, thus it could be viewed whether the table is consistent on Active Master and Standby Slave:
+Log in to [management port (3325 Port)](#management-port-information-monitoring) of the compute node to execute show @@masterslaveconsistency command, thus it could be viewed whether the table is consistent on Active Master and Standby Slave:
 
-mysql\> show @\@masterslaveconsistency;
+mysql> show @@masterslaveconsistency;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------------------------------+---------------------------------+-------+--------+-------------------------------------+
 
-\| db \| table \| dn \| result \| info \|
+| db | table | dn | result | info |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------------------------------+---------------------------------+-------+--------+--------------------------------------+
 
-\| DB_T \| FB_STUDENT \| dn_04 \| NO \| There is data inconsistency, because data source: 5, table: FB_STUDENT, MySQL error: Table \'db252.fb_student\' doesn\'t exist \|
+| DB_T | FB_STUDENT | dn_04 | NO | There is data inconsistency, because data source: 5, table: FB_STUDENT, MySQL error: Table 'db252.fb_student' doesn't exist |
 
-\| DB_A \| SP \| dn_04 \| NO \| table: SP has data inconsistency in node: 4, column: ID, distribution interval is: 0-17;, and unique key of the inconsistent line is: (ID):(2),(1) \|
+| DB_A | SP | dn_04 | NO | table: SP has data inconsistency in node: 4, column: ID, distribution interval is: 0-17;, and unique key of the inconsistent line is: (ID):(2),(1) |
 
-\| DB_T \| JOIN_Z \| \| YES \| \|
+| DB_T | JOIN_Z | | YES | |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------------------------------+---------------------------------+-------+--------+-------------------------------------+
 
 3 row in set (0.07 sec)
 
@@ -1470,11 +1470,11 @@ It's shown in the result that for the JOIN_Z table in LogicDBDB_T, among master/
 ------------------------------------------------------------------------------------ -------------------------------------------------------------------------------------------------------------------------
 
 A large amount of data inconsistency in table                                        Table: ... in datanode: ... exist a large amount of data inconsistency
-    Some data inconsistency in table                                                     Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows\' Primary Key (...)：
-    Standby Slave Table doesn't exist                                                    exist data inconsistency, because DS: ... Table \'...\' doesn\'t exist
+    Some data inconsistency in table                                                     Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows' Primary Key (...)：
+    Standby Slave Table doesn't exist                                                    exist data inconsistency, because DS: ... Table '...' doesn't exist
     Index of table doesn't exist                                                         DN: ... not exsit index of table:...
     Master/slave failure detection (for example the Slave Slave_SQL_Running: NO state)   DN: ... ERROR! Check your replication.
-    Master/slave delay exceeds 10S                                                       DN：... delay too much,can\'t check master-slave data consistency
+    Master/slave delay exceeds 10S                                                       DN：... delay too much,can't check master-slave data consistency
     Delay exceeds 2S                                                                     Table: ... in datanode: ... exist a large amount of data inconsistency
 
 ------------------------------------------------------------------------------------ -------------------------------------------------------------------------------------------------------------------------
@@ -1485,7 +1485,7 @@ Global AUTO_INCREMENT, refers to that the AUTO_INCREMENT column of the table mak
 
 HotDB Server provides Global AUTO_INCREMENT support. When the table contains AUTO_INCREMENT column, and in server.xml file, the value of the parameter autoIncrement is set as non-zero (one or two), Global AUTO_INCREMENT of compute node could be used the same as using AUTO_INCRMENT of MySQL:
 
-\<property name=\"autoIncrement\"\>1\</property\>
+<property name=[autoIncrement](#autoIncrement)>1</property>
 
 #### When the parameter is set as 0
 
@@ -1493,31 +1493,31 @@ If the parameter autoIncrement is set as 0, the auto-incremental field will be m
 
 For example: customer is an auto sharding table, and the sharding field is id, and name is defined as auto-incremental sequence. Then the auto increment feature of name is controlled by each data source:
 
-mysql\> create table customer(id int ,name int auto_increment primary key);
+mysql> create table customer(id int ,name int auto_increment primary key);
 
-mysql\> insert into customer values (1,null),(2,null),(3,null),(4,null);
+mysql> insert into customer values (1,null),(2,null),(3,null),(4,null);
 
 Query OK, 4 rows affected (0.01 sec)
 
 Records: 4 Duplicates:0 Warnings: 0
 
-mysql\> select \* from customer;
+mysql> select * from customer;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
++------+------+------+
 
-\| id \| name \| DNID \|
+| id | name | DNID |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
++------+------+------+
 
-\| 4 \| 1 \| 1001 \|
+| 4 | 1 | 1001 |
 
-\| 2 \| 1 \| 1006 \|
+| 2 | 1 | 1006 |
 
-\| 3 \| 1 \| 1004 \|
+| 3 | 1 | 1004 |
 
-\| 1 \| 1 \| 1008 \|
+| 1 | 1 | 1008 |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
++------+------+------+
 
 4 rows in set (0.00 sec)
 
@@ -1525,35 +1525,35 @@ mysql\> select \* from customer;
 
 If the parameter autoIncrement is set as 1, the compute node takes over the auto increment of all tables, which can ensure the global auto increment.
 
-\<property name=\"autoIncrement\"\>1\</property\>
+<property name=[autoIncrement](#autoIncrement)>1</property>
 
 For example: customer is an auto sharding table, and the sharding field is id, and name is defined as auto-incremental sequence. Then the auto increment feature of name is controlled by the compute node, which can realize global auto increment:
 
-mysql\> create table customer(id int ,name int auto_increment primary key);
+mysql> create table customer(id int ,name int auto_increment primary key);
 
-mysql\> insert into customer values (1,null),(2,null),(3,null),(4,null);
+mysql> insert into customer values (1,null),(2,null),(3,null),(4,null);
 
 Query OK, 4 rows affected (0.01 sec)
 
 Records: 4 Duplicates: 0 Warnings: 0
 
-mysql\> select \* From customer order by id;
+mysql> select * From customer order by id;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
++------+------+------+
 
-\| id \| name \| DNID \|
+| id | name | DNID |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
++------+------+------+
 
-\| 1 \| 1 \| 1008 \|
+| 1 | 1 | 1008 |
 
-\| 2 \| 2 \| 1006 \|
+| 2 | 2 | 1006 |
 
-\| 3 \| 3 \| 1004 \|
+| 3 | 3 | 1004 |
 
-\| 4 \| 4 \| 1001 \|
+| 4 | 4 | 1001 |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
++------+------+------+
 
 4 rows in set (0.00 sec)
 
@@ -1561,7 +1561,7 @@ mysql\> select \* From customer order by id;
 
 If the parameter autoIncrement is set as 1, the auto-incremental field type must be INT or BIGINT, otherwise, the table creation prompt warning:
 
-mysql\> create table table_test(id tinyint auto_increment primary key);
+mysql> create table table_test(id tinyint auto_increment primary key);
 
 Query OK, 0 rows affected, 1 warning (0.05 sec)
 
@@ -1573,105 +1573,105 @@ The auto-incremental sequence 1 mode can guarantee the global uniqueness and str
 
 If the parameter autoIncrement is set as 2, the compute node takes over the auto increment of all tables. In this mode, when the compute node mode is cluster mode and the table contains the auto-incremental sequence, only the global uniqueness and relative increment in the long run of auto-incremental sequence is guaranteed, but the continuity of auto increment is not guaranteed (in a short time, the auto increment between different nodes will be staggered). The intelligent control of the auto increment feature by compute node can improve the performance of the compute node in the cluster mode. If the compute node mode is high availability or single node mode, the outcome of setting as 2 is the same as that of setting as 1.
 
-For example, if the prefetchbatchinit of the existing Primary compute node A, Secondary compute node B and Secondary compute node C is set as 100, the prefetch interval of the auto-incremental sequence of compute node A is \[1,100\], the prefetch interval of compute node B is \[101,200\] and the prefetch interval of compute node C is \[201,300\], that is:
+For example, if the prefetchbatchinit of the existing Primary compute node A, Secondary compute node B and Secondary compute node C is set as 100, the prefetch interval of the auto-incremental sequence of compute node A is [1,100], the prefetch interval of compute node B is [101,200] and the prefetch interval of compute node C is [201,300], that is:
 
-mysql\> create table test(id int auto_increment primary key,num int);
+mysql> create table test(id int auto_increment primary key,num int);
 
 Execute the code on compute node A:
 
-mysql\> insert into test values(null,1),(null,2),(null,3),(null,4);
+mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
 
-mysql\> select \* from test order by id;
+mysql> select * from test order by id;
 
-+\-\-\--+\-\-\-\-\--+
++----+------+
 
-\| id \| num \|
+| id | num |
 
-+\-\-\--+\-\-\-\-\--+
++----+------+
 
-\| 1 \| 1 \|
+| 1 | 1 |
 
-\| 2 \| 2 \|
+| 2 | 2 |
 
-\| 3 \| 3 \|
+| 3 | 3 |
 
-\| 4 \| 4 \|
+| 4 | 4 |
 
-+\-\-\--+\-\-\-\-\--+
++----+------+
 
-// the prefetch interval of the auto-incremental sequence is \[1,100\]
+// the prefetch interval of the auto-incremental sequence is [1,100]
 
 Execute the code on compute node B:
 
-mysql\> insert into test values(null,1),(null,2),(null,3),(null,4);
+mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
 
-mysql\> select \* from test order by id;
+mysql> select * from test order by id;
 
-+\-\-\-\--+\-\-\-\-\--+
++-----+------+
 
-\| id \| num \|
+| id | num |
 
-+\-\-\-\--+\-\-\-\-\--+
++-----+------+
 
-\| 1 \| 1 \|
+| 1 | 1 |
 
-\| 2 \| 2 \|
+| 2 | 2 |
 
-\| 3 \| 3 \|
+| 3 | 3 |
 
-\| 4 \| 4 \|
+| 4 | 4 |
 
-\| 101 \| 1 \|
+| 101 | 1 |
 
-\| 102 \| 2 \|
+| 102 | 2 |
 
-\| 103 \| 3 \|
+| 103 | 3 |
 
-\| 104 \| 4 \|
+| 104 | 4 |
 
-+\-\-\-\--+\-\-\-\-\--+
++-----+------+
 
-// the prefetch interval of the auto-incremental sequence is \[101,200\]
+// the prefetch interval of the auto-incremental sequence is [101,200]
 
 Execute the code on compute node C
 
-mysql\> insert into test values(null,1),(null,2),(null,3),(null,4);
+mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
 
-mysql\> select \* from test order by id;
+mysql> select * from test order by id;
 
-+\-\-\-\--+\-\-\-\-\--+
++-----+------+
 
-\| id \| num \|
+| id | num |
 
-+\-\-\-\--+\-\-\-\-\--+
++-----+------+
 
-\| 1 \| 1 \|
+| 1 | 1 |
 
-\| 2 \| 2 \|
+| 2 | 2 |
 
-\| 3 \| 3 \|
+| 3 | 3 |
 
-\| 4 \| 4 \|
+| 4 | 4 |
 
-\| 101 \| 1 \|
+| 101 | 1 |
 
-\| 102 \| 2 \|
+| 102 | 2 |
 
-\| 103 \| 3 \|
+| 103 | 3 |
 
-\| 104 \| 4 \|
+| 104 | 4 |
 
-\| 201 \| 1 \|
+| 201 | 1 |
 
-\| 202 \| 2 \|
+| 202 | 2 |
 
-\| 203 \| 3 \|
+| 203 | 3 |
 
-\| 204 \| 4 \|
+| 204 | 4 |
 
-+\-\-\-\--+\-\-\-\-\--+
++-----+------+
 
-// the prefetch interval of the auto-incremental sequence is \[201,300\]
+// the prefetch interval of the auto-incremental sequence is [201,300]
 
 In the following two cases, it will judge whether to re prefetch the batch and recalculate the next batch size, so as to adjust the batch size suitable for the current business environment:
 
@@ -1683,47 +1683,47 @@ Currently, users are allowed to insert a specified auto increment. Whether the s
 
 Execute the code on compute node A
 
-mysql\> insert into test values(null,1);
+mysql> insert into test values(null,1);
 
-mysql\> insert into test values (11,5);
+mysql> insert into test values (11,5);
 
-mysql\> insert into test values(null,1);
+mysql> insert into test values(null,1);
 
-mysql\> select \* from test order by id;
+mysql> select * from test order by id;
 
-+\-\-\--+\-\-\-\-\--+
++----+------+
 
-\| id \| num \|
+| id | num |
 
-+\-\-\--+\-\-\-\-\--+
++----+------+
 
-\| 1 \| 1 \|
+| 1 | 1 |
 
-\| 11 \| 5 \|
+| 11 | 5 |
 
-\| 12 \| 1 \|
+| 12 | 1 |
 
-+\-\-\--+\-\-\-\-\--+
++----+------+
 
 Execute the code on compute node B
 
-mysql\> insert into test values(null,1);
+mysql> insert into test values(null,1);
 
-+\-\-\--+\-\-\-\-\--+
++----+------+
 
-\| id \| num \|
+| id | num |
 
-+\-\-\--+\-\-\-\-\--+
++----+------+
 
-\| 1 \| 1 \|
+| 1 | 1 |
 
-\| 11 \| 5 \|
+| 11 | 5 |
 
-\| 12 \| 1 \|
+| 12 | 1 |
 
-\| 101 \| 1 \|
+| 101 | 1 |
 
-+\-\-\--+\-\-\-\-\--+
++----+------+
 
 Notes:
 
@@ -1733,7 +1733,7 @@ The compute node can perceive the field type range of the auto-incremental seque
 
 If the parameter autoIncrement is set as 2, the auto-incremental field type must be bigint, otherwise the table creation fails:
 
-mysql\> create table table_test(id tinyint auto_increment primary key);
+mysql> create table table_test(id tinyint auto_increment primary key);
 
 ERROR 10212 (HY000): auto_increment column must be bigint
 
@@ -1747,11 +1747,11 @@ Using foreign XA TRANSACTION provided by MySQL, HotDB Server could solve data st
 
 In compute node, by default, XA TRANSACTION is disabled. To use XA transaction, the attribute enableXA shall be set TRUE in server.xml file:
 
-\<property name=\"enableXA\"\>true\</property\>
+<property name=[enableXA](#enableXA)>true</property>
 
 It could take effect after restart the compute node, i.e. XA TRANSACTION function is enabled. If after XA TRANSACTION switch is modified, reload is directly conducted without reenabling compute node, then the Modify results shall not take effect and there will be INFO message in compute node log:
 
-Can\'t reset XA in reloading, please restart the hotdb to enable XA
+Can't reset XA in reloading, please restart the hotdb to enable XA
 
 After enabling XA TRANSACTION function in compute node, the operations toward the application or client MySQL command are transparent, while the SQL command and transaction procedure are free of change, and could be used the same as ordinary transaction. Use START TRANSACTION or BEGIN, SET AUTOCOMMIT=0 to enable transaction, COMMIT or ROLLBACK to commit or rollback transaction.
 
@@ -1775,23 +1775,23 @@ Under XA mode: refer to SQL99 Standard, begin\\start transaction will immediatel
 
 When the compute node version is 2.5.6 and above, if the front end is disconnected under XA mode, the transaction status will be recorded to the log and ConfigDB. You can check whether the transaction needs to be redone by executing SHOW ABNORMAL_XA_TRX directly at the service port.
 
-2020-10-30 15:42:29.857 \[WARN\] \[MANAGER\] \[\$NIOExecutor-2-10\] cn.hotpu.hotdb.manager.response.v(39) - \[thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT\]killed by manager
+2020-10-30 15:42:29.857 [WARN] [MANAGER] [\$NIOExecutor-2-10] cn.hotpu.hotdb.manager.response.v(39) - [thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT]killed by manager
 
-2020-10-30 15:42:29.857 \[INFO\] \[INNER\] \[\$NIOExecutor-2-10\] cn.hotpu.hotdb.server.d.c(1066) - XATransactionSession in \[thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT\]\'s query will be killed due to a kill command, current sql:null
+2020-10-30 15:42:29.857 [INFO] [INNER] [\$NIOExecutor-2-10] cn.hotpu.hotdb.server.d.c(1066) - XATransactionSession in [thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT]'s query will be killed due to a kill command, current sql:null
 
-2020-10-30 15:42:29.859 \[INFO\] \[CONNECTION\] \[\$NIOExecutor-2-10\] cn.hotpu.hotdb.server.b(3599) - \[thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT\] will be closed because a kill command.
+2020-10-30 15:42:29.859 [INFO] [CONNECTION] [\$NIOExecutor-2-10] cn.hotpu.hotdb.server.b(3599) - [thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT] will be closed because a kill command.
 
 ![](assets/standard/image49.png)
 
 ![](assets/standard/image50.png)
 
-[]{# _Toc60015816 .anchor}disconnect\_ reason: reasons for disconnection, such as kill, TCP disconnection (program err:java.io.IOException: Connection reset by peer), SQL execution timeout (stream closed, read return -1), idle timeout, etc.
+[]{# _Toc60015816 .anchor}disconnect_ reason: reasons for disconnection, such as kill, TCP disconnection (program err:java.io.IOException: Connection reset by peer), SQL execution timeout (stream closed, read return -1), idle timeout, etc.
 
-trx\_ state: the transaction status of disconnection, including:
+trx_ state: the transaction status of disconnection, including:
 
-1\. ROLLBACKED_BY_HOTDB: in a transaction and the transaction is rolled back by the compute node (when the transaction is not commited automatically, the application program does not issue the commit command or lose the commit command halfway);
+1. ROLLBACKED_BY_HOTDB: in a transaction and the transaction is rolled back by the compute node (when the transaction is not commited automatically, the application program does not issue the commit command or lose the commit command halfway);
 
-2\. COMMITED_BY_HOTDB: in a transaction and the transaction is commited by the compute node (when the transaction is not commited automatically, the compute node receives a commit and commits it successfully, but the front-end connection is disconnected in the middle of commit, so the compute node fails to send ok package).
+2. COMMITED_BY_HOTDB: in a transaction and the transaction is commited by the compute node (when the transaction is not commited automatically, the compute node receives a commit and commits it successfully, but the front-end connection is disconnected in the middle of commit, so the compute node fails to send ok package).
 
 #### Relation between XA transaction and read/write splitting
 
@@ -1805,15 +1805,15 @@ Meanwhile, at the time of use, compute node log will output relevant Warning pro
 
 The Non-Deterministic Function will bring some column problems in use, especially data consistency problem of Global Table, therefore, HotDB Server provides the function of Nondeterministic Function Proxy. Non-Deterministic Function is generally divided into types, one is Time Function with known value, such as CURDATE(), CURRENT_TIMESTAMP(), etc., the other is Random Value Function and Unique Value Function with unknown value, such as RAND(), UUID(), etc.
 
-1\. For Time Function, compute node makes Uniform Proxy.
+1. For Time Function, compute node makes Uniform Proxy.
 
 -   When the Table Field type is datetime (or timestamp) and free of default value, the parameter [timestampProxy](#timestampproxy) will control Proxy Range of the compute node (Auto Mode by default, and Global Processing/Auto Detection are optional), and insert such Function Proxy as specific value into Table;
 
 -   In case the Functions such as curdate(), curtime(), etc. appear in select/insert/update/delete statement, compute node will insert such Function Proxy as specific value into Table;
 
-2\. For Random Value Function, compute node conducts different Proxy methods toward different SQL statements.
+2. For Random Value Function, compute node conducts different Proxy methods toward different SQL statements.
 
-3\. For Unique Value Function, compute node makes Uniform Proxy.
+3. For Unique Value Function, compute node makes Uniform Proxy.
 
 -   In case uuid() or uuid_short() appear in select/insert/update/delete statement, compute node will make Proxy Unique Value according to standard UUIDv1 algorithm;
 
@@ -1824,31 +1824,31 @@ The Non-Deterministic Function will bring some column problems in use, especiall
 
 In order to guarantee data accuracy, for different time zones are set due to existence of different data source servers, and thus resulting in data error of the time type in database, HotDB Server provided support for Global Time Zone, including:
 
--   When the time_zone parameters are specific same value or for SYSTEM the system_time_zone are all the same specific value, HotDB Server makes no special treatment, otherwise, HotDB Server will set the time_zone as uniform fixed value: "+8:00" and will record warning level log (The datasources\' time_zones are not consistent);
+-   When the time_zone parameters are specific same value or for SYSTEM the system_time_zone are all the same specific value, HotDB Server makes no special treatment, otherwise, HotDB Server will set the time_zone as uniform fixed value: "+8:00" and will record warning level log (The datasources' time_zones are not consistent);
 
 > For example, after login service port, enter the command:
 
-set time_zone = \'+0:00\';
+set time_zone = '+0:00';
 
-show variables like \'%time_zone\';
+show variables like '%time_zone';
 
-> It will still display that the time_zone is \'+8:00\':
+> It will still display that the time_zone is '+8:00':
 
-mysql\> set time_zone=\'+0:00\';
+mysql> set time_zone='+0:00';
 
-mysql\> show variables like \'%time_zone\';
+mysql> show variables like '%time_zone';
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+
++------------------+--------+
 
-\| Variable_name \| Value \|
+| Variable_name | Value |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+
++------------------+--------+
 
-\| system_time_zone \| CST \|
+| system_time_zone | CST |
 
-\| time_zone \| +08:00 \|
+| time_zone | +08:00 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+
++------------------+--------+
 
 2 rows in set (0.09 sec)
 
@@ -1866,7 +1866,7 @@ HotDB Server 2.5.3 optimizes and accurate Global Unique Constraint to Table Leve
 
 You could either modify the following parameter in server.xml or modify the parameter in compute node parameter configuration on the management platform. Modify parameter only sets Global unique default value for the table added in the future, but doesn't influence Global Uniqueness of history data table.
 
-\<property name=\"globalUniqueConstraint\"\>false\</property\>\<!\-- Global unique constraints enable on newly added table by default or not \--\>
+<property name=[globalUniqueConstraint](#globalUniqueConstraint)>false</property><!-- Global unique constraints enable on newly added table by default or not -->
 
 ![](assets/standard/image51.png)
 
@@ -1876,31 +1876,31 @@ Notice: After enable the function, there may be great influence on execution eff
 
 At the time of Add Table Configuration, it could Enable/Disable Global Unique Constraint separately for a table
 
-1\. When Add Table Configuration on the management platform, Enable/Disable status of Global Unique Constraint will be displayed by default according to compute node parameter, which could also be manually modified:
+1. When Add Table Configuration on the management platform, Enable/Disable status of Global Unique Constraint will be displayed by default according to compute node parameter, which could also be manually modified:
 
 ![](assets/standard/image52.png)
 
 Both Vertical Sharding Table and Global Table have no such exit, because no special treatment is required for Unique Constraint. After Add Table and Configuration, it could be used after using Create Table statement to Add Table Structure.
 
-2\. Using [Auto Create Table](#_建表即分片) function, the switch of Global Unique Constraint could be set via table option GLOBAL_UNIQUE \[=\] {0 \| 1}. For example:
+2. Using [Auto Create Table](#_建表即分片) function, the switch of Global Unique Constraint could be set via table option GLOBAL_UNIQUE [=] {0 | 1}. For example:
 
-mysql\> create table test02(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int) **GLOBAL_UNIQUE=0**;
+mysql> create table test02(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int) **GLOBAL_UNIQUE=0**;
 
-mysql\> create table test03(id int Primary Key,id1 int) **GLOBAL_UNIQUE =1**;
+mysql> create table test03(id int Primary Key,id1 int) **GLOBAL_UNIQUE =1**;
 
-If not using GLOBAL_UNIQUE \[=\] {0 \| 1}, then by default, it will be set Enable or Disable according to default value of the compute node parameter configuration or the Table Configuration added on the management platform; if GLOBAL_UNIQUE=1, it shall be judged as Enable; if GLOBAL_UNIQUE=0, it shall be judged as Disable.
+If not using GLOBAL_UNIQUE [=] {0 | 1}, then by default, it will be set Enable or Disable according to default value of the compute node parameter configuration or the Table Configuration added on the management platform; if GLOBAL_UNIQUE=1, it shall be judged as Enable; if GLOBAL_UNIQUE=0, it shall be judged as Disable.
 
 -   If GLOBAL_UNIQUE setting is different from the default value, then GLOBAL_UNIQUE shall prevail;
 
 -   If GLOBAL_UNIQUE setting is different from Global Unique Constraint configuration of this table on the Management Platform, then Create Table will fail, and error prompt will be given, for example when Add test01 on the management platform, Global Unique Constraint is disabled:
 
-mysql\> create table test01(id int)global_unique=1;
+mysql> create table test01(id int)global_unique=1;
 
 ERROR 10172 (HY000): CREATE TABLE FAILED due to generated table config already in HotDB config datasource. You may need to check config datasource or reload HotDB config.
 
 -   If using GLOBAL_UNIQUE in Create Table statement in Vertical Sharding Table or Global Table, then Create Table will succeed, but warning message will be given, because no extra treatment is required for its Unique Constraint, for example, test03 is a Vertical Sharding Table:
 
-mysql\> create table test03(id int)**global_unique=1**;
+mysql> create table test03(id int)**global_unique=1**;
 
 Query OK, 0 rows affected, 2 warnings (0.09 sec)
 
@@ -1910,61 +1910,61 @@ Note (Code 10210): Global_unique is not applicable to vertical-sharding tables o
 
 In order to meet compatibility of MySQL, for example, when using mysqldump, there is no worry about that the backup results will be interfered by GLOBAL_UNIQUE, therefore, GLOBAL_UNIQUE syntax is parsed as Annotation Format, for example:
 
-mysql\> create table test02(id int) GLOBAL_UNIQUE=1;
+mysql> create table test02(id int) GLOBAL_UNIQUE=1;
 
-mysql\> show create table test02
+mysql> show create table test02
 
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+----------------------------------------+
 
-\| Table \| Create Table \|
+| Table | Create Table |
 
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+----------------------------------------+
 
-\| test3 \| CREATE TABLE \`test3\` (
+| test3 | CREATE TABLE \`test3\` (
 
 \`id\` int(11) DEFAULT NULL
 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4**/\*hotdb:020503 global_unique=1\*/** \|
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4**/*hotdb:020503 global_unique=1*/** |
 
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+----------------------------------------+
 
 1 row in set (0.00 sec)
 
 Importing the Create Table statement containing GLOBAL_UNIQUE Syntax into MySQL will have no influence on the result. In compute node, Annotation Syntax could also be directly used to operate GLOBAL_UNIQUE, and use -c as login parameter of MySQL, and annotation is allowed to be executed.
 
-root\> mysql -c -uroot -proot -h127.0.0.1 -P3323
+root> mysql -c -uroot -proot -h127.0.0.1 -P3323
 
 For example, executing the following statement, means that when the version of HotDB Server is higher than 2.5.3, GLOBAL_UNIQUE=0 will be executed:
 
-mysql\> create table test02(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int) /\*hotdb:020503 GLOBAL_UNIQUE=0\*/;
+mysql> create table test02(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int) /*hotdb:020503 GLOBAL_UNIQUE=0*/;
 
 #### Table level control when modifying a table
 
-1\. Table Configuration could be modified on Table Configuration Management page on the Management Platform:
+1. Table Configuration could be modified on Table Configuration Management page on the Management Platform:
 
 ![](assets/standard/image53.png)
 
-If the Table Structure is Created Table, then after Modify the Global Unique Constraint to Enable status, click Reload and refresh the page, if the prompt as in the figure below appears, it means that unique @\@create shall be executed on management port, and check history data of the Unique Constraint Key of the table, and after the return result is unique, the compute node will Auto Create secondary index, only in this way could Global Unique Constraint take effect, for details of this command, please refer to *Distributed Transactional Database HotDB Server \[management port Command\] Function Manual*:
+If the Table Structure is Created Table, then after Modify the Global Unique Constraint to Enable status, click Reload and refresh the page, if the prompt as in the figure below appears, it means that unique @@create shall be executed on management port, and check history data of the Unique Constraint Key of the table, and after the return result is unique, the compute node will Auto Create secondary index, only in this way could Global Unique Constraint take effect, for details of this command, please refer to *Distributed Transactional Database HotDB Server [management port Command] Function Manual*:
 
 ![](assets/standard/image54.png)
 
-2\. Use GLOBAL_UNIQUE Syntax in the compute node via ALTER TABLE, enable Global Unique, and similarly, if appearing warning message, it means that it could take effect only after executing unique @\@create:
+2. Use GLOBAL_UNIQUE Syntax in the compute node via ALTER TABLE, enable Global Unique, and similarly, if appearing warning message, it means that it could take effect only after executing unique @@create:
 
-mysql\> alter table keevey01 global_unique=1;
+mysql> alter table keevey01 global_unique=1;
 
 Query OK, 0 rows affected, 1 warning (0.01 sec)
 
-mysql\> show warnings;
+mysql> show warnings;
 
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+-------+---------------------------------------------------------+
 
-\| Level \| Code \| Message \|
+| Level | Code | Message |
 
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+-------+---------------------------------------------------------+
 
-\| Note \| 10210 \| please go to HotDB Server manager port and execute this command: unique @\@create, otherwise this global_unique setting doesn\'t work. \|
+| Note | 10210 | please go to HotDB Server manager port and execute this command: unique @@create, otherwise this global_unique setting doesn't work. |
 
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+-------+---------------------------------------------------------+
 
 1 row in set (0.00 sec)
 
@@ -1982,13 +1982,13 @@ After Enable, the Modification Plan Pre-detection will detect whether history da
 
 This function also supports that when the SELECT Query statement doesn't contain sharding key but contains Unique Constraint field, locate to fixed node via Query Secondary Index, and distribute SELECT Query statement to specified node only instead of all nodes.
 
-\<property name=\"routeByRelativeCol\"\>false\</property\>\<!\--When not containing sharding key, via Secondary Index Field Route\--\>
+<property name=[routeByRelativeCol](#routeByRelativeCol)>false</property><!--When not containing sharding key, via Secondary Index Field Route-->
 
 This function is Disable by default, which could be enabled by modifying the routeByRelativeCol parameter in server.xml or adding the parameter "When not containing sharding key, enable via Secondary Index Field Route or not" in compute node parameter configuration under Management Platform Configuration Menu.
 
 After the parameter is enabled, example of its role is as follow: for an existing Sharding Table table01, sharding key is id, sharding function is auto_mod, when executing the following Query statement:
 
-SELECT \* FROM table01 WHERE unique_col = 100; //unique_col is Unique Constraint column
+SELECT * FROM table01 WHERE unique_col = 100; //unique_col is Unique Constraint column
 
 This Query statement will be distributed to the data node with unique_col = 100 only, instead of all data nodes
 
@@ -1998,7 +1998,7 @@ Whether Asynchronous Replication or Semi-synchronization Replication, there may 
 
 Therefore, compute node parameter [failoverAutoresetslave](#failoverautoresetslave) is added, which is Disable by default.
 
-\<property name=\"failoverAutoresetslave\"\>false\</property\>\<!\-- At the time of failover, Auto Reset master/slave replication relation or not \--\>
+<property name=[failoverAutoresetslave](#failoverAutoresetslave)>false</property><!-- At the time of failover, Auto Reset master/slave replication relation or not -->
 
 After failover, IO thread between the original Master/Slave will be suspended, and Heartbeat Detection of the original Active Master will be conducted once every minute, until the original Active Master recovers normal. After the original Active Master recovers normal, comparing with binlog position of the original Active Master, detect whether the original Standby Slave (the existing Active Master) has the transaction not acquired before Switch, if yes, enable this parameter will Auto Reset the master/slave replication relation. If not, there will be no treatment after Re-enable the IO Thread.
 
@@ -2042,19 +2042,19 @@ For master/slave configuration mode of MySQL database, please refer to official 
 
 By default, compute node Heartbeat function is enabled:
 
-\<property name=\"enableHeartbeat\"\>true\</property\>
+<property name="enableHeartbeat">true</property>
 
 Assuming that instance 3308 of 192.168.210.41 and instance 3308 of 192.168.210.42 are a pair of MySQL databases of master/slave replication.
 
-The master/slave data source configured in the same node, could be set in "Add Node" page or "Data Source Edit\" page on the management platform.
+The master/slave data source configured in the same node, could be set in "Add Node" page or "Data Source Edit" page on the management platform.
 
-Assuming that the data node "dn_08" has already existed, Add Master data source and slave data source for this node. On management platform page, select "Configuration"-\>"Node Management"-\>"Add Node", and jump to the "Add Node" page:
+Assuming that the data node "dn_08" has already existed, Add Master data source and slave data source for this node. On management platform page, select "Configuration"->"Node Management"->"Add Node", and jump to the "Add Node" page:
 
 In the following operation, generate a data node "dn_08", and add a Master data source"ds_failover_master" and a slave data source"ds_failover_slave" for this data node:
 
 ![](assets/standard/image58.png)
 
-"Automatic Adaptation Switching Rule" could be directly checked, when Add Node, make Automatic Adaptation of failover priority at the same time. Or, on the management platform page, select "Configuration"-\>"Node Management"-\>"High Availability Setting"-\>"Switching Rule"-\>"Add Switch Rule", select "dn_08" from drop-down box of data node, select Master data source "ds_failover_master from drop-down box of data source, select "ds_failover_slave" from drop-down box of standby data source, and select High in Failover Priority:
+"Automatic Adaptation Switching Rule" could be directly checked, when Add Node, make Automatic Adaptation of failover priority at the same time. Or, on the management platform page, select "Configuration"->"Node Management"->"High Availability Setting"->"Switching Rule"->"Add Switch Rule", select "dn_08" from drop-down box of data node, select Master data source "ds_failover_master from drop-down box of data source, select "ds_failover_slave" from drop-down box of standby data source, and select High in Failover Priority:
 
 ![](assets/standard/image59.png)
 
@@ -2064,7 +2064,7 @@ Or click "Auto Adaptation", select dn_08 node, and then Save.
 
 Build master/slave replication relation:
 
-Although a pair of master/slave data sources have been added under node dn_08, if the 2 data sources haven't been built master/slave replication relation in practice, then at this time, you could select "dn_08" node in "Configuration"-\>"Node Management"-\>"High Availability Setting"-\>"Master/Slave Build".
+Although a pair of master/slave data sources have been added under node dn_08, if the 2 data sources haven't been built master/slave replication relation in practice, then at this time, you could select "dn_08" node in "Configuration"->"Node Management"->"High Availability Setting"->"Master/Slave Build".
 
 ![](assets/standard/image61.png)
 
@@ -2074,7 +2074,7 @@ After clicking "Start Build", the system will build master/slave replication rel
 
 ##### Manual Switch
 
-In "Configuration"-\>"Node Management", click \[Switch\] of a data node, thus Manual Switch could be completed:
+In "Configuration"->"Node Management", click [Switch] of a data node, thus Manual Switch could be completed:
 
 ![](assets/standard/image63.png)
 
@@ -2090,11 +2090,11 @@ Description:
 
 -   After Switch succeeded, the compute node will record switch process log:
 
-INFO \[pool-1-thread-1064\] (SwitchDataSource.java:78) -received switch datasourceid command from Manager : \[Connection Information\]
+INFO [pool-1-thread-1064] (SwitchDataSource.java:78) -received switch datasourceid command from Manager : [Connection Information]
 
-WARN \[pool-1-thread-1339\] (BackendDataNode.java:263) -datanode id switch datasource:id to datasource:id in failover. due to: Manual Switch by User: username
+WARN [pool-1-thread-1339] (BackendDataNode.java:263) -datanode id switch datasource:id to datasource:id in failover. due to: Manual Switch by User: username
 
-INFO \[pool-1-thread-1339\] (SwitchDataSource.java:68) -switch datasource:id for datanode:id successfully by Manager.
+INFO [pool-1-thread-1339] (SwitchDataSource.java:68) -switch datasource:id for datanode:id successfully by Manager.
 
 -   In case of no Switching Rule configured, there will be no Switch, and will be the error prompt: switch datasource id failed due to:found no backup information)
 
@@ -2106,7 +2106,7 @@ Failover is generally the Auto Switch after data source failure, and the descrip
 
 -   If the Standby Slave Status is Unavailable, there will be no Switch, and the compute node will record log
 
-WARN \[pool-1-thread-2614\] datanode id failover failed due to found no available backup
+WARN [pool-1-thread-2614] datanode id failover failed due to found no available backup
 
 -   In server.xml, you could configure the parameter waitForSlaveInFailover to control whether the Switch shall wait for the Standby Slave to catch up with replication. If the parameter is true by default, which means Waiting, then during Switch process, it will wait for the Standby Slave to catch up with replication. If set as false, which means Not Waiting, then it will Switch immediately. (There is a risk of data loss in the immediate switch, which is not recommended).
 
@@ -2114,7 +2114,7 @@ WARN \[pool-1-thread-2614\] datanode id failover failed due to found no availabl
 
 -   During Failover, Active Master Heartbeat is continuous. If Heartbeat succeed for two successive time, then give up Switch, and the compute node will record log
 
-INFO \[\$NIOREACTOR-6-RW\] (Heartbeat.java:502) -heartbeat continue success twice for datasource 5 192.168.200.52:3310/phy243_05, give up failover.
+INFO [\$NIOREACTOR-6-RW] (Heartbeat.java:502) -heartbeat continue success twice for datasource 5 192.168.200.52:3310/phy243_05, give up failover.
 
 -   After Switch succeeded, the compute node will record log, and record the cause for Switch:
 
@@ -2126,21 +2126,21 @@ If MySQL service is enabled, but the response is abnormal, then it will record: 
 
 For example: when stopping the data source service, the whole Switch process is promoted as follow:
 
-02/21 15:57:29.342 INFO \[HeartbeatTimer\] (BackendDataNode.java:396) -start failover for datanode:5
+02/21 15:57:29.342 INFO [HeartbeatTimer] (BackendDataNode.java:396) -start failover for datanode:5
 
-02/21 15:57:29.344 INFO \[HeartbeatTimer\] (BackendDataNode.java:405) -found candidate backup for datanode 5 :\[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1\] in failover, start checking slave status.
+02/21 15:57:29.344 INFO [HeartbeatTimer] (BackendDataNode.java:405) -found candidate backup for datanode 5 :[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1] in failover, start checking slave status.
 
-02/21 15:57:29.344 WARN \[\$NIOREACTOR-0-RW\] (HeartbeatInitHandler.java:44) -datasoruce 5 192.168.200.52:331001_3310_ms init heartbeat failed due to:MySQL Error Packet{length=36,id=1}
+02/21 15:57:29.344 WARN [\$NIOREACTOR-0-RW] (HeartbeatInitHandler.java:44) -datasoruce 5 192.168.200.52:331001_3310_ms init heartbeat failed due to:MySQL Error Packet{length=36,id=1}
 
-02/21 15:57:29.344 INFO \[pool-1-thread-1020\] (CheckSlaveHandler.java:241) -slave_sql_running is Yes in :\[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1\] during failover of datanode 5
+02/21 15:57:29.344 INFO [pool-1-thread-1020] (CheckSlaveHandler.java:241) -slave_sql_running is Yes in :[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1] during failover of datanode 5
 
-02/21 15:57:29.424 WARN \[pool-1-thread-1066\] (BackendDataNode.java:847) -datanode 5 switch datasource 5 to 9 in failover. due to: MySQL Service Stopped
+02/21 15:57:29.424 WARN [pool-1-thread-1066] (BackendDataNode.java:847) -datanode 5 switch datasource 5 to 9 in failover. due to: MySQL Service Stopped
 
-02/21 15:57:29.429 WARN \[pool-1-thread-1066\] (Heartbeat.java:416) -datasource 5 192.168.200.52:331001_3310_ms heartbeat failed and will be no longer used.
+02/21 15:57:29.429 WARN [pool-1-thread-1066] (Heartbeat.java:416) -datasource 5 192.168.200.52:331001_3310_ms heartbeat failed and will be no longer used.
 
 -   In case of Switching Rule configured, there will be no Switch, and the compute node will record log：
 
-WARN \[pool-1-thread-177\] (?:?) -datanode id failover failed due to found no backup information
+WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no backup information
 
 -   After Failover of data source, whether Master/Slave or Standby Master, we have the uniform requirement that, the precondition for setting the data source as Available manually is that the operating personnel must be clear about that the existing master/slave service is free of abnormalities, the data synchronization is free of abnormalities, and especially for the master/slave mode, it must be guaranteed that the data at the time of Slave service during the period has been synchronized to the Master data source. When data source is enabled, we shall form the habit of not skipping the Master / Slave Consistency Detection.
 
@@ -2148,59 +2148,59 @@ WARN \[pool-1-thread-177\] (?:?) -datanode id failover failed due to found no ba
 
 When the configDB and some data sources are deployed on the same MySQL instance or the same server, in case of failure with this instance, the failure information can't be recorded into the configDB, therefore, compute node supports the ConfigDB High Availability function, in order to guarantee normal use of configDB.
 
-1\. Configure connection information of master/slave configDB in server.xml, in order to guarantee normal master/slave relation
+1. Configure connection information of master/slave configDB in server.xml, in order to guarantee normal master/slave relation
 
-\<property name=\"url\"\>jdbc:mysql://192.168.200.191:3310/hotdb_config\</property\>\<!\-- Master configDB address\--\>
+<property name="url">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- Master configDB address-->
 
-\<property name=\"username\"\>hotdb_config\</property\>\<!\-- Master configDB username \--\>
+<property name="username">hotdb_config</property><!-- Master configDB username -->
 
-\<property name=\"password\"\>hotdb_config\</property\>\<!\-- Master configDB password \--\>
+<property name="password">hotdb_config</property><!-- Master configDB password -->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.200.190:3310/hotdb_config\</property\>\<!\-- Slave configDB address \--\>
+<property name="bakUrl">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- Slave configDB address -->
 
-\<property name=\"bakUsername\"\>hotdb_config\</property\>\<!\-- Slave configDB username \--\>
+<property name="bakUsername">hotdb_config</property><!-- Slave configDB username -->
 
-\<property name=\"bakPassword\"\>hotdb_config\</property\>\<!\-- Slave configDB password \--\>
+<property name="bakPassword">hotdb_config</property><!-- Slave configDB password -->
 
 -   In case of failure with the Master configDB, it will switch to the Slave configDB automatically. In case of delay in the Switch process, it will wait for the Slave configDB to catch up with replication.
 
 -   When the compute node version is 2.5.6 or above, in case of failure with the Master configDB, the slave ConfigDB will be updated to the master before taking over, and the original master ConfigDB will be updated to the slave. Server.xml will be adjusted synchronously, as shown below:
 
-\<property name=\"url\"\>jdbc:mysql://192.168.200.190:3310/hotdb_config\</property\>\<!\-- Master configDB address \--\>
+<property name="url">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- Master configDB address -->
 
-\<property name=\"username\"\>hotdb_config\</property\>\<!\-- Master configDB username \--\>
+<property name="username">hotdb_config</property><!-- Master configDB username -->
 
-\<property name=\"password\"\>hotdb_config\</property\>\<!\-- Master configDB password \--\>
+<property name="password">hotdb_config</property><!-- Master configDB password -->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.200.191:3310/hotdb_config\</property\>\<!\-- Slave configDB address \--\>
+<property name="bakUrl">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- Slave configDB address -->
 
-\<property name=\"bakUsername\"\>hotdb_config\</property\>\<!\-- Slave configDB username \--\>
+<property name="bakUsername">hotdb_config</property><!-- Slave configDB username -->
 
-\<property name=\"bakPassword\"\>hotdb_config\</property\>\<!\-- Slave configDB password \--\>
+<property name="bakPassword">hotdb_config</property><!-- Slave configDB password -->
 
 -   If Compute Node High Availability service involves master/slave relation of configDB, then it shall be guaranteed that configuration of a group of Compute Node High Availability master/slave configDB in server.xml is identical, and there shall be no staggered configuration.
 
-2\. configDB also supports MGR configDB at the same time (MySQL must be above the Version 5.7, configDB MGR only supports three nodes for the time being), in server.xml, configure configDB information with MGR relation, and guarantee that the MGR relation is normal. Under the condition where MGR relation is inaccurate, configDB may can't provide normal service, and may result in Startup Failure.
+2. configDB also supports MGR configDB at the same time (MySQL must be above the Version 5.7, configDB MGR only supports three nodes for the time being), in server.xml, configure configDB information with MGR relation, and guarantee that the MGR relation is normal. Under the condition where MGR relation is inaccurate, configDB may can't provide normal service, and may result in Startup Failure.
 
-\<property name=\"url\"\>jdbc:mysql://192.168.210.22:3308/hotdb_config_test250\</property\>\<!\-- configDB address \--\>
+<property name="url">jdbc:mysql://192.168.210.22:3308/hotdb_config_test250</property><!-- configDB address -->
 
-\<property name=\"username\"\>hotdb_config\</property\>\<!\-- configDB username \--\>
+<property name="username">hotdb_config</property><!-- configDB username -->
 
-\<property name=\"password\"\>hotdb_config\</property\>\<!\-- configDB password \--\>
+<property name="password">hotdb_config</property><!-- configDB password -->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.210.23:3308/hotdb_config_test250\</property\>\<!\-- Slave configDB address (if configDB uses MGR, this item must be configured) \--\>
+<property name="bakUrl">jdbc:mysql://192.168.210.23:3308/hotdb_config_test250</property><!-- Slave configDB address (if configDB uses MGR, this item must be configured) -->
 
-\<property name=\"bakUsername\"\>hotdb_config\</property\>\<!\-- Slave configDB username (if configDB uses MGR, this item must be configured) \--\>
+<property name="bakUsername">hotdb_config</property><!-- Slave configDB username (if configDB uses MGR, this item must be configured) -->
 
-\<property name=\"bakPassword\"\>hotdb_config\</property\>\<!\-- Slave configDB password (if configDB uses MGR, this item must be configured) \--\>
+<property name="bakPassword">hotdb_config</property><!-- Slave configDB password (if configDB uses MGR, this item must be configured) -->
 
-\<property name=\"configMGR\"\>true\</property\>\<!\-- Whether configDB uses MGR or not\--\>
+<property name="configMGR">true</property><!-- Whether configDB uses MGR or not-->
 
-\<property name=\"bak1Url\"\>jdbc:mysql://192.168.210.24:3308/hotdb_config_test250\</property\>\<!\-- MGR configDB address (if configDB uses MGR, this item must be configured) \--\>
+<property name="bak1Url">jdbc:mysql://192.168.210.24:3308/hotdb_config_test250</property><!-- MGR configDB address (if configDB uses MGR, this item must be configured) -->
 
-\<property name=\"bak1Username\"\>hotdb_config\</property\>\<!\-- MGR configDB username (if configDB uses MGR, this item must be configured) \--\>
+<property name="bak1Username">hotdb_config</property><!-- MGR configDB username (if configDB uses MGR, this item must be configured) -->
 
-\<property name=\"bak1Password\"\>hotdb_config\</property\>\<!\-- MGR configDB password (if configDB uses MGR, this item must be configured) \--\>
+<property name="bak1Password">hotdb_config</property><!-- MGR configDB password (if configDB uses MGR, this item must be configured) -->
 
 In case of failure with the Active Master, MGR configDB will re-select the Master Logic according to actual MySQL, and when new Active Master is selected, it will switch to new Master configDB timely.
 
@@ -2212,31 +2212,31 @@ HotDB Server supports High Availability Architecture Deployment, which utilizes 
 
 When start the master/slave compute node service under High Availability Architecture, attention shall be paid to the problem of startup sequence, and the following is the standard startup sequence:
 
-1\. Firstly, start the Keepalived on the server where the master compute node resides, and then start the master compute node:
+1. Firstly, start the Keepalived on the server where the master compute node resides, and then start the master compute node:
 
 View the compute node log:
 
-2018-06-13 09:40:04.408 \[INFO\] \[INIT\] \[Labor-3\] j(-1) -- HotDB-Manager listening on 3325
+2018-06-13 09:40:04.408 [INFO] [INIT] [Labor-3] j(-1) -- HotDB-Manager listening on 3325
 
-2018-06-13 09:40:04.412 \[INFO\] \[INIT\] \[Labor-3\] j(-1) -- HotDB-Server listening on 3323
+2018-06-13 09:40:04.412 [INFO] [INIT] [Labor-3] j(-1) -- HotDB-Server listening on 3323
 
 View the port listening status:
 
-root\> ss -npl \| grep 3323
+root> ss -npl | grep 3323
 
-LISTEN 0 1000 \*:3323 \*:\* users:((\"java\",12639,87))
+LISTEN 0 1000 *:3323 *:* users:(("java",12639,87))
 
-root\> ps -aux \|grep hotdb
+root> ps -aux |grep hotdb
 
-Warning: bad syntax, perhaps a bogus \'-\'? See /usr/share/doc/procps-3.2.8/FAQ
+Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
 
 root 12639 60.7 34.0 4194112 2032134 ? Sl Jun04 7043:58 /usr/java/jdk1.7.0_80/bin/java -DHOTDB_HOME=/usr/local/hotdb-2.4/hotdb-server -classpath /usr/local/hotdb-2.4/hotdb-server/conf: ...省略更多... -Xdebug -Xrunjdwp:transport=dt_socket,address=8065,server=y,suspend=n -Djava.net.preferIPv4Stack=true cn.hotpu.hotdb.HotdbStartup
 
 Using command"ip a", you could view whether Keepalived VIP of the existing master compute node has been successfully bound or not, for example in the following instance, 192.168.200.190 is the address of the server where master compute node resides; 192.168.200.140 is the configured VIP address
 
-root\> ip a
+root> ip a
 
-1: lo: \<LOOPBACK,UP,LOWER_UP\> mtu 65536 qdisc noqueue state UNKNOWN
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
 
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 
@@ -2246,7 +2246,7 @@ inet6 ::1/128 scope host
 
 valid_lft forever preferred_lft forever
 
-2: eth1: \<BROADCAST,MULTICAST,UP,LOWER_UP\> mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
+2: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
 
 link/ether 00:1d:0f:14:8b:fa brd ff:ff:ff:ff:ff:ff
 
@@ -2262,21 +2262,21 @@ valid_lft forever preferred_lft forever
 
 View the compute node log:
 
-2018-06-04 18:14:32:321 \[INFO\] \[INIT\] \[main\] j(-1) -- Using nio network handler
+2018-06-04 18:14:32:321 [INFO] [INIT] [main] j(-1) -- Using nio network handler
 
-2018-06-04 18:14:32:356 \[INFO\] \[INIT\] \[main\] j(-1) -- HotDB-Manager listening on 3325
+2018-06-04 18:14:32:356 [INFO] [INIT] [main] j(-1) -- HotDB-Manager listening on 3325
 
-2018-06-04 18:14:32:356 \[INFO\] \[AUTHORITY\] \[checker\] Z(-1) -- Thanks for choosing HotDB
+2018-06-04 18:14:32:356 [INFO] [AUTHORITY] [checker] Z(-1) -- Thanks for choosing HotDB
 
 View the port listening status:
 
-root\> ss -npl \| grep 3325
+root> ss -npl | grep 3325
 
-LISTEN 0 1000 \*:3325 \*:\* users:((\"java\",11603,83))
+LISTEN 0 1000 *:3325 *:* users:(("java",11603,83))
 
-root\> ps -aux \|grep hotdb
+root> ps -aux |grep hotdb
 
-Warning: bad syntax, perhaps a bogus \'-\'? See /usr/share/doc/procps-3.2.8/FAQ
+Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
 
 root 11603 12.0 13.6 3788976 1086196 ? Sl Jun04 1389:44 /usr/java/jdk1.7.0_80/bin/java -DHOTDB_HOME=/usr/local/hotdb-2.4/hotdb-server -classpath /usr/local/hotdb-2.4/hotdb-server/conf: ...省略更多... -Xdebug -Xrunjdwp:transport=dt_socket,address=8065,server=y,suspend=n -Djava.net.preferIPv4Stack=true cn.hotpu.hotdb.HotdbStartup
 
@@ -2286,23 +2286,23 @@ In case of failure with the server where master compute node resides (take 192.1
 
 After the keepalived on the server where the slave compute node resides (take 192.168.200.191 for instance) receives vrrp packet inferior to its own priority (the priority of 192.168.200.191 is 95), it will switch to the master status, and preempt the vip (take 192.168.200.140 for instance). Meanwhile, after entering the master status, it will execute the notify_master script, have access to management port of the compute node on 192.168.200.191 to execute online command, start and initialize the service port of the compute node on 192.168.200.191. If this compute node is enabled successfully, then Master/Slave Switch succeeded, and it will continue to provide service. Log of the compute node on 192.168.200.191 is as follow:
 
-2018-06-12 21:54:45.128 \[INFO\] \[INIT\] \[Labor-3\] j(-1) -- HotDB-Server listening on 3323
+2018-06-12 21:54:45.128 [INFO] [INIT] [Labor-3] j(-1) -- HotDB-Server listening on 3323
 
-2018-06-12 21:54:45.128 \[INFO\] \[INIT\] \[Labor-3\] j(-1) -- =============================================
+2018-06-12 21:54:45.128 [INFO] [INIT] [Labor-3] j(-1) -- =============================================
 
-2018-06-12 21:54:45.141 \[INFO\] \[MANAGER\] \[Labor-4\] q(-1) -- Failed to offline master Because mysql: \[Warning\] Using a password on the command line interface can be insecure.
+2018-06-12 21:54:45.141 [INFO] [MANAGER] [Labor-4] q(-1) -- Failed to offline master Because mysql: [Warning] Using a password on the command line interface can be insecure.
 
-ERROR 2003 (HY000): Can\'t connect to MySQL server on \'192.168.200.190\' (111)
+ERROR 2003 (HY000): Can't connect to MySQL server on '192.168.200.190' (111)
 
-2018-06-12 21:54:45.141 \[INFO\] \[RESPONSE\] \[\$NIOREACTOR-8-RW\] af(-1) -- connection killed for HotDB backup startup
+2018-06-12 21:54:45.141 [INFO] [RESPONSE] [\$NIOREACTOR-8-RW] af(-1) -- connection killed for HotDB backup startup
 
 ...More are omitted...
 
 VIP of Keepalived has been on the 192.168.200.191 server already:
 
-root\> ip a
+root> ip a
 
-1: lo: \<LOOPBACK,UP,LOWER_UP\> mtu 65536 qdisc noqueue state UNKNOWN
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
 
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 
@@ -2312,7 +2312,7 @@ inet6 ::1/128 scope host
 
 valid_lft forever preferred_lft forever
 
-2: eth0: \<BROADCAST,MULTICAST,UP,LOWER_UP\> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
 
 link/ether 18:a9:05:1b:0f:a8 brd ff:ff:ff:ff:ff:ff
 
@@ -2330,7 +2330,7 @@ Note: For Manual Switch on the management platform, if Switch succeeded, it will
 
 The compute node under Master/Slave mode mainly marks the Master/Slave role via the server.xml and keepalived.conf Config File. High Availability Switch shall only from Master role to Slave role, and after Failover or Manual Switch of the compute node, in order to guarantee smooth Failback in case of failure with the compute node next time, it needs to make configuration of the master/slave compute node accurate via the High Availability Rebuild.
 
-For example, through this function it could be realized that: in case of failover with the master compute node (take 192.168.200.190 for instance), after switch to the slave compute node (take 192.168.200.191 for instance), by manual trigger of Compute Node High Availability Rebuild function, the compute node service and Master/Slave relation on the 192.168.200.190 server could be recovered, and in case of failure again with the compute node on the 192.168.200.191 server, it could failback to the 192.168.200.190 automatically. For details of High Availability Rebuild, please refer to *Distributed Transactional Database HotDB Server \[Management Platform\] Function Manual*.
+For example, through this function it could be realized that: in case of failover with the master compute node (take 192.168.200.190 for instance), after switch to the slave compute node (take 192.168.200.191 for instance), by manual trigger of Compute Node High Availability Rebuild function, the compute node service and Master/Slave relation on the 192.168.200.190 server could be recovered, and in case of failure again with the compute node on the 192.168.200.191 server, it could failback to the 192.168.200.190 automatically. For details of High Availability Rebuild, please refer to *Distributed Transactional Database HotDB Server [Management Platform] Function Manual*.
 
 #### Load-balancing of compute node
 
@@ -2338,7 +2338,7 @@ HotDB Server supports node autonomy of multiple compute node cluster. Hereinafte
 
 HotDB Server supports load-balancing: you could select LVS and other means to distribute SQL request. The application client could have access to database service of HotDB Server via VIP of LVS, and at the same time, use transparency and service un-interruption are guaranteed. It could also use the remaining load-balancing plans for processing, for example F5 plus Custom Test; apply the mode of direct connection compute node, but replace node in case of abnormality, etc.
 
-![9R8QD\$VPCV%J\$4\_\]YYIOGHX](media/image64.png)
+![9R8QD\$VPCV%J\$4_]YYIOGHX](media/image64.png)
 
 ##### Startup description
 
@@ -2406,25 +2406,25 @@ After multiple compute node cluster starts, by accessing to the database service
 
 Notices for multiple compute node cluster:
 
-1\. When compute node cluster starts, the Primary is random, the compute node on the server where the Master configDB resides can't become Primary;
+1. When compute node cluster starts, the Primary is random, the compute node on the server where the Master configDB resides can't become Primary;
 
-2\. After a certain period, the compute node with failure will disable the service port independently to become Started status;
+2. After a certain period, the compute node with failure will disable the service port independently to become Started status;
 
-3\. In case the Secondary finds that the Primary loses response and itself is not on the server where Master configDB resides, it will launch new Election, and will become the new Primary if receiving the majority votes;
+3. In case the Secondary finds that the Primary loses response and itself is not on the server where Master configDB resides, it will launch new Election, and will become the new Primary if receiving the majority votes;
 
-4\. Add new node, and the Primary will find join of the new Started node, and will Add the new node found; if the Primary finds that the Secondary loses response, it will kick out this node;
+4. Add new node, and the Primary will find join of the new Started node, and will Add the new node found; if the Primary finds that the Secondary loses response, it will kick out this node;
 
-5\. For cluster environment upgrade version, if the business is not influenced, it's recommended enabling after disabling the Cluster Upgrade;
+5. For cluster environment upgrade version, if the business is not influenced, it's recommended enabling after disabling the Cluster Upgrade;
 
-6\. For server.xml configuration of various nodes in the cluster, all parameters must be consistent except the cluster related parameters;
+6. For server.xml configuration of various nodes in the cluster, all parameters must be consistent except the cluster related parameters;
 
-7\. Time difference of various compute node servers shall be less than 1s;
+7. Time difference of various compute node servers shall be less than 1s;
 
-8\. It's required that network latency between compute node servers shall be less than 1s at any time;
+8. It's required that network latency between compute node servers shall be less than 1s at any time;
 
-9\. It's recommended deploying only a set of multiple compute node cluster within a local-area network segment (It\'s just a suggestion, not a mandatory requirement. The reason for the suggestion is to reserve more space for future expansion);
+9. It's recommended deploying only a set of multiple compute node cluster within a local-area network segment (It's just a suggestion, not a mandatory requirement. The reason for the suggestion is to reserve more space for future expansion);
 
-10\. configDB IP requires configuration of actual IP.
+10. configDB IP requires configuration of actual IP.
 
 ##### Linear expansion
 
@@ -2432,7 +2432,7 @@ In the multi-node cluster mode, if you want to achieve linear growth of performa
 
 ###### Deployment of Listener
 
-Please refer to the Distributed Transactional Database HotDB Server - \[Installation & Deployment\] Function Manual for the deployment of Listener components.
+Please refer to the Distributed Transactional Database HotDB Server - [Installation & Deployment] Function Manual for the deployment of Listener components.
 
 ###### Use of Listener
 
@@ -2460,7 +2460,7 @@ In steps 1-4, fill in the host name and port number of the data source, connecti
 
 The rules are as follows:
 
--   Listener host name: \"default\" by default, no need to modify
+-   Listener host name: "default" by default, no need to modify
 
 -   Listening port: the start port of Listener. 3330 by default
 
@@ -2470,13 +2470,13 @@ After filling is achieved, click Connection Test, and click Save and Return afte
 
 In dynamic loading, if the status on the node management list is ![](assets/standard/image78.png), it means that the Listener can be connected; if the status is ![](assets/standard/image79.png)，it means that the Listener cannot be connected. You should check whether enableXA is true and enableListener is true.
 
-Verify whether the Listener service is enabled or not: execute show @\@datasource on port 3325 to view.
+Verify whether the Listener service is enabled or not: execute show @@datasource on port 3325 to view.
 
 ####### Edit node configuration of Listener
 
 This method is suitable for adding Listener configuration based on existing data nodes.
 
-On the node management page, take dn\_ 26 as an example:
+On the node management page, take dn_ 26 as an example:
 
 ![](assets/standard/image80.png)
 
@@ -2492,7 +2492,7 @@ Click Edit to add information about the Listener.
 
 The rules are as follows:
 
--   Listener host name: \"default\" by default, no need to modify
+-   Listener host name: "default" by default, no need to modify
 
 -   Listener port: the start port of Listener. 3330 by default
 
@@ -2502,23 +2502,23 @@ After filling is achieved, click Connection Test, and click Save and Return afte
 
 In dynamic loading, if the status on the node management list is ![](assets/standard/image78.png), it means that the Listener can be connected; if the status is ![](assets/standard/image79.png)，it means that the Listener cannot be connected. You should check whether enableXA is true and enableListener is true.
 
-Verify whether the Listener service is enabled or not: execute show @\@datasource on port 3325 to view.
+Verify whether the Listener service is enabled or not: execute show @@datasource on port 3325 to view.
 
 ###### Notes
 
-1\. Once deployed and correctly identified, the Listener is of no concern to users in the process of daily compute node operation;
+1. Once deployed and correctly identified, the Listener is of no concern to users in the process of daily compute node operation;
 
-2\. Listener components should be installed on the same server as the data source;
+2. Listener components should be installed on the same server as the data source;
 
-3\. If a Listener needs to listen to multiple data sources, different service ports need to be filled in;
+3. If a Listener needs to listen to multiple data sources, different service ports need to be filled in;
 
-4\. When a certain data source is cancelled to be listened by Listener, the allocated Listener service port will always exist. The original data source can use the Listener service port to bind the Listener again.
+4. When a certain data source is cancelled to be listened by Listener, the allocated Listener service port will always exist. The original data source can use the Listener service port to bind the Listener again.
 
-5\. When a certain data source is cancelled to be listened by Listener, the allocated Listener service port will always exist. At this time, if other data sources use the Listener service port, the Listener log will report an error: Port conflicts. Port already exists. Therefore, you need to restart Listener before you can use the Listener service port.
+5. When a certain data source is cancelled to be listened by Listener, the allocated Listener service port will always exist. At this time, if other data sources use the Listener service port, the Listener log will report an error: Port conflicts. Port already exists. Therefore, you need to restart Listener before you can use the Listener service port.
 
-6\. When the cluster needs to be restarted, it is recommended that the Listener components be restarted together. The restart sequence is: restart Listener first, and then restart the cluster, so that the cluster can recognize the Listener faster;
+6. When the cluster needs to be restarted, it is recommended that the Listener components be restarted together. The restart sequence is: restart Listener first, and then restart the cluster, so that the cluster can recognize the Listener faster;
 
-7\. As a pluggable component, when Listener is not available, the cluster and data sources can still provide services.
+7. As a pluggable component, when Listener is not available, the cluster and data sources can still provide services.
 
 #### Compute node auto scaling
 
@@ -2534,7 +2534,7 @@ Parameters involved are as follows:
 
 **Parameters**   **Instructions**                                                                                                   **Reference value**                                                                       **Whether the reloading is valid**
   haMode           High availability mode: 0: master and slave; 1: cluster                                                            In cluster environment, the parameter value is 1                                          yes
-  serverId         Cluster node number 1-N (number of nodes), unique in the cluster and N \< = total number of nodes in the cluster   The serverID should start from 1 and should not be repeated continuously in the cluster   yes
+  serverId         Cluster node number 1-N (number of nodes), unique in the cluster and N < = total number of nodes in the cluster   The serverID should start from 1 and should not be repeated continuously in the cluster   yes
   clusterName      Cluster group name                                                                                                 HotDB-Cluster                                                                             yes
   clusterSize      Total number of cluster nodes                                                                                      The default value is 3, which is configured according to the actual number of nodes       yes
   clusterNetwork   Network segment of cluster                                                                                         192.168.200.0/24, same network segment as cluster IP                                      yes
@@ -2573,7 +2573,7 @@ Taking single LVS service as an example, select 192.168.210.136 as LVS server, a
 
 cd /usr/local/hotdb/Install_Package
 
-sh hotdbinstall_v\*.sh \--dry-run=no \--install-lvs=master \--lvs-vip-with-perfix=192.168.210.218/24 \--lvs-port=3323 \--lvs-virtual-router-id=44 \--lvs-net-interface-name=eth0:1 \--lvs-real-server-list=192.168.210.134:3323:3325,192.168.210.67:3323:3325,192.168.210.68:3323:3325 \--ntpdate-server-ip=182.92.12.11
+sh hotdbinstall_v*.sh --dry-run=no --install-lvs=master --lvs-vip-with-perfix=192.168.210.218/24 --lvs-port=3323 --lvs-virtual-router-id=44 --lvs-net-interface-name=eth0:1 --lvs-real-server-list=192.168.210.134:3323:3325,192.168.210.67:3323:3325,192.168.210.68:3323:3325 --ntpdate-server-ip=182.92.12.11
 
 （2）Configure LVS service on compute node server （HotDB_01/HotDB_02/HotDB_03）
 
@@ -2581,7 +2581,7 @@ HotDB_01/HotDB_02/HotDB_03服务器分别执行脚本：
 
 cd /usr/local/hotdb/Install_Package
 
-sh hotdbinstall_v\*.sh \--dry-run=no \--lvs-real-server-startup-type=service \--lvs-vip-with-perfix=192.168.210.218/24 \--install-ntpd=yes \--ntpdate-server-host=182.92.12.11
+sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-vip-with-perfix=192.168.210.218/24 --install-ntpd=yes --ntpdate-server-host=182.92.12.11
 
 （3）Enable LVS service on LVS server
 
@@ -2591,19 +2591,19 @@ service keepalived start
 
 （1）server.xml of compute node（HotDB_01/HotDB_02/HotDB_03）is adjusted according to relevant [parameters](#parameter-introduction)，as in the following figure:
 
-For HotDB\_ 01 parameters, refer to the configuration of selected area:
+For HotDB_ 01 parameters, refer to the configuration of selected area:
 
 ![](assets/standard/image85.png)
 
-For HotDB\_ 02 parameters, refer to the configuration of selected area:
+For HotDB_ 02 parameters, refer to the configuration of selected area:
 
 ![](assets/standard/image86.png)
 
-For HotDB\_ 03 parameters, refer to the configuration of selected area:
+For HotDB_ 03 parameters, refer to the configuration of selected area:
 
 ![](assets/standard/image87.png)
 
-（2）Executes reload @@ config HotDB\_ 01 at the management end of HotDB_01, and execute show @\@cluster you can see HotDB_01 join the cluster as PRIMARY.
+（2）Executes reload @@ config HotDB_ 01 at the management end of HotDB_01, and execute show @@cluster you can see HotDB_01 join the cluster as PRIMARY.
 
 ![](assets/standard/image88.png)
 
@@ -2613,13 +2613,13 @@ service keepalived stop
 
 ![](assets/standard/image89.png)
 
-\(4\) Start HotDB_02, HotDB_03, and then execute show @\@cluster at the management end of HotDB_01; you can see that all cluster members have joined.
+\(4\) Start HotDB_02, HotDB_03, and then execute show @@cluster at the management end of HotDB_01; you can see that all cluster members have joined.
 
 ![](assets/standard/image90.png)
 
 **Step 4: Adaptation adjustment of management platform**
 
-The adaptation mode is the same as \"[Expand compute nodes in cluster mode](#expand-compute-nodes-in-cluster-mode)\". Edit the cluster of compute nodes to add new compute nodes and convert the HA mode to cluster mode, as shown in the following figure:
+The adaptation mode is the same as "[Expand compute nodes in cluster mode](#expand-compute-nodes-in-cluster-mode)". Edit the cluster of compute nodes to add new compute nodes and convert the HA mode to cluster mode, as shown in the following figure:
 
 ![](assets/standard/image91.png)
 
@@ -2656,9 +2656,9 @@ Execute deployment script and configure LVS at the HotDB_04 server:
 
 cd /usr/local/hotdb/Install_Package/
 
-sh hotdbinstall_v\*.sh \--dry-run=no \--lvs-real-server-startup-type=service \--lvs-vip-with-perfix=192.168.210.216/24 \--install-ntpd=no \--ntpdate-server-host=182.92.12.11
+sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-vip-with-perfix=192.168.210.216/24 --install-ntpd=no --ntpdate-server-host=182.92.12.11
 
-说明：\--lvs-vip-with-perfix：当前集群的VIP
+说明：--lvs-vip-with-perfix：当前集群的VIP
 
 **Step 3: adjust parameters and start a new cluster member**
 
@@ -2672,13 +2672,13 @@ sh hotdbinstall_v\*.sh \--dry-run=no \--lvs-real-server-startup-type=service \--
 
 **Step 4: Reload the configuration**
 
-Execute reload @\@config at the the management end of the primary compute node(HotDB_01), you can see HotDB_04 join the cluster:
+Execute reload @@config at the the management end of the primary compute node(HotDB_01), you can see HotDB_04 join the cluster:
 
 ![](assets/standard/image96.png)
 
 **Step5: Adaption adjustment of management platform**
 
-Enter the "Cluster management" -\> "Compute node cluster" page to bring the newly added compute nodes into the management.
+Enter the "Cluster management" -> "Compute node cluster" page to bring the newly added compute nodes into the management.
 
 Edit the compute node cluster, and add the newly introduced compute nodes via the "+" button in the operation bar on the right side of the compute node. After saving, the management platform will automatically identify the compute node mode according to the number of compute nodes, as shown in the following figure:
 
@@ -2688,7 +2688,7 @@ Edit the compute node cluster, and add the newly introduced compute nodes via th
 
 -   If new compute nodes are added in the cluster, repeat the operation from the first step.
 
--   If the value of clusterSize and haMode of the compute node does not match the actual configured cluster, reload @\@config in step 4 will fail, therefore it shall be ensured that the configuration be consistent with the actual situation.
+-   If the value of clusterSize and haMode of the compute node does not match the actual configured cluster, reload @@config in step 4 will fail, therefore it shall be ensured that the configuration be consistent with the actual situation.
 
 -   The parameter serverId of new compute nodes should be unique and continuous with the original cluster, otherwise it will cause abnormal startup.
 
@@ -2720,25 +2720,25 @@ This section mainly describes the operation of reducing a cluster that normally 
 
 **Step 1: disablethe standby compute node service**
 
-Disable the compute node services of HotDB\_ 02 and HotDB\_ 03. This process will trigger cluster election. If there is a pressure measurement task at this time, it will flash off and return to normal in a few seconds.
+Disable the compute node services of HotDB_ 02 and HotDB_ 03. This process will trigger cluster election. If there is a pressure measurement task at this time, it will flash off and return to normal in a few seconds.
 
 ![](assets/standard/image98.png)
 
 **Step 2: deploy keepalived and adjust the compute node configuration**
 
-（1）HotDB\_ 01、HotDB\_ 02 servers are respectively deployed with master and slave keepalived (the corresponding VIP can be the same with and VIP of LVS, but virtual\_ router\_ id cannot be the same)
+（1）HotDB_ 01、HotDB_ 02 servers are respectively deployed with master and slave keepalived (the corresponding VIP can be the same with and VIP of LVS, but virtual_ router_ id cannot be the same)
 
 **HotDB_01 server execution script**：
 
 /usr/local/hotdb/Install_Package
 
-sh hotdbinstall_v\*.sh \--dry-run=no \--install-keepalived=master \--keepalived-vip-with-prefix=192.168.210.218/24 \--keepalived-virtual-router-id=218 \--keepalived-net-interface-name=eth0:1 \--ntpdate-server-host=182.92.12.11 \--install-ntpd=yes
+sh hotdbinstall_v*.sh --dry-run=no --install-keepalived=master --keepalived-vip-with-prefix=192.168.210.218/24 --keepalived-virtual-router-id=218 --keepalived-net-interface-name=eth0:1 --ntpdate-server-host=182.92.12.11 --install-ntpd=yes
 
 **HotDB_02 server execution script：**
 
 cd /usr/local/hotdb/Install_Package
 
-sh hotdbinstall_v\*.sh \--dry-run=no \--install-keepalived=backup \--keepalived-vip-with-prefix=192.168.210.218/24 \--keepalived-virtual-router-id=218 \--keepalived-net-interface-name=eth0:1 \--ntpdate-server-host=182.92.12.11 \--install-ntpd=yes
+sh hotdbinstall_v*.sh --dry-run=no --install-keepalived=backup --keepalived-vip-with-prefix=192.168.210.218/24 --keepalived-virtual-router-id=218 --keepalived-net-interface-name=eth0:1 --ntpdate-server-host=182.92.12.11 --install-ntpd=yes
 
 （2）Modify the configuration of keepalived.conf of HotDB_01、HotDB_02 servers，refer to the chapter 2.1.2.2 in the document Installation and Deployment
 
@@ -2786,7 +2786,7 @@ Enable HotDB_02 and keepalived service.
 
 **Step 6: Adaptation adjustment of management platform**
 
-The adaptation mode is the same as \"[Expand compute nodes in cluster mode](#expand-compute-nodes-in-cluster-mode)\". Edit the cluster of compute nodes to delete the reduced compute nodes and convert the cluster mode to HA mode, as shown in the following figure:
+The adaptation mode is the same as "[Expand compute nodes in cluster mode](#expand-compute-nodes-in-cluster-mode)". Edit the cluster of compute nodes to delete the reduced compute nodes and convert the cluster mode to HA mode, as shown in the following figure:
 
 ![](assets/standard/image105.png)
 
@@ -2808,7 +2808,7 @@ To use the Read/write splitting function, it needs to configure Master/Slave dat
 
 By default, Read/write splitting function is Disable in the compute node. To enable the Read/write splitting function, it needs to set property value of strategyForRWSplit bigger than 0 in Config Fileserver.xml of the compute node.
 
-\<property name=\"strategyForRWSplit\"\>1\</property\>
+<property name=[strategyForRWSplit](#strategyForRWSplit)>1</property>
 
 strategyForRWSplit is allowed to be set as 0, 1, 2, 3. If set as 0, the Read/Write operations are conducted in the Master data source.
 
@@ -2818,7 +2818,7 @@ strategyForRWSplit is allowed to be set as 0, 1, 2, 3. If set as 0, the Read/Wri
 
 -   When set as 3, then before write request, the Active Master in transaction only participates in Write, and the Slave only participates in Read, after Write occurs in transaction, all Read and Write in the transaction are sent to the Active Master.
 
-Note: when HINT is not used for read-write splitting, the \"separable read request\" mainly refers to the auto committed read request and the read request in the explicit read-only transaction. The rest of the read requests are \"inseparable read requests\". For example, a read request in a non-auto-commit transaction.
+Note: when HINT is not used for read-write splitting, the "separable read request" mainly refers to the auto committed read request and the read request in the explicit read-only transaction. The rest of the read requests are "inseparable read requests". For example, a read request in a non-auto-commit transaction.
 
 In server.xml, it could configure max latency time, parameter name: maxLatencyForRWSplit, unit: ms of readable Standby Slave in Read/write splitting, when the actual master/slave latency time is longer than the latency time set, Read/write splitting will force to read data from the Active Master, and if shorter than the latency time set, it will read data according to the configured Read/write splitting strategy. The configured latency time is 1s by default, that is: when the data source data synchronization in the node has latency for more than 1s, then under the condition of enabling the Read/write splitting function, the compute node will not allow the Slave data source with data synchronization latency to participate in Read; if in data node, all Salve data sources have data latency, then at this time, the Read operation will be taken over by the Master data source, and only when there is no latency in data source data synchronization could the Slave data source participate in Read.
 
@@ -2828,19 +2828,19 @@ In the compute node, through [HINT](#hint) function, it could specify the data s
 
 Specify that SQL statement shall execute the following in the Master data source:
 
-/\*!hotdb:rw=master\*/select \* from customer;
+/*!hotdb:rw=master*/select * from customer;
 
 Specify that SQL statement shall execute the following in the Standby Slave data source:
 
-/\*!hotdb:rw=slave\*/select \* from customer;
+/*!hotdb:rw=slave*/select * from customer;
 
 #### Weight configuration of Read/write splitting
 
 While supporting Read/write splitting, compute node could control the master/slave Read proportion via the configuration parameter in server.xml. Enter conf directory under installation directory of compute node, and edit server.xml, to modify the following related settings:
 
-\<property name=\"strategyForRWSplit\"\>1\</property\>\<!\-- Read/write splitting strategy, only Active Master participates in Read/Write: 0; Active Master participates in Read/Write, the Slave participates in Read; 1:Active Master only participates in Write, the Slave participates in Read: 2: Splittable Read request is distributed to available Slave data sources; 3: Read request in transaction before Write is distributed to available Slave data sources; \--\>
+<property name=[strategyForRWSplit](#strategyForRWSplit)>1</property><!-- Read/write splitting strategy, only Active Master participates in Read/Write: 0; Active Master participates in Read/Write, the Slave participates in Read; 1:Active Master only participates in Write, the Slave participates in Read: 2: Splittable Read request is distributed to available Slave data sources; 3: Read request in transaction before Write is distributed to available Slave data sources; -->
 
-\<property name=\"weightForSlaveRWSplit\"\>100\</property\>\<!\-- the Slave Read proportion, 50 (percent) by default, and 0 means that the modified parameter is invalid \--\>
+<property name=[weightForSlaveRWSplit](#weightForSlaveRWSplit)>100</property><!-- the Slave Read proportion, 50 (percent) by default, and 0 means that the modified parameter is invalid -->
 
 Description:
 
@@ -2864,7 +2864,7 @@ On compute node, DNID could be used as filter condition in WHERE Clause, and as 
 
 -   **Use DNID field in SELECT, UPDATE, DELETE Clauses**
 
-SELECT \* FROM customer WHERE dnid=1;
+SELECT * FROM customer WHERE dnid=1;
 
 If executing this SELECT statement, compute node will return the data of the Sharding Table customer being 1 on DNID.
 
@@ -2872,41 +2872,41 @@ DELETE FROM customer WHERE dnid=1 AND id=3;
 
 If executing this DELETE statement, compute node will delete data of Sharding Table customer with DNID being 1 and Field ID being 3.
 
-UPDATE customer SET id=4 WHERE dnid=1 AND name=\'a\';
+UPDATE customer SET id=4 WHERE dnid=1 AND name='a';
 
-If executing this DELETE statement, compute node will modify the data of Sharding Table customer with DNID being 1 and Field Name = \'a\'.
+If executing this DELETE statement, compute node will modify the data of Sharding Table customer with DNID being 1 and Field Name = 'a'.
 
 -   **Use DNID as a Query item to execute SELECT statement**
 
-SELECT \*,dnid FROM tab_name;
+SELECT *,dnid FROM tab_name;
 
-If executing this SELECT statement, compute node will display dnid value of all results in the Result Set, and dnid must be placed behind \*, otherwise, there will be Syntax Error.
+If executing this SELECT statement, compute node will display dnid value of all results in the Result Set, and dnid must be placed behind *, otherwise, there will be Syntax Error.
 
 -   **Show DNID in Result Set**
 
 After log in the compute node, if executing the SET SHOW_DNID=1 statement, compute node will return DNID (data node ID) of results of each row in the SELECT statement.
 
-mysql\> set show_dnid=1;
+mysql> set show_dnid=1;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select \* from customer where id in (77,67,52,20);
+mysql> select * from customer where id in (77,67,52,20);
 
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
++----+---------+------------+------------+------------+------+-------------+------+
 
-\| id \| name \| telephone \| provinceid \| province \| city \| address \| **DNID** \|
+| id | name | telephone | provinceid | province | city | address | **DNID** |
 
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
++----+---------+------------+------------+------------+------+-------------+------+
 
-\| 52 \| 马深圳 \| 13912340052 \| 7 \| Guangdong \| 深圳 \| 某某街某某号 \| 13 \|
+| 52 | 马深圳 | 13912340052 | 7 | Guangdong | 深圳 | 某某街某某号 | 13 |
 
-\| 77 \| 郝上海 \| 13912340077 \| 25 \| Shanghai \| 上海 \| 某某街某某号 \| 14 \|
+| 77 | 郝上海 | 13912340077 | 25 | Shanghai | 上海 | 某某街某某号 | 14 |
 
-\| 20 \| 许重庆 \| 13912340020 \| 4 \| Chongqing \| 重庆 \| 某某街某某号 \| 12 \|
+| 20 | 许重庆 | 13912340020 | 4 | Chongqing | 重庆 | 某某街某某号 | 12 |
 
-\| 67 \| 岑南昌 \| 13912340067 \| 17 \| Jiangxi \| 南昌 \| 某某街某某号 \| 15 \|
+| 67 | 岑南昌 | 13912340067 | 17 | Jiangxi | 南昌 | 某某街某某号 | 15 |
 
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
++----+---------+------------+------------+------------+------+-------------+------+
 
 4 rows in set (0.00 sec)
 
@@ -2914,49 +2914,49 @@ The results in above figure show data rows with data node ID as 12, 13, 14, 15 r
 
 When executing SET SHOW_DNID=1 statement, and Query Global Table, compute node will return DNID (GLOBAL) of results of each row in the SELECT statement.
 
-mysql\> set show_dnid=1;
+mysql> set show_dnid=1;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select \* from tb_quan;
+mysql> select * from tb_quan;
 
-+\-\-\-\-\--+\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
++------+-----+-------+----------+
 
-\| id \| a \| b \| **DNID** \|
+| id | a | b | **DNID** |
 
-+\-\-\-\-\--+\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
++------+-----+-------+----------+
 
-\| 1 \| 1 \| 1.10 \| **GLOBAL** \|
+| 1 | 1 | 1.10 | **GLOBAL** |
 
-\| 2 \| 2 \| 1.20 \| **GLOBAL** \|
+| 2 | 2 | 1.20 | **GLOBAL** |
 
-\| 3 \| 3 \| 1.30 \| **GLOBAL** \|
+| 3 | 3 | 1.30 | **GLOBAL** |
 
-+\-\-\-\-\--+\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
++------+-----+-------+----------+
 
 SET SHOW_DNID=0, will cancel showing DNID column in Result Reset.
 
-mysql\> set show_dnid=0;
+mysql> set show_dnid=0;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select \* from customer where id in (77,67,52,20);
+mysql> select * from customer where id in (77,67,52,20);
 
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++----+---------+------------+------------+------------+------+-------------+
 
-\| id \| name \| telephone \| provinceid \| province \| city \| address \|
+| id | name | telephone | provinceid | province | city | address |
 
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++----+---------+------------+------------+------------+------+-------------+
 
-\| 52 \| 马深圳 \| 13912340052 \| 7 \| Guangdong \| 深圳 \| 某某街某某号 \|
+| 52 | 马深圳 | 13912340052 | 7 | Guangdong | 深圳 | 某某街某某号 |
 
-\| 77 \| 郝上海 \| 13912340077 \| 25 \| Shanghai \| 上海 \| 某某街某某号 \|
+| 77 | 郝上海 | 13912340077 | 25 | Shanghai | 上海 | 某某街某某号 |
 
-\| 20 \| 许重庆 \| 13912340020 \| 4 \| Chongqing \| 重庆 \| 某某街某某号 \|
+| 20 | 许重庆 | 13912340020 | 4 | Chongqing | 重庆 | 某某街某某号 |
 
-\| 67 \| 岑南昌 \| 13912340067 \| 17 \| Jiangxi \| 南昌 \| 某某街某某号 \|
+| 67 | 岑南昌 | 13912340067 | 17 | Jiangxi | 南昌 | 某某街某某号 |
 
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++----+---------+------------+------------+------------+------+-------------+
 
 4 rows in set (0.00 sec)
 
@@ -2974,37 +2974,37 @@ If using HINT Syntax on compute node, you can bypass the HotDB Server Parser, an
 
 Syntax:
 
-/\*!hotdb:dnid = dnid_value\*/ SQL to be executed
+/*!hotdb:dnid = dnid_value*/ SQL to be executed
 
 Note: the value of dnid_value is the ID of a data node. The user could specify the specific sharding node by replacing the value of dnid_value.
 
 For example:
 
-/\*!hotdb:dnid = 1\*/select \* from customer where age \> 20;
+/*!hotdb:dnid = 1*/select * from customer where age > 20;
 
 This statement will be executed on database node 1. The user could, via "Data Node" page on Distributed Transactional Database Management Platform, find the name of the data source with data node ID being 1, and search specified data source name of the "Data Node" page, thus the practical MySQL database could be located.
 
 -   **Use DSID (data source ID) in HINT:**
 
-HINT statement supports the specified datasource_id to skip the compute node and send the statement directly to the data source. You can view the data source datasource\_ id through the service port command.
+HINT statement supports the specified datasource_id to skip the compute node and send the statement directly to the data source. You can view the data source datasource_ id through the service port command.
 
-Syntax：SHOW \[full\] HOTDB ｛datasources｝ \[LIKE \'pattern\' \| WHERE expr\]
+Syntax：SHOW [full] HOTDB ｛datasources｝ [LIKE 'pattern' | WHERE expr]
 
 For example：
 
-hotdb\> show hotdb datasources where datasource_id like \'22\';
+hotdb> show hotdb datasources where datasource_id like '22';
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--
++-------------+---------------+---------------------------+-----------------+--------------
 
-\| DATANODE_ID \| DATASOURCE_ID \| DATASOURCE_NAME \| DATASOURCE_TYPE \| DATASOURCE_STATUS \| HOST \| PORT \| SCHEMA \| IDC_ID \|
+| DATANODE_ID | DATASOURCE_ID | DATASOURCE_NAME | DATASOURCE_TYPE | DATASOURCE_STATUS | HOST | PORT | SCHEMA | IDC_ID |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--
++-------------+---------------+---------------------------+-----------------+---------------
 
-\| 23 \| 22 \| 192.168.210.41_3308_hotdb157 \| 1 \| 1 \| 192.168.210.41 \| 3308 \| hotdb157 \| 1 \|
+| 23 | 22 | 192.168.210.41_3308_hotdb157 | 1 | 1 | 192.168.210.41 | 3308 | hotdb157 | 1 |
 
 -   Specify a specific datasource_id without writing binlog:
 
-/\*!hotdb:dsid=nobinlog:datasource_id\*/SQL to be executed
+/*!hotdb:dsid=nobinlog:datasource_id*/SQL to be executed
 
 Note: the value of datasource_id is the ID of a certain data source, and you can specify multiple nodes and separate them by English commas. This statement will not record the executed statements into binlogof data source. If it is not used properly, it may lead to the data inconsistency between the two masters and the disorder of GTID location. You should be careful when using it.
 
@@ -3012,33 +3012,33 @@ For Example:
 
 Create the user hpt on the data source datasource_id=22 without writing binlog.
 
-hotdb\> /\*!hotdb:dsid=nobinlog:22\*/create user \'hpt\'@\'%\' identified by \'123456\';
+hotdb> /*!hotdb:dsid=nobinlog:22*/create user 'hpt'@'%' identified by '123456';
 
 Query OK, 0 rows affected (0.00 sec)
 
 Set parameters on the data source datasource_id=22.
 
-hotdb\> /\*!hotdb:dsid=nobinlog:22\*/set wait_timeout=1200;
+hotdb> /*!hotdb:dsid=nobinlog:22*/set wait_timeout=1200;
 
 Query OK, 0 rows affected (0.01 sec)
 
-hotdb\> /\*!hotdb:dsid=nobinlog:22\*/show variables like \'wait_timeout\';
+hotdb> /*!hotdb:dsid=nobinlog:22*/show variables like 'wait_timeout';
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+
++---------------+-------+
 
-\| Variable_name \| Value \|
+| Variable_name | Value |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+
++---------------+-------+
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+
++---------------+-------+
 
 1 row in set (0.01 sec)
 
 -   Specify all datasource_ids without writing binlog:
 
-/\*!hotdb:dsid=nobinlog:all\*/SQL to be executed
+/*!hotdb:dsid=nobinlog:all*/SQL to be executed
 
 Note: all refers to all data sources (including data sources in the DR center when the DR mode is enabled). This statement will not record the executed statements into binlog.
 
@@ -3046,49 +3046,49 @@ For example:
 
 Update table 1 on all data sources without writing binlog:
 
-/\*!hotdb:dsid=nobinlog:all\*/update table1 set name='hotdb' where id=100;
+/*!hotdb:dsid=nobinlog:all*/update table1 set name='hotdb' where id=100;
 
 Set parameters on all data sources.
 
-hotdb\> /\*!hotdb:dsid=nobinlog:all\*/set wait_timeout=1200;
+hotdb> /*!hotdb:dsid=nobinlog:all*/set wait_timeout=1200;
 
 Query OK, 0 rows affected (0.00 sec)
 
-hotdb\> /\*!hotdb:dsid=nobinlog:all\*/show variables like \'wait_timeout\';
+hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+
++---------------+-------+
 
-\| Variable_name \| Value \|
+| Variable_name | Value |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+
++---------------+-------+
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
 8 rows in set (0.00 sec)
 
 -   Specify a specific datasource_id with writing binlog:
 
-/\*!hotdb:dsid=datasource_id\*/SQL to be executed
+/*!hotdb:dsid=datasource_id*/SQL to be executed
 
 Note: this statement will record the executed statements into binlog of the corresponding data source. When operating data sources with replication relations, care should be taken to avoid the master-slave replication synchronization exception.
 
 -   Specify all datasource_ids with writing binlog：
 
-/\*!hotdb:dsid=all\*/SQL to be executed
+/*!hotdb:dsid=all*/SQL to be executed
 
 Note: all refers to all data sources (including data sources in the DR center when the DR mode is enabled). This statement will record the executed statements into binlog. For writing binlog may lead to replication exception of data sources with replication relations and disorder of GTID location. You should be careful when using it.
 
@@ -3098,13 +3098,13 @@ Note: if multiple data sources are distributed on the same instance, use of data
 
 Syntax:
 
-/!hotdb:table = table_name:column_value\*/ SQL to be executed
+/!hotdb:table = table_name:column_value*/ SQL to be executed
 
 Note: table_name is the Table Name of a Sharding Table; column_value is a value of the Sharding Key in this table. The user could replace the table_name to specify corresponding Splitting Rule, and then via replacing the column_value, specify corresponding Sharding Node of using this Sharding Key.
 
 For example:
 
-/\*!hotdb: table = customer:10001\*/select \* from customer where age \> 20;
+/*!hotdb: table = customer:10001*/select * from customer where age > 20;
 
 Use method:
 
@@ -3112,33 +3112,33 @@ Connect compute node (refer to [Log in compute node and start to use](#_登录Ho
 
 Search customer table on sharding node with dn_id=2
 
-mysql\> /\*!hotdb: dnid=2\*/ select count(\*) from customer;
+mysql> /*!hotdb: dnid=2*/ select count(*) from customer;
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| count(\*) \|
+| count(*) |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| 50 \|
+| 50 |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
 1 row in set (0.00 sec)
 
 Search the customer table with provinceid = 1 on sharding node
 
-mysql\> /\*!hotdb: table=customer:1\*/ select count(\*) from customer;
+mysql> /*!hotdb: table=customer:1*/ select count(*) from customer;
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| count(\*) \|
+| count(*) |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| 11 \|
+| 11 |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
 1 row in set (0.00 sec)
 
@@ -3150,39 +3150,39 @@ In order to prevent the connection pool from being contaminated, after using HIN
 
 In addition to HINT, the statements involving connection binding also include the following statements:
 
-set \[session\] foreign_key_checks=0;
+set [session] foreign_key_checks=0;
 
-START TRANSACTION /\*!40100 WITH CONSISTENT SNAPSHOT \*/
+START TRANSACTION /*!40100 WITH CONSISTENT SNAPSHOT */
 
-set \[session\] UNIQUE_CHECKS=0;
+set [session] UNIQUE_CHECKS=0;
 
 After the SQL with connection binding is executed, the compute node will output Warning and log prompt:
 
 For example, when executing the following statement, there will be warning prompt:
 
-mysql\> use db_a
+mysql> use db_a
 
 Database changed
 
-mysql\> /\*!hotdb:dnid=all\*/select \* From tba;
+mysql> /*!hotdb:dnid=all*/select * From tba;
 
-+\-\-\-\-\--+\-\-\-\--+
++------+-----+
 
-\| id \| a \|
+| id | a |
 
-+\-\-\-\-\--+\-\-\-\--+
++------+-----+
 
-\| 1 \| 1 \|
+| 1 | 1 |
 
-\| 2 \| 2 \|
+| 2 | 2 |
 
-\| 3 \| 3 \|
+| 3 | 3 |
 
-\| 4 \| 4 \|
+| 4 | 4 |
 
-\| 5 \| 5 \|
+| 5 | 5 |
 
-+\-\-\-\-\--+\-\-\-\--+
++------+-----+
 
 5 rows in set, 1 warning (0.01 sec)
 
@@ -3190,31 +3190,31 @@ Warning (Code 10041): The current session has been bound to the backend connecti
 
 Meanwhile, the following info information will be logged:
 
-2019-04-01 19:11:29.662 \[INFO\] \[CONNECTION\] \[\$NIOEecutor-3-1\] ServerConnection(1565) -- 31 has been bound to the backend connection:\[2,1\]
+2019-04-01 19:11:29.662 [INFO] [CONNECTION] [\$NIOEecutor-3-1] ServerConnection(1565) -- 31 has been bound to the backend connection:[2,1]
 
 When operating new data node beyond bound back-end connection of the original LogicDB, SHOW WARNING will prompt as follow and the connection will be disconnected:
 
-mysql\> use db_b
+mysql> use db_b
 
 Database changed
 
-mysql\> show warnings;
+mysql> show warnings;
 
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+-------+----------------------------------------------------------------------------------------------------------------+
 
-\| Level \| Code \| Message
+| Level | Code | Message
 
-\|
+|
 
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+-------+----------------------------------------------------------------------------------------------------------------+
 
-\| Note \| 10042 \| The connection in current LogicDB was a binded connection, operations under current LogicDB may cause connect abort. \|
+| Note | 10042 | The connection in current LogicDB was a binded connection, operations under current LogicDB may cause connect abort. |
 
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+-------+----------------------------------------------------------------------------------------------------------------+
 
 1 row in set (0.00 sec)
 
-mysql\> select \* from tbb;
+mysql> select * from tbb;
 
 ERROR 2013 (HY000): Lost connection to MySQL server during query
 
@@ -3230,7 +3230,7 @@ When the HotDB Server version is 2.5.5 below, if LogicDB is not USEd, the comput
 
 For example: log in to the service port, execute the connection binding statement without using the LogicDB:
 
-set \[session\] foreign_key_checks=0;
+set [session] foreign_key_checks=0;
 
 Then directly execute
 
@@ -3244,7 +3244,7 @@ When HotDB Server version is 2.5.5 and above, this kind of scenario is further o
 
 In connection binding, whether the LogicDB is USEd or not, it is not allowed to execute SQL that may destroy the data source (please note that HINT itself does not restrict the following types of SQL):
 
-CREATE\|ALTER\|DROP DATABASE, SET SESSION SQL_LOG_BIN\|GTID_NEXT, SET GLOBAL, RESET MASTER\|SLAVE, CHANGE MASTER, START\|STOP SLAVE\|GROUP_REPLICATION, CREATE\|ALTER\|DROP\|RENAME USER\|ROLE, GRANT, REVOKE, SET PASSWORD, SET DEFAULT ROLE, CLONE and other SQL types.
+CREATE|ALTER|DROP DATABASE, SET SESSION SQL_LOG_BIN|GTID_NEXT, SET GLOBAL, RESET MASTER|SLAVE, CHANGE MASTER, START|STOP SLAVE|GROUP_REPLICATION, CREATE|ALTER|DROP|RENAME USER|ROLE, GRANT, REVOKE, SET PASSWORD, SET DEFAULT ROLE, CLONE and other SQL types.
 
 For example: execute binding connection statement before executing DROP TABLE:
 
@@ -3252,7 +3252,7 @@ set foreign_key_checks=0;
 
 drop table if exists test1;
 
-ERROR 1289 (HY000): Command \'drop table test1\' is forbidden when sql don\'t use database with table or use multi database, because he current session has been bound to the backend connection.
+ERROR 1289 (HY000): Command 'drop table test1' is forbidden when sql don't use database with table or use multi database, because he current session has been bound to the backend connection.
 
 When the LogicDB is not USEd, after executing the binding connection statement, you can execute SQL with LogicDB which is limited to be single: SELECT/INSERT/ REPLACE/UPDATE/DELETE/LOAD/CREATE TABLE/ALTER TABLE/DROP TABLE/TRUNCATE TABLE/RENAME TABLE/PREPARE/EXECUTE/DEALLOCATE/SET SESSION/SHOW etc.
 
@@ -3270,25 +3270,25 @@ Query OK, 0 rows affected, 1 warning (0.18 sec)
 
 In compute node, EXPLAIN statement is used for showing route plan of SQL statement.
 
-mysql\> explain select id,name,telephone from customer;
+mysql> explain select id,name,telephone from customer;
 
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------+------------------------------------------+
 
-\| DATANODE \| SQL \|
+| DATANODE | SQL |
 
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------+------------------------------------------+
 
-\| 1 \| SELECT id, name, telephone FROM customer \|
+| 1 | SELECT id, name, telephone FROM customer |
 
-\| 2 \| SELECT id, name, telephone FROM customer \|
+| 2 | SELECT id, name, telephone FROM customer |
 
-\| 3 \| SELECT id, name, telephone FROM customer \|
+| 3 | SELECT id, name, telephone FROM customer |
 
-\| 4 \| SELECT id, name, telephone FROM customer \|
+| 4 | SELECT id, name, telephone FROM customer |
 
-\| 5 \| SELECT id, name, telephone FROM customer \|
+| 5 | SELECT id, name, telephone FROM customer |
 
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------+------------------------------------------+
 
 5 rows in set (0.01 sec)
 
@@ -3296,17 +3296,17 @@ DATANODE column is data node ID, and as shown in the above results, this SQL sta
 
 If to show execution plan of MySQL in EXPLAIN, you could combine the [HINT](#hint) function in compute node:
 
-mysql\> /\*!hotdb:dnid=13\*/explain select \* from customer;
+mysql> /*!hotdb:dnid=13*/explain select * from customer;
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
++----+-------------+----------+------+---------------+------+---------+-----+------+------+
 
-\| id \| select_type \| table \| type \| possible_keys \| key \| key_len \| ref \| rows \| Extra \|
+| id | select_type | table | type | possible_keys | key | key_len | ref | rows | Extra |
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
++----+-------------+----------+------+---------------+------+---------+-----+------+------+
 
-\| 1 \| SIMPLE \| customer \| NULL \| NULL \| NULL \| NULL \| NULL \| 53 \| NULL \|
+| 1 | SIMPLE | customer | NULL | NULL | NULL | NULL | NULL | 53 | NULL |
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
++----+-------------+----------+------+---------------+------+---------+-----+------+------+
 
 1 row in set (0.00 sec)
 
@@ -3318,29 +3318,29 @@ EXPLAIN statement is only applicable to simple single-table statements of INSERT
 
 SupportOnlineDDL function on [management port (3325)](#management-port-information-monitoring) of compute node, guarantees that the online Read/Write transaction will not be blocked at the time of Table Change, the database can still provide foreign access, and the specific use methods are as follow:
 
--   Log in 3325 management port, and onlineddl \"\[DDLSTATEMENT\]\" Syntax could be used to execute onlineddl statement, for example: onlineddl \"alter table customer add column testddl varchar (20) default \'测试onlineddl\'\";
+-   Log in 3325 management port, and onlineddl "[DDLSTATEMENT]" Syntax could be used to execute onlineddl statement, for example: onlineddl "alter table customer add column testddl varchar (20) default '测试onlineddl'";
 
--   Executing show @\@onlineddl statement, it could show the current running OnlineDDL statement and execution speed of the statement, progress shows the current DDL execution progress (unit: %), speed shows the current DDL running speed (unit: row/ms), for example:
+-   Executing show @@onlineddl statement, it could show the current running OnlineDDL statement and execution speed of the statement, progress shows the current DDL execution progress (unit: %), speed shows the current DDL running speed (unit: row/ms), for example:
 
-mysql\> show @\@onlineddl;
+mysql> show @@onlineddl;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++--------------+-------------------------------------------------------------------------------+----------+---------+
 
-\| schema \| onlineddl
+| schema | onlineddl
 
-\| progress \| speed \|
+| progress | speed |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++--------------+-------------------------------------------------------------------------------+----------+---------+
 
-\| TEST_DML_JWY \| ALTER TABLE CUSTOMER ADD COLUMN TESTDDL VARCHAR(20) DEFAULT \'测试ONLINEDDL\' \| 0.2300 \| 23.3561 \|
+| TEST_DML_JWY | ALTER TABLE CUSTOMER ADD COLUMN TESTDDL VARCHAR(20) DEFAULT '测试ONLINEDDL' | 0.2300 | 23.3561 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++--------------+-------------------------------------------------------------------------------+----------+---------+
 
-Special description: execution of onlineddl statement doesn't mean completion of DDL, the return of "Query OK, 0 rows affected" only means that the DDL statement is executable, and if to see whether execution is completed, please view the progress showed in progress in show @\@onlineddl. When the result of show @\@onlineddl is null, it means that all DDL execution completed and there is no other DDL task at present, in case of midway DDL disconnection due to network or other abnormalities, it will roll back to the whole DDL;
+Special description: execution of onlineddl statement doesn't mean completion of DDL, the return of "Query OK, 0 rows affected" only means that the DDL statement is executable, and if to see whether execution is completed, please view the progress showed in progress in show @@onlineddl. When the result of show @@onlineddl is null, it means that all DDL execution completed and there is no other DDL task at present, in case of midway DDL disconnection due to network or other abnormalities, it will roll back to the whole DDL;
 
 ### NDB Cluster SQL Node Service
 
-The compute node below the version of V2.5.2 has incomplete support toward SQL statement in SELECT Query type, especially SQL of Subquery type, therefore, NDB Cluster SQL Node Service (hereinafter referred to as NDB SQL) is introduced. This service uses SQL node of NDB Cluster for compatibility of SQL not supported by the compute node, and to be used for completing relatively complex Query statement computation under distributed environment. If to know how to install and deploy NDB Cluster SQL Node Service, please refer to the chapter of NDB Cluster SQL Node Service Deployment in *Distributed Transactional Database HotDB Server \[Install Deploy\] Function Manual*.
+The compute node below the version of V2.5.2 has incomplete support toward SQL statement in SELECT Query type, especially SQL of Subquery type, therefore, NDB Cluster SQL Node Service (hereinafter referred to as NDB SQL) is introduced. This service uses SQL node of NDB Cluster for compatibility of SQL not supported by the compute node, and to be used for completing relatively complex Query statement computation under distributed environment. If to know how to install and deploy NDB Cluster SQL Node Service, please refer to the chapter of NDB Cluster SQL Node Service Deployment in *Distributed Transactional Database HotDB Server [Install Deploy] Function Manual*.
 
 #### NDB use restrictions
 
@@ -3360,9 +3360,9 @@ For the following SQL type statements, the compute node doesn't support itself, 
 
 **MySQL statement type**   **Clause type**                          **Function**                                 **Description**
 
-SELECT                     INNER/LEFT JOIN/RIGHT JOIN WHERE         Operation Expression                         column1+column2、column1-column2、column1\*column2、column1/column2
+SELECT                     INNER/LEFT JOIN/RIGHT JOIN WHERE         Operation Expression                         column1+column2、column1-column2、column1*column2、column1/column2
 
-\<=\> or \<\>                                
+<=> or <>                                
     
                                                                       \% or MOD                                    Only support column% constant; not support column1% column2
     
@@ -3370,9 +3370,9 @@ SELECT                     INNER/LEFT JOIN/RIGHT JOIN WHERE         Operation Ex
     
                                                                       / or DIV                                     Only support column div constant; not support column1 div column2
     
-                             INNER/LEFT JOIN/RIGHT JOIN ON            IN/IS NOT NULL/IS NULL/BETWEEN\...AND/LIKE   
+                             INNER/LEFT JOIN/RIGHT JOIN ON            IN/IS NOT NULL/IS NULL/BETWEEN...AND/LIKE   
     
-                                                                      \<=\> or \<\>                                
+                                                                      <=> or <>                                
     
                                                                       XOR                                          
     
@@ -3380,7 +3380,7 @@ SELECT                     INNER/LEFT JOIN/RIGHT JOIN WHERE         Operation Ex
     
                                                                       CONCAT()                                     Not support concat() to serve as JOIN condition in Operation Expression (on Clause condition), or as association condition in where Clause
     
-                                                                      CASE\...WHEN\...END                          Only support Field of the table judged single by CASE WHEN; not support conditional judgement of multi-table Field, such as: CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias
+                                                                      CASE...WHEN...END                          Only support Field of the table judged single by CASE WHEN; not support conditional judgement of multi-table Field, such as: CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias
     
                              Function                                 MIN(MIN(column_name))\                       Nested Function not supported
                                                                       ABS(MAX())                                   
@@ -3410,7 +3410,7 @@ alter table table_name change shard column new_column；
 
 For example, modify the sharding key id of source table sbtest1 to k, and execute:
 
-root\@127.0.0.1:hotdb 5.7.25 06:44:26\> alter table sbtest1 change shard column k;
+root@127.0.0.1:hotdb 5.7.25 06:44:26> alter table sbtest1 change shard column k;
 
 Query OK, 0 rows affected (2 min 2.27 sec)
 
@@ -3516,56 +3516,56 @@ Compute node supports use Space typespatial_type when Create Table; it supports 
 
 HotDB Server supports relevant setting of Character Set, and the Character Set and Collation Set supported at present are as follow:
 
-\| Collation \| Charset \|
+| Collation | Charset |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++--------------------------+---------+
 
-\| latin1_swedish_ci \| latin1 \|
+| latin1_swedish_ci | latin1 |
 
-\| latin1_bin \| latin1 \|
+| latin1_bin | latin1 |
 
-\| gbk_chinese_ci \| gbk \|
+| gbk_chinese_ci | gbk |
 
-\| gbk_bin \| gbk \|
+| gbk_bin | gbk |
 
-\| utf8_general_ci \| utf8 \|
+| utf8_general_ci | utf8 |
 
-\| utf8_bin \| utf8 \|
+| utf8_bin | utf8 |
 
-\| utf8mb4_general_ci \| utf8mb4 \|
+| utf8mb4_general_ci | utf8mb4 |
 
-\| utf8mb4_bin \| utf8mb4 \|
+| utf8mb4_bin | utf8mb4 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-- \-\-\-\-\-\-\-\-\-\-\--+
++--------------------+---- ------------+
 
 The Syntax associated with the Character Set is as follow, HotDB Server could also make synchronous Support, and the functions are consistent with that of MySQL:
 
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
 | **Function classification** | **Syntax related**                                                                                                   |
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-| CREATE TABLE                | col_name {CHAR \| VARCHAR \| TEXT} (col_length)                                                                      |
+| CREATE TABLE                | col_name {CHAR | VARCHAR | TEXT} (col_length)                                                                      |
 |                             |                                                                                                                      |
-|                             | \[CHARACTER SET charset_name\]                                                                                       |
+|                             | [CHARACTER SET charset_name]                                                                                       |
 |                             |                                                                                                                      |
-|                             | \[COLLATE collation_name\]                                                                                           |
+|                             | [COLLATE collation_name]                                                                                           |
 |                             |                                                                                                                      |
-|                             | col_name {ENUM \| SET} (val_list)                                                                                    |
+|                             | col_name {ENUM | SET} (val_list)                                                                                    |
 |                             |                                                                                                                      |
-|                             | \[CHARACTER SET charset_name\]                                                                                       |
+|                             | [CHARACTER SET charset_name]                                                                                       |
 |                             |                                                                                                                      |
-|                             | \[COLLATE collation_name\]                                                                                           |
+|                             | [COLLATE collation_name]                                                                                           |
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-| ALTER TABLE                 | ALTER TABLE tbl_name CONVERT TO CHARACTER SET charset_name \[COLLATE collation_name\];                               |
+| ALTER TABLE                 | ALTER TABLE tbl_name CONVERT TO CHARACTER SET charset_name [COLLATE collation_name];                               |
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | ALTER TABLE tbl_name DEFAULT CHARACTER SET charset_name \[COLLATE collation_name\];                                  |
+|                             | ALTER TABLE tbl_name DEFAULT CHARACTER SET charset_name [COLLATE collation_name];                                  |
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | ALTER TABLE t MODIFY tbl_name column_definition CHARACTER SET charset_name \[COLLATE collation_name\];               |
+|                             | ALTER TABLE t MODIFY tbl_name column_definition CHARACTER SET charset_name [COLLATE collation_name];               |
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-| SET                         | SET NAMES \'charset_name\' \[COLLATE \'collation_name\'\]                                                            |
+| SET                         | SET NAMES 'charset_name' [COLLATE 'collation_name']                                                            |
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
 |                             | SET CHARACTER SET charset_name                                                                                       |
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | set \[session\] {character_set_client\|character_set_results\|character_set_connection\|collation_connection} = xxx; |
+|                             | set [session] {character_set_client|character_set_results|character_set_connection|collation_connection} = xxx; |
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
 | WITH                        | With ORDER BY:                                                                                                       |
 |                             |                                                                                                                      |
@@ -3589,11 +3589,11 @@ The Syntax associated with the Character Set is as follow, HotDB Server could al
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
 |                             | With WHERE:                                                                                                          |
 |                             |                                                                                                                      |
-|                             | SELECT \* FROM k WHERE a=\'a\' COLLATE utf8_bin = \'a\';                                                             |
+|                             | SELECT * FROM k WHERE a='a' COLLATE utf8_bin = 'a';                                                             |
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
 |                             | With HAVING:                                                                                                         |
 |                             |                                                                                                                      |
-|                             | SELECT \* FROM k WHERE a=\'a\' having a=\'a\' COLLATE utf8_bin = a order by id;                                      |
+|                             | SELECT * FROM k WHERE a='a' having a='a' COLLATE utf8_bin = a order by id;                                      |
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
 
 ## Function and operator support
@@ -3641,7 +3641,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [BENCHMARK()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                              | Not support        | Yes                  | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [BETWEEN \... AND \...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
+| [BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [BIN()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3661,7 +3661,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [\~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
+| [|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [\^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3783,7 +3783,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [Envelope()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\<=\>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
+| [<=>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3835,9 +3835,9 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [GLength()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\>=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
+| [>=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
+| [>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [GREATEST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3905,9 +3905,9 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [IsSimple()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_ARRAYAGG(col_or_expr) \[over_clause\]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html# function_json-arrayagg)                          | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_ARRAYAGG(col_or_expr) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html# function_json-arrayagg)                          | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_OBJECTAGG(key, value) \[over_clause\]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html# function_json-arrayagg)                          | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_OBJECTAGG(key, value) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html# function_json-arrayagg)                          | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [JSON_PRETTY(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html# function_json-pretty)                                             | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3915,9 +3915,9 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [JSON_STORAGE_SIZE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html# function_json-storage-free)                                 | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_MERGE_PATCH(json_doc, json_doc\[, json_doc\] \...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html# function_json-merge-patch) | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_MERGE_PATCH(json_doc, json_doc[, json_doc] ...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html# function_json-merge-patch) | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_TABLE(expr, path COLUMNS (column_list) \[AS\] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html# function_json-table)            | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
+| [JSON_TABLE(expr, path COLUMNS (column_list) [AS] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html# function_json-table)            | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [LAST_DAY](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3927,15 +3927,15 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [LEAST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\<\<](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
+| [<<](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [LEFT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\<=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
+| [<=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\<](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
+| [<](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4033,9 +4033,9 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [NAME_CONST()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NOT BETWEEN \... AND \...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
+| [NOT BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [!=, \<\>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
+| [!=, <>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [NOT IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4061,7 +4061,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                         | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\|\|, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
+| [||, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [ORD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4123,7 +4123,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [REVERSE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\>\>](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
+| [>>](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [RIGHT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4139,9 +4139,9 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [RTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SCHEMA()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                 | Support            | No                   | 1\. select schema() return to LogicDB name;                                                                                                                                         |
+| [SCHEMA()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                 | Support            | No                   | 1. select schema() return to LogicDB name;                                                                                                                                         |
 |                                                                                                                                                               |                    |                      |                                                                                                                                                                                     |
-|                                                                                                                                                               |                    |                      | 2\. show tables from information_schema; compute node is not supported, Query result is null;                                                                                       |
+|                                                                                                                                                               |                    |                      | 2. show tables from information_schema; compute node is not supported, Query result is null;                                                                                       |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [SEC_TO_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4211,7 +4211,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [TIMEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\*](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
+| [*](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4306,49 +4306,49 @@ By default, the MERGE_RESULT value is 1.
 
 When MERGE_RESULT=0, for the SQL statement containing Aggregate Function, the compute node will not merge the Result Set, and the query result of each data node will be returned separately:
 
-mysql\> select count(\*) from customer;
+mysql> select count(*) from customer;
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| COUNT(\*) \|
+| COUNT(*) |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| 23 \|
+| 23 |
 
-\| 11 \|
+| 11 |
 
-\| 13 \|
+| 13 |
 
-\| 53 \|
+| 53 |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
 4 rows in set (0.00 sec)
 
 SET MERGE_RESULT=0 and SET SHOW_DNID=1, is available for statistics of distribution condition of transaction tables on various data nodes:
 
-mysql\> set MERGE_RESULT=0;
+mysql> set MERGE_RESULT=0;
 
-mysql\> set show_dnid=1;
+mysql> set show_dnid=1;
 
-mysql\> select count(\*) from customer;
+mysql> select count(*) from customer;
 
-+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
++------------+------+
 
-\| COUNT(\*) \| DNID \|
+| COUNT(*) | DNID |
 
-+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
++------------+------+
 
-\| 13 \| 12 \|
+| 13 | 12 |
 
-\| 11 \| 15 \|
+| 11 | 15 |
 
-\| 53 \| 13 \|
+| 53 | 13 |
 
-\| 23 \| 14 \|
+| 23 | 14 |
 
-+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
++------------+------+
 
 4 rows in set (0.00 sec)
 
@@ -4356,21 +4356,21 @@ DNID column in the Result Set shows unique ID of each data node. In the result, 
 
 When MERGE_RESULT=1, for the SQL statement containing Aggregate Function, the compute node shall return query results of all data nodes by SQL Semantics:
 
-mysql\> set show_dnid=0;
+mysql> set show_dnid=0;
 
-mysql\> set MERGE_RESULT=1;
+mysql> set MERGE_RESULT=1;
 
-mysql\> select count(\*) from customer;
+mysql> select count(*) from customer;
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| COUNT(\*) \|
+| COUNT(*) |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| 100 \|
+| 100 |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
 1 row in set (0.00 sec)
 
@@ -4382,11 +4382,11 @@ In distributed database, logic of DML statement will become more complex. Comput
 
 Single-node DML statement, refers to that SQL statement only needs to run on one node, and the accurate results could be computed. For example, assuming that in Sharding Table the customer has sharding key provinceid, then the following statement is single-node SELECT, because this statement will only run on the node where provinceid=1 resides:
 
-SELECT \* FROM customer WHERE provinceid=1;
+SELECT * FROM customer WHERE provinceid=1;
 
-Cross-node DML statement, refers to that SQL statement requires data of multiple data nodes, and then upon secondary processing of compute nodes, the final results could be integrated and computed. For example, assuming that in the Sharding Table the customer has sharding key provinceid, then the following SELECT statement is cross-node statement, because the id is not sharding key, the data with id\>10 may distribute on multiple nodes, and in order to obtain the final result through integration and ranking, data of multiple nodes is required:
+Cross-node DML statement, refers to that SQL statement requires data of multiple data nodes, and then upon secondary processing of compute nodes, the final results could be integrated and computed. For example, assuming that in the Sharding Table the customer has sharding key provinceid, then the following SELECT statement is cross-node statement, because the id is not sharding key, the data with id>10 may distribute on multiple nodes, and in order to obtain the final result through integration and ranking, data of multiple nodes is required:
 
-SELECT \* FROM customer WHERE id\>10 ORDER BY id;
+SELECT * FROM customer WHERE id>10 ORDER BY id;
 
 Obviously, single-node SQL statement has better performance than cross-node SQL statement. When using compute node, try to use single-node DML statement as much as possible.
 
@@ -4413,9 +4413,9 @@ DELETE FROM t PARTITION(p0);
 +--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
 |                          | LIMIT              | 　           | Support            | 　                                                                                                                          |
 +--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
-|                          | WHERE              | dnid         | Support            | 1\. dnid in DML where Clause shall be a necessary requirement, and it is not supported if not being a necessary requirement |
+|                          | WHERE              | dnid         | Support            | 1. dnid in DML where Clause shall be a necessary requirement, and it is not supported if not being a necessary requirement |
 |                          |                    |              |                    |                                                                                                                             |
-|                          |                    |              |                    | 2\. Global Table does not support use dnid.                                                                                 |
+|                          |                    |              |                    | 2. Global Table does not support use dnid.                                                                                 |
 +--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
 |                          |                    | Function     | Support            | 　                                                                                                                          |
 +--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
@@ -4428,7 +4428,7 @@ DELETE FROM t PARTITION(p0);
 
 **MySQL statement type**   **Clause type**                          **Function**        **Support status**   **Description**
   DELETE                     PARTITION                                　                  Support              　
-                             ORDER BY DESC\|ASC                       　                  Support              　
+                             ORDER BY DESC|ASC                       　                  Support              　
                              LIMIT                                    　                  Support              　
                              ORDER BY ... LIMIT ...                   　                  Support              Parent/Child Table is not supported
                              ORDER BY case sensitive of Field value   　                  Support              　
@@ -4439,23 +4439,23 @@ DELETE FROM t PARTITION(p0);
 
 In cross-node DELETE statement, the following Multi-table statement is not supported:
 
-DELETE \[LOW_PRIORITY\] \[QUICK\] \[IGNORE\]
+DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
 
-tbl_name\[.\*\] \[, tbl_name\[.\*\]\] \...
+tbl_name[.*] [, tbl_name[.*]] ...
 
 FROM table_references
 
-\[WHERE where_condition\]
+[WHERE where_condition]
 
 Or:
 
-DELETE \[LOW_PRIORITY\] \[QUICK\] \[IGNORE\]
+DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
 
-FROM tbl_name\[.\*\] \[, tbl_name\[.\*\]\] \...
+FROM tbl_name[.*] [, tbl_name[.*]] ...
 
 USING table_references
 
-\[WHERE where_condition\]
+[WHERE where_condition]
 
 #### INSERT statement
 
@@ -4484,9 +4484,9 @@ USING table_references
 
 -------------------------- ------------------------------------------------------- --------------------------------------- -------------------- ------------------------------------------------------------------------------
 
--   INSERT INTO\...SELECT\...
+-   INSERT INTO...SELECT...
 
--   For INSERT INTO... SELECT ... statement, if the SELECT clause is not supported, INSERT INTO\... SELECT\...is not supported either. It can be executed in other circumstances.
+-   For INSERT INTO... SELECT ... statement, if the SELECT clause is not supported, INSERT INTO... SELECT...is not supported either. It can be executed in other circumstances.
 
 -   INSERT IGNORE
 
@@ -4494,29 +4494,29 @@ USING table_references
 
 -   Parent/Child Table does not support inser/replace into... select....
 
-mysql\> create table test(id int not null Primary Key,provinceid int)engine=innodb;
+mysql> create table test(id int not null Primary Key,provinceid int)engine=innodb;
 
 Query OK, 0 rows affected (0.02 sec)
 
-mysql\> insert into test set id = 1,provinceid=2;
+mysql> insert into test set id = 1,provinceid=2;
 
 Query OK, 1 row affected (0.00 sec)
 
-mysql\> select \* from test;
+mysql> select * from test;
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
++----+------------+
 
-\| id \| provinceid \|
+| id | provinceid |
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
++----+------------+
 
-\| 1 \| 2 \|
+| 1 | 2 |
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
++----+------------+
 
 1 row in set (0.00 sec)
 
-mysql\> insert ignore into test set id = 1,provinceid=2; \-- there has already existed the record of Primary Keyid = 1, data is ignored.
+mysql> insert ignore into test set id = 1,provinceid=2; -- there has already existed the record of Primary Keyid = 1, data is ignored.
 
 Query OK, 0 rows affected (0.00 sec)
 
@@ -4524,7 +4524,7 @@ For operation of INSERT IGORE statement in Sharding Table, if in INSERT statemen
 
 For example, test is a sharding table, and id is a sharding key.
 
-mysql\> CREATE TABLE \`test2\` (
+mysql> CREATE TABLE \`test2\` (
 
 \`id\` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 
@@ -4536,9 +4536,9 @@ UNIQUE KEY \`name\` (\`name\`)
 
 ) ENGINE=InnoDB;
 
-mysql\> insert ignore into test2(name) values (\'e\');
+mysql> insert ignore into test2(name) values ('e');
 
-mysql\> insert ignore into test2(name) values (\'e\')
+mysql> insert ignore into test2(name) values ('e')
 
 With the global unique constraint disabled, when inserting the second row, if the values of id column 1 and 2 are routed to the same node, the second SQL will be ignored. If it is not the same node, the second row will be inserted successfully.
 
@@ -4581,9 +4581,9 @@ For INSERT BATCH in a transaction, if parts succeed and parts failed, it will au
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL statement type** | **Clause type**                         | **Function** | **Support status** | **Description**                                                                                                                                                                                                                                              |
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| LOAD DATA                | LOAD DATA ... INFILE ... INTO TABLE     |              | Support            | 1\. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                             |
+| LOAD DATA                | LOAD DATA ... INFILE ... INTO TABLE     |              | Support            | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                             |
 |                          |                                         |              |                    |                                                                                                                                                                                                                                                              |
-|                          |                                         |              |                    | 2\. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the imported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |
+|                          |                                         |              |                    | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the imported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | LOW_PRIORITY                            |              | Not support        |                                                                                                                                                                                                                                                              |
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4599,23 +4599,23 @@ For INSERT BATCH in a transaction, if parts succeed and parts failed, it will au
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | CHARACTER SET                           |              | Not support        |                                                                                                                                                                                                                                                              |
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | {FIELDS \| COLUMNS}                     |              | Support            |                                                                                                                                                                                                                                                              |
+|                          | {FIELDS | COLUMNS}                     |              | Support            |                                                                                                                                                                                                                                                              |
 |                          |                                         |              |                    |                                                                                                                                                                                                                                                              |
-|                          | \[TERMINATED BY \'string\'\]            |              |                    |                                                                                                                                                                                                                                                              |
+|                          | [TERMINATED BY 'string']            |              |                    |                                                                                                                                                                                                                                                              |
 |                          |                                         |              |                    |                                                                                                                                                                                                                                                              |
-|                          | \[\[OPTIONALLY\] ENCLOSED BY \'char\'\] |              |                    |                                                                                                                                                                                                                                                              |
+|                          | [[OPTIONALLY] ENCLOSED BY 'char'] |              |                    |                                                                                                                                                                                                                                                              |
 |                          |                                         |              |                    |                                                                                                                                                                                                                                                              |
-|                          | \[ESCAPED BY \'char\'\]                 |              |                    |                                                                                                                                                                                                                                                              |
+|                          | [ESCAPED BY 'char']                 |              |                    |                                                                                                                                                                                                                                                              |
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | LINES STARTING BY \'string\'            |              | Not support        |                                                                                                                                                                                                                                                              |
+|                          | LINES STARTING BY 'string'            |              | Not support        |                                                                                                                                                                                                                                                              |
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | LINES TERMINATED BY \'string\'          |              | Support            |                                                                                                                                                                                                                                                              |
+|                          | LINES TERMINATED BY 'string'          |              | Support            |                                                                                                                                                                                                                                                              |
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | Import the specified field              |              | Support            |                                                                                                                                                                                                                                                              |
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | SET                                     |              | Support            |                                                                                                                                                                                                                                                              |
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | IGNORE number {LINES \| ROWS}           |              | Support            |                                                                                                                                                                                                                                                              |
+|                          | IGNORE number {LINES | ROWS}           |              | Support            |                                                                                                                                                                                                                                                              |
 +--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 #### REPLACE statement
@@ -4726,19 +4726,19 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +--------------------------+--------------------------------+---------------------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | PARTITION                      | 　                                                      | Support            | 　                                                                                                                                                                                                                                                           |
 +--------------------------+--------------------------------+---------------------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | WHERE                          | dnid                                                    | Support            | 1\. After set show_dnid=1, do not support where condition with dnid;                                                                                                                                                                                         |
+|                          | WHERE                          | dnid                                                    | Support            | 1. After set show_dnid=1, do not support where condition with dnid;                                                                                                                                                                                         |
 |                          |                                |                                                         |                    |                                                                                                                                                                                                                                                              |
-|                          |                                |                                                         |                    | 2\. dnid and Other conditions use or association, and only take dnid Condition;                                                                                                                                                                              |
+|                          |                                |                                                         |                    | 2. dnid and Other conditions use or association, and only take dnid Condition;                                                                                                                                                                              |
 |                          |                                |                                                         |                    |                                                                                                                                                                                                                                                              |
-|                          |                                |                                                         |                    | 3\. Not support SELECT Clause with dnid Expression, for example: select dnid=4 from dml_a\_jwy;                                                                                                                                                              |
+|                          |                                |                                                         |                    | 3. Not support SELECT Clause with dnid Expression, for example: select dnid=4 from dml_a_jwy;                                                                                                                                                              |
 +--------------------------+--------------------------------+---------------------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          |                                | Function                                                | Support            | Please refer to Function Description                                                                                                                                                                                                                         |
 +--------------------------+--------------------------------+---------------------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | GROUP BY ASC\|DESC WITH ROLLUP | 　                                                      | Support            |                                                                                                                                                                                                                                                              |
+|                          | GROUP BY ASC|DESC WITH ROLLUP | 　                                                      | Support            |                                                                                                                                                                                                                                                              |
 +--------------------------+--------------------------------+---------------------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | HAVING                         | 　                                                      | Support            | 　                                                                                                                                                                                                                                                           |
 +--------------------------+--------------------------------+---------------------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | ORDER BY ASC\|DESC             | 　                                                      | Support            | 　                                                                                                                                                                                                                                                           |
+|                          | ORDER BY ASC|DESC             | 　                                                      | Support            | 　                                                                                                                                                                                                                                                           |
 +--------------------------+--------------------------------+---------------------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | LIMIT n,m                      | 　                                                      | Support            | 　                                                                                                                                                                                                                                                           |
 +--------------------------+--------------------------------+---------------------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4746,9 +4746,9 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +--------------------------+--------------------------------+---------------------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | INTO OUTFILE                   | 　                                                      | Support            | 　1. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                            |
 |                          |                                |                                                         |                    |                                                                                                                                                                                                                                                              |
-|                          |                                |                                                         |                    | 2\. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |
+|                          |                                |                                                         |                    | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |
 |                          |                                |                                                         |                    |                                                                                                                                                                                                                                                              |
-|                          |                                |                                                         |                    | 3\. If the cluster is switched during the export, the data output can still be normal.                                                                                                                                                                       |
+|                          |                                |                                                         |                    | 3. If the cluster is switched during the export, the data output can still be normal.                                                                                                                                                                       |
 +--------------------------+--------------------------------+---------------------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | INTO DUMPFILE                  | 　                                                      | Not support        | 　                                                                                                                                                                                                                                                           |
 +--------------------------+--------------------------------+---------------------------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4784,7 +4784,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +--------------------------+-------------------------------------------------+-------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | ORDER BY LIMIT n,m                              | 　                                  | Support            | 　                                                                                                                                                                                                                                                           |
 +--------------------------+-------------------------------------------------+-------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | GROUP BY ASC\|DESC WITH ROLLUP                  | 　                                  | Support            | 　                                                                                                                                                                                                                                                           |
+|                          | GROUP BY ASC|DESC WITH ROLLUP                  | 　                                  | Support            | 　                                                                                                                                                                                                                                                           |
 +--------------------------+-------------------------------------------------+-------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | GROUP BY ORDER BY LIMIT m,n                     | 　                                  | Support            | 　                                                                                                                                                                                                                                                           |
 +--------------------------+-------------------------------------------------+-------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4810,9 +4810,9 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +--------------------------+-------------------------------------------------+-------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | INTO OUTFILE                                    | 　                                  | Support            | 　　1. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                          |
 |                          |                                                 |                                     |                    |                                                                                                                                                                                                                                                              |
-|                          |                                                 |                                     |                    | 2\. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |
+|                          |                                                 |                                     |                    | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |
 |                          |                                                 |                                     |                    |                                                                                                                                                                                                                                                              |
-|                          |                                                 |                                     |                    | 3\. If the cluster is switched during the export, the data output can still be normal.                                                                                                                                                                       |
+|                          |                                                 |                                     |                    | 3. If the cluster is switched during the export, the data output can still be normal.                                                                                                                                                                       |
 +--------------------------+-------------------------------------------------+-------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | INTO DUMPFILE                                   | 　                                  | Not support        | 　                                                                                                                                                                                                                                                           |
 +--------------------------+-------------------------------------------------+-------------------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4864,11 +4864,11 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +--------------------------+------------------------+--------------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | LIMIT n                | 　           | Support            | 　                                                                                                                                                                                                                                                                                                                |
 +--------------------------+------------------------+--------------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | SET                    |              | Support            | 1\. It is allowed to update the sharding key, but it is required that the change of the value of the sharding key will not affect the data routing, that is, the modified value of the sharding key and the value before the modification are routed to the same node, otherwise the execution is not successful. |
+|                          | SET                    |              | Support            | 1. It is allowed to update the sharding key, but it is required that the change of the value of the sharding key will not affect the data routing, that is, the modified value of the sharding key and the value before the modification are routed to the same node, otherwise the execution is not successful. |
 |                          |                        |              |                    |                                                                                                                                                                                                                                                                                                                   |
-|                          |                        |              |                    | 2\. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3.                                                          |
+|                          |                        |              |                    | 2. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3.                                                          |
 |                          |                        |              |                    |                                                                                                                                                                                                                                                                                                                   |
-|                          |                        |              |                    | 3\. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1;                                                                                                                                                                       |
+|                          |                        |              |                    | 3. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1;                                                                                                                                                                       |
 +--------------------------+------------------------+--------------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | WHERE                  | dnid         | Support            | When dnid serves as or Condition in DML where Condition, only dnid Condition is judged, while other limit conditions will be ignored                                                                                                                                                                              |
 +--------------------------+------------------------+--------------+--------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4884,11 +4884,11 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +--------------------------+----------------------------------------+------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL statement type** | **Clause type**                        | **Function**           | **Support status** | **Description**                                                                                                                                                                                                                                                                                                    |
 +--------------------------+----------------------------------------+------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| UPDATE                   | ORDER BY DESC\|ASC                     | 　                     | Support            | 　                                                                                                                                                                                                                                                                                                                 |
+| UPDATE                   | ORDER BY DESC|ASC                     | 　                     | Support            | 　                                                                                                                                                                                                                                                                                                                 |
 +--------------------------+----------------------------------------+------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | LIMIT n                                | 　                     | Support            | 　                                                                                                                                                                                                                                                                                                                 |
 +--------------------------+----------------------------------------+------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | ORDER BY DESC\|ASC LIMIT n,m           | 　                     | Support            | Parent/Child Table is not supported                                                                                                                                                                                                                                                                                |
+|                          | ORDER BY DESC|ASC LIMIT n,m           | 　                     | Support            | Parent/Child Table is not supported                                                                                                                                                                                                                                                                                |
 +--------------------------+----------------------------------------+------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | ORDER BY case sensitive of Field value | 　                     | Support            | 　                                                                                                                                                                                                                                                                                                                 |
 +--------------------------+----------------------------------------+------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4896,9 +4896,9 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +--------------------------+----------------------------------------+------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | SET                                    | 　                     | Support            | 　1. It is allowed to update the sharding key, but it is required that the change of the value of the sharding key will not affect the data routing, that is, the modified value of the sharding key and the value before the modification are routed to the same node, otherwise the execution is not successful. |
 |                          |                                        |                        |                    |                                                                                                                                                                                                                                                                                                                    |
-|                          |                                        |                        |                    | 2\. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3.                                                           |
+|                          |                                        |                        |                    | 2. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3.                                                           |
 |                          |                                        |                        |                    |                                                                                                                                                                                                                                                                                                                    |
-|                          |                                        |                        |                    | 3\. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1;                                                                                                                                                                        |
+|                          |                                        |                        |                    | 3. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1;                                                                                                                                                                        |
 +--------------------------+----------------------------------------+------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          |                                        | Function in SET Clause | Support            |                                                                                                                                                                                                                                                                                                                    |
 +--------------------------+----------------------------------------+------------------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4922,7 +4922,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      | HAVING                                 | Unconditional Field                    | Not support        | SELECT Clause must contain HAVING Filter Field, so does MySQL                                                                                                                                                                                                                    |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                                        | COUNT(\*)                              | Support            |                                                                                                                                                                                                                                                                                  |
+|                      |                                        | COUNT(*)                              | Support            |                                                                                                                                                                                                                                                                                  |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | AVG()                                  | Support            |                                                                                                                                                                                                                                                                                  |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4956,7 +4956,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      | WHERE                                  | OR condition of different fields       | Limited support    | a=x and b=x or c=x not supported, only support the condition that OR Expression is sub-node of AND Expression, and the condition that there is only one or Expression, for example: select xxx from a,b where (c1 OR c2) and c3 and (c4 OR c5 OR c6) and c7..AND cN.. statement: |
 |                      |                                        |                                        |                    |                                                                                                                                                                                                                                                                                  |
-|                      |                                        |                                        |                    | Among which, every condition (C1, C2, etc.) in OR Clause only supports table.column \[=\|\<\|\<=\|\>\|\>=\|!=\] value or IS \[NOT\] NULL or specific value (0/1/TRUE/FALSE/character string, etc.);                                                                              |
+|                      |                                        |                                        |                    | Among which, every condition (C1, C2, etc.) in OR Clause only supports table.column [=|<|<=|>|>=|!=] value or IS [NOT] NULL or specific value (0/1/TRUE/FALSE/character string, etc.);                                                                              |
 |                      |                                        |                                        |                    |                                                                                                                                                                                                                                                                                  |
 |                      |                                        |                                        |                    | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes.                                                                                                                            |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4974,9 +4974,9 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | BETWEEN ... AND ...                    | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                                        | \>、\>= 、\< 、\<=                     | Support            | 　                                                                                                                                                                                                                                                                               |
+|                      |                                        | >、>= 、< 、<=                     | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                                        | NOW() and other constant Expression    | Support            | column1 \> NOW() or column1 \> DATE_ADD(NOW(), INTERVAL +3 day )                                                                                                                                                                                                                 |
+|                      |                                        | NOW() and other constant Expression    | Support            | column1 > NOW() or column1 > DATE_ADD(NOW(), INTERVAL +3 day )                                                                                                                                                                                                                 |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | Operation Expression                   | Special support    | column1=column2+1(Support of using NDB and meeting NDB limit)                                                                                                                                                                                                                    |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5012,7 +5012,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | COUNT()                                | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                                        | COUNT(\*)                              | Support            | 　                                                                                                                                                                                                                                                                               |
+|                      |                                        | COUNT(*)                              | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | COUNT(1)                               | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5022,17 +5022,17 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      | SUM                                    | SUM()                                  | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                                        | SUM(CASE \... WHEN\...)                | Support            | Only support Field judged as single table by CASE WHEN, and the CASE WHEN Field must have Table Alias                                                                                                                                                                            |
+|                      |                                        | SUM(CASE ... WHEN...)                | Support            | Only support Field judged as single table by CASE WHEN, and the CASE WHEN Field must have Table Alias                                                                                                                                                                            |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | SUM(IFNULL())                          | Support            | Procedure Control Function                                                                                                                                                                                                                                                       |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | SUM(*column1*-*column2*)               | Support            | Only support operation of single-table columns, Multi-table Field is not supported; operation of Multi-table Field has been intercepted                                                                                                                                          |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      | INTO OUTFILE                           |                                        | Support            | 1\. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                                                 |
+|                      | INTO OUTFILE                           |                                        | Support            | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                                                 |
 |                      |                                        |                                        |                    |                                                                                                                                                                                                                                                                                  |
-|                      |                                        |                                        |                    | 2\. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP.                     |
+|                      |                                        |                                        |                    | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP.                     |
 |                      |                                        |                                        |                    |                                                                                                                                                                                                                                                                                  |
-|                      |                                        |                                        |                    | 3\. If the cluster is switched during the export, the data output can still be normal.                                                                                                                                                                                           |
+|                      |                                        |                                        |                    | 3. If the cluster is switched during the export, the data output can still be normal.                                                                                                                                                                                           |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      | FOR UPDATE                             |                                        | Not support        | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5044,13 +5044,13 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      | ON Clause                              | Single =                               | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                                        | \<=\>                                  | Special support    | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
+|                      |                                        | <=>                                  | Special support    | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                                        | != \<\>                                | Support            | 　                                                                                                                                                                                                                                                                               |
+|                      |                                        | != <>                                | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                                        | \>= \> \<= \<                          | Support            | 　                                                                                                                                                                                                                                                                               |
+|                      |                                        | >= > <= <                          | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                                        | Multiple\>= \> \<= \<Condition         | Support            | 　                                                                                                                                                                                                                                                                               |
+|                      |                                        | Multiple>= > <= <Condition         | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | Multiple and = Condition               | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5060,7 +5060,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | IS NULL                                | Support            | When LEFT JOIN, the Left Table or Right Table Field using IS NULL condition to filter is not supported in ON condition                                                                                                                                                           |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                                        | BETWEEN ... AND ...                    | Support            | When LEFT JOIN, the Left Table Field using BETWEEN ... AND\... condition to filter is not supported in ON condition                                                                                                                                                              |
+|                      |                                        | BETWEEN ... AND ...                    | Support            | When LEFT JOIN, the Left Table Field using BETWEEN ... AND... condition to filter is not supported in ON condition                                                                                                                                                              |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | LIKE                                   | Support            | When LEFT JOIN, the Left Table Field using LIKE condition to filter is not supported in ON condition                                                                                                                                                                             |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5068,7 +5068,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | Mathematical Expression                | Special support    | Support of using NDB and meeting NDB limit, such as: column1=column2+1                                                                                                                                                                                                           |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      | SELECT Clause                          | Show Null Column                       | Support            | SELECT \'\' AS A FROM ... Query result could show accurate null column                                                                                                                                                                                                           |
+|                      | SELECT Clause                          | Show Null Column                       | Support            | SELECT '' AS A FROM ... Query result could show accurate null column                                                                                                                                                                                                           |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | STRAIGHT_JOIN                          | Support            |                                                                                                                                                                                                                                                                                  |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5122,7 +5122,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | IFNULL                                 | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                      |                                        | CASE\...WHEN\...END                    | Support            | Only support the Field judged as single table by CASE WHEN; Not support condition judgment of Multi-table Field, such as: CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias                                                                        |
+|                      |                                        | CASE...WHEN...END                    | Support            | Only support the Field judged as single table by CASE WHEN; Not support condition judgment of Multi-table Field, such as: CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias                                                                        |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                      |                                        | DISTINCT                               | Support            | 　                                                                                                                                                                                                                                                                               |
 +----------------------+----------------------------------------+----------------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5163,15 +5163,15 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 **MySQL statement type**   **Clause type**                                                               **Support status**   **Description**
   ALTER TABLE                ADD COLUMN                                                                    Support              　
-                             ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY                         Support              Support ADD UNIQUE \[index_name\]\[index_type\]index_col_name
+                             ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY                         Support              Support ADD UNIQUE [index_name][index_type]index_col_name
                              ADD FOREIGN KEY for child table(s)                                            Partial Support      When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails
-                             ADD SPATIAL \[INDEX\|KEY\]                                                    Support              　
-                             ADD CONSTRAINT \[CONSTRAINT \[symbol\]\] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY   Support              　
-                             ADD CONSTRAINT \[CONSTRAINT \[symbol\]\] FOREIGN KEY for child table(s)       Partial Support      When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails
+                             ADD SPATIAL [INDEX|KEY]                                                    Support              　
+                             ADD CONSTRAINT [CONSTRAINT [symbol]] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY   Support              　
+                             ADD CONSTRAINT [CONSTRAINT [symbol]] FOREIGN KEY for child table(s)       Partial Support      When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails
                              ALGORITHM                                                                     Support              New INSTANT of MySQL8.0, and INSTANT is used by default
                              ALTER COLUMN                                                                  Support              　
                              LOCK                                                                          Support              　
-                             MODIFY/CHANGE \[COLUMN\]                                                      Support              　
+                             MODIFY/CHANGE [COLUMN]                                                      Support              　
                              DROP COLUMN                                                                   Support              　
                              DROP PRIMARY KEY/KEY/INDEX/FOREIGN KEY                                        Support              　
                              DISABLE KEYS                                                                  Support              　
@@ -5219,15 +5219,15 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 +--------------------------+--------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CREATE TABLE             | CREATE TEMPORARY TABLE         | Forbidden          | SQL Parser supports this Syntax, not supports Temporary Table function                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 +--------------------------+--------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | CREATE TABLE \[IF NOT EXISTS\] | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|                          | CREATE TABLE [IF NOT EXISTS] | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 +--------------------------+--------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | CREATE TABLE LIKE              | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 +--------------------------+--------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | CREATE TABLE AS SELECT ...     | Support            | 1\. The data source user is required to have CREATE TEMPORARY TABLE privilege.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|                          | CREATE TABLE AS SELECT ...     | Support            | 1. The data source user is required to have CREATE TEMPORARY TABLE privilege.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 |                          |                                |                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-|                          |                                |                    | 2\. It is required that the CREATE table and the SELECT table are associated with at least one same data node, otherwise the execution is unsuccessful: ERROR 10215 (HY000): \[LOADTEST1\] no overlapping datanode .                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+|                          |                                |                    | 2. It is required that the CREATE table and the SELECT table are associated with at least one same data node, otherwise the execution is unsuccessful: ERROR 10215 (HY000): [LOADTEST1] no overlapping datanode .                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 |                          |                                |                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-|                          |                                |                    | 3\. CREATE TABLE \... IGNORE SELECT and CREATE TABLE \... REPLACE SELECT are not supported.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|                          |                                |                    | 3. CREATE TABLE ... IGNORE SELECT and CREATE TABLE ... REPLACE SELECT are not supported.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 +--------------------------+--------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                          | GENERATED COLUMNS              | Support            | New function of MySQL8.0 and 5.7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 +--------------------------+--------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5244,17 +5244,17 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 []{# _Toc20646638 .anchor}CREATE DATABASE is used to create LogicDB, the usage is as follows:
 
-CREATE {DATABASE \| SCHEMA} \[IF NOT EXISTS\] db_name \[create_option\] \... \[DEFAULT DATANODE \'datanodeid\'\]
+CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name [create_option] ... [DEFAULT DATANODE 'datanodeid']
 
 Description:
 
-create_option: \[DEFAULT\] { CHARACTER SET \[=\] charset_name \| COLLATE \[=\] collation_name }
+create_option: [DEFAULT] { CHARACTER SET [=] charset_name | COLLATE [=] collation_name }
 
-\[DEFAULT DATANODE \'datanodeid\'\] You can specify the default sharding node. When it is not specified, all data nodes will be associated by default; when it is specified, the specified data node will be associated as the default sharding node of the LogicDB; when the specified datanodeid does not exist, it prompts: datanodeid not exists.
+[DEFAULT DATANODE 'datanodeid'] You can specify the default sharding node. When it is not specified, all data nodes will be associated by default; when it is specified, the specified data node will be associated as the default sharding node of the LogicDB; when the specified datanodeid does not exist, it prompts: datanodeid not exists.
 
 The statement of CREATING DATABASE on the server end is:
 
-create database if not exists zjj_d3 default datanode \'1,4\';
+create database if not exists zjj_d3 default datanode '1,4';
 
 -   Associate non-existent data nodes
 
@@ -5282,10 +5282,10 @@ Note: the warning prompt will be given when the character set and collations is 
                              SPATIAL                                         Support              　
                              ALGORITHM                                       Support              　
                              LOCK                                            Support              　
-  DROP TABLE                 DROP \[TEMPORARY\] TABLE \[IF EXISTS\]          Forbidden            　
+  DROP TABLE                 DROP [TEMPORARY] TABLE [IF EXISTS]          Forbidden            　
                              DROP TABLE                                      Support              　
                              DROP TABLE multi-table                          Support              Multi-table must be guaranteed in the same node
-                             DROP TABLE table_name \[RESTRICT \| CASCADE\]   Support              　
+                             DROP TABLE table_name [RESTRICT | CASCADE]   Support              　
   DROP TRIGGER               　                                              Support              DROP privilege shall be granted
   DROP VIEW                  　                                              Support              　
 
@@ -5296,9 +5296,9 @@ Note: the warning prompt will be given when the character set and collations is 
 +--------------------------+-----------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL statement type** | **Clause type** | **Support status** | **Description**                                                                                                                                                                                                                                                                       |
 +--------------------------+-----------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| RENAME TABLE             | 　              | Support            | 1\. RENAME multiple tables is supported, but these tables are required to be on the same node. Otherwise, the execution will fail and an error will be reported: ERROR 10042 (HY000): unsupported to rename multi table with different datanodes.                                     |
+| RENAME TABLE             | 　              | Support            | 1. RENAME multiple tables is supported, but these tables are required to be on the same node. Otherwise, the execution will fail and an error will be reported: ERROR 10042 (HY000): unsupported to rename multi table with different datanodes.                                     |
 |                          |                 |                    |                                                                                                                                                                                                                                                                                       |
-|                          |                 |                    | 2\. The target table of RENAME does not need to be added with the table configuration in advance. If you add the table configuration to the new table, you need to ensure that the configuration of the new table is consistent with the old table, otherwise RENAME will not succeed |
+|                          |                 |                    | 2. The target table of RENAME does not need to be added with the table configuration in advance. If you add the table configuration to the new table, you need to ensure that the configuration of the new table is consistent with the old table, otherwise RENAME will not succeed |
 |                          |                 |                    |                                                                                                                                                                                                                                                                                       |
 |                          |                 |                    | Note: database users of the compute node need to have ALTER and DROP privileges of the old table, and CREATE and INSERT privileges on the new table.　                                                                                                                                |
 +--------------------------+-----------------+--------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5322,13 +5322,13 @@ Note: the warning prompt will be given when the character set and collations is 
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                       | COMMIT                    |                                         | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                       | COMMIT                    | \[AND \[NO\] CHAIN\] \[\[NO\] RELEASE\] | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|                                       | COMMIT                    | [AND [NO] CHAIN] [[NO] RELEASE] | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                       | ROLLBACK                  |                                         | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                       | ROLLBACK                  | \[AND \[NO\] CHAIN\] \[\[NO\] RELEASE\] | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|                                       | ROLLBACK                  | [AND [NO] CHAIN] [[NO] RELEASE] | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                       | SET autocommit            | 0\|1                                    | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|                                       | SET autocommit            | 0|1                                    | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | SAVEPOINT                             | SAVEPOINT                 |                                         | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5336,9 +5336,9 @@ Note: the warning prompt will be given when the character set and collations is 
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                       | RELEASE SAVEPOINT         |                                         | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| LOCK                                  | LOCK TABLES               | READ \[LOCAL\]                          | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| LOCK                                  | LOCK TABLES               | READ [LOCAL]                          | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                       |                           | \[LOW_PRIORITY\] WRITE                  | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|                                       |                           | [LOW_PRIORITY] WRITE                  | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                       | UNLOCK TABLES             |                                         | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5374,19 +5374,19 @@ Note: the warning prompt will be given when the character set and collations is 
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                       |                           | READ WRITE                              | Not support |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Distributed transaction               | XA START\|BEGIN ...       | \[JOIN\|RESUME\]                        | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Distributed transaction               | XA START|BEGIN ...       | [JOIN|RESUME]                        | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                       | XA END                    | \[SUSPEND \[FOR MIGRATE\]\]             | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|                                       | XA END                    | [SUSPEND [FOR MIGRATE]]             | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                       | XA PREPARE                |                                         | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                       | XA COMMIT                 | \[ONE PHASE\]                           | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|                                       | XA COMMIT                 | [ONE PHASE]                           | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                       | XA ROLLBACK               |                                         | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                       | XA RECOVER                |                                         | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                       | XA RECOVER                | \[CONVERT XID\]                         | Forbidden   | New parameter of 5.7                                                                                                                                                                                                                                                                                                                                                                                             |
+|                                       | XA RECOVER                | [CONVERT XID]                         | Forbidden   | New parameter of 5.7                                                                                                                                                                                                                                                                                                                                                                                             |
 +---------------------------------------+---------------------------+-----------------------------------------+-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ### Other MySQL statements
@@ -5430,7 +5430,7 @@ HotDB Server only supports Storage Procedure, Custom Function statement in verti
 +--------------------------------------------+--------------------------------------------------------------------------------------+--------------------+-------------------------------+
 |                                            | SIGNAL                                                                               | Limited            | **　**                        |
 +--------------------------------------------+--------------------------------------------------------------------------------------+--------------------+-------------------------------+
-| Plugin and User-Defined Function statement | CREATE \[AGGREGATE\] FUNCTION function_name RETURNS {STRING\|INTEGER\|REAL\|DECIMAL} | Limited            |                               |
+| Plugin and User-Defined Function statement | CREATE [AGGREGATE] FUNCTION function_name RETURNS {STRING|INTEGER|REAL|DECIMAL} | Limited            |                               |
 |                                            |                                                                                      |                    |                               |
 |                                            | SONAME shared_library_name                                                           |                    |                               |
 +--------------------------------------------+--------------------------------------------------------------------------------------+--------------------+-------------------------------+
@@ -5448,7 +5448,7 @@ HotDB Server only supports Storage Procedure, Custom Function statement in verti
 **Statement type**      **SQL statement**              **Support status**   **Description**
   Prepare SQL Statement   PREPARE ... FROM ...           Support              
                           EXECUTE ...                    Support              　
-                          {DEALLOCATE \| DROP} PREPARE   Support
+                          {DEALLOCATE | DROP} PREPARE   Support
 
 ----------------------- ------------------------------ -------------------- -----------------
 
@@ -5475,11 +5475,11 @@ HotDB Server realizes a set of its own username and privilege management system,
 
 The statement is:
 
-CREATE USER \[IF NOT EXISTS\] \'user_name\'@\'host_name\'   IDENTIFIED BY  \'password_auth_string\'\[,\'user_name\'@\'host_name\'   IDENTIFIED BY  \'password_auth_string\'\]\...
+CREATE USER [IF NOT EXISTS] 'user_name'@'host_name'   IDENTIFIED BY  'password_auth_string'[,'user_name'@'host_name'   IDENTIFIED BY  'password_auth_string']...
 
 The statement of CREATE USER on the server end is:
 
-create user \'jingjingjing\'@\'%\' identified by \'jing\' with max_user_connections 3;
+create user 'jingjingjing'@'%' identified by 'jing' with max_user_connections 3;
 
 When CREATE USER, the execution user must have super privilege. NULL password creation is not supported. The max length of user name is limited to 64 characters, and the password is not limited temporarily.
 
@@ -5503,11 +5503,11 @@ When CREATE USER, the execution user must have super privilege. NULL password cr
 
 The statement is:
 
-DROP USER \[IF EXISTS\] \'user_name\'@\'host_name\' \[,\'user_name\'@\'host_name\'\]\...
+DROP USER [IF EXISTS] 'user_name'@'host_name' [,'user_name'@'host_name']...
 
 The statement of DROP USER on the server end is:
 
-drop user \'jingjingjing\'@\'%\';
+drop user 'jingjingjing'@'%';
 
 When DROP USER, the execution user must have super privilege.
 
@@ -5525,47 +5525,47 @@ The statement is:
 
 GRANT
 
-priv_type\[, priv_type \] \...
+priv_type[, priv_type ] ...
 
-ON  priv_level TO \'user_name\'@\'host_name\'\[,\'user_name\'@\'host_name\'\] \...
+ON  priv_level TO 'user_name'@'host_name'[,'user_name'@'host_name'] ...
 
-\[WITH MAX_USER_CONNECTIONS con_num \]
+[WITH MAX_USER_CONNECTIONS con_num ]
 
 **Description:**
 
 priv_type includes：SELECT、 UPDATE、 DELETE、 INSERT 、CREATE 、DROP 、ALTER 、FILE 、 SUPER
 
-You can use [ALL \[PRIVILEGES\]](https://dev.mysql.com/doc/refman/5.6/en/privileges-provided.html# priv_all) to give users all privileges (including super privilege), which is the same as MySQL.
+You can use [ALL [PRIVILEGES]](https://dev.mysql.com/doc/refman/5.6/en/privileges-provided.html# priv_all) to give users all privileges (including super privilege), which is the same as MySQL.
 
-priv\_ Level includes: \*  \| \*.\*  \| db_name.\*  \|db_name.tbl_name  \| tbl_name  \|
+priv_ Level includes: *  | *.*  | db_name.*  |db_name.tbl_name  | tbl_name  |
 
-\*: represents all tables in the current database (which can only be executed after "use" the LogicDB); \* \*: represents all tables in all databases; db_name.\*: represents all tables in a certain database, db_name specifies the database name; db_name.tbl_name: a certain table in a certain database, db_name, database name, tbl_name: represents a table, tbl_name specifies the name of the table (which can only be executed after "use" the LogicDB).
+*: represents all tables in the current database (which can only be executed after "use" the LogicDB); * *: represents all tables in all databases; db_name.*: represents all tables in a certain database, db_name specifies the database name; db_name.tbl_name: a certain table in a certain database, db_name, database name, tbl_name: represents a table, tbl_name specifies the name of the table (which can only be executed after "use" the LogicDB).
 
 The statement of GRANT on the server end is:
 
 The global grant:
 
-grant all on \*.\* to \' test_ct \'@\'localhost\' identified by \' test_ct \' with max_user_connections 3;
+grant all on *.* to ' test_ct '@'localhost' identified by ' test_ct ' with max_user_connections 3;
 
 The node-level grant:
 
-grant all on test_ct.\* to \'test_ct\'@\'localhost\' identified by \'test_ct\';
+grant all on test_ct.* to 'test_ct'@'localhost' identified by 'test_ct';
 
 The table-level grant
 
-grant update on test_ct.test_aa to \'test_ct\'@\'localhost\' identified by \'test_ct\';
+grant update on test_ct.test_aa to 'test_ct'@'localhost' identified by 'test_ct';
 
 Notes on GRANT:
 
-1\. The user who GRANTs must have super privilege.
+1. The user who GRANTs must have super privilege.
 
-2\. User can be created synchronously when GRANT, but with password.
+2. User can be created synchronously when GRANT, but with password.
 
-3\. "super" and "file" must be granted global management privilege, and node-level and table-level grant is not supported.
+3. "super" and "file" must be granted global management privilege, and node-level and table-level grant is not supported.
 
-4\. "all" can not be used with other privileges at the same time. It can only be granted separately, which is the same as MySQL.
+4. "all" can not be used with other privileges at the same time. It can only be granted separately, which is the same as MySQL.
 
-5\. Privilege modification is only valid for the new connection and will not change the privilege of the created connection.
+5. Privilege modification is only valid for the new connection and will not change the privilege of the created connection.
 
 -   When the user who GRANTs does not have super privilege, it will prompt:
 
@@ -5595,21 +5595,21 @@ Notes on GRANT:
 
 The statement is:
 
-REVOKE priv_type \[, priv_type \] \...ON priv_level FROM \'user_name\'@\'host_name\' \[, \'user_name\'@\'host_name\'\] \...
+REVOKE priv_type [, priv_type ] ...ON priv_level FROM 'user_name'@'host_name' [, 'user_name'@'host_name'] ...
 
 The statement of REVOKE on the server end is:
 
-revoke select,update,delete,insert,create,drop,alter,file,super on \*.\* from jingjing05;
+revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jingjing05;
 
 Notes on REVOKE:
 
-1\. The user who REVOKE must have super privilege.
+1. The user who REVOKE must have super privilege.
 
-2\. You can REVOKE some privileges and all privileges, and you can also REVOKE the corresponding privileges of node-level and table-level.
+2. You can REVOKE some privileges and all privileges, and you can also REVOKE the corresponding privileges of node-level and table-level.
 
-3\. Privilege items can be REVOKEd repeatedly, but error will be reported when REVOKEing non-existent types.
+3. Privilege items can be REVOKEd repeatedly, but error will be reported when REVOKEing non-existent types.
 
-4\. Privilege modification is only valid for the new connection and will not change the privilege of the created connection.
+4. Privilege modification is only valid for the new connection and will not change the privilege of the created connection.
 
 -   When the user who REVOKEs does not have super privilege, it will prompt:
 
@@ -5659,9 +5659,9 @@ Notes on REVOKE:
 +--------------------+---------------------------------+--------------------+-------------------------------------------------------------------------------------------+
 |                    | SET SESSION                     | Partial support    | Such as: SET SESSION TRANSACTION/SET TX_READONLY/SET NAMES, etc.                          |
 +--------------------+---------------------------------+--------------------+-------------------------------------------------------------------------------------------+
-|                    | SET @\@global.                  | Not support        | 　                                                                                        |
+|                    | SET @@global.                  | Not support        | 　                                                                                        |
 +--------------------+---------------------------------+--------------------+-------------------------------------------------------------------------------------------+
-|                    | SET @\@session.                 | Not support        | 　                                                                                        |
+|                    | SET @@session.                 | Not support        | 　                                                                                        |
 +--------------------+---------------------------------+--------------------+-------------------------------------------------------------------------------------------+
 |                    | SET @@                          | Not support        | 　                                                                                        |
 +--------------------+---------------------------------+--------------------+-------------------------------------------------------------------------------------------+
@@ -5699,9 +5699,9 @@ Notes on REVOKE:
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
 |                    | SHOW FIELDS FROM                                                                      | Support            | 　                                                                        |
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
-|                    | SHOW COLUMNS FROM\|IN tbl_name                                                        | Support            | 　                                                                        |
+|                    | SHOW COLUMNS FROM|IN tbl_name                                                        | Support            | 　                                                                        |
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
-|                    | SHOW FULL COLUMNS FROM\|IN tbl_name                                                   | Support            | 　                                                                        |
+|                    | SHOW FULL COLUMNS FROM|IN tbl_name                                                   | Support            | 　                                                                        |
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
 |                    | SHOW CONTRIBUTORS                                                                     | Support            | 　                                                                        |
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
@@ -5749,7 +5749,7 @@ Notes on REVOKE:
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
 |                    | SHOW PROFILES                                                                         | Support            | 　                                                                        |
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
-|                    | SHOW RELAYLOG EVENTS \[IN \'log_name\'\] \[FROM pos\] \[LIMIT \[offset,\] row_count\] | Support            | 　                                                                        |
+|                    | SHOW RELAYLOG EVENTS [IN 'log_name'] [FROM pos] [LIMIT [offset,] row_count] | Support            | 　                                                                        |
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
 |                    | SHOW SLAVE HOSTS                                                                      | Support            | 　                                                                        |
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
@@ -5769,11 +5769,11 @@ Notes on REVOKE:
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
 |                    | SHOW TRIGGERS                                                                         | Support            | 　                                                                        |
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
-|                    | SHOW GLOBAL\|SESSION VARIABLES                                                        | Support            | 　                                                                        |
+|                    | SHOW GLOBAL|SESSION VARIABLES                                                        | Support            | 　                                                                        |
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
 |                    | SHOW WARNINGS                                                                         | Support            |                                                                           |
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
-|                    | Show HOTDB tables                                                                     | Support            | Support \[{FROM \| IN} *db_name*\] \[LIKE \'*pattern*\' \| WHERE *expr*\] |
+|                    | Show HOTDB tables                                                                     | Support            | Support [{FROM | IN} *db_name*] [LIKE '*pattern*' | WHERE *expr*] |
 |                    |                                                                                       |                    |                                                                           |
 |                    |                                                                                       |                    | Show sharding information of the compute node                             |
 +--------------------+---------------------------------------------------------------------------------------+--------------------+---------------------------------------------------------------------------+
@@ -5783,9 +5783,9 @@ Notes on REVOKE:
 -------------------- ------------------------------------------------------------- -------------------- -----------------------------------------
 
 **Statement type**   **SQL statement**                                             **Support status**   **Description**
-  SET statement        set hotdb_profiling={0\|1\|on\|off}                           Support              Support set \[session\] hotdb_profiling
+  SET statement        set hotdb_profiling={0|1|on|off}                           Support              Support set [session] hotdb_profiling
   SHOW statement       show hotdb_profiles                                           Support              　
-                       show hotdb_profile for query N \[relative time\|real time\]   Support              N represents the SQL id executed
+                       show hotdb_profile for query N [relative time|real time]   Support              N represents the SQL id executed
 
 -------------------- ------------------------------------------------------------- -------------------- -----------------------------------------
 
@@ -5801,23 +5801,23 @@ Query of the 3rd column is SQL text
 
 Instance:
 
-mysql\> show hotdb_profiles;
+mysql> show hotdb_profiles;
 
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------+----------+-------------------+
 
-\| Query_ID \| Duration \| Query \|
+| Query_ID | Duration | Query |
 
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------+----------+-------------------+
 
-\| 1 \| 422 \| SELECT DATABASE() \|
+| 1 | 422 | SELECT DATABASE() |
 
-\| 2 \| 1962 \| select \* from aa \|
+| 2 | 1962 | select * from aa |
 
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------+----------+-------------------+
 
 2 rows in set (0.01 sec)
 
-Show hotdb_profile for query N \[relative time\|real time\] is similar with MySQL:
+Show hotdb_profile for query N [relative time|real time] is similar with MySQL:
 
 Status of the 1st column, which is execution status of SQL statement
 
@@ -5827,45 +5827,45 @@ Duration of the 3^rd^ column, which is compute time of every step during SQL exe
 
 Instance:
 
-mysql\> show hotdb_profile for query 2 relative time;
+mysql> show hotdb_profile for query 2 relative time;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
++--------------------------------------------+---------------+----------+
 
-\| Status \| Relative_time \| Duration \|
+| Status | Relative_time | Duration |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
++--------------------------------------------+---------------+----------+
 
-\| SQL receive start time \| 0 \| NULL \|
+| SQL receive start time | 0 | NULL |
 
-\| SQL receive end time \| 67 \| 67 \|
+| SQL receive end time | 67 | 67 |
 
-\| multiquery parse end time \| 125 \| 58 \|
+| multiquery parse end time | 125 | 58 |
 
-\| multiquery other SQL execute wait end time \| 155 \| 30 \|
+| multiquery other SQL execute wait end time | 155 | 30 |
 
-\| SQL parse end time \| 709 \| 553 \|
+| SQL parse end time | 709 | 553 |
 
-\| backend SQL 1 request generate start time \| 709 \| NULL \|
+| backend SQL 1 request generate start time | 709 | NULL |
 
-\| backend SQL 1 request generate end time \| 892 \| 182 \|
+| backend SQL 1 request generate end time | 892 | 182 |
 
-\| backend SQL 1 request send start time \| 1329 \| NULL \|
+| backend SQL 1 request send start time | 1329 | NULL |
 
-\| backend SQL 1 request send end time \| 1390 \| 61 \|
+| backend SQL 1 request send end time | 1390 | 61 |
 
-\| backend SQL 1 result receive start time \| 1733 \| NULL \|
+| backend SQL 1 result receive start time | 1733 | NULL |
 
-\| backend SQL 1 result receive end time \| 1842 \| 109 \|
+| backend SQL 1 result receive end time | 1842 | 109 |
 
-\| backend SQL 1 result rewrite start time \| 1733 \| NULL \|
+| backend SQL 1 result rewrite start time | 1733 | NULL |
 
-\| backend SQL 1 result rewrite end time \| 1849 \| 116 \|
+| backend SQL 1 result rewrite end time | 1849 | 116 |
 
-\| result send start time \| 1849 \| NULL \|
+| result send start time | 1849 | NULL |
 
-\| result send end time \| 1962 \| 112 \|
+| result send end time | 1962 | 112 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
++--------------------------------------------+---------------+----------+
 
 15 rows in set (0.00 sec)
 
@@ -5881,7 +5881,7 @@ multiquery other SQL execute wait end time: the time point when the compute node
 
 SQL parse end time: the time point when the compute node completes SQL parse (after parse failure, the subsequent rows will no longer be output)
 
-backend SQL N request generate start time: the time point when the compute node starts generation of back-end SQL N (N is serial No. of back-end SQL, such as 1, 2, 3, 4\...)
+backend SQL N request generate start time: the time point when the compute node starts generation of back-end SQL N (N is serial No. of back-end SQL, such as 1, 2, 3, 4...)
 
 backend SQL N request generate end time: the time point when the compute node completes back-end SQL N
 
@@ -5906,14 +5906,14 @@ result send end time: the time point when the compute node completes sending the
 ----------------------------- ------------------------------ -------------------- --------------------------------------------
 
 **Statement type**            **SQL statement**              **Support status**   **Description**
-  Other management statements   BINLOG \'str\'                 Forbidden            　
+  Other management statements   BINLOG 'str'                 Forbidden            　
                                 CACHE INDEX                    Forbidden            　
-                                KILL \[CONNECTION \| QUERY\]   Support              
+                                KILL [CONNECTION | QUERY]   Support              
                                 LOAD INDEX INTO CACHE          Forbidden            　
                                 RESET MASTER                   Forbidden            　
                                 RESET QUERY CACHE              Forbidden            　
                                 RESET SLAVE                    Forbidden            　
-  MySQL Utility Statements      DESCRIBE\|DESC                 Support              
+  MySQL Utility Statements      DESCRIBE|DESC                 Support              
                                 EXPLAIN                        Support              Please refer to [EXPLAIN](#explain)
                                 EXPLAIN EXTENDED               Not support          
                                 HELP                           Not support          　
@@ -5934,7 +5934,7 @@ The following parameter are of special processing, the for its specific show res
 +--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL VARIABLES**      | **Show description**                                                                                                                        |
 +--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
-| BIND_ADDRESS             | \*Always show\*                                                                                                                             |
+| BIND_ADDRESS             | *Always show*                                                                                                                             |
 +--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
 | TX_ISOLATION             | REPEATABLE-READ is default. If it is session, show session's value.                                                                         |
 |                          |                                                                                                                                             |
@@ -6103,7 +6103,7 @@ By default, the compute node could Create Table only after making appropriate Ta
 
 **Premise for use: LogicDB sets default node**
 
-1.  Log in to Distributed Transactional Database Management Platform, select "Configuration"-\>"LogicDB", set LogicDB default node
+1.  Log in to Distributed Transactional Database Management Platform, select "Configuration"->"LogicDB", set LogicDB default node
 
 ![](assets/standard/image129.png)
 
@@ -6115,25 +6115,25 @@ By default, the compute node could Create Table only after making appropriate Ta
 
 ![](assets/standard/image130.png)
 
-2\. Log in to compute node to select "test001" LogicDB, and Create Table, create succeeded
+2. Log in to compute node to select "test001" LogicDB, and Create Table, create succeeded
 
 For example, if the "test001" has only one default node, then "test01" is Vertical Sharding Table; if "test002" has multiple default nodes, then "test02" is Sharding Table
 
-mysql\> use TEST001;
+mysql> use TEST001;
 
 Database changed
 
-mysql\> create table test01(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int);
+mysql> create table test01(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int);
 
-mysql\> use TEST002;
+mysql> use TEST002;
 
 Database changed
 
-mysql\> create table test02(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int);
+mysql> create table test02(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int);
 
 ![](assets/standard/image131.png)
 
--   For Sharding Table automatically created, selection sequence of sharding key is: Primary Key Field -\> Unique Key Field -\>the 1^st^ Integer Field (BIGINT, INT, MEDIUMINT, SMALLINT, TINYINT) - \>after taking the Integer Field, take the Character String Type Field (CHAR, VARCHAR ), and in case of no appropriate one after taking all types above, a Field will be randomly selected as the Sharding Key by default.
+-   For Sharding Table automatically created, selection sequence of sharding key is: Primary Key Field -> Unique Key Field ->the 1^st^ Integer Field (BIGINT, INT, MEDIUMINT, SMALLINT, TINYINT) - >after taking the Integer Field, take the Character String Type Field (CHAR, VARCHAR ), and in case of no appropriate one after taking all types above, a Field will be randomly selected as the Sharding Key by default.
 
 Notice: This function is only recommended to be used when contacting customer for the first time, and is not recommended for formal delivery and online, and Sharding shall be made according to the practical transaction scenarios;
 
@@ -6141,125 +6141,125 @@ Notice: This function is only recommended to be used when contacting customer fo
 
 **Function description:** According to the added Sharding Functions on the management platform, Create Table directly via special statement on service port of the compute node, without configuring Table Sharding Information any longer. For tables created using the existing Sharding Functions, after deleting the tables according to rules, relevant tables on the management platform will be deleted synchronously.
 
-**Premise for use:** If Sharding Functions already exist, to add Sharding Function, please refer to *Distributed Transactional Database HotDB Server \[Management Platform\] Function Manual*.
+**Premise for use:** If Sharding Functions already exist, to add Sharding Function, please refer to *Distributed Transactional Database HotDB Server [Management Platform] Function Manual*.
 
 Add Sharding Function on the management platform, and reload.
 
 ![](assets/standard/image132.png)
 
-Use [service port command](#related-command-of-create-table-using-existing-sharding-function) to view functionid \| functionname\| functiontype\| ruleid \| rulename and other information of Sharding Function, and Create Table according to relevant Field information.
+Use [service port command](#related-command-of-create-table-using-existing-sharding-function) to view functionid | functionname| functiontype| ruleid | rulename and other information of Sharding Function, and Create Table according to relevant Field information.
 
-mysql\> show hotdb functions;
+mysql> show hotdb functions;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
-\| Function_id \| Function_name \| Function_type \| Auto_generated \|
+| Function_id | Function_name | Function_type | Auto_generated |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
-\| 1 \| AUTO_CRC32_4 \| AUTO_CRC32 \| 0 \|
+| 1 | AUTO_CRC32_4 | AUTO_CRC32 | 0 |
 
-\| 2 \| fun_range \| RANGE \| 0 \|
+| 2 | fun_range | RANGE | 0 |
 
-\| 3 \| AUTO_CRC32_2 \| AUTO_CRC32 \| 0 \|
+| 3 | AUTO_CRC32_2 | AUTO_CRC32 | 0 |
 
-\| 4 \| AUTO_GENERATE_CRC32 \| AUTO_CRC32 \| 1 \|
+| 4 | AUTO_GENERATE_CRC32 | AUTO_CRC32 | 1 |
 
-\| 5 \| 5_CRC32_MOD \| CRC32_MOD \| 0 \|
+| 5 | 5_CRC32_MOD | CRC32_MOD | 0 |
 
-\| 6 \| AUTO_CRC32_3 \| AUTO_CRC32 \| 0 \|
+| 6 | AUTO_CRC32_3 | AUTO_CRC32 | 0 |
 
-\| 9 \| 7_RANGE \| RANGE \| 0 \|
+| 9 | 7_RANGE | RANGE | 0 |
 
-\| 11 \| AUTO_MOD_4 \| AUTO_MOD \| 0 \|
+| 11 | AUTO_MOD_4 | AUTO_MOD | 0 |
 
-\| 12 \| AUTO_MOD_3 \| AUTO_MOD \| 0 \|
+| 12 | AUTO_MOD_3 | AUTO_MOD | 0 |
 
-\| 13 \| AUTO_CRC32_1 \| AUTO_CRC32 \| 0 \|
+| 13 | AUTO_CRC32_1 | AUTO_CRC32 | 0 |
 
-\| 14 \| AUTO_MOD_1 \| AUTO_MOD \| 0 \|
+| 14 | AUTO_MOD_1 | AUTO_MOD | 0 |
 
-\| 15 \| 15_RANGE \| MATCH \| 0 \|
+| 15 | 15_RANGE | MATCH | 0 |
 
-\| 17 \| 16_RANGE \| RANGE \| 0 \|
+| 17 | 16_RANGE | RANGE | 0 |
 
-\| 18 \| 18_RANGE \| RANGE \| 0 \|
+| 18 | 18_RANGE | RANGE | 0 |
 
-\| 24 \| 24_SIMPLE_MOD \| SIMPLE_MOD \| 0 \|
+| 24 | 24_SIMPLE_MOD | SIMPLE_MOD | 0 |
 
-\| 25 \| 25_MATCH \| MATCH \| 0 \|
+| 25 | 25_MATCH | MATCH | 0 |
 
-\| 30 \| 26_SIMPLE_MOD \| SIMPLE_MOD \| 0 \|
+| 30 | 26_SIMPLE_MOD | SIMPLE_MOD | 0 |
 
-\| 31 \| 31_CRC32_MOD \| CRC32_MOD \| 0 \|
+| 31 | 31_CRC32_MOD | CRC32_MOD | 0 |
 
-\| 32 \| 32_SIMPLE_MOD \| SIMPLE_MOD \| 0 \|
+| 32 | 32_SIMPLE_MOD | SIMPLE_MOD | 0 |
 
-\| 33 \| 33_RANGE \| RANGE \| 0 \|
+| 33 | 33_RANGE | RANGE | 0 |
 
-\| 34 \| 34_RANGE \| RANGE \| 0 \|
+| 34 | 34_RANGE | RANGE | 0 |
 
-\| 35 \| 35_SIMPLE_MOD \| SIMPLE_MOD \| 0 \|
+| 35 | 35_SIMPLE_MOD | SIMPLE_MOD | 0 |
 
-\| 36 \| 36_SIMPLE_MOD \| SIMPLE_MOD \| 0 \|
+| 36 | 36_SIMPLE_MOD | SIMPLE_MOD | 0 |
 
-\| 37 \| 37_CRC32_MOD \| CRC32_MOD \| 0 \|
+| 37 | 37_CRC32_MOD | CRC32_MOD | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
 24 rows in set (0.01 sec)
 
-mysql\> show hotdb rules;
+mysql> show hotdb rules;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+------------------------------------------------------------------+-------------+-------------+----------------+
 
-\| Rule_id \| Rule_name \| Rule_column \| Function_id \| Auto_generated \|
+| Rule_id | Rule_name | Rule_column | Function_id | Auto_generated |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+------------------------------------------------------------------+-------------+-------------+----------------+
 
-\| 1 \| hotdb-cloud_eb04c4ba-2116-4ea5-ba32-40f97ba8616d \| id \| 1 \| 0 \|
+| 1 | hotdb-cloud_eb04c4ba-2116-4ea5-ba32-40f97ba8616d | id | 1 | 0 |
 
-\| 2 \| hotdb-cloud_a3527f8c-fc7f-44d9-ad1f-243944e5c573 \| id \| 2 \| 0 \|
+| 2 | hotdb-cloud_a3527f8c-fc7f-44d9-ad1f-243944e5c573 | id | 2 | 0 |
 
-\| 3 \| hotdb-cloud_3703e424-69d7-474c-b925-03f65ec5f6c0 \| a \| 2 \| 0 \|
+| 3 | hotdb-cloud_3703e424-69d7-474c-b925-03f65ec5f6c0 | a | 2 | 0 |
 
-\| 4 \| hotdb-cloud_2fa6dfaa-1f82-449b-bff3-036bc0d762ce \| a \| 1 \| 0 \|
+| 4 | hotdb-cloud_2fa6dfaa-1f82-449b-bff3-036bc0d762ce | a | 1 | 0 |
 
-\| 5 \| hotdb-cloud_8bd4884f-7bca-405f-b6bf-4b11da71dd2d \| id \| 3 \| 0 \|
+| 5 | hotdb-cloud_8bd4884f-7bca-405f-b6bf-4b11da71dd2d | id | 3 | 0 |
 
-\| 6 \| AUTO_GENERATE_1\_TABLEEMP_ID \| ID \| 4 \| 1 \|
+| 6 | AUTO_GENERATE_1_TABLEEMP_ID | ID | 4 | 1 |
 
-\| 7 \| hotdb-cloud_3ceac42d-015a-4a3b-8cc7-d4edcc34a5b1 \| id \| 1 \| 0 \|
+| 7 | hotdb-cloud_3ceac42d-015a-4a3b-8cc7-d4edcc34a5b1 | id | 1 | 0 |
 
-\| 8 \| hotdb-server_cf24a81b-6ffa-494c-b69c-28c7d8318cb8_20190905185548 \| ID \| 6 \| 1 \|
+| 8 | hotdb-server_cf24a81b-6ffa-494c-b69c-28c7d8318cb8_20190905185548 | ID | 6 | 1 |
 
-\| 12 \| hotdb-server_bc53bcae-139a-4238-a598-47b52f6f9787_20190909104803 \| ID1 \| 6 \| 1 \|
+| 12 | hotdb-server_bc53bcae-139a-4238-a598-47b52f6f9787_20190909104803 | ID1 | 6 | 1 |
 
-\| 13 \| hotdb-server_e662af7d-b968-4131-a7db-eac8d66c53c1_20190909134505 \| NAME \| 6 \| 1 \|
+| 13 | hotdb-server_e662af7d-b968-4131-a7db-eac8d66c53c1_20190909134505 | NAME | 6 | 1 |
 
-\| 14 \| hotdb-server_171fe946-63c9-47b9-bf52-10b9743fd064_20190909135113 \| NAME \| 6 \| 1 \|
+| 14 | hotdb-server_171fe946-63c9-47b9-bf52-10b9743fd064_20190909135113 | NAME | 6 | 1 |
 
-\| 15 \| hotdb-server_f3f0dcc2-3d31-4536-8a5c-ec229c2983d7_20190909135444 \| NAME \| 6 \| 1 \|
+| 15 | hotdb-server_f3f0dcc2-3d31-4536-8a5c-ec229c2983d7_20190909135444 | NAME | 6 | 1 |
 
-\| 16 \| hotdb-server_261a36af-40d6-4854-9205-081e358e275d_20190909160204 \| ID \| 12 \| 1 \|
+| 16 | hotdb-server_261a36af-40d6-4854-9205-081e358e275d_20190909160204 | ID | 12 | 1 |
 
-\| 17 \| hotdb-server_742cae4b-416f-4df4-92cf-cf45f070a2ec_20190909160303 \| NAME \| 12 \| 1 \|
+| 17 | hotdb-server_742cae4b-416f-4df4-92cf-cf45f070a2ec_20190909160303 | NAME | 12 | 1 |
 
-\| 18 \| hotdb-server_e3e0db99-25e4-499c-a7b1-550919cb87aa_20190909165736 \| ID1 \| 12 \| 1 \|
+| 18 | hotdb-server_e3e0db99-25e4-499c-a7b1-550919cb87aa_20190909165736 | ID1 | 12 | 1 |
 
-\| 19 \| hotdb-server_604d4b31-b369-4372-86e8-ce5f1c0a61b5_20190909190106 \| ID1 \| 1 \| 1 \|
+| 19 | hotdb-server_604d4b31-b369-4372-86e8-ce5f1c0a61b5_20190909190106 | ID1 | 1 | 1 |
 
-\| 20 \| hotdb-server_b3bb5cfd-42b6-4cde-86c3-318ddee4bc1c_20190909190906 \| ID1 \| 1 \| 1 \|
+| 20 | hotdb-server_b3bb5cfd-42b6-4cde-86c3-318ddee4bc1c_20190909190906 | ID1 | 1 | 1 |
 
-\| 21 \| hotdb-server_b385ebde-a28b-478a-8662-d8fbea964bfe_20190909191129 \| ID1 \| 1 \| 1 \|
+| 21 | hotdb-server_b385ebde-a28b-478a-8662-d8fbea964bfe_20190909191129 | ID1 | 1 | 1 |
 
-\| 26 \| hotdb-cloud_3abf9ad2-d436-4e2d-ad32-2a60246a6102 \| id \| 13 \| 0 \|
+| 26 | hotdb-cloud_3abf9ad2-d436-4e2d-ad32-2a60246a6102 | id | 13 | 0 |
 
-\| 27 \| hotdb-server_227c12e2-0c6c-4380-8f66-bab30f521a74_20190919163004 \| ID \| 11 \| 1 \|
+| 27 | hotdb-server_227c12e2-0c6c-4380-8f66-bab30f521a74_20190919163004 | ID | 11 | 1 |
 
-\| 28 \| hotdb-cloud_2ab203ed-885b-4cd2-9879-5e0f7191bafa \| provinceid \| 6 \| 0 \|
+| 28 | hotdb-cloud_2ab203ed-885b-4cd2-9879-5e0f7191bafa | provinceid | 6 | 0 |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+------------------------------------------------------------------+-------------+-------------+----------------+
 
 21 rows in set (0.00 sec)
 
@@ -6269,35 +6269,35 @@ Sharding table is the kind of table that splits data of the table by rows accord
 
 The syntax for creating a sharding table is as follows:
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functionid \| functionname} \'functionid \| functionname\' USING COLUMN \'shardcolumnname\' (\.....
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {functionid | functionname} 'functionid | functionname' USING COLUMN 'shardcolumnname' (.....
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functiontype} \'functiontype\' USING COLUMN \'shardcolumnname\' on datanode \'datanodeid\'(\.....
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid'(.....
 
 Besides, the keywords after SHARD BY can also be placed after the table definition (the same is true for the vertical sharding table and the global table), for example:
 
-CREATE TABLE \[IF NOT EXISTS\] tbl_name （table define\...） SHARD BY {functiontype} \'functiontype\' USING COLUMN \'shardcolumnname\' on datanode \'datanodeid\'(\.....);
+CREATE TABLE [IF NOT EXISTS] tbl_name （table define...） SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid'(.....);
 
 Sharding table creating syntax description:
 
-SHARD BY {FUNCTIONID \| FUNCTIONNAME \| FUNCTIONTYPE} refers to the keyword of sharding function ID, sharding function name and partition function type.
+SHARD BY {FUNCTIONID | FUNCTIONNAME | FUNCTIONTYPE} refers to the keyword of sharding function ID, sharding function name and partition function type.
 
-\' functionid_value \| functionname_value \| functiontype_value \' refers to the specific value of sharding function ID, sharding function name and sharding function type.
+' functionid_value | functionname_value | functiontype_value ' refers to the specific value of sharding function ID, sharding function name and sharding function type.
 
 USING COLUMN refers to the keyword of the sharding column.
 
-\'shardcolumnname\' refers to the value of the sharding column.
+'shardcolumnname' refers to the value of the sharding column.
 
 ON DATANODE refers to the keyword of the data node.
 
-\'datanodeid\' refers to the value of a specific data node. Multiple discontinuous values can be separated by commas. Multiple consecutive values can be specified in the form of intervals, such as 1, 3, 4, 5-10, 12-40.
+'datanodeid' refers to the value of a specific data node. Multiple discontinuous values can be separated by commas. Multiple consecutive values can be specified in the form of intervals, such as 1, 3, 4, 5-10, 12-40.
 
 Log in to the service port, use the LogicDB, enter Create Table statement, and execution succeeded. The management platform will show this table as defined status
 
-mysql\> use fun_zy
+mysql> use fun_zy
 
 Database changed
 
-mysql\> CREATE TABLE match1_tb shard by functionname \'test_match1\' using column \'aname\' (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT \'\', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
+mysql> CREATE TABLE match1_tb shard by functionname 'test_match1' using column 'aname' (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
 
 Query OK, 0 rows affected (0.09 sec)
 
@@ -6305,93 +6305,93 @@ Query OK, 0 rows affected (0.09 sec)
 
 For Create Table according to this Syntax Rule, pay attention to several points below:
 
--   \'functionid \| functionname \| functiontype\' is specific specified Sharding Function ID, Sharding Function name and Sharding Function type
+-   'functionid | functionname | functiontype' is specific specified Sharding Function ID, Sharding Function name and Sharding Function type
 
--   \'shardcolumnname\' is specified sharding key
+-   'shardcolumnname' is specified sharding key
 
--   \'datanodeid\' is node ID, which could be separated by comma, and support specification in interval form, such as: \'1,3,4,5-10,12-40\', the node ID could log in to Distributed Transactional Database Management Platform page, and select "Configuration"-\>" Node Management" to view, and could also log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function) to show hotdb datanodes; view:
+-   'datanodeid' is node ID, which could be separated by comma, and support specification in interval form, such as: '1,3,4,5-10,12-40', the node ID could log in to Distributed Transactional Database Management Platform page, and select "Configuration"->" Node Management" to view, and could also log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function) to show hotdb datanodes; view:
 
-mysql\> show hotdb datanodes;
+mysql> show hotdb datanodes;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------------+----------------+-----------------+
 
-\| datanode_id \| datanode_name \| datanode_type \|
+| datanode_id | datanode_name | datanode_type |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------------+----------------+-----------------+
 
-\| 9 \| dn_01 \| 0 \|
+| 9 | dn_01 | 0 |
 
-\| 11 \| dn_02 \| 0 \|
+| 11 | dn_02 | 0 |
 
-\| 13 \| dn_03 \| 0 \|
+| 13 | dn_03 | 0 |
 
-\| 15 \| dn_04 \| 0 \|
+| 15 | dn_04 | 0 |
 
-\| 19 \| dn_failover \| 0 \|
+| 19 | dn_failover | 0 |
 
-\| 20 \| dn_rmb_01 \| 0 \|
+| 20 | dn_rmb_01 | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------------+----------------+-----------------+
 
 6 rows in set (0.00 sec)
 
 -   Function Type only support auto_crc32/auto_mod; if other types are used, it will prompt: ERROR:The fucntiontype can only be auto_crc32/auto_mod.
 
-mysql\> create table ft_match shard by functiontype \'match\' using column \'id\' on datanode \'11,13\'(id int(10) Primary Key, a char(20) not null);
+mysql> create table ft_match shard by functiontype 'match' using column 'id' on datanode '11,13'(id int(10) Primary Key, a char(20) not null);
 
 ERROR 10070 (HY000): The functiontype can only by auto_crc32/auto_mode.
 
--   When using functionid \| functionname to Create Table, if the specified function information associated function_type is auto_crc32/auto_mod, it needs to specify on datanode \'datanodes\', otherwise, it will prompt: The function must be specified datanodes. If being other types, specification is unnecessary.
+-   When using functionid | functionname to Create Table, if the specified function information associated function_type is auto_crc32/auto_mod, it needs to specify on datanode 'datanodes', otherwise, it will prompt: The function must be specified datanodes. If being other types, specification is unnecessary.
 
-mysql\> create table mod_ft shard by functionid \'15\' using column \'id\'(id int(10) Primary Key, a char(20) not null);
+mysql> create table mod_ft shard by functionid '15' using column 'id'(id int(10) Primary Key, a char(20) not null);
 
 ERROR 10090 (HY000): The function must be specified datanodes.
 
-mysql\> create table testsa shard by functionid \'3\' using column \'id\'(id int,a int);
+mysql> create table testsa shard by functionid '3' using column 'id'(id int,a int);
 
 Query OK, 0 rows affected, 1 warning (0.10 sec)
 
-mysql\> CREATE TABLE match_tb shard by functionname \'test_match1\' using column \'ananme\' on datanode \'1,2\'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT \'\', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
+mysql> CREATE TABLE match_tb shard by functionname 'test_match1' using column 'ananme' on datanode '1,2'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
 
-ERROR 10090 (HY000): This rule doesn\'t need to specify a datanodes;
+ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
 
 Tables with similar table structure could use the same Sharding Function, and the following Syntax could be used to make direct citation of Sharding Function to create Sharding Table
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {ruleid \| rulename} \'ruleid\\rulename\' \[on datanode \'datanodes\'\] (\...\...
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleid\\rulename' [on datanode 'datanodes'] (......
 
 Log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function), show hotdb rules; and show hotdb functions; you could see the Sharding Function associated with its sharding Function
 
-mysql\> show hotdb rules;
+mysql> show hotdb rules;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+--------------------------------------------------------+-------------+-------------+----------------+
 
-\| rule_id \| rule_name \| rule_column \| function_id \| auto_generated \|
+| rule_id | rule_name | rule_column | function_id | auto_generated |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+--------------------------------------------------------+-------------+-------------+----------------+
 
-\| 17 \| AUTO_GENERATE_3\_ROUTE1_TB \| A \| 1 \| 1 \|
+| 17 | AUTO_GENERATE_3_ROUTE1_TB | A | 1 | 1 |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+--------------------------------------------------------+-------------+-------------+----------------+
 
 21 rows in set (0.01 sec)
 
-mysql\> show hotdb functions;
+mysql> show hotdb functions;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
-\| function_id \| function_name \| **function_type** \| auto_generated \|
+| function_id | function_name | **function_type** | auto_generated |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
-\| 1 \| test_route1 \| ROUTE \| 1 \|
+| 1 | test_route1 | ROUTE | 1 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
 13 rows in set (0.01 sec)
 
 The user could use ruleid/rulename to Create Table directly
 
-mysql\> CREATE TABLE rt_table shard by ruleid \'30\'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT \'\', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
+mysql> CREATE TABLE rt_table shard by ruleid '30'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
 
 Query OK, 0 rows affected (0.07 sec)
 
@@ -6399,47 +6399,47 @@ Query OK, 0 rows affected (0.07 sec)
 
 For Create Table according to this Syntax Rule, pay attention to several points below:
 
--   If associated function_type with specified rule is auto_crc32/auto_mod, then it needs to specify on datanode \'datanodes\', if being other types, thre is no need to specify datanode.
+-   If associated function_type with specified rule is auto_crc32/auto_mod, then it needs to specify on datanode 'datanodes', if being other types, thre is no need to specify datanode.
 
-mysql\> show hotdb rules;
+mysql> show hotdb rules;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+--------------------------------------------------------+-------------+-------------+----------------+
 
-\| rule_id \| rule_name \| rule_column \| function_id \| auto_generated \|
+| rule_id | rule_name | rule_column | function_id | auto_generated |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+--------------------------------------------------------+-------------+-------------+----------------+
 
-\| 17 \| **AUTO_GENERATE_3\_ROUTE1_TB** \| A \| 1 \| 1 \|
+| 17 | **AUTO_GENERATE_3_ROUTE1_TB** | A | 1 | 1 |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+--------------------------------------------------------+-------------+-------------+----------------+
 
 21 rows in set (0.01 sec)
 
-mysql\> show hotdb functions;
+mysql> show hotdb functions;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
-\| function_id \| function_name \| **function_type** \| auto_generated \|
+| function_id | function_name | **function_type** | auto_generated |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
-\| 1 \| test_route1 \| ROUTE \| 1 \|
+| 1 | test_route1 | ROUTE | 1 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
 13 rows in set (0.01 sec)
 
-mysql\> CREATE TABLE route2_rptb1 shard by rulename \'AUTO_GENERATE_3\_ROUTE1_TB\' on datanode \'9,11,13\'(id int not null auto_increment Primary Key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) charcter set utf8,j varchar(30) character set utf8mb4,k char(20) character set gbk,l text character set latin1, m enum(\'\',\'null\',\'1\',\'2\',\'3\'),n set(\'\',\'null\',\'1\',\'2\',\'3\'));
+mysql> CREATE TABLE route2_rptb1 shard by rulename 'AUTO_GENERATE_3_ROUTE1_TB' on datanode '9,11,13'(id int not null auto_increment Primary Key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) charcter set utf8,j varchar(30) character set utf8mb4,k char(20) character set gbk,l text character set latin1, m enum('','null','1','2','3'),n set('','null','1','2','3'));
 
-ERROR 10090 (HY000): This rule doesn\'t need to specify a datanodes;
+ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
 
 -   When associated function_type with specified rule is auto_crc32/auto_mod, in case of inconsistence between specified data nodes and the parameter, then it will prompt: ERROR: The total number of datanodes must be XXX (XXX is the column_value of the practical rule id associated function info)
 
-mysql\> CREATE TABLE auto_c shard by ruleid \'63\' on datanode \'9\'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT \'\',adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE=INNODB;
+mysql> CREATE TABLE auto_c shard by ruleid '63' on datanode '9'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '',adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE=INNODB;
 
 ERROR 10090 (HY000): The total number of datanodes must be 2
 
-mysql\> CREATE TABLE auto_c shard by ruleid \'63\' on datanode \'9,15\'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT \'\',adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE=INNODB;
+mysql> CREATE TABLE auto_c shard by ruleid '63' on datanode '9,15'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '',adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE=INNODB;
 
 Query OK, 0 rows affected (0.13 sec)
 
@@ -6449,13 +6449,13 @@ The vertical sharding table is a global unique total data table with no sharding
 
 The syntax for creating a vertical sharding table is as follows:
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY vertical on datanode \'datanodeid\'(\.....
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY vertical on datanode 'datanodeid'(.....
 
 Syntax description:
 
-SHARD BY VERTICAL is a vertical sharding keyword. ON DATANODE \'datanodeid\' can only specify one data node. If you do not specify any data node or specify multiple data nodes, an error will be reported.
+SHARD BY VERTICAL is a vertical sharding keyword. ON DATANODE 'datanodeid' can only specify one data node. If you do not specify any data node or specify multiple data nodes, an error will be reported.
 
-mysql\> CREATE TABLE tb_vertical shard by vertical on datanode\'2\'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT \'\', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
+mysql> CREATE TABLE tb_vertical shard by vertical on datanode'2'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
 
 Query OK, 0 rows affected(0.07 sec)
 
@@ -6463,13 +6463,13 @@ Query OK, 0 rows affected(0.07 sec)
 
 When datanode is not specified
 
-mysql\> CREATE TABLE tb1_vertical shard by vertical( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCAHR(32) DEFAULT \'\', adept VARCHAR(40), adate DATETIME DEFAULT NULL)ENGINE=INNODB;
+mysql> CREATE TABLE tb1_vertical shard by vertical( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCAHR(32) DEFAULT '', adept VARCHAR(40), adate DATETIME DEFAULT NULL)ENGINE=INNODB;
 
 ERROR 10090 (HY000): This table has to specify a datanodes.
 
 When multiple nodes are specified
 
-mysql\> CREATE TABLE tb1_vertical shard by vertical on datanode\'9,11,13\'( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCAHR(32) DEFAULT \'\', adept VARCHAR(40), adate DATETIME DEFAULT NULL)ENGINE=INNODB;
+mysql> CREATE TABLE tb1_vertical shard by vertical on datanode'9,11,13'( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCAHR(32) DEFAULT '', adept VARCHAR(40), adate DATETIME DEFAULT NULL)ENGINE=INNODB;
 
 ERROR 10090 (HY000): Can only specify one datanodes.
 
@@ -6479,15 +6479,15 @@ Global table refers to the table stored in all data nodes under the LogicDB. The
 
 The syntax for creating a global table is as follows:
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY global on datanode \'datanodeid\'(\.....
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY global on datanode 'datanodeid'(.....
 
 Syntax description:
 
 SHARD BY GLOBAL is the keyword of global table.
 
-\[ON DATANODE \'datanodeid\'\] is the syntax for specifying a data node. When the compute node version is 2.5.6 or above, if it is not specified, the table will be created by default based on the default sharding node of the LogicDB + the union set of all the associated nodes of the tables in the logicDB; if it is specified, all data nodes must be included, errors will be reported if only some data nodes are specified.
+[ON DATANODE 'datanodeid'] is the syntax for specifying a data node. When the compute node version is 2.5.6 or above, if it is not specified, the table will be created by default based on the default sharding node of the LogicDB + the union set of all the associated nodes of the tables in the logicDB; if it is specified, all data nodes must be included, errors will be reported if only some data nodes are specified.
 
-mysql\> CREATE TABLE tb_quan shard by global(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT \'\', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
+mysql> CREATE TABLE tb_quan shard by global(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
 
 Query OK, 0 rows affected (0.07 sec)
 
@@ -6497,13 +6497,13 @@ global in syntax rules means creating a global table. The 'datanodeid' is the no
 
 -   If there is no sharding node or defined table under the LogicDB, you need to specify the nodes of the global table distribution when creating the global table using special syntax:
 
-mysql\> CREATE TABLE tb2_quan shard by global(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) null,j varchar(30),k blob,l text, m enum(\'\',\'null\',\'1\',\'2\',\'3\'),n set(\'\',\'null\',\'1\',\'2\',\'3\'));
+mysql> CREATE TABLE tb2_quan shard by global(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) null,j varchar(30),k blob,l text, m enum('','null','1','2','3'),n set('','null','1','2','3'));
 
 ERROR 10090 (HY000): This table has to specify a datanodes.
 
 If a defined table already exists in the LogicDB, whenever you do not need to specify a node or need to specify a node, you need to specify the maximum number of non-duplicate nodes (that is, the union of all the selected nodes of all the table) that are included in the LogicDB. Otherwise, it will warn you of a table-creating error if some data nodes are specified:
 
-mysql\> CREATE TABLE tb1_quan shard by global on datanodes\'9,11\'(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) null,j varchar(30),k blob,l text, m enum(\'\',\'null\',\'1\',\'2\',\'3\'),n set(\'\',\'null\',\'1\',\'2\',\'3\'));
+mysql> CREATE TABLE tb1_quan shard by global on datanodes'9,11'(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) null,j varchar(30),k blob,l text, m enum('','null','1','2','3'),n set('','null','1','2','3'));
 
 ERROR 10090 (HY000): The specified datanodes must cover all datanodes of the LogicDB.
 
@@ -6511,11 +6511,11 @@ ERROR 10090 (HY000): The specified datanodes must cover all datanodes of the Log
 
 The command introduced in this section could be executed by service port and management port of the compute node.
 
-1\. show hotdb datanodes - show the existing available nodes
+1. show hotdb datanodes - show the existing available nodes
 
 This command is used for View of hotdb_datanodes table in configDB, Syntax:
 
-mysql\> show hotdb datanodes \[LIKE \'pattern\' \| WHERE expr\];
+mysql> show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 
 **The command contains parameters and its description:**
 
@@ -6540,55 +6540,55 @@ mysql\> show hotdb datanodes \[LIKE \'pattern\' \| WHERE expr\];
 
 For example:
 
-mysql\> show hotdb datanodes;
+mysql> show hotdb datanodes;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------+---------------+
 
-\| datanode_id \| datanode_name \| datanode_type \|
+| datanode_id | datanode_name | datanode_type |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------+---------------+
 
-\| 1 \| dn_01 \| 0 \|
+| 1 | dn_01 | 0 |
 
-\| 2 \| dn_02 \| 0 \|
+| 2 | dn_02 | 0 |
 
-\| 4 \| dn_04 \| 0 \|
+| 4 | dn_04 | 0 |
 
-\| 101 \| dn_101 \| 0 \|
+| 101 | dn_101 | 0 |
 
-\| 127 \| dn_03 \| 0 \|
+| 127 | dn_03 | 0 |
 
-\| 186 \| dn_199 \| 0 \|
+| 186 | dn_199 | 0 |
 
-\| 203 \| dn_19 \| 0 \|
+| 203 | dn_19 | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------+---------------+
 
 For another example:
 
-mysql\> show hotdb datanodes like \'dn_0%\';
+mysql> show hotdb datanodes like 'dn_0%';
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------+---------------+
 
-\| datanode_id \| datanode_name \| datanode_type \|
+| datanode_id | datanode_name | datanode_type |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------+---------------+
 
-\| 1 \| dn_01 \| 0 \|
+| 1 | dn_01 | 0 |
 
-\| 2 \| dn_02 \| 0 \|
+| 2 | dn_02 | 0 |
 
-\| 4 \| dn_04 \| 0 \|
+| 4 | dn_04 | 0 |
 
-\| 127 \| dn_03 \| 0 \|
+| 127 | dn_03 | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------+---------------+
 
-2\. show hotdb functions -- show the existing available Sharding Function
+2. show hotdb functions -- show the existing available Sharding Function
 
 This command is used for View of hotdb_function table in configDB, Syntax:
 
-mysql\> show hotdb functions;
+mysql> show hotdb functions;
 
 **The command contains parameters and its description:**
 
@@ -6614,77 +6614,77 @@ mysql\> show hotdb functions;
 
 For example:
 
-mysql\> show hotdb functions;
+mysql> show hotdb functions;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
-\| function_id \| function_name \| function_type \| auto_generated \|
+| function_id | function_name | function_type | auto_generated |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
 ...More are omitted...
 
-\| 40 \| AUTO_CRC32_8 \| AUTO_CRC32 \| 0 \|
+| 40 | AUTO_CRC32_8 | AUTO_CRC32 | 0 |
 
-\| 41 \| th_fun_range \| RANGE \| 0 \|
+| 41 | th_fun_range | RANGE | 0 |
 
-\| 42 \| AUTO_MOD_5 \| AUTO_MOD \| 0 \|
+| 42 | AUTO_MOD_5 | AUTO_MOD | 0 |
 
-\| 43 \| 43_RANGE \| RANGE \| 0 \|
+| 43 | 43_RANGE | RANGE | 0 |
 
-\| 44 \| AUTO_CRC32_15 \| AUTO_CRC32 \| 0 \|
+| 44 | AUTO_CRC32_15 | AUTO_CRC32 | 0 |
 
-\| 45 \| AUTO_CRC32_5 \| AUTO_CRC32 \| 0 \|
+| 45 | AUTO_CRC32_5 | AUTO_CRC32 | 0 |
 
-\| 46 \| yds_RANGE \| RANGE \| 0 \|
+| 46 | yds_RANGE | RANGE | 0 |
 
-\| 47 \| AUTO_CRC32_11 \| AUTO_CRC32 \| 0 \|
+| 47 | AUTO_CRC32_11 | AUTO_CRC32 | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------------+---------------+----------------+
 
 For another example:
 
-mysql\> show hotdb functions like \'%range%\';
+mysql> show hotdb functions like '%range%';
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------+---------------+----------------+
 
-\| function_id \| function_name \| function_type \| auto_generated \|
+| function_id | function_name | function_type | auto_generated |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------+---------------+----------------+
 
-\| 41 \| th_fun_range \| RANGE \| 0 \|
+| 41 | th_fun_range | RANGE | 0 |
 
-\| 43 \| 43_RANGE \| RANGE \| 0 \|
+| 43 | 43_RANGE | RANGE | 0 |
 
-\| 46 \| yds_RANGE \| RANGE \| 0 \|
+| 46 | yds_RANGE | RANGE | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-3 rows in set (0.00 sec)
-
-mysql\> show hotdb functions where function_name like \'%range%\';
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| function_id \| function_name \| function_type \| auto_generated \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 41 \| th_fun_range \| RANGE \| 0 \|
-
-\| 43 \| 43_RANGE \| RANGE \| 0 \|
-
-\| 46 \| yds_RANGE \| RANGE \| 0 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+---------------+---------------+----------------+
 
 3 rows in set (0.00 sec)
 
-3\. show hotdb function infos - show the existing available Sharding Function information
+mysql> show hotdb functions where function_name like '%range%';
+
++-------------+---------------+---------------+----------------+
+
+| function_id | function_name | function_type | auto_generated |
+
++-------------+---------------+---------------+----------------+
+
+| 41 | th_fun_range | RANGE | 0 |
+
+| 43 | 43_RANGE | RANGE | 0 |
+
+| 46 | yds_RANGE | RANGE | 0 |
+
++-------------+---------------+---------------+----------------+
+
+3 rows in set (0.00 sec)
+
+3. show hotdb function infos - show the existing available Sharding Function information
 
 This command is used for View of hotdb_function_info table in configDB, Syntax:
 
-mysql\> show hotdb function infos \[WHERE expr\];
+mysql> show hotdb function infos [WHERE expr];
 
 **The command contains parameters and its description:**
 
@@ -6708,67 +6708,67 @@ mysql\> show hotdb function infos \[WHERE expr\];
 
 For example:
 
-mysql\> show hotdb function infos;
+mysql> show hotdb function infos;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+--------------+-------------+
 
-\| function_id \| column_value \| datanode_id \|
+| function_id | column_value | datanode_id |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+--------------+-------------+
 
-\| 2 \| 4 \| 0 \|
+| 2 | 4 | 0 |
 
-\| 3 \| 1 \| 0 \|
+| 3 | 1 | 0 |
 
-\| 4 \| 2 \| 0 \|
+| 4 | 2 | 0 |
 
-\| 31 \| \'\' \| 4 \|
+| 31 | '' | 4 |
 
-\| 31 \| 1 \| 1 \|
+| 31 | 1 | 1 |
 
-\| 31 \| 2 \| 2 \|
+| 31 | 2 | 2 |
 
-\| 31 \| null \| 127 \|
+| 31 | null | 127 |
 
-\| 33 \| 0:1 \| 1 \|
+| 33 | 0:1 | 1 |
 
-\| 33 \| 10:10 \| 191 \|
+| 33 | 10:10 | 191 |
 
-\| 33 \| 11:11 \| 186 \|
+| 33 | 11:11 | 186 |
 
-\| 33 \| 12 \| 0 \|
+| 33 | 12 | 0 |
 
-\| 33 \| 2:3 \| 2 \|
+| 33 | 2:3 | 2 |
 
 ...More are omitted...
 
 For another example:
 
-mysql\> show hotdb function infos where function_id=38;
+mysql> show hotdb function infos where function_id=38;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+--------------+-------------+
 
-\| function_id \| column_value \| datanode_id \|
+| function_id | column_value | datanode_id |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+--------------+-------------+
 
-\| 38 \| 10:12 \| 1 \|
+| 38 | 10:12 | 1 |
 
-\| 38 \| 1:2 \| 1 \|
+| 38 | 1:2 | 1 |
 
-\| 38 \| 20 \| 0 \|
+| 38 | 20 | 0 |
 
-\| 38 \| 4:8 \| 1 \|
+| 38 | 4:8 | 1 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+--------------+-------------+
 
 4 rows in set (0.00 sec)
 
-4\. show hotdb rules -- show the existing available Sharding Function
+4. show hotdb rules -- show the existing available Sharding Function
 
 This command is used for View of hotdb_rule table in configDB, Syntax:
 
-mysql\> show hotdb rules \[LIKE \'pattern\' \| WHERE expr\];
+mysql> show hotdb rules [LIKE 'pattern' | WHERE expr];
 
 **The command contains parameters and its description:**
 
@@ -6795,61 +6795,61 @@ mysql\> show hotdb rules \[LIKE \'pattern\' \| WHERE expr\];
 
 For example:
 
-mysql\> show hotdb rules;
+mysql> show hotdb rules;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+--------------------------------------------------------+-------------+-------------+----------------+
 
-\| rule_id \| rule_name \| rule_column \| function_id \| auto_generated \|
+| rule_id | rule_name | rule_column | function_id | auto_generated |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+--------------------------------------------------------+-------------+-------------+----------------+
 
-\| 21 \| AUTO_GENERATE_3\_JOIN_A\_JWY \| ID \| 1 \| 1 \|
+| 21 | AUTO_GENERATE_3_JOIN_A_JWY | ID | 1 | 1 |
 
-\| 22 \| hotdb-cloud_0374c02e-58a7-4263-9b80-9c5b46fb42af \| id \| 5 \| 0 \|
+| 22 | hotdb-cloud_0374c02e-58a7-4263-9b80-9c5b46fb42af | id | 5 | 0 |
 
-\| 25 \| hotdb-cloud_f3979d19-93cb-4925-8dee-e4fbf8803c7c \| id \| 5 \| 0 \|
+| 25 | hotdb-cloud_f3979d19-93cb-4925-8dee-e4fbf8803c7c | id | 5 | 0 |
 
-\| 32 \| hotdb-cloud_6ccd2f69-cf53-4e81-ab3d-61345134fb7a \| id \| 5 \| 0 \|
+| 32 | hotdb-cloud_6ccd2f69-cf53-4e81-ab3d-61345134fb7a | id | 5 | 0 |
 
-\| 33 \| hotdb-cloud_b5bc16e6-3481-40ed-83ff-e81d488e47a5 \| ID \| 4 \| 0 \|
+| 33 | hotdb-cloud_b5bc16e6-3481-40ed-83ff-e81d488e47a5 | ID | 4 | 0 |
 
 ...More are omitted...
 
 For another example:
 
-mysql\> show hotdb rules like \'%auto%\';
+mysql> show hotdb rules like '%auto%';
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+----------------------------+-------------+-------------+----------------+
 
-\| rule_id \| rule_name \| rule_column \| function_id \| auto_generated \|
+| rule_id | rule_name | rule_column | function_id | auto_generated |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+----------------------------+-------------+-------------+----------------+
 
-\| 21 \| AUTO_GENERATE_3\_JOIN_A\_JWY \| ID \| 1 \| 1 \|
+| 21 | AUTO_GENERATE_3_JOIN_A_JWY | ID | 1 | 1 |
 
-\| 50 \| AUTO_GENERATE_9\_FT_ADDR \| ID \| 26 \| 1 \|
+| 50 | AUTO_GENERATE_9_FT_ADDR | ID | 26 | 1 |
 
-\| 64 \| AUTO_GENERATE_23_S03 \| A \| 1 \| 1 \|
+| 64 | AUTO_GENERATE_23_S03 | A | 1 | 1 |
 
-\| 65 \| AUTO_GENERATE_23_S04 \| B \| 1 \| 1 \|
+| 65 | AUTO_GENERATE_23_S04 | B | 1 | 1 |
 
 ...More are omitted...
 
-mysql\> show hotdb rules where rule_name like \'%auto%\';
+mysql> show hotdb rules where rule_name like '%auto%';
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+----------------------------+-------------+-------------+----------------+
 
-\| rule_id \| rule_name \| rule_column \| function_id \| auto_generated \|
+| rule_id | rule_name | rule_column | function_id | auto_generated |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++---------+----------------------------+-------------+-------------+----------------+
 
-\| 21 \| AUTO_GENERATE_3\_JOIN_A\_JWY \| ID \| 1 \| 1 \|
+| 21 | AUTO_GENERATE_3_JOIN_A_JWY | ID | 1 | 1 |
 
-\| 50 \| AUTO_GENERATE_9\_FT_ADDR \| ID \| 26 \| 1 \|
+| 50 | AUTO_GENERATE_9_FT_ADDR | ID | 26 | 1 |
 
-\| 64 \| AUTO_GENERATE_23_S03 \| A \| 1 \| 1 \|
+| 64 | AUTO_GENERATE_23_S03 | A | 1 | 1 |
 
-\| 65 \| AUTO_GENERATE_23_S04 \| B \| 1 \| 1 \|
+| 65 | AUTO_GENERATE_23_S04 | B | 1 | 1 |
 
 ...More are omitted...
 
@@ -6859,7 +6859,7 @@ Considering the high risk of DROP TABLE, TRUNCATE TABLE, DELETE TABLE without WH
 
 You can either modify the dropTableRetentionTime parameter in server.xml or Add the parameter "dropTableRetentionTime(h)" in Compute Node Parameter Configuration under the management platform configuration menu.
 
-\<property name=\"dropTableRetentionTime\"\>0\</property\>\<!---the dropTableRetentionTime is 0 by default, meaning not retained\--\>
+<property name=[dropTableRetentionTime](#dropTableRetentionTime)>0</property><!---the dropTableRetentionTime is 0 by default, meaning not retained-->
 
 dropTableRetentionTime parameter is 0 by default; when dropTableRetentionTime is 0, it means that the DROP Table is not retained, DROP TABLE is to delete table; when dropTableRetentionTime is greater than 0, computed by hour, and retain the DROP Table for set time, and the table will be automatically deleted if exceeding the set time.
 
@@ -6867,19 +6867,19 @@ At present, compute node does not provide direct command of restoring the delete
 
 When this function is enabled, this document takes dropTableRetentionTime=24 for instance, that is to retain the DROP Table, and delete the table 24h later. If to restore the table deleted, firstly, Query hotdb_dropped_table_log in the compute node configDB, to view the mapping relation of the table deleted. For example:
 
-mysql\> select \* from hotdb_dropped_table_log;
+mysql> select * from hotdb_dropped_table_log;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+------------+----------------------+-------------------------------+
 
-\| table_name \| datanodes \| drop_time \| renamed_table_name \|
+| table_name | datanodes | drop_time | renamed_table_name |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+------------+----------------------+-------------------------------+
 
-\| TABLE25 \| 11 \| 2019-03-26 17:18:07 \| HOTDB_TEMP_33_20190326171807 \|
+| TABLE25 | 11 | 2019-03-26 17:18:07 | HOTDB_TEMP_33_20190326171807 |
 
-\| TABLE30 \| 11 \| 2019-03-26 17:18:13 \| HOTDB_TEMP_34_20190326171812 \|
+| TABLE30 | 11 | 2019-03-26 17:18:13 | HOTDB_TEMP_34_20190326171812 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------------+------------+----------------------+-------------------------------+
 
 2 rows in set (0.00 sec)
 
@@ -6915,7 +6915,7 @@ This chapter lists the tables and its special processing contents in INFORMATION
   character_sets                          Only return the Character Set and Collation Set data supported by the compute node
   collations                              Only return the Character Set and Collation Set data supported by the compute node
   collation_character_set_applicability   Only return the Character Set and Collation Set data supported by the compute node
-  columns                                 If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
+  columns                                 If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')
   column_privileges                       Return Null Set
   engines                                 Only return innodb
   events                                  Return Null Set
@@ -6950,23 +6950,23 @@ This chapter lists the tables and its special processing contents in INFORMATION
   innodb_sys_tablespaces                  Return Null Set
   innodb_sys_tablestats                   Return Null Set
   innodb_trx                              Return Null Set
-  key_column_usage                        If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
+  key_column_usage                        If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')
   optimizer_trace                         Return Null Set
   parameters                              Return Null Set
-  partitions                              If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\'). Sequencing and grouped queries of tables is supported.
+  partitions                              If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys'). Sequencing and grouped queries of tables is supported.
   plugins                                 Return Null Set
   processlist                             The returned result and server command show that processlist is consistent
   profiling                               Return Null Set
-  referential_constraints                 If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
+  referential_constraints                 If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')
   routines                                Return Null Set
   schemata                                Return LogicDB related information
   schema_privileges                       Return Null Set
   session_status                          The same as the result of show session status
   session_variables                       The same as the result of show session variables
-  statistics                              The compute node will show after making de-repetition or sum processing of statistics information of all nodes under the LogicDB. The return result does not include information of the system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
-  tables                                  If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
+  statistics                              The compute node will show after making de-repetition or sum processing of statistics information of all nodes under the LogicDB. The return result does not include information of the system database ('mysql','information_schema','performance_schema','sys')
+  tables                                  If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')
   tablespaces                             Return Null Set
-  table_constraints                       If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
+  table_constraints                       If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')
   table_privileges                        Return Null Set
   triggers                                Return Null Set
   user_privileges                         Return Null Set
@@ -6979,11 +6979,11 @@ In order to be compatible with the data source above MySQL 8.0, conduct the foll
 ------------------------------ -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 **Table Name**                 **Special processing**
-  check_constraints              If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
-  column_statistics              If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
+  check_constraints              If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')
+  column_statistics              If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')
   keywords                       Return Null Set
   resource_groups                Return Null Set
-  st_geometry_columns            If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
+  st_geometry_columns            If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')
   st_spatial_reference_systems   No special processing
   st_units_of_measure            No special processing
   view_table_usage               Return Null Set
@@ -6993,7 +6993,7 @@ In order to be compatible with the data source above MySQL 8.0, conduct the foll
 
 ## Instruction on use of compute node parameters
 
-During the use process, the compute node has maintained many system configuration parameters, and this document describes how to use these parameters and the influence on function. Every parameter has a default value, which can be either modified in server.xml Config File when service starts, or modified on the Parameter Configuration page after Log in the management platform. Most of these parameters could use Reload (reload @\@config) to operate dynamic modification during running, without the need to stop and restart the service. Some parameters could also be modified in Expression by means of set.
+During the use process, the compute node has maintained many system configuration parameters, and this document describes how to use these parameters and the influence on function. Every parameter has a default value, which can be either modified in server.xml Config File when service starts, or modified on the Parameter Configuration page after Log in the management platform. Most of these parameters could use Reload (reload @@config) to operate dynamic modification during running, without the need to stop and restart the service. Some parameters could also be modified in Expression by means of set.
 
 #### adaptiveProcessor
 
@@ -7015,7 +7015,7 @@ During the use process, the compute node has maintained many system configuratio
 
 adaptiveProcessor parameter in Server.xml is configured as follow:
 
-\<property name=\"adaptiveProcessor\"\>true\</property\>\<!\-- Control whether the startup service is Automatic Adaptation or not, true means Automatic Adaptation, false means non-Automatic Adaptation, the parameter is true by default, and is hidden \--\>
+<property name=[adaptiveProcessor](#adaptiveProcessor)>true</property><!-- Control whether the startup service is Automatic Adaptation or not, true means Automatic Adaptation, false means non-Automatic Adaptation, the parameter is true by default, and is hidden -->
 
 adaptiveProcessor parameter is true by default, that is the Automatic Adaptation startup service is enabled, and all values including [processor](#processors), [processorExecutor](#pinglogcleanperiod) and [timerExecutor](#timerexecutor) will come into Automatic Adaptation. If being false, the Automatic Adaptation startup service is disabled
 
@@ -7023,41 +7023,41 @@ adaptiveProcessor parameter is true by default, that is the Automatic Adaptation
 
 After the Automatic Adaptation startup service is enabled, the compute node will set parameters according to the current server configuration and Automatic Adaptation Rule, that is to modify the following parameter value in server.xml, and after the startup service, the modification can't take effect, and the parameter value will still be set according to Adaptation Rule.
 
-\<property name=\"processors\"\>16\</property\>\<!---number of processors\--\>
+<property name="processors">16</property><!---number of processors-->
 
-\<property name=\"processorExecutor\"\>4\</property\>\<!---number of threads of various processorExecutor \--\>
+<property name=[processorExecutor](#processorExecutor)>4</property><!---number of threads of various processorExecutor -->
 
-\<property name=\"timerExecutor\"\>4\</property\>\<!---number of threads of timerExecutor \--\>
+<property name=[timerExecutor](#timerExecutor)>4</property><!---number of threads of timerExecutor -->
 
-Log in to 3325 port, execute show @\@threadpool; command, view the current processor, processorExecutor and timerExecutor value. for example:
+Log in to 3325 port, execute show @@threadpool; command, view the current processor, processorExecutor and timerExecutor value. for example:
 
-mysql\> show @\@threadpool;
+mysql> show @@threadpool;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
++-----------------+-----------+--------------+-----------------+----------------+------------+
 
-\| name \| pool_size \| active_count \| task_queue_size \| completed_task \| total_task \|
+| name | pool_size | active_count | task_queue_size | completed_task | total_task |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
++-----------------+-----------+--------------+-----------------+----------------+------------+
 
-\| TimerExecutor \| 4 \| 0 \| 15 \| 50376807 \| 50376822 \|
+| TimerExecutor | 4 | 0 | 15 | 50376807 | 50376822 |
 
-\| \$NIOExecutor-0- \| 4 \| 0 \| 0 \| 99254 \| 99254 \|
+| \$NIOExecutor-0- | 4 | 0 | 0 | 99254 | 99254 |
 
-\| \$NIOExecutor-1- \| 4 \| 1 \| 0 \| 81195 \| 81196 \|
+| \$NIOExecutor-1- | 4 | 1 | 0 | 81195 | 81196 |
 
-\| \$NIOExecutor-2- \| 4 \| 2 \| 0 \| 140921 \| 140923 \|
+| \$NIOExecutor-2- | 4 | 2 | 0 | 140921 | 140923 |
 
-\| \$NIOExecutor-3- \| 4 \| 1 \| 0 \| 48218 \| 48219 \|
+| \$NIOExecutor-3- | 4 | 1 | 0 | 48218 | 48219 |
 
-\| \$NIOExecutor-4- \| 4 \| 0 \| 0 \| 39073 \| 39073 \|
+| \$NIOExecutor-4- | 4 | 0 | 0 | 39073 | 39073 |
 
-\| \$NIOExecutor-5- \| 4 \| 0 \| 0 \| 31656 \| 31656 \|
+| \$NIOExecutor-5- | 4 | 0 | 0 | 31656 | 31656 |
 
-\| \$NIOExecutor-6- \| 4 \| 0 \| 0 \| 167007 \| 167007 \|
+| \$NIOExecutor-6- | 4 | 0 | 0 | 167007 | 167007 |
 
-\| \$NIOExecutor-7- \| 4 \| 1 \| 0 \| 27221 \| 27222 \|
+| \$NIOExecutor-7- | 4 | 1 | 0 | 27221 | 27222 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
++-----------------+-----------+--------------+-----------------+----------------+------------+
 
 9 rows in set (0.00 sec)
 
@@ -7065,37 +7065,37 @@ mysql\> show @\@threadpool;
 
 The following command could be used to view the number of the current logic CPU
 
-cat /proc/cpuinfo\| grep \"processor\"\| wc -l
+cat /proc/cpuinfo| grep "processor"| wc -l
 
-Notice: When starting Initialize at the very beginning, the compute node does not generate all threads, instead, it generates the threads actually used, therefore, executing show @\@threadpool; command may show the result as follow:
+Notice: When starting Initialize at the very beginning, the compute node does not generate all threads, instead, it generates the threads actually used, therefore, executing show @@threadpool; command may show the result as follow:
 
-mysql\> show @\@threadpool;
+mysql> show @@threadpool;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
++-----------------+-----------+--------------+-----------------+----------------+------------+
 
-\| name \| pool_size \| active_count \| task_queue_size \| completed_task \| total_task \|
+| name | pool_size | active_count | task_queue_size | completed_task | total_task |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
++-----------------+-----------+--------------+-----------------+----------------+------------+
 
-\| TimerExecutor \| 4 \| 0 \| 14 \| 73720 \| 73734 \|
+| TimerExecutor | 4 | 0 | 14 | 73720 | 73734 |
 
-\| \$NIOExecutor-0- \| 1 \| 0 \| 0 \| 1 \| 1 \|
+| \$NIOExecutor-0- | 1 | 0 | 0 | 1 | 1 |
 
-\| \$NIOExecutor-1- \| 1 \| 0 \| 0 \| 1 \| 1 \|
+| \$NIOExecutor-1- | 1 | 0 | 0 | 1 | 1 |
 
-\| \$NIOExecutor-2- \| 1 \| 0 \| 0 \| 1 \| 1 \|
+| \$NIOExecutor-2- | 1 | 0 | 0 | 1 | 1 |
 
-\| \$NIOExecutor-3- \| 1 \| 0 \| 0 \| 1 \| 1 \|
+| \$NIOExecutor-3- | 1 | 0 | 0 | 1 | 1 |
 
-\| \$NIOExecutor-4- \| 2 \| 0 \| 0 \| 2 \| 2 \|
+| \$NIOExecutor-4- | 2 | 0 | 0 | 2 | 2 |
 
-\| \$NIOExecutor-5- \| 5 \| 0 \| 0 \| 5 \| 5 \|
+| \$NIOExecutor-5- | 5 | 0 | 0 | 5 | 5 |
 
-\| \$NIOExecutor-6- \| 1 \| 0 \| 0 \| 1 \| 1 \|
+| \$NIOExecutor-6- | 1 | 0 | 0 | 1 | 1 |
 
-\| \$NIOExecutor-7- \| 1 \| 1 \| 0 \| 1 \| 1 \|
+| \$NIOExecutor-7- | 1 | 1 | 0 | 1 | 1 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
++-----------------+-----------+--------------+-----------------+----------------+------------+
 
 9 rows in set (0.00 sec)
 
@@ -7121,7 +7121,7 @@ Only when the compute node is under pressure could it reach the Automatic Adapta
 
 allowRCWithoutReadConsistentInXA in server.xml is configured as follows:
 
-\<property name=\"allowRCWithoutReadConsistentInXA\"\>1\</property\>\<!\-- whether allow RC isolation level that does not gurantee strong read-write consistency in XA mode \--\>
+<property name=[allowRCWithoutReadConsistentInXA](#allowRCWithoutReadConsistentInXA)>1</property><!-- whether allow RC isolation level that does not gurantee strong read-write consistency in XA mode -->
 
 **Role of parameter:**
 
@@ -7181,7 +7181,7 @@ In version 2.5.3 and below, only true or false can be set. Setting as true is eq
 
 **Parameter Setting:**
 
-\<property name=\"badConnAfterContinueGet\"\>true\</property\>\<!\-- Continue to obtain connection or not: true means continue to obtain connection, false means return null and not continue to obtain connection, the outer layer shall create new connection or other operation \--\>
+<property name=[badConnAfterContinueGet](#badConnAfterContinueGet)>true</property><!-- Continue to obtain connection or not: true means continue to obtain connection, false means return null and not continue to obtain connection, the outer layer shall create new connection or other operation -->
 
 **Role of parameter:**
 
@@ -7205,7 +7205,7 @@ After compute node obtaining connection from the connection pool and having cond
 
 **Parameter Setting:**
 
-\<property name=\"badConnAfterFastCheckAllIdle\"\>true\</property\>\<!\-- When broken back-end connection is obtained, whether to check all idle connections rapidly or not, true means check, false means not check, true by default\--\>
+<property name=[badConnAfterFastCheckAllIdle](#badConnAfterFastCheckAllIdle)>true</property><!-- When broken back-end connection is obtained, whether to check all idle connections rapidly or not, true means check, false means not check, true by default-->
 
 **Role of parameter:**
 
@@ -7257,25 +7257,25 @@ bakUrl and bakUsername and bakPassword are supporting parameters, and are used f
 
 In case of latency during the switch process, it will wait for the Slave configDB to catch up with replication, and then switch succeeded and it will provide service
 
-\<property name=\"url\"\>jdbc:mysql://192.168.210.30:3306/hotdb_config\</property\>\<!\-- Master configDB address, real IP address of the configDB service shall be specified \--\>
+<property name="url">jdbc:mysql://192.168.210.30:3306/hotdb_config</property><!-- Master configDB address, real IP address of the configDB service shall be specified -->
 
-\<property name=\"username\"\>hotdb_config\</property\>\<!\-- Master configDB username \--\>
+<property name="username">hotdb_config</property><!-- Master configDB username -->
 
-\<property name=\"password\"\>hotdb_config\</property\>\<!\-- Master configDB password \--\>
+<property name="password">hotdb_config</property><!-- Master configDB password -->
 
 If not requiring Master/Slave configDB, then the configuration here shall be consistent with the master configuration information or Slave configDB shall not be configured.
 
-property name=\"bakUrl\"\>jdbc:mysql://192.168.210.31:3306/hotdb_config\</property\>\<!\-- Slave configDB address, real IP address of the configDB service shall be specified \--\>
+property name="bakUrl">jdbc:mysql://192.168.210.31:3306/hotdb_config</property><!-- Slave configDB address, real IP address of the configDB service shall be specified -->
 
-\<property name=\"bakUsername\"\>hotdb_config\</property\>\<!\-- Slave configDB username \--\>
+<property name="bakUsername">hotdb_config</property><!-- Slave configDB username -->
 
-\<property name=\"bakPassword\"\>hotdb_config\</property\>\<!\-- Slave configDB password \--\>
+<property name="bakPassword">hotdb_config</property><!-- Slave configDB password -->
 
-In case of configDB switch due to failure with the Active Master, to restore the Active Master to normal, it needs to update v value in the row hotdb_master_config_status named k in houdb_config_info table of the configDB from 0 to 1, and execute reload @\@config on management port, and only in this way could the Master configDB be reused (for operating method of enabling Master configDB on the management platform, please refer to *Distributed Transactional Database HotDB Server \[Management Platform\] Function Manual*).
+In case of configDB switch due to failure with the Active Master, to restore the Active Master to normal, it needs to update v value in the row hotdb_master_config_status named k in houdb_config_info table of the configDB from 0 to 1, and execute reload @@config on management port, and only in this way could the Master configDB be reused (for operating method of enabling Master configDB on the management platform, please refer to *Distributed Transactional Database HotDB Server [Management Platform] Function Manual*).
 
-mysql\> select \* from hotdb_config_info\\G
+mysql> select * from hotdb_config_info\\G
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*1.row\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+***************************1.row**************************
 
 k: hotdb_master_config_status
 
@@ -7301,23 +7301,23 @@ description: NULL
 
 **Parameter Setting:**
 
-\<property name=\"checkConnLastUsedTime\"\>false\</property\>\<!\-- Max allowed interval time of last use by the back-end connection. If exceeded, it will check whether this connection is valid or not, unit: ms \--\>
+<property name=[checkConnLastUsedTime](#checkConnLastUsedTime)>false</property><!-- Max allowed interval time of last use by the back-end connection. If exceeded, it will check whether this connection is valid or not, unit: ms -->
 
 **Role of parameter:**
 
 Under the condition of still no Read/Write of bk_last_write_time and the timeout, the compute node will check the connection connectivity first when obtaining connection from the connection pool, in order to guarantee that the connection obtained is available
 
-mysql\> show @\@session;
+mysql> show @@session;
 
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+---------+-------------+----------+-----------+----------+---------+---------+-------+------------+----------+-----------+---------------+---------+---------+-------+----------+-------------------+--------------------+
 
-\| id \| running \| trx_started \| trx_time \| trx_query \| bk_count \| bk_dnid \| bk_dsid \| bk_id \| bk_mysqlid \| bk_state \| bk_closed \| bk_autocommit \| bk_host \| bk_port \| bk_db \| bk_query \| bk_last_read_time \| **bk_last_write_time** \|
+| id | running | trx_started | trx_time | trx_query | bk_count | bk_dnid | bk_dsid | bk_id | bk_mysqlid | bk_state | bk_closed | bk_autocommit | bk_host | bk_port | bk_db | bk_query | bk_last_read_time | **bk_last_write_time** |
 
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+---------+-------------+----------+-----------+----------+---------+---------+-------+------------+----------+-----------+---------------+---------+---------+-------+----------+-------------------+--------------------+
 
-\| 60615 \| FALSE \| NULL \| NULL \| NULL \| 0 \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \|
+| 60615 | FALSE | NULL | NULL | NULL | 0 | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL |
 
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++-------+---------+-------------+----------+-----------+----------+---------+---------+-------+------------+----------+-----------+---------------+---------+---------+-------+----------+-------------------+--------------------+
 
 1 row in set (0.00 sec)
 
@@ -7341,7 +7341,7 @@ mysql\> show @\@session;
 
 Add configuration of CheckConnValid manually in server.xml
 
-\<property name=\"CheckConnValid\"\>true\</property\>
+<property name=[CheckConnValid](#CheckConnValid)>true</property>
 
 **Role of parameter:**
 
@@ -7365,7 +7365,7 @@ When obtaining connection from the connection pool, check availability of the co
 
 **Parameter Setting:**
 
-\<property name=\"checkConnValidTimeout\"\>500\</property\>\<!\-- At the time of checking validity of back-end connection, max timeout, unit: ms \--\>
+<property name=[checkConnValidTimeout](#checkConnValidTimeout)>500</property><!-- At the time of checking validity of back-end connection, max timeout, unit: ms -->
 
 **Role of parameter:**
 
@@ -7399,7 +7399,7 @@ At the time of checking validity of back-end connection, when the checking time 
 
 **Parameter Setting:**
 
-\<property name=\"checkMySQLParamInterval\"\>60000\</property\>\<!---interval time of checking whether MySQL Parameter Setting is reasonable or not (Unit: ms) \--\>
+<property name=[checkMySQLParamInterval](#checkMySQLParamInterval)>60000</property><!---interval time of checking whether MySQL Parameter Setting is reasonable or not (Unit: ms) -->
 
 **Role of parameter:**
 
@@ -7427,29 +7427,29 @@ Control whether allow modifying the sharding key or not. Unless under special ci
 
 If set true, after updating the sharding key, there will be prompt as follow:
 
-mysql\> update ss set id=13 where a=\'aa\';
+mysql> update ss set id=13 where a='aa';
 
-ERROR 1064 (HY000): sharding column\'s value cannot be changed.
+ERROR 1064 (HY000): sharding column's value cannot be changed.
 
 If set false, updating the sharding key could make execution succeeded.
 
-mysql\> update ss set id=13 where a=\'aa\';
+mysql> update ss set id=13 where a='aa';
 
 Query OK, 1 row affected (0.01 sec)
 
 Rows matched: 1 Changed: 1 Warnings: 0
 
-mysql\> select \* from ss where a=\'aa\';
+mysql> select * from ss where a='aa';
 
-+\-\-\-\-\--+\-\-\-\-\--+
++------+------+
 
-\| id \| a \|
+| id | a |
 
-+\-\-\-\-\--+\-\-\-\-\--+
++------+------+
 
-\| 13 \| aa \|
+| 13 | aa |
 
-+\-\-\-\-\--+\-\-\-\-\--+
++------+------+
 
 1 row in set (0.00 sec)
 
@@ -7473,7 +7473,7 @@ mysql\> select \* from ss where a=\'aa\';
 
 clientFoundRows parameter in Server.xml is configured as follow:
 
-\<property name=\" clientFoundRows \"\>false\</property\>\<!\--用found rows代替OK包中的affected rows \--\>
+<property name=" clientFoundRows ">false</property><!--用found rows代替OK包中的affected rows -->
 
 **Role of parameter:**
 
@@ -7485,7 +7485,7 @@ For example: jdbc is committed useAffectedRows=false, the number of rows matched
 
 jdbc is committed useAffectedRows=true，the actual number of rows affected will be returned.
 
-![\_Q6UT\]\~A6JWH9A8E83\_\@D71](media/image139.png)
+![_Q6UT]\~A6JWH9A8E83_@D71](media/image139.png)
 
 #### clusterElectionTimeoutMs
 
@@ -7507,7 +7507,7 @@ jdbc is committed useAffectedRows=true，the actual number of rows affected will
 
 clusterElectionTimeoutMs parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"clusterElectionTimeoutMs\"\>2000\</property\>\<!\-- Cluster Election Timeout (ms) \--\>
+<property name=[clusterElectionTimeoutMs](#clusterElectionTimeoutMs)>2000</property><!-- Cluster Election Timeout (ms) -->
 
 **Role of parameter:**
 
@@ -7533,7 +7533,7 @@ This parameter is used for setting Cluster Election Timeout of the compute node,
 
 clusterHeartbeatTimeoutMs parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"clusterHeartbeatTimeoutMs\"\>5000\</property\>\<!\-- Cluster Heartbeat Timeout (ms) \--\>
+<property name=[clusterHeartbeatTimeoutMs](#clusterHeartbeatTimeoutMs)>5000</property><!-- Cluster Heartbeat Timeout (ms) -->
 
 **Role of parameter:**
 
@@ -7559,7 +7559,7 @@ This parameter is used for setting Cluster Heartbeat Timeout of the compute node
 
 clusterHost parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"clusterHost\"\>192.168.200.1\</property\>\<!\-- IP of the current node \--\>
+<property name=[clusterHost](#clusterHost)>192.168.200.1</property><!-- IP of the current node -->
 
 **Role of parameter:**
 
@@ -7585,7 +7585,7 @@ This parameter shall be set consistent with the actual IP of the compute node (c
 
 clusterName parameter configuration in Server.xml is configured as follow:
 
-\<property name=\" HotDB-Cluster \"\> HotDB-Cluster \</property\>\<!\-- cluster group name \--\>
+<property name=" HotDB-Cluster "> HotDB-Cluster </property><!-- cluster group name -->
 
 **Role of parameter:**
 
@@ -7611,7 +7611,7 @@ Specify the name of the group added after cluster startup, and this parameter of
 
 clusterNetwork parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"clusterNetwork\"\>192.168.200.0/24\</property\>\<!\-- Cluster Network Segment \--\>
+<property name=[clusterNetwork](#clusterNetwork)>192.168.200.0/24</property><!-- Cluster Network Segment -->
 
 **Role of parameter:**
 
@@ -7637,7 +7637,7 @@ This parameter is the network segment of the whole cluster, and it's limited tha
 
 clusterPacketTimeoutMs parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"clusterPacketTimeoutMs\"\>5000\</property\>\<!\-- Failure time of inter-cluster communication packet (ms) \--\>
+<property name=[clusterPacketTimeoutMs](#clusterPacketTimeoutMs)>5000</property><!-- Failure time of inter-cluster communication packet (ms) -->
 
 **Role of parameter:**
 
@@ -7663,7 +7663,7 @@ This parameter is used for setting Cluster Packet Timeout, and generally modific
 
 clusterPort parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"clusterPort\"\>3326\</property\>\<!\-- Cluster Communication Port \--\>
+<property name=[clusterPort](#clusterPort)>3326</property><!-- Cluster Communication Port -->
 
 **Role of parameter:**
 
@@ -7689,7 +7689,7 @@ The default value 3326 specifies the port of listening cluster information. This
 
 clusterSize parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"clusterSize\"\>3\</property\>\<!\-- Total number of nodes in cluster \--\>
+<property name=[clusterSize](#clusterSize)>3</property><!-- Total number of nodes in cluster -->
 
 **Role of parameter:**
 
@@ -7715,7 +7715,7 @@ This parameter is total number of compute node in cluster. If haMode is set as 1
 
 clusterStartedPacketTimeoutMs parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"clusterStartedPacketTimeoutMs\"\>2000\</property\>\<!\-- Failure Time of Cluster Started Broadcast Packet (ms) \--\>
+<property name=[clusterStartedPacketTimeoutMs](#clusterStartedPacketTimeoutMs)>2000</property><!-- Failure Time of Cluster Started Broadcast Packet (ms) -->
 
 **Role of parameter:**
 
@@ -7783,13 +7783,13 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 
 configMGR and bak1Url and bak1Username and bak1Password are supporting parameters, and are used for MGR configDB function. If to use MGR configDB, it needs to be set as information of corresponding MGR configDB and guarantee normal replication relation of the MGR configDB instance, and they are MGR mutually, and in case of failure with the Master configDB, it will switch to new Master configDB automatically. At most 3 MGR configDB are supported.
 
-\<property name=\"configMGR\"\>true\</property\> \<!\-- Whether configDB uses MGR or not \--\>
+<property name="configMGR">true</property> <!-- Whether configDB uses MGR or not -->
 
-\<property name=\"bak1Url\"\>jdbc:mysql://192.168.210.32:3306/hotdb_config\</property\> \<!\-- MGR configDB address(if configDB uses MGR, this item must be configured), real IP address of the configDB service shall be specified \--\>
+<property name="bak1Url">jdbc:mysql://192.168.210.32:3306/hotdb_config</property> <!-- MGR configDB address(if configDB uses MGR, this item must be configured), real IP address of the configDB service shall be specified -->
 
-\<property name=\"bak1Username\"\>hotdb_config\</property\> \<!\-- MGR configDB username (if configDB uses MGR, this item must be configured) \--\>
+<property name="bak1Username">hotdb_config</property> <!-- MGR configDB username (if configDB uses MGR, this item must be configured) -->
 
-\<property name=\"bak1Password\"\>hotdb_config\</property\> \<!\-- MGR configDB password (if configDB uses MGR, this item must be configured) \--\>
+<property name="bak1Password">hotdb_config</property> <!-- MGR configDB password (if configDB uses MGR, this item must be configured) -->
 
 #### crossDbXa
 
@@ -7811,7 +7811,7 @@ configMGR and bak1Url and bak1Username and bak1Password are supporting parameter
 
 crossDbXa is configured in server.xml as follows:
 
-\<property name=\"crossDbXa\"\>false\</property\>
+<property name=[crossDbXa](#crossDbXa)>false</property>
 
 **Role of parameter:**
 
@@ -7819,73 +7819,73 @@ When enableXA is enabled, if there are XA transactions queries across LogicDBs, 
 
 Data preparation:
 
-1\. Enable XA
+1. Enable XA
 
-2\. LogicDB A, the default node is 2, 4; and LogicDB B, the default node is 2, 3, 4
+2. LogicDB A, the default node is 2, 4; and LogicDB B, the default node is 2, 3, 4
 
-3\. LogicDB A creates table a; LogicDB B creates table b; the table structure of the two tables is consistent
+3. LogicDB A creates table a; LogicDB B creates table b; the table structure of the two tables is consistent
 
-4\. 1000 pieces of data are inserted into table a, but no data in table b
+4. 1000 pieces of data are inserted into table a, but no data in table b
 
 **Scenario 1: when crossDbXa is disabled, strong data consistency is not guaranteed:**
 
-1\. Open a session and execute the following SQL:
+1. Open a session and execute the following SQL:
 
-use A;begin;insert into B.b select \* from A.a;commit;use B;begin;delete from b;commit;
+use A;begin;insert into B.b select * from A.a;commit;use B;begin;delete from b;commit;
 
 The two transactions are executed alternately without interval;
 
-2\. Open another session and execute it repeatedly:
+2. Open another session and execute it repeatedly:
 
 use A;
 
-select count(\*) from B.b;
+select count(*) from B.b;
 
-Result: the results of Count (\*) doesn\'t have to be all 0 or 1000
+Result: the results of Count (*) doesn't have to be all 0 or 1000
 
 ![](assets/standard/image140.png)
 
 **Scenario 2: when crossDbXa is enabled, strong data consistency is guaranteed:**
 
-1\. Open a session and execute the following SQL:
+1. Open a session and execute the following SQL:
 
-use A;begin;insert into B.b select \* from A.a;commit;use B;begin;delete from b;commit;
+use A;begin;insert into B.b select * from A.a;commit;use B;begin;delete from b;commit;
 
 The two transactions are executed alternately without interval;
 
-2\. Open another session and execute it repeatedly:
+2. Open another session and execute it repeatedly:
 
 use A;
 
-select count(\*) from B.b;
+select count(*) from B.b;
 
-Result: the results of Count (\*) be 0 or 1000
+Result: the results of Count (*) be 0 or 1000
 
 ![](assets/standard/image141.png)
 
 **Scenario 3: when crossDbXa is disabled, error will be reported when a node is added to the transaction:**
 
-1\. Open a session and execute the following SQL:
+1. Open a session and execute the following SQL:
 
 use A;
 
-begin;select \* from A.a;
+begin;select * from A.a;
 
-select \* from B.b;
+select * from B.b;
 
-Result: select \* from B.b; error will be reported when executes
+Result: select * from B.b; error will be reported when executes
 
 ![](assets/standard/image142.png)
 
 **Scenario 4: when crossDbXa is enabled, execute normally when a node is added to the transaction:**
 
-1\. Open a session and execute the following SQL:
+1. Open a session and execute the following SQL:
 
 use A;
 
-begin;select \* from A.a;select \* from B.b;
+begin;select * from A.a;select * from B.b;
 
-Result: select \* from B.b; execute normally
+Result: select * from B.b; execute normally
 
 ![](assets/standard/image143.png)
 
@@ -7907,7 +7907,7 @@ Result: select \* from B.b; execute normally
 
 **Parameter Setting:**
 
-\<property name=\"cryptMandatory\"\>false\</property\>\<!\-- Mandatory password encryption or not, Yes: true, No: false \--\>
+<property name=[cryptMandatory](#cryptMandatory)>false</property><!-- Mandatory password encryption or not, Yes: true, No: false -->
 
 **Role of parameter:**
 
@@ -7953,13 +7953,13 @@ It's used for setting whether to make mandatory password identification or not w
 
 **Parameter Setting:**
 
-\<property name=\"dataNodeIdleCheckPeriod\"\>120\</property\>\<!\-- Default Data Node Idle Check Period (S) \--\>
+<property name=[dataNodeIdleCheckPeriod](#dataNodeIdleCheckPeriod)>120</property><!-- Default Data Node Idle Check Period (S) -->
 
 **Role of parameter:**
 
 It is used for setting the periodical task period of data node idle check. The compute node will check connection condition of the back-end data source periodically, disable excessive idle connection or supplement available connections of the connection pool, guarantee that the connections can't be disabled by MySQL, and maintain normal running of the connection pool.
 
-For example: Conduct on large concurrent insert operation on the 3323 service port, execute Show @\@backend on the 3325 management port to view back-end connection. When execution of 3323 service port completed, if the compute node checks that there are idle back-end connections in the data node, the compute node will clear up these connections.
+For example: Conduct on large concurrent insert operation on the 3323 service port, execute Show @@backend on the 3325 management port to view back-end connection. When execution of 3323 service port completed, if the compute node checks that there are idle back-end connections in the data node, the compute node will clear up these connections.
 
 #### deadlockCheckPeriod
 
@@ -7993,13 +7993,13 @@ When Deadlock Check is enabled, it will check cross-node deadlock periodically a
 
 When deadlock is enabled, it will check cross-node deadlock periodically according to the Deadlock Check Period, and once cross-node deadlock occurs, it will kick out the connection with the Min trx_weight, and rollback the whole transaction.
 
-mysql\> select \* from autoi where id=4 for update;
+mysql> select * from autoi where id=4 for update;
 
 ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting transaction
 
 When deadlock is disabled, it will wait for Lock Timeout, and the Lock Timeout is set according to the innodb_lock_wait_timeout parameter value in MySQL data source.
 
-mysql\> select \* from autoi where id=10 for update;
+mysql> select * from autoi where id=10 for update;
 
 ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 
@@ -8021,7 +8021,7 @@ Property                         Value
 
 defaultMaxLimit parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"defaultMaxLimit\"\>10000\</property\>\<!\-- default max limit \--\>
+<property name=[defaultMaxLimit](#defaultMaxLimit)>10000</property><!-- default max limit -->
 
 **Role of parameter:**
 
@@ -8029,57 +8029,57 @@ This parameter is related to the HotDB overload protection and is used in combin
 
 Reflected in show processlist, State is Flow control, waiting for the next batch of execution. In the following graph, to facilitate testing, set defaultMaxLimit=5, highCostSqlConcurrency=10, and use 20 concurrencies to execute cross-node update limit n. It can be seen that 10 connections are being executed, and the other 10 connections have been limited.
 
-ztm\@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45\> show processlist;
+ztm@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45> show processlist;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-------------------+------+---------+------+--------------+--------------------------------------------------------------------+
 
-\| Id \| User \| Host \| db \| Command \| Time \| State \| Info \|
+| Id | User | Host | db | Command | Time | State | Info |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-------------------+------+---------+------+--------------+--------------------------------------------------------------------+
 
-\| 4 \| ztm \| 10.10.0.201:57882 \| PM \| Query \| 0 \| executing \| show processlist \|
+| 4 | ztm | 10.10.0.201:57882 | PM | Query | 0 | executing | show processlist |
 
-\| 6 \| ztm \| 10.10.0.201:57905 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 6 | ztm | 10.10.0.201:57905 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 7 \| ztm \| 10.10.0.201:57902 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 7 | ztm | 10.10.0.201:57902 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 8 \| ztm \| 10.10.0.201:57912 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 8 | ztm | 10.10.0.201:57912 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 9 \| ztm \| 10.10.0.201:57900 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 9 | ztm | 10.10.0.201:57900 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 10 \| ztm \| 10.10.0.201:57919 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 10 | ztm | 10.10.0.201:57919 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 11 \| ztm \| 10.10.0.201:57911 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 11 | ztm | 10.10.0.201:57911 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 12 \| ztm \| 10.10.0.201:57904 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 12 | ztm | 10.10.0.201:57904 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 13 \| ztm \| 10.10.0.201:57906 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 13 | ztm | 10.10.0.201:57906 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 14 \| ztm \| 10.10.0.201:57903 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 14 | ztm | 10.10.0.201:57903 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 15 \| ztm \| 10.10.0.201:57910 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 15 | ztm | 10.10.0.201:57910 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 16 \| ztm \| 10.10.0.201:57908 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 16 | ztm | 10.10.0.201:57908 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 17 \| ztm \| 10.10.0.201:57920 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 17 | ztm | 10.10.0.201:57920 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 18 \| ztm \| 10.10.0.201:57907 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 18 | ztm | 10.10.0.201:57907 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 19 \| ztm \| 10.10.0.201:57913 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 19 | ztm | 10.10.0.201:57913 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 20 \| ztm \| 10.10.0.201:57909 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 20 | ztm | 10.10.0.201:57909 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 21 \| ztm \| 10.10.0.201:57921 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 21 | ztm | 10.10.0.201:57921 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 22 \| ztm \| 10.10.0.201:57918 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 22 | ztm | 10.10.0.201:57918 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 23 \| ztm \| 10.10.0.201:57962 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 23 | ztm | 10.10.0.201:57962 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 24 \| ztm \| 10.10.0.201:57915 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 24 | ztm | 10.10.0.201:57915 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 25 \| ztm \| 10.10.0.201:57914 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 25 | ztm | 10.10.0.201:57914 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-------------------+------+---------+------+--------------+--------------------------------------------------------------------+
 
 21 rows in set (0.01 sec)
 
@@ -8103,7 +8103,7 @@ ztm\@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45\> show processlist;
 
 dropTableRetentionTime parameter configuration in Server.xml is configured as follow:
 
-\<property name=\" dropTableRetentionTime\"\>0\</property\>\<!\-- dropTableRetentionTime, 0 by default, no retention \--\>
+<property name=" dropTableRetentionTime">0</property><!-- dropTableRetentionTime, 0 by default, no retention -->
 
 **Role of parameter:**
 
@@ -8153,11 +8153,11 @@ Property                         Value
 
 drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are used for the high availability functions of ConfigDB in the DR center. When the DR center is switched to be the current active center, if the ConfigDB is highly available, the information of the corresponding slave ConfigDB needs to be set and the replication relation of the master-slave ConfigDB instances should be normal, and the master-slave ConfigDB instances should be mutually standby. When the DR center is switched to be the current active center, the master ConfigDB will automatically switch to the slave ConfigDB in the case of failure. At this time, for the high availability switching of the ConfigDB, you can refer to the description of parameters [bakUrl，bakUsername，bakPassword](#bakurl-bakusername-bakpassword) of the slave ConfigDB in the master center.
 
-\<property name=\"drBakUrl\"\>jdbc:mysql://192.168.240.77:3316/hotdb_config\</property\>\<!\-- Slave ConfigDB address of DR center \--\>
+<property name="drBakUrl">jdbc:mysql://192.168.240.77:3316/hotdb_config</property><!-- Slave ConfigDB address of DR center -->
 
-\<property name=\"drBakUsername\"\>hotdb_config\</property\>\<!\-- Slave ConfigDB username of DR center \--\>
+<property name="drBakUsername">hotdb_config</property><!-- Slave ConfigDB username of DR center -->
 
-\<property name=\"drBakPassword\"\>hotdb_config\</property\>\<!\-- Slave ConfigDB password of DR center \--\>
+<property name="drBakPassword">hotdb_config</property><!-- Slave ConfigDB password of DR center -->
 
 #### drUrl & drUsername & drPassword
 
@@ -8203,11 +8203,11 @@ Property                         Value
 
 drUrl, drUsername and drPassword are supporting parameters, among which drUrl refers to the ConfigDB path of the compute node configuration in theDR center; drUsername and drPassword refer to the username and password connecting the database, which is used to store the configuration of the DR center. Please refer to the related parameters [url, username and password](#url-username-password) of the master center ConfigDBs.
 
-\<property name=\"drUrl\"\>jdbc:mysql://192.168.240.76:3316/hotdb_config\</property\>\<!\-- ConfigDB address of DR center \--\>
+<property name="drUrl">jdbc:mysql://192.168.240.76:3316/hotdb_config</property><!-- ConfigDB address of DR center -->
 
-\<property name=\"drUsername\"\>hotdb_config\</property\>\<!\-- ConfigDB username of DR center \--\>
+<property name="drUsername">hotdb_config</property><!-- ConfigDB username of DR center -->
 
-\<property name=\"drPassword\"\>hotdb_config\</property\>\<!\-- ConfigDB password of DR center \--\>
+<property name="drPassword">hotdb_config</property><!-- ConfigDB password of DR center -->
 
 #### enableCursor
 
@@ -8229,7 +8229,7 @@ drUrl, drUsername and drPassword are supporting parameters, among which drUrl re
 
 enableCursor parameter in Server.xml
 
-\<property name=\"enableCursor\"\>false\</property\>
+<property name=[enableCursor](#enableCursor)>false</property>
 
 **Role of parameter:**
 
@@ -8259,45 +8259,45 @@ Allow PREPARE to obtain data content via Cursor or not (jdbcURl:useCursorFetch=t
 
 **Role of parameter:**
 
-Enable by default in Version 2.4.8 and later versions. After Enable, it will limit back-end concurrency, protect the data source, and control the data source pressure. View the control condition flow_control via show @\@datasource on management port.
+Enable by default in Version 2.4.8 and later versions. After Enable, it will limit back-end concurrency, protect the data source, and control the data source pressure. View the control condition flow_control via show @@datasource on management port.
 
-mysql\> show @\@datasource;
+mysql> show @@datasource;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+------------------------------+------+--------+-----------------+------+----------------------+--------+------+------+--------------------+--------------+
 
-\| dn \| ds \| name \| type \| status \| host \| port \| schema \| active \| idle \| size \| unavailable_reason \| **flow_control** \|
+| dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | **flow_control** |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+------------------------------+------+--------+-----------------+------+----------------------+--------+------+------+--------------------+--------------+
 
-\| 186 \| 227 \| 192.168.210.68_3307_db252 \| 1 \| 1 \| 192.168.210.68 \| 3307 \| db252 \| 2 \| 512 \| 514 \| NULL \| 0/64 \|
+| 186 | 227 | 192.168.210.68_3307_db252 | 1 | 1 | 192.168.210.68 | 3307 | db252 | 2 | 512 | 514 | NULL | 0/64 |
 
-\| 186 \| 228 \| 192.168.210.68_3308_db252 \| 3 \| 1 \| 192.168.210.68 \| 3308 \| db252 \| 1 \| 512 \| 513 \| NULL \| 0/64 \|
+| 186 | 228 | 192.168.210.68_3308_db252 | 3 | 1 | 192.168.210.68 | 3308 | db252 | 1 | 512 | 513 | NULL | 0/64 |
 
-\| 1 \| 7 \| 192.168.210.41_3307_db252 \| 1 \| 1 \| 192.168.210.41 \| 3307 \| db252 \| 2 \| 512 \| 514 \| NULL \| 0/64 \|
+| 1 | 7 | 192.168.210.41_3307_db252 | 1 | 1 | 192.168.210.41 | 3307 | db252 | 2 | 512 | 514 | NULL | 0/64 |
 
-\| 2 \| 8 \| 192.168.210.42_3307_db252 \| 1 \| 1 \| 192.168.210.42 \| 3307 \| db252 \| 2 \| 512 \| 514 \| NULL \| 0/16 \|
+| 2 | 8 | 192.168.210.42_3307_db252 | 1 | 1 | 192.168.210.42 | 3307 | db252 | 2 | 512 | 514 | NULL | 0/16 |
 
-\| 101 \| 74 \| 192.168.210.41_3307_clu_db30 \| 1 \| 1 \| 192.168.210.41 \| 3307 \| clu_db30 \| 2 \| 512 \| 514 \| NULL \| 0/64 \|
+| 101 | 74 | 192.168.210.41_3307_clu_db30 | 1 | 1 | 192.168.210.41 | 3307 | clu_db30 | 2 | 512 | 514 | NULL | 0/64 |
 
-\| 190 \| 237 \| 192.168.200.191_3307_db252 \| 1 \| 1 \| 192.168.200.191 \| 3307 \| db252 \| 2 \| 512 \| 514 \| NULL \| 0/64 \|
+| 190 | 237 | 192.168.200.191_3307_db252 | 1 | 1 | 192.168.200.191 | 3307 | db252 | 2 | 512 | 514 | NULL | 0/64 |
 
-\| 190 \| 238 \| 192.168.200.190_3307_db252 \| 2 \| 1 \| 192.168.200.190 \| 3307 \| db252 \| 1 \| 512 \| 513 \| NULL \| 0/64 \|
+| 190 | 238 | 192.168.200.190_3307_db252 | 2 | 1 | 192.168.200.190 | 3307 | db252 | 1 | 512 | 513 | NULL | 0/64 |
 
-\| 4 \| 5 \| 192.168.210.43_3308_db252 \| 1 \| 1 \| 192.168.210.43 \| 3308 \| db252 \| 2 \| 32 \| 34 \| NULL \| 0/64 \|
+| 4 | 5 | 192.168.210.43_3308_db252 | 1 | 1 | 192.168.210.43 | 3308 | db252 | 2 | 32 | 34 | NULL | 0/64 |
 
-\| 4 \| 77 \| 192.168.210.44_3308_db252 \| 3 \| 1 \| 192.168.210.44 \| 3308 \| db252 \| 1 \| 512 \| 513 \| NULL \| 0/64 \|
+| 4 | 77 | 192.168.210.44_3308_db252 | 3 | 1 | 192.168.210.44 | 3308 | db252 | 1 | 512 | 513 | NULL | 0/64 |
 
-\| 191 \| 239 \| 192.168.200.191_3308_db252 \| 1 \| 1 \| 192.168.200.191 \| 3308 \| db252 \| 2 \| 512 \| 514 \| NULL \| 0/64 \|
+| 191 | 239 | 192.168.200.191_3308_db252 | 1 | 1 | 192.168.200.191 | 3308 | db252 | 2 | 512 | 514 | NULL | 0/64 |
 
-\| 191 \| 240 \| 192.168.200.190_3308_db252 \| 2 \| 1 \| 192.168.200.190 \| 3308 \| db252 \| 1 \| 512 \| 513 \| NULL \| 0/64 \|
+| 191 | 240 | 192.168.200.190_3308_db252 | 2 | 1 | 192.168.200.190 | 3308 | db252 | 1 | 512 | 513 | NULL | 0/64 |
 
-\| 127 \| 88 \| 192.168.210.42_3308_db252 \| 3 \| 1 \| 192.168.210.42 \| 3308 \| db252 \| 1 \| 512 \| 513 \| NULL \| 0/64 \|
+| 127 | 88 | 192.168.210.42_3308_db252 | 3 | 1 | 192.168.210.42 | 3308 | db252 | 1 | 512 | 513 | NULL | 0/64 |
 
-\| 127 \| 87 \| 192.168.210.41_3308_db252 \| 1 \| 1 \| 192.168.210.41 \| 3308 \| db252 \| 2 \| 512 \| 514 \| NULL \| 0/16 \|
+| 127 | 87 | 192.168.210.41_3308_db252 | 1 | 1 | 192.168.210.41 | 3308 | db252 | 2 | 512 | 514 | NULL | 0/16 |
 
-\| -1 \| -1 \| configDatasource \| 1 \| 1 \| 192.168.210.30 \| 3307 \| hotdb_config_test252 \| 1 \| 7 \| 8 \| NULL \| N/A \|
+| -1 | -1 | configDatasource | 1 | 1 | 192.168.210.30 | 3307 | hotdb_config_test252 | 1 | 7 | 8 | NULL | N/A |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+------------------------------+------+--------+-----------------+------+----------------------+--------+------+------+--------------------+--------------+
 
 14 rows in set (0.00 sec)
 
@@ -8375,13 +8375,13 @@ The default value of Heartbeat Check Period is 2s, that is Periodical Heartbeat 
 
 Detect whether the data source is available and whether there is sharing of use.
 
-After Heartbeat Check is enabled, it will check whether the data source is normally connected or not according to Heartbeat Check Period. When the network is unreachable or data source fails, under the condition of existing Slave data source and Configuration Switching Rule, it will switch to Slave data source, and the Master data source will be set Unavailable; for data source switch logic, please refer to *Distributed Transactional Database HotDB Server \[Management Platform\] Function Manual*.
+After Heartbeat Check is enabled, it will check whether the data source is normally connected or not according to Heartbeat Check Period. When the network is unreachable or data source fails, under the condition of existing Slave data source and Configuration Switching Rule, it will switch to Slave data source, and the Master data source will be set Unavailable; for data source switch logic, please refer to *Distributed Transactional Database HotDB Server [Management Platform] Function Manual*.
 
-When a data source is cited by multiple compute node services simultaneously, then after reload, the compute node will prompt via log that: there\'s another HotDB using this datasource\...restart heartbeat. Under the condition that Heartbeat Check is disabled, then Data Node/ConfigDB High Availability can't be realized, failover can't be made, and sharing condition of the data source can't be checked, etc.
+When a data source is cited by multiple compute node services simultaneously, then after reload, the compute node will prompt via log that: there's another HotDB using this datasource...restart heartbeat. Under the condition that Heartbeat Check is disabled, then Data Node/ConfigDB High Availability can't be realized, failover can't be made, and sharing condition of the data source can't be checked, etc.
 
 For Heartbeat Timeout under the condition that Heartbeat is enabled, in case of data source failure or the Slave network latency, the Heartbeat failure exceeds the threshold value, then there will be log heartbeat timeout output:
 
-2018-05-29 16:32:52.924 \[WARN\] \[HEARTBEAT\] \[HeartbeatTimer\] a(-1) -- Datasource:-1 128.0.0.1:3306/hotdb_config time out! Last packet sent at:2018-05-29 04:32:49:886...omitted...
+2018-05-29 16:32:52.924 [WARN] [HEARTBEAT] [HeartbeatTimer] a(-1) -- Datasource:-1 128.0.0.1:3306/hotdb_config time out! Last packet sent at:2018-05-29 04:32:49:886...omitted...
 
 Note: If the current data source is the last data source of the node, then the data source will not be set Unavailable and will try connection all the time; if being pure Slave data source, even if Heartbeat failure times have exceeded the threshold value, as long as Heartbeat could make successful connection with the data source, it will not be marked Unavailable.
 
@@ -8433,29 +8433,29 @@ The default value of Master/Slave Latency Check Period is 500ms, that is, the pe
 
 **Role of parameter:**
 
-Latency check relies on Heartbeat table. If master/slave latency check is enabled, it will check whether the Standby Slave has replication latency, whether it catches up with replication synchronously. This parameter has a certain influence when the data source/ configDB switch and the compute node is enabled. If to conduct master/slave latency check before data source failover, there shall be Configuration Failover Rule in advance; with no Configuration Switching Rule, there will be no Master/Slave data source switch and master/slave latency check, please refer to *Distributed Transactional Database HotDB Server \[Management Platform\] Function Manual*.
+Latency check relies on Heartbeat table. If master/slave latency check is enabled, it will check whether the Standby Slave has replication latency, whether it catches up with replication synchronously. This parameter has a certain influence when the data source/ configDB switch and the compute node is enabled. If to conduct master/slave latency check before data source failover, there shall be Configuration Failover Rule in advance; with no Configuration Switching Rule, there will be no Master/Slave data source switch and master/slave latency check, please refer to *Distributed Transactional Database HotDB Server [Management Platform] Function Manual*.
 
-Log in to management port, use show @\@latency; and you could view the master/slave latency time.
+Log in to management port, use show @@latency; and you could view the master/slave latency time.
 
-mysql\> show @\@latency;
+mysql> show @@latency;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+----------------------------+----------------------------+---------+
 
-\| dn \| info \| backup_info \| latency \|
+| dn | info | backup_info | latency |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+----------------------------+----------------------------+---------+
 
-\| 186 \| 192.168.210.68:3307/db252 \| 192.168.210.68:3308/db252 \| 501 ms \|
+| 186 | 192.168.210.68:3307/db252 | 192.168.210.68:3308/db252 | 501 ms |
 
-\| 4 \| 192.168.210.43:3308/db252 \| 192.168.210.44:3308/db252 \| 0 ms \|
+| 4 | 192.168.210.43:3308/db252 | 192.168.210.44:3308/db252 | 0 ms |
 
-\| 190 \| 192.168.200.191:3307/db252 \| 192.168.200.190:3307/db252 \| 0 ms \|
+| 190 | 192.168.200.191:3307/db252 | 192.168.200.190:3307/db252 | 0 ms |
 
-\| 191 \| 192.168.200.191:3308/db252 \| 192.168.200.190:3308/db252 \| 0 ms \|
+| 191 | 192.168.200.191:3308/db252 | 192.168.200.190:3308/db252 | 0 ms |
 
-\| 127 \| 192.168.210.41:3308/db252 \| 192.168.210.42:3308/db252 \| STOPPED \|
+| 127 | 192.168.210.41:3308/db252 | 192.168.210.42:3308/db252 | STOPPED |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+----------------------------+----------------------------+---------+
 
 5 rows in set (0.02 sec)
 
@@ -8477,47 +8477,47 @@ mysql\> show @\@latency;
 
 **Parameter Setting:**
 
-\<property name=\"enableListener\"\>false\</property\>\<!\--Enable Listener mode or not\--\>
+<property name=[enableListener](#enableListener)>false</property><!--Enable Listener mode or not-->
 
 **Role of parameter:**
 
 HotDB Listener is a pluggable component of compute node, which can solve the problem of linear performance expansion under the strong consistency (XA) mode of cluster. The following requirements shall be met before using the Listener: the compute node is in multi-node cluster mode with XA enabled; Listener is successfully deployed on the data source server with enableListener enabled. Executing the dynamic loading and then the following command, you can view whether the identification is successful or not and the real-time status of Listener via listener_status.
 
-MySQL \[(none)\]\> show @\@datasource;
+MySQL [(none)]> show @@datasource;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-----------------------+------+--------+-------------+------+--------------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
 
-\| dn \| ds \| name \| type \| status \| host \| port \| schema \| active \| idle \| size \| unavailable_reason \| flow_control \| idc_id \| listener_id \| listener_status \|
+| dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-----------------------+------+--------+-------------+------+--------------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
 
-\| 17 \| 17 \| 10.10.0.140_3313_db01 \| 1 \| 1 \| 10.10.0.140 \| 3313 \| db01 \| 0 \| 45 \| 45 \| NULL \| 0/64 \| 1 \| 8 \| 1 \|
+| 17 | 17 | 10.10.0.140_3313_db01 | 1 | 1 | 10.10.0.140 | 3313 | db01 | 0 | 45 | 45 | NULL | 0/64 | 1 | 8 | 1 |
 
-\| 16 \| 16 \| 10.10.0.140_3312_db01 \| 1 \| 1 \| 10.10.0.140 \| 3312 \| db01 \| 0 \| 47 \| 47 \| NULL \| 0/64 \| 1 \| 7 \| 1 \|
+| 16 | 16 | 10.10.0.140_3312_db01 | 1 | 1 | 10.10.0.140 | 3312 | db01 | 0 | 47 | 47 | NULL | 0/64 | 1 | 7 | 1 |
 
-\| 19 \| 19 \| 10.10.0.155_3311_db01 \| 1 \| 1 \| 10.10.0.155 \| 3311 \| db01 \| 0 \| 49 \| 49 \| NULL \| 0/64 \| 1 \| 10 \| 1 \|
+| 19 | 19 | 10.10.0.155_3311_db01 | 1 | 1 | 10.10.0.155 | 3311 | db01 | 0 | 49 | 49 | NULL | 0/64 | 1 | 10 | 1 |
 
-\| 18 \| 18 \| 10.10.0.155_3310_db01 \| 1 \| 1 \| 10.10.0.155 \| 3310 \| db01 \| 0 \| 53 \| 53 \| NULL \| 0/64 \| 1 \| 9 \| 1 \|
+| 18 | 18 | 10.10.0.155_3310_db01 | 1 | 1 | 10.10.0.155 | 3310 | db01 | 0 | 53 | 53 | NULL | 0/64 | 1 | 9 | 1 |
 
-\| 21 \| 21 \| 10.10.0.155_3313_db01 \| 1 \| 1 \| 10.10.0.155 \| 3313 \| db01 \| 0 \| 55 \| 55 \| NULL \| 0/64 \| 1 \| 12 \| 1 \|
+| 21 | 21 | 10.10.0.155_3313_db01 | 1 | 1 | 10.10.0.155 | 3313 | db01 | 0 | 55 | 55 | NULL | 0/64 | 1 | 12 | 1 |
 
-\| 20 \| 20 \| 10.10.0.155_3312_db01 \| 1 \| 1 \| 10.10.0.155 \| 3312 \| db01 \| 0 \| 47 \| 47 \| NULL \| 0/64 \| 1 \| 11 \| 1 \|
+| 20 | 20 | 10.10.0.155_3312_db01 | 1 | 1 | 10.10.0.155 | 3312 | db01 | 0 | 47 | 47 | NULL | 0/64 | 1 | 11 | 1 |
 
-\| 10 \| 10 \| 10.10.0.125_3310_db01 \| 1 \| 1 \| 10.10.0.125 \| 3310 \| db01 \| 0 \| 44 \| 44 \| NULL \| 0/64 \| 1 \| 1 \| 1 \|
+| 10 | 10 | 10.10.0.125_3310_db01 | 1 | 1 | 10.10.0.125 | 3310 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 1 | 1 |
 
-\| 11 \| 11 \| 10.10.0.125_3311_db01 \| 1 \| 1 \| 10.10.0.125 \| 3311 \| db01 \| 0 \| 43 \| 43 \| NULL \| 0/64 \| 1 \| 2 \| 1 \|
+| 11 | 11 | 10.10.0.125_3311_db01 | 1 | 1 | 10.10.0.125 | 3311 | db01 | 0 | 43 | 43 | NULL | 0/64 | 1 | 2 | 1 |
 
-\| 12 \| 12 \| 10.10.0.125_3312_db01 \| 1 \| 1 \| 10.10.0.125 \| 3312 \| db01 \| 0 \| 44 \| 44 \| NULL \| 0/64 \| 1 \| 3 \| 1 \|
+| 12 | 12 | 10.10.0.125_3312_db01 | 1 | 1 | 10.10.0.125 | 3312 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 3 | 1 |
 
-\| 13 \| 13 \| 10.10.0.125_3313_db01 \| 1 \| 1 \| 10.10.0.125 \| 3313 \| db01 \| 0 \| 48 \| 48 \| NULL \| 0/64 \| 1 \| 4 \| 1 \|
+| 13 | 13 | 10.10.0.125_3313_db01 | 1 | 1 | 10.10.0.125 | 3313 | db01 | 0 | 48 | 48 | NULL | 0/64 | 1 | 4 | 1 |
 
-\| 14 \| 14 \| 10.10.0.140_3310_db01 \| 1 \| 1 \| 10.10.0.140 \| 3310 \| db01 \| 0 \| 44 \| 44 \| NULL \| 0/64 \| 1 \| 5 \| 1 \|
+| 14 | 14 | 10.10.0.140_3310_db01 | 1 | 1 | 10.10.0.140 | 3310 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 5 | 1 |
 
-\| 15 \| 15 \| 10.10.0.140_3311_db01 \| 1 \| 1 \| 10.10.0.140 \| 3311 \| db01 \| 0 \| 62 \| 62 \| NULL \| 0/64 \| 1 \| 6 \| 1 \|
+| 15 | 15 | 10.10.0.140_3311_db01 | 1 | 1 | 10.10.0.140 | 3311 | db01 | 0 | 62 | 62 | NULL | 0/64 | 1 | 6 | 1 |
 
-\| -1 \| -1 \| configDatasource \| 1 \| 1 \| 10.10.0.121 \| 3306 \| hotdb_config \| 1 \| 11 \| 12 \| NULL \| N/A \| -1 \| 0 \| 1 \|
+| -1 | -1 | configDatasource | 1 | 1 | 10.10.0.121 | 3306 | hotdb_config | 1 | 11 | 12 | NULL | N/A | -1 | 0 | 1 |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-----------------------+------+--------+-------------+------+--------------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
 
 13 rows in set (0.00 sec)
 
@@ -8547,7 +8547,7 @@ Property                         Value
 
 enableOracleFunction is a hidden parameter. If you want to enable it, you need to add it into Server.xml. The default parameter value is false, configured as follows:
 
-> \<property name=\"enableOracleFunction\"\>false\</property\>\<!\-- support oracle function or not \--\>
+> <property name=[enableOracleFunction](#enableOracleFunction)>false</property><!-- support oracle function or not -->
 
 **Role of parameter:**
 
@@ -8557,27 +8557,27 @@ When Oracle data is migrated to MySQL, some functions are replaced to make it ru
 
 > When it is set to true, the Oracle function parse identifies rewriting support and executes successfully. Example:
 >
-> root\@192.168.210.202:cc 5.7.23 05:09:07\> select to_char(sysdate,\'yyyy-MM-dd H
+> root@192.168.210.202:cc 5.7.23 05:09:07> select to_char(sysdate,'yyyy-MM-dd H
 >
-> H24:mi:ss\') from dual;
+> H24:mi:ss') from dual;
 >
-> +\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+> +------------------------------------------+
 >
-> \| to_char(sysdate,\'yyyy-MM-dd HH24:mi:ss\') \|
+> | to_char(sysdate,'yyyy-MM-dd HH24:mi:ss') |
 >
-> +\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+> +------------------------------------------+
 >
-> \| 2020-09-24 17:09:30 \|
+> | 2020-09-24 17:09:30 |
 >
-> +\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+> +------------------------------------------+
 >
 > 1 row in set (0.01 sec)
 
 When it is set to false, for functions not supported by MySQL, it will report "not support "or "function does not exist".
 
-> root\@192.168.210.225:cc 5.7.23 05:09:11\> select to_char(sysdate,\'yyyy-MM-dd H
+> root@192.168.210.225:cc 5.7.23 05:09:11> select to_char(sysdate,'yyyy-MM-dd H
 >
-> H24:mi:ss\') from dual;
+> H24:mi:ss') from dual;
 >
 > ERROR 1305 (42000): FUNCTION db256_01.TO_CHAR does not exist
 
@@ -8585,29 +8585,29 @@ When it is set to false, for functions not supported by MySQL, it will report "n
 
 When it is set to true, the sequence related functions execute successfully. Example:
 
-> root\@192.168.210.202:cc 5.7.23 11:30:09\> create sequence sequence_test
+> root@192.168.210.202:cc 5.7.23 11:30:09> create sequence sequence_test
 >
-> -\> minvalue 1
+> -> minvalue 1
 >
-> -\> maxvalue 1000
+> -> maxvalue 1000
 >
-> -\> start with 1
+> -> start with 1
 >
-> -\> increment by 10;
+> -> increment by 10;
 >
 > Query OK, 1 row affected (0.04 sec)
 
 When it is set to false, it will prompt error:
 
-> root\@192.168.210.225:cc 5.7.23 11:43:11\> create sequence sequence_256
+> root@192.168.210.225:cc 5.7.23 11:43:11> create sequence sequence_256
 >
-> -\> minvalue 1
+> -> minvalue 1
 >
-> -\> maxvalue 1000
+> -> maxvalue 1000
 >
-> -\> start with 1
+> -> start with 1
 >
-> -\> increment by 10;
+> -> increment by 10;
 >
 > ERROR 10010 (HY000): expect VIEW. lexer state: token=IDENTIFIER, sqlLeft=sequence_256
 
@@ -8629,7 +8629,7 @@ When it is set to false, it will prompt error:
 
 **Parameter Setting:**
 
-\<property name=\"enableSleep\"\>false\</property\>\<!\-- Whether SLEEP Function is allowed or not, Yes: true, No: false \--\>
+<property name=[enableSleep](#enableSleep)>false</property><!-- Whether SLEEP Function is allowed or not, Yes: true, No: false -->
 
 **Role of parameter:**
 
@@ -8637,23 +8637,23 @@ It's used for setting whether execution of sleep parameter is allowed in compute
 
 Sleep Function is not allowed:
 
-mysql\> select sleep(2);
+mysql> select sleep(2);
 
 ERROR 1064 (HY000): forbidden function:SLEEP, go check your config file to enable it.
 
 Sleep Function is allowed:
 
-mysql\> select sleep(2);
+mysql> select sleep(2);
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| sleep(2) \|
+| sleep(2) |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
-\| 0 \|
+| 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
++------------+
 
 1 row in set (2.00 sec)
 
@@ -8675,7 +8675,7 @@ mysql\> select sleep(2);
 
 **Role of parameter:**
 
-\<property name=\"enableSSL\"\>false\</property\>\<!\-- Whether to enable SSL connection function，yes：true，no：false \--\>
+<property name=[enableSSL](#enableSSL)>false</property><!-- Whether to enable SSL connection function，yes：true，no：false -->
 
 This parameter is used to set whether the compute node is allowed to connect using SSL authentication. For details, please refer to the [TLS connection login](#tls-connection-login), and use it together with parameters [keyStore](#keystore) and [keyStorePass](#keystorepass).
 
@@ -8701,25 +8701,25 @@ Whether the table in Subquery is allowed to be Sharding Table. After Version 2.4
 
 When set as false, it means that the table in Subquery is not allowed to be Sharding Table, and there will be prompt as follow:
 
-mysql\> select \* from test3 where id in (select id from test31);
+mysql> select * from test3 where id in (select id from test31);
 
 ERROR 1064 (HY000): Unsupported table type in subquery.
 
 When set as false, it means that the table in Subquery is not allowed to be Sharding Table, there will be prompt as follow:
 
-mysql\> select \* from test3 where id in (select id from test31);
+mysql> select * from test3 where id in (select id from test31);
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++------+-------------+
 
-\| id \| name \|
+| id | name |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++------+-------------+
 
-\| 5 \| dfff56f \|
+| 5 | dfff56f |
 
-\| 7 \| aa78bca \|
+| 7 | aa78bca |
 
-\| 15 \| dfff56f \|
+| 15 | dfff56f |
 
 ...省略更多...
 
@@ -8749,59 +8749,59 @@ mysql\> select \* from test3 where id in (select id from test31);
 
 **Parameter Setting:**
 
-\<property name=\"enableWatchdog\"\>true\</property\>\<!\-- Enable Watchdog or not \--\>
+<property name=[enableWatchdog](#enableWatchdog)>true</property><!-- Enable Watchdog or not -->
 
 **Role of parameter:**
 
 It's used for checking abnormal connection and other abnormal status of front-end connection and back-end connection pool of the compute node. In case of abnormality, record log and terminate the connection.
 
-You could view log tail -f hotdb.log\|grep to see whether "watchdog" has been enabled or not
+You could view log tail -f hotdb.log|grep to see whether "watchdog" has been enabled or not
 
-root\> cat hotdb.log\|grep \'watchdog\'
+root> cat hotdb.log|grep 'watchdog'
 
-2018-06-01 18:26:50.983 \[WARN\] \[WATCHDOG\] \[\$NIOREACTOR-7-RW\] watchdogTableCheckHandler(78) - Table TABLEB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection \[node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false\]. You may need to contact HotDB administrator to get help.
+2018-06-01 18:26:50.983 [WARN] [WATCHDOG] [\$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TABLEB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
 
-2018-06-01 18:26:50.986 \[WARN\] \[WATCHDOG\] \[\$NIOREACTOR-7-RW\] watchdogTableCheckHandler(78) - Table TESTB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection \[node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false\]. You may need to contact HotDB administrator to get help.
+2018-06-01 18:26:50.986 [WARN] [WATCHDOG] [\$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TESTB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
 
-2018-06-01 18:26:50.988 \[WARN\] \[WATCHDOG\] \[\$NIOREACTOR-7-RW\] watchdogTableCheckHandler(78) - Table JOIN_DN02 not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection \[node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false\]. You may need to contact HotDB administrator to get help.
+2018-06-01 18:26:50.988 [WARN] [WATCHDOG] [\$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table JOIN_DN02 not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
 
 ...More are omitted...
 
 You could view inconsistency check information of the table structure and memory via log:
 
-2018-10-3118:46:44.834 \[WARN\] \[WATCHDOG\] \[\$NIOREACTOR-0-RW\] WatchdogTableCheckHandler(85) - Table CCC is inconsistent in watchdog table structure check between HotDB memory and MySQL: MySQLConnection \[node=20, id=299, threadId=3748, state=running, closed=false, autocommit=true, host=192.168.210.41. port=3310, database=rmb0l, localPort=58808, isClose:false, toBeClose:false\]. You may need to contact HOtDB administrator to get help.
+2018-10-3118:46:44.834 [WARN] [WATCHDOG] [\$NIOREACTOR-0-RW] WatchdogTableCheckHandler(85) - Table CCC is inconsistent in watchdog table structure check between HotDB memory and MySQL: MySQLConnection [node=20, id=299, threadId=3748, state=running, closed=false, autocommit=true, host=192.168.210.41. port=3310, database=rmb0l, localPort=58808, isClose:false, toBeClose:false]. You may need to contact HOtDB administrator to get help.
 
 You could view inconsistency check information of configDB and memory via log:
 
-2018-10-31 17:45:39.617 \[INFO\] \[WATCHDOG\] \[Watchdog\] WatchDog(500) -- HotDB user config is inconsistent between config database and HotDB memory, Logic tables are not the same in FUN_RMB. you may need to reload HotDB config to bring into effect.
+2018-10-31 17:45:39.617 [INFO] [WATCHDOG] [Watchdog] WatchDog(500) -- HotDB user config is inconsistent between config database and HotDB memory, Logic tables are not the same in FUN_RMB. you may need to reload HotDB config to bring into effect.
 
 You could view check information of the transactions not committed within 24h via log:
 
-2018-10-26 16:14:55.787 \[INFO\] \[WATCHDOG\] \[\$NIOREACTOR-0-RW\] WatchDogLongTransactionCheckHandler(123) - Session \[thread=Thread-5,id=1720,user=rmb,host=192.168.200.3,port=3323,localport=54330,schema=FUNTEST_RMB\] has not been queryed for 839s. executed IUD5:\[INSERT INTO rmb_cbc VALUES (tuanjian, 4000)\]. binded connection:\[MySQLConnection \[node=11, id=1330, threadld=18085, state=borrowed, closed=false, autocommit=false, host=192.168.210.42, port=3307, database=db251, localPort=15722, isCiose:false, toBeClose:false\] lastSQL:INSERT INTO rmb_cbc VALUES (tuanjian, 4000)\]. innodb_trx:\[(ds:11 trx_id:25765462 trx_state:RUNNING trx_started:2018-10-26 16:00:56 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:2 trx_mysql.\_thread_id:18085 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:1 trx_lock_memory_bytes:1136 trx_rows_locked:0 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )\]. we will close this session now.
+2018-10-26 16:14:55.787 [INFO] [WATCHDOG] [\$NIOREACTOR-0-RW] WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-5,id=1720,user=rmb,host=192.168.200.3,port=3323,localport=54330,schema=FUNTEST_RMB] has not been queryed for 839s. executed IUD5:[INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. binded connection:[MySQLConnection [node=11, id=1330, threadld=18085, state=borrowed, closed=false, autocommit=false, host=192.168.210.42, port=3307, database=db251, localPort=15722, isCiose:false, toBeClose:false] lastSQL:INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. innodb_trx:[(ds:11 trx_id:25765462 trx_state:RUNNING trx_started:2018-10-26 16:00:56 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:2 trx_mysql._thread_id:18085 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:1 trx_lock_memory_bytes:1136 trx_rows_locked:0 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now.
 
 You could view check information of data source switch via log:
 
-2018-10-26 19:29:01.146 \[INFO\] \[MANAGER\] \[Labor-478\] HotdbConfig(2164) - reload config successfully for connection:\[thread=Labor-478,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440.schema=null\]
+2018-10-26 19:29:01.146 [INFO] [MANAGER] [Labor-478] HotdbConfig(2164) - reload config successfully for connection:[thread=Labor-478,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440.schema=null]
 
-2018-10-26 19:30:24.384 \[INFO\] \[FAILOVER\] \[\$NlOExecutor-7-2\] SwitchDataSource(111) - received switch datasource 24 command from Manager: \[thread=\$NIOExecutor-7-2,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440,schema=null\]
+2018-10-26 19:30:24.384 [INFO] [FAILOVER] [\$NlOExecutor-7-2] SwitchDataSource(111) - received switch datasource 24 command from Manager: [thread=\$NIOExecutor-7-2,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440,schema=null]
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-484\] InitSequenceHandler(270) - FUN_RMB.BC\'s sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-484] InitSequenceHandler(270) - FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-474\] InitSequenceHandler(270) - FUN_RMB.CBC\'s sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-474] InitSequenceHandler(270) - FUN_RMB.CBC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-484\] InitSequenceHandler(270) • FUN_RMB.BC\'s sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-484] InitSequenceHandler(270) • FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-474\] InitSequenceHandler(270) - FUN_RMB.CBC\'s sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-474] InitSequenceHandler(270) - FUN_RMB.CBC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.407 \[INFO\] \[FAILOVER\] \[Labor-464\] CheckSlaveHandler(852) - DN:20(dn_rmb_01) switch datasource 24(192.168.210.41_3310_rmbol)-\>25(192.168.210.42_3310_rmb0l). current slave status:Slave_IO_State:Waiting for master to send event Master_Host:192.168.210.41 Master_User:hotdb_datasource Master_Port:3310 Connect_Retry:60 Master_Log_File:mysql-bin.000002 Read_Master_Log_Pos:3871570 Relay_Log_File:mysql-relay-bin.000006 Relay_Log_Pos:3871783 Relay_Master_Log_File:mysql-bin.000002 Slave_IO_Running:Yes Slave_SQL_Running:Yes Replicate_Do_DB: Replicate_Ignore_DB: Replicate_Do_Table: Replicate_Ignore_Table: Replicate_Wild_Do_Table: Replicate_Wild_Ignore_Table: Last_Errno:0 Last_Error: Skip_Counter:0 Exec_Master_Log_Pos:3871570 Relay_Log_Space:5058376 Until_Condition:None Until_Log_File: Until_Log_Pos:0 Master_SSL_Allowed:No Master_SSL_CA_File: Master_SSL_CA_Path: Master_SSL_Cert: Master_SSL_Cipher: Master_SSL_Key: Seconds_Behind_Master:0 Master_SSL_Verify_Server_Cert:No Last_IO_Errno:0 Last_IO_Error: Last_SQL_Errno:0 Last_SQL_Error: Replicate_Ignore_Server_Ids: Master_Server_Id:210413310 Master_UUID:919cbf03-9f2d-11e8-b8af-525400636cd2 Master_Info_File:mysql.slave_master_info SQL_Delay:0 SQL_Remaining_Delay:NULL Slave_SQL_Running_State:Slave has read all relay log; waiting for more updates Master_Retry_Count:86400 Master_Bind: Last_IO_Error_Timestamp: Last_SQL_Error_Timestamp: Master_SSL_Crl: Master_SSL_Crlpath: Retrieved_Gtid_Set:919cbf03-9f2d-11e8-b8af-525400636cd2:22735-1367727 Executed_Gtid_Set:1aef7172-9f2e-11e8-b62c-525400fcfb5b: 1-3281,919cbf03-9f2d-11e8-b8af-525400636cd2:1-1367727 Auto_Position:1 Replicate_Rewrite_DB: Channel_Name: Master_TLS_Version:
+2018-10-26 19:30:24.407 [INFO] [FAILOVER] [Labor-464] CheckSlaveHandler(852) - DN:20(dn_rmb_01) switch datasource 24(192.168.210.41_3310_rmbol)->25(192.168.210.42_3310_rmb0l). current slave status:Slave_IO_State:Waiting for master to send event Master_Host:192.168.210.41 Master_User:hotdb_datasource Master_Port:3310 Connect_Retry:60 Master_Log_File:mysql-bin.000002 Read_Master_Log_Pos:3871570 Relay_Log_File:mysql-relay-bin.000006 Relay_Log_Pos:3871783 Relay_Master_Log_File:mysql-bin.000002 Slave_IO_Running:Yes Slave_SQL_Running:Yes Replicate_Do_DB: Replicate_Ignore_DB: Replicate_Do_Table: Replicate_Ignore_Table: Replicate_Wild_Do_Table: Replicate_Wild_Ignore_Table: Last_Errno:0 Last_Error: Skip_Counter:0 Exec_Master_Log_Pos:3871570 Relay_Log_Space:5058376 Until_Condition:None Until_Log_File: Until_Log_Pos:0 Master_SSL_Allowed:No Master_SSL_CA_File: Master_SSL_CA_Path: Master_SSL_Cert: Master_SSL_Cipher: Master_SSL_Key: Seconds_Behind_Master:0 Master_SSL_Verify_Server_Cert:No Last_IO_Errno:0 Last_IO_Error: Last_SQL_Errno:0 Last_SQL_Error: Replicate_Ignore_Server_Ids: Master_Server_Id:210413310 Master_UUID:919cbf03-9f2d-11e8-b8af-525400636cd2 Master_Info_File:mysql.slave_master_info SQL_Delay:0 SQL_Remaining_Delay:NULL Slave_SQL_Running_State:Slave has read all relay log; waiting for more updates Master_Retry_Count:86400 Master_Bind: Last_IO_Error_Timestamp: Last_SQL_Error_Timestamp: Master_SSL_Crl: Master_SSL_Crlpath: Retrieved_Gtid_Set:919cbf03-9f2d-11e8-b8af-525400636cd2:22735-1367727 Executed_Gtid_Set:1aef7172-9f2e-11e8-b62c-525400fcfb5b: 1-3281,919cbf03-9f2d-11e8-b8af-525400636cd2:1-1367727 Auto_Position:1 Replicate_Rewrite_DB: Channel_Name: Master_TLS_Version:
 
-2018-10-26 19:30:24.407 \[WARN\] \[FAILOVER\] \[Labor-484\] BackendDataNode(726) - datanode 20 switch datasource 24 to 25 in failover. due to: Manual Switch by User: root
+2018-10-26 19:30:24.407 [WARN] [FAILOVER] [Labor-484] BackendDataNode(726) - datanode 20 switch datasource 24 to 25 in failover. due to: Manual Switch by User: root
 
-2018-10-26 19:30:24.408 \[INFO\] \[FAILOVER\] \[Labor-484\] BackendDataNode(762) - datasource:\[id:24,nodeld:20 192.168.210.41:3310/rmb0l status:1,charset:utf8mb4\] will be set to unavailable due to datanode switch datasource.
+2018-10-26 19:30:24.408 [INFO] [FAILOVER] [Labor-484] BackendDataNode(762) - datasource:[id:24,nodeld:20 192.168.210.41:3310/rmb0l status:1,charset:utf8mb4] will be set to unavailable due to datanode switch datasource.
 
-2018-10-26 19:30:24.410 \[INFO\] \[FAILOVER\] \[Thread-55\] BackendDataNode(834) - starting updating datasource_status in failover of datanode:20
+2018-10-26 19:30:24.410 [INFO] [FAILOVER] [Thread-55] BackendDataNode(834) - starting updating datasource_status in failover of datanode:20
 
-2018-10-26 19:30:24.415 \[INFO\] \[FAILOVER\] \[Labor-484\] SwitchDataSource(94) - switch datasource:24 for datanode:20 successfully by Manager.
+2018-10-26 19:30:24.415 [INFO] [FAILOVER] [Labor-484] SwitchDataSource(94) - switch datasource:24 for datanode:20 successfully by Manager.
 
 #### enableXA
 
@@ -8847,73 +8847,73 @@ When set as False, execute SQL in transaction, and after MySQL returns error, th
 
 When set as False, and MySQL returns error, there will be prompt as follow:
 
-mysql\> begin;
+mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> insert into autoi values(null,\'aa\');
+mysql> insert into autoi values(null,'aa');
 
 Query OK, 1 row affected (0.00 sec)
 
-mysql\> select \* from autoi;
+mysql> select * from autoi;
 
-ERROR 1146 (HY000): Table \'db249.autoi\' doesn\'t exist
+ERROR 1146 (HY000): Table 'db249.autoi' doesn't exist
 
-mysql\> select \* from autoi where id=1;
+mysql> select * from autoi where id=1;
 
 ERROR 1003 (HY000): **errors occurred in transaction, you need to rollback now**
 
-mysql\> commit;
+mysql> commit;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select \* from autoi where id=1;
+mysql> select * from autoi where id=1;
 
 Empty set (0.00 sec)
 
 When set as true, even if there is error in transaction, the transaction can still be successfully committed.
 
-mysql\> begin;
+mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> insert into autoi values(null,\'aa\');
+mysql> insert into autoi values(null,'aa');
 
 Query OK, 1 row affected (0.00 sec)
 
-mysql\> select \* from ss;
+mysql> select * from ss;
 
-ERROR 1146 (HY000): Table \'db249.ss\' doesn\'t exist
+ERROR 1146 (HY000): Table 'db249.ss' doesn't exist
 
-mysql\> select \* from ss where id=1;
+mysql> select * from ss where id=1;
 
-+\-\-\-\-\--+\-\-\-\--+
++------+-----+
 
-\| id \| a \|
+| id | a |
 
-+\-\-\-\-\--+\-\-\-\--+
++------+-----+
 
-\| 1 \| aa \|
+| 1 | aa |
 
-+\-\-\-\-\--+\-\-\-\--+
++------+-----+
 
 1 row in set (0.01 sec)
 
-mysql\> commit;
+mysql> commit;
 
 Query OK, 0 rows affected (0.01 sec)
 
-mysql\> select \* from ss where id=1;
+mysql> select * from ss where id=1;
 
-+\-\-\-\-\--+\-\-\-\--+
++------+-----+
 
-\| id \| a \|
+| id | a |
 
-+\-\-\-\-\--+\-\-\-\--+
++------+-----+
 
-\| 1 \| aa \|
+| 1 | aa |
 
-+\-\-\-\-\--+\-\-\-\--+
++------+-----+
 
 1 row in set (0.01 sec)
 
@@ -8935,7 +8935,7 @@ mysql\> select \* from ss where id=1;
 
 **Parameter Setting:**
 
-\<property name=\"failoverAutoresetslave\"\>false\</property\>\<!\-- When failover, auto reset the master/slave replication relation or not \--\>
+<property name=[failoverAutoresetslave](#failoverAutoresetslave)>false</property><!-- When failover, auto reset the master/slave replication relation or not -->
 
 **Role of parameter:**
 
@@ -8959,7 +8959,7 @@ This parameter is used for guaranteeing data accuracy after data source failover
 
 **Parameter Setting:**
 
-\<property name=\"frontConnectionTrxIsoLevel\"\>2\</property\>
+<property name=[frontConnectionTrxIsoLevel](#frontConnectionTrxIsoLevel)>2</property>
 
 **Role of parameter:**
 
@@ -8999,7 +8999,7 @@ When Front-end Connection Write Block Timeout, it will disable front-end connect
 
 Great network latency or unreachable network from the compute node to the client, slow data receiving of the client, etc. may lead to front-end write block.
 
-2018-06-14 13:46:48.355 \[INFO\] \[\] \[TimerExecutor1\] FrontendConnection(695) -- \[thread=TimerExecutori,id=9,user=cara,host=192.168.200.82,port=8883,localport=61893,schema=TEST_LGG\] closed, due to write block timeout, executing SQL: select \* from customer_auto_1
+2018-06-14 13:46:48.355 [INFO] [] [TimerExecutor1] FrontendConnection(695) -- [thread=TimerExecutori,id=9,user=cara,host=192.168.200.82,port=8883,localport=61893,schema=TEST_LGG] closed, due to write block timeout, executing SQL: select * from customer_auto_1
 
 #### generatePrefetchCostRatio
 
@@ -9021,7 +9021,7 @@ Great network latency or unreachable network from the compute node to the client
 
 **参数设置：**
 
-\<property name=\"generatePrefetchCostRatio\"\>70\</property\>
+<property name=[generatePrefetchCostRatio](#generatePrefetchCostRatio)>70</property>
 
 **参数作用：**
 
@@ -9055,7 +9055,7 @@ Great network latency or unreachable network from the compute node to the client
 
 globalUniqueConstraint parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"globalUniqueConstraint\"\>false\</property\>\<!---Whether enable Global Unique Constraint for the new tables by default or not\--\>
+<property name=[globalUniqueConstraint](#globalUniqueConstraint)>false</property><!---Whether enable Global Unique Constraint for the new tables by default or not-->
 
 **Role of parameter:**
 
@@ -9089,7 +9089,7 @@ To Enable Global Unique Constraint guarantees that the column with Unique Constr
 
 haMode parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"haMode\"\>0\</property\>\<!\-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center 4:Cluster in master center, 5:Cluster in DR center \--\>
+<property name=[haMode](#haMode)>0</property><!-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center 4:Cluster in master center, 5:Cluster in DR center -->
 
 **Role of parameter:**
 
@@ -9133,7 +9133,7 @@ In HotDB Server 2.5.6 and above, haMode can be set to 0,1,2,3,4,5. Among them, 4
 
 -------------------------------- -----------------------------
 
-hastate and haNodeHost are supporting parameters. When hastate is master node, haNodeHost is null; when hastate is slave node, haNodeHost could be configured as connection information of management port of end node, i.e. IP:PORT. This group of parameters are applicable to Compute Node High Availability environment, while this parameter could be ignored in compute node service. For details, please refer to *Distributed Transactional Database HotDB Server \[Install Deploy\] Function Manual*. If the cluster mode haMode is enabled as 1, then this parameter shall set other node IP:PORT; PORT is the communication port, and separate multiple nodes by comma (refer to Reference Value Setting).
+hastate and haNodeHost are supporting parameters. When hastate is master node, haNodeHost is null; when hastate is slave node, haNodeHost could be configured as connection information of management port of end node, i.e. IP:PORT. This group of parameters are applicable to Compute Node High Availability environment, while this parameter could be ignored in compute node service. For details, please refer to *Distributed Transactional Database HotDB Server [Install Deploy] Function Manual*. If the cluster mode haMode is enabled as 1, then this parameter shall set other node IP:PORT; PORT is the communication port, and separate multiple nodes by comma (refer to Reference Value Setting).
 
 **Role of parameter:**
 
@@ -9143,17 +9143,17 @@ For example, 192.168.200.51:3325 and 192.168.200.52:3325 belong to Compute Node 
 
 For example, 192.168.210.22:3326,192.168.210.23:3326 and 192.168.210.24:3326 belong to multiple compute nodes, and it needs to specify and configure IP and Communication Port of master service related with it.
 
-\<property name=\"haState\"\>master\</property\>\<!---HA role, Master node: master, standby node: backup (invalid in cluster mode) \--\>
+<property name="haState">master</property><!---HA role, Master node: master, standby node: backup (invalid in cluster mode) -->
 
-\<property name=\"haNodeHost\"/\>\<!\-- HA role, Other node IP:PORT (in Master/Standby mode, PORT means management port, for example: 192.168.200.2:3325) \--\>
+<property name="haNodeHost"/><!-- HA role, Other node IP:PORT (in Master/Standby mode, PORT means management port, for example: 192.168.200.2:3325) -->
 
-\<property name=\"haState\"\>backup\</property\>\<!\-- HA role, Master node: master, standby node: backup (invalid in cluster mode) \--\>
+<property name="haState">backup</property><!-- HA role, Master node: master, standby node: backup (invalid in cluster mode) -->
 
-\<property name=\"haNodeHost\"/\>192.168.200.51:3325\<!\-- HA role, Other node IP:PORT (in Master/Standby mode, PORT means management port, for example: 192.168.200.2:3325) \--\>
+<property name="haNodeHost"/>192.168.200.51:3325<!-- HA role, Other node IP:PORT (in Master/Standby mode, PORT means management port, for example: 192.168.200.2:3325) -->
 
-\<property name=\"haState\"\>backup\</property\>\<!\-- HA role, Master node: master, standby node: backup (invalid in cluster mode) \--\>
+<property name="haState">backup</property><!-- HA role, Master node: master, standby node: backup (invalid in cluster mode) -->
 
-\<property name=\"haNodeHost\"/\>192.168.210.23:3326,192.168.310.24:3326\<!\-- HA role, Other node IP:PORT (in Master/Standby mode, PORT means management port, for example: 192.168.200.2:3325) \--\>
+<property name="haNodeHost"/>192.168.210.23:3326,192.168.310.24:3326<!-- HA role, Other node IP:PORT (in Master/Standby mode, PORT means management port, for example: 192.168.200.2:3325) -->
 
 #### highCostSqlConcurrency
 
@@ -9183,41 +9183,41 @@ For example, 192.168.210.22:3326,192.168.210.23:3326 and 192.168.210.24:3326 bel
 
 **Role of parameter:**
 
-This parameter is the compute node overload protection related parameter, which is used for controlling number of high cost statement concurrencies (including cross-node join, union, update/delete\...limit, etc.). When front-end execution concurrencies exceed the setting, relevant connection will Hold, and wait for completion of previous execution, then the next batch could be executed.
+This parameter is the compute node overload protection related parameter, which is used for controlling number of high cost statement concurrencies (including cross-node join, union, update/delete...limit, etc.). When front-end execution concurrencies exceed the setting, relevant connection will Hold, and wait for completion of previous execution, then the next batch could be executed.
 
 Flow control in Show processlist is in lock status, waiting for execution of the next batch.
 
 You could view the remaining concurrencies available at present from the management port.
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\--+
++------+----------------------+----------------------+------+---------+------+-------+------+
 
-\| Id \| User \| Host \| db \| Command \| Time \| State \| Info \|
+| Id | User | Host | db | Command | Time | State | Info |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\--+
++------+----------------------+----------------------+------+---------+------+-------+------+
 
-\| 150 \| \_HotDB_Cluster_USER\_ \| 192.168.210.31:51428 \| TEST_LGG \| Query \| 0 \| Sending data \| select a.\*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted \|
+| 150 | _HotDB_Cluster_USER_ | 192.168.210.31:51428 | TEST_LGG | Query | 0 | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
 
-\| 126 \| \_HotDB_Cluster_USER\_ \| 192.168.210.31:51412 \| TEST_LGG \| Query \| 0 \| **Flow control** \| select a.\*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted \|
+| 126 | _HotDB_Cluster_USER_ | 192.168.210.31:51412 | TEST_LGG | Query | 0 | **Flow control** | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
 
-\| 222 \| \_HotDB_Cluster_USER\_ \| 192.168.210.32:16636 \| TEST_LGG \| Query \| 0 \| optimizing \| select a.\*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted \|
+| 222 | _HotDB_Cluster_USER_ | 192.168.210.32:16636 | TEST_LGG | Query | 0 | optimizing | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
 
-\| 174 \| \_HotDB_Cluster_USER\_ \| 192.168.210.32:16604 \| TEST_LGG \| Query \| 0 \| Sending data \| select a.\*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted \|
+| 174 | _HotDB_Cluster_USER_ | 192.168.210.32:16604 | TEST_LGG | Query | 0 | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
 
-\| 129 \| \_HotDB_Cluster_USER\_ \| 192.168.210.31:51414 \| TEST_LGG \| Query \| 0 \| **Flow control** \| select a.\*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted \|
+| 129 | _HotDB_Cluster_USER_ | 192.168.210.31:51414 | TEST_LGG | Query | 0 | **Flow control** | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
 
 ...More are omitted...
 
-mysql\> show @\@debug;
+mysql> show @@debug;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------+-------------+
 
-\| join_limit \| committing \|
+| join_limit | committing |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------+-------------+
 
-\| 32 \| 0 \|
+| 32 | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------+-------------+
 
 1 row in set (0.00 sec)
 
@@ -9255,9 +9255,9 @@ When the DR mode is enabled, the parameters idcId and idcNodeHost need to be con
 
 For example, set idcId as 1 in server.xml of the master center, idcNodeHost for all the compute node information of the DR center; set idcId as 2 in server.xml of the DR center, idcNodeHost for all the compute node information of the master center.
 
-\<property name=\"idcId\"\>2\</property\>\<!\-- ID of IDC, 1:master center,2:DR center \--\>
+<property name="idcId">2</property><!-- ID of IDC, 1:master center,2:DR center -->
 
-\<property name=\"idcNodeHost\"\>192.168.220.188:3325,192.168.220.189:3325\</property\>\<!\-- connection information of another IDC\--\>
+<property name="idcNodeHost">192.168.220.188:3325,192.168.220.189:3325</property><!-- connection information of another IDC-->
 
 #### idleTimeout
 
@@ -9278,83 +9278,83 @@ Parameter value                  idleTimeout
 
 In server.xml，the parameter idleTimeout is configured as follows:
 
-\<property name=\"idleTimeout\"\>28800\</property\>\<!\-- Front-end idle connection timeout time，unit: seconds \--\>
+<property name=[idleTimeout](#idleTimeout)>28800</property><!-- Front-end idle connection timeout time，unit: seconds -->
 
 **Role of parameter:**
 
-This parameter is used to detect the timeout time of idle connections at the front end. If Time of connection in the \"sleep\" state at the front-end exceeds the set value, HotDB will close the idle connection. When the parameter is set to 0, it means that the current front-end idle connection never timeout.
+This parameter is used to detect the timeout time of idle connections at the front end. If Time of connection in the "sleep" state at the front-end exceeds the set value, HotDB will close the idle connection. When the parameter is set to 0, it means that the current front-end idle connection never timeout.
 
 To facilitate the demonstration, the value is set to 60 seconds in the test.
 
-mysql \> show processlist;
+mysql > show processlist;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-----------------------+--------------------+---------+------+-----------+------------------+
 
-\| Id \| User \| Host \| db \| Command \| Time \| State \| Info \|
+| Id | User | Host | db | Command | Time | State | Info |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-----------------------+--------------------+---------+------+-----------+------------------+
 
-\| 9 \| root \| 192.168.220.211:26568 \| NULL \| Query \| 0 \| executing \| show processlist \|
+| 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |
 
-\| 7 \| ztm \| 192.168.220.211:26470 \| INFORMATION_SCHEMA \| Sleep \| 59 \| \| NULL \|
+| 7 | ztm | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep | 59 | | NULL |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-2 rows in set (0.00 sec)
-
-mysql \> show processlist;
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| Id \| User \| Host \| db \| Command \| Time \| State \| Info \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 9 \| root \| 192.168.220.211:26568 \| NULL \| Query \| 0 \| executing \| show processlist \|
-
-\| 7 \| ztm \| 192.168.220.211:26470 \| INFORMATION_SCHEMA \| Sleep \| 60 \| \| NULL \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-----------------------+--------------------+---------+------+-----------+------------------+
 
 2 rows in set (0.00 sec)
 
-mysql \> show processlist;
+mysql > show processlist;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-----------------------+--------------------+---------+------+-----------+------------------+
 
-\| Id \| User \| Host \| db \| Command \| Time \| State \| Info \|
+| Id | User | Host | db | Command | Time | State | Info |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------+------+-----------------------+--------------------+---------+------+-----------+------------------+
 
-\| 9 \| root \| 192.168.220.211:26568 \| NULL \| Query \| 0 \| executing \| show processlist \|
+| 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 7 | ztm | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep | 60 | | NULL |
+
++------+------+-----------------------+--------------------+---------+------+-----------+------------------+
+
+2 rows in set (0.00 sec)
+
+mysql > show processlist;
+
++------+------+-----------------------+------+---------+------+-----------+------------------+
+
+| Id | User | Host | db | Command | Time | State | Info |
+
++------+------+-----------------------+------+---------+------+-----------+------------------+
+
+| 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |
+
++------+------+-----------------------+------+---------+------+-----------+------------------+
 
 1 row in set (0.00 sec)
 
 At this time, the front-end connection session time outs. Entering SQL in, it will prompt that the connection has been disconnected, and try to reconnect. Finally, the reconnection is successful:
 
-msyql\> show databases;
+msyql> show databases;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------+
 
-\| DATABASE \|
+| DATABASE |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------+
 
-\| INFORMATION_SCHEMA \|
+| INFORMATION_SCHEMA |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------+
 
 1 row in set (0.00 sec)
 
-mysql\> show databases;
+mysql> show databases;
 
 ERROR 2013 (HY000): Lost connection to MySQL server during query
 
 ERROR 2006 (HY000): MySQL server has gone away
 
-No connection. Trying to reconnect\...
+No connection. Trying to reconnect...
 
 Connection id: 10
 
@@ -9384,31 +9384,31 @@ This parameter could limit some SQL statement execution, including cross-node jo
 
 Set JOIN Query as false, and execute statement under this environment. Report ERROR 1064 (HY000): joinable is not configured.
 
-mysql\> select \* from join_cross_a\_jwy a inner join join_cross_b\_jwy b on a.adnid between 108 and 110;
+mysql> select * from join_cross_a_jwy a inner join join_cross_b_jwy b on a.adnid between 108 and 110;
 
 ERROR 1064 (HY000): joinable is not configured.
 
-mysql\> select a.adept from join_a\_jwy a join join_b\_jwy b on a.adept=b.bdept limit 5;
+mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept limit 5;
 
 ERROR 1064 (HY000): joinable is not configured.
 
 Set JOIN Query as true, and execute the statement under this environment:
 
-mysql\> select a.adept from join_a\_jwy a join join_b\_jwy b on a.adept=b.bdept limit 5;
+mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept limit 5;
 
-+\-\-\-\-\-\-\-\--+
++---------+
 
-\| adept \|
+| adept |
 
-+\-\-\-\-\-\-\-\--+
++---------+
 
-\| aa \|
+| aa |
 
-\| bb \|
+| bb |
 
-\| cc \|
+| cc |
 
-+\-\-\-\-\-\-\-\--+
++---------+
 
 3 rows in set (0.03 sec)
 
@@ -9434,11 +9434,11 @@ mysql\> select a.adept from join_a\_jwy a join join_b\_jwy b on a.adept=b.bdept 
 
 At equi-join query, record number of equi-join queries turning into IN queries per batch. The value exceeding the setting will be transferred in several times. This parameter belongs to optimization parameter of join Query, and it could improve the join Query speed. For example:
 
-\<property name=\"joinBatchSize\"\>3\</property\>\<!---At equi-join query, record number of equi-join queries turning into IN queries per batch \--\>
+<property name=[joinBatchSize](#joinBatchSize)>3</property><!---At equi-join query, record number of equi-join queries turning into IN queries per batch -->
 
 At this time, execute:
 
-mysql\> select b.\* from customer_auto_1 a join customer_auto_3 b on a.id=b.id where a.postcode=123456;
+mysql> select b.* from customer_auto_1 a join customer_auto_3 b on a.id=b.id where a.postcode=123456;
 
 View actual execution result of general_log as follow:
 
@@ -9474,19 +9474,19 @@ It presents available direct memory size of join, and could influence speed of J
 
 When direct memory used by join exceeds the set value, it will be stored on local disk temporarily, and after execution of join statement completed, the temporary file will be deleted automatically.
 
-root\> pwd
+root> pwd
 
 /usr/local/hotdb-2.4.9/hotdb-server/HotDB-TEMP
 
 You have mail in /var/spool/mail/root
 
-root\> ll
+root> ll
 
--rw-r\--r\-- 1 root root 8778410 May 9 17:28 positions_5302007528422328273.tmp
+-rw-r--r-- 1 root root 8778410 May 9 17:28 positions_5302007528422328273.tmp
 
--rw-r\--r\-- 1 root root 141868981 May 9 17:28 row_411809270296834018.tmp
+-rw-r--r-- 1 root root 141868981 May 9 17:28 row_411809270296834018.tmp
 
--rw-r\--r\-- 1 root root 26113612 May 9 18:01 row_4342139033645193593.tmp
+-rw-r--r-- 1 root root 26113612 May 9 18:01 row_4342139033645193593.tmp
 
 #### joinLoopSize
 
@@ -9510,21 +9510,21 @@ root\> ll
 
 JOIN Query times per batch of each node when using BNL algorithm belongs to optimization parameter of join Query, and it could improve the join Query speed.
 
-\<property name=\"joinLoopSize\"\>1000\</property\>\<!\-- 使用BNL算法做JOIN时各节点每批次查询数量 \--\>
+<property name=[joinLoopSize](#joinLoopSize)>1000</property><!-- 使用BNL算法做JOIN时各节点每批次查询数量 -->
 
-\<property name=\"joinLoopSize\"\>1000\</property\>\<!\-- JOIN Query times per batch of each node when using BNL algorithm \--\>
+<property name=[joinLoopSize](#joinLoopSize)>1000</property><!-- JOIN Query times per batch of each node when using BNL algorithm -->
 
-For example: joinLoopSize is set as 1000. bn_a\_jwy is autoSharding Table, sharding key is id; bn_b\_jwy is matchSharding Table, sharding key is a; bn_c\_jwy is autoSharding Table, sharding key is a, and the data amount of all the three tables is 2w.
+For example: joinLoopSize is set as 1000. bn_a_jwy is autoSharding Table, sharding key is id; bn_b_jwy is matchSharding Table, sharding key is a; bn_c_jwy is autoSharding Table, sharding key is a, and the data amount of all the three tables is 2w.
 
-mysql\> select \* from bn_a\_Jwy as a inner join bn_b\_jwy as b on a.a=b.a limit 9000;
+mysql> select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 9000;
 
 View actual execution result of general_log:
 
-1187022 Query SELECT A.id, A.a, A.bchar, A.cdeci, A.dtime FROM bn_a\_jwy AS a ORDER BY A.ID LIMIT 1001
+1187022 Query SELECT A.id, A.a, A.bchar, A.cdeci, A.dtime FROM bn_a_jwy AS a ORDER BY A.ID LIMIT 1001
 
-1187022 Query SELECT C.id, C.a, C.bchar, C.cdeci, C.dtime FROM bn_c\_jwy AS c WHERE C.id IN (0) ORDER BY C.ID LIMIT 0 , 1001
+1187022 Query SELECT C.id, C.a, C.bchar, C.cdeci, C.dtime FROM bn_c_jwy AS c WHERE C.id IN (0) ORDER BY C.ID LIMIT 0 , 1001
 
-1187022 Query SELECT B.id, B.a, B.bchar, B.cdeci, B.dtime FROM bn_b\_jwy AS b WHERE B.a COLLATE utf8_general_ci IN (\'d\') ORDER BY B.ID LIMIT 0 , 1001 ...More are omitted...
+1187022 Query SELECT B.id, B.a, B.bchar, B.cdeci, B.dtime FROM bn_b_jwy AS b WHERE B.a COLLATE utf8_general_ci IN ('d') ORDER BY B.ID LIMIT 0 , 1001 ...More are omitted...
 
 #### keyStore
 
@@ -9544,7 +9544,7 @@ View actual execution result of general_log:
 
 **Parameter setting:**
 
-\<property name=\"keyStore\"\>/server.jks\</property\>\<!\-- Path to the data certificate .jks file for TLS connection \--\>
+<property name=[keyStore](#keyStore)>/server.jks</property><!-- Path to the data certificate .jks file for TLS connection -->
 
 **Role of parameter:**
 
@@ -9568,7 +9568,7 @@ This parameter is used to set the path to the data certificate .jks file for con
 
 **Parameter setting:**
 
-\<property name=\"keyStore\"\>/server.jks\</property\>\<!\-- Password of the data certificate .jks file for TLS connection \--\>
+<property name=[keyStore](#keyStore)>/server.jks</property><!-- Password of the data certificate .jks file for TLS connection -->
 
 **Role of parameter:**
 
@@ -9596,7 +9596,7 @@ Property                         Value
 
 This parameter is used to set the timeout (s) for obtaining metadata lock. The value range is 1-31536000s, and the default value is 31536000s, i.e. 365 days, representing if the metadata lock timeout exceeds 365 days, the client will prompt the lock timeout.
 
-\<property name=\"lockWaitTimeout\"\>31536000\</property\> \<!\-- Timeout for obtaining metadata lock \--\>
+<property name=[lockWaitTimeout](#lockWaitTimeout)>31536000</property> <!-- Timeout for obtaining metadata lock -->
 
 session A execute:
 
@@ -9626,11 +9626,11 @@ session B execute: if the set value of lockWaitTimeout is exceeded, the followin
 
 When start, the Master data source will reconnect continuously after initial initialization failure; in case of existing standby data source and initialization timeout time of the Master data source is exceeded, it will switch to available standby data source; in case of initialization failure with all data sources of this node, then the whole node is Unavailable. If all nodes of at least one LogicDB in the compute node has Initialized successfully, then the compute node Start succeeded, otherwise, Start failed.
 
-2018-05-28 18:07:29.719 \[WARN\] \[INIT\] \[main\] r(-1) -- failed in connecting datasource:\[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8\], exception:...omitted...
+2018-05-28 18:07:29.719 [WARN] [INIT] [main] r(-1) -- failed in connecting datasource:[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8], exception:...omitted...
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the sever.
 
-2018-05-28 18:07:31.719 \[INFO\] \[INIT\] \[main\] b(-1) -- try reinit datasource:\[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8\]
+2018-05-28 18:07:31.719 [INFO] [INIT] [main] b(-1) -- try reinit datasource:[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8]
 
 Causes for data source timeout are: beyond limit of the system or database connection, authentication failure of data source user password, great network latency, etc.
 
@@ -9654,23 +9654,23 @@ Causes for data source timeout are: beyond limit of the system or database conne
 
 **Role of parameter:**
 
-Control packet size sent from the front-end connection. 64M by default, when the SQL statement size sent exceeds the default value 64M, the compute node will give prompt (Get a packet bigger than \'max_allowed_packet\').
+Control packet size sent from the front-end connection. 64M by default, when the SQL statement size sent exceeds the default value 64M, the compute node will give prompt (Get a packet bigger than 'max_allowed_packet').
 
-ERROR 1153 (HY000): Get a packet bigger than \'max allowed packet\'
+ERROR 1153 (HY000): Get a packet bigger than 'max allowed packet'
 
 Meanwhile, show variables could show the configuration value.
 
-mysql\> show variables like \'%allowed%;
+mysql> show variables like '%allowed%;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-\| variable_name \| value \|
+| variable_name | value |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-\| max_allowed_packet \| 16777216 \|
+| max_allowed_packet | 16777216 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
 #### maxConnections & maxUserConnections
 
@@ -9714,7 +9714,7 @@ maxUserConnections is commonly known to be the Max Connections of the same accou
 
 When number of connections exceeds the set value, if executing front-end connection, there will be prompt as follow:
 
-root\> mysql -uzy -pzy -h127.0.0.1 -P9993
+root> mysql -uzy -pzy -h127.0.0.1 -P9993
 
 Warning: Using a password on the command line interface can be insecure.
 
@@ -9722,37 +9722,37 @@ ERROR 1040 (HY000): too many connections
 
 The value of maxConnections and maxUserConnections could be modified via Set, the parameters are at GLOBAL level:
 
-mysql\> set global max_connections = 5000;
+mysql> set global max_connections = 5000;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> show variables like \'%max_connections%;
+mysql> show variables like '%max_connections%;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-\| variable_name \| value \|
+| variable_name | value |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-\| max_connections \| 5000 \|
+| max_connections | 5000 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-mysql\> set global max_user_connections = 1000;
+mysql> set global max_user_connections = 1000;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> show variables like \'%max_user_connections%;
+mysql> show variables like '%max_user_connections%;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-\| variable_name \| value \|
+| variable_name | value |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-\| max_user_connections \| 1000 \|
+| max_user_connections | 1000 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
 #### maxIdleTransactionTimeout
 
@@ -9772,15 +9772,15 @@ mysql\> show variables like \'%max_user_connections%;
 
 **Parameter Setting:**
 
-\<property name=\"maxIdleTransactionTimeout\"\>864000000\</property\>
+<property name=[maxIdleTransactionTimeout](#maxIdleTransactionTimeout)>864000000</property>
 
-maxIdleTransactionTimeout parameter has the default value of 86400000ms, that is 24h, which means that when the last SQL is completed in the transaction, the transaction fails to be submitted within 24h, it will be judged as timeout transaction, and HotDB records connection IP, port, username, LogicDB, lastsql, whether to autocommit or not, innodb_trx of back-end connection and other information with the mark \[INFO\] \[WATCHDOG\] WatchDogLongTransactionCheckHandler in hotdb.log, and disable the connection, and auto rollback the transaction.
+maxIdleTransactionTimeout parameter has the default value of 86400000ms, that is 24h, which means that when the last SQL is completed in the transaction, the transaction fails to be submitted within 24h, it will be judged as timeout transaction, and HotDB records connection IP, port, username, LogicDB, lastsql, whether to autocommit or not, innodb_trx of back-end connection and other information with the mark [INFO] [WATCHDOG] WatchDogLongTransactionCheckHandler in hotdb.log, and disable the connection, and auto rollback the transaction.
 
 The parameter is only valid when enableWatchdog=true. In Watchdog, maxIdleTransactionTimeout is checked every 10 mins. Idle time of the transaction connected is judged in next check of Watchdog toward maxIdleTransactionTimeout; if exceeding the set threshold value, disable the connection, therefore, the practical transaction Idle time doesn't equal to the set threshold value.
 
 For example, if the transaction Idle time exceeds the set threshold value, then disable the connection, and at this time, view log:
 
-2019-07-01 18:09:24.528 \[INFO\] \[WATCHDOG\] \[\$NIOREACTOR-20-RW\] cn.hotpu.hotdb.mysql.nio.handler.WatchDogLongTransactionCheckHandler(123) - Session \[thread=Thread-13,id=1,user=ztm,host=127.0.0.1,port=3323,localport=46138,schema=PM\] has not been queryed for 593s. executed IUDs:\[UPDATE customer_auto_1 SET city = \'xxxx\' WHERE id = 1\]. binded connection:\[MySQLConnection \[node=2, id=59, threadId=14921, state=borrowed, closed=false, autocommit=false, host=10.10.0.202, port=3307, database=db_test251, localPort=52736, isClose:false, toBeClose:false\] lastSQL:SET autocommit=0;UPDATE customer_auto_1 SET city = \'xxxx\' WHERE id = 1\]. innodb_trx:\[(ds:2 trx_id:3435056156 trx_state:RUNNING trx_started:2019-07-01 17:59:33 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:3 trx_mysql_thread_id:14921 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:2 trx_lock_memory_bytes:1136 trx_rows_locked:1 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )\]. we will close this session now.
+2019-07-01 18:09:24.528 [INFO] [WATCHDOG] [\$NIOREACTOR-20-RW] cn.hotpu.hotdb.mysql.nio.handler.WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-13,id=1,user=ztm,host=127.0.0.1,port=3323,localport=46138,schema=PM] has not been queryed for 593s. executed IUDs:[UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. binded connection:[MySQLConnection [node=2, id=59, threadId=14921, state=borrowed, closed=false, autocommit=false, host=10.10.0.202, port=3307, database=db_test251, localPort=52736, isClose:false, toBeClose:false] lastSQL:SET autocommit=0;UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. innodb_trx:[(ds:2 trx_id:3435056156 trx_state:RUNNING trx_started:2019-07-01 17:59:33 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:3 trx_mysql_thread_id:14921 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:2 trx_lock_memory_bytes:1136 trx_rows_locked:1 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now.
 
 When the parameter is set as 0, it means never timeout, that is, no limit for COMMIT time of the transaction.
 
@@ -9808,57 +9808,57 @@ Max rows allowed for Join query cache. Computation method of JOIN query cache is
 
 When the JOIN query cache has rows greater than the set value, the message will be prompted as follow:
 
-mysql\> select \* from customer_auto_1 a join customer_auto_3 b on a.postcode=b.postcode;
+mysql> select * from customer_auto_1 a join customer_auto_3 b on a.postcode=b.postcode;
 
 ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml
 
 The current session parameter value could be modified via set session max_join_size, to make the JOIN query cache within 1\~ 2124000000:
 
-mysql\> show variables like \'%max_join_size%;
+mysql> show variables like '%max_join_size%;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-\| variable_name \| value \|
+| variable_name | value |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-\| max_join_size \| 5000 \|
+| max_join_size | 5000 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-mysql\> set global max_user_connections = 1000;
-
-Query OK, 0 rows affected (0.00 sec)
-
-mysql\> show variables like \'%max_user_connections%;
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| variable_name \| value \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| max_user_connections \| 2124000000 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-mysql\> set session max_join_size=1;
+mysql> set global max_user_connections = 1000;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> show variables like \'%max_user_connections%;
+mysql> show variables like '%max_user_connections%;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-\| variable_name \| value \|
+| variable_name | value |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-\| max_user_connections \| 1 \|
+| max_user_connections | 2124000000 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------+---------------------+
 
-mysql\> select \* from bn_a\_jwy a join bn_c\_jwy b on a.a=b.a where a.a=\'d\';
+mysql> set session max_join_size=1;
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show variables like '%max_user_connections%;
+
++--------------------------+---------------------+
+
+| variable_name | value |
+
++--------------------------+---------------------+
+
+| max_user_connections | 1 |
+
++--------------------------+---------------------+
+
+mysql> select * from bn_a_jwy a join bn_c_jwy b on a.a=b.a where a.a='d';
 
 ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml
 
@@ -9884,49 +9884,49 @@ ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check
 
 After Read/write splitting is enabled, when the master/slave latency is smaller than the set latency time, read the Standby Slave:
 
-mysql\> select \* from cd;
+mysql> select * from cd;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| id \| name \|
+| id | name |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| 1 \| slave \|
+| 1 | slave |
 
-\| 2 \| slave \|
+| 2 | slave |
 
-\| 3 \| slave \|
+| 3 | slave |
 
-\| 4 \| slave \|
+| 4 | slave |
 
-\| 5 \| slave \|
+| 5 | slave |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
 5 rows in set (0.00 sec)
 
 After Read/write splitting is enabled, when latency of readable Standby Slave exceeds the set time, it will read the Active Master:
 
-mysql\> select \* from cd;
+mysql> select * from cd;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
++------+----------+
 
-\| id \| name \|
+| id | name |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
++------+----------+
 
-\| 1 \| master \|
+| 1 | master |
 
-\| 2 \| master \|
+| 2 | master |
 
-\| 3 \| master \|
+| 3 | master |
 
-\| 4 \| master \|
+| 4 | master |
 
-\| 5 \| master \|
+| 5 | master |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
++------+----------+
 
 5 rows in set (0.00 sec)
 
@@ -9950,7 +9950,7 @@ mysql\> select \* from cd;
 
 maxNotInSubquery parameter in server.xml is configured as follow:
 
-\<property name=\"maxNotInSubquery\"\>20000\</property\>\<!\-- Max number of not in in subquery \--\>
+<property name=[maxNotInSubquery](#maxNotInSubquery)>20000</property><!-- Max number of not in in subquery -->
 
 **Role of parameter:**
 
@@ -9962,41 +9962,41 @@ For example:
 
 (For the convenience of test, maxNotInSubquery is set as 10)
 
-mysql\> use pm
+mysql> use pm
 
 Database changed
 
-mysql\> show tables;
+mysql> show tables;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------------------+
 
-\| Tables_in_PM \|
+| Tables_in_PM |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------------------+
 
-\| customer_quan_2 \|
+| customer_quan_2 |
 
-\| customer_route_1 \|
+| customer_route_1 |
 
-\| customer_route_2 \|
+| customer_route_2 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------------------+
 
 3 rows in set (0.00 sec)
 
-mysql\> select \* from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id \> 205119 limit 20);
+mysql> select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20);
 
 ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml
 
-The log will record corresponding information with \[INFO\] \[SQL\] mark
+The log will record corresponding information with [INFO] [SQL] mark
 
-2019-10-08 14:33:41.725 \[INFO\] \[SQL\] \[\$NIOExecutor-3-2\] cn.hotpu.hotdb.j.h(2626) - unsupported subquery:\[thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM\] AutoCommitTransactionSession in \[thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM\], sql:select \* from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id \> 205119 limit 20), error code:1104, error msg:The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml
+2019-10-08 14:33:41.725 [INFO] [SQL] [\$NIOExecutor-3-2] cn.hotpu.hotdb.j.h(2626) - unsupported subquery:[thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM] AutoCommitTransactionSession in [thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM], sql:select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20), error code:1104, error msg:The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml
 
-Meanwhile, you could view the configured value in log and 3325 port show @\@systemconfig, and this parameter after modification could be valid upon reload.
+Meanwhile, you could view the configured value in log and 3325 port show @@systemconfig, and this parameter after modification could be valid upon reload.
 
-mysql\> show @\@systemconfig;
+mysql> show @@systemconfig;
 
-config \| {\"enableFlowControl\":\"true\",\"recordSql\":\"false\",\"defaultMaxLimit\":\"10000\",\"bakPassword\":\"hotdb_config\",\"bakUrl\":\"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha\",\"management port\":\"3325\",\"heartbeatPeriod\":\"2\",\"cryptMandatory\":\"false\",\"password\":\"hotdb_config\",\"enableCursor\":\"false\",\"username\":\"hotdb_config\",\"enableXA\":\"false\",\"errorsPermittedInTransaction\":\"true\",\"strategyForRWSplit\":\"0\",\"enableWatchdog\":\"false\",\"haNodeHost\":\"192.168.220.139:3325\",\"maxJoinSize\":\"9148M\",\"maxNotInSubquery\":\"10\",\"pingLogCleanPeriodUnit\":\"0\",\"clientFoundRows\":\"false\",\"joinCacheSize\":\"236\",\"enableHeartbeat\":\"true\",\"url\":\"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha\",\"parkPeriod\":\"100000\",\"maxSqlRecordLength\":\"4000\",\"joinBatchSize\":\"46000\",\"enableSubquery\":\"true\",\"heartbeatTimeoutMs\":\"500\",\"pingPeriod\":\"300\",\"joinLoopSize\":\"18500\",\"VIP\":\"192.168.220.171\",\"joinable\":\"true\",\"maxUserConnections\":\"4900\",\"pingLogCleanPeriod\":\"1\",\"dataNodeIdleCheckPeriod\":\"120\",\"deadlockCheckPeriod\":\"3000\",\"sqlTimeout\":\"3600\",\"bakUsername\":\"hotdb_config\",\"enableLatencyCheck\":\"true\",\"waitSyncFinishAtStartup\":\"true\",\"checkVIPPeriod\":\"500\",\"statisticsUpdatePeriod\":\"0\",\"usingAIO\":\"0\",\"showAllAffectedRowsInGlobalTable\":\"false\",\"maxLatencyForRWSplit\":\"1000\",\"maxConnections\":\"5000\",\"enableSleep\":\"false\",\"waitForSlaveInFailover\":\"true\",\"autoIncrement\":\"true\",\"processorExecutor\":\"4\",\"highCostSqlConcurrency\":\"400\",\"latencyCheckPeriod\":\"500\",\"processors\":\"16\",\"weightForSlaveRWSplit\":\"50\",\"haState\":\"master\",\"readOnly\":\"false\",\"timerExecutor\":\"4\",\"service port\":\"3323\",\"frontWriteBlockTimeout\":\"10000\",\"switchoverTimeoutForTrans\":\"3000\"}
+config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql):"false",[defaultMaxLimit](#defaultMaxLimit):"10000","bakPassword":"hotdb_config","bakUrl":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha","management port":"3325","heartbeatPeriod":"2",[cryptMandatory](#cryptMandatory):"false","password":"hotdb_config",[enableCursor](#enableCursor):"false","username":"hotdb_config",[enableXA](#enableXA):"false",[errorsPermittedInTransaction](#errorsPermittedInTransaction):"true",[strategyForRWSplit](#strategyForRWSplit):"0",[enableWatchdog](#enableWatchdog):"false","haNodeHost":"192.168.220.139:3325",[maxJoinSize](#maxJoinSize):"9148M",[maxNotInSubquery](#maxNotInSubquery):"10",[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit):"0",[clientFoundRows](#clientFoundRows):"false",[joinCacheSize](#joinCacheSize):"236","enableHeartbeat":"true","url":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha",[parkPeriod](#parkPeriod):"100000",[maxSqlRecordLength](#maxSqlRecordLength):"4000",[joinBatchSize](#joinBatchSize):"46000",[enableSubquery](#enableSubquery):"true","heartbeatTimeoutMs":"500",[pingPeriod](#pingPeriod):"300",[joinLoopSize](#joinLoopSize):"18500","VIP":"192.168.220.171",[joinable](#joinable):"true","maxUserConnections":"4900",[pingLogCleanPeriod](#pingLogCleanPeriod):"1",[dataNodeIdleCheckPeriod](#dataNodeIdleCheckPeriod):"120",[deadlockCheckPeriod](#deadlockCheckPeriod):"3000",[sqlTimeout](#sqlTimeout):"3600","bakUsername":"hotdb_config","enableLatencyCheck":"true",[waitSyncFinishAtStartup](#waitSyncFinishAtStartup):"true","checkVIPPeriod":"500",[statisticsUpdatePeriod](#statisticsUpdatePeriod):"0",[usingAIO](#usingAIO):"0",[showAllAffectedRowsInGlobalTable](#showAllAffectedRowsInGlobalTable):"false",[maxLatencyForRWSplit](#maxLatencyForRWSplit):"1000","maxConnections":"5000",[enableSleep](#enableSleep):"false",[waitForSlaveInFailover](#waitForSlaveInFailover):"true",[autoIncrement](#autoIncrement):"true",[processorExecutor](#processorExecutor):"4",[highCostSqlConcurrency](#highCostSqlConcurrency):"400","latencyCheckPeriod":"500","processors":"16",[weightForSlaveRWSplit](#weightForSlaveRWSplit):"50","haState":"master",[readOnly](#readOnly):"false",[timerExecutor](#timerExecutor):"4","service port":"3323",[frontWriteBlockTimeout](#frontWriteBlockTimeout):"10000",[switchoverTimeoutForTrans](#switchoverTimeoutForTrans):"3000"}
 
 1 row in set (0.01 sec)
 
@@ -10022,11 +10022,11 @@ Property                         Value
 
 In server.xml, maxReconnectConfigDBTimes is configured as follows:
 
-\<property name=\" maxReconnectConfigDBTimes \"\>3\</property\>\<!\-- Max times of reconnecting ConfigDB \--\>
+<property name=" maxReconnectConfigDBTimes ">3</property><!-- Max times of reconnecting ConfigDB -->
 
 **Role of parameter:**
 
-The parameter can prevent long time consumption for configDB connection during the compute node start, the HA switch, or reloading, and increase the reconnection times of configDB. If the max times of reconnections is exceeded (the default reconnection time is 3\*2s), it will automatically switch to connecting from the ConfigDB.
+The parameter can prevent long time consumption for configDB connection during the compute node start, the HA switch, or reloading, and increase the reconnection times of configDB. If the max times of reconnections is exceeded (the default reconnection time is 3*2s), it will automatically switch to connecting from the ConfigDB.
 
 #### maxSqlRecordLength
 
@@ -10098,11 +10098,11 @@ When the length of the executed SQL statement exceeds the set length, it will be
 
 ndbSqlAddr, ndbSqlUser, ndbSqlPass are supporting parameters: ndbSqlAddr is physical address of NDB SQL node; ndbSqlUser and ndbSqlPass are respectively username and password for connecting NDB SQL node.
 
-\<property name=\"ndbSqlAddr\"\>localhost:3329\</property\>
+<property name="ndbSqlAddr">localhost:3329</property>
 
-\<property name=\"ndbSqlUser\"\>root\</property\>
+<property name="ndbSqlUser">root</property>
 
-\<property name=\"ndbSqlPass\"\>root\</property\>
+<property name="ndbSqlPass">root</property>
 
 #### ndbSqlDataAddr
 
@@ -10124,7 +10124,7 @@ ndbSqlAddr, ndbSqlUser, ndbSqlPass are supporting parameters: ndbSqlAddr is phys
 
 The connection from NDB SQL to compute node, that is the communication port from the server IP and NDB SQL where the compute node resides to the compute node, the default value is 127.0.0.1:3327.
 
-property name=\"ndbSqlDataAddr\"\>127.0.0.1:3327\</property\>
+property name=[ndbSqlDataAddr](#ndbSqlDataAddr)>127.0.0.1:3327</property>
 
 #### ndbSqlMode
 
@@ -10146,7 +10146,7 @@ property name=\"ndbSqlDataAddr\"\>127.0.0.1:3327\</property\>
 
 none: the default value, representing Forbidden NDB function; local: NDB SQL server and compute node server are on the same computer, execute NDB logic if meeting NDB condition.
 
-\<property name=\"ndbSqlMode\"\>none\</property\>
+<property name=[ndbSqlMode](#ndbSqlMode)>none</property>
 
 #### ndbSqlVersion & ndbVersion
 
@@ -10180,9 +10180,9 @@ none: the default value, representing Forbidden NDB function; local: NDB SQL ser
 
 ndbSqlVersion and ndbVersion are of corresponding relation, and please refer to official MySQL document for the specific corresponding relation. ndbSqlVersion is 5.7.24 by default, and ndbVersion is 7.5.12 by default. The NDB Engine Version supported by the current compute node is 7.5.4 and above, and if to use NDB version, it's required that the data source version must be 5.7.16 and above.
 
-\<property name=\"ndbSqlVersion\"\>5.7.24\</property\>
+<property name="ndbSqlVersion">5.7.24</property>
 
-\<property name=\"ndbVersion\"\>7.5.12\</property\>
+<property name="ndbVersion">7.5.12</property>
 
 #### operateMode
 
@@ -10204,7 +10204,7 @@ Property                         Value
 
 server.xml中operateMode参数配置如下：
 
-\<property name=\"operateMode\"\>0\</property\>\<!\-- Operating mode, 0: normal mode, 1: performance mode, 2: debug mode\--\>
+<property name=[operateMode](#operateMode)>0</property><!-- Operating mode, 0: normal mode, 1: performance mode, 2: debug mode-->
 
 **Role of parameter:**
 
@@ -10252,7 +10252,7 @@ operateMode is a hidden parameter, and the default mode is normal mode, that is,
 
 In normal mode, the compute nodes will start according to the parameter configuration of server.xml, and not be affected by operateMode.
 
-When it is set to performance mode, that is, modifying server.xml, adding operateMode =1 parameter configuration, then make it work by executing reload @\@config in 3325 port, and the compute node will output the corresponding information in hotdb.log as follows:
+When it is set to performance mode, that is, modifying server.xml, adding operateMode =1 parameter configuration, then make it work by executing reload @@config in 3325 port, and the compute node will output the corresponding information in hotdb.log as follows:
 
 ![](assets/standard/image148.png)
 
@@ -10298,7 +10298,7 @@ recordSql=true,recordSQLSyntaxError=true,recordCrossDNJoin=true,recordUNION=true
 
 The parkPeriod parameter in Server.xml is set as follow:
 
-\<property name=\"parkPeriod\"\>100000\</property\>
+<property name=[parkPeriod](#parkPeriod)>100000</property>
 
 **Role of parameter:**
 
@@ -10324,7 +10324,7 @@ This parameter is used for adjusting sleep time of cost message queue thread at 
 
 pingLogCleanPeriod parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"pingLogCleanPeriod\"\>3\</property\>\<!\-- Ping Log Clean Period, 3 by default \--\>
+<property name=[pingLogCleanPeriod](#pingLogCleanPeriod)>3</property><!-- Ping Log Clean Period, 3 by default -->
 
 **Role of parameter:**
 
@@ -10350,7 +10350,7 @@ pingLogCleanPeriod parameter is 3 by default, with the optional unit being Hour,
 
 pingLogCleanPeriodUnit parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"pingLogCleanPeriodUnit\"\>2\</property\>\<!\-- Unit of ping log clean period, 2 by default, 0: Hour, 1: Day, 2: Month \--\>
+<property name=[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit)>2</property><!-- Unit of ping log clean period, 2 by default, 0: Hour, 1: Day, 2: Month -->
 
 **Role of parameter:**
 
@@ -10376,7 +10376,7 @@ pingLogCleanPeriodUnit parameter is 2 by default, meaning that the unit of ping 
 
 pingPeriod parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"pingPeriod\"\>3600\</property\>\<!\-- ping server period, Unit: s, 3600s by default, min 300s \--\>
+<property name=[pingPeriod](#pingPeriod)>3600</property><!-- ping server period, Unit: s, 3600s by default, min 300s -->
 
 **Role of parameter:**
 
@@ -10384,9 +10384,9 @@ pingPeriod parameter is 3600 by default, Unit: s, which is mainly used to contro
 
 In the detection process, for a certain IP address, the program will automatically use 10 packets (64 byte), 10 packets (65000 byte), which are pinged every 1 second. When the network quality is found to be failed, the interval of ping will be shortened to once per minute, and the criteria of failure judgment are as follows:
 
--   If 64-byte packets in the same IDC are not all lost, when the average delay is greater than 1 ms or the max delay is greater than 2 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb\_ ping\_ log。 If 65000-byte packets are not all lost, when the average delay is greater than 3 ms, or the max delay is greater than 5 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb\_ ping\_ log table.
+-   If 64-byte packets in the same IDC are not all lost, when the average delay is greater than 1 ms or the max delay is greater than 2 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log。 If 65000-byte packets are not all lost, when the average delay is greater than 3 ms, or the max delay is greater than 5 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log table.
 
--   If 64-byte packets across the IDCs are not all lost, when the average delay is greater than 10 ms or the max delay is greater than 20 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb\_ ping\_ log。 If 65000-byte packets are not all lost, when the average delay is greater than 15 ms, or the max delay is greater than 30 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb\_ ping\_ log table.
+-   If 64-byte packets across the IDCs are not all lost, when the average delay is greater than 10 ms or the max delay is greater than 20 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log。 If 65000-byte packets are not all lost, when the average delay is greater than 15 ms, or the max delay is greater than 30 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log table.
 
 #### prefetchBatchInit
 
@@ -10406,13 +10406,13 @@ Property                         Value
 
 **Parameter Setting:**
 
-\<property name=\"prefetchBatchInit\"\>100\</property\>
+<property name=[prefetchBatchInit](#prefetchBatchInit)>100</property>
 
 **Role of parameter:**
 
-The initial value of the auto-incremental batch size. If the initial value is set as 100, the range difference of the prefetch interval is 100 by default. For example, if the prefetch starts from 123, the prefetch interval is \[123, 223\].
+The initial value of the auto-incremental batch size. If the initial value is set as 100, the range difference of the prefetch interval is 100 by default. For example, if the prefetch starts from 123, the prefetch interval is [123, 223].
 
-The initial value can be configured within the upper and lower limits of the auto-incremental batch size actually configured (prefetchBatchMax and prefetchBatchMin). The default range is \[10, 10000\].
+The initial value can be configured within the upper and lower limits of the auto-incremental batch size actually configured (prefetchBatchMax and prefetchBatchMin). The default range is [10, 10000].
 
 #### prefetchBatchMax
 
@@ -10434,11 +10434,11 @@ Property                         Value
 
 **Parameter Setting:**
 
-\<property name=\"prefetchBatchMax\"\>10000\</property\>
+<property name=[prefetchBatchMax](#prefetchBatchMax)>10000</property>
 
 **Role of parameter:**
 
-The upper limit of the auto-incremental batch size. If 1000 is set, the maximum value of the range difference of each prefetch interval is 1000. For example, if the prefetch starts from 123, the maximum value in the prefetch interval is not more than 1123, that is, the values are within \[123,1123\].
+The upper limit of the auto-incremental batch size. If 1000 is set, the maximum value of the range difference of each prefetch interval is 1000. For example, if the prefetch starts from 123, the maximum value in the prefetch interval is not more than 1123, that is, the values are within [123,1123].
 
 #### prefetchBatchMin
 
@@ -10460,11 +10460,11 @@ The upper limit of the auto-incremental batch size. If 1000 is set, the maximum 
 
 **Parameter Setting:**
 
-\<property name=\"prefetchBatchMin\"\>10\</property\>
+<property name=[prefetchBatchMin](#prefetchBatchMin)>10</property>
 
 **Role of parameter:**
 
-The lower limit of the auto-incremental prefetch batch size. If 100 is set, the minimum value of the range difference of each prefetch interval is 100. For example, if the prefetch starts from 123, the maximum value in the prefetch interval is not less than 223, that is, the next prefetch batch starts from 223 at least, and the next prefetch batch \[\>=223, 223+prefetch batch size\].
+The lower limit of the auto-incremental prefetch batch size. If 100 is set, the minimum value of the range difference of each prefetch interval is 100. For example, if the prefetch starts from 123, the maximum value in the prefetch interval is not less than 223, that is, the next prefetch batch starts from 223 at least, and the next prefetch batch [>=223, 223+prefetch batch size].
 
 #### prefetchValidTimeout
 
@@ -10486,7 +10486,7 @@ Property                         Value
 
 **Parameter Setting:**
 
-\<property name=\"prefetchValidTimeout\"\>30\</property\>
+<property name=[prefetchValidTimeout](#prefetchValidTimeout)>30</property>
 
 **Role of parameter:**
 
@@ -10512,13 +10512,13 @@ The valid timeout time of prefetching the auto-incremental batch. When set as 0,
 
 **Parameter Setting:**
 
-\<property name=\"processorExecutor\"\>4\</property\>\<!\-- Number of threads of processors \--\>
+<property name=[processorExecutor](#processorExecutor)>4</property><!-- Number of threads of processors -->
 
 **Role of parameter:**
 
 This parameter is used for setting number of threads of processors in internal thread pool model of the compute node. The parameter [adaptiveProcessor](#adaptiveprocessor) is Enabled by default, and when enabled, the compute node will make Automatic Adaptation to Max processorExecutor.
 
-Log in to 3325 port, execute the show @\@threadpool; command, and then you could view the current number of processorExecutor.
+Log in to 3325 port, execute the show @@threadpool; command, and then you could view the current number of processorExecutor.
 
 #### Processors
 
@@ -10540,13 +10540,13 @@ Log in to 3325 port, execute the show @\@threadpool; command, and then you could
 
 **Parameter Setting:**
 
-\<property name=\"processors\"\>8\</property\>\<!---Number of processors \--\>
+<property name="processors">8</property><!---Number of processors -->
 
 **Role of parameter:**
 
 This parameter is used for setting number of threads in internal thread pool model of the compute node. The parameter [adaptiveProcessor](#adaptiveprocessor) is Enable by default, and when enabled, the compute node will make Automatic Adaptation to the max number of processors.
 
-Log in to 3325 port, execute show @\@threadpool; command, and then you could view the number of current processors.
+Log in to 3325 port, execute show @@threadpool; command, and then you could view the number of current processors.
 
 #### readOnly
 
@@ -10566,17 +10566,17 @@ Log in to 3325 port, execute show @\@threadpool; command, and then you could vie
 
 **Parameter Setting:**
 
-\<property name=\"readOnly\"\>false\</property\>\<!\-- readOnly mode or not \--\>
+<property name=[readOnly](#readOnly)>false</property><!-- readOnly mode or not -->
 
 **Role of parameter:**
 
-It is used for setting the current compute node as readonly mode. In readonly mode, compute node only receives DQL (SELECT statement) operation, and SET command row and SHOW type operations, and refuses to execute DDL(CREATE TABLE/VIEW/INDEX/SYN/CLUSTER statement), DML(INSERT, UPDATE, DELETE) and DCL (GRANT, ROLLBACK \[WORK\] TO \[SAVEPOINT\], COMMIT) modification operation commands
+It is used for setting the current compute node as readonly mode. In readonly mode, compute node only receives DQL (SELECT statement) operation, and SET command row and SHOW type operations, and refuses to execute DDL(CREATE TABLE/VIEW/INDEX/SYN/CLUSTER statement), DML(INSERT, UPDATE, DELETE) and DCL (GRANT, ROLLBACK [WORK] TO [SAVEPOINT], COMMIT) modification operation commands
 
 **Notices:** This parameter is still provided for single compute node service, and does not allow multiple compute nodes to provide service simultaneously, that is, it does not allow enabling multiple compute nodes and providing external service at the same time
 
 Enable status:
 
-mysql\> drop table customer;
+mysql> drop table customer;
 
 ERROR 1289 (HY000): Command not allowed in Read-Only mode.
 
@@ -10600,11 +10600,11 @@ ERROR 1289 (HY000): Command not allowed in Read-Only mode.
 
 recordAuditlog parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordAuditlog\"\>true\</property\>\<!---Record audit log \--\>
+<property name=[recordAuditlog](#recordAuditlog)>true</property><!---Record audit log -->
 
 **Role of parameter:**
 
-recordAuditlog enables audit log or not. This parameter is used for controlling whether to record the management port operation information or not. When the audit log is enabled, you could view management port operation record via Event-\>Audit log on the management platform.
+recordAuditlog enables audit log or not. This parameter is used for controlling whether to record the management port operation information or not. When the audit log is enabled, you could view management port operation record via Event->Audit log on the management platform.
 
 #### recordCrossDNJoin
 
@@ -10626,7 +10626,7 @@ recordAuditlog enables audit log or not. This parameter is used for controlling 
 
 recordCrossDNJoin parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordCrossDNJoin\"\>false\</property\>
+<property name=[recordCrossDNJoin](#recordCrossDNJoin)>false</property>
 
 **Role of parameter:**
 
@@ -10640,11 +10640,11 @@ borrower table auto_modsharding, sharding key id, node 2
 
 Execute as follow:
 
-mysql\> SELECT \* FROM account a JOIN borrower b;
+mysql> SELECT * FROM account a JOIN borrower b;
 
 View /logs/sql.log of compute node installation directory
 
-2018-05-22 16:17:11.607 \[INFO\] \[CROSSDNJOIN\] \[\$NIOExecutor-6-2\] JoinVisitor(4947) -- SELECT \* FROM account a JOIN borrower b
+2018-05-22 16:17:11.607 [INFO] [CROSSDNJOIN] [\$NIOExecutor-6-2] JoinVisitor(4947) -- SELECT * FROM account a JOIN borrower b
 
 #### recordDDL
 
@@ -10666,19 +10666,19 @@ View /logs/sql.log of compute node installation directory
 
 recordDDL parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordDDL\"\>false\</property\>
+<property name=[recordDDL](#recordDDL)>false</property>
 
 **Role of parameter:**
 
 recordDDL log records DDL statement, execute the following statement:
 
-mysql\> create table abc(id int);
+mysql> create table abc(id int);
 
 View /logs/sql.log of compute node installation directory
 
-2018-05-23 14:23:52.697 \[INFO\] \[HOTDBWARNING\] \[\$NIOExecutor-6-2\] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without Primary Key and unique key}
+2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [\$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without Primary Key and unique key}
 
-2018-05-23 14:23:52.698 \[INFO\] \[DDL\] \[\$NIOExecutor-6-2\] ServerConnection(123) -- sql: create table abc(id int)
+2018-05-23 14:23:52.698 [INFO] [DDL] [\$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int)
 
 #### recordDeadLockSQL
 
@@ -10700,17 +10700,17 @@ View /logs/sql.log of compute node installation directory
 
 recordDeadLockSQL parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordDeadLockSQL\"\>true\</property\>
+<property name=[recordDeadLockSQL](#recordDeadLockSQL)>true</property>
 
 **Role of parameter:**
 
 recordDeadLockSQL log records the statement triggering deadlock:
 
-1\. Create deadlock scenario
+1. Create deadlock scenario
 
-2\. View /logs/hotdb.log of compute node installation directory:
+2. View /logs/hotdb.log of compute node installation directory:
 
-2018-05-23 14:54:30.865 \[INFO\] \[DEADLOCK\] \[\$NIOREACTOR-1-RW\] am(-1) -- sql: INSERT INTO table2000 VALUES (3); error response from MySQLConnection \[node=4, id=277, threadId=133815, state=borrowed, close=false, autocommit=false, host=192.168.220.102, port=3309, database=db249, localPort=15332, isClose:false, toBeClose:false\], err: Lock wait timeout exceeded; try restarting transaction, code: 1205
+2018-05-23 14:54:30.865 [INFO] [DEADLOCK] [\$NIOREACTOR-1-RW] am(-1) -- sql: INSERT INTO table2000 VALUES (3); error response from MySQLConnection [node=4, id=277, threadId=133815, state=borrowed, close=false, autocommit=false, host=192.168.220.102, port=3309, database=db249, localPort=15332, isClose:false, toBeClose:false], err: Lock wait timeout exceeded; try restarting transaction, code: 1205
 
 #### recordHotDBErrors
 
@@ -10732,7 +10732,7 @@ recordDeadLockSQL log records the statement triggering deadlock:
 
 recordHotDBErrors parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordHotDBErrors\"\>true\</property\>
+<property name=[recordHotDBErrors](#recordHotDBErrors)>true</property>
 
 **Role of parameter:**
 
@@ -10740,7 +10740,7 @@ recordHotDBErrors log records error message returned by compute node
 
 For example: when executing Create statement by user without create privilege, the prompt is as follow:
 
-2018-06-04 10:43:07.316 \[INFO\] \[HOTDBERROR\] \[\$NIOExecutor-3-0\] ServerConnection(155) -- sql: create table a001(id int), err: \[CREATE\] command denied to user \'jzl\' to logic database \'TEST_JZL\'
+2018-06-04 10:43:07.316 [INFO] [HOTDBERROR] [\$NIOExecutor-3-0] ServerConnection(155) -- sql: create table a001(id int), err: [CREATE] command denied to user 'jzl' to logic database 'TEST_JZL'
 
 #### recordHotDBWarnings
 
@@ -10762,7 +10762,7 @@ For example: when executing Create statement by user without create privilege, t
 
 recordHotDBWarnings parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordHotDBWarnings\"\>false\</property\>
+<property name=[recordHotDBWarnings](#recordHotDBWarnings)>false</property>
 
 **Role of parameter:**
 
@@ -10772,9 +10772,9 @@ create table abc(id int);
 
 View /logs/sql.log of the compute node installation directory
 
-2018-05-23 14:23:52.697 \[INFO\] \[HOTDBWARNING\] \[\$NIOExecutor-6-2\] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without Primary Key and unique key}
+2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [\$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without Primary Key and unique key}
 
-2018-05-23 14:23:52.698 \[INFO\] \[DDL\] \[\$NIOExecutor-6-2\] ServerConnection(123) -- sql: create table abc(id int)
+2018-05-23 14:23:52.698 [INFO] [DDL] [\$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int)
 
 #### recordLimitOffsetWithoutOrderby
 
@@ -10796,7 +10796,7 @@ View /logs/sql.log of the compute node installation directory
 
 recordLimitOffsetWithoutOrderby parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordLimitOffsetWithoutOrderby\"\>false\</property\>
+<property name=[recordLimitOffsetWithoutOrderby](#recordLimitOffsetWithoutOrderby)>false</property>
 
 **Role of parameter:**
 
@@ -10804,15 +10804,15 @@ recordLimitOffsetWithoutOrderby log records the limit statement without orderby.
 
 Execute as follow:
 
-mysql\> select \* FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ) limit 1,3;
+mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ) limit 1,3;
 
 View /logs/sql.log of compute node installation directory
 
-2018-05-23 14:05:14.915 \[INFO\] \[LIMITOFFSETWITHOUTORDERBY\] \[\$NIOExecutor-6-l\] SubqueryExecutor(97) - sql: select \* FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3
+2018-05-23 14:05:14.915 [INFO] [LIMITOFFSETWITHOUTORDERBY] [\$NIOExecutor-6-l] SubqueryExecutor(97) - sql: select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3
 
-2018-05-23 14:05:14.922 \[INFO\] \[LIMITOFFSETWITHOUTORDERBY\] \[\$NIOExecutor-2-3\] BaseSession(97) - sql: SELECT A.\`Balance\`, A.\`Branch_name\`, A.\`Account_number\`, A.\`account_date\` FROM account AS a WHERE a.Branch_name IN (UNHEX(\'4272696768746F6E\'), UNHEX(\'4272696768746F6E\'), UNHEX(\'526564776F6F64\'), UNHEX(\'50657272797269646765\'), UNHEX(\'50657272797269646765\'), UNHEX(\'526564776
+2018-05-23 14:05:14.922 [INFO] [LIMITOFFSETWITHOUTORDERBY] [\$NIOExecutor-2-3] BaseSession(97) - sql: SELECT A.\`Balance\`, A.\`Branch_name\`, A.\`Account_number\`, A.\`account_date\` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776
 
-F6f64\'), NULL) LIMIT 1 , 3
+F6f64'), NULL) LIMIT 1 , 3
 
 #### recordMySQLErrors
 
@@ -10834,7 +10834,7 @@ F6f64\'), NULL) LIMIT 1 , 3
 
 recordMySQLErrors parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordMySQLErrors\"\>false\</property\>
+<property name=[recordMySQLErrors](#recordMySQLErrors)>false</property>
 
 **Role of parameter:**
 
@@ -10842,11 +10842,11 @@ recordMySQLErrors log records error message returned by MySQL.
 
 Execute as follow:
 
-msyql\> select form;
+msyql> select form;
 
 View /logs/hotdb.log of compute node installation directory
 
-2018-05-23 14:38:55.843 \[INFO\] \[MYSQLERROR\] \[\$NIOREACTOR-7-RW\] MySQLConnection(56) -- sql: select form, error response from MySQLConnection \[node=4, id=223, threadId=118551, state=borrowed, close=false, autocommit=true, host=192.168.220.103, port=3309, database=db249, localPort=27007, isClose:false, toBeClose:false\], err: Unknown column \'form\' in \'field list\', code: 1054
+2018-05-23 14:38:55.843 [INFO] [MYSQLERROR] [\$NIOREACTOR-7-RW] MySQLConnection(56) -- sql: select form, error response from MySQLConnection [node=4, id=223, threadId=118551, state=borrowed, close=false, autocommit=true, host=192.168.220.103, port=3309, database=db249, localPort=27007, isClose:false, toBeClose:false], err: Unknown column 'form' in 'field list', code: 1054
 
 #### recordMySQLWarnings
 
@@ -10868,7 +10868,7 @@ View /logs/hotdb.log of compute node installation directory
 
 recordMySQLWarnings parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordMySQLWarnings\"\>false\</property\>
+<property name=[recordMySQLWarnings](#recordMySQLWarnings)>false</property>
 
 **Role of parameter:**
 
@@ -10876,17 +10876,17 @@ recordMySQLWarnings log records the warning message returned by MySQL.
 
 Execute as follow:
 
-mysql\> update account set Account_number=\"\$!\\\\\'\'\# \# \";
+mysql> update account set Account_number="\$!\\\\''\# \# ";
 
 View /logs/sql.log of compute node installation directory,
 
-2018-06-12 10:52:07.011 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\# \# \', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 1, code: 1265
+2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*\$!\\\\\\'\\'\# \# ', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
 
-2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\# \# \', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 2, code: 1265
+2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*\$!\\\\\\'\\'\# \# ', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
 
-2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\# \# \', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 1, code: 1265
+2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*\$!\\\\\\'\\'\# \# ', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
 
-2018-06-12 10:52:07.013 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\# \# \', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 2, code: 1265
+2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*\$!\\\\\\'\\'\# \# ', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
 
 #### recordSql
 
@@ -10906,7 +10906,7 @@ View /logs/sql.log of compute node installation directory,
 
 **Parameter Setting:**
 
-\<property name=\"recordSql\"\>false\</property\>\<!\-- Make statistics of SQL execution condition or not, Yes: true, No: false \--\>
+<property name=[recordSql](#recordSql)>false</property><!-- Make statistics of SQL execution condition or not, Yes: true, No: false -->
 
 **Role of parameter:**
 
@@ -10922,11 +10922,11 @@ Make statistics of SQL execution condition or not.
 
 ![](assets/standard/image151.png)
 
-2\. View statistics of SQL execution via server configDB
+2. View statistics of SQL execution via server configDB
 
-mysql\> select \* from hotdb_query_records order by db_id limit 1\\G
+mysql> select * from hotdb_query_records order by db_id limit 1\\G
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*1. row\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+******************************1. row***************************
 
 id: 2
 
@@ -10934,7 +10934,7 @@ db_id: 1
 
 type: SELECT
 
-query: SELECT COUNT(\*) FROM union b
+query: SELECT COUNT(*) FROM union b
 
 total_hotdb_time: 67934
 
@@ -11020,7 +11020,7 @@ crc: 321944166562
 
 The parameter recordSqlAuditlog in Server.xml is configured as false by default:
 
-\<property name=\"recordSqlAuditlog\"\>false\</property\>
+<property name=[recordSqlAuditlog](#recordSqlAuditlog)>false</property>
 
 **Role of parameter:**
 
@@ -11028,13 +11028,13 @@ If the parameter is set as true，DDL、DML、DQL and other operations will be r
 
 For example, execute DDL on the server of compute node and view the log output.
 
-{\"affected_rows\":\"0\",\"command\":\"CREATE TABLE \`t_sharding_01\` (\\n\`id\` int(10) NOT NULL AUTO_INCREMENT,\\n\`name\` varchar(50) NOT NULL,\\n\`age\` int(3),\\nPRIMARY KEY (\`id\`)\\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\",\"connection_id\":\"44\",\"end_time\":\"2020-04-27 14:58:34.769\",\"failed_reason\":\"\",\"host\":\"127.0.0.1\",\"ip\":\"127.0.0.1\",\"log_id\":\"9524067900080128\",\"logic_db\":\"CXD_DB\",\"matched_rows\":\"0\",\"port\":\"3323\",\"query_rows\":\"0\",\"sql_subtype\":\"CREATE\",\"sql_type\":\"DDL\",\"status\":\"1\",\"time\":\"2020-04-27 14:58:34.736\",\"user\":\"cxd@%\"}
+{"affected_rows":"0","command":"CREATE TABLE \`t_sharding_01\` (\\n\`id\` int(10) NOT NULL AUTO_INCREMENT,\\n\`name\` varchar(50) NOT NULL,\\n\`age\` int(3),\\nPRIMARY KEY (\`id\`)\\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4","connection_id":"44","end_time":"2020-04-27 14:58:34.769","failed_reason":"","host":"127.0.0.1","ip":"127.0.0.1","log_id":"9524067900080128","logic_db":"CXD_DB","matched_rows":"0","port":"3323","query_rows":"0","sql_subtype":"CREATE","sql_type":"DDL","status":"1","time":"2020-04-27 14:58:34.736","user":"cxd@%"}
 
-Note: the log is output in the format of json. Special characters such as double quotation marks are escaped with \\. The meaning of some keys in json is as follows:
+Note: the log is output in the format of json. Special characters such as double quotation marks are escaped with \. The meaning of some keys in json is as follows:
 
-sql\_ type: the type of SQL currently executed, including DDL/DML/DQL/OTHER.
+sql_ type: the type of SQL currently executed, including DDL/DML/DQL/OTHER.
 
-sql\_ subtype: the subtype of SQL currently executed, among which DDL includes CREARE/ALTER/DROP/TUNCATE/RENAME; DQL includes SELECT; DML includes UPDATE/DELETE/INSERT/REPLACE/LOAD; OTHER includes SET/PREPARE/TRANSACTION/SHOW.
+sql_ subtype: the subtype of SQL currently executed, among which DDL includes CREARE/ALTER/DROP/TUNCATE/RENAME; DQL includes SELECT; DML includes UPDATE/DELETE/INSERT/REPLACE/LOAD; OTHER includes SET/PREPARE/TRANSACTION/SHOW.
 
 ip: the IP address of the client executing SQL.
 
@@ -11044,23 +11044,23 @@ user: the user (including the host name) who connects to the compute node and ex
 
 host: connects to the host value specified by the compute node.
 
-logic\_ db: connects to the LogicDB used by the compute node to execute SQL.
+logic_ db: connects to the LogicDB used by the compute node to execute SQL.
 
-connection\_ id: the front-end connection ID used to execute SQL.
+connection_ id: the front-end connection ID used to execute SQL.
 
 command: the statement that specifically executes SQL (the original SQL statement).
 
-query\_ rows: the number of data rows returned (mainly reflected in the SELECT operation).
+query_ rows: the number of data rows returned (mainly reflected in the SELECT operation).
 
-affected\_ rows: the number of rows affected by SQL execution.
+affected_ rows: the number of rows affected by SQL execution.
 
-matched\_ rows: the number of rows matched by SQL execution.
+matched_ rows: the number of rows matched by SQL execution.
 
 status: whether the SQL execution status is success or failure. 0 is for failure and 1 is for success.
 
-failed\_ reason: the reason why SQL execution failed.
+failed_ reason: the reason why SQL execution failed.
 
-end\_ time: end time of SQL execution.
+end_ time: end time of SQL execution.
 
 #### recordSQLIntercepted
 
@@ -11082,15 +11082,15 @@ end\_ time: end time of SQL execution.
 
 recordSQLIntercepted parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordSQLIntercepted\"\>true\</property\>
+<property name=[recordSQLIntercepted](#recordSQLIntercepted)>true</property>
 
 **Role of parameter:**
 
-recordSQLIntercepted log records the intercepted statement; configuration of intercepted statement is in Middleware management platform-\>Safety-\>SQL firewall.
+recordSQLIntercepted log records the intercepted statement; configuration of intercepted statement is in Middleware management platform->Safety->SQL firewall.
 
 View /logs/sql.log of compute node installation directory
 
-2018-06-01 14:17:45.669 \[INFO\] \[SQLINTERCEPTED\] \[\$NIOExecutor-1-2\] g(-1) -- sql: DELETE FROM sql_intercept_tab, user:zy, ip: 192.168.200.45, db: TEST_JZL, intercepted by filewall: not allowed to execute delete without where expression
+2018-06-01 14:17:45.669 [INFO] [SQLINTERCEPTED] [\$NIOExecutor-1-2] g(-1) -- sql: DELETE FROM sql_intercept_tab, user:zy, ip: 192.168.200.45, db: TEST_JZL, intercepted by filewall: not allowed to execute delete without where expression
 
 #### recordSQLKeyConflict
 
@@ -11112,7 +11112,7 @@ View /logs/sql.log of compute node installation directory
 
 recordSQLKeyConflict parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordSQLKeyConflict\"\>false\</property\>
+<property name=[recordSQLKeyConflict](#recordSQLKeyConflict)>false</property>
 
 **Role of parameter:**
 
@@ -11122,19 +11122,19 @@ Executed as follow:
 
 Create Table:
 
-mysql\> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`));
+mysql> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`));
 
 Execute Insert statement once:
 
-mysql\> insert into vtab001 values(1,\'aaa\');
+mysql> insert into vtab001 values(1,'aaa');
 
 Execute again, to violate the Primary Key Constraint:
 
-mysql\> insert into vtab001 values(1,\'aaa\');
+mysql> insert into vtab001 values(1,'aaa');
 
 View /logs/sql.log of compute node installation directory
 
-2018-06-01 14:09:47.139 \[INFO\] \[SQLKEYCONFLICT\] \[\$NIOREACTOR-1-RW\] MySQLConnection(65) -- sql: insert into vtab001 values(1,\'aaa\'), error response from MySQLConnection \[node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false\], err: Duplicate entry \'1\' for key \'PRIMARY\', CODE: 1062
+2018-06-01 14:09:47.139 [INFO] [SQLKEYCONFLICT] [\$NIOREACTOR-1-RW] MySQLConnection(65) -- sql: insert into vtab001 values(1,'aaa'), error response from MySQLConnection [node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false], err: Duplicate entry '1' for key 'PRIMARY', CODE: 1062
 
 #### recordSQLSyntaxError
 
@@ -11156,7 +11156,7 @@ View /logs/sql.log of compute node installation directory
 
 recordSQLSyntaxError parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordSQLSyntaxError\"\>false\</property\>
+<property name=[recordSQLSyntaxError](#recordSQLSyntaxError)>false</property>
 
 **Role of parameter:**
 
@@ -11164,11 +11164,11 @@ recordSQLSyntaxError records statement with Syntax error.
 
 For example:
 
-mysql\> SELECT \* FROM;
+mysql> SELECT * FROM;
 
 View /logs/sql.log of compute node installation directory
 
-2018-05-22 16:12:42.686 \[INFO\] \[SQLSYNTAXERROR\] \[\$NIOExecutor-6-3\] ServerConnection(671) - SELECT \* FROM
+2018-05-22 16:12:42.686 [INFO] [SQLSYNTAXERROR] [\$NIOExecutor-6-3] ServerConnection(671) - SELECT * FROM
 
 #### recordSQLUnsupported
 
@@ -11190,7 +11190,7 @@ View /logs/sql.log of compute node installation directory
 
 recordSQLUnsupported parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordSQLUnsupported\"\>true\</property\>
+<property name=[recordSQLUnsupported](#recordSQLUnsupported)>true</property>
 
 **Role of parameter:**
 
@@ -11198,13 +11198,13 @@ recordSQLUnsupported log records the unsupported statement.
 
 For example:
 
-Create Table: mysql\> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`));
+Create Table: mysql> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`));
 
-Execute the statement not supported by HotDB for the time being: mysql\> select \* into vtab001_bak from vtab001;
+Execute the statement not supported by HotDB for the time being: mysql> select * into vtab001_bak from vtab001;
 
 View /logs/sql.log of compute node installation directory
 
-2018-05-22 14:19:54.395 \[INFO\] \[SQLUNSUPPORTED\] \[\$NIOExecutor-6-2\] ServerConnection(110) -- sql: select \* into vtab001_bak from vtab001
+2018-05-22 14:19:54.395 [INFO] [SQLUNSUPPORTED] [\$NIOExecutor-6-2] ServerConnection(110) -- sql: select * into vtab001_bak from vtab001
 
 #### recordSubQuery
 
@@ -11226,7 +11226,7 @@ View /logs/sql.log of compute node installation directory
 
 recordSubQuery parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordSubQuery\"\>false\</property\>
+<property name=[recordSubQuery](#recordSubQuery)>false</property>
 
 **Role of parameter:**
 
@@ -11234,11 +11234,11 @@ recordSubQuery log records Subquery.
 
 For example:
 
-mysql\> select \* FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b );
+mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b );
 
 View /logs/sql.log of compute node installation directory
 
-2018-05-23 13:56:11.714 \[INFO\] \[SUBQUERY\] \[\$NIOExecutor-6-0\] SubqueryExecutor(169) -- select \* FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b )
+2018-05-23 13:56:11.714 [INFO] [SUBQUERY] [\$NIOExecutor-6-0] SubqueryExecutor(169) -- select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b )
 
 #### recordUNION
 
@@ -11260,7 +11260,7 @@ View /logs/sql.log of compute node installation directory
 
 recordUNION parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"recordUNION\"\>false\</property\>
+<property name=[recordUNION](#recordUNION)>false</property>
 
 **Role of parameter:**
 
@@ -11268,11 +11268,11 @@ recordUNION records UNION statement.
 
 For example:
 
-mysql\> SELECT \* FROM trends UNION SELECT \* from trends_uint;
+mysql> SELECT * FROM trends UNION SELECT * from trends_uint;
 
 View /logs/sql.log of compute node installation directory
 
-2018-05-23 13:30:27.156 \[INFO\] \[UNION\] \[\$NIOREACTOR-5-RW\] UnionExecutor(162) - SELECT \* FROM trends UNION SELECT \* from trends_uint
+2018-05-23 13:30:27.156 [INFO] [UNION] [\$NIOREACTOR-5-RW] UnionExecutor(162) - SELECT * FROM trends UNION SELECT * from trends_uint
 
 #### routeByRelativeCol
 
@@ -11294,7 +11294,7 @@ View /logs/sql.log of compute node installation directory
 
 routeByRelativeCol parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"routeByRelativeCol\"\>false\</property\>\<!\-- It does not include the route via Secondary Index Field at the time of sharding key \--\>
+<property name=[routeByRelativeCol](#routeByRelativeCol)>false</property><!-- It does not include the route via Secondary Index Field at the time of sharding key -->
 
 **Role of parameter:**
 
@@ -11320,7 +11320,7 @@ This function is OFF by default, that is, it does not route via Secondary Index 
 
 serverId parameter configuration in Server.xml is configured as follow:
 
-\<property name=\"serverId\"\>1\</property\>\<!\-- Cluster node number 1-N (number of nodes), unique in cluster \--\>
+<property name=[serverId](#serverId)>1</property><!-- Cluster node number 1-N (number of nodes), unique in cluster -->
 
 **Role of parameter:**
 
@@ -11380,19 +11380,19 @@ management port is used to monitor compute node service information and monitori
 
 When showAllAffectedRowsInGlobalTable Parameter is set as true, Global Table will execute insert,delete,update related SQL statements, and the result will show total number of affected nodes.
 
-For example: Global Table join_c06_ct associates 8 nodes; after executing this SQL statement, 1 row of the actual data will be updated; when this Parameter is set as true, the result will show that the affected number is 8 (that is: number of updated rows\*number of affected nodes).
+For example: Global Table join_c06_ct associates 8 nodes; after executing this SQL statement, 1 row of the actual data will be updated; when this Parameter is set as true, the result will show that the affected number is 8 (that is: number of updated rows*number of affected nodes).
 
-mysql\> delete from join_us06_ct where id = 8;
+mysql> delete from join_us06_ct where id = 8;
 
 Query OK, 8 rows affected (0.01 sec)
 
-mysql\> update join_us06_ct set e = \'y\' where id =7;
+mysql> update join_us06_ct set e = 'y' where id =7;
 
 Query OK, 8 rows affected (0.04 sec)
 
 Rows matched: 8 Changed: 8 Warnings: 0
 
-mysql\> insert into join_us06_ct values (8,6,1.3,1.4,\'y\',\'u\',now(),now(),2017);
+mysql> insert into join_us06_ct values (8,6,1.3,1.4,'y','u',now(),now(),2017);
 
 Query OK, 8 rows affected (0.01 sec)
 
@@ -11400,7 +11400,7 @@ Records: 8 Duplicates: 0 Warnings: 0
 
 When this Parameter is set as false, it will only show number of rows affected, as prompted below:
 
-mysql\> update join_us06_ct set e = \'m\' where id =4;
+mysql> update join_us06_ct set e = 'm' where id =4;
 
 Query OK, 1 rows affected (0.10 sec)
 
@@ -11426,7 +11426,7 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 skipDatatypeCheck parameter in Server.xml
 
-\<property name=\"skipDatatypeCheck\"\>true\</property\>
+<property name=[skipDatatypeCheck](#skipDatatypeCheck)>true</property>
 
 **Role of parameter:**
 
@@ -11434,17 +11434,17 @@ When executing Create and Alter statements on Middleware server, whether to chec
 
 For example:
 
-mysql\> alter table skipDatatypeCheck add(phone double(10,3));
+mysql> alter table skipDatatypeCheck add(phone double(10,3));
 
 skipDatatypeCheck=false:
 
-mysql\> alter table skipDatatypeCheck add(phone double(10,3));
+mysql> alter table skipDatatypeCheck add(phone double(10,3));
 
-ERROR 1064 (HY000): Column type:\'DOUBLE\' is forbidden, you could change column:\'PHONE\' to type \'DECIMAL\'
+ERROR 1064 (HY000): Column type:'DOUBLE' is forbidden, you could change column:'PHONE' to type 'DECIMAL'
 
 skipDatatypeCheck=true:
 
-mysql\> alter table skipDatatypeCheck add(phone double(10,3));
+mysql> alter table skipDatatypeCheck add(phone double(10,3));
 
 Query OK, 0 rows affected (0.23 sec)
 
@@ -11468,7 +11468,7 @@ Query OK, 0 rows affected (0.23 sec)
 
 **Parameter Setting:**
 
-\<property name=\"socketBacklog\"\>1000\</property\>\<!\-- service port Socket backlog (Unit: Ge) \--\>
+<property name=[socketBacklog](#socketBacklog)>1000</property><!-- service port Socket backlog (Unit: Ge) -->
 
 **Role of parameter:**
 
@@ -11506,7 +11506,7 @@ This is the max time of compute node from sending SQL to data source to receivin
 
 When SQL execution time exceeds the set time, there will be prompt as follow:
 
-mysql\> select a.\*,b.\*,c.\* from customer_auto_3 a join customer_auto_1 b on a.postcode=b.postcode join customer_auto_2 c on a.provinceid=c.provinceid where c.provinceid in (12,15) and b.province !=\'anhui\' group by a.postcode order by a.birthday,a.provinceid,b.birthday,c.postcode limit 1000;
+mysql> select a.*,b.*,c.* from customer_auto_3 a join customer_auto_1 b on a.postcode=b.postcode join customer_auto_2 c on a.provinceid=c.provinceid where c.provinceid in (12,15) and b.province !='anhui' group by a.postcode order by a.birthday,a.provinceid,b.birthday,c.postcode limit 1000;
 
 ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a new transaction started automatically
 
@@ -11530,7 +11530,7 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 sslUseSM4 in server.xml is configure as follows:
 
-\<property name=\"sslUseSM4\"\>true\</property\>\<!\-- Whether to support SM4 native cipher algorithm \--\>
+<property name=[sslUseSM4](#sslUseSM4)>true</property><!-- Whether to support SM4 native cipher algorithm -->
 
 **Role of parameter:**
 
@@ -11575,11 +11575,11 @@ If set as 0, the program will exit due to abnormality, and there will be no pers
 
 When executing SQL statement on Client, relevant commands will be counted into configDB. When set as 0, none will be counted into configDB.
 
-mysql\> use test_ct
+mysql> use test_ct
 
 Database changed
 
-mysql\> select \* from tid;
+mysql> select * from tid;
 
 Empty set (0.03 sec)
 
@@ -11605,49 +11605,49 @@ Empty set (0.03 sec)
 
 When the parameter is set as 0, it means not to enable Read/write splitting, and all will be read from the host.
 
-mysql\> select \* from ss order by id;
+mysql> select * from ss order by id;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| id \| a \|
+| id | a |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| 1 \| master \|
+| 1 | master |
 
-\| 2 \| master \|
+| 2 | master |
 
-\| 3 \| master \|
+| 3 | master |
 
-\| 4 \| master \|
+| 4 | master |
 
-\| 5 \| master \|
+| 5 | master |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
 5 rows in set (0.00 sec)
 
 When the parameter is set as 1, it means that splittable Read requests are sent to all available data sources, and according to the set read proportion of the Slave, read the Slave or Master.
 
-mysql\> select \* from ss;
+mysql> select * from ss;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| id \| a \|
+| id | a |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| 1 \| master \|
+| 1 | master |
 
-\| 2 \| master \|
+| 2 | master |
 
-\| 3 \| master \|
+| 3 | master |
 
-\| 4 \| slave \|
+| 4 | slave |
 
-\| 5 \| slave \|
+| 5 | slave |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
 5 rows in set (0.00 sec)
 
@@ -11655,117 +11655,117 @@ When the parameter is set as 2, it means that splittable Read requests are sent 
 
 -   Beyond transaction:
 
-mysql\> select \* from ss;
+mysql> select * from ss;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| id \| a \|
+| id | a |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| 1 \| slave \|
+| 1 | slave |
 
-\| 2 \| slave \|
+| 2 | slave |
 
-\| 3 \| slave \|
+| 3 | slave |
 
-\| 4 \| slave \|
+| 4 | slave |
 
-\| 5 \| slave \|
+| 5 | slave |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
 5 rows in set (0.00 sec)
 
 -   Within transaction:
 
-mysql\> select \* from ss order by id;
+mysql> select * from ss order by id;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| id \| a \|
+| id | a |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| 1 \| master \|
+| 1 | master |
 
-\| 2 \| master \|
+| 2 | master |
 
-\| 3 \| master \|
+| 3 | master |
 
-\| 4 \| master \|
+| 4 | master |
 
-\| 5 \| master \|
+| 5 | master |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
 5 rows in set (0.00 sec)
 
 When the parameter is set as 3, it means that the Read requests in transaction before Write occurs are sent to available Slave data sources. Read requests beyond the transaction are sent to available Salve data sources.
 
-mysql\> begin
+mysql> begin
 
 Query OK, 0 row affected (0.00 sec)
 
-mysql\> select \* from ss;
+mysql> select * from ss;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++---------+---------+
 
-\| id \| a \|
+| id | a |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++---------+---------+
 
-\| 4 \| slave \|
+| 4 | slave |
 
-\| 5 \| slave \|
+| 5 | slave |
 
-\| 600004 \| write \|
+| 600004 | write |
 
-\| 600007 \| write \|
+| 600007 | write |
 
-\| 600013 \| write \|
+| 600013 | write |
 
-\| 1 \| slave \|
+| 1 | slave |
 
-\| 2 \| slave \|
+| 2 | slave |
 
-\| 3 \| slave \|
+| 3 | slave |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++---------+---------+
 
 8 rows in set (0.00 sec)
 
-mysql\> insert into ss values(null,\'write\');
+mysql> insert into ss values(null,'write');
 
 Query OK, 0 row affected (0.01 sec)
 
-mysql\> select \* from ss;
+mysql> select * from ss;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++---------+---------+
 
-\| id \| a \|
+| id | a |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++---------+---------+
 
-\| 1 \| master \|
+| 1 | master |
 
-\| 2 \| master \|
+| 2 | master |
 
-\| 3 \| master \|
+| 3 | master |
 
-\| 600014 \| write \|
+| 600014 | write |
 
-\| 4 \| master \|
+| 4 | master |
 
-\| 5 \| master \|
+| 5 | master |
 
-\| 600004 \| write \|
+| 600004 | write |
 
-\| 600007 \| write \|
+| 600007 | write |
 
-\| 600013 \| write \|
+| 600013 | write |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++---------+---------+
 
 9 rows in set (0.00 sec)
 
@@ -11789,7 +11789,7 @@ For details, please refer to [Read/write splitting](#high-availability-service-1
 
 **Parameter Setting:**
 
-\<property name=\"switchByLogInFailover\"\>false\</property\>\<!---When failover, select switch priority accoriding to Read_Master_Log_Pos \--\>
+<property name=[switchByLogInFailover](#switchByLogInFailover)>false</property><!---When failover, select switch priority accoriding to Read_Master_Log_Pos -->
 
 **Role of parameter:**
 
@@ -11821,7 +11821,7 @@ Note: Manual Switch operation is not under control of this parameter
 
 switchoverTimeoutForTransParameter in Server.xml is set as below:
 
-\<property name=\"switchoverTimeoutForTrans\"\>3000\</property\>
+<property name=[switchoverTimeoutForTrans](#switchoverTimeoutForTrans)>3000</property>
 
 **Role of parameter:**
 
@@ -11831,51 +11831,51 @@ That is: Before manual execution of Master/Slave switch, enable Non-commit of ex
 
 For example:
 
-1\. Set [switchoverTimeoutForTrans](#switchoverTimeoutForTrans)Timeout as 36000ms
+1. Set [switchoverTimeoutForTrans](#switchoverTimeoutForTrans)Timeout as 36000ms
 
-2\. Enable transaction to execute Insert operation, make manual execution of Master/Slave switch, and commit transaction within 36000ms. Commit succeeded as follow:
+2. Enable transaction to execute Insert operation, make manual execution of Master/Slave switch, and commit transaction within 36000ms. Commit succeeded as follow:
 
-mysql\> begin;
-
-Query OK, 0 rows affected (0.00 sec)
-
-mysql\> insert into TEST_001 values(1);
+mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> commit;
+mysql> insert into TEST_001 values(1);
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select \* from TEST_001;
+mysql> commit;
 
-+\-\-\-\-\--+
+Query OK, 0 rows affected (0.00 sec)
 
-\| id \|
+mysql> select * from TEST_001;
 
-+\-\-\-\-\--+
++------+
 
-\| 1 \|
+| id |
 
-+\-\-\-\-\--+
++------+
+
+| 1 |
+
++------+
 
 1 row in set (0.01 sec)
 
 After committing the transaction, it's queried that id=1
 
-3\. Enable the transaction to execute Insert operation, make manual execution of Master/Slave switch. If the transaction is not committed within 36000 ms, then due to Commit timeout, the transaction will roll back as follow:
+3. Enable the transaction to execute Insert operation, make manual execution of Master/Slave switch. If the transaction is not committed within 36000 ms, then due to Commit timeout, the transaction will roll back as follow:
 
-mysql\> begin;
+mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> insert into TEST_001 values(2);
+mysql> insert into TEST_001 values(2);
 
 Query OK, 0 rows affected (0.00 sec)
 
 Execute Query statement one minute later:
 
-mysql\> select \* from TEST_001;
+mysql> select * from TEST_001;
 
 ERROR 2013 (HY000): Lost connection to MySQL server during query
 
@@ -11889,17 +11889,17 @@ Current database: test_jzl
 
 Query after re-login, and it's found that the transaction is not committed:
 
-mysql\> select \* from TEST_001;
+mysql> select * from TEST_001;
 
-+\-\-\-\-\--+
++------+
 
-\| id \|
+| id |
 
-+\-\-\-\-\--+
++------+
 
-\| 1 \|
+| 1 |
 
-+\-\-\-\-\--+
++------+
 
 1 row in set (0.01 sec)
 
@@ -11923,11 +11923,11 @@ mysql\> select \* from TEST_001;
 
 **Parameter Setting:**
 
-\<property name=\"timerExecutor\"\>4\</property\>\<!\-- Number of threads of timers \--\>
+<property name=[timerExecutor](#timerExecutor)>4</property><!-- Number of threads of timers -->
 
 **Role of parameter:**
 
-The parameter [adaptiveProcessor](#adaptiveprocessor) is enabled by default, and when enabled, the compute node will make Automatic Adaptation to the Max timerExecutor. Log in to 3325 port, execute show @\@threadpool; command, and you could view the number of current timerExecutor.
+The parameter [adaptiveProcessor](#adaptiveprocessor) is enabled by default, and when enabled, the compute node will make Automatic Adaptation to the Max timerExecutor. Log in to 3325 port, execute show @@threadpool; command, and you could view the number of current timerExecutor.
 
 #### timestampProxy
 
@@ -11949,15 +11949,15 @@ The parameter [adaptiveProcessor](#adaptiveprocessor) is enabled by default, and
 
 When timestampProxy parameter is 0, it means auto mode, and when the compute node checks that the time difference of data source is greater than 0.5, it will be the auto Proxy of the Global Time Function. If less than 0.5, it only make Proxy of the time function of the Global Table, high-accuracy time stamp and cross-node statement.
 
-\<property name=\"timestampProxy\"\>0\</property\>
+<property name=[timestampProxy](#timestampProxy)>0</property>
 
 When the parameter is set as 1, it means global_table_only, only in Global Table mode; the compute node only make Proxy of the time function of Global Table.
 
-\<property name=\"timestampProxy\"\>1\</property\>
+<property name=[timestampProxy](#timestampProxy)>1</property>
 
 When the parameter is set as 2, it means all, in Global mode, and the compute node will make Proxy of the Global Time Function. **Role of parameter:**
 
-\<property name=\"timestampProxy\"\>2\</property\>
+<property name=[timestampProxy](#timestampProxy)>2</property>
 
 **Role of parameter:**
 
@@ -12007,39 +12007,39 @@ This parameter is used for Complete Global Proxy of the table with on update cur
 
 url, username and password are supporting parameters: url is the configDB route storing compute node configuration information; username and password are username and password for connecting this physical database. This configDB is used for storing configuration information.
 
-\<property name=\"url\"\>jdbc:mysql://192.168.200.191:3310/hotdb_config\</property\>\<!\-- Master configDB address \--\>
+<property name="url">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- Master configDB address -->
 
-\<property name=\"username\"\>hotdb_config\</property\>\<!\-- Master configDB username \--\>
+<property name="username">hotdb_config</property><!-- Master configDB username -->
 
-\<property name=\"password\"\>hotdb_config\</property\>\<!\-- Master configDB password \--\>
+<property name="password">hotdb_config</property><!-- Master configDB password -->
 
-\<property
+<property
 
 This username and password shall be created in MySQL instance, and could log in to this configDB only after being granted with privilege. Both the username and password could be customized.
 
-mysql\> grant select,insert,update,delete,super on \*.\* to hotdb_config_9@\'%\' identified by \'hotdb_config_9\';
+mysql> grant select,insert,update,delete,super on *.* to hotdb_config_9@'%' identified by 'hotdb_config_9';
 
 Query OK, 0 row affected (0.00 sec)
 
-root\@127.0.0.1:(none) 5.7.19-HotDB-2.5.2 04:20:08\> show grants;
+root@127.0.0.1:(none) 5.7.19-HotDB-2.5.2 04:20:08> show grants;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------------------------------------------------+
 
-\| Grants for root\@localhost \|
+| Grants for root@localhost |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------------------------------------------------+
 
-\| GRANT ALL PRIVILEGED ON \*.\* TO \'root\'@\'localhost\' WITH GRANT OPTION \|
+| GRANT ALL PRIVILEGED ON *.* TO 'root'@'localhost' WITH GRANT OPTION |
 
-\| GRANT PROXY ON \'\'@\'\' TO \'root\'@\'localhost\' WITH GRANT OPTION \|
+| GRANT PROXY ON ''@'' TO 'root'@'localhost' WITH GRANT OPTION |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------------------------------------------------------+
 
 1 row in set (0.07 sec)
 
-root\> mysql -uhotdb_config_9 -photdb_config_9 -h127.0.0.1 -P3306
+root> mysql -uhotdb_config_9 -photdb_config_9 -h127.0.0.1 -P3306
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -12055,13 +12055,13 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type \'help;\' or \'\\h\' for help. Type \'\\c\' to clear the current input statement.
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
 When configDB connection fails after enabling the compute node, the compute node will reconnect at interval of 3s, until connection still fails after more than 30 minutes of retry, then interrupt Enable operation.
 
 The last packet set successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
 
-2018-06-12 15:25:56.789 \[ERROR\] \[INIT\] \[main\] HotdbConfig(275) -- no available config datasources. retry in 3 seconds.
+2018-06-12 15:25:56.789 [ERROR] [INIT] [main] HotdbConfig(275) -- no available config datasources. retry in 3 seconds.
 
 #### usingAIO
 
@@ -12081,7 +12081,7 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 
 **Parameter Setting:**
 
-\<property name=\"usingAIO\"\>0\</property\>\<!---Use AIO or not, Yes: 1, No: 0 \--\>
+<property name=[usingAIO](#usingAIO)>0</property><!---Use AIO or not, Yes: 1, No: 0 -->
 
 When the parameter is set as 0, the compute node uses NIO, and marks opposition between AIO and NIO
 
@@ -12091,11 +12091,11 @@ It's used for setting whether the current compute node enables AIO or not
 
 AIO: Asynchronous Input/Output, and the server realization mode is to create a thread for a valid request, and all I/O requests of the Client are firstly completed by OS and then informed to the server application to enable thread for processing, IO mode is applicable to the architecture with many connections and long connections (heavy operation). Since at present, AIO hasn't been completed on Linux and optimization of AIO by compute node is far inferior to NIO, therefore, it's not recommended to enable this parameter.
 
-root\> tail -n 300 hotdb.log \| grep \'aio\'
+root> tail -n 300 hotdb.log | grep 'aio'
 
-2018-06-01 13:51:18.961 \[INFO\] \[INIT\] \[main\] j(-1) -- using aio network handler
+2018-06-01 13:51:18.961 [INFO] [INIT] [main] j(-1) -- using aio network handler
 
-2018-06-01 13:52:19.644 \[INFO\] \[INIT\] \[main\] j(-1) -- using aio network handler
+2018-06-01 13:52:19.644 [INFO] [INIT] [main] j(-1) -- using aio network handler
 
 #### version
 
@@ -12107,7 +12107,7 @@ root\> tail -n 300 hotdb.log \| grep \'aio\'
   Parameter value                  version
   Visible or not                   No
   Description of parameters        The version number shown to the public by the compute node
-  Default value                    Synchronize with result of the compute node show @\@version, for example:5.6.29-HotDB-2.5.1
+  Default value                    Synchronize with result of the compute node show @@version, for example:5.6.29-HotDB-2.5.1
   Whether Reload is valid or not   Yes
   Min Compatible Version           2.4.3
 
@@ -12117,13 +12117,13 @@ root\> tail -n 300 hotdb.log \| grep \'aio\'
 
 The version number shown by the compute node to the public, which could be modified by Custom, and it could specify relevant connection protocol of inferior versions.
 
-\<property name=\"version\"\>5.6.1\</property\>\<!---Version Number \--\>
+<property name=[version](#version)>5.6.1</property><!---Version Number -->
 
 When log in to MySQL instance, you could view corresponding version number:
 
-root\> mysql -uct -pct -h127.0.0.1 -P2473
+root> mysql -uct -pct -h127.0.0.1 -P2473
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -12139,19 +12139,19 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type \'help;\' or \'\\h\' for help. Type \'\\c\' to clear the current input statement.
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
-root\@127.0.0.1:(none) 5.7.19-HotDB-2.5.2 04:20:14\> select version();
+root@127.0.0.1:(none) 5.7.19-HotDB-2.5.2 04:20:14> select version();
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------+
 
-\| VERSION() \|
+| VERSION() |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------+
 
-\| **5.6.1**-HotDB-2.4.7 \|
+| **5.6.1**-HotDB-2.4.7 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++--------------------+
 
 1 row in set (0.03 sec)
 
@@ -12179,11 +12179,11 @@ versionComment, the version comment of compute node for external display, can be
 
 For example:
 
-Null：\<property name=\"versionComment\"\>\</property\>，connect to the compute node：
+Null：<property name=[versionComment](#versionComment)></property>，connect to the compute node：
 
-\[root\@hotdb\]\## mysql -uroot -proot -P3323 -h192.168.210.49
+[root@hotdb]\## mysql -uroot -proot -P3323 -h192.168.210.49
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -12191,13 +12191,13 @@ Your MySQL connection id is 235
 
 Server version: 5.7.23 HotDB-2.5.3 HotDB Server by Hotpu Tech
 
-\...\...
+......
 
-A space： \<property name=\"versionComment\"\> \</property\>，connect to the compute node：
+A space： <property name=[versionComment](#versionComment)> </property>，connect to the compute node：
 
-\[root\@hotdb\]\## mysql -uroot -proot -P3323 -h192.168.210.49
+[root@hotdb]\## mysql -uroot -proot -P3323 -h192.168.210.49
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -12205,13 +12205,13 @@ Your MySQL connection id is 235
 
 Server version: 5.7.23
 
-\...\...
+......
 
-A customized string： \<property name=\"versionComment\"\>hotpu\</property\>，connect to the compute node：
+A customized string： <property name=[versionComment](#versionComment)>hotpu</property>，connect to the compute node：
 
-\[root\@hotdb\]\## mysql -uroot -proot -P3323 -h192.168.210.49
+[root@hotdb]\## mysql -uroot -proot -P3323 -h192.168.210.49
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
 Welcome to the MySQL monitor. Commands end with ; or \\g.
 
@@ -12219,15 +12219,15 @@ Your MySQL connection id is 235
 
 Server version: 5.7.23 hotpu
 
-\...\...
+......
 
 Note: the status result after connection and the prompt when the client is connecting the compute node will both be displayed according to the version comment.
 
-\...\...
+......
 
-root\@192.168.210.49:(none) 5.7.23 08:41:42\> status;
+root@192.168.210.49:(none) 5.7.23 08:41:42> status;
 
-\-\-\-\-\-\-\-\-\-\-\-\-\--
+--------------
 
 mysql Ver 14.14 Distrib 5.7.21, for linux-glibc2.12 (x86_64) using EditLine wrapper
 
@@ -12235,13 +12235,13 @@ Connection id: 444
 
 Current database:
 
-Current user: root\@192.168.210.49
+Current user: root@192.168.210.49
 
 SSL: Not in use
 
 Current pager: stdout
 
-Using outfile: \'\'
+Using outfile: ''
 
 Using delimiter: ;
 
@@ -12251,7 +12251,7 @@ Protocol version: 10
 
 Connection: 192.168.210.49 via TCP/IP
 
-\...\...
+......
 
 #### VIP & checkVIPPeriod
 
@@ -12289,9 +12289,9 @@ VIP and checkVIPPeriod are supporting parameters; VIP is set as Keepalived virtu
 
 VIP Parameter of Server.xml is set as IP of Keepalived; CheckVIPPeriod is the check period, and the unit: ms
 
-\<property name=\"VIP\"\>192.168.220.106\</property\>\<!\-- virtual IP (Null if not filled or if the format is not IPv4) \--\>
+<property name="VIP">192.168.220.106</property><!-- virtual IP (Null if not filled or if the format is not IPv4) -->
 
-\<property name=\"checkVIPPeriod\"\>500\</property\>\<!\-- virtual IP check period (If VIP is valid, check VIP period, unit: ms) \--\>
+<property name="checkVIPPeriod">500</property><!-- virtual IP check period (If VIP is valid, check VIP period, unit: ms) -->
 
 View configuration script of Keepalived:
 
@@ -12331,7 +12331,7 @@ It is in Compute Node High Availability environment, and under the condition of 
 
 **Parameter Setting:**
 
-\<property name=\"waitConfigSyncFinish\"\>true\</property\>\<!\-- When enabled, wait for configDB synchronization or not \--\>
+<property name=[waitConfigSyncFinish](#waitConfigSyncFinish)>true</property><!-- When enabled, wait for configDB synchronization or not -->
 
 **Role of parameter:**
 
@@ -12339,27 +12339,27 @@ It is used for setting whether to wait for configDB synchronization or not when 
 
 OFF status: Enable successfully when there is latency between master/slave configDB
 
-2018-06-01 16:21:14.958 \[INFO\] \[INIT\] \[main\] j(-1) - reading config\...
+2018-06-01 16:21:14.958 [INFO] [INIT] [main] j(-1) - reading config...
 
-2018-06-01 16:21:15.170 \[info\] \[INIT\] \[main\] a(-1) - using config datasource in start up:\[id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8\]
+2018-06-01 16:21:15.170 [info] [INIT] [main] a(-1) - using config datasource in start up:[id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8]
 
-2018-06-01 16:21:15.518 \[info\] \[INIT\] \[main\] a(-1) - master config datasource \[id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8\] connect success.
+2018-06-01 16:21:15.518 [info] [INIT] [main] a(-1) - master config datasource [id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8] connect success.
 
-2018-06-01 16:21:16.892 \[info\] \[INIT\] \[main\] j(-1) - ===============================================
+2018-06-01 16:21:16.892 [info] [INIT] [main] j(-1) - ===============================================
 
-2018-06-01 16:21:16.893 \[info\] \[INIT\] \[main\] j(-1) - HotDB-2.4.9 is ready to startup \...
+2018-06-01 16:21:16.893 [info] [INIT] [main] j(-1) - HotDB-2.4.9 is ready to startup ...
 
-2018-06-01 16:21:16.894 \[info\] \[INIT\] \[main\] j(-1) - Sysconfig params:SystemConfig \[ frontwriteQueueSize=2048, service port=9993, management port=999S, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferchunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://l27.0.0.l:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://l27.0.0.l:3306/botdb_config_249, usingAIO=0, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=1, heartbeatTimeoutMs=100, joinable=true, joincachesize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,viP=nul1,checkVIPPeriod=l600\]
+2018-06-01 16:21:16.894 [info] [INIT] [main] j(-1) - Sysconfig params:SystemConfig [ frontwriteQueueSize=2048, service port=9993, management port=999S, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferchunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://l27.0.0.l:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://l27.0.0.l:3306/botdb_config_249, usingAIO=0, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=1, heartbeatTimeoutMs=100, joinable=true, joincachesize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,viP=nul1,checkVIPPeriod=l600]
 
-2018-06-01 16:21:17.210 \[info\] \[INIT\] \[main\] BufferPool(-1) - total buffer:163840000,every chunk bytes:16384,chunk number:10000,every threadLocalMaxNumber:10000
+2018-06-01 16:21:17.210 [info] [INIT] [main] BufferPool(-1) - total buffer:163840000,every chunk bytes:16384,chunk number:10000,every threadLocalMaxNumber:10000
 
-2018-06-01 16:21:17.216 \[INFO\] \[INIT\] \[main\] j(-1) - usinq aio network handler
+2018-06-01 16:21:17.216 [INFO] [INIT] [main] j(-1) - usinq aio network handler
 
 ON status:
 
 It could be enabled only after waiting for master/slave synchronization
 
-2018-07-12 14:28:52.019 \[INFO\] \[INIT\] \[\$NIOREACTOR-9-RW\] XAInitRecoverHandler(125) -- wait for config datasource synchronizing...
+2018-07-12 14:28:52.019 [INFO] [INIT] [\$NIOREACTOR-9-RW] XAInitRecoverHandler(125) -- wait for config datasource synchronizing...
 
 #### waitForSlaveInFailover
 
@@ -12379,7 +12379,7 @@ It could be enabled only after waiting for master/slave synchronization
 
 **Parameter Setting:**
 
-\<property name=\"waitForSlaveInFailover\"\>true\</property\>\<!\-- In failover, whether to wait for the Slave to catch up with replication or not \--\>
+<property name=[waitForSlaveInFailover](#waitForSlaveInFailover)>true</property><!-- In failover, whether to wait for the Slave to catch up with replication or not -->
 
 **Role of parameter:**
 
@@ -12389,45 +12389,45 @@ ON status:
 
 When the Slave has replication latency, it can't switch to the Slave, and the compute node will keep checking, and could make switch only after waiting for replication synchronization
 
-mysql\> show @\@latency;
+mysql> show @@latency;
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++----+----------------------------+----------------------------+---------+
 
-\| dn \| info \| \| latency \|
+| dn | info | | latency |
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++----+----------------------------+----------------------------+---------+
 
-\| 4 \| 192.168.200.51:3310/phy248 \| 192.168.200.51:3310/phy248 \| 0 ms \|
+| 4 | 192.168.200.51:3310/phy248 | 192.168.200.51:3310/phy248 | 0 ms |
 
-\| 5 \| 192.168.200.51:3311/phy248 \| 192.168.200.51:3311/phy248 \| 0 ms \|
+| 5 | 192.168.200.51:3311/phy248 | 192.168.200.51:3311/phy248 | 0 ms |
 
-\| 6 \| 192.168.200.51:3312/phy248 \| 192.168.200.51:3312/phy248 \| 19582 ms \|
+| 6 | 192.168.200.51:3312/phy248 | 192.168.200.51:3312/phy248 | 19582 ms |
 
-\| 7 \| 192.168.200.51:3313/phy248 \| 192.168.200.51:3313/phy248 \| 0 ms \|
+| 7 | 192.168.200.51:3313/phy248 | 192.168.200.51:3313/phy248 | 0 ms |
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++----+----------------------------+----------------------------+---------+
 
 4 rows in set (0.02 sec)
 
 In the log you can see the prompt of no longer using the failed Master data source, and the data source without replication synchronization will not be enabled
 
-2018-06-08 10:36:47.921 \[INFO\] \[FAILOVER\] \[Labor-1552\] j(-1) - slave_sql_running is Yes in :\[id:178,nodeId:6 192.168.200.52:3312/phy248 status:1,charset:utf8\] during failover of datanode 6
+2018-06-08 10:36:47.921 [INFO] [FAILOVER] [Labor-1552] j(-1) - slave_sql_running is Yes in :[id:178,nodeId:6 192.168.200.52:3312/phy248 status:1,charset:utf8] during failover of datanode 6
 
-2018-06-08 10:36:48.417 \[WARN\] \[HEARTBEAT\] \[\$NIOConnector\] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:java.net.ConnectException:connection refused
+2018-06-08 10:36:48.417 [WARN] [HEARTBEAT] [\$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:java.net.ConnectException:connection refused
 
-2018-06-08 10:36:48.418 \[WARN\] \[HEARTBEAT\] \[\$NIOConnector\] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused
+2018-06-08 10:36:48.418 [WARN] [HEARTBEAT] [\$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused
 
-2018-06-08 10:36:48.918 \[WARN\] \[HEARTBEAT\] \[\$NIOConnector\] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:j ava.net.ConnectException: connection refused
+2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [\$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:j ava.net.ConnectException: connection refused
 
-2018-06-08 10:36:48.918 \[WARN\] \[HEARTBEAT\] \[\$NIOConnector\] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused
+2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [\$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused
 
-2018-06-0810:36:48.982 \[INFO\] \[FAILOVER\] \[Labor-1552\] j(-1) - masterLogFile:mysql-bin.000518,readMasterLogFile:mysql-bin.000518,readMasterLogPos:384545127,execMaster LogPos:384512435,relayLogFiTe:mysql-relay-bin.000002,relayLogPos; 248414,secondBehindMaster:19,execLogchanged:true in slave: MySQLConnection \[node=6, id=140, threadId=3 15945, state=borrowed, closed=false, autocommit=true, host=192.168.200.52, port=3312, database=phy248, localPort=64694, isClose:false, toBeclose:false\]
+2018-06-0810:36:48.982 [INFO] [FAILOVER] [Labor-1552] j(-1) - masterLogFile:mysql-bin.000518,readMasterLogFile:mysql-bin.000518,readMasterLogPos:384545127,execMaster LogPos:384512435,relayLogFiTe:mysql-relay-bin.000002,relayLogPos; 248414,secondBehindMaster:19,execLogchanged:true in slave: MySQLConnection [node=6, id=140, threadId=3 15945, state=borrowed, closed=false, autocommit=true, host=192.168.200.52, port=3312, database=phy248, localPort=64694, isClose:false, toBeclose:false]
 
 OFF status:
 
 When the master/slave data source has replication latency, it could switch to the Slave directly, without waiting for replication synchronization.
 
-2018-06-08 16:19:22.864 \[INFO\] \[FAILOVER\] \[Labor-1852\] bh(-1) -- switch datasource:6 for datanode:6 successfully by Manager.
+2018-06-08 16:19:22.864 [INFO] [FAILOVER] [Labor-1852] bh(-1) -- switch datasource:6 for datanode:6 successfully by Manager.
 
 Special note: the effect of master_delay on switching is adjusted in 2.5.6 and above. When the parameter waitForSlaveInFailover
 
@@ -12451,7 +12451,7 @@ Special note: the effect of master_delay on switching is adjusted in 2.5.6 and a
 
 **Parameter Setting:**
 
-\<property name=\"waitSyncFinishAtStartup\"\>true\</property\>\<!\-- When enabled, wait for synchronization of the Master data source or not \--\>
+<property name=[waitSyncFinishAtStartup](#waitSyncFinishAtStartup)>true</property><!-- When enabled, wait for synchronization of the Master data source or not -->
 
 **Role of parameter:**
 
@@ -12463,29 +12463,29 @@ Under the condition of Master data source latency, enabling compute node will pr
 
 Turn on the switch: When enable the compute node, wait for replication synchronization of master/slave data source, so as to guarantee data consistency of master/salve data source
 
-2018-06-01 17:15:12.990 \[info\] \[INIT\] \[\$NIOREACTOR-3-RW\] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos:4668659,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection \[node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false\]
+2018-06-01 17:15:12.990 [info] [INIT] [\$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos:4668659,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false]
 
-2018-06-01 17:15:12.990 \[info\] \[INIT\] \[\$NIOREACTOR-3-RW\] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4669275,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection \[node=3, id=50, threadId=l7084, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=20329, isClose:false, toBeClose:false\]
+2018-06-01 17:15:12.990 [info] [INIT] [\$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4669275,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=50, threadId=l7084, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=20329, isClose:false, toBeClose:false]
 
-2018-06-01 17:15:12.990 \[info\] \[INIT\] \[\$NIOREACTOR-3-RW\] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4670199,execMasterLogPos: 4557471,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2122521,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection \[node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false\]
+2018-06-01 17:15:12.990 [info] [INIT] [\$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4670199,execMasterLogPos: 4557471,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2122521,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false]
 
 Turn off the switch: No other abnormalities, the compute node could be enabled directly
 
-2018-06-01 16:21:14.958 \[INFO\] \[INIT\] \[main\] j(-1) - reading config\...
+2018-06-01 16:21:14.958 [INFO] [INIT] [main] j(-1) - reading config...
 
-2018-06-01 16:21:15.170 \[info\] \[INIT\] \[main\] a(-1) - using config datasource in start up:\[id:-1,nodeld:-1 l27.0.0.1:3306/hotdb_config_249 status:1,charset:utf8\]
+2018-06-01 16:21:15.170 [info] [INIT] [main] a(-1) - using config datasource in start up:[id:-1,nodeld:-1 l27.0.0.1:3306/hotdb_config_249 status:1,charset:utf8]
 
-2018-06-01 16:21:15.518 \[info\] \[INIT\] \[main\] a(-1) - master config datasource \[id:-1,nodeld:-1 l27.0.0.1:3306/hotdb_config_249 status:1,charset:utf8\] connect success.
+2018-06-01 16:21:15.518 [info] [INIT] [main] a(-1) - master config datasource [id:-1,nodeld:-1 l27.0.0.1:3306/hotdb_config_249 status:1,charset:utf8] connect success.
 
-2018-06-01 16:21:16.892 \[info\] \[INIT\] \[main\] j(-1) - ===============================================
+2018-06-01 16:21:16.892 [info] [INIT] [main] j(-1) - ===============================================
 
-2018-06-01 16:21:16.893 \[info\] \[INIT\] \[main\] j(-1) - HotDB-2.4.9 is ready to startup \...
+2018-06-01 16:21:16.893 [info] [INIT] [main] j(-1) - HotDB-2.4.9 is ready to startup ...
 
-2018-06-01 16:21:16.894 \[info\] \[INIT\] \[main\] j(-1) - Sysconfig params:SystemConfig \[ frontwriteQueueSize=2048, service port=9993, management port=9995, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferChunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://127.0.0.1:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://127.0.0.l:3306/hotdb_config_249, usingAIO=o, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=l, heartbeatTimeoutMs=l00, joinable=true, joinCacheSize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,VIP=null,checkVIPPeriod=1600\]
+2018-06-01 16:21:16.894 [info] [INIT] [main] j(-1) - Sysconfig params:SystemConfig [ frontwriteQueueSize=2048, service port=9993, management port=9995, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferChunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://127.0.0.1:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://127.0.0.l:3306/hotdb_config_249, usingAIO=o, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=l, heartbeatTimeoutMs=l00, joinable=true, joinCacheSize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,VIP=null,checkVIPPeriod=1600]
 
-2018-06-01 16:21:17.210 \[info\] \[INIT\] \[main\] BufferPool(-1) - total buffer:163840000,every chunk bytes:16384,chunk number:10000,every threadLocalMaxNumber:1000
+2018-06-01 16:21:17.210 [info] [INIT] [main] BufferPool(-1) - total buffer:163840000,every chunk bytes:16384,chunk number:10000,every threadLocalMaxNumber:1000
 
-2018-06-01 16:21:17.216 \[info\] \[INIT\] \[main\] j(-1) - usinq aio network handler
+2018-06-01 16:21:17.216 [info] [INIT] [main] j(-1) - usinq aio network handler
 
 #### weightForSlaveRWSplit
 
@@ -12507,7 +12507,7 @@ Turn off the switch: No other abnormalities, the compute node could be enabled d
 
 weightForSlaveRWSplitParameter in server.xml is set as 50
 
-\<property name=\"weightForSlaveRWSplit\"\>50\</property\>
+<property name=[weightForSlaveRWSplit](#weightForSlaveRWSplit)>50</property>
 
 **Role of parameter:**
 
@@ -12519,43 +12519,43 @@ Under one-master and multi-slave condition (such as: one master and double slave
 
 For example: Active Master mark: name= Master
 
-mysql\> select \* from vrab001;
+mysql> select * from vrab001;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| id \| name \|
+| id | name |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| 1 \| Master \|
+| 1 | Master |
 
-\| 2 \| Master \|
+| 2 | Master |
 
-\| 3 \| Master \|
+| 3 | Master |
 
-\| 4 \| Master \|
+| 4 | Master |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
 Slave mark: name= Slave
 
-mysql\> select \* from vrab001;
+mysql> select * from vrab001;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| id \| name \|
+| id | name |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
-\| 1 \| slave \|
+| 1 | slave |
 
-\| 2 \| slave \|
+| 2 | slave |
 
-\| 3 \| slave \|
+| 3 | slave |
 
-\| 4 \| slave \|
+| 4 | slave |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
++------+---------+
 
 Execute select Query operation for several times, read 50% of master/slave respectively
 

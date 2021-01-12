@@ -2,7 +2,7 @@
 
 ## Basic Information
 
-Based on the Distributed Transactional Database Product HotDB Server - v2.5.6, this manual masterly describes the basic function usage and operation process of the cross-IDC disaster recovery scheme of HotDB Server based on the MySQL native replication function, for the user\'s reference and learning.
+Based on the Distributed Transactional Database Product HotDB Server - v2.5.6, this manual masterly describes the basic function usage and operation process of the cross-IDC disaster recovery scheme of HotDB Server based on the MySQL native replication function, for the user's reference and learning.
 
 This document focuses more on the functions related to compute nodes and the management platform. If you need to know how to use the compute nodes and the management platform, please refer to the [Distributed Transactional Database HotDB Server - V2.5.3 \[Management Platform\] Function Manual](file://localhost/Users/anita/Downloads/英文翻译审核完成/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3%20%5bManagement%20Platform%5d%20Function%20Manual.doc) and the [Distributed Transactional Database HotDB Server -- V2.5.3 \[Standard\]Function Manual](file:///Users/anita/Desktop/Distributed%20Transactional%20Database%20HotDB%20Server%20Disaster%20Recovery%20Function%20Specification%20(修复的).docx).
 
@@ -158,7 +158,7 @@ Note:
 
 Automatic deployment can be achieved through the cluster deployment function provided by the management platform. The cluster deployment function in the DR mode is performed orderly in the master center and the DR center of compute node clusters as. One deployment at least requires: compute node, ConfigDB, keepalived (required in master/slave node mode), and other components: data source, NTPD should be planned and installed according to the actual needs.
 
-This section only describes in detail what should be paid attention to in the automatic deployment when the DR mode, not single-IDC mode, is enabled. For other automatic deployment related contents, please refer to the [Distributed Transactional Database HotDB Server - V2.5.3 \[Installation & Deployment\] Function Manual](file://localhost/Users/anita/Downloads/英文翻译审核完成/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3%20%5bManagement%20Platform%5d%20Function%20Manual.doc).
+This section only describes in detail what should be paid attention to in the automatic deployment when the DR mode, not single-IDC mode, is enabled. For other automatic deployment related contents, please refer to the [Distributed Transactional Database HotDB Server - V2.5.3 [Installation & Deployment] Function Manual](file://localhost/Users/anita/Downloads/英文翻译审核完成/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3%20%5bManagement%20Platform%5d%20Function%20Manual.doc).
 
 #### Deploy a new set of disaster recovery environment
 
@@ -166,11 +166,11 @@ This section only describes in detail what should be paid attention to in the au
 
 **(1) Select the deployment mode:**
 
-1\. Log in to the management platform as the management user, enter \"Cluster Management - \> Compute Node Cluster\", and click the \[Cluster Deployment\] button to enter the cluster deployment function page.
+1. Log in to the management platform as the management user, enter "Cluster Management - > Compute Node Cluster", and click the [Cluster Deployment] button to enter the cluster deployment function page.
 
-2\. Choose the compute node mode, click to enable \"deploy by DR mode\", choose \"master center\" in \"IDC type\" and click \[Parameter Configuration\] to enter the cluster deployment parameter configuration page.
+2. Choose the compute node mode, click to enable "deploy by DR mode", choose "master center" in "IDC type" and click [Parameter Configuration] to enter the cluster deployment parameter configuration page.
 
-In the DR mode, the compute node cluster mode is not supported at present, so it is not possible to choose multi-node as the cluster mode when \"Deploy by DR mode\" is enabled.
+In the DR mode, the compute node cluster mode is not supported at present, so it is not possible to choose multi-node as the cluster mode when "Deploy by DR mode" is enabled.
 
 ![](assets/cross-idc-disaster-recovery/image3.png)**(2) Parameter configuration：**
 
@@ -192,13 +192,13 @@ Therefore, the parameter configuration of the master center is as follows ([depl
 
 ![](assets/cross-idc-disaster-recovery/image6.png)**(3) Start deployment:**
 
-1\. Click \[Check and save\] to verify the validity and integrity of the configuration parameters, and send a detection scripts to the target server to verify whether it meets the hardware requirements of the cluster deployment. If it does not meet the requirements, a pop-up prompt will appear. Before deployment, all clusters need to pass \[Check and save\] before installation.
+1. Click [Check and save] to verify the validity and integrity of the configuration parameters, and send a detection scripts to the target server to verify whether it meets the hardware requirements of the cluster deployment. If it does not meet the requirements, a pop-up prompt will appear. Before deployment, all clusters need to pass [Check and save] before installation.
 
-2\. After check and accept of the management platform, click \[Start deployment\] to enter the installation process.
+2. After check and accept of the management platform, click [Start deployment] to enter the installation process.
 
 ![](assets/cross-idc-disaster-recovery/image7.png)
 
-While a step \"set up disaster recovery replication\" is added in the installation and deployment process of management platform, there are no additional operations in this step when deploying the master center. Therefore, the installation process of the master center deployment is the same as that of a cluster deployment in single-IDC mode.
+While a step "set up disaster recovery replication" is added in the installation and deployment process of management platform, there are no additional operations in this step when deploying the master center. Therefore, the installation process of the master center deployment is the same as that of a cluster deployment in single-IDC mode.
 
 ![](assets/cross-idc-disaster-recovery/image8.png)**(4) Cluster management:**
 
@@ -212,15 +212,15 @@ That is, the DR mode of the cluster will be OFF at this time after the master ce
 
 ![](assets/cross-idc-disaster-recovery/image11.png)
 
-At this time, you can either deploy the corresponding DR center through the cluster deployment function, or after the DR center is deployed manually, click \"Enable DR mode\" on the Edit Compute Node Cluster page to add the DR center information to the cluster.
+At this time, you can either deploy the corresponding DR center through the cluster deployment function, or after the DR center is deployed manually, click "Enable DR mode" on the Edit Compute Node Cluster page to add the DR center information to the cluster.
 
 ###### Cluster deployment -- DR center deployment
 
 **(1) select the deployment mode:**
 
-1\. After the master center is deployed, click the \[Cluster Deployment\] button again.
+1. After the master center is deployed, click the [Cluster Deployment] button again.
 
-2\. Similar to the master center deployment, after choosing the compute node mode, click to enable \"Deploy by DR mode\", choose \"DR center\" in \"IDC type\" and the corresponding \"Cluster name of the master center\", i.e., the master center cluster that is newly deployed.
+2. Similar to the master center deployment, after choosing the compute node mode, click to enable "Deploy by DR mode", choose [DR center](#DR%20center) in "IDC type" and the corresponding "Cluster name of the master center", i.e., the master center cluster that is newly deployed.
 
 Note: it is recommended to deploy the DR center at the low peak of the master center business, otherwise it may affect the data migration time when setting up the disaster recovery replication.
 
@@ -230,7 +230,7 @@ While the parameter configuration of the DR center is roughly the same as that o
 
 - The version of compute node, ConfigDB and data source must be consistent with that of the master center;
 
-- \"\--character-set-server\", \"\--collation-server\", \"\--innodb-buffer-pool-size-mb\" in \"More Parameters\" of ConfigDB and data source must be consistent with the master center;
+- "--character-set-server", "--collation-server", "--innodb-buffer-pool-size-mb" in "More Parameters" of ConfigDB and data source must be consistent with the master center;
 
 - The DR center will automatically generate all data nodes that have existed in the master center by default, and the data node type is the same as that in the master center (in this example, a master-master data node is automatically generated). You can choose other data source types and click Generate to regenerate, but the number and name of data nodes must be consistent with the master center;
 
@@ -244,11 +244,11 @@ The parameter configuration of the DR center reference is as follows ( [Deployme
 
 ![](assets/cross-idc-disaster-recovery/image15.png)**(3) Start deployment:**
 
-1\. Click \[check and save\], the management platform will check whether there is error. When it is all correct, click \[Start deployment\] to enter the installation process.
+1. Click [check and save], the management platform will check whether there is error. When it is all correct, click [Start deployment] to enter the installation process.
 
-2\. In step \"Generate basic configuration\", configuration of the DR center will be updated to ConfigDB and server.xml of the master center synchronously and take effect after dynamic loading.
+2. In step "Generate basic configuration", configuration of the DR center will be updated to ConfigDB and server.xml of the master center synchronously and take effect after dynamic loading.
 
-3\. In step \"Set up disaster recovery replication\", data of the master center ConfigDB and data source will be migrated to the DR center ConfigDB and data source, and the disaster recovery replication will be set up between the ConfigDB and data source of the two IDCs.
+3. In step "Set up disaster recovery replication", data of the master center ConfigDB and data source will be migrated to the DR center ConfigDB and data source, and the disaster recovery replication will be set up between the ConfigDB and data source of the two IDCs.
 
 Note: due to the data import, you may wait a long time if the master center data source has a large data amount.
 
@@ -262,7 +262,7 @@ After the successful installation and deployment of the DR center, you can see a
 
 - The IDC types include the master center and the DR center. According to the IDC status, the icon ![](assets/cross-idc-disaster-recovery/image18.png) next to the IDC type indicates that type of the IDC is current active center;
 
-- The two IDCs have their own component configuration and deployment, among which the current standby center does not provide the access to \[Switch\] and \[Rebuild\], that is, the current standby center does not allow to manually switch compute nodes;
+- The two IDCs have their own component configuration and deployment, among which the current standby center does not provide the access to [Switch] and [Rebuild], that is, the current standby center does not allow to manually switch compute nodes;
 
 - The two IDCs in a cluster temporarily do not support separate monitoring pause or start, and the user privilege also regards the two IDCs as a cluster and manages uniformly;
 
@@ -270,21 +270,21 @@ After the successful installation and deployment of the DR center, you can see a
 
 - If the cluster with DR mode enabled is deleted, the master center and the DR center will be deleted at the same time;
 
-- On the compute node cluster editing page, if the \"Enable DR mode\" is ON, it is not allowed to be OFF; if it is OFF, it is allowed to be ON.The existing cluster information is used as the master center configuration, and the DR center configuration can be added to it.
+- On the compute node cluster editing page, if the "Enable DR mode" is ON, it is not allowed to be OFF; if it is OFF, it is allowed to be ON.The existing cluster information is used as the master center configuration, and the DR center configuration can be added to it.
 
 ###### Disaster recovery environment deployment in multi-node mode
 
 The disaster recovery deployment of the multi-node cluster mode is basically the same as the steps of the master/slave compute node mode described in the previous chapter. The differences are as follows:
 
-1\. For disaster recovery deployment of the multi-node cluster mode, the version of compute node must be 2.5.6 and above, and \"multi node\" must be selected at the entrance of cluster deployment. On this basis, the master center and DR center of disaster recovery mode can be deployed.
+1. For disaster recovery deployment of the multi-node cluster mode, the version of compute node must be 2.5.6 and above, and "multi node" must be selected at the entrance of cluster deployment. On this basis, the master center and DR center of disaster recovery mode can be deployed.
 
 ![](assets/cross-idc-disaster-recovery/image20.png)
 
-2\. For the multi-node cluster, the master center should be deployed before the DR center.
+2. For the multi-node cluster, the master center should be deployed before the DR center.
 
-3\. The configuration of the multi-node cluster in the master center and DR center is consistent with the deployment that needs to be filled in for the common multi-node cluster mode deployment.
+3. The configuration of the multi-node cluster in the master center and DR center is consistent with the deployment that needs to be filled in for the common multi-node cluster mode deployment.
 
-4\. In the process of automatic deployment through the management platform, the program will configure server.xml according to the information of the master center and DR center by default. The associated configuration items include:
+4. In the process of automatic deployment through the management platform, the program will configure server.xml according to the information of the master center and DR center by default. The associated configuration items include:
 
 **Modification items for cluster mode in master center:**
 
@@ -306,7 +306,7 @@ idcNodeHost is set to the compute node information of the master center: host na
 
 Note: the clusterName in the cluster of the same IDC must be consistent, but the master center and the DR center cannot be consistent. Through platform deployment, the default configuration is: HotDB-Cluster-idc1/idc2-groupID (groupID is the platform cluster group ID, in order to distinguish the deployment of multiple clusters on the same server)
 
-1\. In addition to the special modification items described above, for the deployment of multi-node cluster in DR mode you should also pay attention to:
+1. In addition to the special modification items described above, for the deployment of multi-node cluster in DR mode you should also pay attention to:
 
 1. The serverID in the same IDC must be continuous. In the master center and DR center, it is according to the number of nodes and increases from 1 by default.
 
@@ -316,11 +316,11 @@ Note: the clusterName in the cluster of the same IDC must be consistent, but the
 
 4. Other cluster related modification items, such as clusterSize, clusterNetwork, clusterHost and clusterPort, are consistent with the configured mode in the ordinary single IDC.
 
-2\. It allows the master center to be multi-node cluster mode, DR center to be the master/slave compute node mode or vice versa. Different architectures are compatible.
+2. It allows the master center to be multi-node cluster mode, DR center to be the master/slave compute node mode or vice versa. Different architectures are compatible.
 
-3\. The corresponding host names of all components in the DR center cannot be consistent with the master. Otherwise, it will not pass the verification.
+3. The corresponding host names of all components in the DR center cannot be consistent with the master. Otherwise, it will not pass the verification.
 
-4\. The information of multi-node cluster after normal deployment is shown in the list as follows:
+4. The information of multi-node cluster after normal deployment is shown in the list as follows:
 
 ![](assets/cross-idc-disaster-recovery/image21.png)
 
@@ -342,15 +342,15 @@ The cluster deployment function of management platform is able to deploy DR cent
 
 **Deployment steps are as follows:**
 
-1\. After clicking the \[Cluster Deployment\] button, click to enable \"Deploy by DR mode\", and choose \"DR center\" in \"IDC type\". Then, two cluster names, Compute node mode cluster with DR mode disabled and DR mode cluster with no corresponding DR center, will appear in the drop-down box of cluster name of master center.
+1. After clicking the [Cluster Deployment] button, click to enable "Deploy by DR mode", and choose [DR center](#DR%20center) in "IDC type". Then, two cluster names, Compute node mode cluster with DR mode disabled and DR mode cluster with no corresponding DR center, will appear in the drop-down box of cluster name of master center.
 
-2\. After choosing a target cluster name and clicking \[Parameter Configuration\], if master center is deployed through management platform, the management platform will also automatically obtain the relevant parameter values of master center and automatically fill in DR center with no modification allowed. Please refer to the [parameter configuration and deployment process of DR center.](#参数配置) If the former master center is manually deployed offline, it is required to manually ensure that the parameters filled in are consistent with the master center configuration.
+2. After choosing a target cluster name and clicking [Parameter Configuration], if master center is deployed through management platform, the management platform will also automatically obtain the relevant parameter values of master center and automatically fill in DR center with no modification allowed. Please refer to the [parameter configuration and deployment process of DR center.](#参数配置) If the former master center is manually deployed offline, it is required to manually ensure that the parameters filled in are consistent with the master center configuration.
 
 ### Manual deployment
 
 #### Deploy a new set of disaster recovery environment
 
-When deploying the disaster recovery environment, the deployment process of components in master center and DR center are the same as deployment process in single-IDC mode. Please refer to the [Distributed Transactional Database HotDB Server - V2.5.3 \[Installation & Deployment\] Function Manual](file://localhost/Users/anita/Downloads/英文翻译审核完成/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3%20%5bInstallation%20&%20Deployment%5d%20Function%20Manual.doc). It needs extra attention that the number of data nodes in both IDCs should be the same, and the names should correspond one by one. The content below is masterly about the required configuration modification after deployment of the basic components of master center and DR center.
+When deploying the disaster recovery environment, the deployment process of components in master center and DR center are the same as deployment process in single-IDC mode. Please refer to the [Distributed Transactional Database HotDB Server - V2.5.3 [Installation & Deployment] Function Manual](file://localhost/Users/anita/Downloads/英文翻译审核完成/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3%20%5bInstallation%20&%20Deployment%5d%20Function%20Manual.doc). It needs extra attention that the number of data nodes in both IDCs should be the same, and the names should correspond one by one. The content below is masterly about the required configuration modification after deployment of the basic components of master center and DR center.
 
 ##### Parameter configuration modification
 
@@ -360,45 +360,45 @@ When deploying the compute nodes of master center or DR center, the [new paramet
 
 Master center:
 
-\<property name=\"url\"\>jdbc:mysql://192.168.220.186:3306/hotdb_config\</property\>\<!\-- Master ConfigDB address, which needs to be the real IP address of the ConfigDB service \--\>
+<property name="url">jdbc:mysql://192.168.220.186:3306/hotdb_config</property><!-- Master ConfigDB address, which needs to be the real IP address of the ConfigDB service -->
 
-\<property name=\"username\"\>hotdb_config\</property\>\<!\-- Master ConfigDB user name \--\>
+<property name="username">hotdb_config</property><!-- Master ConfigDB user name -->
 
-\<property name=\"password\"\>hotdb_config\</property\>\<!\-- Master ConfigDB password \--\>
+<property name="password">hotdb_config</property><!-- Master ConfigDB password -->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.220.187:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address, which needs to be the real IP address of the ConfigDB service \--\>
+<property name="bakUrl">jdbc:mysql://192.168.220.187:3306/hotdb_config</property><!-- Slave ConfigDB address, which needs to be the real IP address of the ConfigDB service -->
 
-\<property name=\"bakUsername\"\>hotdb_config\</property\>\<!\-- Slave ConfigDB user name \--\>
+<property name="bakUsername">hotdb_config</property><!-- Slave ConfigDB user name -->
 
-\<property name=\"bakPassword\"\>hotdb_config\</property\>\<!\-- Slave ConfigDB password \--\>
+<property name="bakPassword">hotdb_config</property><!-- Slave ConfigDB password -->
 
-\<property name=\"drUrl\"\>jdbc:mysql://192.168.220.188:3306/hotdb_config\</property\>\<!\-- ConfigDB address in DR center \--\>
+<property name="drUrl">jdbc:mysql://192.168.220.188:3306/hotdb_config</property><!-- ConfigDB address in DR center -->
 
-\<property name=\"drUsername\"\>hotdb_config\</property\>\<!\-- ConfigDB user name in DR center \--\>
+<property name="drUsername">hotdb_config</property><!-- ConfigDB user name in DR center -->
 
-\<property name=\"drPassword\"\>hotdb_config\</property\>\<!\-- ConfigDB password in DR center \--\>
+<property name="drPassword">hotdb_config</property><!-- ConfigDB password in DR center -->
 
-\<property name=\"drBakUrl\"\>jdbc:mysql://192.168.220.189:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address in DR center \--\>
+<property name="drBakUrl">jdbc:mysql://192.168.220.189:3306/hotdb_config</property><!-- Slave ConfigDB address in DR center -->
 
-\<property name=\"drBakUsername\"\>hotdb_config\</property\>\<!\-- Slave ConfigDB user name in DR center \--\>
+<property name="drBakUsername">hotdb_config</property><!-- Slave ConfigDB user name in DR center -->
 
-\<property name=\"drBakPassword\"\>hotdb_config\</property\>\<!\-- Slave ConfigDB password in DR center \--\>
+<property name="drBakPassword">hotdb_config</property><!-- Slave ConfigDB password in DR center -->
 
-\<property name=\"haMode\"\>2\</property\>\<!\-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center) \--\>
+<property name="haMode">2</property><!-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center) -->
 
-\<property name=\"idcId\"\>1\</property\>\<!\-- ID of IDC, 1:master center, 2:DR center \--\>
+<property name="idcId">1</property><!-- ID of IDC, 1:master center, 2:DR center -->
 
-\<property name=\"idcNodeHost\"\>192.168.220.188:3325,192.168.220.189:3325\</property\>\<!\-- Computer node info in the other IDC \--\>
+<property name="idcNodeHost">192.168.220.188:3325,192.168.220.189:3325</property><!-- Computer node info in the other IDC -->
 
 **DR center：**
 
 ConfigDB-related configuration is consistent with that of the master center, unnecessary details omitted.
 
-\<property name=\"haMode\"\>3\</property\>\<!\-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center) \--\>
+<property name="haMode">3</property><!-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center) -->
 
-\<property name=\"idcId\"\>2\</property\>\<!\-- ID of IDC, 1:master center, 2:DR center \--\>
+<property name="idcId">2</property><!-- ID of IDC, 1:master center, 2:DR center -->
 
-\<property name=\"idcNodeHost\"\>192.168.220.186:3325,192.168.220.187:3325\</property\>\<!\-- Computer node info in the other IDC \--\>
+<property name="idcNodeHost">192.168.220.186:3325,192.168.220.187:3325</property><!-- Computer node info in the other IDC -->
 
 ###### Multi-node mode
 
@@ -434,31 +434,31 @@ The ConfigDB is essentially a standard MySQL instance, so under this deployment 
 
 The detailed steps are as follows:
 
-1\. By default, MySQL instances are installed on these four servers and GTID is enabled in the configuration parameters.
+1. By default, MySQL instances are installed on these four servers and GTID is enabled in the configuration parameters.
 
 Note: for more requirements and more detailed master-slave replication setup steps, please refer to the relevant chapters in the "[Recommended steps for replication setup](#recommended-steps-for-replication-setup)". This section describes the basic operations performed without considering the influence of other factors.
 
-2\. Set up a master-master replication relation between the MySQL instances of servers 220.186 and 220.187.
+2. Set up a master-master replication relation between the MySQL instances of servers 220.186 and 220.187.
 
 Execute the code on Instance 192.168.220.186_3306：
 
-mysql\> change master to master_host=\'192.168.220.187\',master_user=\'repl\',master_password=\'repl\',Master_Port=3306,master_auto_position=1;
+mysql> change master to master_host='192.168.220.187',master_user='repl',master_password='repl',Master_Port=3306,master_auto_position=1;
 
-mysql\> start slave;
+mysql> start slave;
 
 Execute the code on Instance 192.168.220.187_3306：
 
-mysql\> change master to master_host=\'192.168.220.186\',master_user=\'repl\',master_password=\'repl\',Master_Port=3306,master_auto_position=1;
+mysql> change master to master_host='192.168.220.186',master_user='repl',master_password='repl',Master_Port=3306,master_auto_position=1;
 
-mysql\> start slave;
+mysql> start slave;
 
 At this time, by executing show slave status on 220.186 and 220.187 respectively, you can see that the relation between Master and Host is master-master,and Slave_IO_Running and Slave_SQL_Running are in normal status. For example:
 
 Execute the code on Instance 192.168.220.186_3306：
 
-mysql\> show slave status\\G
+mysql> show slave status\\G
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* 1. row \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+*************************** 1. row ***************************
 
 Slave_IO_State: Waiting for master to send event
 
@@ -484,51 +484,51 @@ Slave_IO_Running: Yes
 
 Slave_SQL_Running: Yes
 
-3\. Set up a master-slave replication relation (DR replication) between MySQL instances on servers 220.186 and 220.188.
+3. Set up a master-slave replication relation (DR replication) between MySQL instances on servers 220.186 and 220.188.
 
 Execute the code on Instance 192.168.220.188_3306：
 
-mysql\> change master to master_host=\'192.168.220.186\',master_user=\'repl\',master_password=\'repl\',Master_Port=3306,master_auto_position=1;
+mysql> change master to master_host='192.168.220.186',master_user='repl',master_password='repl',Master_Port=3306,master_auto_position=1;
 
-mysql\> start slave;
+mysql> start slave;
 
-4\. Set up a master-slave replication relation between MySQL instances on servers 220.188 and 220.189.
+4. Set up a master-slave replication relation between MySQL instances on servers 220.188 and 220.189.
 
 Execute the code on Instance 192.168.220.189_3306：
 
-mysql\> change master to master_host=\'192.168.220.188\',master_user=\'repl\',master_password=\'repl\',Master_Port=3306,master_auto_position=1;
+mysql> change master to master_host='192.168.220.188',master_user='repl',master_password='repl',Master_Port=3306,master_auto_position=1;
 
-mysql\> start slave;
+mysql> start slave;
 
-5\. Import the ConfigDB data to the master ConfigDB 192.168.220.186_3306 in the master center.
+5. Import the ConfigDB data to the master ConfigDB 192.168.220.186_3306 in the master center.
 
 Execute the code on Server 192.168.220.186：
 
-root\> mysql -uroot -S /data/mysql/mysqldata3306/sock/mysql.sock \< /usr/local/hotdb/hotdb-server/conf/hotdb_config.sql
+root> mysql -uroot -S /data/mysql/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-server/conf/hotdb_config.sql
 
-6\. Wait for the replication latency to catch up, then log in to Instance 3306 on four servers to find the imported ConfigDB data, which means the ConfigDB deployment is successful.
+6. Wait for the replication latency to catch up, then log in to Instance 3306 on four servers to find the imported ConfigDB data, which means the ConfigDB deployment is successful.
 
-mysql\> use hotdb_config;
+mysql> use hotdb_config;
 
-mysql\> show tables;
+mysql> show tables;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------------------------------------+
 
-\| Tables_in_hotdb_config_replication \|
+| Tables_in_hotdb_config_replication |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------------------------------------+
 
-\| hotdb_auto_failover \|
+| hotdb_auto_failover |
 
-\| hotdb_config_info \|
+| hotdb_config_info |
 
-\| hotdb_config_info_running \|
+| hotdb_config_info_running |
 
-\| hotdb_datanode \|
+| hotdb_datanode |
 
-\| hotdb_datanode_running \|
+| hotdb_datanode_running |
 
-\| hotdb_datasource \|
+| hotdb_datasource |
 
 ...More details omitted ...
 
@@ -542,15 +542,15 @@ If the clusters have been successfully deployed offline, you can add the compute
 
 **（1）Compute node:**
 
-Click \"Enable DR mode\", and fill in two sets of compute node information of the master center and the DR center. The numbers of compute nodes in two IDCs are selected respectively by two \"compute node modes\". Select according to different compute node modes. If it is master/slave mode, select master/slave node. If it is multi-node mode, select multi node.
+Click "Enable DR mode", and fill in two sets of compute node information of the master center and the DR center. The numbers of compute nodes in two IDCs are selected respectively by two "compute node modes". Select according to different compute node modes. If it is master/slave mode, select master/slave node. If it is multi-node mode, select multi node.
 
 ![](assets/cross-idc-disaster-recovery/image22.png)
 
 Notes:
 
-1. In the multi-node mode, you need to add the configuration of cluster communication ports. If the compute nodes are distributed on different servers and the communication ports are consistent, you can fill in only one port (3326 by default). If the compute nodes are deployed on the same or multiple servers with different ports, you can use English commas to separate the communication ports, for example, 3326,3327,3328, and the order of the communication ports should correspond to the order of adding the compute nodes. Otherwise, when saving the verification, it will refuse to save and remind \"the compute nodes are on the same server, the communication ports must match the compute nodes in numbers and cannot be repeated.\".
+1. In the multi-node mode, you need to add the configuration of cluster communication ports. If the compute nodes are distributed on different servers and the communication ports are consistent, you can fill in only one port (3326 by default). If the compute nodes are deployed on the same or multiple servers with different ports, you can use English commas to separate the communication ports, for example, 3326,3327,3328, and the order of the communication ports should correspond to the order of adding the compute nodes. Otherwise, when saving the verification, it will refuse to save and remind "the compute nodes are on the same server, the communication ports must match the compute nodes in numbers and cannot be repeated.".
 
-2. If multiple compute nodes in the cluster are deployed on the same server, the communication port+ service port+ management port should be unique to each other, and there can\'t be the same port combination.
+2. If multiple compute nodes in the cluster are deployed on the same server, the communication port+ service port+ management port should be unique to each other, and there can't be the same port combination.
 
 ![](assets/cross-idc-disaster-recovery/image23.png)
 
@@ -560,7 +560,7 @@ Notes:
 
 **（2）ConfigDB:**
 
-If the management port of the compute node is connectable, the management platform will automatically obtain the ConfigDB information without the need of manually filling in the ConfigDB; if the management port of the compute node is not connectable, the management platform cannot obtain the ConfigDB information and needs to manually add the ConfigDB information. Check \"Manually setting ConfigDB\" and fill in the ConfigDB information of two IDCs respectively.
+If the management port of the compute node is connectable, the management platform will automatically obtain the ConfigDB information without the need of manually filling in the ConfigDB; if the management port of the compute node is not connectable, the management platform cannot obtain the ConfigDB information and needs to manually add the ConfigDB information. Check "Manually setting ConfigDB" and fill in the ConfigDB information of two IDCs respectively.
 
 ![](assets/cross-idc-disaster-recovery/image25.png)
 
@@ -586,7 +586,7 @@ Example of abnormal connection
 
 > ![](assets/cross-idc-disaster-recovery/image28.png)
 
-- When the DR center is switched to the current active IDC after the failure of the master center, the \[Detect\] here will detect based on the IDC status, that is, detect the port connection status of the current active center; detect the data consistency of all other ConfigDBs with the current active ConfigDB in the current active center as a standard; detect the replication status internal the IDC or between IDCs, etc.
+- When the DR center is switched to the current active IDC after the failure of the master center, the [Detect] here will detect based on the IDC status, that is, detect the port connection status of the current active center; detect the data consistency of all other ConfigDBs with the current active ConfigDB in the current active center as a standard; detect the replication status internal the IDC or between IDCs, etc.
 
 ##### Add data sources for IDCs
 
@@ -630,87 +630,87 @@ When deploying a DR center on the basis of a running cluster, the steps of setti
 
 **The detailed steps are as follows:**
 
-1\. By default, the master-master replication status of the ConfigDB in the master center is normal and the data is consistent at this time, and MySQL instance has been installed on the server in the DR center with GTID enabled in the configuration parameters.
+1. By default, the master-master replication status of the ConfigDB in the master center is normal and the data is consistent at this time, and MySQL instance has been installed on the server in the DR center with GTID enabled in the configuration parameters.
 
 Note: for more requirements and more detailed master-slave replication setup steps, please refer to the relevant chapters in the "[Recommended steps for replication setup](#recommended-steps-for-replication-setup)". This section describes the basic operations performed without considering the influence of other factors.
 
-2\. Import the data from MySQL Instance 220.186_3306 to MySQL Instance 220.188_3306.
+2. Import the data from MySQL Instance 220.186_3306 to MySQL Instance 220.188_3306.
 
 Execute the code on Server 192.168.220.186：
 
-root\> mysqldump \--no-defaults -uroot \--port=3306 \--no-tablespaces \--default-character-set=utf8mb4 \--all-databases \--set-gtid-purged \--single-transaction \--events \--routines \--triggers \--hex-blob \>/usr/local/config_data.sql ;echo \$?
+root> mysqldump --no-defaults -uroot --port=3306 --no-tablespaces --default-character-set=utf8mb4 --all-databases --set-gtid-purged --single-transaction --events --routines --triggers --hex-blob >/usr/local/config_data.sql ;echo \$?
 
 0 //If the returned result is 0, the data is imported successfully:
 
 Transmit the exported sql file to 192.168.220.188 via scp command：
 
-root\> scp /usr/local/config_data.sql <root@192.168.220.188:/usr/local/>
+root> scp /usr/local/config_data.sql <root@192.168.220.188:/usr/local/>
 
 Execute the code on Server 192.168.220.188:
 
-root\> mysql \--no-defaults \--default-character-set=utf8mb4 \--binary-mode \--disable-reconnect \--host=192.168.220.188 \--port=3306 \--uroot -proot \< config_data.sql;echo \$?
+root> mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=192.168.220.188 --port=3306 --uroot -proot < config_data.sql;echo \$?
 
 0 //If the returned result is 0, the data has been successfully imported:
 
 At this time, you can see that the master ConfigDB data of the DR center has been imported successfully:
 
-mysql\> show tables;
+mysql> show tables;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------------------------------------+
 
-\| Tables_in_hotdb_config_replication \|
+| Tables_in_hotdb_config_replication |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++------------------------------------+
 
-\| hotdb_auto_failover \|
+| hotdb_auto_failover |
 
-\| hotdb_config_info \|
+| hotdb_config_info |
 
-\| hotdb_config_info_running \|
+| hotdb_config_info_running |
 
-\| hotdb_datanode \|
+| hotdb_datanode |
 
-\| hotdb_datanode_running \|
+| hotdb_datanode_running |
 
-\| hotdb_datasource \|
+| hotdb_datasource |
 
 ...More details omitted...
 
-3\. Set up the master-slave replication relation (disaster recovery relation) between MySQL instances of servers 220.186 and 220.188.
+3. Set up the master-slave replication relation (disaster recovery relation) between MySQL instances of servers 220.186 and 220.188.
 
 Execute the code on Instance 192.168.220.188_3306：
 
-mysql\> change master to master_host=\'192.168.220.186\',master_user=\'repl\',master_password=\'repl\',master_Port=3306,master_auto_position=1;
+mysql> change master to master_host='192.168.220.186',master_user='repl',master_password='repl',master_Port=3306,master_auto_position=1;
 
-mysql\> start slave;
+mysql> start slave;
 
 4.Import data of MySQL instance 220.188_3306 to MySQL instance 220.189_3306.
 
 Execute the code on Server 192.168.220.188：
 
-root\> mysqldump \--no-defaults -uroot \--port=3306 \--no-tablespaces \--default-character-set=utf8mb4 \--all-databases \--set-gtid-purged \--single-transaction \--events \--routines \--triggers \--hex-blob \>/usr/local/config_data.sql ;echo \$?
+root> mysqldump --no-defaults -uroot --port=3306 --no-tablespaces --default-character-set=utf8mb4 --all-databases --set-gtid-purged --single-transaction --events --routines --triggers --hex-blob >/usr/local/config_data.sql ;echo \$?
 
 0 //If the returned result is 0, the data is imported successfully:
 
 Transmit the exported sql file to 192.168.220.189 via scp command：
 
-root\> scp /usr/local/config_data.sql <root@192.168.220.189:/usr/local/>
+root> scp /usr/local/config_data.sql <root@192.168.220.189:/usr/local/>
 
 Execute the code on Server 192.168.220.189:
 
-root\> mysql \--no-defaults \--default-character-set=utf8mb4 \--binary-mode \--disable-reconnect \--host=192.168.220.189 \--port=3306 \--uroot -proot \< config_data.sql;echo \$?
+root> mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=192.168.220.189 --port=3306 --uroot -proot < config_data.sql;echo \$?
 
 0 //If the returned result is 0, the data has been successfully imported:
 
-5\. Set up master-slave replication relations of MySQL instances between servers 220.188 and 220.189.
+5. Set up master-slave replication relations of MySQL instances between servers 220.188 and 220.189.
 
 Execute the code on Instance 192.168.220.189_3306：
 
-mysql\> change master to master_host=\'192.168.220.188\',master_user=\'repl\',master_password=\'repl\',master_Port=3306,master_auto_position=1;
+mysql> change master to master_host='192.168.220.188',master_user='repl',master_password='repl',master_Port=3306,master_auto_position=1;
 
-mysql\> start slave;
+mysql> start slave;
 
-6\. At this time, the data modification of master ConfigDB in master center will be synchronized to all ConfigDBs of the two IDCs, that is, the ConfigDB is successfully deployed.
+6. At this time, the data modification of master ConfigDB in master center will be synchronized to all ConfigDBs of the two IDCs, that is, the ConfigDB is successfully deployed.
 
 ##### Set up data source replication relations
 
@@ -722,9 +722,9 @@ If clusters in the DR center have been successfully deployed offline, you can mo
 
 ![](assets/cross-idc-disaster-recovery/image29.png)
 
-1\. On the cluster management page, click the name of a running cluster to enter the compute node cluster editing page.
+1. On the cluster management page, click the name of a running cluster to enter the compute node cluster editing page.
 
-2\. Click \"Enable DR mode\" to take the existing cluster information as configuration information of the master center, and add configuration information of the DR center for it. For details, please refer to [add compute node clusters to management platform](#add-compute-node-clusters-to-management-platform).
+2. Click "Enable DR mode" to take the existing cluster information as configuration information of the master center, and add configuration information of the DR center for it. For details, please refer to [add compute node clusters to management platform](#add-compute-node-clusters-to-management-platform).
 
 ![](assets/cross-idc-disaster-recovery/image30.png)
 
@@ -734,11 +734,11 @@ On the node management page of general users, if you click Add node, management 
 
 ## Description of functions related to management platform
 
-This chapter needs to be read together with the [Distributed Transactional Database HotDB Server - V2.5.3 \[Management Platform\] Function Manual](file://localhost/Users/anita/Downloads/英文翻译审核完成/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3%20%5bManagement%20Platform%5d%20Function%20Manual.doc). This chapter only describes the function usage of the compute node cluster group managed by the management platform after enabling the DR mode. At the same time, the function pages not specifically mentioned display information related to the current active center and control the current active center status by default.
+This chapter needs to be read together with the [Distributed Transactional Database HotDB Server - V2.5.3 [Management Platform] Function Manual](file://localhost/Users/anita/Downloads/英文翻译审核完成/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3%20%5bManagement%20Platform%5d%20Function%20Manual.doc). This chapter only describes the function usage of the compute node cluster group managed by the management platform after enabling the DR mode. At the same time, the function pages not specifically mentioned display information related to the current active center and control the current active center status by default.
 
 ### Compute node cluster selection
 
-Log in to HotDB Management as a general user and enter the \" compute node cluster selection\" page.
+Log in to HotDB Management as a general user and enter the " compute node cluster selection" page.
 
 - If the user has the privilege of accessing or controlling a cluster with DR mode enabled and the cluster runs normally, the current active center is displayed in green, with the current standby center in blue. When the master center is the current active center, the DR center is the current standby center, and both of them are connected normally, it is as shown in the figure below.
 
@@ -746,7 +746,7 @@ Log in to HotDB Management as a general user and enter the \" compute node clust
 
 - Click either IDC module to enter the management platform. Pages not specifically mentioned in this document will display or control information of the current active center. For example, when one IDC fails to connect and switches to the other IDC, click any IDC module you will enter the management platform page that monitors the current active center, that is, the DR center after the switch.
 
-- Each IDC module will display the connection status of its own IDC, which is displayed the same way as that of the cluster in single-IDC mode, including: when the compute node is unable to connect, the compute node is marked red and abnormal; when the ConfigDB is unable to connect, the connection of the bottom ConfigDB is displayed abnormal; when part of the ConfigDB is unable to connect, move the cursor over the word \"partially abnormal\" to display the specific ConfigDB connection abnormal information, etc.
+- Each IDC module will display the connection status of its own IDC, which is displayed the same way as that of the cluster in single-IDC mode, including: when the compute node is unable to connect, the compute node is marked red and abnormal; when the ConfigDB is unable to connect, the connection of the bottom ConfigDB is displayed abnormal; when part of the ConfigDB is unable to connect, move the cursor over the word "partially abnormal" to display the specific ConfigDB connection abnormal information, etc.
 
 ![](assets/cross-idc-disaster-recovery/image32.png)
 
@@ -766,7 +766,7 @@ Log in to HotDB Management as a general user and enter the \" compute node clust
 
 The deployment environment examination not only supports the current active center, but also the IDC that does not provide services, that is, the current standby center.
 
-- Click \[Initiate Examination\], if you choose the cluster of DR mode, you can continue to choose the master center or the DR center for examination.
+- Click [Initiate Examination], if you choose the cluster of DR mode, you can continue to choose the master center or the DR center for examination.
 
 ![](assets/cross-idc-disaster-recovery/image35.png)
 
@@ -813,7 +813,7 @@ The node management page will manage all data nodes and all data sources of mast
 >
 > **Unknown:** the data source cannot be connected; the data source does not have sufficient privileges, detection timeout (timeout time is 1min), the non-master-slave replication relation between nodes (no replication relation is set up, or the replication relation is set up incorrectly).
 >
-> **Setup failed:** it means that there is a detection failure or setup failure in the master-slave setup. Move the cursor over the word \"Setup failed\", it will prompt the specific failure information.
+> **Setup failed:** it means that there is a detection failure or setup failure in the master-slave setup. Move the cursor over the word "Setup failed", it will prompt the specific failure information.
 >
 > **Setting up:** it means that the master-slave setup is currently in progress. When the background operation is completed, refresh the page, and it will display Normal or Setup failed.
 
@@ -829,7 +829,7 @@ The node management page will manage all data nodes and all data sources of mast
 
 **（2）Descriptions of the page functions**
 
-- No \[switch\] button can be seen in the data source of the current standby center, that is, when the master center or the DR center is the current standby center, management platform will not provide manual switch access for the data source.
+- No [switch] button can be seen in the data source of the current standby center, that is, when the master center or the DR center is the current standby center, management platform will not provide manual switch access for the data source.
 
 - Users can delete single or batch data sources and data nodes, while it is not allowed to separately delete the data nodes in the DR center which correspond to the master center. If the data nodes in the master center are deleted, the corresponding data nodes in the DR center will be deleted together.
 
@@ -839,19 +839,19 @@ The function can quickly configure data nodes and data sources for two IDCs, or 
 
 **（1） Add data nodes and data sources at the same time:**
 
-- Input \"Number of Data Nodes\", for example, 2, which means 2 data nodes are generated under the master center and DR center modules at the same time, and the names correspond one by one.
+- Input "Number of Data Nodes", for example, 2, which means 2 data nodes are generated under the master center and DR center modules at the same time, and the names correspond one by one.
 
 - The data node name can only be modified under the master center module, and the modification will be updated to the corresponding node in the DR center synchronously.
 
 - It is allowed to delete data sources in any IDCs, however the deletion of data nodes must synchronize with the master center the DR center, that is, separate deletion of data nodes of DR center is not allowed.
 
-- Check \"Automatically build DR relation\" to automatically set up a replication relation between the corresponding data nodes of the two added IDCs.
+- Check "Automatically build DR relation" to automatically set up a replication relation between the corresponding data nodes of the two added IDCs.
 
 ![](assets/cross-idc-disaster-recovery/image37.png)
 
 **(2) Add data source only:**
 
-- Check \"Add data source only\" to add data sources to data nodes that already exist in the master center or DR center.
+- Check "Add data source only" to add data sources to data nodes that already exist in the master center or DR center.
 
 - Addition of only data sources will not affect the logical structure of data nodes in two IDCs. Therefore, when only adding data sources, the number of data sources added under any IDC module will not be limited. For example, if you want to add data sources to a data node in the master center separately, you can delete the automatically generated data source under the DR center module.
 
@@ -859,11 +859,11 @@ The function can quickly configure data nodes and data sources for two IDCs, or 
 
 **(3) Add missing data nodes:**
 
-Click \[Add Node\]. When the master center is the current active center, management platform will check whether the current logical structure of the two IDCs is consistent. If it is found that there are more data nodes in the master center than in the DR center, management platform will ask users to add corresponding nodes for the DR center, otherwise the function Add Node cannot be used. This function is used to separately supplement the data nodes which correspond to the production environment for the DR center after a DR center is added to an existing production environment, which can avoid the situation where the node information is manually modified in the ConfigDB.
+Click [Add Node]. When the master center is the current active center, management platform will check whether the current logical structure of the two IDCs is consistent. If it is found that there are more data nodes in the master center than in the DR center, management platform will ask users to add corresponding nodes for the DR center, otherwise the function Add Node cannot be used. This function is used to separately supplement the data nodes which correspond to the production environment for the DR center after a DR center is added to an existing production environment, which can avoid the situation where the node information is manually modified in the ConfigDB.
 
 ![](assets/cross-idc-disaster-recovery/image39.png)
 
-Click \[Confirm\], then management platform will automatically generate missing nodes in the DR center of the same node type as that of the master center. You can modify the \"Data Node Type\" or \"Data Source Group\" and regenerate it, but the data node name and number cannot be modified which are consistent with the master center.
+Click [Confirm], then management platform will automatically generate missing nodes in the DR center of the same node type as that of the master center. You can modify the "Data Node Type" or "Data Source Group" and regenerate it, but the data node name and number cannot be modified which are consistent with the master center.
 
 ![](assets/cross-idc-disaster-recovery/image40.png)
 
@@ -881,7 +881,7 @@ Master-slave setup can set up replication relations not only for the data source
 
 **（1）Setup instructions:**
 
-(The setup instructions only explain the differences between DR centers. For detailed setup instructions and steps, please refer to the [Distributed Transactional Database HotDB Server - V2.5.3 \[Management Platform\] Function Manual](file://localhost/Users/anita/Downloads/英文翻译审核完成/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3%20%5bManagement%20Platform%5d%20Function%20Manual.doc).)
+(The setup instructions only explain the differences between DR centers. For detailed setup instructions and steps, please refer to the [Distributed Transactional Database HotDB Server - V2.5.3 [Management Platform] Function Manual](file://localhost/Users/anita/Downloads/英文翻译审核完成/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3%20%5bManagement%20Platform%5d%20Function%20Manual.doc).)
 
 - The data source you choose to set up cannot be configured with or have multi-master replication relations. To set up disaster recovery relations, it is required that the master data source in the DR center cannot be a slave data source in a set up replication relation; if the slave data source in the DR center has a set up replication relation, it can only be a replication relation with the master data source.
 
@@ -923,17 +923,17 @@ Configuration checking mainly provides checking function for relevant configurat
 
 ![](assets/cross-idc-disaster-recovery/image46.jpeg)
 
-- The IDC type is added to the error message related to the checking of the data source, which can clearly identify which IDC\'s data source fails the checking, so as to troubleshoot the problem.
+- The IDC type is added to the error message related to the checking of the data source, which can clearly identify which IDC's data source fails the checking, so as to troubleshoot the problem.
 
-- The checking item \[Data source connection is normal\] is changed to the checking of warning level. For example, if any data source in the master center or the DR center is connected abnormally, a warning message will appear in the configuration checking, which however will not affect the dynamic loading. When the master center or the DR center fails as the current standby center, this checking item will still check whether all data sources in the two IDCs are connected normally, which however will not affect the dynamic loading.
+- The checking item [Data source connection is normal] is changed to the checking of warning level. For example, if any data source in the master center or the DR center is connected abnormally, a warning message will appear in the configuration checking, which however will not affect the dynamic loading. When the master center or the DR center fails as the current standby center, this checking item will still check whether all data sources in the two IDCs are connected normally, which however will not affect the dynamic loading.
 
-- If the unconnected data source causes no available nodes under the corresponding data nodes of the master center and the DR center, such as dn_01 of the master center and dn_01 of the DR center, an error message will appear in the checking item \[A Data Node must contain available Data Source\] in the configuration checking, and the dynamic loading will not succeed. For example, if all data sources in a data node of the DR center are connected abnormally, as long as there are still available data sources in the corresponding data node of the master center, the dynamic loading will succeed, but a warning message will still appear in the configuration checking.
+- If the unconnected data source causes no available nodes under the corresponding data nodes of the master center and the DR center, such as dn_01 of the master center and dn_01 of the DR center, an error message will appear in the checking item [A Data Node must contain available Data Source] in the configuration checking, and the dynamic loading will not succeed. For example, if all data sources in a data node of the DR center are connected abnormally, as long as there are still available data sources in the corresponding data node of the master center, the dynamic loading will succeed, but a warning message will still appear in the configuration checking.
 
-- An error-level checking item is added in \[Data Source table configuration\]: the logical structure of the data nodes in the master center and the DR center is consistent, that is, the number of data nodes in the master center and the DR center is consistent, and the names correspond one by one.
+- An error-level checking item is added in [Data Source table configuration]: the logical structure of the data nodes in the master center and the DR center is consistent, that is, the number of data nodes in the master center and the DR center is consistent, and the names correspond one by one.
 
-- In \[ConfigDB status\], \[ConfigDB connection is normal\] is modified as a warning-level checking item. Similar to \[Data source connection is normal\], check whether all ConfigDBs in the two IDCs are connected normally.
+- In [ConfigDB status], [ConfigDB connection is normal] is modified as a warning-level checking item. Similar to [Data source connection is normal], check whether all ConfigDBs in the two IDCs are connected normally.
 
-- A warning-level checking item in \[ConfigDB\] is added: whether the replication status between ConfigDBs is normal, that is, whether the replication status of the internal ConfigDBs of a single IDC is normal and whether the replication status of the master ConfigDB between two IDCs is normal.
+- A warning-level checking item in [ConfigDB] is added: whether the replication status between ConfigDBs is normal, that is, whether the replication status of the internal ConfigDBs of a single IDC is normal and whether the replication status of the master ConfigDB between two IDCs is normal.
 
 ![](assets/cross-idc-disaster-recovery/image47.png)
 
@@ -947,7 +947,7 @@ The compute node parameter configuration can configure the server.xml parameters
 
 - The compute node parameters in the current active center are switched and checked through the TAB page.
 
-- Click \[switch\] to switch to the parameter configuration page of the other IDC.
+- Click [switch] to switch to the parameter configuration page of the other IDC.
 
 - If the compute node fails or the connection failure of compute nodes due to the IDC switching, the parameter configuration page of the compute node cannot be displayed.
 
@@ -957,11 +957,11 @@ The compute node parameter configuration can configure the server.xml parameters
 
 **(1) Parameter synchronization:**
 
-If you check \"Automatically synchronize to other compute nodes\", the modified or added parameters will be synchronized to other compute nodes. If the DR center is the current active center, the master compute node parameters of the DR center will be displayed and synchronized on the page by default.
+If you check "Automatically synchronize to other compute nodes", the modified or added parameters will be synchronized to other compute nodes. If the DR center is the current active center, the master compute node parameters of the DR center will be displayed and synchronized on the page by default.
 
 ![](assets/cross-idc-disaster-recovery/image49.png)
 
-Note: The six parameters \[DR Mode\], \[HA role\], \[HA role, other node IP: PORT\], \[IDC ID\], \[The other IDC compute node information\] and \[keepalived virtual IP\] do not support the modification synchronization.
+Note: The six parameters [DR Mode], [HA role], [HA role, other node IP: PORT], [IDC ID], [The other IDC compute node information] and [keepalived virtual IP] do not support the modification synchronization.
 
 **(2) Node failure**
 
@@ -973,13 +973,13 @@ If there is compute node failure, then the failed compute node will not be displ
 
 When the ConfigDB mode used by the master center or DR center is master-slave or master-master, if the master ConfigDB fails, the compute node will automatically switch the connection of the ConfigDB to the slave ConfigDB or standby master ConfigDB. At this time, if the master ConfigDB failure is manually repaired, the compute node cluster will not use the master ConfigDB, you can re-enable the failed ConfigDB according to the following steps:
 
-1\. When the master ConfigDB fails, the compute node parameter configuration page is displayed as the following figure:
+1. When the master ConfigDB fails, the compute node parameter configuration page is displayed as the following figure:
 
 ![](assets/cross-idc-disaster-recovery/image52.png)
 
-2\. If it is determined that the master ConfigDB has returned to normal and consistent with the data of the slave ConfigDB and is up-to-date, click the enable button on the \"Compute node parameter configuration\" page to enable the master ConfigDB.
+2. If it is determined that the master ConfigDB has returned to normal and consistent with the data of the slave ConfigDB and is up-to-date, click the enable button on the [Compute node parameter configuration](#Compute%20node%20parameter%20configuration) page to enable the master ConfigDB.
 
-3\. Click the enable button ![](assets/cross-idc-disaster-recovery/image53.png), and then click the \[Dynamic loading\] button to re-enable the master ConfigDB.
+3. Click the enable button ![](assets/cross-idc-disaster-recovery/image53.png), and then click the [Dynamic loading] button to re-enable the master ConfigDB.
 
 ![](assets/cross-idc-disaster-recovery/image54.png)
 
@@ -995,7 +995,7 @@ When the ConfigDB mode used by the master center or DR center is master-slave or
 
 **(4) New parameters:**[]{# 新增参数 .anchor}
 
-1\. Configure the DR center ConfigDB
+1. Configure the DR center ConfigDB
 
 ![](assets/cross-idc-disaster-recovery/image56.png)
 
@@ -1007,45 +1007,45 @@ When the ConfigDB mode used by the master center or DR center is master-slave or
 
 (The ConfigDB parameters that do not have the IDC type identifications represent the ConfigDB parameters of the master center)
 
-\<propertyname=\"url\"\>jdbc:mysql://192.168.220.213:3316/hotdb_config\</property\>\<!\-- Master ConfigDB address，which needs to be the real IP address of the ConfigDB service\--\>
+<propertyname="url">jdbc:mysql://192.168.220.213:3316/hotdb_config</property><!-- Master ConfigDB address，which needs to be the real IP address of the ConfigDB service-->
 
-\<propertyname=\"username\"\>hotdb_config\</property\>\<!\--Master ConfigDB username\--\>
+<propertyname="username">hotdb_config</property><!--Master ConfigDB username-->
 
-\<propertyname=\"password\"\>hotdb_config\</property\>\<!\--Master ConfigDB password\--\>
+<propertyname="password">hotdb_config</property><!--Master ConfigDB password-->
 
-\<propertyname=\"bakUrl\"\>jdbc:mysql://192.168.220.214:3316/hotdb_config\</property\>\<!\--Slave ConfigDB address，which needs to be the real IP address of the ConfigDB service\--\>
+<propertyname="bakUrl">jdbc:mysql://192.168.220.214:3316/hotdb_config</property><!--Slave ConfigDB address，which needs to be the real IP address of the ConfigDB service-->
 
-\<propertyname=\"bakUsername\"\>hotdb_config\</property\>\<!\--Slave ConfigDB username\--\>
+<propertyname="bakUsername">hotdb_config</property><!--Slave ConfigDB username-->
 
-\<propertyname=\"bakPassword\"\>hotdb_config\</property\>\<!\--Slave ConfigDB password\--\>
+<propertyname="bakPassword">hotdb_config</property><!--Slave ConfigDB password-->
 
-\<propertyname=\"drUrl\"\>jdbc:mysql://192.168.220.217:3316/hotdb_config\</property\>\<!\--ConfigDB address in DR center\--\>
+<propertyname="drUrl">jdbc:mysql://192.168.220.217:3316/hotdb_config</property><!--ConfigDB address in DR center-->
 
-\<propertyname=\"drUsername\"\>hotdb_config\</property\>\<!\--ConfigDB username in DR center\--\>
+<propertyname="drUsername">hotdb_config</property><!--ConfigDB username in DR center-->
 
-\<propertyname=\"drPassword\"\>hotdb_config\</property\>\<!\--ConfigDB password in DR center\--\>
+<propertyname="drPassword">hotdb_config</property><!--ConfigDB password in DR center-->
 
-\<propertyname=\"drBakUrl\"\>jdbc:mysql://192.168.220.218:3316/hotdb_config\</property\>\<!\--Slave ConfigDB address in DR center\--\>
+<propertyname="drBakUrl">jdbc:mysql://192.168.220.218:3316/hotdb_config</property><!--Slave ConfigDB address in DR center-->
 
-\<propertyname=\"drBakUsername\"\>hotdb_config\</property\>\<!\--Slave ConfigDB username in DR center\--\>
+<propertyname="drBakUsername">hotdb_config</property><!--Slave ConfigDB username in DR center-->
 
-\<propertyname=\"drBakPassword\"\>hotdb_config\</property\>\<!\--Slave ConfigDB password in DR center\--\>
+<propertyname="drBakPassword">hotdb_config</property><!--Slave ConfigDB password in DR center-->
 
-2\. haMode adds high availability in DR mode
+2. haMode adds high availability in DR mode
 
 In the DR mode, regardless of whether the high-availability or single-node compute node mode is used, set this parameter as 2 for the master center and 3 for the DR center. If the multi-node mode is used, set this parameter as 4 for the master center and 5 for the DR center.
 
 Master center:
 
-\<property name=\"haMode\"\>2\</property\>\<!\--High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center, 4: Cluster in master center, 5: Cluster in DR center \--\>
+<property name="haMode">2</property><!--High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center, 4: Cluster in master center, 5: Cluster in DR center -->
 
 DR center:
 
-\<property name=\"haMode\"\>3\</property\>\<!\--High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center, 4: Cluster in master center, 5: Cluster in DR center \--\>
+<property name="haMode">3</property><!--High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center, 4: Cluster in master center, 5: Cluster in DR center -->
 
 Note: DR mode does not support compute nodes in cluster mode.
 
-3\. Add the ID of IDC and the compute node configuration of another IDC
+3. Add the ID of IDC and the compute node configuration of another IDC
 
 - idcId and idcNodeHost should be configured in DR mode.
 
@@ -1057,15 +1057,15 @@ Note: DR mode does not support compute nodes in cluster mode.
 
 Slave compute node in DR center:
 
-\<property name=\"idcId\"\>1\</property\>\<!\--ID of IDC, 1:master center, 2:DR center\--\>
+<property name="idcId">1</property><!--ID of IDC, 1:master center, 2:DR center-->
 
-\<property name=\"idcNodeHost\"\>192.168.220.213:3325,192.168.220.214:3325\</property\>\<!\-- Computer node info in the other IDC \--\>
+<property name="idcNodeHost">192.168.220.213:3325,192.168.220.214:3325</property><!-- Computer node info in the other IDC -->
 
 Slave compute node in DR center:
 
-\<property name=\"idcId\"\>2\</property\>\<!\--ID of IDC, 1:master center, 2:DR center\--\>
+<property name="idcId">2</property><!--ID of IDC, 1:master center, 2:DR center-->
 
-\<property name=\"idcNodeHost\"\>192.168.220.213:3325,192.168.220.214:3325\</property\>\<--- Computer node info in the other IDC)\--\>
+<property name="idcNodeHost">192.168.220.213:3325,192.168.220.214:3325</property><--- Computer node info in the other IDC)-->
 
 ### Monitoring
 
@@ -1075,7 +1075,7 @@ The Logic topological graph not only provides the topological graph of the curre
 
 **(1) Topology of master center and 2.5D topology of master center:**
 
-1\. Visualized monitoring of ConfigDB is added.
+1. Visualized monitoring of ConfigDB is added.
 
 - The ConfigDB components are always displayed on the far left of the topology of master center.
 
@@ -1089,15 +1089,15 @@ The ConfigDB components are also added in the 2.5D topology of master center, wi
 
 - Similar to the data source, icon of ConfigDB in red means a failure exists; moving the cursor over the red icon, the failure cause can be displayed. Orange means an abnormal replication status exists, moving the cursor over the orange icon, the abnormality cause can be displayed.
 
-- The monitoring information of \"Replication latency\" is displayed in the ConfigDB. Similar to the data source, the alert threshold of replication latency can be set under ConfigDB module in \"Setting ---\> Topological Graph Alert Setting\".
+- The monitoring information of "Replication latency" is displayed in the ConfigDB. Similar to the data source, the alert threshold of replication latency can be set under ConfigDB module in "Setting ---> Topological Graph Alert Setting".
 
 > ![](assets/cross-idc-disaster-recovery/image61.png)
 
-2\. Monitoring information of ConfigDB is added to the Topological Graph Info Panel
+2. Monitoring information of ConfigDB is added to the Topological Graph Info Panel
 
 - Warning-level monitoring information is added: The replication status of ConfigDB is abnormal and ConfigDB replication latency exceeds the threshold.
 
-3\. IDC switching message is added in the Topological Graph Info Panel
+3. IDC switching message is added in the Topological Graph Info Panel
 
 - When IDC switching occurs, a message which reports the IDC switching will appear on the Topological Graph Info Panel of the topology of master center under the three levels of info, warning and error.
 
@@ -1129,7 +1129,7 @@ If the master center fails and the DR center is switched to be the current activ
 
 ![](assets/cross-idc-disaster-recovery/image67.png)The graph shows the abnormal replication between ConfigDBs in the DR center.
 
-- The data sources with replication latency in the master center and DR center will display monitoring information of the replication latency. If the replication latency is 0, it will not be displayed. Same as that of the topology of master center, the alert threshold for the replication latency is set under the ConfigDB or data source module in \"Setting ---\> Topological Graph Alert Setting\".
+- The data sources with replication latency in the master center and DR center will display monitoring information of the replication latency. If the replication latency is 0, it will not be displayed. Same as that of the topology of master center, the alert threshold for the replication latency is set under the ConfigDB or data source module in "Setting ---> Topological Graph Alert Setting".
 
 - The current active compute node in the DR center will display monitoring information of the disaster recovery latency. The alert threshold for the disaster recovery latency of the ConfigDB and the data source is set uniformly in ![](assets/cross-idc-disaster-recovery/image68.png) on the topology of DR center page.
 
@@ -1153,7 +1153,7 @@ If the master center fails and the DR center is switched to be the current activ
 
 No matter whether the IDC fails or not, the Topological Graph Info Panel will monitor the status of the two IDCs. If the master center fails and the DR center is switched to be the current active center, other status will still be monitored except the disaster recovery relation between the two IDCs.
 
-1\. Info
+1. Info
 
 - Add data sources and data nodes for both two IDCs;
 
@@ -1163,7 +1163,7 @@ No matter whether the IDC fails or not, the Topological Graph Info Panel will mo
 
 - Delete data sources and data nodes in the two IDCs at the same time.
 
-2\. Warning
+2. Warning
 
 - The replication status of data sources or ConfigDBs in a single IDC is abnormal;
 
@@ -1171,7 +1171,7 @@ No matter whether the IDC fails or not, the Topological Graph Info Panel will mo
 
 - The disaster recovery latency of data sources and ConfigDBs between two IDCs exceeds the threshold.
 
-3\. Error
+3. Error
 
 - Failure of data sources, ConfigDBs, or compute nodes in a single IDC;
 
@@ -1193,7 +1193,7 @@ The physical topological graph adds a toggle button for the IDC switching, throu
 
 **(1) Compute node server resources:**
 
-You can select to monitor all compute nodes that can connect to the management port whether in the master center or in the DR center on the compute node server resources function page. In \[Add Monitoring Item\], you can select the compute nodes of the master center or DR center you want to monitor. while the master compute node of the current active center is selected by default.
+You can select to monitor all compute nodes that can connect to the management port whether in the master center or in the DR center on the compute node server resources function page. In [Add Monitoring Item], you can select the compute nodes of the master center or DR center you want to monitor. while the master compute node of the current active center is selected by default.
 
 ![](assets/cross-idc-disaster-recovery/image74.png)
 
@@ -1203,7 +1203,7 @@ If the management port of compute nodes cannot be connected, for example, if the
 
 For other server resources, you can view detailed information about all server resources configured with SSH information in the two IDCs, including: CPU usage, memory usage, disk usage, and network traffic in and out.
 
-(It is a prerequisite to configure the server\'s SSH information in \"Configuration-\> Server\")
+(It is a prerequisite to configure the server's SSH information in "Configuration-> Server")
 
 ![](assets/cross-idc-disaster-recovery/image75.png)
 
@@ -1235,7 +1235,7 @@ Monitoring management page can be used to check the relations between the front-
 
 ![](assets/cross-idc-disaster-recovery/image78.png)
 
-For example, if you select \"Server Connection Information: show processlist\" in \"Query Command\", the server connection information of the master compute node server in the current active center is displayed by default:
+For example, if you select "Server Connection Information: show processlist" in "Query Command", the server connection information of the master compute node server in the current active center is displayed by default:
 
 ![](assets/cross-idc-disaster-recovery/image79.png)
 
@@ -1243,7 +1243,7 @@ For example, if you select \"Server Connection Information: show processlist\" i
 
 #### Data backup
 
-The management platform does not provide the data backup function for the DR center. If you want to restore the data backup of the current active center to another IDC, you can check the item \"Backup to Remote Path simultaneously\" in \"Start Backup\" to transfer all the backup files of each data source in the current IDC to a remote path through scp command before restoring the backup files to the corresponding data sources one by one according to the correspondence of the data sources offline.
+The management platform does not provide the data backup function for the DR center. If you want to restore the data backup of the current active center to another IDC, you can check the item "Backup to Remote Path simultaneously" in "Start Backup" to transfer all the backup files of each data source in the current IDC to a remote path through scp command before restoring the backup files to the corresponding data sources one by one according to the correspondence of the data sources offline.
 
 ![](assets/cross-idc-disaster-recovery/image80.png)
 
@@ -1257,7 +1257,7 @@ The management platform supports the migration of data sources in the master cen
 
 ![](assets/cross-idc-disaster-recovery/image82.png)
 
-- In \[Step 4: Data Source Migration\], a replication relation will be set up of the current active data sources between the master center and the DR center. For example, if to migrate the data nodes of the master center, the management platform will set up a replication relation between the target master data source of the master center and the current active data source of the DR center.
+- In [Step 4: Data Source Migration], a replication relation will be set up of the current active data sources between the master center and the DR center. For example, if to migrate the data nodes of the master center, the management platform will set up a replication relation between the target master data source of the master center and the current active data source of the DR center.
 
 ### Detect
 
@@ -1279,7 +1279,7 @@ For detection range of LogicDB or detection range of data source:
 
 - If two IDCs are both selected, all the data sources under the selected data nodes will be compared with the master data sources under the corresponding data nodes of the current active center to see whether the data is consistent.
 
-> For example, in the detection range of **LogicDB**, select logicdb01, which is associated with the dn_01 of the master center and the DR center. Click \[Start a Detection\], and then the current active data source (ds_01) under the dn_01 of master center will be compared with all the data sources (ds_01, ds_02, ds_03, ds_04) under the dn_01 of the two IDCs respectively.
+> For example, in the detection range of **LogicDB**, select logicdb01, which is associated with the dn_01 of the master center and the DR center. Click [Start a Detection], and then the current active data source (ds_01) under the dn_01 of master center will be compared with all the data sources (ds_01, ds_02, ds_03, ds_04) under the dn_01 of the two IDCs respectively.
 
 (2) **Detection range of ConfigDB:**
 
@@ -1287,9 +1287,9 @@ For detection range of LogicDB or detection range of data source:
 
 - In detection range of ConfigDB, select the ConfigDB address you want to detect and fill in the concurrency number (the default is 2)
 
-- Click \[Start a Detection\] to check the data consistency between the selected ConfigDB and the master ConfigDB of the current active center.
+- Click [Start a Detection] to check the data consistency between the selected ConfigDB and the master ConfigDB of the current active center.
 
-- Click \[View Results\] to view the details of detection results. If there are inconsistencies, locations and details of the inconsistencies will be displayed in the detection results.
+- Click [View Results] to view the details of detection results. If there are inconsistencies, locations and details of the inconsistencies will be displayed in the detection results.
 
 ![](assets/cross-idc-disaster-recovery/image86.png)
 
@@ -1297,7 +1297,7 @@ For detection range of LogicDB or detection range of data source:
 
 #### Notification strategy
 
-After adding notification strategy, it can alert you by email to the failure or abnormalities of the master center or DR center during cluster operation. The monitoring items including \[Failure Real-time Monitoring\], \[Compute Node Server Resource Monitoring\], \[Compute Node Service Status\], \[Data Source Information Monitoring\], and \[ConfigDB Monitoring\] are added with the IDC identifications to alert the failure or abnormalities related to the current active center; \[Other Server Resource Monitoring\] and \[License Authorization Monitoring\] are added with IDC identifications to identify the IDC where the server exceeds the alert threshold and the IDC to which the compute node with abnormal license belongs.
+After adding notification strategy, it can alert you by email to the failure or abnormalities of the master center or DR center during cluster operation. The monitoring items including [Failure Real-time Monitoring], [Compute Node Server Resource Monitoring], [Compute Node Service Status], [Data Source Information Monitoring], and [ConfigDB Monitoring] are added with the IDC identifications to alert the failure or abnormalities related to the current active center; [Other Server Resource Monitoring] and [License Authorization Monitoring] are added with IDC identifications to identify the IDC where the server exceeds the alert threshold and the IDC to which the compute node with abnormal license belongs.
 
 (1) **Email information:**
 
@@ -1309,13 +1309,13 @@ Added email information: whether to enable the DR mode, type of the current acti
 
 ![](assets/cross-idc-disaster-recovery/image88.png)
 
-In the data source information monitoring, for \[Replication Delay\] and \[Data Source Replication Status\], in addition to alerting the abnormality of the internal data source in the current active center, it also alerts the disaster recovery latency and the abnormal disaster recovery status between the current active data source in the master center and the current active data source in the DR center.
+In the data source information monitoring, for [Replication Delay] and [Data Source Replication Status], in addition to alerting the abnormality of the internal data source in the current active center, it also alerts the disaster recovery latency and the abnormal disaster recovery status between the current active data source in the master center and the current active data source in the DR center.
 
 **Threshold setting:**
 
-- ¬ The replication latency still corresponds to the replication latency under the data source module in \"Setting -\> Topological Graph Alert Setting\"
+- ¬ The replication latency still corresponds to the replication latency under the data source module in "Setting -> Topological Graph Alert Setting"
 
-- ¬ The disaster recovery latency corresponds to the disaster recovery latency setting of the topology in DR center in \"Monitoring-\> [Logical Topological Graph](#logic-topological-graph)\"
+- ¬ The disaster recovery latency corresponds to the disaster recovery latency setting of the topology in DR center in "Monitoring-> [Logical Topological Graph](#logic-topological-graph)"
 
 ![](assets/cross-idc-disaster-recovery/image69.png)
 
@@ -1327,9 +1327,9 @@ In ConfigDB information monitoring, alert is added of the replication latency an
 
 **Threshold setting:**
 
-- The replication latency corresponds to the replication latency under the ConfigDB module in \"Setting -\> Topological graph alert setting\"
+- The replication latency corresponds to the replication latency under the ConfigDB module in "Setting -> Topological graph alert setting"
 
-- The disaster recovery latency corresponds to the disaster recovery latency setting of the topology in the DR center in \"Monitoring -\> [Logical Topological Graph](#logic-topological-graph)\"
+- The disaster recovery latency corresponds to the disaster recovery latency setting of the topology in the DR center in "Monitoring -> [Logical Topological Graph](#logic-topological-graph)"
 
 ![](assets/cross-idc-disaster-recovery/image69.png)
 
@@ -1373,7 +1373,7 @@ If there is a server in the two IDCs that cannot be connected, you can choose to
 
 The upgrade center also supports cross-version or minor-version upgrade, that is, users can upgrade the lower version of the compute node to version 2.5.3.1, so that the already running low-version compute node cluster can enable the DR mode after the upgrade is completed.
 
-Select the compute node cluster that needs to be upgraded. If the cluster has the DR mode enabled, the color green will be used to mark the master center, and blue to mark the DR center for the items Cluster Mode and the Compute Node. After uploading the upgrade package, click \[Start Update\] to enter the upgrade process.
+Select the compute node cluster that needs to be upgraded. If the cluster has the DR mode enabled, the color green will be used to mark the master center, and blue to mark the DR center for the items Cluster Mode and the Compute Node. After uploading the upgrade package, click [Start Update] to enter the upgrade process.
 
 ![](assets/cross-idc-disaster-recovery/image95.png)
 
@@ -1385,7 +1385,7 @@ After the upgrade is complete, you can view the detailed update logs:
 
 - If the currently configured master center is not the current active center and the current master center management port cannot be connected, the upgrade cannot be performed.
 
-- If the compute node in the master center is in the master/slave mode, the page will display \"whether to switch back after the upgrade\". Select \"Yes\" to switch back to the former master compute node after the upgrade (the master/slave high availability switch will be performed during the upgrade).
+- If the compute node in the master center is in the master/slave mode, the page will display "whether to switch back after the upgrade". Select "Yes" to switch back to the former master compute node after the upgrade (the master/slave high availability switch will be performed during the upgrade).
 
 - If the compute node in the DR center is in master/slave mode, no matter whether the upgrade is successful or not, only the master compute node management port will be enabled after the upgrade, that is, the slave compute node management port or keepalived components will not be enabled.
 
@@ -1403,33 +1403,33 @@ The master-slave compute node services in DR center are in standby status before
 
 The online command is disabled for the master-slave compute nodes of DR center before the IDC-level switching of service occurs, mainly to differentiate from the general high availability switching operation. When the online command is executed, the following prompt will be given:
 
-root\@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 07:58:26\> online;
+root@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 07:58:26> online;
 
 ERROR 10192 (HY000): access denied. online is not allowed in a DR HotDB Server.
 
 The master compute node of DR center is not involved in HA high availability switching and master selection of master center. In addition to some show commands, only manual commands are accepted: online_dr switch the IDC.
 
-root\@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 08:12:31\> online_dr;
+root@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 08:12:31> online_dr;
 
 Query OK, 1 row affected (5 min 4.35 sec)
 
 Once the master compute node of DR center executes the online_dr command, an IDC-level switching of the compute node services will occur, and the master compute node of DR center will provide services. For other situations, please refer to the detailed description of the [IDC failure](#idc-failure) in related chapters. At the same time, the compute node logs output of DR center are as follows, which means that the service of the DR center is successfully enabled:
 
-2019-12-12 19:50:47.257 \[INFO\] \[MANAGER\] \[\$NIOExecutor-1-0\] cn.hotpu.hotdb.manager.ManagerQueryHandler(178) - online_dr by \[thread=\$NIOExecutor-1-0,id=8514,user=root,host=192.168.220.183,port=3325,localport=13838,schema=null\]
+2019-12-12 19:50:47.257 [INFO] [MANAGER] [\$NIOExecutor-1-0] cn.hotpu.hotdb.manager.ManagerQueryHandler(178) - online_dr by [thread=\$NIOExecutor-1-0,id=8514,user=root,host=192.168.220.183,port=3325,localport=13838,schema=null]
 
-2019-12-12 19:50:47.258 \[INFO\] \[MANAGER\] \[Labor-2\] cn.hotpu.hotdb.HotdbServer(2111) - DR online start
+2019-12-12 19:50:47.258 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.HotdbServer(2111) - DR online start
 
 ......
 
-2019-12-12 19:50:50.587 \[INFO\] \[MANAGER\] \[Labor-2\] cn.hotpu.hotdb.HotdbServer(2142) - DR online end
+2019-12-12 19:50:50.587 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.HotdbServer(2142) - DR online end
 
 The slave compute node of DR center is not involved in the HA high availability switching and master selection of master center. When the IDC-level switching of the compute node occurs, that is, when the master compute node of the DR center provides services, if the master compute node of the DR center fails at this time, it can execute enable_online; command before executing online or online_dr command to enable the slave compute node of the DR center. After the command is executed, the slave compute node in the DR center can automatically enable the service port (3323 by default) to continue the service by enabling the process judging.
 
-root\@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:10:31\> enable_online;
+root@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:10:31> enable_online;
 
 Query OK, 1 row affected (11 min 5.39 sec)
 
-root\@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:22:27\> online_dr;
+root@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:22:27> online_dr;
 
 Query OK, 1 row affected (0.01 sec)
 
@@ -1513,7 +1513,7 @@ This section mainly describes the function usage when high-availability switchin
 
 ![](assets/cross-idc-disaster-recovery/image98.jpeg)
 
-Enter the \"Cluster Management\"-\> \"Compute Node Cluster\" page. When you manually click the \[Switch\] button corresponding to the compute node group with the master-slave relation to perform manual compute node switching operations, switching will only occur in the master center, which has no effect on the compute node services of the DR center. The logic of high-availability switching and re-setup operations in all master center compute node services is the same as that of the ordinary single IDC mode.
+Enter the "Cluster Management"-> "Compute Node Cluster" page. When you manually click the [Switch] button corresponding to the compute node group with the master-slave relation to perform manual compute node switching operations, switching will only occur in the master center, which has no effect on the compute node services of the DR center. The logic of high-availability switching and re-setup operations in all master center compute node services is the same as that of the ordinary single IDC mode.
 
 ##### Failover
 
@@ -1531,7 +1531,7 @@ When the failed master ConfigDB of the master center is restored, if the master-
 
 ##### Manual switching
 
-Click \[Switch\] button corresponding to the master center on the \"Node Management\" page of the management platform, the compute node will automatically detect whether the replication relations between the master nodes of the current master center and the standby master nodes or the slave nodes are normal and whether the replication latency is within 10s. The switching can be successful when the conditions are met. At the same time, the master data sources of the DR center will be automatically set up with replication relations with the standby master nodes or slave nodes in the switched master center, without manual intervention. That is, after switching from ds01 to ds02, the replication relation between ds01 and ds03 will be cleared, and ds03 as a slave will reset up a replication relation with ds02.
+Click [Switch] button corresponding to the master center on the "Node Management" page of the management platform, the compute node will automatically detect whether the replication relations between the master nodes of the current master center and the standby master nodes or the slave nodes are normal and whether the replication latency is within 10s. The switching can be successful when the conditions are met. At the same time, the master data sources of the DR center will be automatically set up with replication relations with the standby master nodes or slave nodes in the switched master center, without manual intervention. That is, after switching from ds01 to ds02, the replication relation between ds01 and ds03 will be cleared, and ds03 as a slave will reset up a replication relation with ds02.
 
 ![](assets/cross-idc-disaster-recovery/image99.png)
 
@@ -1557,7 +1557,7 @@ If the keepalived service in the DR center needs to be retained due to special r
 
 ##### Failover
 
-After the master ConfigDB of the DR center fails, the standby master ConfigDB of the DR center will be automatically set as unavailable. When the failure is restored, you need to click the \[Enable\] button on the \"[Parameter Configuration](#compute-node-parameter-configuration)\" page of management platform before the dynamic loading takes effect. When the standby master ConfigDB in the DR center is enabled, its master ConfigDB must be enabled; otherwise, the operation is invalid. If only the slave ConfigDB of the DR center fails, only the slave ConfigDB will be marked as unavailable and will not affect other services.
+After the master ConfigDB of the DR center fails, the standby master ConfigDB of the DR center will be automatically set as unavailable. When the failure is restored, you need to click the [Enable] button on the "[Parameter Configuration](#compute-node-parameter-configuration)" page of management platform before the dynamic loading takes effect. When the standby master ConfigDB in the DR center is enabled, its master ConfigDB must be enabled; otherwise, the operation is invalid. If only the slave ConfigDB of the DR center fails, only the slave ConfigDB will be marked as unavailable and will not affect other services.
 
 #### Data source
 
@@ -1573,7 +1573,7 @@ After the manual switching and failover of all data sources and ConfigDBs, the c
 
 ### IDC Failure
 
-This section mainly describes precautions and instructions when master center fails in the IDC level, DR center is switched as the active IDC and provides services during a compute node cluster is providing services normally, taken the compute node cluster in the master/slave mode as an example. This description mainly describes the steps of manual switching and repair of IDC. If automatic switching, repair and removal of the IDC through the management platform is wanted, on the basis of ensuring that the management platform version is 2.5.6 and above, you can refer to the [Distributed Transactional Database HotDB Server - V2.5.6 \[Visualization of Cross-IDC DR Switching\] Function Manual](file:///Users/anita/Desktop/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.5%20Cross-IDC%20Disaster%20Recovery%20Function%20Specification.docx).
+This section mainly describes precautions and instructions when master center fails in the IDC level, DR center is switched as the active IDC and provides services during a compute node cluster is providing services normally, taken the compute node cluster in the master/slave mode as an example. This description mainly describes the steps of manual switching and repair of IDC. If automatic switching, repair and removal of the IDC through the management platform is wanted, on the basis of ensuring that the management platform version is 2.5.6 and above, you can refer to the [Distributed Transactional Database HotDB Server - V2.5.6 [Visualization of Cross-IDC DR Switching] Function Manual](file:///Users/anita/Desktop/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.5%20Cross-IDC%20Disaster%20Recovery%20Function%20Specification.docx).
 
 #### Master center fails and DR center is switched as the active IDC
 
@@ -1591,17 +1591,17 @@ When the compute node services of the master center fail irreparably, you can ma
 
 After confirming the switch pre-detection, you can execute the online_dr command on the management port of compute nodes in the DR center. After receiving the command, the compute node will make the following judgments in order:
 
-1\. Send the offline command to the master compute node in the master center again to try to avoid multiple compute node services running simultaneously;
+1. Send the offline command to the master compute node in the master center again to try to avoid multiple compute node services running simultaneously;
 
-2\. Wait for all the master data sources and master ConfigDB of the DR center to catch up with the replication;
+2. Wait for all the master data sources and master ConfigDB of the DR center to catch up with the replication;
 
-3\. Automatically clear all the data sources and ConfigDBs replication relation between the master center and the DR center;
+3. Automatically clear all the data sources and ConfigDBs replication relation between the master center and the DR center;
 
-4\. Mark all data sources and ConfigDBs in the master center as unavailable;
+4. Mark all data sources and ConfigDBs in the master center as unavailable;
 
-5\. After passing other verifications that need to be done when start service port, start the service port of master computer node in the DR center to provide services;
+5. After passing other verifications that need to be done when start service port, start the service port of master computer node in the DR center to provide services;
 
-6\. At the same time, the replication relation between data sources in a single data node is automatically determined by the compute node. The compute node will set up or reset the replication relation in the DR center according to the configuration roles of data sources in the DR center.
+6. At the same time, the replication relation between data sources in a single data node is automatically determined by the compute node. The compute node will set up or reset the replication relation in the DR center according to the configuration roles of data sources in the DR center.
 
 - If the data source is configured as a "standby master", compute node will compare the GTID position: When the master data source has more or equal GTID than the standby master data source, compute node will automatically set up a replication between these two data sources (the standby master data source is the host) so that there is a master-master replication for this data node; when the master data source has fewer GTID than the standby master data source(generally, this situation does not occur, and it is more possible when human operation involved),compute node will perform reset slave all on the standby master data source and set the standby master data source unavailable;
 
@@ -1609,11 +1609,11 @@ After confirming the switch pre-detection, you can execute the online_dr command
 
 - Other replication relations (such as master-master with slave(s)) will be determined same as above whether to set up or reset replication relation based on specific role configurations.
 
-7\. If currently there is high-availability compute node services in the DR center, you need to continue to execute the enable_online command on the management port of the standby compute node in the DR center to ensure that when the current master compute node fails, you can perform compute node service switchover in the DR center according to high-availability rules of keepalived component.
+7. If currently there is high-availability compute node services in the DR center, you need to continue to execute the enable_online command on the management port of the standby compute node in the DR center to ensure that when the current master compute node fails, you can perform compute node service switchover in the DR center according to high-availability rules of keepalived component.
 
-8\. Finally, check whether the keepalived status of the DR center is normal. The VIP is on the current master compute node, and there is no abnormality in the service status and role status of the master and standby keepalived, master and standby compute nodes.
+8. Finally, check whether the keepalived status of the DR center is normal. The VIP is on the current master compute node, and there is no abnormality in the service status and role status of the master and standby keepalived, master and standby compute nodes.
 
-9\. If necessary, perform SQL operations on the compute nodes that are currently providing services to confirm that the services are normal
+9. If necessary, perform SQL operations on the compute nodes that are currently providing services to confirm that the services are normal
 
 #### IDC failure repair and failover
 
@@ -1625,11 +1625,11 @@ After the master center fails and the DR center is successfully switched, if the
 
 Step 1: Make a data backup of the ConfigDB of the management platform that is currently providing the service, and the ConfigDB of compute nodes, so that they can be restored after misuse;
 
-Step 2: Delete the original cluster in the DR mode through the \"Cluster Management\"-\> \"Computer Node Cluster\" page of the administrator interface in the management platform;
+Step 2: Delete the original cluster in the DR mode through the "Cluster Management"-> "Computer Node Cluster" page of the administrator interface in the management platform;
 
 ![](assets/cross-idc-disaster-recovery/image100.jpeg)
 
-Step 3: Still through the \"Cluster Management\"-\> \"Compute Node Cluster\" page, click \[Add Cluster\] to add the active IDC as a new compute node cluster and add the ConfigDB information after the disaster recovery switchover (as long as the compute node management port is currently connectable, no manual configuration is required here by default).
+Step 3: Still through the "Cluster Management"-> "Compute Node Cluster" page, click [Add Cluster] to add the active IDC as a new compute node cluster and add the ConfigDB information after the disaster recovery switchover (as long as the compute node management port is currently connectable, no manual configuration is required here by default).
 
 ![](assets/cross-idc-disaster-recovery/image101.png)
 
@@ -1637,7 +1637,7 @@ Step 4: Add user privileges to the new cluster for general users
 
 Step 5: Log in to the management platform as a general user, select the newly-added cluster
 
-Step 6: Go to the \"Configuration\"-\> \"Parameter Configuration\" page and modify the related configuration parameters as shown in red below: select HA as cluster mode and select master center as IDC ID (here is the preparation for [scenario two](#scenario-two-make-the-original-master-center-as-the-standby-idc)). The ConfigDB connection information should be filled and saved according to the actual current ConfigDB information;
+Step 6: Go to the [Configuration](#Configuration)-> "Parameter Configuration" page and modify the related configuration parameters as shown in red below: select HA as cluster mode and select master center as IDC ID (here is the preparation for [scenario two](#scenario-two-make-the-original-master-center-as-the-standby-idc)). The ConfigDB connection information should be filled and saved according to the actual current ConfigDB information;
 
 ![](assets/cross-idc-disaster-recovery/image102.png)
 
@@ -1645,7 +1645,7 @@ Step 6: Go to the \"Configuration\"-\> \"Parameter Configuration\" page and modi
 
 ![](assets/cross-idc-disaster-recovery/image104.png)
 
-Step 7: Go to the \"Configuration\"-\> \"Node Management\" page to delete the data stored for the original master center.(You can choose to search by IP, or you can choose to search by unavailable status, but you need to be careful not to delete the data used by the current active IDC by mistake)
+Step 7: Go to the [Configuration](#Configuration)-> "Node Management" page to delete the data stored for the original master center.(You can choose to search by IP, or you can choose to search by unavailable status, but you need to be careful not to delete the data used by the current active IDC by mistake)
 
 ![](assets/cross-idc-disaster-recovery/image105.png)
 
@@ -1657,17 +1657,17 @@ update hotdb_datasource set idc_id=1;
 
 Step 9: Enter the master ConfigDB of the current active IDC, then check the result of the hotdb_config_info table and make sure that v value of the row whose k column is hotdb_master_config_status is 1. (The data of this row represents whether the current master ConfigDB is available. It will not be updated after IDC switchover, just check it and make sure that the current ConfigDB information can be read normally.) If it is not 1, update the row of data to 1.
 
-root\@localhost:hotdb_config 5.7.25-log 07:47:19\> select \* From hotdb_config_info where k=\'hotdb_master_config_status\' ;
+root@localhost:hotdb_config 5.7.25-log 07:47:19> select * From hotdb_config_info where k='hotdb_master_config_status' ;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------------------------+---+--------------------------------------------+
 
-\| k \| v \| description \|
+| k | v | description |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------------------------+---+--------------------------------------------+
 
-\| hotdb_master_config_status \| 1 \| Master ConfigDB status \|
+| hotdb_master_config_status | 1 | Master ConfigDB status |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------------------------+---+--------------------------------------------+
 
 1 row in set (0.00 sec)
 
@@ -1703,81 +1703,81 @@ Step 4: Modify the configuration file server.xml of the original master center a
 
 **Master compute node in the current active IDC:**
 
-\<property name=\"drUrl\"\>jdbc:mysql://192.168.220.181:3306/hotdb_config\</property\>\<!\-- Configuration database address in DR center \--\>
+<property name="drUrl">jdbc:mysql://192.168.220.181:3306/hotdb_config</property><!-- Configuration database address in DR center -->
 
-\<property name=\"drBakUrl\"\>jdbc:mysql://192.168.220.182:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address in DRIDC \--\>
+<property name="drBakUrl">jdbc:mysql://192.168.220.182:3306/hotdb_config</property><!-- Slave ConfigDB address in DRIDC -->
 
-\<property name=\"haMode\"\>2\</property\>\<!\-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center \--\>
+<property name="haMode">2</property><!-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center -->
 
-\<property name=\"idcId\"\>1\</property\>\<!\-- ID of IDC, 1:master center, 2:DR center \--\>
+<property name="idcId">1</property><!-- ID of IDC, 1:master center, 2:DR center -->
 
 **Standby compute node in the current active IDC:**
 
-\<property name=\"drUrl\"\>jdbc:mysql://192.168.220.181:3306/hotdb_config\</property\>\<!\-- Configuration database address in DR center \--\>
+<property name="drUrl">jdbc:mysql://192.168.220.181:3306/hotdb_config</property><!-- Configuration database address in DR center -->
 
-\<property name=\"drBakUrl\"\>jdbc:mysql://192.168.220.182:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address in DR center \--\>
+<property name="drBakUrl">jdbc:mysql://192.168.220.182:3306/hotdb_config</property><!-- Slave ConfigDB address in DR center -->
 
-\<property name=\"haMode\"\>2\</property\>\<!\-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center \--\>
+<property name="haMode">2</property><!-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center -->
 
-\<property name=\"idcId\"\>1\</property\>\<!\-- ID of IDC, 1:master center, 2:DR center \--\>
+<property name="idcId">1</property><!-- ID of IDC, 1:master center, 2:DR center -->
 
 **Master compute node in the original master center:**
 
-\<property name=\"url\"\>jdbc:mysql://192.168.220.183:3306/hotdb_config\</property\>\<!\-- ConfigDB address\--\>
+<property name="url">jdbc:mysql://192.168.220.183:3306/hotdb_config</property><!-- ConfigDB address-->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.220.184:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address \--\>
+<property name="bakUrl">jdbc:mysql://192.168.220.184:3306/hotdb_config</property><!-- Slave ConfigDB address -->
 
-\<property name=\"drUrl\"\>jdbc:mysql://192.168.220.181:3306/hotdb_config\</property\>\<!\-- Configuration database address in DR center \--\>
+<property name="drUrl">jdbc:mysql://192.168.220.181:3306/hotdb_config</property><!-- Configuration database address in DR center -->
 
-\<property name=\"drBakUrl\"\>jdbc:mysql://192.168.220.182:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address in DRIDC \--\>
+<property name="drBakUrl">jdbc:mysql://192.168.220.182:3306/hotdb_config</property><!-- Slave ConfigDB address in DRIDC -->
 
-\<property name=\"haMode\"\>**3**\</property\>\<!\-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center \--\>
+<property name="haMode">**3**</property><!-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center -->
 
-\<property name=\"idcId\"\>**2**\</property\>\<!\-- ID of IDC, 1:master center, 2:DR center \--\>
+<property name="idcId">**2**</property><!-- ID of IDC, 1:master center, 2:DR center -->
 
 **Standby compute node in the original master center:**
 
-\<property name=\"url\"\>jdbc:mysql://192.168.220.183:3306/hotdb_config\</property\>\<!\-- ConfigDB address\--\>
+<property name="url">jdbc:mysql://192.168.220.183:3306/hotdb_config</property><!-- ConfigDB address-->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.220.184:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address \--\>
+<property name="bakUrl">jdbc:mysql://192.168.220.184:3306/hotdb_config</property><!-- Slave ConfigDB address -->
 
-\<property name=\"drUrl\"\>jdbc:mysql://192.168.220.181:3306/hotdb_config\</property\>\<!\-- Configuration database address in DR center \--\>
+<property name="drUrl">jdbc:mysql://192.168.220.181:3306/hotdb_config</property><!-- Configuration database address in DR center -->
 
-\<property name=\"drBakUrl\"\>jdbc:mysql://192.168.220.182:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address in DRIDC \--\>
+<property name="drBakUrl">jdbc:mysql://192.168.220.182:3306/hotdb_config</property><!-- Slave ConfigDB address in DRIDC -->
 
-\<property name=\"haMode\"\>**3**\</property\>\<!\-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center \--\>
+<property name="haMode">**3**</property><!-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center -->
 
-\<property name=\"idcId\"\>**2**\</property\>\<!\-- ID of IDC, 1:master center, 2:DR center \--\>
+<property name="idcId">**2**</property><!-- ID of IDC, 1:master center, 2:DR center -->
 
 Step 5: Log in to the master ConfigDB in the current active IDC, and set the availability of the ConfigDB of original master center to 1. (after disaster recovery switchover in IDC level, the compute node will automatically mark the status of ConfigDB in master center as unavailable. It needs to be enabled here to ensure that after reloading, the compute node can read the correct ConfigDB information according to the current latest configuration.) Also, check whether the status of other ConfigDB in this table is in accordance with the actual availability status:
 
 **Update the availability of the ConfigDB of master center:**
 
-update hotdb_config_info set v=\'1\' where k=\'hotdb_biz_idc_config_ok\' or k=\'hotdb_master_config_status\';
+update hotdb_config_info set v='1' where k='hotdb_biz_idc_config_ok' or k='hotdb_master_config_status';
 
 **Check the availability of other ConfigDB:**
 
-select \* From hotdb_config_info limit 1,5;
+select * From hotdb_config_info limit 1,5;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------------------------------+---+---------------------------------------------------+
 
-\| k \| v \| description \|
+| k | v | description |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------------------------------+---+---------------------------------------------------+
 
-\| hotdb_biz_idc_config_ok \| 1 \| ConfigDB in master center ok or not \|
+| hotdb_biz_idc_config_ok | 1 | ConfigDB in master center ok or not |
 
-\| hotdb_dr_idc_config_ok \| 1 \| ConfigDB in DR center ok or not) \|
+| hotdb_dr_idc_config_ok | 1 | ConfigDB in DR center ok or not) |
 
-\| hotdb_dr_idc_master_config_status\| 1 \| Master ConfigDB status in DR center \|
+| hotdb_dr_idc_master_config_status| 1 | Master ConfigDB status in DR center |
 
-\| hotdb_dr_idc_slave_config_ok \| 1 \| standby ConfigDB in DR center ok or not\|
+| hotdb_dr_idc_slave_config_ok | 1 | standby ConfigDB in DR center ok or not|
 
-\| hotdb_master_config_status \| 1 \| Master ConfigDB status \|
+| hotdb_master_config_status | 1 | Master ConfigDB status |
 
-Step 6: Start the services of the active and standby compute nodes of the original master center. (Keepalived don\'t need to be started temporarily. If a failover at IDC level occurs afterwards, you can start keepalived after restarting services.)
+Step 6: Start the services of the active and standby compute nodes of the original master center. (Keepalived don't need to be started temporarily. If a failover at IDC level occurs afterwards, you can start keepalived after restarting services.)
 
-Step 7: Log in to the management platform as a manager user and go to the \"Cluster Management\"-\> \"Compute Node Cluster\" page to turn on the DR mode for this cluster, and configure the original master center as the current standby IDC. Save after passing test.
+Step 7: Log in to the management platform as a manager user and go to the "Cluster Management"-> "Compute Node Cluster" page to turn on the DR mode for this cluster, and configure the original master center as the current standby IDC. Save after passing test.
 
 ![](assets/cross-idc-disaster-recovery/image107.png)
 
@@ -1785,13 +1785,13 @@ Step 7: Log in to the management platform as a manager user and go to the \"Clus
 
 Step 8: Log in to the management platform as a general user account and select the newly added cluster in DR mode.
 
-Step 9. Go to the \"Configuration\"-\> \"Node Management\" page to add data nodes and data sources in the DR center.
+Step 9. Go to the [Configuration](#Configuration)-> "Node Management" page to add data nodes and data sources in the DR center.
 
 ![](assets/cross-idc-disaster-recovery/image109.png)
 
 ![](assets/cross-idc-disaster-recovery/image110.png)
 
-Step 10: Check whether the replication status or DR replication status in the current active IDC is abnormal. You can check whether the replication status of the data sources or ConfigDBs are normal through the \"Node Management\" and \"Configuration Verification\" pages.
+Step 10: Check whether the replication status or DR replication status in the current active IDC is abnormal. You can check whether the replication status of the data sources or ConfigDBs are normal through the "Node Management" and "Configuration Verification" pages.
 
 Step 11: Dynamic loading.
 
@@ -1813,27 +1813,27 @@ Step 4: After confirming that there is no abnormality in the replication relatio
 
 **Update the availability of the ConfigDB of master center:**
 
-update hotdb_config_info set v=\'1\' where k=\'hotdb_biz_idc_config_ok\' or k=\'hotdb_master_config_status\';
+update hotdb_config_info set v='1' where k='hotdb_biz_idc_config_ok' or k='hotdb_master_config_status';
 
 **Check the availability of other ConfigDB:**
 
-select \* From hotdb_config_info limit 1,5;
+select * From hotdb_config_info limit 1,5;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------------------------------+---+---------------------------------------------------+
 
-\| k \| v \| description \|
+| k | v | description |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
++----------------------------------+---+---------------------------------------------------+
 
-\| hotdb_biz_idc_config_ok \| 1 \| ConfigDB in master center ok or not \|
+| hotdb_biz_idc_config_ok | 1 | ConfigDB in master center ok or not |
 
-\| hotdb_dr_idc_config_ok \| 1 \| ConfigDB in DR center ok or not) \|
+| hotdb_dr_idc_config_ok | 1 | ConfigDB in DR center ok or not) |
 
-\| hotdb_dr_idc_master_config_status\| 1 \| Master ConfigDB status in DR center \|
+| hotdb_dr_idc_master_config_status| 1 | Master ConfigDB status in DR center |
 
-\| hotdb_dr_idc_slave_config_ok \| 1 \| standby ConfigDB in DR center ok or not\|
+| hotdb_dr_idc_slave_config_ok | 1 | standby ConfigDB in DR center ok or not|
 
-\| hotdb_master_config_status \| 1 \| Master ConfigDB status \|
+| hotdb_master_config_status | 1 | Master ConfigDB status |
 
 Step 5: After confirming that the first 4 steps are correct, start the compute nodes and keepalived service of the original master center and DR center according to the normal process; At this time, for the front-end application, the master data has been officially switched back, and the IDC type has not changed;
 
@@ -1873,63 +1873,63 @@ Step 5: Modify the configuration file server.xml of the original master center a
 
 **Master compute node in the current active IDC:**
 
-\<property name=\"url\"\>jdbc:mysql://192.168.220.183:3306/hotdb_config\</property\>\<!\-- ConfigDB address \--\>
+<property name="url">jdbc:mysql://192.168.220.183:3306/hotdb_config</property><!-- ConfigDB address -->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.220.184:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address \--\>
+<property name="bakUrl">jdbc:mysql://192.168.220.184:3306/hotdb_config</property><!-- Slave ConfigDB address -->
 
-\<property name=\"drUrl\"\>jdbc:mysql://192.168.220.181:3306/hotdb_config\</property\>\<!\-- Configuration database address in DR center \--\>
+<property name="drUrl">jdbc:mysql://192.168.220.181:3306/hotdb_config</property><!-- Configuration database address in DR center -->
 
-\<property name=\"drBakUrl\"\>jdbc:mysql://192.168.220.182:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address in DR center \--\>
+<property name="drBakUrl">jdbc:mysql://192.168.220.182:3306/hotdb_config</property><!-- Slave ConfigDB address in DR center -->
 
-\<property name=\"haMode\"\>2\</property\>\<!\-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center \--\>
+<property name="haMode">2</property><!-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center -->
 
-\<property name=\"idcId\"\>1\</property\>\<!\-- ID of IDC, 1:master center, 2:DR center \--\>
+<property name="idcId">1</property><!-- ID of IDC, 1:master center, 2:DR center -->
 
 **Standby compute node in the current active IDC:**
 
-\<property name=\"url\"\>jdbc:mysql://192.168.220.183:3306/hotdb_config\</property\>\<!\-- ConfigDB address\--\>
+<property name="url">jdbc:mysql://192.168.220.183:3306/hotdb_config</property><!-- ConfigDB address-->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.220.184:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address \--\>
+<property name="bakUrl">jdbc:mysql://192.168.220.184:3306/hotdb_config</property><!-- Slave ConfigDB address -->
 
-\<property name=\"drUrl\"\>jdbc:mysql://192.168.220.181:3306/hotdb_config\</property\>\<!\-- Configuration database address in DR center \--\>
+<property name="drUrl">jdbc:mysql://192.168.220.181:3306/hotdb_config</property><!-- Configuration database address in DR center -->
 
-\<property name=\"drBakUrl\"\>jdbc:mysql://192.168.220.182:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address in DR center \--\>
+<property name="drBakUrl">jdbc:mysql://192.168.220.182:3306/hotdb_config</property><!-- Slave ConfigDB address in DR center -->
 
-\<property name=\"haMode\"\>2\</property\>\<!\-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center \--\>
+<property name="haMode">2</property><!-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center -->
 
-\<property name=\"idcId\"\>1\</property\>\<!\-- ID of IDC, 1:master center, 2:DR center \--\>
+<property name="idcId">1</property><!-- ID of IDC, 1:master center, 2:DR center -->
 
 **Master compute node in the original master center:**
 
-\<property name=\"url\"\>jdbc:mysql://192.168.220.183:3306/hotdb_config\</property\>\<!\-- ConfigDB address\--\>
+<property name="url">jdbc:mysql://192.168.220.183:3306/hotdb_config</property><!-- ConfigDB address-->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.220.184:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address \--\>
+<property name="bakUrl">jdbc:mysql://192.168.220.184:3306/hotdb_config</property><!-- Slave ConfigDB address -->
 
-\<property name=\"drUrl\"\>jdbc:mysql://192.168.220.181:3306/hotdb_config\</property\>\<!\-- Configuration database address in DR center \--\>
+<property name="drUrl">jdbc:mysql://192.168.220.181:3306/hotdb_config</property><!-- Configuration database address in DR center -->
 
-\<property name=\"drBakUrl\"\>jdbc:mysql://192.168.220.182:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address in DRIDC \--\>
+<property name="drBakUrl">jdbc:mysql://192.168.220.182:3306/hotdb_config</property><!-- Slave ConfigDB address in DRIDC -->
 
-\<property name=\"haMode\"\>**3**\</property\>\<!\-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center \--\>
+<property name="haMode">**3**</property><!-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center -->
 
-\<property name=\"idcId\"\>**2**\</property\>\<!\-- ID of IDC, 1:master center, 2:DR center \--\>
+<property name="idcId">**2**</property><!-- ID of IDC, 1:master center, 2:DR center -->
 
 **Standby compute node in the original master center:**
 
-\<property name=\"url\"\>jdbc:mysql://192.168.220.183:3306/hotdb_config\</property\>\<!\-- ConfigDB address\--\>
+<property name="url">jdbc:mysql://192.168.220.183:3306/hotdb_config</property><!-- ConfigDB address-->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.220.184:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address \--\>
+<property name="bakUrl">jdbc:mysql://192.168.220.184:3306/hotdb_config</property><!-- Slave ConfigDB address -->
 
-\<property name=\"drUrl\"\>jdbc:mysql://192.168.220.181:3306/hotdb_config\</property\>\<!\-- Configuration database address in DR center \--\>
+<property name="drUrl">jdbc:mysql://192.168.220.181:3306/hotdb_config</property><!-- Configuration database address in DR center -->
 
-\<property name=\"drBakUrl\"\>jdbc:mysql://192.168.220.182:3306/hotdb_config\</property\>\<!\-- Slave ConfigDB address in DRIDC \--\>
+<property name="drBakUrl">jdbc:mysql://192.168.220.182:3306/hotdb_config</property><!-- Slave ConfigDB address in DRIDC -->
 
-\<property name=\"haMode\"\>**3**\</property\>\<!\-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center \--\>
+<property name="haMode">**3**</property><!-- High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center -->
 
-\<property name=\"idcId\"\>**2**\</property\>\<!\-- ID of IDC, 1:master center, 2:DR center \--\>
+<property name="idcId">**2**</property><!-- ID of IDC, 1:master center, 2:DR center -->
 
 Step 6: Log in to the master ConfigDB in the current active IDC, and set the availability of the ConfigDB of original master center to 1 and swap IDC ID:
 
-update hotdb_config_info set v=\'1\' where k=\'hotdb_biz_idc_config_ok\' or k=\'hotdb_master_config_status\';
+update hotdb_config_info set v='1' where k='hotdb_biz_idc_config_ok' or k='hotdb_master_config_status';
 
 update hotdb_datasource t1 join hotdb_datasource t2 on(t1.idc_id=1 and t2.idc_id=2) set t1.idc_id=t2.idc_id,t2.idc_id=t1.idc_id;
 
@@ -1955,11 +1955,11 @@ Step 8: Log in to the management platform and enable the data sources in the ori
 
 ![](assets/cross-idc-disaster-recovery/image112.png)
 
-Step 9: Check whether the replication status and DR replication status in the current active IDC is abnormal. You can check the replication status of data sources and ConfigDBs through the \"Node Management\" and \"Configuration Checking\" pages.
+Step 9: Check whether the replication status and DR replication status in the current active IDC is abnormal. You can check the replication status of data sources and ConfigDBs through the "Node Management" and "Configuration Checking" pages.
 
 Step 10: Reload
 
-Step 11: Check whether the topologic graph and various monitoring indicators are normal, and check whether all the heartbeat is monitored by executing the show @@ heartbeat command through management port of compute node in the current active IDC and check whether IDC type has been swapped by executing the show @\@configurl or show @\@datanode command.For example:
+Step 11: Check whether the topologic graph and various monitoring indicators are normal, and check whether all the heartbeat is monitored by executing the show @@ heartbeat command through management port of compute node in the current active IDC and check whether IDC type has been swapped by executing the show @@configurl or show @@datanode command.For example:
 
 ![](assets/cross-idc-disaster-recovery/image113.png)
 
@@ -1973,27 +1973,27 @@ Step 11: Check whether the topologic graph and various monitoring indicators are
 
 Example 1: Log output of replication position of ConfigDB
 
-2019-12-14 19:07:58.317 \[INFO\] \[INNER\] \[\$I-NIOREACTOR-3-RW\] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master(\[id:-4,nodeId:-1 192.168.220.183:3306/hotdb_config status:1,charset:utf8\], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2) change master to master_standby(\[id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8\], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2).
+2019-12-14 19:07:58.317 [INFO] [INNER] [\$I-NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:-4,nodeId:-1 192.168.220.183:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2) change master to master_standby([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2).
 
 Example 2: Log output of replication position of data source
 
-2019-12-14 19:08:00.546 \[INFO\] \[INNER\] \[\$NIOREACTOR-2-RW\] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master(\[id:192,nodeId:46 192.168.220.183:3308/db2531 status:1,charset:utf8mb4\], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3) change master to master_standby(\[id:193,nodeId:46 192.168.220.184:3308/db2531 status:1,charset:utf8mb4\], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3).
+2019-12-14 19:08:00.546 [INFO] [INNER] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:192,nodeId:46 192.168.220.183:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3) change master to master_standby([id:193,nodeId:46 192.168.220.184:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3).
 
 Example 3: Slave data source has more GTID than the master
 
-2019-12-14 19:08:00.546 \[WARN\] \[INNER\] \[\$NIOREACTOR-2-RW\] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(329) - Slave(\[id:189,nodeId:45 192.168.220.184:3307/db2531 status:1,charset:utf8mb4\])\'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1,7afdc35d-0b87-11ea-91a3-52540073fb81:1) is **greater than** master(\[id:188,nodeId:45 192.168.220.183:3307/db2531 status:1,charset:utf8mb4\])\'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1).
+2019-12-14 19:08:00.546 [WARN] [INNER] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(329) - Slave([id:189,nodeId:45 192.168.220.184:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1,7afdc35d-0b87-11ea-91a3-52540073fb81:1) is **greater than** master([id:188,nodeId:45 192.168.220.183:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1).
 
 Example 4: Semi-synchronous replication status monitoring
 
-2019-12-14 19:07:57.820 \[WARN\] \[INIT\] \[Labor-26\] cn.hotpu.hotdb.backend.BackendDatasource(806) - \[id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8\], Rpl_semi_sync_master_status or Rpl_semi_sync_slave_status must be \'ON\' in DR mode
+2019-12-14 19:07:57.820 [WARN] [INIT] [Labor-26] cn.hotpu.hotdb.backend.BackendDatasource(806) - [id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8], Rpl_semi_sync_master_status or Rpl_semi_sync_slave_status must be 'ON' in DR mode
 
 - All descriptions in this [Maintenance Management](#_运维管理_1) chapter are explained with GTID and semi-synchronous replication enabled. If you consider semi-synchronization replication of data sources and ConfigDB in a single IDC and asynchronous replication between this two IDC, we recommend the following configuration:
 
-> 1\. It is recommended that you set rpl_semi_sync_master_wait_no_slave = 0 and rpl_semi_sync_master_timeout should not be set too long for instances (including data sources and ConfigDB) in the master center. Also set rpl_semi_sync_slave_enabled as disable for the master instance in the DR center.
+> 1. It is recommended that you set rpl_semi_sync_master_wait_no_slave = 0 and rpl_semi_sync_master_timeout should not be set too long for instances (including data sources and ConfigDB) in the master center. Also set rpl_semi_sync_slave_enabled as disable for the master instance in the DR center.
 >
-> 2\. After a switchover at IDC level occurs, when you manually check the semi-synchronous replication parameters, you need to execute the stop slave; start slave command once to make it take effect.
+> 2. After a switchover at IDC level occurs, when you manually check the semi-synchronous replication parameters, you need to execute the stop slave; start slave command once to make it take effect.
 >
-> 3\. After failover of the master instances in the DR center, you need to manually disable rpl_semi_sync_slave_enabled for the current active master and enable rpl_semi_sync_slave_enabled for the original master , and execute the stop slave; start slave command once on both instances to make it effective.
+> 3. After failover of the master instances in the DR center, you need to manually disable rpl_semi_sync_slave_enabled for the current active master and enable rpl_semi_sync_slave_enabled for the original master , and execute the stop slave; start slave command once on both instances to make it effective.
 
 - Or, if semi-synchronous replication is not considered in the DR center at all, you can directly disable rpl_semi_sync_slave_enabled for all the instances in DR center so that there is no need to maintain the semi-synchronization status in the DR center. If semi-synchronous replication is not enabled in the DR replication relationship, you must strictly pay attention that the RPO cannot be set to 0.
 
@@ -2009,7 +2009,7 @@ It is recommended to set a periodic plan for [master/slave consistency detection
 
 #### Email Alert
 
-It is recommended that you set an email alert including monitoring the service status of all compute nodes and data sources in order to be aware of error information of each core component in time. And newly-added item, replication status of ConfigDB, can be set on the \"Events\"-\> \"Email Alert Setting\"-\> \"Add Notification Strategy\" page. For example, the following figure shows an example of setting up for monitoring replication status of ConfigDB:
+It is recommended that you set an email alert including monitoring the service status of all compute nodes and data sources in order to be aware of error information of each core component in time. And newly-added item, replication status of ConfigDB, can be set on the "Events"-> "Email Alert Setting"-> "Add Notification Strategy" page. For example, the following figure shows an example of setting up for monitoring replication status of ConfigDB:
 
 ![](assets/cross-idc-disaster-recovery/image116.png)
 
@@ -2021,7 +2021,7 @@ The content of the email alert will explain the specific IDC type where the prob
 
 #### Environment Examination
 
-After cluster deployment is completed without any errors, it is recommended to use the manager account of management platform to enter the \"Cluster Management\"-\> \"Deployment Environment Examination\" page to perform environment examinations for both master center and DR center, and follow the suggestions to optimize unqualified configuration.
+After cluster deployment is completed without any errors, it is recommended to use the manager account of management platform to enter the "Cluster Management"-> "Deployment Environment Examination" page to perform environment examinations for both master center and DR center, and follow the suggestions to optimize unqualified configuration.
 
 ![](assets/cross-idc-disaster-recovery/image119.png)
 
@@ -2035,7 +2035,7 @@ When the serviced of failed data sources or ConfigDB are started, you must make 
 
 #### SSH of Servers
 
-It is recommended to configure the server SSH information on the \"Configuration\"-\> \"Server\" page when you start to use it, so as to assist the management platform to complete some simple maintenance and monitoring operations.
+It is recommended to configure the server SSH information on the [Configuration](#Configuration)-> "Server" page when you start to use it, so as to assist the management platform to complete some simple maintenance and monitoring operations.
 
 ![](assets/cross-idc-disaster-recovery/image120.png)
 
@@ -2073,7 +2073,7 @@ After the DR mode is enabled, you must pay attention to some abnormal log alerts
 
 - Degraded semi-synchronous replication status of the slave data source (possibly cause that RPO is not 0):
 
-2019-12-10 12:17:00.630 \[WARN\] \[TIMER\] \[\$NIOExecutor-5-1\] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - DR_IDC\'s datasource: -5(\[id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8\])\'s RPL_SEMI_SYNC_SLAVE_STATUS is OFF
+2019-12-10 12:17:00.630 [WARN] [TIMER] [\$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - DR_IDC's datasource: -5([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8])'s RPL_SEMI_SYNC_SLAVE_STATUS is OFF
 
 - The number of acks returned by the slave that is set for the semi-synchronous replication of slave data source is inconsistent with the actual number (possibly cause that RPO is not 0):
 
@@ -2081,37 +2081,37 @@ After the DR mode is enabled, you must pay attention to some abnormal log alerts
 
 ![](assets/cross-idc-disaster-recovery/image122.png)
 
-2019-12-10 12:16:00.634 \[WARN\] \[TIMER\] \[\$NIOExecutor-5-1\] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - datasource: 169(\[id:169,nodeId:43 192.168.220.181:3307/db2531 status:1,charset:utf8mb4\])\'s RPL_SEMI_SYNC_MASTER_WAIT_FOR_SLAVE_COUNT=2, real slave count=1
+2019-12-10 12:16:00.634 [WARN] [TIMER] [\$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - datasource: 169([id:169,nodeId:43 192.168.220.181:3307/db2531 status:1,charset:utf8mb4])'s RPL_SEMI_SYNC_MASTER_WAIT_FOR_SLAVE_COUNT=2, real slave count=1
 
 - The actual replication relation between the data source or ConfigDB is inconsistent with the configuration in ConfigDB.
 
-2019-12-14 19:08:00.426 \[WARN\] \[INNER\] \[\$NIOREACTOR-3-RW\] cn.hotpu.hotdb.mysql.nio.handler.InitSlaveStatusHandler(99) - Datasource: 188\'s master datasource: 192.168.220.183:3307 not in datanode: 45
+2019-12-14 19:08:00.426 [WARN] [INNER] [\$NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.InitSlaveStatusHandler(99) - Datasource: 188's master datasource: 192.168.220.183:3307 not in datanode: 45
 
 - When IDC is switched or the compute node that is providing services is offline, the current back-end connection related to it will also be closed. For related log information, please refer to:
 
-2019-12-14 19:08:00.978 \[WARN\] \[CONNECTION\] \[\$NIOREACTOR-2-RW\] cn.hotpu.hotdb.net.NIOSocketWR(181) - exception(stream closed) in reading backend connection: \[id:196,nodeId:47 192.168.220.181:3309/db2531 status:1,charset:utf8mb4\] id=931
+2019-12-14 19:08:00.978 [WARN] [CONNECTION] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.net.NIOSocketWR(181) - exception(stream closed) in reading backend connection: [id:196,nodeId:47 192.168.220.181:3309/db2531 status:1,charset:utf8mb4] id=931
 
 threadId=5801 isAuthenticated=true responseHandler=null isNetFull=false bufferInFullNet=false lastUsedTime=1576321520613 tookTime=1576321520605 sendingData=false inFlowControl=false maybeSlow=false heavyRowEof=false inFieldPacket=false
 
-needSyncAutocommit=false syncAutocommitValue=true usingReadBuffer=false usingWriteBuffer=false readBuffer=java.nio.DirectByteBuffer\[pos=0 lim=16384 cap=16384\] writeBuffer=null writeQueue=0 host=192.168.220.181 port=3309 localPort=22248
+needSyncAutocommit=false syncAutocommitValue=true usingReadBuffer=false usingWriteBuffer=false readBuffer=java.nio.DirectByteBuffer[pos=0 lim=16384 cap=16384] writeBuffer=null writeQueue=0 host=192.168.220.181 port=3309 localPort=22248
 
-connectionVars=\[dsCharset=utf8mb4 autocommit=true savepointChecked=false txIsolation=2 charsetIndex=45 characterSetClient=utf8mb4 characterSetResults=utf8mb4 characterSetConnection=utf8mb4 collationConnection=utf8mb4_general_ci foreignK
+connectionVars=[dsCharset=utf8mb4 autocommit=true savepointChecked=false txIsolation=2 charsetIndex=45 characterSetClient=utf8mb4 characterSetResults=utf8mb4 characterSetConnection=utf8mb4 collationConnection=utf8mb4_general_ci foreignK
 
-eyChecks=true uniqueChecks=true txReadOnly=false\] connectionStat=\[startupTime=1576320655994 lastReadTime=1576321520594 lastWriteTime=1576321520594 netInBytes=5533 netOutBytes=1477\] state=idle pauseTime=0 usedMemory=16384 lastSQL=\[null\]
+eyChecks=true uniqueChecks=true txReadOnly=false] connectionStat=[startupTime=1576320655994 lastReadTime=1576321520594 lastWriteTime=1576321520594 netInBytes=5533 netOutBytes=1477] state=idle pauseTime=0 usedMemory=16384 lastSQL=[null]
 
 readData=1576321520613 lastWritten=184 inner=false toBeClosed=false isClosed=false closeReason=null MySQLVersion=5.7.25
 
 - Log records when service port is closed:
 
-2019-12-14 19:07:56.610 \[INFO\] \[MANAGER\] \[\$NIOExecutor-0-2\] cn.hotpu.hotdb.manager.response.Offline(66) - received offline command from:\[thread=\$NIOExecutor-0-2,id=1056,user=root,host=192.168.220.181,port=3325,localport=16928,schema=nul
+2019-12-14 19:07:56.610 [INFO] [MANAGER] [\$NIOExecutor-0-2] cn.hotpu.hotdb.manager.response.Offline(66) - received offline command from:[thread=\$NIOExecutor-0-2,id=1056,user=root,host=192.168.220.181,port=3325,localport=16928,schema=nul
 
-l\]
+l]
 
-2019-12-14 19:07:56.612 \[INFO\] \[MANAGER\] \[Labor-10\] cn.hotpu.hotdb.HotdbServer(2149) - MANAGER offline start
+2019-12-14 19:07:56.612 [INFO] [MANAGER] [Labor-10] cn.hotpu.hotdb.HotdbServer(2149) - MANAGER offline start
 
 - Log records when service in the DR center is started:
 
-2019-12-14 19:07:56.552 \[INFO\] \[MANAGER\] \[Labor-26\] cn.hotpu.hotdb.HotdbServer(2115) - DR online start
+2019-12-14 19:07:56.552 [INFO] [MANAGER] [Labor-26] cn.hotpu.hotdb.HotdbServer(2115) - DR online start
 
 ### Recommended steps for replication setup
 
@@ -2137,31 +2137,31 @@ Step 1: Check whether the remaining free disk space of the directory used for ex
 
 Step 2: Use the following parameters to export the old master instance data:
 
-mysqldump \--no-defaults \--all-databases \--default-character-set=utf8mb4 \--single-transaction \--set-gtid-purged \--events \--routines \--triggers \--hex-blob \--no-tablespaces \--host=xxx \--port=xxx \--user=xxx -pxxx \> *file name* ;echo \$?
+mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > *file name* ;echo \$?
 
-Example：mysqldump \--no-defaults \--all-databases \--default-character-set=utf8mb4 \--single-transaction \--set-gtid-purged \--events \--routines \--triggers \--hex-blob \--no-tablespaces \--host=127.0.0.1 \--port=3306 \--user=dbbackup -pdbbackup \> backup_data.sql ;echo \$?
+Example：mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup > backup_data.sql ;echo \$?
 
-mysqldump: \[Warning\] Using a password on the command line interface can be insecure.
+mysqldump: [Warning] Using a password on the command line interface can be insecure.
 
-If the return value is 0 and the export command does not report an error, it means the data is exported successfully. (This is normal: mysqldump: \[Warning\] Using a password on the command line interface can be insecure.)
+If the return value is 0 and the export command does not report an error, it means the data is exported successfully. (This is normal: mysqldump: [Warning] Using a password on the command line interface can be insecure.)
 
 Note: By adopting the above method to export data, SET @@ SESSION.SQL_LOG_BIN = 0; is added by default. Therefore, you must make sure that you do not setup DR replication first and then import data to the master in DR center when setting up the replication relation between master instances in the master center and DR center, and the replication relation in the DR center itself. (Wrongly believing that data will synchronize to the slave in DR center). You have to set up replication relations after importing data correctly into each instance.
 
 Step 3: After the file is exported, check if the file content is available. Transmit the file through SCP command to the server where the new instance to be the slave stores. Before execute SCP command, check the data directory of the new instance to see if the remaining disk space was sufficient. It is required the remaining disk space of the target data directory to be greater than 2.5 times the size of the exported file + 10GB. The command to check the new instance data directory can refer to:
 
-show global variables like \'datadir\'
+show global variables like 'datadir'
 
 Step 4: After the file transfer is successful, you can choose to delete the exported file on the original master instance as required.
 
 Step 5: Use the following command to import the file:
 
-mysql \--no-defaults \--default-character-set=utf8mb4 \--binary-mode \--disable-reconnect \--host=xxx \--port=xxx \--user=xxx -pxxx \< *file name* ;echo \$?
+mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < *file name* ;echo \$?
 
-Example：\[root\@hotdb-220-182 \~\]\## mysql \--no-defaults \--default-character-set=utf8mb4 \--binary-mode \--disable-reconnect \--host=127.0.0.1 \--port=3306 \--user=dbbackup -pdbbackup \< /data/mysql/mysqldata3306/backup_data.sql ;echo \$?
+Example：[root@hotdb-220-182 \~]\## mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup < /data/mysql/mysqldata3306/backup_data.sql ;echo \$?
 
-mysql: \[Warning\] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
 
-If the return value is 0 and the export command does not report an error, it means that data is imported successfully. ( This is normal: mysqldump: \[Warning\] Using a password on the command line interface can be insecure.)
+If the return value is 0 and the export command does not report an error, it means that data is imported successfully. ( This is normal: mysqldump: [Warning] Using a password on the command line interface can be insecure.)
 
 Step 6: Run the following command to refresh privileges. Note that after the refresh, if the instance is reconnected, the username and password of the connection are the same as the old master instance.
 
@@ -2175,9 +2175,9 @@ Step 8: Delete the original data backup file under data directory of the new ins
 
 Step 9: Set up a replication relationship using GTID auto-location.
 
-change master to master_host = \'xxx\',master_user=\'xxx\',master_password=\'xxx\', master_port=xxx,master_auto_position=1;
+change master to master_host = 'xxx',master_user='xxx',master_password='xxx', master_port=xxx,master_auto_position=1;
 
-Example：change master to master_host = \'192.168.220.181\',master_user=\'repl\',master_password=\'repl\', master_port=3306,master_auto_position=1;
+Example：change master to master_host = '192.168.220.181',master_user='repl',master_password='repl', master_port=3306,master_auto_position=1;
 
 #### Set up replication relations when GTID is disabled
 
@@ -2187,17 +2187,17 @@ If the GTID function of the new instance and the old master instance for the rep
 
 Step 2: export data command refers to:
 
-mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --loose-set-gtid-purged=off --master-data=2 --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx \> *file name* ;echo \$?
+mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --loose-set-gtid-purged=off --master-data=2 --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > *file name* ;echo \$?
 
 Step 5: import data command refers to:
 
-mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx \< *file name* ;echo \$?
+mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < *file name* ;echo \$?
 
 Step 9: set up replication refers to:
 
-change master to master_host = \'xxx\',master_user=\'xxx\',master_password=\'xxx\', MASTER_LOG_FILE=\'mysql-bin.xxx\', MASTER_LOG_POS=xxx;
+change master to master_host = 'xxx',master_user='xxx',master_password='xxx', MASTER_LOG_FILE='mysql-bin.xxx', MASTER_LOG_POS=xxx;
 
-Note: *MASTER_LOG_FILE = \'mysql-bin.xxx\', MASTER_LOG_POS = xxx;* This position is the position obtained when the data was exported in step 2, which can be obtained by: *head -c 4096 file without duplicate name \| grep -I \'change master\'*. If there are multiple new instances that need to set up a master-slave replication and there is a multipe levels of slaves relation, you need to execute *show master status* on the corresponding master to obtain the binlog position after the data is imported and before performing any write operations. You cannot directly take the export position to set up a replication relation.
+Note: *MASTER_LOG_FILE = 'mysql-bin.xxx', MASTER_LOG_POS = xxx;* This position is the position obtained when the data was exported in step 2, which can be obtained by: *head -c 4096 file without duplicate name | grep -I 'change master'*. If there are multiple new instances that need to set up a master-slave replication and there is a multipe levels of slaves relation, you need to execute *show master status* on the corresponding master to obtain the binlog position after the data is imported and before performing any write operations. You cannot directly take the export position to set up a replication relation.
 
 ### Under what circumstances data in the original IDC must be abandoned
 
