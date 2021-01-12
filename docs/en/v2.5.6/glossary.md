@@ -146,7 +146,7 @@ On the contrary, the compute node cluster without the DR mode enabled is the sin
 
 ### IDC type and IDC status
 
-The IDC type include the master center and the DR center. The IDC type is only used to identify and distinguish two IDCs, and does not change with the change of the service status of the IDC. In the process of using HotDB Server products, with the added compute node cluster group management as an entrance, you are able to distinguish between the master center and the DR center
+The IDC type include the master center and the DR center. The IDC type is only used to identify and distinguish two IDCs, and does not change with the change of the service status of the IDC. In the process of using HotDB Server products, with the added compute node cluster group management as an entrance, you are able to distinguish between the master center and the DR center
 
 The IDC status consists of the current active center and the current standby center, which is determined according to whether the master compute node in the IDC provides services (3323 service port by default). The IDC in which the current master compute node provides services is the current active center; the standby IDC that provides high-availability service switching at the IDC level with the current active center is the current standby center.
 

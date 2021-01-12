@@ -22,7 +22,7 @@ HotDB Server provides visualized parameter configuration and parameter rationali
 
 **High Availability**
 
-The high availability of compute node, ConfigDB and underlying database can be realized. Data service will not be unavailable during the master node downtime. The reliability of data service can reach 99.999%. 
+The high availability of compute node, ConfigDB and underlying database can be realized. Data service will not be unavailable during the master node downtime. The reliability of data service can reach 99.999%.
 
 **Strong Transparency**
 

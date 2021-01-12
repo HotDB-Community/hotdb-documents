@@ -106,14 +106,18 @@ private fun String.removePrefixContent(fileName: String): String {
 	return lines.joinToString("\n")
 }
 
-private val optimizeHeadingRegex = """(?:\d+(?:\.\d+)*\.)?\s*(#+)\s*(?:\d+(?:\.\d+)*\.\s*)?""".toRegex()
+private val optimizeHeadingRegex = """(?:\d+(?:\.\d+)*\.?)?\s*(#+)(?:\s*\d+(?:\.\d+)*\.?)?""".toRegex()
 
 private fun String.optimizeHeading(): String {
 	return this.lines().joinToString("\n") { line ->
-		val l1 =line.replace(optimizeHeadingRegex,"$1 ") //去除标题中的序号
+		val l1 =line.replace(optimizeHeadingRegex,"$1") //去除标题中的序号
 		val l2= if(line.startsWith('#')) l1.substringBefore('{') else l1  //移除末尾的attributes
 		l2
 	}
+}
+
+private fun String.optimizeOrderedList():String{
+	return this //不要转义序号中的点
 }
 
 private val changeImageRelUrlRegex = """!\[[^]]*]\(media""".toRegex()

@@ -6,7 +6,7 @@ This Manual is compiled based on *Distributed Transactional Database Product Hot
 
 Some functions in this manual could be used in combination with distributed transactional database management platform (hereinafter referred to as management platform), and if to know use method of management platform, please refer to *Distributed Transactional Database HotDB Server \[Management Platform\] Function Manual*.
 
-HotDB Server V.2.5.3.1 and above provide a solution based on MySQL native replication function to solve the problem of HotDB Server cross-IDC disaster recovery, which can realize the cross-IDC data synchronization function and solve the problem of cross-IDC distributed transactional database service disaster recovery. This document only describes the functions and features of HotDB Server in general mode in detail. To understand the functions and features in disaster recovery mode, please refer to the *[Distributed Transactional Database HotDB Server - Cross-IDC Disaster Recovery Function Specification](file:////Users/anita/Desktop/2.5.4/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3.1%20%5bManagement%20Platform%5d%20Function%20Manual.doc).*
+HotDB Server V.2.5.3.1 and above provide a solution based on MySQL native replication function to solve the problem of HotDB Server cross-IDC disaster recovery, which can realize the cross-IDC data synchronization function and solve the problem of cross-IDC distributed transactional database service disaster recovery. This document only describes the functions and features of HotDB Server in general mode in detail. To understand the functions and features in disaster recovery mode, please refer to the *[Distributed Transactional Database HotDB Server - Cross-IDC Disaster Recovery Function Specification](file:////Users/anita/Desktop/2.5.4/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3.1%20%5bManagement%20Platform%5d%20Function%20Manual.doc).*
 
 Special attention may not be paid to difference in version details of some screenshots, and the version number described in the document shall prevail. Since there are many contents in the document, it's recommended opening document map for the convenience of reading.
 
@@ -26,9 +26,9 @@ The management platform in compatible use of compute node (also known as HotDB M
 
 #### Component architecture of HotDB Server
 
-![4英文(1)](media/image3.png){width="5.769444444444445in" height="4.144444444444445in"}Figure 1.1.1-1 Functional component architecture diagram of HotDB Server
+![](assets/standard/image3.png)Figure 1.1.1-1 Functional component architecture diagram of HotDB Server
 
-![8B9153702BFFAA9E9DB5858C5430D364](media/image4.png){width="5.769444444444445in" height="3.7118055555555554in"}
+![](assets/standard/image4.png)
 
 Figure 1.1.1-2 Component architecture diagram of HotDB Server
 
@@ -62,7 +62,7 @@ If to know relevant terms and relation of HotDB Server cluster system, please re
 
 Compute node is data service provider, and its default service port is 3323, and could be logged in using the following MySQL command:
 
-\#mysql -uroot -proot -h127.0.0.1 -P3323
+\# mysql -uroot -proot -h127.0.0.1 -P3323
 
 After login, compute node could be used the same as MySQL database, for example:
 
@@ -160,7 +160,7 @@ Management platform provides the compute node with configuration of user informa
 
 For example: http://*192.168.200.191:3324*/login, the accesss page is shown as follow:
 
-![1](media/image5.png){width="4.25in" height="3.845833333333333in"}
+![](assets/standard/image5.png)
 
 Both manager username and password are: admin by default, while other user accounts are created by the manager user, with the initial password being: <service_hotdb@hotdb.com>.
 
@@ -208,13 +208,13 @@ This section will introduce the new compute node parameters added and optimized 
 
 ----------------------------------------------- ------------------------------------------------------------------------------ --------------- ------------------------ --------------------------------
 
-  Parameter name of compute node                  Description of compute node parameters                                         Default value   Reload is valid or not   Version supported
+Parameter name of compute node                  Description of compute node parameters                                         Default value   Reload is valid or not   Version supported
   [enableOracleFunction](#enableoraclefunction)   Whether to parse Oracle functions first                                        false           N                        2.5.6
   [lockWaitTimeout](#lockwaittimeout)             Timeout for obtaining metadata lock (s)                                        31536000        Y                        Synchronized downward to 2.5.3
   [operateMode](#operatemode)                     Compute node working mode                                                      0               Y                        Newly added in 2.5.6
   [maxReconnectConfigDBTimes](\l)                 Maximum number of retries to connect to the ConfigDB                           3               Y                        2.5.6
   [sslUseSM4](\l)                                 Whether to support SM4                                                         No              Y                        Synchronized downward to 2.5.5
-  [haMode](#hamode)                               Added status: 4: master center in cluster mode  5: DR center in cluster mode   0               N                        2.5.6
+  [haMode](#hamode)                               Added status: 4: master center in cluster mode  5: DR center in cluster mode   0               N                        2.5.6
   [crossDbXa](#crossdbxa)                         Whether XA transactions are adopted in cross-LogicDB                           false           N                        2.5.5
 
 ----------------------------------------------- ------------------------------------------------------------------------------ --------------- ------------------------ --------------------------------
@@ -267,7 +267,7 @@ Click "Cluster Deployment and Configuration"-\>"Add Compute Node Cluster" on com
 
 After entry, click Test, and if connection succeeded, this compute node cluster could be assigned to the management platform user for configuration management.
 
-![](media/image6.png){width="4.375in" height="2.0in"}
+![](assets/standard/image6.png)
 
 ### Add management platform user
 
@@ -275,7 +275,7 @@ Management platform user is the user who Manage, Configure, Monitor and Detect c
 
 Log in to management platform, and on the Management Platform User page, click "Add New User", enter username, and assign control privilege of compute node cluster. After completing the Add operation, the user could manage the compute node after login.
 
-![](media/image7.png){width="4.692361111111111in" height="1.9041666666666666in"}
+![](assets/standard/image7.png)
 
 ### Create MySQL database and data source user
 
@@ -303,9 +303,9 @@ LogicDB is a virtual database in compute node, after logging in to compute node 
 
 show databases;
 
-Log in to management platform page, select "Configuration"-\>"LogicDB"-\>"Add LogicDB". Click "**√**", save the configuration, and the LogicDB is successfully added.
+Log in to management platform page, select "Configuration"-\>"LogicDB"-\>[Add LogicDB](#Add%20LogicDB). Click "**√**", save the configuration, and the LogicDB is successfully added.
 
-![](media/image8.png){width="5.769444444444445in" height="1.6055555555555556in"}
+![](assets/standard/image8.png)
 
 ### Grant user LogicDB privilege
 
@@ -317,7 +317,7 @@ Note:
 
 After the management platform is installed, the system creates a platform user named root (password is root) by default.
 
-![](media/image9.png){width="5.769444444444445in" height="1.4423611111111112in"}
+![](assets/standard/image9.png)
 
 ### Add data source group
 
@@ -325,7 +325,7 @@ Add Data Source Group could make it more convenient to Add or Modify a group of 
 
 Log in to Distributed Transactional Database Management Platform page, select "Configuration"-\>"Node Management"-\>"Data Source Group"-\>"Add Group":
 
-![](media/image10.png){width="5.779166666666667in" height="1.9131944444444444in"}
+![](assets/standard/image10.png)
 
 The parameters include:
 
@@ -357,7 +357,7 @@ According to business scenarios, select those with the same parameter value as a
 
 When Add Node, the data source group is applied on several data sources, which will Autofill the preset parameter value of the group; when Edit a parameter of the group, the parameter of all data sources in the group will be Edited in batches.
 
-![](media/image11.png){width="4.875in" height="4.961805555555555in"}
+![](assets/standard/image11.png)
 
 ### Add data node and data source
 
@@ -365,17 +365,17 @@ In this case, six MySQL instances are divided into three groups (three shardings
 
 Log in to management platform page, select "Configuration"-\>"Node Management"-\>"Add Node":
 
-![](media/image12.png){width="5.759722222222222in" height="1.6152777777777778in"}
+![](assets/standard/image12.png)
 
 Either Add Data Node and its corresponding Data Source in batches or Add Data Source to existing Data Node is available, and only Add of Data Node and Data Source in batches is introduced here, and the operation is displayed as follow:
 
 1\. Fill in parameters of Data Node added: In this case, the Number of Data Nodes is 3, and the Data Node Type is Master-Master (other types could also be selected). In this case, Data Source Group selects not to use group, and you could also select to use the [Data Source Group](#add-data-source-group) added in previous section from the drop-down menu, and then Add in batches or Edit similar parameters. Without special requirements, the Node Prefix, Number of Encoding Bits and Start Encoding could use the default value. After filling in the parameters, click \[Generate\].
 
-![](media/image13.png){width="5.625in" height="1.4805555555555556in"}
+![](assets/standard/image13.png)
 
 2\. Fill in Data Source Configuration Parameters according to the prompt message.
 
-![](media/image14.png){width="3.3368055555555554in" height="1.6826388888888888in"}![](media/image15.png){width="2.25in" height="1.6826388888888888in"}
+![](assets/standard/image14.png)![](assets/standard/image15.png)
 
 Parameters include:
 
@@ -413,11 +413,11 @@ Parameters include:
 
 Click \[...\] to unfold more parameters, including:
 
-![](media/image16.png){width="3.8652777777777776in" height="3.8270833333333334in"}
+![](assets/standard/image16.png)
 
 3\. After completing the parameters, click \[Connection Test\] to verify that the entry is accurate and after all data sources are successfully connected, click \[Save and Return\], thus 3 data nodes and their respective corresponding 6 data sources have been successfully added.
 
-![](media/image17.png){width="5.413194444444445in" height="2.4229166666666666in"}
+![](assets/standard/image17.png)
 
 ### Add sharding function
 
@@ -425,7 +425,7 @@ The purpose of Add Sharding Function is to provide route method and algorithm of
 
 Log in to Management Platform page, select "Configuration"-\>"Sharding Function"-\>"Add Sharding Function".
 
-![](media/image18.png){width="5.279166666666667in" height="2.0in"}
+![](assets/standard/image18.png)
 
 According to business scenarios, enter configuration parameters, including:
 
@@ -439,11 +439,11 @@ According to business scenarios, enter configuration parameters, including:
 
 -   Value Range: enter full Value Range of sharding key, and the management platform will compute the Step Length automatically in combination of the Number of Nodes selected
 
-![](media/image19.png){width="5.230555555555555in" height="2.345833333333333in"}
+![](assets/standard/image19.png)
 
 Click \[Preview\] to view the generated results, and click \[Modify\] to modify the Value Range or Data Node, in order to solve data skew problem.
 
-![](media/image20.png){width="5.452083333333333in" height="2.279166666666667in"}
+![](assets/standard/image20.png)
 
 Click \[Save and Return\] to add sharding function.
 
@@ -451,7 +451,7 @@ Click \[Save and Return\] to add sharding function.
 
 Log in to Management Platform page, select "Configuration"-\>"Table Configuration"-\>"Add Table Configuration"
 
-![](media/image21.png){width="5.5in" height="2.7020833333333334in"}
+![](assets/standard/image21.png)
 
 According to business scenarios, after selecting the Table Type, enter the configuration parameters. In this case, under the Sharding Table page, add the parameter configuration as follow:
 
@@ -465,21 +465,21 @@ According to business scenarios, after selecting the Table Type, enter the confi
 
 -   Please Fill in Table Name: enter "customer", when Add multiple tables but different sharding keys, "customer:provinceid" could be entered.
 
-![](media/image22.png){width="5.605555555555555in" height="4.220833333333333in"}
+![](assets/standard/image22.png)
 
 Click \[Save\], and Customer Auto Sharding Table is successfully added. Note: The Sharding Function cited in this table is AUTO_CRC32 type (for difference of the sharding types AUTO_MOD and AUTO_CRC32, the "Mode Declaration" in the page could be viewed).
 
 ### Check and reload configuration information
 
-Log in to Management Platform page, and for any modification made to the HotDB Server User, LogicDB, Data Node, Data Source, Failover, Sharding Function, Table Configuration and Child Table Configuration, under the condition of not re-enabling the compute node service, the new configuration information shall take effect only after "Reload".
+Log in to Management Platform page, and for any modification made to the HotDB Server User, LogicDB, Data Node, Data Source, Failover, Sharding Function, Table Configuration and Child Table Configuration, under the condition of not re-enabling the compute node service, the new configuration information shall take effect only after [Reload](#Reload).
 
 If Compute Node is not enabled, reload can't be executed, therefore, Compute Node shall be enabled first.
 
-Log in to Management Platform page, select "Configuration"-\>"Config Checking", and click "Start Checking" in the page, if there is no prompt of configuration error, it means that the configuration information is correct:
+Log in to Management Platform page, select "Configuration"-\>[Config Checking](#Config%20Checking), and click "Start Checking" in the page, if there is no prompt of configuration error, it means that the configuration information is correct:
 
-Click "Reload" in the page, if it's promoted "Reload Succeeded" in the page, then the configuration information has taken effect successfully in the compute node:
+Click [Reload](#Reload) in the page, if it's promoted "Reload Succeeded" in the page, then the configuration information has taken effect successfully in the compute node:
 
-![](media/image23.png){width="5.240277777777778in" height="2.845833333333333in"}
+![](assets/standard/image23.png)
 
 ### Log in to compute node and start to use
 
@@ -539,11 +539,11 @@ Compute node will Create Customer Table in various data nodes. You can log in to
 
 Or find the [Table Configuration](#add-table-configuration) added in previous section on the "Configuration"-\>"Table Configuration" page, and click \[Not Created\] in the Table Structure column to jump to Ordinary DDL page.
 
-![](media/image24.png){width="5.288194444444445in" height="2.692361111111111in"}
+![](assets/standard/image24.png)
 
 Enter [LogicDB Username Password](#grant-user-logicdb-privilege), and after selecting Test LogicDB, enter Create Table statement, click \[Execute\] to Add Table Structure.
 
-![](media/image25.png){width="5.567361111111111in" height="2.9618055555555554in"}
+![](assets/standard/image25.png)
 
 After the Sharding Table Customer is successfully created, you could execute the following SQL statements in Compute Node, and write in data:
 
@@ -599,7 +599,7 @@ Next, you could log in to Compute Node Service, to execute DELETE, UPDATE and SE
 
 -   When Compute Node is enabled, if the Data Source is of abnormal connection, you could control whether the Master Data Source in Data Node shall be re-initialized or not and the Initialization Timeout time through editing the configuration parameter [masterSourceInitWaitTimeout](#keystore) in server.xml, and please refer to [Judgment of availability of LogicDB when enabling compute node](#judgment-of-availability-of-logicdb-when-enabling-compute-node) for specific control logic.
 
-    1.  #### Judgment of availability of LogicDB when enabling compute node
+#### Judgment of availability of LogicDB when enabling compute node
 
 In order to ensure that in case of Unavailable Status of Data Node in Vertical sharding scenario, the unassociated business scenarios of different LogicDB are not influenced, therefore, at the time of Compute Node Enable, special judgment and treatment have been made toward available status of all LogicDB, and the description is as follow:
 
@@ -639,13 +639,13 @@ As for following parameters of MySQL data source service port, they are required
 
 -   If innodb_rollback_on_timeout parameters are all off, then compute node allows successful load, but the behavior of the compute node equals to the transaction rollback method when innodb_rollback_on_timeout parameter is on, and the following prompts will be given at the time of Config Checking:
 
-![](media/image26.png){width="4.952083333333333in" height="3.3847222222222224in"}
+![](assets/standard/image26.png)
 
 And at the time of Reload, the log output will be: innodb_rollback_on_timeout=off is not supported, HotDB behavior will be equivalent to innodb_rollback_on_timeout = on.
 
 -   If innodb_rollback_on_timeout parameter data sources are inconsistent, Reload will fail, and there will be prompt as follow at the time of Config Checking:
 
-![](media/image27.png){width="4.711805555555555in" height="2.8368055555555554in"}
+![](assets/standard/image27.png)
 
 And at the time of Reload, the data source being off will have log output: MySQL variables \'innodb_rollback_on_timeout\' is not consistent, the current value is OFF ,neet to bu changed to ON, and the data source being on will have log output: MySQL variables \'innodb_rollback_on_timeout\' is not consistent, the current value is ON
 
@@ -657,7 +657,7 @@ And at the time of Reload, the data source being off will have log output: MySQL
 
 -   If for the Slave, the parameter read_only=1 and is not configured with the configuration rule of Switch to the Slave, then compute node could start, and reload will be successful if without other error.
 
-    1.  #### Parameters requiring consistent configuration of all nodes
+#### Parameters requiring consistent configuration of all nodes
 
 For the following parameters of MySQL data source service port, parameter values between the data sources are required to be set consistent by the compute node:
 
@@ -673,7 +673,7 @@ If the above parameters are configured inconsistent between the data sources, co
 
 Considering that sending super-large SQL by Client may threaten HotDB Server (no practical case has yet been discovered at present), HotDB Server could be configured with MAX_ALLOWED_PACKET the same as MySQL, to control the max packet size of SQL sent to compute node by Client, and the parameter could be preset in server.xml via parameter name maxAllowedPacket, if maxAllowedPacket of compute node has its default value bigger than MySQL, the log will give warning prompt, and Config Checking on the management platform will also give prompt:
 
-![](media/image28.png){width="5.595833333333333in" height="2.345833333333333in"}
+![](assets/standard/image28.png)
 
 ### Management port information monitoring
 
@@ -871,27 +871,27 @@ Error-level logs recorded by compute node logs are as follow, and when End Sessi
 
 ### Reload
 
-Compute node could make Online Reload of configuration information without re-enabling the service. For the parameters which could take effect immediately via "Reload" function, please refer to [Instruction on use of compute node parameters](#_计算节点参数使用说明_2).
+Compute node could make Online Reload of configuration information without re-enabling the service. For the parameters which could take effect immediately via [Reload](#Reload) function, please refer to [Instruction on use of compute node parameters](#_计算节点参数使用说明_2).
 
-There are two Reload methods, one is to log in to [[management port (3325)]{.ul}](#management-port-information-monitoring) to execute: reload @\@config command; the other is to log in to management platform, click "Reload" button on top right corner of the menu bar, and reload the new configuration items to the compute node for use. As shown in the following figure:
+There are two Reload methods, one is to log in to [[management port (3325)]{.ul}](#management-port-information-monitoring) to execute: reload @\@config command; the other is to log in to management platform, click [Reload](#Reload) button on top right corner of the menu bar, and reload the new configuration items to the compute node for use. As shown in the following figure:
 
-![](media/image29.png){width="5.269444444444445in" height="1.4041666666666666in"}
+![](assets/standard/image29.png)
 
 In order to guarantee that compute node makes accurate loading of configuration information, before executing Reload, configuration information could be checked first. During Reload process, in case of master/slave configDB, master/slave data source switching, it will give prompt to the user and provide two optional schemes: force to stop switch and cancel reload.
 
-![](media/image30.png){width="5.317361111111111in" height="2.692361111111111in"}
+![](assets/standard/image30.png)
 
 ### Config Checking
 
-Log in to management platform, select "Configuration"-\>"Config Checking" to enter the Config Checking panel, click "Start Checking" button, and then it will check the configuration items in "Config Checking" menu of Distributed Transactional Database Management Platform, as shown in the following figure:
+Log in to management platform, select "Configuration"-\>[Config Checking](#Config%20Checking) to enter the Config Checking panel, click "Start Checking" button, and then it will check the configuration items in [Config Checking](#Config%20Checking) menu of Distributed Transactional Database Management Platform, as shown in the following figure:
 
-![](media/image31.png){width="4.961805555555555in" height="5.413194444444445in"}
+![](assets/standard/image31.png)
 
 As shown in the above figure, all configuration items have passed the checking normally.
 
 In case of inaccurate configuration items, modify correspondingly according to the error prompt:
 
-![](media/image32.png){width="4.913194444444445in" height="5.125in"}
+![](assets/standard/image32.png)
 
 When executing reload @\@config command to reload via compute node management port, Config Checking will be conducted first as well by default, and successful reload is allowed only after the checking passed.
 
@@ -903,7 +903,7 @@ The operations in the following table, describe the deadlock process of two data
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------------------- ----------------------------------------------
 
-  　                                                                                                                                                                                                                                                  Session 1                                      Session 2
+　                                                                                                                                                                                                                                                  Session 1                                      Session 2
   Session 1 Start transaction                                                                                                                                                                                                                         start transaction;                             
   Session 2 Start transaction                                                                                                                                                                                                                         　                                             start transaction;
   Session 1 Execute DELETE statement on data node where DNID = 15                                                                                                                                                                                     delete from customer where dnid=15 and id=1;   
@@ -1093,7 +1093,7 @@ LogicDB must be accessed with granted compute node user privilege. Compute node 
 
 -------------------- ---------------------------------------------------
 
-  **Privilege type**   **Executable SQL statement**
+**Privilege type**   **Executable SQL statement**
   CREATE               CREATE TABLE,CREATE INDEX
   DROP                 DROP TABLE,DROP INDEX,TRUNCATE TABLE,RENAME TABLE
   ALTER                ALTER TABLE,RENAME TABLE
@@ -1119,15 +1119,15 @@ When granting privilege for compute node user, in addition to SUPER privilege, o
 
 -   Global privilege: the user with Global Privilege has the privilege to specify all objects under LogicDB. For example: if check Global privilege: SELECT, UPDATE, INSERT, CREATE, and click Save, then the current user could make S/U/I/C operation toward all LogicDB and tables.
 
-![](media/image33.png){width="5.470833333333333in" height="1.9708333333333334in"}
+![](assets/standard/image33.png)
 
 -   LogicDB privilege: the user with LogicDB Privilege has the privilege to specify all objects under LogicDB.
 
-![](media/image34.png){width="5.538194444444445in" height="2.029166666666667in"}
+![](assets/standard/image34.png)
 
 -   Table privilege: Table privilege is also divided into Table privilege Allowed and Table privilege Denied. The user with Table privilege Allowed owns the privilege to check the table; the user with Table privilege Denied owns all privileges other than check privilege toward the table; for example: check Table privilege Denied: SELECT, UPDATE, INSERT, CREATE, and click Save, then the current user can't make S/U/I/C operation of the table, but has the privilege to DELETE, DROP, ALTER.
 
-![](media/image35.png){width="5.547916666666667in" height="2.125in"}
+![](assets/standard/image35.png)
 
 SUPER privilege doesn't specify specific LogicDB. Only the user with SUPER privilege could execute management port statements, please refer to the chapter [management port Information Monitoring](#management-port-information-monitoring) for detailed functions of management port.
 
@@ -1147,7 +1147,7 @@ Please refer to the [official MySQL documents](https://dev.mysql.com/doc/refman/
 
 mysql_ssl_rsa_setup \--datadir=/usr/local/crt/
 
-![](media/image36.png){width="5.769444444444445in" height="1.5576388888888888in"}
+![](assets/standard/image36.png)
 
 Among them, the secret keys required by the client are: ca.pem, client-cert.pem, client-key.pem;
 
@@ -1155,7 +1155,7 @@ The secret keys required by HotDB are: ca.pem 、server-cert.pem 、server-key.p
 
 Note: the certificate generated by the MySQL command cannot be CA certified, please refer to the link: <https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html>
 
-![](media/image37.png){width="5.769444444444445in" height="1.2791666666666666in"}
+![](assets/standard/image37.png)
 
 If you need to generate a self-signed certificate capable of CA authentication, you need to use openssl. Please refer to the following steps:
 
@@ -1187,7 +1187,7 @@ openssl pkcs12 -export -out server.pfx -inkey server-key.pem -in server-cert.pem
 
 Enter password SDcrtest
 
-![](media/image38.png){width="5.769444444444445in" height="1.0770833333333334in"}
+![](assets/standard/image38.png)
 
 2\) Convert pfx to jks file using keytool provided by Java:
 
@@ -1195,7 +1195,7 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 
 Enter password SDcrtest
 
-![](media/image39.png){width="5.759722222222222in" height="1.3944444444444444in"}
+![](assets/standard/image39.png)
 
 #### Configuration of TLS secret key
 
@@ -1211,11 +1211,11 @@ Parameter description: a set of pem file related to server.jks and client is pro
 
 \<property name=\"keyStorePass\"\>BB5A70F75DD5FEB214A5623DD171CEEB\</property\>\<!\-- Password of the data certificate .jks file for TLS connection \--\>
 
-Parameter description: the password in the key file that comes with the program is hotdb.com, which can be encrypted by users through select hex(aes_encrypt(\'hotdb.com\',unhex(md5(\'Hotpu\@2013\#shanghai\#2017\')))); to get the default value BB5A70F75DD5FEB214A5623DD171CEEB and fill the value in keyStorePass. If users use their own generated key file, the value be filled is based on the password which is actually entered. If SDcrtest is entered as password, users can get the value of keyStorePass through select hex(aes_encrypt(\'SDcrtest\',unhex(md5(\'Hotpu\@2013\#shanghai\#2017\')))) and fill the value C43BD9DDE9C908FEE7683AED7A301E33 in keyStorePass.
+Parameter description: the password in the key file that comes with the program is hotdb.com, which can be encrypted by users through select hex(aes_encrypt(\'hotdb.com\',unhex(md5(\'Hotpu\@2013\# shanghai\# 2017\')))); to get the default value BB5A70F75DD5FEB214A5623DD171CEEB and fill the value in keyStorePass. If users use their own generated key file, the value be filled is based on the password which is actually entered. If SDcrtest is entered as password, users can get the value of keyStorePass through select hex(aes_encrypt(\'SDcrtest\',unhex(md5(\'Hotpu\@2013\# shanghai\# 2017\')))) and fill the value C43BD9DDE9C908FEE7683AED7A301E33 in keyStorePass.
 
 The configured parameters are as follows:
 
-![}\]2\_\_08H0B\`61\[421T9YIBK](media/image40.png){width="5.769444444444445in" height="0.2881944444444444in"}
+![}\]2\_\_08H0B\`61\[421T9YIBK](media/image40.png)
 
 Users have no need to restart the compute node service for the parameter modification, for server.jks documents will be read again during dynamic loading. If SSL-related logic initialization fails, the dynamic loading will not fail, though the subsequent SSL connections cannot be established normally. Non-SSL connections will not be affected.
 
@@ -1223,15 +1223,15 @@ Users have no need to restart the compute node service for the parameter modific
 
 -   If the compute node cannot find any available server.jks file, the following error messages will be output when starting or synchronously loading.
 
-![](media/image41.png){width="5.759722222222222in" height="3.125in"}
+![](assets/standard/image41.png)
 
 -   If the keyStorePass configuration is wrong, the following error messages will be output during startup or synchronously loading.
 
-![](media/image42.png){width="5.769444444444445in" height="0.5097222222222222in"}
+![](assets/standard/image42.png)
 
 -   If the certificate configuration is wrong, the following error messages will be output during login
 
-![](media/image43.png){width="5.769444444444445in" height="0.25972222222222224in"}
+![](assets/standard/image43.png)
 
 #### TLS connection login
 
@@ -1241,11 +1241,11 @@ For MySQL clients, users can specify a secret key file to connect using the foll
 
 mysql -ujing01 -p123456 -h192.168.240.117 -P3323 \--ssl-ca=/usr/local/crt/ca.pem \--ssl-cert=/usr/local/crt/client-cert.pem \--ssl-key=/usr/local/crt/client-key.pem \--ssl-mode=verify_ca
 
-![](media/image44.png){width="5.769444444444445in" height="0.9326388888888889in"}
+![](assets/standard/image44.png)
 
 Check whether SSL is enabled:
 
-![](media/image45.png){width="5.769444444444445in" height="1.9618055555555556in"}
+![](assets/standard/image45.png)
 
 ##### JDBC
 
@@ -1255,7 +1255,7 @@ For JDBC, the corresponding key file is also required. Please refer to the [offi
 
 keytool -importcert -alias MySQLCACert -file ca.pem -keystore truststore
 
-![](media/image46.png){width="5.769444444444445in" height="2.095833333333333in"}\
+![](assets/standard/image46.png)\
 The truststore file is used for JDBC connection：
 
 jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/usr/local/crt/truststore&clientCertificateKeyStorePassword=hotdb.com&verifyServerCertificate=true
@@ -1266,7 +1266,7 @@ openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name \"mysqlcl
 
 keytool -importkeystore -srckeystore client-keystore.p12 -srcstoretype pkcs12 -destkeystore keystore -deststoretype JKS
 
-![](media/image47.png){width="5.769444444444445in" height="2.0479166666666666in"}\
+![](assets/standard/image47.png)\
 The truststore file is used for JDBC connection:
 
 jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/usr/local/crt/keystore&clientCertificateKeyStorePassword=hotdb.com
@@ -1275,7 +1275,7 @@ jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/u
 
 For Navicat and other similar clients, users can configure the relevant file location in the client settings to connect:
 
-![](media/image48.png){width="3.442361111111111in" height="3.932638888888889in"}
+![](assets/standard/image48.png)
 
 Note: for some versions of Navicat, it may be unable to connect after checking the CA certificate name verification, which may be because the DLL of this version is not compatible. For example, the following warning: \"2026 SSL connection error: ASN: bad other signature confirmation\". In this case, you need to replace the "libmysql.dll" with files with the same name in MySQL Workbench, or update it to a higher version. Please refer to the [link](https://www.heidisql.com/forum.php?t=19494).
 
@@ -1467,9 +1467,9 @@ It's shown in the result that for the JOIN_Z table in LogicDBDB_T, among master/
 
 -   info: In case of master/slave data consistency, there is no information output; in case of master/slave data inconsistency, there will be several kinds of information as follow:
 
-    ------------------------------------------------------------------------------------ -------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------ -------------------------------------------------------------------------------------------------------------------------
 
-    A large amount of data inconsistency in table                                        Table: ... in datanode: ... exist a large amount of data inconsistency
+A large amount of data inconsistency in table                                        Table: ... in datanode: ... exist a large amount of data inconsistency
     Some data inconsistency in table                                                     Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows\' Primary Key (...)：
     Standby Slave Table doesn't exist                                                    exist data inconsistency, because DS: ... Table \'...\' doesn\'t exist
     Index of table doesn't exist                                                         DN: ... not exsit index of table:...
@@ -1477,7 +1477,7 @@ It's shown in the result that for the JOIN_Z table in LogicDBDB_T, among master/
     Master/slave delay exceeds 10S                                                       DN：... delay too much,can\'t check master-slave data consistency
     Delay exceeds 2S                                                                     Table: ... in datanode: ... exist a large amount of data inconsistency
 
-    ------------------------------------------------------------------------------------ -------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------ -------------------------------------------------------------------------------------------------------------------------
 
 ### Global AUTO_INCREMENT
 
@@ -1781,11 +1781,11 @@ When the compute node version is 2.5.6 and above, if the front end is disconnect
 
 2020-10-30 15:42:29.859 \[INFO\] \[CONNECTION\] \[\$NIOExecutor-2-10\] cn.hotpu.hotdb.server.b(3599) - \[thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT\] will be closed because a kill command.
 
-![](media/image49.png){width="5.779166666666667in" height="2.557638888888889in"}
+![](assets/standard/image49.png)
 
-![](media/image50.png){width="5.779166666666667in" height="0.5381944444444444in"}
+![](assets/standard/image50.png)
 
-[]{#_Toc60015816 .anchor}disconnect\_ reason: reasons for disconnection, such as kill, TCP disconnection (program err:java.io.IOException: Connection reset by peer), SQL execution timeout (stream closed, read return -1), idle timeout, etc.
+[]{# _Toc60015816 .anchor}disconnect\_ reason: reasons for disconnection, such as kill, TCP disconnection (program err:java.io.IOException: Connection reset by peer), SQL execution timeout (stream closed, read return -1), idle timeout, etc.
 
 trx\_ state: the transaction status of disconnection, including:
 
@@ -1868,7 +1868,7 @@ You could either modify the following parameter in server.xml or modify the para
 
 \<property name=\"globalUniqueConstraint\"\>false\</property\>\<!\-- Global unique constraints enable on newly added table by default or not \--\>
 
-![](media/image51.png){width="4.663194444444445in" height="0.6347222222222222in"}
+![](assets/standard/image51.png)
 
 Notice: After enable the function, there may be great influence on execution efficiency of INSERT, UPDATE and DELETE of SQL statements, and may result in increasing delay of SQL operation; it may also increase the circumstance of Lock Wait and Deadlock. Please make the choice upon careful consideration.
 
@@ -1878,7 +1878,7 @@ At the time of Add Table Configuration, it could Enable/Disable Global Unique Co
 
 1\. When Add Table Configuration on the management platform, Enable/Disable status of Global Unique Constraint will be displayed by default according to compute node parameter, which could also be manually modified:
 
-![](media/image52.png){width="5.442361111111111in" height="2.5097222222222224in"}
+![](assets/standard/image52.png)
 
 Both Vertical Sharding Table and Global Table have no such exit, because no special treatment is required for Unique Constraint. After Add Table and Configuration, it could be used after using Create Table statement to Add Table Structure.
 
@@ -1942,11 +1942,11 @@ mysql\> create table test02(id not null auto_increment Primary Key,a char(8),b d
 
 1\. Table Configuration could be modified on Table Configuration Management page on the Management Platform:
 
-![](media/image53.png){width="5.355555555555555in" height="2.7881944444444446in"}
+![](assets/standard/image53.png)
 
 If the Table Structure is Created Table, then after Modify the Global Unique Constraint to Enable status, click Reload and refresh the page, if the prompt as in the figure below appears, it means that unique @\@create shall be executed on management port, and check history data of the Unique Constraint Key of the table, and after the return result is unique, the compute node will Auto Create secondary index, only in this way could Global Unique Constraint take effect, for details of this command, please refer to *Distributed Transactional Database HotDB Server \[management port Command\] Function Manual*:
 
-![](media/image54.png){width="5.490277777777778in" height="1.4041666666666666in"}
+![](assets/standard/image54.png)
 
 2\. Use GLOBAL_UNIQUE Syntax in the compute node via ALTER TABLE, enable Global Unique, and similarly, if appearing warning message, it means that it could take effect only after executing unique @\@create:
 
@@ -1972,11 +1972,11 @@ mysql\> show warnings;
 
 At the time of Online Change of Sharding Plan, you could also Enable or Disable Global Unique Constraint manually for the table after change.
 
-![](media/image55.png){width="5.779166666666667in" height="2.5in"}
+![](assets/standard/image55.png)
 
 After Enable, the Modification Plan Pre-detection will detect whether history data of Unique Constraint Key of the table is unique or not, if yes, then Test Passed.
 
-![](media/image56.png){width="5.577083333333333in" height="2.875in"}
+![](assets/standard/image56.png)
 
 #### Locate by secondary index when querying
 
@@ -2010,11 +2010,11 @@ After failover, IO thread between the original Master/Slave will be suspended, a
 
 -   For example, after Auto Reset of replication relation, warning log recorded by compute node at warning level will be as follow:
 
-you should decide whether to manually execute the unexecuted part of binlog or rebuild the replication according to the actual situation.
+you should decide whether to manually execute the unexecuted part of binlog or rebuild the replication according to the actual situation.
 
 > And the Master/Slave Status in the management platform will display Abnormal, and the Pre-click display is as the prompt message in the figure:
 
-![](media/image57.png){width="5.557638888888889in" height="2.6631944444444446in"}
+![](assets/standard/image57.png)
 
 -   If after failover completed, the Master Active and Standby Slave neither Switch GTID or have transaction not received, but this parameter is disabled, then the compute node will also record warning log at warning level as follow:
 
@@ -2052,31 +2052,31 @@ Assuming that the data node "dn_08" has already existed, Add Master data source 
 
 In the following operation, generate a data node "dn_08", and add a Master data source"ds_failover_master" and a slave data source"ds_failover_slave" for this data node:
 
-![](media/image58.png){width="5.345833333333333in" height="1.6055555555555556in"}
+![](assets/standard/image58.png)
 
 "Automatic Adaptation Switching Rule" could be directly checked, when Add Node, make Automatic Adaptation of failover priority at the same time. Or, on the management platform page, select "Configuration"-\>"Node Management"-\>"High Availability Setting"-\>"Switching Rule"-\>"Add Switch Rule", select "dn_08" from drop-down box of data node, select Master data source "ds_failover_master from drop-down box of data source, select "ds_failover_slave" from drop-down box of standby data source, and select High in Failover Priority:
 
-![](media/image59.png){width="5.211805555555555in" height="1.5291666666666666in"}
+![](assets/standard/image59.png)
 
 Or click "Auto Adaptation", select dn_08 node, and then Save.
 
-![](media/image60.png){width="4.115277777777778in" height="2.2881944444444446in"}
+![](assets/standard/image60.png)
 
 Build master/slave replication relation:
 
 Although a pair of master/slave data sources have been added under node dn_08, if the 2 data sources haven't been built master/slave replication relation in practice, then at this time, you could select "dn_08" node in "Configuration"-\>"Node Management"-\>"High Availability Setting"-\>"Master/Slave Build".
 
-![](media/image61.png){width="3.220833333333333in" height="1.7402777777777778in"}
+![](assets/standard/image61.png)
 
 After clicking "Start Build", the system will build master/slave replication relation for the data source automatically. After Build succeeded, the Master/Slave status is the list will display normally:
 
-![](media/image62.png){width="5.086805555555555in" height="2.0097222222222224in"}
+![](assets/standard/image62.png)
 
 ##### Manual Switch
 
 In "Configuration"-\>"Node Management", click \[Switch\] of a data node, thus Manual Switch could be completed:
 
-![](media/image63.png){width="5.134722222222222in" height="2.0in"}
+![](assets/standard/image63.png)
 
 Description:
 
@@ -2338,71 +2338,71 @@ HotDB Server supports node autonomy of multiple compute node cluster. Hereinafte
 
 HotDB Server supports load-balancing: you could select LVS and other means to distribute SQL request. The application client could have access to database service of HotDB Server via VIP of LVS, and at the same time, use transparency and service un-interruption are guaranteed. It could also use the remaining load-balancing plans for processing, for example F5 plus Custom Test; apply the mode of direct connection compute node, but replace node in case of abnormality, etc.
 
-![9R8QD\$VPCV%J\$4\_\]YYIOGHX](media/image64.png){width="4.5in" height="3.6347222222222224in"}
+![9R8QD\$VPCV%J\$4\_\]YYIOGHX](media/image64.png)
 
 ##### Startup description
 
 After environment deployment of compute node cluster succeeded, start the compute node:
 
-\#cd /usr/local/hotdb-2.5.0/hotdb-server/bin
+\# cd /usr/local/hotdb-2.5.0/hotdb-server/bin
 
-\#sh hotdb_server start
+\# sh hotdb_server start
 
 View start status of HotDB Server:
 
-![](media/image65.png){width="5.769444444444445in" height="2.317361111111111in"}
+![](assets/standard/image65.png)
 
 After compute node is enabled, it doesn't enable service port, and will set its role status as Started for the time being. After all compute nodes in the cluster start, one compute node of them will become Primary, while the remaining compute nodes will become Secondary, and all compute nodes have their data service port open, and then the whole cluster comes into normal running status, for example:
 
 Primary node:
 
-![](media/image66.png){width="5.769444444444445in" height="2.5479166666666666in"}
+![](assets/standard/image66.png)
 
 Secondary node:
 
-![](media/image67.png){width="5.759722222222222in" height="2.817361111111111in"}
+![](assets/standard/image67.png)
 
 View management port 3325 status:
 
-![](media/image68.png){width="5.779166666666667in" height="2.970833333333333in"}
+![](assets/standard/image68.png)
 
 When Primary service is abnormal, one from the remaining Secondary will become the new Primary, and the original Primary will be kicked out of the cluster.
 
 Original Primary:
 
-\#cd /usr/local/hotdb-2.5.0/hotdb-server/bin
+\# cd /usr/local/hotdb-2.5.0/hotdb-server/bin
 
-\#sh hotdb_server stop
+\# sh hotdb_server stop
 
-![](media/image69.png){width="5.759722222222222in" height="2.0381944444444446in"}
+![](assets/standard/image69.png)
 
 New Primary:
 
-![](media/image70.png){width="5.769444444444445in" height="0.9326388888888889in"}
+![](assets/standard/image70.png)
 
 View management port status:
 
-![](media/image71.png){width="5.297916666666667in" height="3.0in"}
+![](assets/standard/image71.png)
 
 If the original Primary service restarts (equivalent to Add of new node), for the Primary node found to be enabled at present, new node will join the cluster to be Secondary.
 
 Original Primary:
 
-\#cd /usr/local/hotdb-2.5.0/hotdb-server/bin
+\# cd /usr/local/hotdb-2.5.0/hotdb-server/bin
 
-\#sh hotdb_server start
+\# sh hotdb_server start
 
-![](media/image72.png){width="5.769444444444445in" height="2.7979166666666666in"}
+![](assets/standard/image72.png)
 
-![](media/image73.png){width="5.779166666666667in" height="2.5770833333333334in"}
+![](assets/standard/image73.png)
 
 View management port status:
 
-![](media/image74.png){width="5.134722222222222in" height="2.8555555555555556in"}
+![](assets/standard/image74.png)
 
 After multiple compute node cluster starts, by accessing to the database service via VIP, transparent load-balancing could be realized, and uninterrupted service could be guaranteed.
 
-![](media/image75.png){width="5.75in" height="2.4618055555555554in"}
+![](assets/standard/image75.png)
 
 Notices for multiple compute node cluster:
 
@@ -2452,11 +2452,11 @@ After the Listener deployment is completed, the configuration of Listener can be
 
 Take adding a group of data nodes with master-master type as an example:
 
-![图片%201](media/image76.png){width="5.759722222222222in" height="1.5097222222222222in"}
+![](assets/standard/image76.png)
 
 In steps 1-4, fill in the host name and port number of the data source, connection user and password, database, etc. according to the previous rules. If the group of data sources needs to bind Listener, fill in the Listener related information in step 5.
 
-![](media/image77.png){width="5.759722222222222in" height="2.7118055555555554in"}
+![](assets/standard/image77.png)
 
 The rules are as follows:
 
@@ -2468,7 +2468,7 @@ The rules are as follows:
 
 After filling is achieved, click Connection Test, and click Save and Return after passing the test.
 
-In dynamic loading, if the status on the node management list is ![](media/image78.png){width="0.32708333333333334in" height="0.16319444444444445in"}, it means that the Listener can be connected; if the status is ![](media/image79.png){width="0.2881944444444444in" height="0.17291666666666666in"}，it means that the Listener cannot be connected. You should check whether enableXA is true and enableListener is true.
+In dynamic loading, if the status on the node management list is ![](assets/standard/image78.png), it means that the Listener can be connected; if the status is ![](assets/standard/image79.png)，it means that the Listener cannot be connected. You should check whether enableXA is true and enableListener is true.
 
 Verify whether the Listener service is enabled or not: execute show @\@datasource on port 3325 to view.
 
@@ -2478,17 +2478,17 @@ This method is suitable for adding Listener configuration based on existing data
 
 On the node management page, take dn\_ 26 as an example:
 
-![](media/image80.png){width="5.75in" height="1.6444444444444444in"}
+![](assets/standard/image80.png)
 
 Click the icon *i* in the operation bar, i.e. information, to enter the data source management page.
 
-![](media/image81.png){width="5.759722222222222in" height="5.422916666666667in"}
+![](assets/standard/image81.png)
 
 For a data source that is not bound to a Listener, the last three items are empty by default.
 
 Click Edit to add information about the Listener.
 
-![](media/image82.png){width="5.759722222222222in" height="3.8652777777777776in"}
+![](assets/standard/image82.png)
 
 The rules are as follows:
 
@@ -2500,7 +2500,7 @@ The rules are as follows:
 
 After filling is achieved, click Connection Test, and click Save and Return after passing the test.
 
-In dynamic loading, if the status on the node management list is ![](media/image78.png){width="0.32708333333333334in" height="0.16319444444444445in"}, it means that the Listener can be connected; if the status is ![](media/image79.png){width="0.2881944444444444in" height="0.17291666666666666in"}，it means that the Listener cannot be connected. You should check whether enableXA is true and enableListener is true.
+In dynamic loading, if the status on the node management list is ![](assets/standard/image78.png), it means that the Listener can be connected; if the status is ![](assets/standard/image79.png)，it means that the Listener cannot be connected. You should check whether enableXA is true and enableListener is true.
 
 Verify whether the Listener service is enabled or not: execute show @\@datasource on port 3325 to view.
 
@@ -2532,7 +2532,7 @@ Parameters involved are as follows:
 
 ---------------- ------------------------------------------------------------------------------------------------------------------ ----------------------------------------------------------------------------------------- ------------------------------------
 
-  **Parameters**   **Instructions**                                                                                                   **Reference value**                                                                       **Whether the reloading is valid**
+**Parameters**   **Instructions**                                                                                                   **Reference value**                                                                       **Whether the reloading is valid**
   haMode           High availability mode: 0: master and slave; 1: cluster                                                            In cluster environment, the parameter value is 1                                          yes
   serverId         Cluster node number 1-N (number of nodes), unique in the cluster and N \< = total number of nodes in the cluster   The serverID should start from 1 and should not be repeated continuously in the cluster   yes
   clusterName      Cluster group name                                                                                                 HotDB-Cluster                                                                             yes
@@ -2549,7 +2549,7 @@ Expand from HA mode to multi-node mode is mainly about how to switch keepalived 
 
 --------------------- ---------------------------- ---------------------
 
-  **Role**              **Connection information**   **Name**
+**Role**              **Connection information**   **Name**
   Master compute node   192.168.210.67_3323_3325     HotDB_01
   Slave compute node    192.168.210.68_3325          HotDB_02
   LVS service           192.168.210.136              VIP:192.168.210.218
@@ -2557,13 +2557,13 @@ Expand from HA mode to multi-node mode is mainly about how to switch keepalived 
 
 --------------------- ---------------------------- ---------------------
 
-![](media/image83.png){width="5.317361111111111in" height="2.7305555555555556in"}
+![](assets/standard/image83.png)
 
 **Step 1: Disable standby compute node / standby keepalived service**
 
 Disable keepalived and compute node service of HotDB_02
 
-![](media/image84.png){width="5.759722222222222in" height="0.5770833333333333in"}
+![](assets/standard/image84.png)
 
 **Step 2: Deploy and enable LVS**
 
@@ -2593,37 +2593,37 @@ service keepalived start
 
 For HotDB\_ 01 parameters, refer to the configuration of selected area:
 
-![](media/image85.png){width="5.759722222222222in" height="1.6444444444444444in"}
+![](assets/standard/image85.png)
 
 For HotDB\_ 02 parameters, refer to the configuration of selected area:
 
-![](media/image86.png){width="5.759722222222222in" height="1.7694444444444444in"}
+![](assets/standard/image86.png)
 
 For HotDB\_ 03 parameters, refer to the configuration of selected area:
 
-![](media/image87.png){width="5.75in" height="2.0097222222222224in"}
+![](assets/standard/image87.png)
 
 （2）Executes reload @@ config HotDB\_ 01 at the management end of HotDB_01, and execute show @\@cluster you can see HotDB_01 join the cluster as PRIMARY.
 
-![](media/image88.png){width="5.759722222222222in" height="2.095833333333333in"}
+![](assets/standard/image88.png)
 
 （3）Disable keepalived service of HotDB_01
 
 service keepalived stop
 
-![ITI\$CWB{(O1\_\_N_A}4PCD\`A](media/image89.png){width="5.692361111111111in" height="3.2402777777777776in"}
+![](assets/standard/image89.png)
 
 \(4\) Start HotDB_02, HotDB_03, and then execute show @\@cluster at the management end of HotDB_01; you can see that all cluster members have joined.
 
-![](media/image90.png){width="5.769444444444445in" height="2.5381944444444446in"}
+![](assets/standard/image90.png)
 
 **Step 4: Adaptation adjustment of management platform**
 
 The adaptation mode is the same as \"[Expand compute nodes in cluster mode](#expand-compute-nodes-in-cluster-mode)\". Edit the cluster of compute nodes to add new compute nodes and convert the HA mode to cluster mode, as shown in the following figure:
 
-![](media/image91.png){width="5.769444444444445in" height="2.2402777777777776in"}
+![](assets/standard/image91.png)
 
-![](media/image92.png){width="5.75in" height="2.9618055555555554in"}
+![](assets/standard/image92.png)
 
 ###### Expand compute nodes in cluster mode
 
@@ -2631,7 +2631,7 @@ This section mainly describes the operation of expanding compute nodes in cluste
 
 -------------------------- ---------------------------- ---------------------
 
-  **Role**                   **Connection information**   **Name**
+**Role**                   **Connection information**   **Name**
   Master compute node        192.168.210.157_3323_3325    HotDB_01
   Slave compute node         192.168.210.156_3323_3325    HotDB_02
   Slave compute node         192.168.210.155_3323_3325    HotDB_03
@@ -2648,7 +2648,7 @@ ipvsadm -a -t 192.168.210.216:3323 -r 192.168.210.134
 
 \(2\) Add the service info of HotDB_04 to keepalived.conf of the master/slave LVS, as shown in the following figure:
 
-![新引入成员的配置信息](media/image93.png){width="5.769444444444445in" height="5.461805555555555in"}
+![](assets/standard/image93.png)
 
 **Step 2: configure LVS for the new compute node server**
 
@@ -2664,17 +2664,17 @@ sh hotdbinstall_v\*.sh \--dry-run=no \--lvs-real-server-startup-type=service \--
 
 \(1\) Modify the value of ClusterSize in server.xml of all compute node servers（HotDB_01/HotDB_02/HotDB_03/HotDB_04）to ensure that the value of ClusterSize is equal to the actual number of cluster members (here is 4). Other parameters require no adjustment, but it should be noted that the values of clusterName, clusterSize, clusterNetwork, clusterPort are consistent in the same cluster.
 
-![](media/image94.png){width="5.75in" height="2.654166666666667in"}
+![](assets/standard/image94.png)
 
 \(2\) Adjust other cluster parameters in server.xml and start the service in the new compute node server (HotDB_04), as shown in the following figure:
 
-![](media/image95.png){width="5.759722222222222in" height="2.682638888888889in"}
+![](assets/standard/image95.png)
 
 **Step 4: Reload the configuration**
 
 Execute reload @\@config at the the management end of the primary compute node(HotDB_01), you can see HotDB_04 join the cluster:
 
-![](media/image96.png){width="5.759722222222222in" height="1.4618055555555556in"}
+![](assets/standard/image96.png)
 
 **Step5: Adaption adjustment of management platform**
 
@@ -2682,7 +2682,7 @@ Enter the "Cluster management" -\> "Compute node cluster" page to bring the newl
 
 Edit the compute node cluster, and add the newly introduced compute nodes via the "+" button in the operation bar on the right side of the compute node. After saving, the management platform will automatically identify the compute node mode according to the number of compute nodes, as shown in the following figure:
 
-![](media/image97.png){width="5.769444444444445in" height="2.029166666666667in"}
+![](assets/standard/image97.png)
 
 **Notes:**
 
@@ -2716,13 +2716,13 @@ Parameters involved are as follows:
 
 This section mainly describes the operation of reducing a cluster that normally provides services to HA mode. The components involved are consistent with the
 
-[Eexpand from HA mode to multi-node mode.](\l)![](media/image92.png){width="5.75in" height="2.9520833333333334in"}
+[Eexpand from HA mode to multi-node mode.](\l)![](assets/standard/image92.png)
 
 **Step 1: disablethe standby compute node service**
 
 Disable the compute node services of HotDB\_ 02 and HotDB\_ 03. This process will trigger cluster election. If there is a pressure measurement task at this time, it will flash off and return to normal in a few seconds.
 
-![](media/image98.png){width="5.759722222222222in" height="0.7791666666666667in"}
+![](assets/standard/image98.png)
 
 **Step 2: deploy keepalived and adjust the compute node configuration**
 
@@ -2744,21 +2744,21 @@ sh hotdbinstall_v\*.sh \--dry-run=no \--install-keepalived=backup \--keepalived-
 
 （3）Modify server.xml of HotDB_01、HotDB_02 compute nodes. Configure relevant parameters as HA mode，as in the following figure：
 
-![](media/image99.png){width="5.759722222222222in" height="1.7791666666666666in"}
+![](assets/standard/image99.png)
 
-![](media/image100.png){width="5.759722222222222in" height="1.0097222222222222in"}
+![](assets/standard/image100.png)
 
 （4）Enable keepalived of HotDB_01，until the VIP of keepalived is mounted。
 
-![](media/image101.png){width="5.759722222222222in" height="2.1729166666666666in"}
+![](assets/standard/image101.png)
 
 **（5）**Execute reload @@ config at managemtn end of HotDB_01 to make the remaining compute nodes become the master compute nodes in HA mode.
 
-![](media/image102.png){width="5.769444444444445in" height="1.8847222222222222in"}
+![](assets/standard/image102.png)
 
 At this time, if there is a pressure measurement task, it will flash off and return to normal after a few seconds.
 
-![](media/image103.png){width="5.759722222222222in" height="0.5479166666666667in"}
+![](assets/standard/image103.png)
 
 **Step 3: Disable LVS service on LVS server**
 
@@ -2782,17 +2782,17 @@ rm -rf lvsrs
 
 Enable HotDB_02 and keepalived service.
 
-![](media/image104.png){width="5.769444444444445in" height="0.7979166666666667in"}
+![](assets/standard/image104.png)
 
 **Step 6: Adaptation adjustment of management platform**
 
 The adaptation mode is the same as \"[Expand compute nodes in cluster mode](#expand-compute-nodes-in-cluster-mode)\". Edit the cluster of compute nodes to delete the reduced compute nodes and convert the cluster mode to HA mode, as shown in the following figure:
 
-![](media/image105.png){width="5.769444444444445in" height="2.595833333333333in"}
+![](assets/standard/image105.png)
 
-![](media/image106.png){width="5.769444444444445in" height="2.2694444444444444in"}
+![](assets/standard/image106.png)
 
-![](media/image107.png){width="5.769444444444445in" height="2.9618055555555554in"}
+![](assets/standard/image107.png)
 
 **Notes：**
 
@@ -2986,9 +2986,9 @@ This statement will be executed on database node 1. The user could, via "Data No
 
 -   **Use DSID (data source ID) in HINT:**
 
-HINT statement supports the specified datasource_id to skip the compute node and send the statement directly to the data source. You can view the data source datasource\_ id through the service port command.
+HINT statement supports the specified datasource_id to skip the compute node and send the statement directly to the data source. You can view the data source datasource\_ id through the service port command.
 
-Syntax：SHOW \[full\] HOTDB ｛datasources｝ \[LIKE \'pattern\' \| WHERE expr\]  
+Syntax：SHOW \[full\] HOTDB ｛datasources｝ \[LIKE \'pattern\' \| WHERE expr\]
 
 For example：
 
@@ -3002,7 +3002,7 @@ hotdb\> show hotdb datasources where datasource_id like \'22\';
 
 \| 23 \| 22 \| 192.168.210.41_3308_hotdb157 \| 1 \| 1 \| 192.168.210.41 \| 3308 \| hotdb157 \| 1 \|
 
--   Specify a specific datasource_id without writing binlog:
+-   Specify a specific datasource_id without writing binlog:
 
 /\*!hotdb:dsid=nobinlog:datasource_id\*/SQL to be executed
 
@@ -3010,13 +3010,13 @@ Note: the value of datasource_id is the ID of a certain data source, and you can
 
 For Example:
 
-Create the user hpt on the data source datasource_id=22 without writing binlog.
+Create the user hpt on the data source datasource_id=22 without writing binlog.
 
 hotdb\> /\*!hotdb:dsid=nobinlog:22\*/create user \'hpt\'@\'%\' identified by \'123456\';
 
 Query OK, 0 rows affected (0.00 sec)
 
-Set parameters on the data source datasource_id=22.
+Set parameters on the data source datasource_id=22.
 
 hotdb\> /\*!hotdb:dsid=nobinlog:22\*/set wait_timeout=1200;
 
@@ -3080,7 +3080,7 @@ hotdb\> /\*!hotdb:dsid=nobinlog:all\*/show variables like \'wait_timeout\';
 
 8 rows in set (0.00 sec)
 
--   Specify a specific datasource_id with writing binlog:
+-   Specify a specific datasource_id with writing binlog:
 
 /\*!hotdb:dsid=datasource_id\*/SQL to be executed
 
@@ -3240,13 +3240,13 @@ At this time, the DROP statement will be directly distributed to all data source
 
 Therefore, when using the statement of connection binding, you need to pay extra attention: you need to use the LogicDB in advance for INSERT/REPLACE/UPDATE/DELETE/LOAD DATA/CREATE TABLE /ALTER TABLE/DROP TABLE/TRUNCATE TABLE/RENAME TABLE and other operations that will modify the data.
 
-When HotDB Server version is 2.5.5 and above, this kind of scenario is further optimized to support the content parsing of connection binding.
+When HotDB Server version is 2.5.5 and above, this kind of scenario is further optimized to support the content parsing of connection binding.
 
 In connection binding, whether the LogicDB is USEd or not, it is not allowed to execute SQL that may destroy the data source (please note that HINT itself does not restrict the following types of SQL):
 
 CREATE\|ALTER\|DROP DATABASE, SET SESSION SQL_LOG_BIN\|GTID_NEXT, SET GLOBAL, RESET MASTER\|SLAVE, CHANGE MASTER, START\|STOP SLAVE\|GROUP_REPLICATION, CREATE\|ALTER\|DROP\|RENAME USER\|ROLE, GRANT, REVOKE, SET PASSWORD, SET DEFAULT ROLE, CLONE and other SQL types.
 
-For example: execute binding connection statement before executing DROP TABLE:
+For example: execute binding connection statement before executing DROP TABLE:
 
 set foreign_key_checks=0;
 
@@ -3256,7 +3256,7 @@ ERROR 1289 (HY000): Command \'drop table test1\' is forbidden when sql don\'t us
 
 When the LogicDB is not USEd, after executing the binding connection statement, you can execute SQL with LogicDB which is limited to be single: SELECT/INSERT/ REPLACE/UPDATE/DELETE/LOAD/CREATE TABLE/ALTER TABLE/DROP TABLE/TRUNCATE TABLE/RENAME TABLE/PREPARE/EXECUTE/DEALLOCATE/SET SESSION/SHOW etc.
 
-For example: execute the binding connection statement before executing CREATE TABLE:
+For example: execute the binding connection statement before executing CREATE TABLE:
 
 set foreign_key_checks=0;
 
@@ -3358,11 +3358,11 @@ For the following SQL type statements, the compute node doesn't support itself, 
 
 -------------------------- ---------------------------------------- -------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  **MySQL statement type**   **Clause type**                          **Function**                                 **Description**
+**MySQL statement type**   **Clause type**                          **Function**                                 **Description**
 
-  SELECT                     INNER/LEFT JOIN/RIGHT JOIN WHERE         Operation Expression                         column1+column2、column1-column2、column1\*column2、column1/column2
+SELECT                     INNER/LEFT JOIN/RIGHT JOIN WHERE         Operation Expression                         column1+column2、column1-column2、column1\*column2、column1/column2
 
-                                                                      \<=\> or \<\>                                
+\<=\> or \<\>                                
     
                                                                       \% or MOD                                    Only support column% constant; not support column1% column2
     
@@ -3390,7 +3390,7 @@ For the following SQL type statements, the compute node doesn't support itself, 
     
                              Subquery                                 Query Operational Condition (any, all)       
     
-                                                                      Nested Multi-layer Association Subquery      
+                                                                      Nested Multi-layer Association Subquery
 
 -------------------------- ---------------------------------------- -------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -3444,7 +3444,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 
 ---------------------- -------------------- ----------------------------------------------------------------------------------------------
 
-  **MySQL data type**    **Support status**   **Description**
+**MySQL data type**    **Support status**   **Description**
   BIT                    Support              
   TINYINT                Support              　
   SMALLINT               Support              　
@@ -3466,7 +3466,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 
 --------------------- -------------------- -----------------
 
-  **MySQL data type**   **Support status**   **Description**
+**MySQL data type**   **Support status**   **Description**
   DATE                  Support              　
   TIME                  Support              　
   TIMESTAMP             Support              　
@@ -3481,7 +3481,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 
 --------------------- -------------------- ----------------------------------------------------------------------------------------------
 
-  **MySQL data type**   **Support status**   **Description**
+**MySQL data type**   **Support status**   **Description**
   CHAR                  Support              　
   VARCHAR               Support              　
   BINARY                Support              　
@@ -3507,7 +3507,7 @@ Compute node supports use Space typespatial_type when Create Table; it supports 
 
 --------------------- -------------------- ----------------------------------------------------------------------------------------------------------------
 
-  **MySQL data type**   **Support status**   **Description**
+**MySQL data type**   **Support status**   **Description**
   JSON                  Support              　It's forbidden from being used either as sharding key, Parent/Child Table associated Field, or as join Field
 
 --------------------- -------------------- ----------------------------------------------------------------------------------------------------------------
@@ -3617,11 +3617,11 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [AES_ENCRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AND, &&](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
+| [AND, &&](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [Area()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AsBinary(), AsWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                            | Support            | No                   | 　                                                                                                                                                                                  |
+| [AsBinary(), AsWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                            | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [ASCII()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3631,9 +3631,9 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [:=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html)                                                                                        | Not support        | Yes                  | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AsText(), AsWKT()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
+| [AsText(), AsWKT()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ATAN2(), ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
+| [ATAN2(), ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3721,15 +3721,15 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CURDATE()                                                                                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CURDATE(), CURRENT_DATE](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                | Support            | No                   | 　                                                                                                                                                                                  |
+| [CURDATE(), CURRENT_DATE](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [CURRENT_ROLE()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html)                                                                          | Not support        | Yes                  | Compute node doesn't support new role function of MySQL8.0                                                                                                                          |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CURRENT_TIME(), CURRENT_TIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                           | Support            | No                   | 　                                                                                                                                                                                  |
+| [CURRENT_TIME(), CURRENT_TIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                           | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                  | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CURRENT_USER(), CURRENT_USER](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                             | Support            | No                   | Return the current LogicDB username                                                                                                                                                 |
+| [CURRENT_USER(), CURRENT_USER](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                             | Support            | No                   | Return the current LogicDB username                                                                                                                                                 |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [CURTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3761,9 +3761,9 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [DEGREES()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DES_DECRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                          | Support            | No                   | 　                                                                                                                                                                                  |
+| [DES_DECRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                          | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DES_ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                          | Support            | No                   | 　                                                                                                                                                                                  |
+| [DES_ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                          | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [Dimension()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3777,7 +3777,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [ENCODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
+| [ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [EndPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3825,7 +3825,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [GeometryType()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GeomFromText(), GeometryFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                           | Support            | No                   | 　                                                                                                                                                                                  |
+| [GeomFromText(), GeometryFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                           | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [GeomFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3905,19 +3905,19 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [IsSimple()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_ARRAYAGG(col_or_expr) \[over_clause\]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                          | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_ARRAYAGG(col_or_expr) \[over_clause\]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html# function_json-arrayagg)                          | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_OBJECTAGG(key, value) \[over_clause\]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                          | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_OBJECTAGG(key, value) \[over_clause\]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html# function_json-arrayagg)                          | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_PRETTY(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-pretty)                                             | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_PRETTY(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html# function_json-pretty)                                             | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_STORAGE_FREE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                                 | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
+| [JSON_STORAGE_FREE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html# function_json-storage-free)                                 | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_STORAGE_SIZE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                                 | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_STORAGE_SIZE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html# function_json-storage-free)                                 | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_MERGE_PATCH(json_doc, json_doc\[, json_doc\] \...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch) | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_MERGE_PATCH(json_doc, json_doc\[, json_doc\] \...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html# function_json-merge-patch) | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_TABLE(expr, path COLUMNS (column_list) \[AS\] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html#function_json-table)            | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
+| [JSON_TABLE(expr, path COLUMNS (column_list) \[AS\] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html# function_json-table)            | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [LAST_DAY](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3941,7 +3941,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [LineFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LineFromWKB(), LineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                           | Support            | No                   | 　                                                                                                                                                                                  |
+| [LineFromWKB(), LineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                           | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [LineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3949,9 +3949,9 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [LOAD_FILE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Not support        | Yes                  | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LOCALTIME(), LOCALTIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
+| [LOCALTIME(), LOCALTIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LOCALTIMESTAMP, LOCALTIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                       | Support            | No                   | 　                                                                                                                                                                                  |
+| [LOCALTIMESTAMP, LOCALTIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                       | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [LOCATE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -3983,7 +3983,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [MBRDisjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                        | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MBREqual() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                        | Support            | No                   | 　                                                                                                                                                                                  |
+| [MBREqual() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                        | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [MBRIntersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                      | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4019,7 +4019,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [MPointFromText(),MultiPointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                        | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MPointFromWKB(), MultiPointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                         | Support            | No                   | 　                                                                                                                                                                                  |
+| [MPointFromWKB(), MultiPointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                         | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [MPolyFromText(),MultiPolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                       | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4035,7 +4035,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [NOT BETWEEN \... AND \...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [!=, \<\>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
+| [!=, \<\>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [NOT IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4043,7 +4043,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [NOT REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NOT, !](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
+| [NOT, !](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [NOW()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4059,9 +4059,9 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [OCTET_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                         | Support            | No                   | 　                                                                                                                                                                                  |
+| [OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                         | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\|\|, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
+| [\|\|, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [ORD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4085,9 +4085,9 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [PointN()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PolyFromText(), PolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                            | Support            | No                   | 　                                                                                                                                                                                  |
+| [PolyFromText(), PolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                            | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PolyFromWKB(), PolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
+| [PolyFromWKB(), PolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [Polygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4149,7 +4149,7 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [SESSION_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                           | Support            | No                   | select session_user(); the Query result is not information of the current user login the LogicDB but the user information of LogicDB associated node                                |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SHA1(), SHA()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
+| [SHA1(), SHA()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [SHA2()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4426,7 +4426,7 @@ DELETE FROM t PARTITION(p0);
 
 -------------------------- ---------------------------------------- ------------------- -------------------- -----------------------------------------------------
 
-  **MySQL statement type**   **Clause type**                          **Function**        **Support status**   **Description**
+**MySQL statement type**   **Clause type**                          **Function**        **Support status**   **Description**
   DELETE                     PARTITION                                　                  Support              　
                              ORDER BY DESC\|ASC                       　                  Support              　
                              LIMIT                                    　                  Support              　
@@ -4463,7 +4463,7 @@ USING table_references
 
 -------------------------- ------------------------------------------------------- --------------------------------------- -------------------- ------------------------------------------------------------------------------
 
-  **MySQL statement type**   **Clause type**                                         **Function**                            **Support status**   **Description**
+**MySQL statement type**   **Clause type**                                         **Function**                            **Support status**   **Description**
   INSERT                     INSERT ... SELECT ...                                   Single-node simple single-table Query   Support              
                                                                                      Single-node JOIN                        Support              　
                                                                                      Single-node Subquery                    Support              　
@@ -4489,10 +4489,6 @@ USING table_references
 -   For INSERT INTO... SELECT ... statement, if the SELECT clause is not supported, INSERT INTO\... SELECT\...is not supported either. It can be executed in other circumstances.
 
 -   INSERT IGNORE
-
-```{=html}
-<!-- -->
-```
 
 -   On compute node, INSERT IGNORE reserves original features of MySQL. In case of Primary Key/Unique Key conflict, data and conflict information will be ignored.
 
@@ -4566,7 +4562,7 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 
 -------------------------- ----------------------- -------------------------------------- -------------------- -----------------------------------------------------------------------
 
-  **MySQL statement type**   **Clause type**         **Function**                           **Support status**   **Description**
+**MySQL statement type**   **Clause type**         **Function**                           **Support status**   **Description**
   INSERT                     INSERT ... SELECT ...   Cross-node simple single-table Query   Support              　
                                                      Cross-node JOIN                        Not support          　
                                                      Cross-node UNION                       Not support          　
@@ -4628,7 +4624,7 @@ For INSERT BATCH in a transaction, if parts succeed and parts failed, it will au
 
 -------------------------- -------------------------------------------------------- --------------------------------------- --------------------- ------------------------------------------------------------------------------
 
-  **MySQL statement type**   **Clause type**                                          **Function**                            **Support status**    **Description**
+**MySQL statement type**   **Clause type**                                          **Function**                            **Support status**    **Description**
   REPALCE                    REPLACE ... SELECT ...                                   Single-node simple single-table Query   Support               
                                                                                       Single-node JOIN                        Support               　
                                                                                       Single-node Subquery                    Support               　
@@ -4659,7 +4655,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 -------------------------- ------------------------ -------------------------------------- -------------------- ------------------------------------------------------------------------
 
-  **MySQL statement type**   **Clause type**          **Function**                           **Support status**   **Description**
+**MySQL statement type**   **Clause type**          **Function**                           **Support status**   **Description**
   REPLACE                    REPLACE ... SELECT ...   Cross-node simple single-table Query   Support              　
                                                       Cross-node JOIN                        Not support          　
                                                       Cross-node UNION                       Not support          　
@@ -5165,7 +5161,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 -------------------------- ----------------------------------------------------------------------------- -------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  **MySQL statement type**   **Clause type**                                                               **Support status**   **Description**
+**MySQL statement type**   **Clause type**                                                               **Support status**   **Description**
   ALTER TABLE                ADD COLUMN                                                                    Support              　
                              ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY                         Support              Support ADD UNIQUE \[index_name\]\[index_type\]index_col_name
                              ADD FOREIGN KEY for child table(s)                                            Partial Support      When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails
@@ -5246,15 +5242,15 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | CREATE VIEW              | 　                             | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 +--------------------------+--------------------------------+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-[]{#_Toc20646638 .anchor}CREATE DATABASE is used to create LogicDB, the usage is as follows:
+[]{# _Toc20646638 .anchor}CREATE DATABASE is used to create LogicDB, the usage is as follows:
 
-CREATE {DATABASE \| SCHEMA} \[IF NOT EXISTS\] db_name \[create_option\] \... \[DEFAULT DATANODE \'datanodeid\'\]
+CREATE {DATABASE \| SCHEMA} \[IF NOT EXISTS\] db_name \[create_option\] \... \[DEFAULT DATANODE \'datanodeid\'\]
 
 Description:
 
-create_option: \[DEFAULT\] { CHARACTER SET \[=\] charset_name \| COLLATE \[=\] collation_name }
+create_option: \[DEFAULT\] { CHARACTER SET \[=\] charset_name \| COLLATE \[=\] collation_name }
 
-\[DEFAULT DATANODE \'datanodeid\'\] You can specify the default sharding node. When it is not specified, all data nodes will be associated by default; when it is specified, the specified data node will be associated as the default sharding node of the LogicDB; when the specified datanodeid does not exist, it prompts: datanodeid not exists.
+\[DEFAULT DATANODE \'datanodeid\'\] You can specify the default sharding node. When it is not specified, all data nodes will be associated by default; when it is specified, the specified data node will be associated as the default sharding node of the LogicDB; when the specified datanodeid does not exist, it prompts: datanodeid not exists.
 
 The statement of CREATING DATABASE on the server end is:
 
@@ -5262,11 +5258,11 @@ create database if not exists zjj_d3 default datanode \'1,4\';
 
 -   Associate non-existent data nodes
 
-![](media/image108.png){width="5.759722222222222in" height="0.2881944444444444in"}
+![](assets/standard/image108.png)
 
 -   When the character set is specified, a warning will be given as follows
 
-![](media/image109.png){width="5.769444444444445in" height="0.5in"}
+![](assets/standard/image109.png)
 
 Note: the warning prompt will be given when the character set and collations is specified, because setting the node-level character set and collations is actually invalid for the compute node and it is recognized according to the default configuration of the data source itself.
 
@@ -5274,7 +5270,7 @@ Note: the warning prompt will be given when the character set and collations is 
 
 -------------------------- ----------------------------------------------- -------------------- -------------------------------------------------
 
-  **MySQL statement type**   **Clause type**                                 **Support status**   **Description**
+**MySQL statement type**   **Clause type**                                 **Support status**   **Description**
   DROP DATABASE              　                                              Forbidden            　
   DROP EVENT                 　                                              Forbidden            　
   DROP FUNCTION              　                                              Forbidden            　
@@ -5449,10 +5445,10 @@ HotDB Server only supports Storage Procedure, Custom Function statement in verti
 
 ----------------------- ------------------------------ -------------------- -----------------
 
-  **Statement type**      **SQL statement**              **Support status**   **Description**
+**Statement type**      **SQL statement**              **Support status**   **Description**
   Prepare SQL Statement   PREPARE ... FROM ...           Support              
                           EXECUTE ...                    Support              　
-                          {DEALLOCATE \| DROP} PREPARE   Support              
+                          {DEALLOCATE \| DROP} PREPARE   Support
 
 ----------------------- ------------------------------ -------------------- -----------------
 
@@ -5462,7 +5458,7 @@ HotDB Server realizes a set of its own username and privilege management system,
 
 --------------------------- ------------------- -------------------- -----------------
 
-  **Statement type**          **SQL statement**   **Support status**   **Description**
+**Statement type**          **SQL statement**   **Support status**   **Description**
   User management statement   ALTER USER          Forbidden            
                               CREATE USER         Support              　
                               DROP USER           Support              　
@@ -5473,13 +5469,13 @@ HotDB Server realizes a set of its own username and privilege management system,
 
 --------------------------- ------------------- -------------------- -----------------
 
-[]{#_Toc60015876 .anchor}Support the use of SQL statements to CREATE / DROP user and to GRANT / REVOKE user when the compute node version is higher than 2.5.6.
+[]{# _Toc60015876 .anchor}Support the use of SQL statements to CREATE / DROP user and to GRANT / REVOKE user when the compute node version is higher than 2.5.6.
 
 ##### CREATE USER
 
 The statement is:
 
-CREATE USER \[IF NOT EXISTS\] \'user_name\'@\'host_name\'   IDENTIFIED BY  \'password_auth_string\'\[,\'user_name\'@\'host_name\'   IDENTIFIED BY  \'password_auth_string\'\]\...
+CREATE USER \[IF NOT EXISTS\] \'user_name\'@\'host_name\'   IDENTIFIED BY  \'password_auth_string\'\[,\'user_name\'@\'host_name\'   IDENTIFIED BY  \'password_auth_string\'\]\...
 
 The statement of CREATE USER on the server end is:
 
@@ -5489,25 +5485,25 @@ When CREATE USER, the execution user must have super privilege. NULL password cr
 
 -   When the execution user does not have super privilege. it will prompt:
 
-![](media/image110.png){width="5.769444444444445in" height="0.5in"}
+![](assets/standard/image110.png)
 
 -   When creating with NULL password, it will prompt:
 
-![](media/image111.png){width="5.769444444444445in" height="0.25972222222222224in"}
+![](assets/standard/image111.png)
 
 -   If the user name exceeds the limit, it will prompt:
 
-![](media/image112.png){width="5.759722222222222in" height="0.38472222222222224in"}
+![](assets/standard/image112.png)
 
 -   When creating user repeatedly, it will prompt:
 
-![](media/image113.png){width="5.769444444444445in" height="0.8458333333333333in"}
+![](assets/standard/image113.png)
 
 ##### DROP USER
 
 The statement is:
 
-DROP USER \[IF EXISTS\] \'user_name\'@\'host_name\' \[,\'user_name\'@\'host_name\'\]\...
+DROP USER \[IF EXISTS\] \'user_name\'@\'host_name\' \[,\'user_name\'@\'host_name\'\]\...
 
 The statement of DROP USER on the server end is:
 
@@ -5517,31 +5513,31 @@ When DROP USER, the execution user must have super privilege.
 
 -   When the execution user does not have super privilege, it will prompt:
 
-![](media/image114.png){width="5.759722222222222in" height="0.26944444444444443in"}
+![](assets/standard/image114.png)
 
 -   When deleting a non-existent user, it will prompt:
 
-![](media/image115.png){width="5.759722222222222in" height="0.39444444444444443in"}
+![](assets/standard/image115.png)
 
 ##### GRANT
 
 The statement is:
 
-GRANT 
+GRANT
 
 priv_type\[, priv_type \] \...
 
-ON  priv_level TO \'user_name\'@\'host_name\'\[,\'user_name\'@\'host_name\'\] \...
+ON  priv_level TO \'user_name\'@\'host_name\'\[,\'user_name\'@\'host_name\'\] \...
 
 \[WITH MAX_USER_CONNECTIONS con_num \]
 
 **Description:**
 
-priv_type includes：SELECT、 UPDATE、 DELETE、 INSERT 、CREATE 、DROP 、ALTER 、FILE 、 SUPER
+priv_type includes：SELECT、 UPDATE、 DELETE、 INSERT 、CREATE 、DROP 、ALTER 、FILE 、 SUPER
 
-You can use [ALL \[PRIVILEGES\]](https://dev.mysql.com/doc/refman/5.6/en/privileges-provided.html#priv_all) to give users all privileges (including super privilege), which is the same as MySQL.
+You can use [ALL \[PRIVILEGES\]](https://dev.mysql.com/doc/refman/5.6/en/privileges-provided.html# priv_all) to give users all privileges (including super privilege), which is the same as MySQL.
 
-priv\_ Level includes: \*  \| \*.\*  \| db_name.\*  \|db_name.tbl_name  \| tbl_name  \|
+priv\_ Level includes: \*  \| \*.\*  \| db_name.\*  \|db_name.tbl_name  \| tbl_name  \|
 
 \*: represents all tables in the current database (which can only be executed after "use" the LogicDB); \* \*: represents all tables in all databases; db_name.\*: represents all tables in a certain database, db_name specifies the database name; db_name.tbl_name: a certain table in a certain database, db_name, database name, tbl_name: represents a table, tbl_name specifies the name of the table (which can only be executed after "use" the LogicDB).
 
@@ -5573,27 +5569,27 @@ Notes on GRANT:
 
 -   When the user who GRANTs does not have super privilege, it will prompt:
 
-![](media/image116.png){width="5.759722222222222in" height="0.2881944444444444in"}
+![](assets/standard/image116.png)
 
 -   User is created synchronously when GRANT.
 
-![](media/image117.png){width="5.769444444444445in" height="0.29791666666666666in"}
+![](assets/standard/image117.png)
 
 -   User is created synchronously when GRANT without password, it will prompt:
 
-![](media/image118.png){width="5.769444444444445in" height="0.5479166666666667in"}
+![](assets/standard/image118.png)
 
 -   super must be granted global management privilege, and node-level and table-level grant is not supported.
 
-![](media/image119.png){width="5.769444444444445in" height="0.5868055555555556in"}
+![](assets/standard/image119.png)
 
 -   file must be granted global privilege, and node-level and table-level grant is not supported.
 
-![](media/image120.png){width="5.759722222222222in" height="0.7881944444444444in"}
+![](assets/standard/image120.png)
 
 -   all can not be used with other privileges at the same time. It can only be granted separately.
 
-![](media/image121.png){width="5.759722222222222in" height="0.5673611111111111in"}
+![](assets/standard/image121.png)
 
 ##### REVOKE
 
@@ -5617,40 +5613,40 @@ Notes on REVOKE:
 
 -   When the user who REVOKEs does not have super privilege, it will prompt:
 
-![](media/image122.png){width="5.759722222222222in" height="0.25972222222222224in"}
+![](assets/standard/image122.png)
 
 -   REVOKE of some privileges is supported:
 
-![](media/image123.png){width="5.759722222222222in" height="0.5770833333333333in"}
+![](assets/standard/image123.png)
 
 -   REVOKE of all privileges is supported:
 
-![](media/image124.png){width="5.759722222222222in" height="0.5958333333333333in"}
+![](assets/standard/image124.png)
 
 -   REVOKE of node-level privileges is supported:
 
-![](media/image125.png){width="5.769444444444445in" height="0.5770833333333333in"}
+![](assets/standard/image125.png)
 
 -   REVOKE of table-level privileges is supported:
 
-![](media/image126.png){width="5.759722222222222in" height="0.5868055555555556in"}
+![](assets/standard/image126.png)
 
 -   If you REVOKE a privilege and use it again, error will be reported as follows:
 
-![](media/image127.png){width="5.759722222222222in" height="0.35555555555555557in"}
+![](assets/standard/image127.png)
 
-![](media/image128.png){width="5.769444444444445in" height="0.3076388888888889in"}
+![](assets/standard/image128.png)
 
 #### Table maintenance statement
 
 ----------------------------- ------------------- -------------------- -----------------
 
-  **Statement type**            **SQL statement**   **Support status**   **Description**
+**Statement type**            **SQL statement**   **Support status**   **Description**
   Table maintenance statement   ANALYZE TABLE       Forbidden            
                                 CHECK TABLE         Forbidden            
                                 CHECKSUM TABLE      Forbidden            
                                 OPTIMIZE TABLE      Forbidden            
-                                REPAIR TABLE        Forbidden            
+                                REPAIR TABLE        Forbidden
 
 ----------------------------- ------------------- -------------------- -----------------
 
@@ -5786,7 +5782,7 @@ Notes on REVOKE:
 
 -------------------- ------------------------------------------------------------- -------------------- -----------------------------------------
 
-  **Statement type**   **SQL statement**                                             **Support status**   **Description**
+**Statement type**   **SQL statement**                                             **Support status**   **Description**
   SET statement        set hotdb_profiling={0\|1\|on\|off}                           Support              Support set \[session\] hotdb_profiling
   SHOW statement       show hotdb_profiles                                           Support              　
                        show hotdb_profile for query N \[relative time\|real time\]   Support              N represents the SQL id executed
@@ -5909,7 +5905,7 @@ result send end time: the time point when the compute node completes sending the
 
 ----------------------------- ------------------------------ -------------------- --------------------------------------------
 
-  **Statement type**            **SQL statement**              **Support status**   **Description**
+**Statement type**            **SQL statement**              **Support status**   **Description**
   Other management statements   BINLOG \'str\'                 Forbidden            　
                                 CACHE INDEX                    Forbidden            　
                                 KILL \[CONNECTION \| QUERY\]   Support              
@@ -5918,7 +5914,7 @@ result send end time: the time point when the compute node completes sending the
                                 RESET QUERY CACHE              Forbidden            　
                                 RESET SLAVE                    Forbidden            　
   MySQL Utility Statements      DESCRIBE\|DESC                 Support              
-                                EXPLAIN                        Support              Please refer to [[EXPLAIN]{.ul}](#explain)
+                                EXPLAIN                        Support              Please refer to [EXPLAIN](#explain)
                                 EXPLAIN EXTENDED               Not support          
                                 HELP                           Not support          　
                                 USE                            Support              　
@@ -6047,7 +6043,7 @@ The following parameter are of special processing, the for its specific show res
 
 ------------------------------------------------------- ---------------------------------------------------------------------------------------------------------------------------------------------
 
-  **Status Name**                                         **Show description**
+**Status Name**                                         **Show description**
   Compression                                             All OFF (compute node does not support Compression Protocol for the time being)
   Innodb_buffer_pool_dump_status                          The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB
   Innodb_buffer_pool_load_status                          The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB
@@ -6109,7 +6105,7 @@ By default, the compute node could Create Table only after making appropriate Ta
 
 1.  Log in to Distributed Transactional Database Management Platform, select "Configuration"-\>"LogicDB", set LogicDB default node
 
-![](media/image129.png){width="5.288194444444445in" height="2.125in"}
+![](assets/standard/image129.png)
 
 -   By default on the management platform, after Reload of LogicDB Configuration, table could be directly created by Create statement (without being defined on the management platform any longer), configuration will be generated automatically after Create Table (including table configuration and Sharding Function, etc.)
 
@@ -6117,7 +6113,7 @@ By default, the compute node could Create Table only after making appropriate Ta
 
 -   If to change the default node of LogicDB in later period, it will have no influence on tables created before change, and only applies the new LogicDB node to the new tables added after change
 
-![](media/image130.png){width="5.029166666666667in" height="2.2402777777777776in"}
+![](assets/standard/image130.png)
 
 2\. Log in to compute node to select "test001" LogicDB, and Create Table, create succeeded
 
@@ -6135,7 +6131,7 @@ Database changed
 
 mysql\> create table test02(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int);
 
-![](media/image131.png){width="5.269444444444445in" height="1.7208333333333334in"}
+![](assets/standard/image131.png)
 
 -   For Sharding Table automatically created, selection sequence of sharding key is: Primary Key Field -\> Unique Key Field -\>the 1^st^ Integer Field (BIGINT, INT, MEDIUMINT, SMALLINT, TINYINT) - \>after taking the Integer Field, take the Character String Type Field (CHAR, VARCHAR ), and in case of no appropriate one after taking all types above, a Field will be randomly selected as the Sharding Key by default.
 
@@ -6149,7 +6145,7 @@ Notice: This function is only recommended to be used when contacting customer fo
 
 Add Sharding Function on the management platform, and reload.
 
-![](media/image132.png){width="5.769444444444445in" height="2.6152777777777776in"}
+![](assets/standard/image132.png)
 
 Use [service port command](#related-command-of-create-table-using-existing-sharding-function) to view functionid \| functionname\| functiontype\| ruleid \| rulename and other information of Sharding Function, and Create Table according to relevant Field information.
 
@@ -6273,9 +6269,9 @@ Sharding table is the kind of table that splits data of the table by rows accord
 
 The syntax for creating a sharding table is as follows:
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functionid \| functionname} \'functionid \| functionname\' USING COLUMN \'shardcolumnname\' (\.....
+CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functionid \| functionname} \'functionid \| functionname\' USING COLUMN \'shardcolumnname\' (\.....
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functiontype} \'functiontype\' USING COLUMN \'shardcolumnname\' on datanode \'datanodeid\'(\.....
+CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functiontype} \'functiontype\' USING COLUMN \'shardcolumnname\' on datanode \'datanodeid\'(\.....
 
 Besides, the keywords after SHARD BY can also be placed after the table definition (the same is true for the vertical sharding table and the global table), for example:
 
@@ -6305,7 +6301,7 @@ mysql\> CREATE TABLE match1_tb shard by functionname \'test_match1\' using colum
 
 Query OK, 0 rows affected (0.09 sec)
 
-![](media/image133.png){width="5.384722222222222in" height="2.5868055555555554in"}
+![](assets/standard/image133.png)
 
 For Create Table according to this Syntax Rule, pay attention to several points below:
 
@@ -6361,7 +6357,7 @@ ERROR 10090 (HY000): This rule doesn\'t need to specify a datanodes;
 
 Tables with similar table structure could use the same Sharding Function, and the following Syntax could be used to make direct citation of Sharding Function to create Sharding Table
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {ruleid \| rulename} \'ruleid\\rulename\' \[on datanode \'datanodes\'\] (\...\...
+CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {ruleid \| rulename} \'ruleid\\rulename\' \[on datanode \'datanodes\'\] (\...\...
 
 Log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function), show hotdb rules; and show hotdb functions; you could see the Sharding Function associated with its sharding Function
 
@@ -6399,7 +6395,7 @@ mysql\> CREATE TABLE rt_table shard by ruleid \'30\'(id INT UNSIGNED NOT NULL AU
 
 Query OK, 0 rows affected (0.07 sec)
 
-![](media/image134.png){width="5.345833333333333in" height="2.595833333333333in"}
+![](assets/standard/image134.png)
 
 For Create Table according to this Syntax Rule, pay attention to several points below:
 
@@ -6453,7 +6449,7 @@ The vertical sharding table is a global unique total data table with no sharding
 
 The syntax for creating a vertical sharding table is as follows:
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY vertical on datanode \'datanodeid\'(\.....
+CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY vertical on datanode \'datanodeid\'(\.....
 
 Syntax description:
 
@@ -6463,7 +6459,7 @@ mysql\> CREATE TABLE tb_vertical shard by vertical on datanode\'2\'(id INT UNSIG
 
 Query OK, 0 rows affected(0.07 sec)
 
-![](media/image135.png){width="5.470833333333333in" height="2.4131944444444446in"}
+![](assets/standard/image135.png)
 
 When datanode is not specified
 
@@ -6483,7 +6479,7 @@ Global table refers to the table stored in all data nodes under the LogicDB. The
 
 The syntax for creating a global table is as follows:
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY global on datanode \'datanodeid\'(\.....
+CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY global on datanode \'datanodeid\'(\.....
 
 Syntax description:
 
@@ -6495,7 +6491,7 @@ mysql\> CREATE TABLE tb_quan shard by global(id INT UNSIGNED NOT NULL AUTO_INCRE
 
 Query OK, 0 rows affected (0.07 sec)
 
-![](media/image136.png){width="5.182638888888889in" height="2.4618055555555554in"}
+![](assets/standard/image136.png)
 
 global in syntax rules means creating a global table. The 'datanodeid' is the node ID, which can be separated by English commas and can be specified in the form of interval, such as 1, 3, 4, 5-10, 12-40. The nodes of the global table with sharidng functions created by global should include all nodes under the LogicDB.
 
@@ -6525,7 +6521,7 @@ mysql\> show hotdb datanodes \[LIKE \'pattern\' \| WHERE expr\];
 
 --------------- --------------------------------------------------------- ----------
 
-  **Parameter**   **Description**                                           **Type**
+**Parameter**   **Description**                                           **Type**
   pattern         Optional, Fuzzy Query Expression, Match rule_name Field   STRING
   expr            Optional, Fuzzy Query Expression, Match Specified Field   STRING
 
@@ -6535,7 +6531,7 @@ mysql\> show hotdb datanodes \[LIKE \'pattern\' \| WHERE expr\];
 
 ----------------- ------------------------- ----------------------
 
-  **Column name**   **Description**           **Value type/Range**
+**Column name**   **Description**           **Value type/Range**
   datanode_id       Node ID                   INTEGER
   datanode_name     Node name                 STRING
   datanode_type     0: Master/Slave; 1: MGR   INTEGER
@@ -6598,7 +6594,7 @@ mysql\> show hotdb functions;
 
 --------------- ------------------------------------------------------------- ----------
 
-  **Parameter**   **Description**                                               **Type**
+**Parameter**   **Description**                                               **Type**
   pattern         Optional, Fuzzy Query Expression, Match function_name Field   STRING
   expr            Optional, Fuzzy Query Expression, Match function_name Field   STRING
 
@@ -6608,7 +6604,7 @@ mysql\> show hotdb functions;
 
 ----------------- --------------------------------------------------------------------------------------------- ----------------------
 
-  **Column name**   **Description**                                                                               **Value type/Range**
+**Column name**   **Description**                                                                               **Value type/Range**
   function_id       Sharding Function ID                                                                          INTEGER
   function_name     Sharding Function name                                                                        STRING
   function_type     Sharding Type                                                                                 STRING
@@ -6694,7 +6690,7 @@ mysql\> show hotdb function infos \[WHERE expr\];
 
 --------------- --------------------------------------------------------- ----------
 
-  **Parameter**   **Description**                                           **Type**
+**Parameter**   **Description**                                           **Type**
   expr            Optional, Fuzzy Query Expression, Match Specified Field   STRING
 
 --------------- --------------------------------------------------------- ----------
@@ -6703,7 +6699,7 @@ mysql\> show hotdb function infos \[WHERE expr\];
 
 ----------------- ---------------------- ----------------------
 
-  **Column name**   **Description**        **Value type/Range**
+**Column name**   **Description**        **Value type/Range**
   function_id       Sharding Function ID   INTEGER
   column_value      Sharding Key value     STRING
   datanode_id       Data node id           INTEGER
@@ -6778,7 +6774,7 @@ mysql\> show hotdb rules \[LIKE \'pattern\' \| WHERE expr\];
 
 --------------- --------------------------------------------------------- ----------
 
-  **Parameter**   **Description**                                           **Type**
+**Parameter**   **Description**                                           **Type**
   pattern         Optional, Fuzzy Query Expression, Match rule_name Field   STRING
   expr            Optional, Fuzzy Query Expression, Match rule_name Field   STRING
 
@@ -6788,7 +6784,7 @@ mysql\> show hotdb rules \[LIKE \'pattern\' \| WHERE expr\];
 
 ----------------- --------------------------------------------------------------------------------------------- ----------------------
 
-  **Column name**   **Description**                                                                               **Value type/Range**
+**Column name**   **Description**                                                                               **Value type/Range**
   rule_id           Sharding Function ID                                                                          INTEGER
   rule_name         Sharding Function name                                                                        STRING
   rule_column       Sharding Key Name                                                                             STRING
@@ -6915,7 +6911,7 @@ This chapter lists the tables and its special processing contents in INFORMATION
 
 --------------------------------------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  **Table name**                          **Special processing**
+**Table name**                          **Special processing**
   character_sets                          Only return the Character Set and Collation Set data supported by the compute node
   collations                              Only return the Character Set and Collation Set data supported by the compute node
   collation_character_set_applicability   Only return the Character Set and Collation Set data supported by the compute node
@@ -6982,7 +6978,7 @@ In order to be compatible with the data source above MySQL 8.0, conduct the foll
 
 ------------------------------ -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  **Table Name**                 **Special processing**
+**Table Name**                 **Special processing**
   check_constraints              If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
   column_statistics              If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
   keywords                       Return Null Set
@@ -6990,8 +6986,8 @@ In order to be compatible with the data source above MySQL 8.0, conduct the foll
   st_geometry_columns            If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database (\'mysql\',\'information_schema\',\'performance_schema\',\'sys\')
   st_spatial_reference_systems   No special processing
   st_units_of_measure            No special processing
-  view_table_usage               Return Null Set
-  view_routine_usage             Return Null Set
+  view_table_usage               Return Null Set
+  view_routine_usage             Return Null Set
 
 ------------------------------ -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -7005,7 +7001,7 @@ During the use process, the compute node has maintained many system configuratio
 
 -------------------------------- ---------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  adaptiveProcessor
   Visible or not                   Hidden
   Description of parameters        Control whether the startup service is Automatic Adaptation or not.
@@ -7111,7 +7107,7 @@ Only when the compute node is under pressure could it reach the Automatic Adapta
 
 -------------------------------- -----------------------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  allowRCWithoutReadConsistentInXA
   Visible or not                   No
   Description of parameters        RC isolation level that does not gurantee strong read-write consistency is allowed in XA mode
@@ -7137,7 +7133,7 @@ When the compute node version is 2.5.3.1 and above, if the parameter allowRCWith
 
 When the parameter allowRCWithoutReadConsistentInXA is set to 1, the isolation level READ COMMITTED is also allowed in XA mode, which however does not guarantee strong read-write consistency. The isolation level READ COMMITED is essentially between READ COMMITED and READ UNCOMMITED, whose performance is better than when it is set to 0, and there will be a log prompt when starting and synchronously loading, as follows:
 
-![](media/image137.png){width="5.769444444444445in" height="0.2881944444444444in"}
+![](assets/standard/image137.png)
 
 #### autoIncrement
 
@@ -7173,7 +7169,7 @@ In version 2.5.3 and below, only true or false can be set. Setting as true is eq
 
 -------------------------------- --------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  badConnAfterContinueGet
   Visible or not                   No
   Description of parameters        Continue to obtain connection or not
@@ -7197,7 +7193,7 @@ After compute node obtaining connection from the connection pool and having cond
 
 -------------------------------- ---------------------------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  badConnAfterFastCheckAllIdle
   Visible or not                   No
   Description of parameters        When broken back-end connection is obtained, whether to check all idle connections rapidly or not
@@ -7221,7 +7217,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 
 -------------------------------- ------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  bakUrl
   Visible or not                   Yes
   Description of parameters        Slave configDB address
@@ -7233,7 +7229,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 
 -------------------------------- -------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  bakUsername
   Visible or not                   Yes
   Description of parameters        Slave configDB username
@@ -7245,7 +7241,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 
 -------------------------------- -------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  bakPassword
   Visible or not                   Yes
   Description of parameters        Slave configDB password
@@ -7293,7 +7289,7 @@ description: NULL
 
 -------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  checkConnLastUsedTime
   Visible or not                   No
   Description of parameters        Max allowed interval time of last use by the back-end connection. If exceeded, it will check whether this connection is valid or not, unit: ms
@@ -7331,7 +7327,7 @@ mysql\> show @\@session;
 
 -------------------------------- ------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  CheckConnValid
   Visible or not                   No
   Description of parameters        Whether to check whether the back-end connection is valid or not
@@ -7357,7 +7353,7 @@ When obtaining connection from the connection pool, check availability of the co
 
 -------------------------------- --------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  checkConnValidTimeout
   Visible or not                   No
   Description of parameters        At the time of checking validity of back-end connection, max timeout, unit: ms
@@ -7415,7 +7411,7 @@ Check whether interval time of MySQL Parameter Setting is reasonable or not. The
 
 -------------------------------- ------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  checkUpdate
   Visible or not                   No
   Description of parameters        Whether to intercept update operation of the sharding key or not
@@ -7463,7 +7459,7 @@ mysql\> select \* from ss where a=\'aa\';
 
 -------------------------------- -----------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  clientFoundRows
   Visible or not                   No
   Description of parameters        Use found rows to replace the affected rows in OK package
@@ -7485,11 +7481,11 @@ When the version is 2.5.5 below, this parameter is used to judge the execution s
 
 For example: jdbc is committed useAffectedRows=false, the number of rows matched will be returned.
 
-![JC2W(OIZ5}7AZ8227AK\`B%W](media/image138.png){width="4.432638888888889in" height="3.4131944444444446in"}
+![](assets/standard/image138.png)
 
 jdbc is committed useAffectedRows=true，the actual number of rows affected will be returned.
 
-![\_Q6UT\]\~A6JWH9A8E83\_\@D71](media/image139.png){width="4.422916666666667in" height="3.2118055555555554in"}
+![\_Q6UT\]\~A6JWH9A8E83\_\@D71](media/image139.png)
 
 #### clusterElectionTimeoutMs
 
@@ -7497,7 +7493,7 @@ jdbc is committed useAffectedRows=true，the actual number of rows affected will
 
 -------------------------------- -------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  clusterElectionTimeoutMs
   Visible or not                   No
   Description of parameters        Cluster Election Timeout (ms)
@@ -7523,7 +7519,7 @@ This parameter is used for setting Cluster Election Timeout of the compute node,
 
 -------------------------------- --------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  clusterHeartbeatTimeoutMs
   Visible or not                   No
   Description of parameters        Cluster Heartbeat Timeout (ms)
@@ -7549,7 +7545,7 @@ This parameter is used for setting Cluster Heartbeat Timeout of the compute node
 
 -------------------------------- ------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  clusterHost
   Visible or not                   Yes
   Description of parameters        IP of the current node
@@ -7575,7 +7571,7 @@ This parameter shall be set consistent with the actual IP of the compute node (c
 
 -------------------------------- --------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  clusterName
   Visible or not                   Yes
   Description of parameters        Cluster Group Name
@@ -7601,7 +7597,7 @@ Specify the name of the group added after cluster startup, and this parameter of
 
 -------------------------------- -------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  clusterNetwork
   Visible or not                   Yes
   Description of parameters        Cluster Network Segment
@@ -7627,7 +7623,7 @@ This parameter is the network segment of the whole cluster, and it's limited tha
 
 -------------------------------- ---------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  clusterPacketTimeoutMs
   Visible or not                   No
   Description of parameters        Failure time of inter-cluster communication packet (ms)
@@ -7653,7 +7649,7 @@ This parameter is used for setting Cluster Packet Timeout, and generally modific
 
 -------------------------------- ----------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  clusterPort
   Visible or not                   Yes
   Description of parameters        Cluster Communication Port
@@ -7679,7 +7675,7 @@ The default value 3326 specifies the port of listening cluster information. This
 
 -------------------------------- ----------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  clusterSize
   Visible or not                   Yes
   Description of parameters        Total number of nodes in cluster
@@ -7705,7 +7701,7 @@ This parameter is total number of compute node in cluster. If haMode is set as 1
 
 -------------------------------- -------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  clusterStartedPacketTimeoutMs
   Visible or not                   No
   Description of parameters        Failure Time of Cluster Started Broadcast Packet (ms)
@@ -7731,7 +7727,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 
 -------------------------------- ----------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  configMGR
   Visible or not                   Yes
   Description of parameters        Whether configDB uses MGR or not
@@ -7761,7 +7757,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 
 -------------------------------- -----------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  bak1Username
   Visible or not                   Yes
   Description of parameters        MGR configDB username
@@ -7773,7 +7769,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 
 -------------------------------- -----------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  bak1Password
   Visible or not                   Yes
   Description of parameters        MGR configDB password
@@ -7801,7 +7797,7 @@ configMGR and bak1Url and bak1Username and bak1Password are supporting parameter
 
 -------------------------------- ------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  crossDbXa
   Visible or not                   No
   Description of parameters        Whether XA transactions are adopted in cross-LogicDB
@@ -7847,7 +7843,7 @@ select count(\*) from B.b;
 
 Result: the results of Count (\*) doesn\'t have to be all 0 or 1000
 
-![](media/image140.png){width="5.779166666666667in" height="0.9041666666666667in"}
+![](assets/standard/image140.png)
 
 **Scenario 2: when crossDbXa is enabled, strong data consistency is guaranteed:**
 
@@ -7865,7 +7861,7 @@ select count(\*) from B.b;
 
 Result: the results of Count (\*) be 0 or 1000
 
-![](media/image141.png){width="5.769444444444445in" height="1.7305555555555556in"}
+![](assets/standard/image141.png)
 
 **Scenario 3: when crossDbXa is disabled, error will be reported when a node is added to the transaction:**
 
@@ -7879,7 +7875,7 @@ select \* from B.b;
 
 Result: select \* from B.b; error will be reported when executes
 
-![](media/image142.png){width="5.769444444444445in" height="0.375in"}
+![](assets/standard/image142.png)
 
 **Scenario 4: when crossDbXa is enabled, execute normally when a node is added to the transaction:**
 
@@ -7891,7 +7887,7 @@ begin;select \* from A.a;select \* from B.b;
 
 Result: select \* from B.b; execute normally
 
-![](media/image143.png){width="5.769444444444445in" height="0.7979166666666667in"}
+![](assets/standard/image143.png)
 
 #### cryptMandatory
 
@@ -7899,7 +7895,7 @@ Result: select \* from B.b; execute normally
 
 -------------------------------- --------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  cryptMandatory
   Visible or not                   Yes
   Description of parameters        Mandatory password encryption or not
@@ -7919,23 +7915,11 @@ It's used for setting whether to make mandatory password identification or not w
 
 -   True status:
 
-```{=html}
-<!-- -->
-```
-
 -   When the data source password is plaintext, the compute node will fail to connect to this data source
 
 -   When the data source password is cyphertext, the compute node can connect to this data source
 
-```{=html}
-<!-- -->
-```
-
 -   False status:
-
-```{=html}
-<!-- -->
-```
 
 -   When the data source password is plaintext, the compute node can connect to this data source
 
@@ -8025,7 +8009,7 @@ ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 
 -------------------------------- -------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  defaultMaxLimit
   Visible or not                   No
   Description of parameters        default max limit
@@ -8105,7 +8089,7 @@ ztm\@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45\> show processlist;
 
 -------------------------------- ----------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  dropTableRetentionTime
   Visible or not                   Yes
   Description of parameters        dropTableRetentionTime, 0 by default, no retention
@@ -8131,7 +8115,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 
 -------------------------------- ------------------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  drBakUrl
   Visible or not                   Yes
   Description of parameters        Slave ConfigDB address of DR center
@@ -8143,7 +8127,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 
 -------------------------------- --------------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  drBakUsername
   Visible or not                   Yes
   Description of parameters        Slave ConfigDB username of DR center
@@ -8155,7 +8139,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 
 -------------------------------- --------------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  drBakPassword
   Visible or not                   Yes
   Description of parameters        Slave ConfigDB password of DR center
@@ -8181,7 +8165,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 
 -------------------------------- ------------------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  drUrl
   Visible or not                   Yes
   Description of parameters        ConfigDB address of DR center
@@ -8193,7 +8177,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 
 -------------------------------- -------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  drUsername
   Visible or not                   Yes
   Description of parameters        ConfigDB usernameof DR center
@@ -8205,7 +8189,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 
 -------------------------------- -------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  drPassword
   Visible or not                   Yes
   Description of parameters        ConfigDB passwordof DR center
@@ -8231,7 +8215,7 @@ drUrl, drUsername and drPassword are supporting parameters, among which drUrl re
 
 -------------------------------- ----------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  enableCursor
   Visible or not                   Yes
   Description of parameters        Allow PREPARE statement to obtain data via CURSOR or not
@@ -8481,7 +8465,7 @@ mysql\> show @\@latency;
 
 -------------------------------- ------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  enableListener
   Visible or not                   Yes
   Description of parameters        Enable Listener mode or not.
@@ -8547,7 +8531,7 @@ Please refer to the description of [linear expansion](#linear-expansion) for pre
 
 -------------------------------- --------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  enableOracleFunction
   Visible or not                   No
   Description of parameters        Support oracle function or not
@@ -8633,7 +8617,7 @@ When it is set to false, it will prompt error:
 
 -------------------------------- ------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  enableSleep
   Visible or not                   Yes
   Description of parameters        Whether SLEEP Function is allowed or not
@@ -8679,7 +8663,7 @@ mysql\> select sleep(2);
 
 -------------------------------- -------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  enableSSL
   Visible or not                   Yes
   Description of parameters        Whether to enable SSL connection function
@@ -8701,7 +8685,7 @@ This parameter is used to set whether the compute node is allowed to connect usi
 
 -------------------------------- ------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  enableSubquery
   Visible or not                   No
   Description of parameters        Whether Subquery under special scenarios is allowed or not
@@ -8825,7 +8809,7 @@ You could view check information of data source switch via log:
 
 -------------------------------- -----------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  enableXA
   Visible or not                   Yes
   Description of parameters        Apply XA TRANSACTION or not
@@ -8847,7 +8831,7 @@ Using the external XA TRANSACTION provided by MySQL, the compute node could solv
 
 -------------------------------- ------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  errorsPermittedInTransaction
   Visible or not                   Yes
   Description of parameters        Whether error is allowed in transaction or not
@@ -8939,7 +8923,7 @@ mysql\> select \* from ss where id=1;
 
 -------------------------------- ------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  failoverAutoresetslave
   Visible or not                   Yes
   Description of parameters        When failover, auto reset the master/slave replication relation or not
@@ -8963,7 +8947,7 @@ This parameter is used for guaranteeing data accuracy after data source failover
 
 -------------------------------- ----------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  frontConnectionTrxIsoLevel
   Visible or not                   No
   Description of parameters        Front-end connection default isolation level
@@ -9023,7 +9007,7 @@ Great network latency or unreachable network from the compute node to the client
 
 -------------------------------- ---------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  generatePrefetchCostRatio
   Visible or not                   No
   Description of parameters        触发提前预取的已消耗比例
@@ -9139,7 +9123,7 @@ In HotDB Server 2.5.6 and above, haMode can be set to 0,1,2,3,4,5. Among them, 4
 
 -------------------------------- -----------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  haNodeHost
   Visible or not                   Yes
   Description of parameters        HA role, Other node IP:PORT
@@ -9243,7 +9227,7 @@ mysql\> show @\@debug;
 
 -------------------------------- ----------------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  idcId
   Visible or not                   Yes
   Description of parameters        ID of IDC, 1:master center,2:DR center
@@ -9255,7 +9239,7 @@ mysql\> show @\@debug;
 
 -------------------------------- ---------------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  idcNodeHost
   Visible or not                   Yes
   Description of parameters        connection information of another IDC
@@ -9279,11 +9263,11 @@ For example, set idcId as 1 in server.xml of the master center, idcNodeHost for 
 
 **Description of parameter:**
 
-  Property                         Value
+Property                         Value
 
 -------------------------------- ----------------------------------------
 
-  Parameter value                  idleTimeout
+Parameter value                  idleTimeout
   Visible or not                   No
   Description of parameters        Front-end idle connection timeout time
   Default value                    28800
@@ -9384,7 +9368,7 @@ If it is set to 0, the front-end idle connection will never time out, and the co
 
 -------------------------------- -----------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  joinable
   Visible or not                   Yes
   Description of parameters        Allow JOIN Query or not, Yes: true, No: false
@@ -9434,7 +9418,7 @@ mysql\> select a.adept from join_a\_jwy a join join_b\_jwy b on a.adept=b.bdept 
 
 -------------------------------- ------------------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  joinBatchSize
   Visible or not                   Yes
   Description of parameters        At equi-join query, record number of equi-join queries turning into IN queries per batch
@@ -9472,7 +9456,7 @@ Notice: The parameter value is for illustration only, not for practical referenc
 
 -------------------------------- ----------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  joinCacheSize
   Visible or not                   No
   Description of parameters        Off-heap memory size of JOIN cache (M)
@@ -9510,7 +9494,7 @@ root\> ll
 
 -------------------------------- ------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  joinLoopSize
   Visible or not                   Yes
   Description of parameters        JOIN Query times per batch of each node when using BNL algorithm
@@ -9548,7 +9532,7 @@ View actual execution result of general_log:
 
 -------------------------------- -----------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  keyStore
   Visible or not                   Yes
   Description of parameters        Path to the data certificate .jks file for TLS connection
@@ -9572,7 +9556,7 @@ This parameter is used to set the path to the data certificate .jks file for con
 
 -------------------------------- ---------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  keyStorePass
   Visible or not                   Yes
   Description of parameters        Password of the data certificate .jks file for TLS connection
@@ -9596,7 +9580,7 @@ This parameter is used to set the password of the data certificate .jks file for
 
 -------------------------------- -----------------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  lockWaitTimeout
   Visible or not                   Yes
   Description of parameters        Timeout for obtaining metadata lock (s)
@@ -9616,9 +9600,9 @@ This parameter is used to set the timeout (s) for obtaining metadata lock. The v
 
 session A execute:
 
-![](media/image144.png){width="5.769444444444445in" height="0.3173611111111111in"}
+![](assets/standard/image144.png)
 
-session B execute: if the set value of lockWaitTimeout is exceeded, the following prompt will be given:![](media/image145.png){width="5.769444444444445in" height="0.45208333333333334in"}
+session B execute: if the set value of lockWaitTimeout is exceeded, the following prompt will be given:![](assets/standard/image145.png)
 
 #### masterSourceInitWaitTimeout
 
@@ -9626,7 +9610,7 @@ session B execute: if the set value of lockWaitTimeout is exceeded, the followin
 
 -------------------------------- --------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  masterSourceInitWaitTimeout
   Visible or not                   No
   Description of parameters        When start, Master Data Source Initialization Timeout in data node
@@ -9656,7 +9640,7 @@ Causes for data source timeout are: beyond limit of the system or database conne
 
 -------------------------------- ----------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  maxAllowedPacket
   Visible or not                   No
   Description of parameters        Max data packet allowed to be received
@@ -9694,7 +9678,7 @@ mysql\> show variables like \'%allowed%;
 
 -------------------------------- ---------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  maxConnections
   Visible or not                   Yes
   Description of parameters        Front-end Max Connections
@@ -9708,7 +9692,7 @@ mysql\> show variables like \'%allowed%;
 
 -------------------------------- --------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  maxUserConnections
   Visible or not                   Yes
   Description of parameters        User Front-end Max Connections, 0 means no limit
@@ -9776,7 +9760,7 @@ mysql\> show variables like \'%max_user_connections%;
 
 -------------------------------- ---------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  maxIdleTransactionTimeout
   Visible or not                   Yes
   Description of parameters        Non-committed Idle Transaction Timeout (ms)
@@ -9806,7 +9790,7 @@ When the parameter is set as 0, it means never timeout, that is, no limit for CO
 
 -------------------------------- ----------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  maxJoinSize
   Visible or not                   Yes
   Description of parameters        Row limits in JOIN query cache (M: Million, K: Thousand)
@@ -9884,7 +9868,7 @@ ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check
 
 -------------------------------- ---------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  maxLatencyForRWSplit
   Visible or not                   Yes
   Description of parameters        Max Latency of Readable Standby Slave in Read/write splitting
@@ -9952,7 +9936,7 @@ mysql\> select \* from cd;
 
 -------------------------------- ----------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  maxNotInSubquery
   Visible or not                   Hidden
   Description of parameters        Max number of not in in subquery
@@ -10022,7 +10006,7 @@ config \| {\"enableFlowControl\":\"true\",\"recordSql\":\"false\",\"defaultMaxLi
 
 -------------------------------- ------------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  maxReconnectConfigDBTimes
   Visible or not                   No
   Description of parameters        Max times of reconnecting ConfigDB
@@ -10050,7 +10034,7 @@ The parameter can prevent long time consumption for configDB connection during t
 
 -------------------------------- ----------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  maxSqlRecordLength
   Visible or not                   Yes
   Description of parameters        Max length of SQL statement record in SQL execution statistics
@@ -10068,7 +10052,7 @@ This parameter refers to the max length of SQL statistics in Slow Query Log Anal
 
 When the length of the executed SQL statement exceeds the set length, it will be cut out automatically, and replaced with ellipsis..., as shown in the following figure:
 
-![](media/image146.png){width="5.769444444444445in" height="1.4131944444444444in"}
+![](assets/standard/image146.png)
 
 #### ndbSqlAddr & ndbSqlUser & ndb SqlPass
 
@@ -10076,7 +10060,7 @@ When the length of the executed SQL statement exceeds the set length, it will be
 
 -------------------------------- ------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  ndbSqlAddr
   Visible or not                   Yes
   Description of parameters        NDB SQL-end IP address
@@ -10088,7 +10072,7 @@ When the length of the executed SQL statement exceeds the set length, it will be
 
 -------------------------------- ----------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  ndbSqlUser
   Visible or not                   Yes
   Description of parameters        NDB SQL front-end username
@@ -10100,7 +10084,7 @@ When the length of the executed SQL statement exceeds the set length, it will be
 
 -------------------------------- ----------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  ndbSqlPass
   Visible or not                   Yes
   Description of parameters        NDB SQL front-end password
@@ -10126,7 +10110,7 @@ ndbSqlAddr, ndbSqlUser, ndbSqlPass are supporting parameters: ndbSqlAddr is phys
 
 -------------------------------- --------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  ndbSqlDataAddr
   Visible or not                   Yes
   Description of parameters        IP address and port receiving NDB SQL connection
@@ -10148,7 +10132,7 @@ property name=\"ndbSqlDataAddr\"\>127.0.0.1:3327\</property\>
 
 -------------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  ndbSqlMode
   Visible or not                   Yes
   Description of parameters        Mode used by NDB SQL node (NDB execution mode: none: Forbidden NDB function, the default value; local: NDB SQL server and compute node server are on the same computer)
@@ -10170,7 +10154,7 @@ none: the default value, representing Forbidden NDB function; local: NDB SQL ser
 
 -------------------------------- ------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  ndbSqlVersion
   Visible or not                   Yes
   Description of parameters        NDB SQL Version Number
@@ -10182,7 +10166,7 @@ none: the default value, representing Forbidden NDB function; local: NDB SQL ser
 
 -------------------------------- ---------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  ndbVersion
   Visible or not                   Yes
   Description of parameters        NDB Engine Version Number
@@ -10206,7 +10190,7 @@ ndbSqlVersion and ndbVersion are of corresponding relation, and please refer to 
 
 -------------------------------- --------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  operateMode
   Visible or not                   No
   Description of parameters        Operating mode of compute node
@@ -10264,13 +10248,13 @@ recordSqlAuditlog
 
 operateMode is a hidden parameter, and the default mode is normal mode, that is, operateMode=0. When the compute node is started, the corresponding log will be output in hotdb.log as follows:
 
-![](media/image147.png){width="5.759722222222222in" height="1.7791666666666666in"}
+![](assets/standard/image147.png)
 
 In normal mode, the compute nodes will start according to the parameter configuration of server.xml, and not be affected by operateMode.
 
 When it is set to performance mode, that is, modifying server.xml, adding operateMode =1 parameter configuration, then make it work by executing reload @\@config in 3325 port, and the compute node will output the corresponding information in hotdb.log as follows:
 
-![](media/image148.png){width="5.759722222222222in" height="2.432638888888889in"}
+![](assets/standard/image148.png)
 
 In performance mode, the compute node will initially force to disable the parameters that affect the performance of compute nodes, for example:
 
@@ -10278,7 +10262,7 @@ recordSql=false,recordSQLSyntaxError=false,recordCrossDNJoin=false,recordUNION=f
 
 When it is debug mode, the compute node will output the corresponding information in hotdb.log, as follows:
 
-![](media/image149.png){width="5.759722222222222in" height="2.3555555555555556in"}
+![](assets/standard/image149.png)
 
 In debug mode, the compute node will force to enable the parameters related to the debug function, for example:
 
@@ -10326,7 +10310,7 @@ This parameter is used for adjusting sleep time of cost message queue thread at 
 
 -------------------------------- -------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  pingLogCleanPeriod
   Visible or not                   Hidden
   Description of parameters        Ping Log Clean Period, 3 by default
@@ -10352,7 +10336,7 @@ pingLogCleanPeriod parameter is 3 by default, with the optional unit being Hour,
 
 -------------------------------- ------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  pingLogCleanPeriodUnit
   Visible or not                   Hidden
   Description of parameters        Unit of ping log clean period, 2 by default, 0: Hour, 1: Day, 2: Month
@@ -10378,7 +10362,7 @@ pingLogCleanPeriodUnit parameter is 2 by default, meaning that the unit of ping 
 
 -------------------------------- ---------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  pingPeriod
   Visible or not                   Hidden
   Description of parameters        ping server period, Unit: s, 3600s by default, min 300s
@@ -10410,7 +10394,7 @@ In the detection process, for a certain IP address, the program will automatical
 
 -------------------------------- ------------------------------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  prefetchBatchInit
   Visible or not                   Yes
   Description of parameters        The initial value of the auto-incremental batch size
@@ -10436,7 +10420,7 @@ The initial value can be configured within the upper and lower limits of the aut
 
 -------------------------------- ----------------------------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  prefetchBatchMax
   Visible or not                   Yes
   Description of parameters        The upper limit of the auto-incremental batch size
@@ -10462,7 +10446,7 @@ The upper limit of the auto-incremental batch size. If 1000 is set, the maximum 
 
 -------------------------------- ----------------------------------------------------
 
-  **Property**                     Value
+**Property**                     Value
   Parameter value                  prefetchBatchMin
   Visible or not                   Yes
   Description of parameters        The lower limit of the auto-incremental batch size
@@ -10488,7 +10472,7 @@ The lower limit of the auto-incremental prefetch batch size. If 100 is set, the 
 
 -------------------------------- ---------------------------------------------
 
-  Property                         Value
+Property                         Value
   Parameter value                  prefetchValidTimeout
   Visible or not                   Yes
   Description of parameters        The valid timeout time of prefetch(seconds)
@@ -10514,7 +10498,7 @@ The valid timeout time of prefetching the auto-incremental batch. When set as 0,
 
 -------------------------------- ---------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  processorExecutor
   Visible or not                   Yes
   Description of parameters        Number of threads of processors
@@ -10542,7 +10526,7 @@ Log in to 3325 port, execute the show @\@threadpool; command, and then you could
 
 -------------------------------- ----------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  processors
   Visible or not                   Yes
   Description of parameters        Number of processors
@@ -10570,7 +10554,7 @@ Log in to 3325 port, execute show @\@threadpool; command, and then you could vie
 
 -------------------------------- ----------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  readOnly
   Visible or not                   No
   Description of parameters        readOnly mode or not
@@ -10602,7 +10586,7 @@ ERROR 1289 (HY000): Command not allowed in Read-Only mode.
 
 -------------------------------- ------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordAuditlog
   Visible or not                   No
   Description of parameters        Record audit log
@@ -10628,7 +10612,7 @@ recordAuditlog enables audit log or not. This parameter is used for controlling 
 
 -------------------------------- -------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordCrossDNJoin
   Visible or not                   No
   Description of parameters        Record cross-node JOIN in log
@@ -10668,7 +10652,7 @@ View /logs/sql.log of compute node installation directory
 
 -------------------------------- -----------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordDDL
   Visible or not                   No
   Description of parameters        Record DDL statement in log
@@ -10702,7 +10686,7 @@ View /logs/sql.log of compute node installation directory
 
 -------------------------------- ---------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordDeadLockSQL
   Visible or not                   No
   Description of parameters        The log records the statement triggering deadlock
@@ -10734,7 +10718,7 @@ recordDeadLockSQL log records the statement triggering deadlock:
 
 -------------------------------- -------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordHotDBErrors
   Visible or not                   No
   Description of parameters        The log records error message returned by HotDB
@@ -10764,7 +10748,7 @@ For example: when executing Create statement by user without create privilege, t
 
 -------------------------------- ------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordHotDBWarnings
   Visible or not                   No
   Description of parameters        The log records the warning message returned by the compute node
@@ -10792,13 +10776,13 @@ View /logs/sql.log of the compute node installation directory
 
 2018-05-23 14:23:52.698 \[INFO\] \[DDL\] \[\$NIOExecutor-6-2\] ServerConnection(123) -- sql: create table abc(id int)
 
-####  recordLimitOffsetWithoutOrderby
+#### recordLimitOffsetWithoutOrderby
 
 **Description of parameter:**
 
 -------------------------------- -----------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordLimitOffsetWithoutOrderby
   Visible or not                   No
   Description of parameters        The log records the limit statement without orderby
@@ -10836,7 +10820,7 @@ F6f64\'), NULL) LIMIT 1 , 3
 
 -------------------------------- -------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordMySQLErrors
   Visible or not                   No
   Description of parameters        The log records error message returned by MySQL
@@ -10870,7 +10854,7 @@ View /logs/hotdb.log of compute node installation directory
 
 -------------------------------- -------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordMySQLWarnings
   Visible or not                   Hidden
   Description of parameters        The log records the warning message returned by MySQL
@@ -10892,17 +10876,17 @@ recordMySQLWarnings log records the warning message returned by MySQL.
 
 Execute as follow:
 
-mysql\> update account set Account_number=\"\$!\\\\\'\'\#\#\";
+mysql\> update account set Account_number=\"\$!\\\\\'\'\# \# \";
 
 View /logs/sql.log of compute node installation directory,
 
-2018-06-12 10:52:07.011 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\#\#\', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 1, code: 1265
+2018-06-12 10:52:07.011 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\# \# \', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 1, code: 1265
 
-2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\#\#\', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 2, code: 1265
+2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\# \# \', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 2, code: 1265
 
-2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\#\#\', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 1, code: 1265
+2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\# \# \', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 1, code: 1265
 
-2018-06-12 10:52:07.013 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\#\#\', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 2, code: 1265
+2018-06-12 10:52:07.013 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\# \# \', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 2, code: 1265
 
 #### recordSql
 
@@ -10910,7 +10894,7 @@ View /logs/sql.log of compute node installation directory,
 
 -------------------------------- ---------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordSql
   Visible or not                   Yes
   Description of parameters        Make statistics of SQL execution condition or not
@@ -10932,11 +10916,11 @@ Make statistics of SQL execution condition or not.
 
 -   OFF status
 
-![](media/image150.png){width="5.779166666666667in" height="1.8555555555555556in"}
+![](assets/standard/image150.png)
 
 -   ON status
 
-![](media/image151.png){width="5.769444444444445in" height="2.904166666666667in"}
+![](assets/standard/image151.png)
 
 2\. View statistics of SQL execution via server configDB
 
@@ -11022,7 +11006,7 @@ crc: 321944166562
 
 -------------------------------- -----------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordSqlAuditlog
   Visible or not                   No
   Description of parameters        Record SQL audit log.
@@ -11084,7 +11068,7 @@ end\_ time: end time of SQL execution.
 
 -------------------------------- -------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordSQLIntercepted
   Visible or not                   No
   Description of parameters        The log records the intercepted statement
@@ -11114,7 +11098,7 @@ View /logs/sql.log of compute node installation directory
 
 -------------------------------- ----------------------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordSQLKeyConflict
   Visible or not                   No
   Description of parameters        The log records the statement with Primary Key conflict and violating foreign key constraint
@@ -11158,7 +11142,7 @@ View /logs/sql.log of compute node installation directory
 
 -------------------------------- ---------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordSQLSyntaxError
   Visible or not                   No
   Description of parameters        The log records statement with Syntax error
@@ -11192,7 +11176,7 @@ View /logs/sql.log of compute node installation directory
 
 -------------------------------- ---------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordSQLUnsupported
   Visible or not                   No
   Description of parameters        The log records the statement not supported
@@ -11228,7 +11212,7 @@ View /logs/sql.log of compute node installation directory
 
 -------------------------------- --------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordSubQuery
   Visible or not                   No
   Description of parameters        The log records Subquery
@@ -11262,7 +11246,7 @@ View /logs/sql.log of compute node installation directory
 
 -------------------------------- -----------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  recordUNION
   Visible or not                   No
   Description of parameters        The log records UNION
@@ -11296,7 +11280,7 @@ View /logs/sql.log of compute node installation directory
 
 -------------------------------- -------------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  routeByRelativeCol
   Visible or not                   No
   Description of parameters        It does not include the route via Secondary Index Field at the time of sharding key
@@ -11322,7 +11306,7 @@ This function is OFF by default, that is, it does not route via Secondary Index 
 
 -------------------------------- --------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  serverId
   Visible or not                   Yes
   Description of parameters        Cluster node number 1-N (number of nodes), unique in cluster
@@ -11348,7 +11332,7 @@ It is used for dividing connection communication ID among the nodes in the clust
 
 -------------------------------- --------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  service port
   Visible or not                   Yes
   Description of parameters        service port
@@ -11360,7 +11344,7 @@ It is used for dividing connection communication ID among the nodes in the clust
 
 -------------------------------- -----------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  management port
   Visible or not                   Yes
   Description of parameters        management port
@@ -11382,7 +11366,7 @@ management port is used to monitor compute node service information and monitori
 
 -------------------------------- ------------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  showAllAffectedRowsInGlobalTable
   Visible or not                   Yes
   Description of parameters        Whether Global Table IDU statement shows total number of AffectedRows in all nodes
@@ -11428,7 +11412,7 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 -------------------------------- -------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  skipDatatypeCheck
   Visible or not                   No
   Description of parameters        Control whether to skip checking of column data type in table structure
@@ -11470,7 +11454,7 @@ Query OK, 0 rows affected (0.23 sec)
 
 -------------------------------- -----------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  socketBacklog
   Visible or not                   No
   Description of parameters        service port Socket backlog
@@ -11532,7 +11516,7 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 -------------------------------- ------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  sslUseSM4
   Visible or not                   No
   Description of parameters        Whether to support SM4 native cipher algorithm
@@ -11551,11 +11535,11 @@ sslUseSM4 in server.xml is configure as follows:
 **Role of parameter:**
 
 If enableSSL and sslUseSM4 in server.xml are enabled, the client can access the compute node in the encrypted state of native cipher algorithm.\
-![](media/image152.png){width="5.769444444444445in" height="1.8847222222222222in"}
+![](assets/standard/image152.png)
 
 For users, this function can only be viewed through packet capture. Example: if you see the number of an encrypted suite (0xff01) defined by HotDB Server SM4 in TLS handshake package through packet capture, it indicates that SM4 encryption and decryption suite has taken effect.\
-![](media/image153.png "fig:"){width="5.836805555555555in" height="3.1152777777777776in"}\
-![](media/image154.png "fig:"){width="5.836805555555555in" height="3.067361111111111in"}
+![](assets/standard/image153.png "fig:")\
+![](assets/standard/image154.png "fig:")
 
 #### statisticsUpdatePeriod
 
@@ -11599,7 +11583,7 @@ mysql\> select \* from tid;
 
 Empty set (0.03 sec)
 
-![](media/image155.png){width="4.875in" height="1.6152777777777778in"}
+![](assets/standard/image155.png)
 
 #### strategyForRWSplit
 
@@ -11607,7 +11591,7 @@ Empty set (0.03 sec)
 
 -------------------------------- ------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  strategyForRWSplit
   Visible or not                   Yes
   Description of parameters        Enable Read/write splitting or not
@@ -11793,7 +11777,7 @@ For details, please refer to [Read/write splitting](#high-availability-service-1
 
 -------------------------------- ---------------------------------------------------------------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  switchByLogInFailover
   Visible or not                   No
   Description of parameters        When failover, control whether to determine switch priority by Master_Log_File position of various data sources under the node or not
@@ -11821,7 +11805,7 @@ Note: Manual Switch operation is not under control of this parameter
 
 -------------------------------- -------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  switchoverTimeoutForTrans
   Visible or not                   Yes
   Description of parameters        When making Manual Switch, the old transaction Wait Commit Timeout (ms)
@@ -11847,7 +11831,7 @@ That is: Before manual execution of Master/Slave switch, enable Non-commit of ex
 
 For example:
 
-1\. Set "switchoverTimeoutForTrans"Timeout as 36000ms
+1\. Set [switchoverTimeoutForTrans](#switchoverTimeoutForTrans)Timeout as 36000ms
 
 2\. Enable transaction to execute Insert operation, make manual execution of Master/Slave switch, and commit transaction within 36000ms. Commit succeeded as follow:
 
@@ -11925,7 +11909,7 @@ mysql\> select \* from TEST_001;
 
 -------------------------------- -----------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  timerExecutor
   Visible or not                   Yes
   Description of parameters        Number of threads of timers
@@ -11951,7 +11935,7 @@ The parameter [adaptiveProcessor](#adaptiveprocessor) is enabled by default, and
 
 -------------------------------- ----------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  timestampProxy
   Visible or not                   Yes
   Description of parameters        TimeProxy mode
@@ -11985,7 +11969,7 @@ This parameter is used for Complete Global Proxy of the table with on update cur
 
 -------------------------------- ------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  url
   Visible or not                   Yes
   Description of parameters        configDB address
@@ -11997,7 +11981,7 @@ This parameter is used for Complete Global Proxy of the table with on update cur
 
 -------------------------------- -------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  username
   Visible or not                   Yes
   Description of parameters        configDB username
@@ -12009,7 +11993,7 @@ This parameter is used for Complete Global Proxy of the table with on update cur
 
 -------------------------------- -------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  password
   Visible or not                   Yes
   Description of parameters        configDB password
@@ -12085,7 +12069,7 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 
 -------------------------------- ---------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  usingAIO
   Visible or not                   No
   Description of parameters        Use AIO or not, Yes
@@ -12119,10 +12103,10 @@ root\> tail -n 300 hotdb.log \| grep \'aio\'
 
 -------------------------------- ---------------------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  version
   Visible or not                   No
-  Description of parameters        The version number shown to the public by the compute node
+  Description of parameters        The version number shown to the public by the compute node
   Default value                    Synchronize with result of the compute node show @\@version, for example:5.6.29-HotDB-2.5.1
   Whether Reload is valid or not   Yes
   Min Compatible Version           2.4.3
@@ -12179,7 +12163,7 @@ Note: When min version number of all data source is inferior to or equals to Max
 
 -------------------------------- ----------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  versionComment
   Visible or not                   No
   Description of parameters        Version comment of compute node.
@@ -12209,7 +12193,7 @@ Server version: 5.7.23 HotDB-2.5.3 HotDB Server by Hotpu Tech
 
 \...\...
 
-A space： \<property name=\"versionComment\"\> \</property\>，connect to the compute node：
+A space： \<property name=\"versionComment\"\> \</property\>，connect to the compute node：
 
 \[root\@hotdb\]\## mysql -uroot -proot -P3323 -h192.168.210.49
 
@@ -12223,7 +12207,7 @@ Server version: 5.7.23
 
 \...\...
 
-A customized string： \<property name=\"versionComment\"\>hotpu\</property\>，connect to the compute node：
+A customized string： \<property name=\"versionComment\"\>hotpu\</property\>，connect to the compute node：
 
 \[root\@hotdb\]\## mysql -uroot -proot -P3323 -h192.168.210.49
 
@@ -12275,8 +12259,8 @@ Connection: 192.168.210.49 via TCP/IP
 
 -------------------------------- ---------------------------------------------------------------------------------------------
 
-  **Property**                     **Value**
-  Parameter value                  [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_back_log)
+**Property**                     **Value**
+  Parameter value                  [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html# sysvar_back_log)
   Visible or not                   Yes
   Description of parameters        Virtual IP address
   Default value                    Null
@@ -12287,7 +12271,7 @@ Connection: 192.168.210.49 via TCP/IP
 
 -------------------------------- ------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  CheckVIPPeriod
   Visible or not                   Yes
   Description of parameters        Check VIP Period
@@ -12325,9 +12309,9 @@ virtual_ipaddress {
 
 It is in Compute Node High Availability environment, and under the condition of change in root password, when making high availability switch, it will make switch by checking according to existence mode of VIP, in order to avoid switch failure after changing the password
 
-![](media/image156.png){width="5.961805555555555in" height="1.2020833333333334in"}
+![](assets/standard/image156.png)
 
-![](media/image157.png){width="5.654166666666667in" height="0.625in"}
+![](assets/standard/image157.png)
 
 #### waitConfigSyncFinish
 
@@ -12335,7 +12319,7 @@ It is in Compute Node High Availability environment, and under the condition of 
 
 -------------------------------- --------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  cryptMandatory
   Visible or not                   No
   Description of parameters        When enabled, wait for configDB synchronization or not
@@ -12383,7 +12367,7 @@ It could be enabled only after waiting for master/slave synchronization
 
 -------------------------------- --------------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  waitForSlaveInFailover
   Visible or not                   Yes
   Description of parameters        In failover, whether to wait for the Slave to catch up with replication or not
@@ -12455,7 +12439,7 @@ Special note: the effect of master_delay on switching is adjusted in 2.5.6 and a
 
 -------------------------------- -------------------------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  waitSyncFinishAtStartup
   Visible or not                   Yes
   Description of parameters        When enabled, wait for synchronization of the Master data source or not
@@ -12509,7 +12493,7 @@ Turn off the switch: No other abnormalities, the compute node could be enabled d
 
 -------------------------------- ----------------------------------------------------------
 
-  **Property**                     **Value**
+**Property**                     **Value**
   Parameter value                  weightForSlaveRWSplit
   Visible or not                   Yes
   Description of parameters        Read Proportion of the Slave, 50 by default (percentage)

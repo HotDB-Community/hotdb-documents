@@ -2,7 +2,7 @@
 
 ## New commands in V2.5.6
 
--   [show backupmasterdelay \[DNID\]](#show-backupmasterdelay-dnid-show-masterslave-replication-delay-of-specified-data-node) -show master/slave replication delay of specified data node\[DNID\]
+-   [show backupmasterdelay \[DNID\]](#show-backupmasterdelay-dnid-show-masterslave-replication-delay-of-specified-data-node) -show master/slave replication delay of specified data node\[DNID\]
 
 -   [disable_election](#disable_election-disable-election-in-cluster) -disable election in cluster
 
@@ -22,43 +22,39 @@
 
 -   [online_dr_process](#online_dr_process-show-idc-switching-process) -show IDC switching process
 
-```{=html}
-<!-- -->
-```
+-   [check @\@datasource_config_new](#check-datasource_config_new-check-mysql-parameter-configuration-information) -check MySQL parameter configuration information
 
--   [check @\@datasource_config_new](#check-datasource_config_new-check-mysql-parameter-configuration-information) -check MySQL parameter configuration information
-
--   [reset @\@dberrorcount](#reset-dberrorcount-clear-all-the-error-messages-of-logicdbs) -clear all the error messages of LogicDBs
+-   [reset @\@dberrorcount](#reset-dberrorcount-clear-all-the-error-messages-of-logicdbs) -clear all the error messages of LogicDBs
 
 ## Data Detection Statement
 
 ### HotDB Server statistics
 
-#### show @\@backend -- show backend connection 
+#### show @\@backend -- show backend connection
 
 This command is used to view the connection between HotDB Server and data source. For example:
 
 mysql\> show @\@backend;
 
-![](media/image3.png){width="5.7652777777777775in" height="1.6347222222222222in"}
+![](assets/management-port-command/image3.png)
 
 Or query backend as you query a normal table:
 
 mysql\> select \* from backend where MYSQLID=198865;
 
-![](media/image4.png){width="5.7652777777777775in" height="0.7479166666666667in"}
+![](assets/management-port-command/image4.png)
 
 Or use HINT statement:
 
 mysql\> /\*!hotdb:dnid=all\*/select \* from information_schema.processlist where info!=\'NULL\' and id=198865;
 
-![](media/image5.png){width="5.7652777777777775in" height="0.7736111111111111in"}
+![](assets/management-port-command/image5.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ----------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  **Column Name**   **Description**                     **Value Type/Range**
+**Column Name**   **Description**                     **Value Type/Range**
   processor         The processor                       STRING/\["Processor"number\]
   id                Backend connection id               LONG/\[number\]
   mysqlid           Corresponding MySQL connection id   LONG/\[number\]
@@ -97,13 +93,13 @@ This command is used to view the status of bufferpool. For example:
 
 mysql\> show @\@bufferpool;
 
-![](media/image6.png){width="5.338888888888889in" height="2.0520833333333335in"}
+![](assets/management-port-command/image6.png)
 
 **Fields and their description are contained in the result:**
 
 --------------------- ---------------------------------------------------- --------------------------------------------------------------------------------------
 
-  **Column Name**       **Description**                                      **Value Type/Range**
+**Column Name**       **Description**                                      **Value Type/Range**
   thread                thread name                                          STRING/ \["\$NIOREACTOR-"\[number\]"-RW", "\$NIOExecutor-"\[number\]"-" \[number\]\]
   pool_size             bufferpool size                                      INT/\[number\]
   local_allocate_opts   The count of buffer requests of local cache thread   LONG /\[number\]
@@ -119,13 +115,13 @@ This command is used to show the statistics of current client query. For example
 
 mysql\> show @\@clientquery;
 
-![](media/image7.jpeg){width="5.7652777777777775in" height="0.9826388888888888in"}
+![](assets/management-port-command/image7.jpeg)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------------- ----------------------
 
-  **Column Name**   **Description**                 **Value Type/Range**
+**Column Name**   **Description**                 **Value Type/Range**
   client            client information              STRING/\[host\]
   db                LogicDB name                    STRING/\[database\]
   select            The count of query              LONG /\[number\]
@@ -145,13 +141,13 @@ This command is used to view current cluster member status. This command is only
 
 mysql\> show @\@cluster;
 
-![AGP\$4PT5X\[THR9SUB\`HDROR](media/image8.png){width="5.826388888888889in" height="1.5215277777777778in"}
+![](assets/management-port-command/image8.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------------ ----------------------
 
-  **Column Name**   **Description**                **Value Type/Range**
+**Column Name**   **Description**                **Value Type/Range**
   status            member status                  STRING
   host              member host                    STRING/\[host\]
   port              cluster communication port     INTEGER/\[port\]
@@ -166,13 +162,13 @@ This command is used to obtain the frontend connection of HotDB Server. For exam
 
 mysql\> show @\@connection;
 
-![](media/image9.png){width="5.409027777777778in" height="2.24375in"}
+![](assets/management-port-command/image9.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------------ ------------------------------
 
-  **Column Name**   **Description**                **Value Type/Range**
+**Column Name**   **Description**                **Value Type/Range**
   processor         processor name                 STRING/\["Processor"number\]
   id                frontend connection id         LONG/\[number\]
   host              client information             STRING/\[host:port\]
@@ -198,13 +194,13 @@ This command is used to obtain current live frontend connection statistics of Ho
 
 mysql\> show @\@connection_statistics;
 
-![](media/image10.png){width="5.626388888888889in" height="0.8173611111111111in"}
+![](assets/management-port-command/image10.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- -------------------------------------------- ----------------------
 
-  **Column Name**   **Description**                              **Value Type/Range**
+**Column Name**   **Description**                              **Value Type/Range**
   id                connection id                                INTEGER/\[number\]
   client_addr       client ip address                            STRING/\[host\]
   port              client connection port                       INTEGER/\[number\]
@@ -223,13 +219,13 @@ This command is used to show current available LogicDB information, which is equ
 
 mysql\> show @\@database;
 
-![](media/image11.png){width="5.590972222222222in" height="1.1215277777777777in"}
+![](assets/management-port-command/image11.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ----------------- ----------------------
 
-  **Column Name**   **Description**   **Value Type/Range**
+**Column Name**   **Description**   **Value Type/Range**
   database          LogicDB           STRING/\[database\]
 
 ----------------- ----------------- ----------------------
@@ -240,7 +236,7 @@ This command is used to show the node information of current database. For examp
 
 mysql\> show @\@database;
 
-![](media/image12.png){width="5.365277777777778in" height="2.7215277777777778in"}
+![](assets/management-port-command/image12.png)
 
 **Fields and their description are contained in the result:**
 
@@ -294,19 +290,19 @@ mysql\> show @\@database;
 |                 |                                                                                                | NULL: non-MGR                      |
 +-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
 
-#### show @\@datasource -- show data source information 
+#### show @\@datasource -- show data source information
 
 This command is used to view configuration information and status of current data source. For example:
 
 mysql\> show @\@datasource;
 
-![](media/image13.png){width="5.590972222222222in" height="1.3041666666666667in"}
+![](assets/management-port-command/image13.png)
 
 **Fields and their description are contained in the result:**
 
 -------------------- ------------------------------------------------------------------------------------------------ -------------------------------
 
-  **Column Name**      **Description**                                                                                  **Value Type/Range**
+**Column Name**      **Description**                                                                                  **Value Type/Range**
   dn                   data node number (the command restart @\@heartbeat can be used to restore heartbeat detection)   INT/\[number\]
   ds                   current data source information                                                                  STRING/\[host:port/database\]
   type                 current data source type                                                                         1: Active Master
@@ -333,7 +329,7 @@ This command is used to detect the consistency of global table. For example:
 
 mysql\> show @\@globaltableconsistency;
 
-![](media/image14.png){width="5.634722222222222in" height="1.5215277777777778in"}
+![](assets/management-port-command/image14.png)
 
 **Fields and their description are contained in the result:**
 
@@ -389,13 +385,13 @@ The command is used to report the heartbeat status. For example:
 
 mysql\> show @\@heartbeat;
 
-![](media/image15.png){width="5.295833333333333in" height="3.782638888888889in"}
+![](assets/management-port-command/image15.png)
 
 **Fields and their description are contained in the result:**
 
 ------------------ ------------------------------------------------------------------- ------------------------------------------------------
 
-  **Column Name**    **Description**                                                     **Value Type/Range**
+**Column Name**    **Description**                                                     **Value Type/Range**
   dn                 data node id                                                        INT/\[number\]
   ds_id              data source id                                                      INT/\[number\]
   ds_type            data source type                                                    STRING/\[master/slave\]
@@ -421,21 +417,21 @@ Note: dn=-1 means configdb
 
 This command is used to view whether there is latency of master/slave database synchronization (the value can be shown only when the failover rule needs to be、 configured). When there is latency of master/slave data, for example, when you set the SQL_DELAY time of standby slave:
 
-![](media/image16.png){width="5.782638888888889in" height="1.95625in"}
+![](assets/management-port-command/image16.png)
 
 mysql\> show @\@latency;
 
-![](media/image17.png){width="5.75625in" height="1.2347222222222223in"}
+![](assets/management-port-command/image17.png)
 
 If there is no latency, it shows:
 
-![](media/image18.png){width="5.573611111111111in" height="1.6611111111111112in"}
+![](assets/management-port-command/image18.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ---------------------------------------------------------------------------------------------------------------------------------------
 
-  **Column Name**   **Description**                                                                                                                                                                                                                                                                                                                                  **Value Type/Range**
+**Column Name**   **Description**                                                                                                                                                                                                                                                                                                                                  **Value Type/Range**
   dn                data node id                                                                                                                                                                                                                                                                                                                                     INT/\[number\]
   info              current data source path                                                                                                                                                                                                                                                                                                                         STRING/\[ip\]:\[port\]/\[database\]
   backup_info       slave data source path                                                                                                                                                                                                                                                                                                                           STRING/\[ip\]:\[port\]/\[database\]
@@ -449,7 +445,7 @@ This command is used to view the information of long transaction. For example:
 
 mysql\> show @\@longtransaction;
 
-![](media/image19.png){width="5.75625in" height="1.2958333333333334in"}
+![](assets/management-port-command/image19.png)
 
 The long transaction is judged based on: transactions executed for more than 10s are all long transactions. Refer to the rules:
 
@@ -459,7 +455,7 @@ select trx_id, trx_started from information_schema.innodb_trx where trx_started\
 
 ----------------- ----------------- ----------------------
 
-  **Column Name**   **Description**   **Value Type/Range**
+**Column Name**   **Description**   **Value Type/Range**
   host              host address      STRING/\[IP\]
   port              host port         INT/\[PORT\]
   trx_id            transaction id    STRING/\[number\]
@@ -472,11 +468,11 @@ This command is used to show the consistency of tables in active master and stan
 
 mysql\> show @\@masterslaveconsistency;
 
-![%\$ZPJCKQV}76{C7\~EWL(KIE](media/image20.png){width="5.773611111111111in" height="0.6611111111111111in"}
+![](assets/management-port-command/image20.png)
 
 The above result shows that the master/salve data of DN_06 node is inconsistent.
 
-![](media/image21.png){width="5.7652777777777775in" height="0.8784722222222222in"}
+![](assets/management-port-command/image21.png)
 
 and:
 
@@ -486,7 +482,7 @@ The above result shows that the CC table in the LogicDB LGG has no index defined
 
 ----------------- -------------------- ----------------------------------
 
-  **Column Name**   **Description**      **Value Type/Range**
+**Column Name**   **Description**      **Value Type/Range**
   db                LogicDB name         STRING/\[database\]
   table             table name           STRING/\[table\]
   dn                data node name       STRING
@@ -503,19 +499,19 @@ mysql\> insert into tid values(10),(2);
 
 mysql\> insert into tid values(1677870),(233333333);
 
-![](media/image22.png){width="5.7652777777777775in" height="0.9215277777777777in"}
+![](assets/management-port-command/image22.png)
 
 The query result shows the current execution of backend for data source table:
 
 mysql\> select \* from operation where \`TABLE\` like \'%tid%\';
 
-![](media/image23.png){width="5.7652777777777775in" height="0.6520833333333333in"}
+![](assets/management-port-command/image23.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------------------------------------------------------------------- ----------------------
 
-  **Column Name**   **Description**                                                                       **Value Type/Range**
+**Column Name**   **Description**                                                                       **Value Type/Range**
   schema            LogicDB name                                                                          STRING/\[database\]
   dn                data node id                                                                          INT/\[number\]
   ds                data source id                                                                        INT/\[number\]
@@ -539,13 +535,13 @@ This command is used to show statistics of command execution with LogicDB as uni
 
 mysql\> show @\@operation_db;
 
-![](media/image24.png){width="5.7652777777777775in" height="1.9826388888888888in"}
+![](assets/management-port-command/image24.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ----------------------------------------------------------------------------------------------- ----------------------
 
-  **Column Name**   **Description**                                                                                 **Value Type/Range**
+**Column Name**   **Description**                                                                                 **Value Type/Range**
   db                LogicDB name                                                                                    STRING/\[database\]
   select            The count of SELECT the \[table\]                                                               LONG /\[number\]
   insert            The count of INSERT the \[table\]                                                               LONG /\[number\]
@@ -563,13 +559,13 @@ This command is used to show the command execution statistis with data node as u
 
 mysql\> show @\@operation_dn;
 
-![](media/image25.jpeg){width="5.782638888888889in" height="1.2958333333333334in"}
+![](assets/management-port-command/image25.jpeg)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ---------------------------------------------------------------------------------------------- ----------------------
 
-  **Column Name**   **Description**                                                                                **Value Type/Range**
+**Column Name**   **Description**                                                                                **Value Type/Range**
   dn                database node id                                                                               INT/\[number\]
   select            The count of SELECT the \[table\]                                                              LONG/\[number\]
   insert            The count of INSERT the \[table\]                                                              LONG/\[number\]
@@ -589,7 +585,7 @@ This command is used to show the statistics of command execution with data sourc
 
 mysql\> show @\@operation_ds;
 
-![](media/image26.jpeg){width="5.773611111111111in" height="1.3215277777777779in"}
+![](assets/management-port-command/image26.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -627,13 +623,13 @@ This command is used to show the command execution statistics with LogicDB as un
 
 mysql\> show @\@operation_table;
 
-![](media/image27.png){width="5.7652777777777775in" height="1.9041666666666666in"}
+![](assets/management-port-command/image27.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------------------------------------------------------------------- ----------------------
 
-  **Column Name**   **Description**                                                                       **Value Type/Range**
+**Column Name**   **Description**                                                                       **Value Type/Range**
   table             table name                                                                            STRING/\[table\]
   select            The count of SELECT the \[table\]                                                     LONG /\[number\]
   insert            The count of INSERT the \[table\]                                                     LONG /\[number\]
@@ -651,13 +647,13 @@ This command is used to view the thread processing information. For example:
 
 mysql\> show @\@processor;
 
-![](media/image28.png){width="5.634722222222222in" height="1.1652777777777779in"}
+![](assets/management-port-command/image28.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------ ----------------------------
 
-  **Column Name**   **Description**          **Value Type/Range**
+**Column Name**   **Description**          **Value Type/Range**
   name              processor name           STRING/\[Processornumber\]
   front_net_in      fronend received bytes   LONG/\[number\]
   front_net_out     frontend sent bytes      LONG/\[number\]
@@ -675,13 +671,13 @@ This command is used to show the statistics of frontend command (excluding the M
 
 mysql\> show @\@query;
 
-![](media/image29.jpeg){width="3.990972222222222in" height="0.9131944444444444in"}
+![](assets/management-port-command/image29.jpeg)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ---------------------------------------------------------------------------------------------- ----------------------
 
-  **Column Name**   **Description**                                                                                **Value Type/Range**
+**Column Name**   **Description**                                                                                **Value Type/Range**
   select            The count of calling SELECT of this service                                                    LONG /\[number\]
   insert            The count of calling INSERT of this service                                                    LONG /\[number\]
   update            The count of calling UPDATE of this service                                                    LONG /\[number\]
@@ -697,13 +693,13 @@ This command is used to show statistics of command execution of each LogicDB. Fo
 
 mysql\> show @\@query_db;
 
-![](media/image30.jpeg){width="4.8in" height="0.95625in"}
+![](assets/management-port-command/image30.jpeg)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------------------------------------------------------------------------------- ----------------------
 
-  **Column Name**   **Description**                                                                                   **Value Type/Range**
+**Column Name**   **Description**                                                                                   **Value Type/Range**
   schema            LogicDB                                                                                           STRING/\[database\]
   select            The count of SELECT the LogicDB \[schema\]                                                        LONG /\[number\]
   insert            The count of INSERT the LogicDB \[schema\]                                                        LONG /\[number\]
@@ -720,13 +716,13 @@ This command is used to show statistics of command execution of each data table.
 
 mysql\> show @\@query_tb;
 
-![](media/image31.jpeg){width="5.782638888888889in" height="1.04375in"}
+![](assets/management-port-command/image31.jpeg)
 
 **Fields and their description are contained in the result:**
 
 ----------------- --------------------------------------------------------------------------------------------------------------------- ----------------------
 
-  **Column Name**   **Description**                                                                                                       **Value Type/Range**
+**Column Name**   **Description**                                                                                                       **Value Type/Range**
   schema            LogicDB                                                                                                               STRING/\[database\]
   table             table name                                                                                                            STRING/\[table\]
   select            The count of SELECT the \[table\] under the LogicDB \[schema\]                                                        LONG /\[number\]
@@ -744,13 +740,13 @@ This command is used to show current session information. For example:
 
 mysql\> show @\@session;
 
-![](media/image32.png){width="5.773611111111111in" height="1.8090277777777777in"}
+![](assets/management-port-command/image32.png)
 
 **Fields and their description are contained in the result:**
 
 -------------------- --------------------------------------------- ------------------------------------
 
-  **Column Name**      **Description**                               **Value Type/Range**
+**Column Name**      **Description**                               **Value Type/Range**
   id                   current session id                            INT/\[number\]
   running              SQL is in progress or not                     BOOLEAN/\[TRUE/FALSE\]
   trx_started          transaction start time                        STRING/\[yyyy-MM-dd HH:mm:ss.SSS\]
@@ -779,13 +775,13 @@ This command is used to view the data information of each data table. For exampl
 
 mysql\> show @\@tableinfo;
 
-![](media/image33.png){width="5.582638888888889in" height="1.2in"}
+![](assets/management-port-command/image33.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- --------------------- ----------------------
 
-  **Column Name**   **Description**       **Value Type/Range**
+**Column Name**   **Description**       **Value Type/Range**
   schema            LogicDB               STRING/\[database\]
   dn                data node id          INT/\[number\]
   ds                data source id        INT/\[number\]
@@ -806,13 +802,13 @@ This command is used to view the data information of table with LogicDB as unit.
 
 mysql\> show @\@tableinfo_db;
 
-![](media/image34.jpeg){width="4.721527777777778in" height="0.8520833333333333in"}
+![](assets/management-port-command/image34.jpeg)
 
 **Fields and their description are contained in the result:**
 
 ----------------- -------------------- ----------------------
 
-  **Column Name**   **Description**      **Value Type/Range**
+**Column Name**   **Description**      **Value Type/Range**
   db                LogicDB name         STRING/\[database\]
   table_rows        database rows        INT/\[number\]
   data_length       data length (byte)   LONG /\[number\]
@@ -825,13 +821,13 @@ This command is used to view the data information of table with data node as uni
 
 mysql\> show @\@tableinfo_dn
 
-![](media/image35.jpeg){width="4.061111111111111in" height="1.0347222222222223in"}
+![](assets/management-port-command/image35.jpeg)
 
 **Fields and their description are contained in the result:**
 
 ----------------- -------------------- ----------------------
 
-  **Column Name**   **Description**      **Value Type/Range**
+**Column Name**   **Description**      **Value Type/Range**
   dn                data node id         INT/\[number\]
   table_rows        database rows        INT/\[number\]
   data_length       data length (byte)   LONG /\[number\]
@@ -844,13 +840,13 @@ This command is used to show the data information of table with data source as u
 
 mysql\> show @\@tableinfo_ds
 
-![](media/image36.jpeg){width="4.417361111111111in" height="1.5131944444444445in"}
+![](assets/management-port-command/image36.jpeg)
 
 **Fields and their description are contained in the result:**
 
 ----------------- -------------------- ----------------------
 
-  **Column Name**   **Description**      **Value Type/Range**
+**Column Name**   **Description**      **Value Type/Range**
   ds                data source id       INT/\[number\]
   table_rows        database rows        INT/\[number\]
   data_length       data length (byte)   LONG /\[number\]
@@ -863,13 +859,13 @@ This command is used to show the data information of table with LogicDB as unit.
 
 mysql\> show @\@tableinfo_table;
 
-![](media/image37.jpeg){width="4.190972222222222in" height="0.84375in"}
+![](assets/management-port-command/image37.jpeg)
 
 **Fields and their description are contained in the result:**
 
 ----------------- -------------------- ----------------------
 
-  **Column Name**   **Description**      **Value Type/Range**
+**Column Name**   **Description**      **Value Type/Range**
   table             table name           STRING/\[table\]
   table_rows        database rows        INT/\[number\]
   data_length       data length (byte)   LONG /\[number\]
@@ -882,7 +878,7 @@ This command is used to view the status of threadpool. For example:
 
 mysql\> show @\@threadpool;
 
-![](media/image38.png){width="5.304166666666666in" height="1.4694444444444446in"}
+![](assets/management-port-command/image38.png)
 
 **Fields and their description are contained in the result:**
 
@@ -910,13 +906,13 @@ This command is used to view each LogicDB and count the number of currently comp
 
 mysql\> show @\@transaction;
 
-![](media/image39.jpeg){width="5.773611111111111in" height="0.8694444444444445in"}
+![](assets/management-port-command/image39.jpeg)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ---------------------------- ----------------------
 
-  **Column Name**   **Description**              **Value Type/Range**
+**Column Name**   **Description**              **Value Type/Range**
   schema            LogicDB                      STRING/\[database\]
   transaction       the number of transactions   LONG/\[number\]
 
@@ -932,7 +928,7 @@ mysql\> show hotdb datanodes \[LIKE \'pattern\' \| WHERE expr\];
 
 --------------- ----------------------------------------------------------- ----------
 
-  **Parameter**   **Description**                                             **Type**
+**Parameter**   **Description**                                             **Type**
   pattern         optional, fuzzy query expression, match the key rule_name   STRING
   expr            optional, fuzzy query expression, match the specified key   STRING
 
@@ -940,17 +936,17 @@ mysql\> show hotdb datanodes \[LIKE \'pattern\' \| WHERE expr\];
 
 For example:
 
-![](media/image40.png){width="3.9131944444444446in" height="1.4784722222222222in"}
+![](assets/management-port-command/image40.png)
 
 For another example:
 
-![](media/image41.png){width="2.5131944444444443in" height="1.0173611111111112in"}
+![](assets/management-port-command/image41.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------- ----------------------
 
-  **Column Name**   **Description**           **Value Type/Range**
+**Column Name**   **Description**           **Value Type/Range**
   datanode_id       node id                   INTEGER
   datanode_name     node name                 STRING
   datanode_type     0: master/slave; 1: MGR   INTEGER
@@ -967,7 +963,7 @@ mysql\> show hotdb functions;
 
 --------------- --------------------------------------------------------------- ----------
 
-  **Parameter**   **Description**                                                 **Type**
+**Parameter**   **Description**                                                 **Type**
   pattern         optional, fuzzy query expression, match the key function_name   STRING
   expr            optional, fuzzy query expression, match the key function_name   STRING
 
@@ -975,19 +971,19 @@ mysql\> show hotdb functions;
 
 For example:
 
-![](media/image42.png){width="4.573611111111111in" height="2.6958333333333333in"}
+![](assets/management-port-command/image42.png)
 
 For another example:
 
-![](media/image43.png){width="5.75625in" height="1.1652777777777779in"}
+![](assets/management-port-command/image43.png)
 
-![](media/image44.png){width="5.7652777777777775in" height="0.9736111111111111in"}
+![](assets/management-port-command/image44.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- --------------------------------------------------------------------------------------------------------------- ----------------------
 
-  **Column Name**   **Description**                                                                                                 **Value Type/Range**
+**Column Name**   **Description**                                                                                                 **Value Type/Range**
   function_id       sharding function id                                                                                            INTEGER
   function_name     sharding function name                                                                                          STRING
   function_type     sharding type                                                                                                   STRING
@@ -1005,24 +1001,24 @@ mysql\> show hotdb function infos \[WHERE expr\];
 
 --------------- ----------------------------------------------------------- ----------
 
-  **Parameter**   **Description**                                             **Type**
+**Parameter**   **Description**                                             **Type**
   expr            optional: fuzzy query expression, match the specified key   STRING
 
 --------------- ----------------------------------------------------------- ----------
 
 For example:
 
-![](media/image45.png){width="3.8694444444444445in" height="2.75625in"}
+![](assets/management-port-command/image45.png)
 
 For another example:
 
-![](media/image46.png){width="2.652083333333333in" height="1.0in"}
+![](assets/management-port-command/image46.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ---------------------- ----------------------
 
-  **Column Name**   **Description**        **Value Type/Range**
+**Column Name**   **Description**        **Value Type/Range**
   function_id       sharding function id   INTEGER
   column_value      sharding key value     STRING
   datanode_id       data node id           INTEGER
@@ -1039,7 +1035,7 @@ mysql\> show hotdb rules \[LIKE \'pattern\' \| WHERE expr\];
 
 --------------- ----------------------------------------------------------- ----------
 
-  **Parameter**   **Description**                                             **Type**
+**Parameter**   **Description**                                             **Type**
   pattern         optional: fuzzy query expression, match the key rule_name   STRING
   expr            optional: fuzzy query expression, match the key rule_name   STRING
 
@@ -1047,19 +1043,19 @@ mysql\> show hotdb rules \[LIKE \'pattern\' \| WHERE expr\];
 
 For example:
 
-![](media/image47.png){width="5.7652777777777775in" height="2.5909722222222222in"}
+![](assets/management-port-command/image47.png)
 
 For another example:
 
-![](media/image48.png){width="5.7652777777777775in" height="1.2520833333333334in"}
+![](assets/management-port-command/image48.png)
 
-![](media/image49.png){width="5.773611111111111in" height="1.1041666666666667in"}
+![](assets/management-port-command/image49.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- --------------------------------------------------------------------------------------------------------------- ----------------------
 
-  **Column Name**   **Description**                                                                                                 **Value Type/Range**
+**Column Name**   **Description**                                                                                                 **Value Type/Range**
   rule_id           sharding function id                                                                                            INTEGER
   rule_name         sharding function name                                                                                          STRING
   rule_column       sharding key name                                                                                               STRING
@@ -1078,20 +1074,20 @@ mysql\> show backupmasterdelay \[DNID\];
 
 --------------- ----------------- ----------
 
-  **Parameter**   **Description**   **Type**
+**Parameter**   **Description**   **Type**
   DNID            Data node id      INTEGER
 
 --------------- ----------------- ----------
 
 For example:
 
-![](media/image50.png){width="5.7652777777777775in" height="1.24375in"}
+![](assets/management-port-command/image50.png)
 
 **Fields and their description are contained in the result:**
 
 ------------------- ----------------------------------- ----------------------
 
-  **Column Name**     **Description**                     **Value Type/Range**
+**Column Name**     **Description**                     **Value Type/Range**
   datasource_id       Data source id                      INTEGER
   sql_delay           Replication delay (s)               LONG
   slave_io_running    Slave io_thread status (Yes/No)     STRING
@@ -1101,7 +1097,7 @@ For example:
 
 ### HotDB services
 
-#### show @\@config_master_status - return to show master status of ConfigDB
+#### show @\@config_master_status - return to show master status of ConfigDB
 
 This command is used to show the show master status of the current ConfigDB.
 
@@ -1109,13 +1105,13 @@ For example:
 
 mysql\> show @\@config_master_status
 
-![](media/image51.png){width="5.7652777777777775in" height="0.9131944444444444in"}
+![](assets/management-port-command/image51.png)
 
 **Fields and their description are contained in the result:**
 
 ------------------- ----------------------------------- ----------------------
 
-  **Column Name**     **Description**                     **Value Type/Range**
+**Column Name**     **Description**                     **Value Type/Range**
   file                Binlog file                         STRING
   position            Binlog position                     INTEGER
   binlog_do_db        Database to be recorded by Binlog   STRING
@@ -1128,13 +1124,13 @@ mysql\> show @\@config_master_status
 
 This command is used to show the running status of current HotDB Server. the memory conforms to the value in the configuration./bin/hotdb-server.
 
-![](media/image52.png){width="3.5305555555555554in" height="1.95625in"}
+![](assets/management-port-command/image52.png)
 
 For example:
 
 mysql\> show @\@server;
 
-![](media/image53.jpeg){width="4.565277777777778in" height="1.773611111111111in"}
+![](assets/management-port-command/image53.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -1182,13 +1178,13 @@ This command is used to view the usage of resources of current HotDB Server. For
 
 mysql\> show @\@serversourceusage;
 
-![](media/image54.png){width="5.573611111111111in" height="1.0694444444444444in"}
+![](assets/management-port-command/image54.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------------ --------------------------------
 
-  **Column Name**   **Description**                **Value Type/Range**
+**Column Name**   **Description**                **Value Type/Range**
   used_memory       used memory (MB)               STRING/\[number\]
   total_memory      total memory (MB)              STRING /\[number\]
   disk              usage of disk                  STRING/\[path number,...\]
@@ -1201,7 +1197,7 @@ mysql\> show @\@serversourceusage;
 
 ----------------- ------------------------------ --------------------------------
 
-#### show @\@systemconfig_memory - memory parameters of current compute node
+#### show @\@systemconfig_memory - memory parameters of current compute node
 
 This command is used to view the memory parameters usage of the current compute node.
 
@@ -1209,13 +1205,13 @@ For example:
 
 mysql\> show @\@systemconfig_memory;
 
-![](media/image55.png){width="5.7652777777777775in" height="1.0520833333333333in"}
+![](assets/management-port-command/image55.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ----------------- ----------------------
 
-  **Column Name**   **Description**   **Value Type/Range**
+**Column Name**   **Description**   **Value Type/Range**
   config            configuration     STRING/\[number\]
 
 ----------------- ----------------- ----------------------
@@ -1226,13 +1222,13 @@ This command is used to view the current time, for example:
 
 mysql\> show @\@time_current;
 
-![](media/image56.png){width="5.373611111111111in" height="0.8520833333333333in"}
+![](assets/management-port-command/image56.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------------ ---------------------------------
 
-  **Column Name**   **Description**                **Value Type/Range**
+**Column Name**   **Description**                **Value Type/Range**
   timestamp         current time of HotDB Server   STRING/\[ yyyy-MM-dd HH:mm:ss\]
 
 ----------------- ------------------------------ ---------------------------------
@@ -1243,13 +1239,13 @@ This command is used to view the startup time of HotDB Server. For example:
 
 mysql\> show @\@time_startup;
 
-![](media/image57.png){width="4.826388888888889in" height="0.8611111111111112in"}
+![](assets/management-port-command/image57.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------------ ---------------------------------
 
-  **Column Name**   **Description**                **Value Type/Range**
+**Column Name**   **Description**                **Value Type/Range**
   timestamp         current time of HotDB Server   STRING/\[ yyyy-MM-dd HH:mm:ss\]
 
 ----------------- ------------------------------ ---------------------------------
@@ -1260,7 +1256,7 @@ This command is used to show USB-KEY status (authorization) and detect the excep
 
 mysql\> show @\@usbkey;
 
-![](media/image58.png){width="5.75625in" height="0.8958333333333334in"}
+![](assets/management-port-command/image58.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1314,13 +1310,13 @@ This command is used to view the description of versions of HotDB Server. For ex
 
 mysql\> show @\@version;
 
-![](media/image59.png){width="4.938888888888889in" height="1.0090277777777779in"}
+![](assets/management-port-command/image59.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ----------------- ----------------------
 
-  **Column Name**   **Description**   **Value Type/Range**
+**Column Name**   **Description**   **Value Type/Range**
   version           HotDB version     STRING
 
 ----------------- ----------------- ----------------------
@@ -1333,13 +1329,13 @@ This command is used to show DDL statements of tables. For example:
 
 mysql\> show @\@ddl;
 
-![](media/image60.png){width="5.209027777777778in" height="2.1479166666666667in"}
+![](assets/management-port-command/image60.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------ ----------------------
 
-  **Column Name**   **Description**          **Value Type/Range**
+**Column Name**   **Description**          **Value Type/Range**
   schema            LogicDB                  STRING/\[database\]
   dn                data node id             INT/\[number\]
   ds                data source id           INT/\[number\]
@@ -1355,13 +1351,13 @@ This command is used to view the last executed SQL information of connection in 
 
 mysql\> show @\@lastsql;
 
-![](media/image61.png){width="5.738888888888889in" height="1.0520833333333333in"}
+![](assets/management-port-command/image61.png)
 
 **Fields and their description are contained in the result:**
 
 ------------------- --------------------------------------------------------------- -----------------------------
 
-  **Column Name**     **Description**                                                 **Value Type/Range**
+**Column Name**     **Description**                                                 **Value Type/Range**
   id                  backend id                                                      LONG/\[number\]
   mysqlid             data node id                                                    LONG/\[number\]
   dn_ds               data node id -- data source id                                  STRING/\[number_number\]
@@ -1376,13 +1372,13 @@ This command shows the active OnlineDDL statement and its execution speed. The p
 
 mysql\> show @\@onlineddl;
 
-![](media/image62.png){width="5.7652777777777775in" height="1.3215277777777779in"}
+![](assets/management-port-command/image62.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ----------------- ----------------------
 
-  **Column Name**   **Description**   **Value Type/Range**
+**Column Name**   **Description**   **Value Type/Range**
   schema            LogicDB           STRING/\[database\]
   onlineddl         statement         STRING/\[SQL\]
   progress          progress          LONG/\[number\]
@@ -1392,19 +1388,19 @@ mysql\> show @\@onlineddl;
 
 ----------------- ----------------- ----------------------
 
-#### show @\@tableindex -- show index structure of tables 
+#### show @\@tableindex -- show index structure of tables
 
 This command is used to show the index structure of each data table. For example:
 
 mysql\> show @\@tableindex;
 
-![](media/image63.png){width="5.4in" height="1.3736111111111111in"}
+![](assets/management-port-command/image63.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ----------------------- ----------------------
 
-  **Column Name**   **Description**         **Value Type/Range**
+**Column Name**   **Description**         **Value Type/Range**
   schema            LogicDB                 STRING/\[database\]
   dn                data node id            INT/\[number\]
   ds                data source id          INT/\[number\]
@@ -1438,7 +1434,7 @@ onlinemodificationrulecheck db.tablename\[=functionid,rulecol:datanodes:checkcon
 
 ------------------ -----------------------------------------------------------------------------------------
 
-  **Parameter**      **Description**
+**Parameter**      **Description**
   db                 LogicDB
   tablename          table name
   functionid         refer to the table hotdb_function in the configdb hotdb_config for the sharding rule id
@@ -1454,7 +1450,7 @@ It is used in two ways:
 
 --------------- ------------------- ---------------------------------------------------------------------------------------------------------
 
-  Check Item ID   Corresponding Key   Description of Check Item
+Check Item ID   Corresponding Key   Description of Check Item
   1               tbNameLess45        The source table name is not longer than 45 characters
   2               running             No sharding plan modification task is being executed in source table
   3               validCol            Sharding key is the key contained in table structure
@@ -1475,13 +1471,13 @@ As shown below: cpd_test is LogicDB, zx_cvset_signin_result is table name, 4 is 
 
 mysql\> onlinemodificationrulecheck cpd_test. zx_cvset_signin_result=4,id:1,2:1;
 
-![](media/image64.png){width="5.7652777777777775in" height="1.538888888888889in"}
+![](assets/management-port-command/image64.png)
 
 When multi tables are checked at the same time, information between tables shall be separated by spaces. For example:
 
 onlinemodificationrulecheck db.tablename=functionid,rulecol:datanodes:checkconsistency \[db.tablename=functionid,rulecol:datanodes:checkconsistency..\]
 
-![](media/image65.png){width="5.773611111111111in" height="1.9041666666666666in"}
+![](assets/management-port-command/image65.png)
 
 2\. It can be used to view the check result after the sharding plan online modification is checked. For example:
 
@@ -1491,7 +1487,7 @@ onlinemodificationrulecheck db.tablename \[db.tablename...\]
 
 ----------------- --------------------------------------
 
-  **Column Name**   **Description**
+**Column Name**   **Description**
   db                LogicDB
   tablename         table name
   id                check item id
@@ -1504,11 +1500,11 @@ View whether the check is finished (if the result value is -1, it means that the
 
 As shown below: cpd_test is LogicDB, zx_cvset_signin_result is table name.
 
-![](media/image66.png){width="5.7652777777777775in" height="1.8173611111111112in"}
+![](assets/management-port-command/image66.png)
 
 When check results of multi tables are viewed at the same time, tables shall be separated by spaces. For example:
 
-![](media/image67.png){width="5.7652777777777775in" height="2.3826388888888888in"}
+![](assets/management-port-command/image67.png)
 
 #### onlinemodificationrule
 
@@ -1548,15 +1544,15 @@ As shown below: cpd_test is LogicDB, zx_cvset_signin_result is table name, 4 is 
 
 onlinemodificationrule cpd_test. zx_cvset_signin_result=4,id:1,2:24:1000:T3:7:0;
 
-![](media/image68.png){width="5.7652777777777775in" height="0.43472222222222223in"}
+![](assets/management-port-command/image68.png)
 
 When multi tables are modified at the same time, the tables shall be separated by spaces.
 
-![](media/image69.png){width="5.7652777777777775in" height="0.8173611111111111in"}
+![](assets/management-port-command/image69.png)
 
 The functionid used for sharding plan modification can be viewed in the table hotdb_function in configdb.
 
-![](media/image70.png){width="5.773611111111111in" height="1.461111111111111in"}
+![](assets/management-port-command/image70.png)
 
 Special instructions:
 
@@ -1582,7 +1578,7 @@ onlinemodificationruleprogress db.tablename\[,db1.tablename1,..\]
 
 --------------- -----------------
 
-  **Parameter**   **Description**
+**Parameter**   **Description**
   db              LogicDB
   tablename       table name
 
@@ -1590,13 +1586,13 @@ onlinemodificationruleprogress db.tablename\[,db1.tablename1,..\]
 
 As shown below: cpd_test is LogicDB, cv_live_courseware and cv_live_study are table names.
 
-![](media/image71.png){width="5.7652777777777775in" height="0.7305555555555555in"}
+![](assets/management-port-command/image71.png)
 
 **Fields and their description are contained in the result:**
 
 ------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  Key Name      Description
+Key Name      Description
   db            LogicDB
   tablename     table name
   progress      0-100, integer
@@ -1612,7 +1608,7 @@ As shown below: cpd_test is LogicDB, cv_live_courseware and cv_live_study are ta
 
 If the state returns to waitting, the user needs to confirm whether to continue it, ignore the inconsistent data or cancel the modification.
 
-![QQ图片20190620110623](media/image72.png){width="6.469444444444444in" height="0.6784722222222223in"}
+![](assets/management-port-command/image72.png)
 
 #### onlinemodificationrulecontinue
 
@@ -1624,7 +1620,7 @@ onlinemodificationrulecontinue db.tablename;
 
 --------------- -----------------
 
-  **Parameter**   **Description**
+**Parameter**   **Description**
   db              LogicDB
   tablename       table name
 
@@ -1632,11 +1628,11 @@ onlinemodificationrulecontinue db.tablename;
 
 As shown below: in the process of modifying sharding plan, when the state is waitting, and inconsistent data exits, this command is used to continue the modification, and then view the progress again, the progress is 100 and the state is finish.
 
-![拉拉](media/image73.png){width="5.7652777777777775in" height="2.3652777777777776in"}
+![](assets/management-port-command/image73.png)
 
 Ignoring these inconsistent data may lead to data errors, as shown below: some data is lost after modification.
 
-![7](media/image74.png){width="5.75625in" height="1.5909722222222222in"}
+![](assets/management-port-command/image74.png)
 
 #### onlinemodificationrulecancel
 
@@ -1646,7 +1642,7 @@ onlinemodificationrulecancle db.tablename;
 
 If the modification of a table in the same batch is cancelled, then the modification of sharding plan of all tables in this batch will be cancelled, as shown below:
 
-![](media/image75.png){width="5.773611111111111in" height="2.061111111111111in"}
+![](assets/management-port-command/image75.png)
 
 ## Management Control Statement
 
@@ -1656,13 +1652,13 @@ This command is used to check the consistency of particular parameter configurat
 
 mysql\> check @\@datasource_config;
 
-![){\`QX\`J7KZK76UEB39Y{UJG](media/image76.png){width="5.486805555555556in" height="0.7909722222222222in"}
+![](assets/management-port-command/image76.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ---------------------------------------------- -------------------------------
 
-  **Column Name**   **Description**                                **Value Type/Range**
+**Column Name**   **Description**                                **Value Type/Range**
   Level             exception information level (Warning, Error)   STRING/\[ "Error","Warning"\]
   Code              exception code                                 INT/\[number\]
   Message           error message                                  STRING
@@ -1702,11 +1698,11 @@ check @\@datasource_config_new is to read and check data node information from t
 
 mysql\> check @\@datasource_config_new;
 
-![](media/image77.png){width="5.7652777777777775in" height="1.1131944444444444in"}
+![](assets/management-port-command/image77.png)
 
 Please refer to [check @\@datasource_config](#check-datasource_config-check-mysql-parameter-configuration-information) for usage and instructions.
 
-### check @\@route -- Route check 
+### check @\@route -- Route check
 
 This command is used to check the rightness of sharding table data routing. The statement is:
 
@@ -1716,25 +1712,25 @@ Parameter description:
 
 --------------- ----------------- ----------
 
-  **Parameter**   **Description**   **Type**
+**Parameter**   **Description**   **Type**
   db_name         database name     STRING
-   tb_name        table name        STRING
+   tb_name        table name        STRING
 
 --------------- ----------------- ----------
 
 When the data routing is consistent, the result is:
 
-![](media/image78.png){width="5.295833333333333in" height="0.49583333333333335in"}
+![](assets/management-port-command/image78.png)
 
 When the data routing is inconsistent, the result is:
 
-![](media/image79.png){width="5.513194444444444in" height="0.9652777777777778in"}
+![](assets/management-port-command/image79.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- -------------------------- ----------------------
 
-  **Column Name**   **Description**            **Value Type/Range**
+**Column Name**   **Description**            **Value Type/Range**
   shard_key_value   the routing key value      STRING
   route_dn          the routing node           INT/\[number\]
   actual_dn         the actually stored node   INT/\[number\]
@@ -1751,7 +1747,7 @@ Parameter description:
 
 --------------- ------------------ ------------------------------------------------------------
 
-  **Parameter**   **Description**    **Type**
+**Parameter**   **Description**    **Type**
   connection_id   the connected id   INTEGER/obtained through the command \[show \@connection\]
 
 --------------- ------------------ ------------------------------------------------------------
@@ -1762,7 +1758,7 @@ mysql\> kill @\@connection 7;
 
 Query OK, 1 rows affected (0.00 sec)
 
-![](media/image80.png){width="5.773611111111111in" height="0.9388888888888889in"}
+![](assets/management-port-command/image80.png)
 
 ### offline -- HotDB offline
 
@@ -1770,9 +1766,9 @@ This command is used to close the HotDB Server port and disconnect the frontend 
 
 mysql\> offline;
 
-![](media/image81.png){width="5.7652777777777775in" height="1.226388888888889in"}
+![](assets/management-port-command/image81.png)
 
-![](media/image82.png){width="5.7652777777777775in" height="0.8784722222222222in"}
+![](assets/management-port-command/image82.png)
 
 ### online -- HotDB online
 
@@ -1780,13 +1776,13 @@ If we need to start up the HotDB Server port, we need to run the online in manag
 
 mysql\> online;
 
-![](media/image83.png){width="5.7652777777777775in" height="2.4694444444444446in"}
+![](assets/management-port-command/image83.png)
 
-![](media/image84.png){width="5.7652777777777775in" height="0.7909722222222222in"}
+![](assets/management-port-command/image84.png)
 
 In a complete and normal HotDB Server high availability environment, if we manually send the command online to slave compute node, the slave compute node may start up 3323, and send the command offline to master compute node, and then the master compute node server port 3323 will be closed. But in the current state, the vip of keepalived will not drift (because master compute port 3325 is still available), then the compute node data service may become unavailable virtually. Therefore, if users manually operate the online of slave compute node without knowing clearly the operation mode of hign availability system or the existence of this defect, there may be a high risk of business failure!
 
-### 1.1. online_dr - switch the IDC
+### online_dr - switch the IDC
 
 The master compute node of DR center is not involved in HA high availability switching of master center. In addition to some show commands, only this command is accepted: online_dr switch the IDC.
 
@@ -1822,7 +1818,7 @@ Query OK, 1 row affected (2.31 sec)
 
 Reload config success
 
-###  reset @\@reloading -- Release the ongoing reload status by force
+### reset @\@reloading -- Release the ongoing reload status by force
 
 This command is used to release the ongoing reload status by force, that is, manually cancel the ongoing dynamic loading by force. Note: this command can be executed only when you confirm that there is no effect at all and this command can be used to reset dynamic loading when it is stuck. It is not recommended to use this command in any other circumstance.
 
@@ -1862,7 +1858,7 @@ Parameter description:
 
 --------------- ----------------- ----------
 
-  **Parameter**   **Description**   **Type**
+**Parameter**   **Description**   **Type**
   datanode_id     data node id      INT
 
 --------------- ----------------- ----------
@@ -1885,7 +1881,7 @@ Parameter description:
 
 --------------- ----------------- ----------
 
-  **Parameter**   **Description**   **Type**
+**Parameter**   **Description**   **Type**
   datanode_id     data node id      INT
   time            stop time (s)     INT
 
@@ -1981,13 +1977,13 @@ Query OK, 1 row affected (0.01 sec)
 
 This command is used to view the progress of IDC switching in the DR mode, for example:
 
-![](media/image85.png){width="5.773611111111111in" height="3.0347222222222223in"}
+![](assets/management-port-command/image85.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------
 
-  **Column Name**   **Description**                                                                                                                                                                                                                                                **Value Type/Range**
+**Column Name**   **Description**                                                                                                                                                                                                                                                **Value Type/Range**
   process           Handling process, 0-8                                                                                                                                                                                                                                          INTEGER
   error             Error message (error format：srcDs1:dstDs1,srcDs2:dstDs2,\...;errormsg or ds,ds:ds,\...;errormsg, data source format (datanodeID_datasourceID_datasourceIP_port_dbname)，if included：then src is the original master center，dst is the original DR center)   STRING
   error_code        Error code status, 1 is finished, 0 is unfinished                                                                                                                                                                                                              INTEGER
@@ -2033,7 +2029,7 @@ dbremapping @\@add\@db01:logic_db02
 
 The first command will be overlaid by the second command, that is, only the mapping relation from db01 to logic_db02 exists finally. You can view the existing mapping relations in the line dbremapping of the table hotdb_config_info in compute node ConfigDB:
 
-![](media/image86.png){width="5.7652777777777775in" height="0.6611111111111111in"}
+![](assets/management-port-command/image86.png)
 
 ### dbremapping @\@remove@ - Remove database mapping relation
 
@@ -2045,7 +2041,7 @@ For example:
 
 mysql\> dbremapping @\@remove\@db01:logic_db01,db02:logic_db02;
 
-\#remove multiple mapping relations
+\# remove multiple mapping relations
 
 Query OK, 0 rows affected (0.00 sec)
 
@@ -2067,13 +2063,13 @@ This command is used to view and obtain the files under the conf directory and i
 
 mysql\> file @\@list;
 
-![](media/image87.png){width="4.747916666666667in" height="2.173611111111111in"}
+![](assets/management-port-command/image87.png)
 
 **Fields and their description are contained in the result:**
 
 ----------------- ------------------------------------------------------- -----------------------------------------------------
 
-  **Column Name**   **Description**                                         **Value Type/Range**
+**Column Name**   **Description**                                         **Value Type/Range**
   DATA              information of related files under the conf directory   STRING/\[number : file "time":yyyy-MM-dd hh:mm:ss\]
 
 ----------------- ------------------------------------------------------- -----------------------------------------------------
@@ -2086,7 +2082,7 @@ mysql\> hold commit;
 
 Query OK, 1 row affected (0.02 sec)
 
-![](media/image88.png){width="5.478472222222222in" height="0.3215277777777778in"}
+![](assets/management-port-command/image88.png)
 
 ### hold ddl -- Set connection status of all clients as HOLD_DDL
 
@@ -2096,7 +2092,7 @@ mysql\> hold ddl;
 
 Query OK, 1 row affected (0.02 sec)
 
-![](media/image89.png){width="5.634722222222222in" height="0.23472222222222222in"}
+![](assets/management-port-command/image89.png)
 
 ### releasehold commit -- Release the connection status of HOLD_ALL_COMMIT
 
@@ -2106,7 +2102,7 @@ mysql\> releasehold commit;
 
 Query OK, 1 row affected (0.00 sec)
 
-![](media/image90.png){width="5.495833333333334in" height="0.3215277777777778in"}
+![](assets/management-port-command/image90.png)
 
 ### releasehold ddl -- Set HOLD_DDL connection status as UNHOLD
 
@@ -2116,7 +2112,7 @@ mysql\> releasehold ddl;
 
 Query OK, 1 row affected (0.00 sec)
 
-![](media/image91.png){width="5.661111111111111in" height="0.24375in"}
+![](assets/management-port-command/image91.png)
 
 ### Global unique constraint
 

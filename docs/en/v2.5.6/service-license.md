@@ -58,7 +58,7 @@ If it prompts: ERROR: LICENSE TAMPERED! it represents that the license has been 
 
 Or after the management platform is started, log in to the management platform, and place the cursor over \"certified\" next to the version number, and view the license details, as shown below:
 
-![](media/image3.jpeg){width="5.7652777777777775in" height="2.609027777777778in"}
+![](assets/service-license/image3.jpeg)
 
 ### Official license
 
@@ -134,7 +134,7 @@ customer info: poc_license_for_bank_of_256test
 
 Or after the management platform is started, log in to the management platform, and place the cursor over \"certified\" next to the version number, and view the license details, as shown below:
 
-![](media/image4.jpeg){width="5.7652777777777775in" height="2.8868055555555556in"}
+![](assets/service-license/image4.jpeg)
 
 ### View the license in use
 
