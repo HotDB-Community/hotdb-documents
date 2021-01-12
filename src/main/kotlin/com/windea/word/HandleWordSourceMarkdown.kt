@@ -75,20 +75,30 @@ fun handleWordSourceMarkdown(parent: String, fileName: String) {
 	val file = File(parent, fileName)
 	val text = file.readText()
 		.replaceToNormalWhiteSpace()
+		.unescape()
 		.removePrefixContent(fileName)
 		.optimizeHeading()
+		.optimizeOrderedList()
 		.changeImageRelUrl(fileName)
 		.removeImageSizeAttributes()
 		.replaceToHeadingLink()
+		.replaceToTable()
 		.removeDuplicates()
 		.trimLineBreak()
 	file.writeText(text)
 	println("Handle word source markdown: ${parent}/${fileName} finished.")
 }
 
+private val unescapeRegex = """\\([<>\-_"'*|@\[\]])""".toRegex()
+
 private fun String.replaceToNormalWhiteSpace(): String {
 	return this.replace(" ", " ")
 }
+
+private fun String.unescape():String{
+	return this.replace(unescapeRegex,"$1")
+}
+
 
 private fun String.removePrefixContent(fileName: String): String {
 	//TODO 
@@ -106,7 +116,7 @@ private fun String.removePrefixContent(fileName: String): String {
 	return lines.joinToString("\n")
 }
 
-private val optimizeHeadingRegex = """(?:\d+(?:\.\d+)*\.?)?\s*(#+)(?:\s*\d+(?:\.\d+)*\.?)?""".toRegex()
+private val optimizeHeadingRegex = """(?:\d+(?:\.\d+)*\.)?\s*(#+)(?:\s*\d+(?:\.\d+)*\.)?""".toRegex()
 
 private fun String.optimizeHeading(): String {
 	return this.lineSequence().joinToString("\n") { line ->
@@ -116,8 +126,13 @@ private fun String.optimizeHeading(): String {
 	}
 }
 
+private	val orderRegex = """(\d+)、""".toRegex()
+
 private fun String.optimizeOrderedList():String{
-	return this //不要转义序号中的点
+	return this.lineSequence().joinToString("\n"){line->
+		//不要转义序号中的点
+		line.replace("\\.",".").replace(orderRegex,"$1.")
+	} 
 }
 
 private val changeImageRelUrlRegex = """!\[[^]]*]\(media""".toRegex()
@@ -143,6 +158,24 @@ private fun String.replaceToHeadingLink(): String {
 		val s = r.groupValues[1]
 		if(s in titles) "[$s](#${s.urlEncode()})" else "\"$s\""
 	}
+}
+
+private val tableRowSeparatorRegex = """\+(-+\+)+""".toRegex()
+private val tableHeaderSeparatorRegex = """\+(=+\+)+""".toRegex()
+private val duplicateRowRegex = """\s*\|\s*\|\s*\|\s*\|\s*\|\s*\|""".toRegex()
+
+//黑人问号啊
+private fun String.replaceToTable():String{
+	//不处理 - 可能是sql结果
+	return this
+	
+	//return this.lineSequence().mapNotNull { line->
+	//	when {
+	//		line.matches(tableRowSeparatorRegex) -> null
+	//		line.matches(tableHeaderSeparatorRegex) -> line.replace("+=","|:").replace("+","|").replace("=","-")
+	//		else -> line
+	//	}
+	//}.joinToString("\n").replace(duplicateRowRegex,"")
 }
 
 private val removeDuplicatesRegex = """\[([^]\s]+?)]\{\.ul}""".toRegex()

@@ -66,7 +66,7 @@ HotDB Server提供数据库服务自动切换功能，可有效地解决数据�
 
 登陆后使用方法与使用MySQL数据库一致，例如：
 
-root\> mysql -uroot -proot -h127.0.0.1 -P3323
+root> mysql -uroot -proot -h127.0.0.1 -P3323
 
 mysql: \[Warning\] Using a password on the command line interface can be insecure.
 
@@ -84,69 +84,57 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type \'help;\' or \'\\h\' for help. Type \'\\c\' to clear the current input statement.
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
-mysql\> show databases;
+mysql> show databases;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| DATABASE |
 
-\| DATABASE \|
+| CLASSIC_LOGICDB |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| CLASSIC_LOGICDB \|
-
-\| HotDB \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| HotDB |
 
 2 rows in set (0.01 sec)
 
-mysql\> use CLASSIC_LOGICDB
+mysql> use CLASSIC_LOGICDB
 
 Database changed
 
-mysql\> show tables;
+mysql> show tables;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Tables_in_CLASSIC_LOGICDB |
 
-\| Tables_in_CLASSIC_LOGICDB \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| customer \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| customer |
 
 1 row in set (0.03 sec)
 
 应用程序连接计算节点与连接MySQL一致，只需修改应用中数据库配置文件的host、port、database、user、password信息即可。HotDB Server支持不同开发平台下的MySQL数据库驱动、连接池，比如JAVA开发平台的JDBC，c3p0、DHCP、DRUID连接池。下面是c3p0连接池的配置举例：
 
-\<!\-- 数据库映射 \--\>
+<!-- 数据库映射 -->
 
-\<!\-- com.mchange.v2.c3p0.ComboPooledDataSource, org.apache.commons.dbcp.BasicDataSource \--\>
+<!-- com.mchange.v2.c3p0.ComboPooledDataSource, org.apache.commons.dbcp.BasicDataSource -->
 
-\<bean id=\"dataSource1\" class=\"com.mchange.v2.c3p0.ComboPooledDataSource\"
+<bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 
-destroy-method=\"close\"\>
+destroy-method="close">
 
-\<property name=\"driverClass\" value=\"com.mysql.jdbc.Driver\" /\>
+<property name="driverClass" value="com.mysql.jdbc.Driver" />
 
-\<property name=\"jdbcUrl\" value=\"jdbc:mysql://192.168.137.101:**3323**/cloth?useLocalSessionState=true\" /\> 其中3323端口位置要修改为计算节点服务端口
+<property name="jdbcUrl" value="jdbc:mysql://192.168.137.101:**3323**/cloth?useLocalSessionState=true" /> 其中3323端口位置要修改为计算节点服务端口
 
-\<property name=\"user\" value=\"root\" /\>
+<property name="user" value="root" />
 
-\<property name=\"password\" value=\"\$root\" /\>
+<property name="password" value="\$root" />
 
-\<property name=\"initialPoolSize\" value=\"10\" /\>
+<property name="initialPoolSize" value="10" />
 
-\<property name=\"maxPoolSize\" value=\"256\" /\>
+<property name="maxPoolSize" value="256" />
 
-\<property name=\"minPoolSize\" value=\"10\" /\>
+<property name="minPoolSize" value="10" />
 
-\<property name=\"maxIdleTime\" value=\"1800\" /\>
+<property name="maxIdleTime" value="1800" />
 
-\<property name=\"maxStatements\" value=\"1000\" /\>
+<property name="maxStatements" value="1000" />
 
 同时，计算节点默认管理端口为3325，在管理端口中可使用命令对当前服务进行监控与管理。若需要了解更多信息，请参考[管理端信息监控](#管理端信息监控)。
 
@@ -176,7 +164,7 @@ destroy-method=\"close\"\>
 
 -   新增[operateMode](#operatemode)参数，满足一键配置不同需求场景下的参数组合，如性能最大化、调试模式等；
 
--   支持直接通过SQL语句[修改分片字段](#在线修改分片字段)（alter table \... change shard column \...）；
+-   支持直接通过SQL语句[修改分片字段](#在线修改分片字段)（alter table ... change shard column ...）；
 
 -   优化[死锁检测](#死锁检测)逻辑：发生死锁根据MySQL版本号控制是否回滚事务并新开事务；
 
@@ -225,9 +213,9 @@ HotDB Server需要获取正规的授权许可证，方能正常提供服务。�
 
 server.xml的部分参数修改后需要重新启动计算节点才能生效，部分参数修改后可通过"[动态加载](#动态加载reload)"生效。
 
-如果第14章[计算节点参数使用说明](#计算节点参数使用说明)中所列参数在server.xml中不存在，则说明该参数使用了默认值；如果想要调整某个参数值或增加某个参数，请在server.xml中增加如下代码，也可以通过管理平台的"配置"-\>"计算节点参数"页面添加。
+如果第14章[计算节点参数使用说明](#计算节点参数使用说明)中所列参数在server.xml中不存在，则说明该参数使用了默认值；如果想要调整某个参数值或增加某个参数，请在server.xml中增加如下代码，也可以通过管理平台的"配置"->"计算节点参数"页面添加。
 
-\<property name=\" dropTableRetentionTime\"\>0\</property\>\<!\--被删除表保留时长,默认为0,不保留\--\>
+<property name=" dropTableRetentionTime">0</property><!--被删除表保留时长,默认为0,不保留-->
 
 ## 快速配置HotDB Server
 
@@ -251,7 +239,7 @@ server.xml的部分参数修改后需要重新启动计算节点才能生效，�
 
 计算节点集群为一组具有高可用关系的计算节点服务，添加计算节点集群是为了将已经部署好的计算节点添加到管理平台进行管理，若要从头部署一套计算节点集群需要使用集群部署功能，请参考《分布式事务数据库HotDB Server【安装部署】功能使用手册》。
 
-在计算节点集群管理页面点击"集群部署与配置"-\>[添加计算节点集群](#添加计算节点集群)，输入计算节点所在的服务器IP 服务端口、管理端口、连接管理端口的用户名、密码即可创建单计算节点，选择主备节点或多节点后可添加一组高可用的计算节点。
+在计算节点集群管理页面点击"集群部署与配置"->[添加计算节点集群](#添加计算节点集群)，输入计算节点所在的服务器IP 服务端口、管理端口、连接管理端口的用户名、密码即可创建单计算节点，选择主备节点或多节点后可添加一组高可用的计算节点。
 
 输入完成后，点击测试，连接成功后则可以将此计算节点集群分配给管理平台用户来配置管理。
 
@@ -275,9 +263,9 @@ set session sql_log_bin=0;
 
 //执行此语句是为了防止创建物理库和用户时同时操作了主备存储节点，如果开启gtid，然后后续又搭建复制，操作不当的情况下可能导致一定的复制中断或主从不一致的风险。
 
-CREATE DATABASE db01 CHARACTER SET \'utf8\' COLLATE \'utf8_general_ci\';
+CREATE DATABASE db01 CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
 
-GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,ALTER,PROCESS,REFERENCES,SUPER,LOCK TABLES,REPLICATION SLAVE,REPLICATION CLIENT,TRIGGER,SHOW VIEW,CREATE VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,EVENT,RELOAD,CREATE TEMPORARY TABLES ON \*.\* TO \'hotdb_datasource\'@\'%\' IDENTIFIED BY \'hotdb_datasource\';
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,ALTER,PROCESS,REFERENCES,SUPER,LOCK TABLES,REPLICATION SLAVE,REPLICATION CLIENT,TRIGGER,SHOW VIEW,CREATE VIEW,CREATE ROUTINE,ALTER ROUTINE,EXECUTE,EVENT,RELOAD,CREATE TEMPORARY TABLES ON *.* TO 'hotdb_datasource'@'%' IDENTIFIED BY 'hotdb_datasource';
 
 set session sql_log_bin=1;
 
@@ -299,7 +287,7 @@ hotdb_datasource账户是HotDB连接各个MySQL实例的唯一账户，所有添
 
 show databases;
 
-登录管理平台页面，选择"配置"-\>"逻辑库"-\>[添加逻辑库](#添加逻辑库)，输入"test"逻辑库名称，点击"**√**"，保存配置，逻辑库即添加成功。
+登录管理平台页面，选择"配置"->"逻辑库"->[添加逻辑库](#添加逻辑库)，输入"test"逻辑库名称，点击"**√**"，保存配置，逻辑库即添加成功。
 
 ![](assets/standard/image8.png)
 
@@ -307,7 +295,7 @@ show databases;
 
 只有被赋予逻辑库权限的用户才能使用逻辑库。
 
-登录管理平台页面，选择"配置"-\>"数据库用户管理"，选择root用户，并点击"编辑"按钮。跳转到"编辑用户权限"页面，在下拉框中勾选创建好的逻辑库"test"，点击"保存"，权限赋予成功。
+登录管理平台页面，选择"配置"->"数据库用户管理"，选择root用户，并点击"编辑"按钮。跳转到"编辑用户权限"页面，在下拉框中勾选创建好的逻辑库"test"，点击"保存"，权限赋予成功。
 
 注意：
 
@@ -319,7 +307,7 @@ show databases;
 
 添加存储节点组可以更方便地添加或修改一组具有相同参数值的存储节点。
 
-登录分布式事务数据库平台页面，选择"配置"-\>"节点管理"-\>"存储节点组"-\>"添加组"：
+登录分布式事务数据库平台页面，选择"配置"->"节点管理"->"存储节点组"->"添加组"：
 
 ![](assets/standard/image10.png)
 
@@ -359,17 +347,17 @@ show databases;
 
 在本案例中，将6个MySQL实例分成3组(3分片)，每组两个MySQL实例（一主一备）。上述描述对应到分布式事务数据库系统为：全量数据由3个数据节点组成，每个数据节点下各有2个存储节点。我们需要在平台做如下操作：添加3个数据节点，并为这3个数据节点分别添加2个存储节点。
 
-登录管理平台页面，选择"配置"-\>"节点管理"-\>"添加节点":
+登录管理平台页面，选择"配置"->"节点管理"->"添加节点":
 
 ![](assets/standard/image12.png)
 
 可以批量添加新的数据节点与其对应存储节点，也可以为已有的数据节点添加存储节点，此处仅介绍批量添加新的数据节点和存储节点，操作演示如下：
 
-1\. 填写数据节点参数：在此例子中，需要添加数据节点个数为3个，数据节点类型为双主（也可以选择其他类型）。此例子中，存储节点组选择不使用组，你也可以在下拉菜单中选择使用上小节添加的[存储节点组](#添加存储节点组)，以此批量添加或修改相似参数。没有特殊要求时，节点前缀、编码位数、起始编码可使用默认值。填入参数后点击【生成】。
+1. 填写数据节点参数：在此例子中，需要添加数据节点个数为3个，数据节点类型为双主（也可以选择其他类型）。此例子中，存储节点组选择不使用组，你也可以在下拉菜单中选择使用上小节添加的[存储节点组](#添加存储节点组)，以此批量添加或修改相似参数。没有特殊要求时，节点前缀、编码位数、起始编码可使用默认值。填入参数后点击【生成】。
 
 ![](assets/standard/image13.png)
 
-2\. 根据提示信息填写存储节点配置参数
+2. 根据提示信息填写存储节点配置参数
 
 ![](assets/standard/image14.png)
 
@@ -411,7 +399,7 @@ show databases;
 
 ![](assets/standard/image15.png)
 
-3\. 填写完参数后，点击【测试连接】验证输入无误且所有存储节点连接成功后，点击【保存并返回】，成功添加3个数据节点及其分别对应的6个存储节点。
+3. 填写完参数后，点击【测试连接】验证输入无误且所有存储节点连接成功后，点击【保存并返回】，成功添加3个数据节点及其分别对应的6个存储节点。
 
 ![](assets/standard/image16.jpeg)
 
@@ -419,7 +407,7 @@ show databases;
 
 添加分片规则的目的是为表的水平拆分提供手动设置的路由方法及算法，如果希望使用自动分片方式创建表信息，则可跳过此步骤。
 
-登录管理平台页面，选择"配置"-\>"分片规则"-\>[添加分片规则](#添加分片规则)。
+登录管理平台页面，选择"配置"->"分片规则"->[添加分片规则](#添加分片规则)。
 
 ![](assets/standard/image17.png)
 
@@ -445,7 +433,7 @@ show databases;
 
 ### 添加表信息
 
-登录管理平台页面，选择"配置"-\>"表信息"-\>[添加表信息](#添加表信息)
+登录管理平台页面，选择"配置"->"表信息"->[添加表信息](#添加表信息)
 
 ![](assets/standard/image20.png)
 
@@ -471,7 +459,7 @@ show databases;
 
 若计算节点未启动，将不能执行动态加载，因此需先启动计算节点。
 
-登录管理平台页面，选择"配置"-\>[配置校验](#配置校验)，在页面中点击"开始校验"，若没有出现配置错误的提示，则表示配置信息无误。
+登录管理平台页面，选择"配置"->[配置校验](#配置校验)，在页面中点击"开始校验"，若没有出现配置错误的提示，则表示配置信息无误。
 
 在页面中点击"动态加载"，若页面提示"动态加载成功"，则配置信息在计算节点中已经成功生效：
 
@@ -485,7 +473,7 @@ mysql -uroot -proot -h127.0.0.1 -P3323 -Dtest
 
 例如：
 
-root\> mysql -h127.0.0.1 -uroot -proot -P3323 -Dtest
+root> mysql -h127.0.0.1 -uroot -proot -P3323 -Dtest
 
 mysql: \[Warning\] Using a password on the command line interface can be insecure.
 
@@ -503,9 +491,9 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type \'help;\' or \'\\h\' for help. Type \'\\c\' to clear the current input statement.
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
-mysql\>
+mysql>
 
 执行customer的建表语句：
 
@@ -519,9 +507,9 @@ CREATE TABLE \`customer\`(
 
 \`provinceid\` TINYINT UNSIGNED NOT NULL DEFAULT 0,
 
-\`province\` ENUM (\'Anhui\',\'Aomen\',\'Beijing\',\'Chongqing\',\'Fujian\',\'Gansu\',\'Guangdong\',\'Guangxi\',\'Guizhou\',\'Hainan\',\'Hebei\',\'Heilongjiang\',\'Henan\',\'Hubei\',\'Hunan\',\'Jiangsu\',\'Jiangxi\',\'Jilin\',\'Liaoning\',\'Neimenggu\',\'Ningxia\',\'Qinghai\',\'Shaanxi\',\'Shandong\',\'Shanghai\',\'Shanxi\',\'Sichuan\',\'Taiwan\',\'Tianjin\',\'Xianggang\',\'Xinjiang\',\'Xizang\',\'Yunnan\',\'Zhejiang\') NULL,
+\`province\` ENUM ('Anhui','Aomen','Beijing','Chongqing','Fujian','Gansu','Guangdong','Guangxi','Guizhou','Hainan','Hebei','Heilongjiang','Henan','Hubei','Hunan','Jiangsu','Jiangxi','Jilin','Liaoning','Neimenggu','Ningxia','Qinghai','Shaanxi','Shandong','Shanghai','Shanxi','Sichuan','Taiwan','Tianjin','Xianggang','Xinjiang','Xizang','Yunnan','Zhejiang') NULL,
 
-\`city\` VARCHAR(16) NULL default \'\',
+\`city\` VARCHAR(16) NULL default '',
 
 \`address\` VARCHAR(64) NULL,
 
@@ -533,7 +521,7 @@ UNIQUE KEY(\`telephone\`)
 
 计算节点将在各个数据节点创建customer表。可以登录到各个MySQL存储节点上，验证customer是否已经被创建。
 
-或在管理平台"配置"-\>"表信息"页面，找到上节添加的[表配置](#添加表信息)，在表结构一列中点击【未创建】跳转到普通DDL页面。
+或在管理平台"配置"->"表信息"页面，找到上节添加的[表配置](#添加表信息)，在表结构一列中点击【未创建】跳转到普通DDL页面。
 
 ![](assets/standard/image23.png)
 
@@ -543,41 +531,41 @@ UNIQUE KEY(\`telephone\`)
 
 分片表customer创建成功后，可以连接计算节点执行下面的SQL语句，操作数据：
 
-INSERT INTO customer VALUES (21,\'何重庆\',\'13912340021\',4,\'Chongqing\',\'重庆\',\'某某街某某号\');
+INSERT INTO customer VALUES (21,'何重庆','13912340021',4,'Chongqing','重庆','某某街某某号');
 
-INSERT INTO customer VALUES (22,\'吕重庆\',\'13912340022\',4,\'Chongqing\',\'重庆\',\'某某街某某号\');
+INSERT INTO customer VALUES (22,'吕重庆','13912340022',4,'Chongqing','重庆','某某街某某号');
 
-INSERT INTO customer VALUES (25,\'孔福州\',\'13912340025\',5,\'Fujian\',\'福州\',\'某某街某某号\');
+INSERT INTO customer VALUES (25,'孔福州','13912340025',5,'Fujian','福州','某某街某某号');
 
-INSERT INTO customer VALUES (26,\'曹兰州\',\'13912340026\',6,\'Gansu\',\'兰州\',\'某某街某某号\');
+INSERT INTO customer VALUES (26,'曹兰州','13912340026',6,'Gansu','兰州','某某街某某号');
 
-INSERT INTO customer VALUES (67,\'岑南昌\',\'13912340067\',17,\'Jiangxi\',\'南昌\',\'某某街某某号\');
+INSERT INTO customer VALUES (67,'岑南昌','13912340067',17,'Jiangxi','南昌','某某街某某号');
 
-INSERT INTO customer VALUES (68,\'薛长春\',\'13912340068\',18,\'Jilin\',\'长春\',\'某某街某某号\');
+INSERT INTO customer VALUES (68,'薛长春','13912340068',18,'Jilin','长春','某某街某某号');
 
-INSERT INTO customer VALUES (69,\'雷沈阳\',\'13912340069\',19,\'Liaoning\',\'沈阳\',\'某某街某某号\');
+INSERT INTO customer VALUES (69,'雷沈阳','13912340069',19,'Liaoning','沈阳','某某街某某号');
 
-INSERT INTO customer VALUES (70,\'贺呼和浩特\',\'13912340070\',20,\'Neimenggu\',\'呼和浩特\',\'某某街某某号\');
+INSERT INTO customer VALUES (70,'贺呼和浩特','13912340070',20,'Neimenggu','呼和浩特','某某街某某号');
 
-INSERT INTO customer VALUES (71,\'倪银川\',\'13912340071\',21,\'Ningxia\',\'银川\',\'某某街某某号\');
+INSERT INTO customer VALUES (71,'倪银川','13912340071',21,'Ningxia','银川','某某街某某号');
 
-INSERT INTO customer VALUES (72,\'汤西宁\',\'13912340072\',22,\'Qinghai\',\'西宁\',\'某某街某某号\');
+INSERT INTO customer VALUES (72,'汤西宁','13912340072',22,'Qinghai','西宁','某某街某某号');
 
-INSERT INTO customer VALUES (73,\'滕西安\',\'13912340073\',23,\'Shaanxi\',\'西安\',\'某某街某某号\');
+INSERT INTO customer VALUES (73,'滕西安','13912340073',23,'Shaanxi','西安','某某街某某号');
 
-INSERT INTO customer VALUES (74,\'殷济南\',\'13912340074\',24,\'Shandong\',\'济南\',\'某某街某某号\');
+INSERT INTO customer VALUES (74,'殷济南','13912340074',24,'Shandong','济南','某某街某某号');
 
-INSERT INTO customer VALUES (93,\'顾台北\',\'13912340093\',28,\'Taiwan\',\'台北\',\'某某街某某号\');
+INSERT INTO customer VALUES (93,'顾台北','13912340093',28,'Taiwan','台北','某某街某某号');
 
-INSERT INTO customer VALUES (94,\'孟天津\',\'13912340094\',29,\'Tianjin\',\'天津\',\'某某街某某号\');
+INSERT INTO customer VALUES (94,'孟天津','13912340094',29,'Tianjin','天津','某某街某某号');
 
-INSERT INTO customer VALUES (95,\'平香港\',\'13912340095\',30,\'Xianggang\',\'香港\',\'某某街某某号\');
+INSERT INTO customer VALUES (95,'平香港','13912340095',30,'Xianggang','香港','某某街某某号');
 
-INSERT INTO customer VALUES (96,\'黄乌鲁木齐\',\'13912340096\',31,\'Xinjiang\',\'乌鲁木齐\',\'某某街某某号\');
+INSERT INTO customer VALUES (96,'黄乌鲁木齐','13912340096',31,'Xinjiang','乌鲁木齐','某某街某某号');
 
-INSERT INTO customer VALUES (99,\'萧杭州\',\'13912340099\',34,\'Zhejiang\',\'杭州\',\'某某街某某号\');
+INSERT INTO customer VALUES (99,'萧杭州','13912340099',34,'Zhejiang','杭州','某某街某某号');
 
-INSERT INTO customer VALUES (100,\'尹杭州\',\'13912340100\',34,\'Zhejiang\',\'杭州\',\'某某街某某号\');
+INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州','某某街某某号');
 
 也可对customer分片表执行DELETE、UPDATE、SELECT等操作。
 
@@ -611,7 +599,7 @@ INSERT INTO customer VALUES (100,\'尹杭州\',\'13912340100\',34,\'Zhejiang\',\
 
 -   集群异常：例如集群无法达成共识，启动时存在网络分区，各节点时间不同步等
 
-1.  #### 计算节点启动时对逻辑库可用的判断
+#### 计算节点启动时对逻辑库可用的判断
 
 为保证垂直拆分场景下，出现数据节点不可用状态时，与之不相关的不同逻辑库之间的业务场景不受影响，计算节点在启动时，对所有逻辑库的可用状态做了特殊判断处理，说明如下：
 
@@ -645,9 +633,9 @@ INSERT INTO customer VALUES (100,\'尹杭州\',\'13912340100\',34,\'Zhejiang\',\
 
 对于下列MySQL存储节点实例的参数，计算节点要求设置为统一的固定值：
 
-1\. **completion_type必须为NO_CHAN**, 如果出现该参数不符合规范，则动态加载失败；
+1. **completion_type必须为NO_CHAN**, 如果出现该参数不符合规范，则动态加载失败；
 
-2\. **innodb_rollback_on_timeout 需要为ON，**且任何时候SHOW \[GLOBAL\|SESSION\] VARIABLES显示出来的innodb_rollback_on_timeout参数都为on，说明如下：
+2. **innodb_rollback_on_timeout 需要为ON，**且任何时候SHOW \[GLOBAL|SESSION\] VARIABLES显示出来的innodb_rollback_on_timeout参数都为on，说明如下：
 
 -   如果innodb_rollback_on_timeout参数全为off， 则计算节点允许加载成功，但计算节点的行为将等同于innodb_rollback_on_timeout参数为on时的事务回滚方式，且配置校验时给出如下提示：
 
@@ -659,9 +647,9 @@ INSERT INTO customer VALUES (100,\'尹杭州\',\'13912340100\',34,\'Zhejiang\',\
 
 > ![](assets/standard/image26.jpeg)
 
-且动态加载时，为off的存储节点日志输出，MySQL variables \'innodb_rollback_on_timeout\' is not consistent,the current value is OFF ,neet to bu changed to ON , 为on的存储节点日志输出MySQL variables \'innodb_rollback_on_timeout\' is not consistent,the current value is ON
+且动态加载时，为off的存储节点日志输出，MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is OFF ,neet to bu changed to ON , 为on的存储节点日志输出MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is ON
 
-3\. **read_only**，参数说明如下：
+3. **read_only**，参数说明如下：
 
 -   如果主存储节点的参数read_only=1，计算节点将拒绝启动，动态加载失败。
 
@@ -669,7 +657,7 @@ INSERT INTO customer VALUES (100,\'尹杭州\',\'13912340100\',34,\'Zhejiang\',\
 
 -   如果从机的参数read_only=1且没有配置切换到该从机的配置规则，计算节点可以启动，reload如果无其它错误则成功。
 
-1.  #### 要求所有节点配置一致的参数
+#### 要求所有节点配置一致的参数
 
 对于下列MySQL存储节点实例的参数，计算节点要求存储节点间的参数值设置为一致：
 
@@ -695,7 +683,7 @@ HotDB Server为客户提供了一套功能完善、操作便捷的信息监控�
 
 用户可以登录管理端（默认端口：3325）使用show @\@help命令查看支持的管理端命令和相应的作用。
 
-root\> mysql -uroot -proot -P3325 -h192.168.200.201
+root> mysql -uroot -proot -P3325 -h192.168.200.201
 
 mysql: \[Warning\] Using a password on the command line interface can be insecure.
 
@@ -713,27 +701,23 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type \'help;\' or \'\\h\' for help. Type \'\\c\' to clear the current input statement.
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
-mysql\> show @\@help;
+mysql> show @\@help;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| statement | description |
 
-\| statement \| description \|
+| check @\@datasource_config | 检查MySQL参数配置信息 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| check @\@route \[db_name.tb_name | tb_name\] | 检测分片表数据路由正确性 |
 
-\| check @\@datasource_config \| 检查MySQL参数配置信息 \|
+| kill @\@connection \[connection_id\] | 将某个指定的连接关闭 |
 
-\| check @\@route \[db_name.tb_name \| tb_name\] \| 检测分片表数据路由正确性 \|
+| onlineddl "\[DDLSTATEMENT\]" | 执行onlineddl |
 
-\| kill @\@connection \[connection_id\] \| 将某个指定的连接关闭 \|
+| rebuild @\@pool | 重建所有节点当前可用存储节点 |
 
-\| onlineddl \"\[DDLSTATEMENT\]\" \| 执行onlineddl \|
-
-\| rebuild @\@pool \| 重建所有节点当前可用存储节点 \|
-
-\| reload @\@config \| 重新读取配置信息 \|
+| reload @\@config | 重新读取配置信息 |
 
 ...省略更多内容，可自行登陆查看...
 
@@ -741,15 +725,11 @@ mysql\> show @\@help;
 
 用户可以输入相应的命令以监控计算节点的服务情况，如显示存储节点信息：
 
-mysql\> show @\@datasource;
+mysql> show @\@datasource;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
 
-\| dn \| ds \| name \| type \| status \| host \| port \| schema \| active \| idle \| size \| unavailable_reason \| flow_control \| idc_id \| listener_id \| listener_status \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 17 \| 17 \| 10.10.0.140_3313_db01 \| 1 \| 1 \| 10.10.0.140 \| 3313 \| db01 \| 0 \| 45 \| 45 \| NULL \| 0/64 \| 1 \| 8 \| 1 \|
+| 17 | 17 | 10.10.0.140_3313_db01 | 1 | 1 | 10.10.0.140 | 3313 | db01 | 0 | 45 | 45 | NULL | 0/64 | 1 | 8 | 1 |
 
 ...省略更多内容，可自行登陆查看...
 
@@ -757,63 +737,51 @@ show @\@命令后接的为一个表的表名，例如上个例子中，"show @\@
 
 用户也可以对show @\@命令后的表名进行DESC操作以查看该表各个字段的含义，如查看存储节点信息中各个字段的含义：
 
-mysql\> desc datasource;
+mysql> desc datasource;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| filedname | description |
 
-\| filedname \| description \|
+| dn | 数据节点号(Datanode) |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| ds | 数据源号(Datasource) |
 
-\| dn \| 数据节点号(Datanode) \|
+| name | 数据源名称(Datasource name) |
 
-\| ds \| 数据源号(Datasource) \|
+| type | 数据源类型(Datasource type) |
 
-\| name \| 数据源名称(Datasource name) \|
+| status | 数据源状态(Datasource status) |
 
-\| type \| 数据源类型(Datasource type) \|
+| host | 主机地址(Host) |
 
-\| status \| 数据源状态(Datasource status) \|
+| port | 主机端口(Port) |
 
-\| host \| 主机地址(Host) \|
+| schema | 物理数据库名(Physical database name) |
 
-\| port \| 主机端口(Port) \|
+| active | 活动连接数(Active connections) |
 
-\| schema \| 物理数据库名(Physical database name) \|
+| idle | 空闲连接数(Idle connections) |
 
-\| active \| 活动连接数(Active connections) \|
+| size | 总连接数(Total connections) |
 
-\| idle \| 空闲连接数(Idle connections) \|
+| unavailable_reason | 数据源不可用原因(Reason for datasource unavailable) |
 
-\| size \| 总连接数(Total connections) \|
+| flow_control | 剩余可用计数(Remaining available quantity in flow control) |
 
-\| unavailable_reason \| 数据源不可用原因(Reason for datasource unavailable) \|
+| idc_id | 机房ID(ID of IDC) |
 
-\| flow_control \| 剩余可用计数(Remaining available quantity in flow control) \|
+| listener_id | LISTENER ID(ID of LISTENER) |
 
-\| idc_id \| 机房ID(ID of IDC) \|
-
-\| listener_id \| LISTENER ID(ID of LISTENER) \|
-
-\| listener_status \| LISTENER STATUS(STATUS of LISTENER) \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| listener_status | LISTENER STATUS(STATUS of LISTENER) |
 
 16 rows in set (0.00 sec)
 
 用户还可以对show @\@命令后的表名进行SELECT操作以进行任意条件的SQL查询，如查看11号数据节点上的存储节点：
 
-mysql\> select \* from datasource where dn=11;
+mysql> select * from datasource where dn=11;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
 
-\| dn \| ds \| name \| type \| status \| host \| port \| schema \| active \| idle \| size \| unavailable_reason \| flow_control \| idc_id \| listener_id \| listener_status \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 11 \| 11 \| 10.10.0.125_3311_db01 \| 1 \| 1 \| 10.10.0.125 \| 3311 \| db01 \| 0 \| 43 \| 43 \| NULL \| 0/64 \| 1 \| 2 \| 1 \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 11 | 11 | 10.10.0.125_3311_db01 | 1 | 1 | 10.10.0.125 | 3311 | db01 | 0 | 43 | 43 | NULL | 0/64 | 1 | 2 | 1 |
 
 1 row in set (0.00 sec)
 
@@ -821,9 +789,9 @@ mysql\> select \* from datasource where dn=11;
 
 计算节点支持限制前端连接数功能，出现访问过载时可辅助限制流量，功能同MySQL。使用方法为：在server.xml中进行配置：
 
-\<property name=\"maxConnections\"\>5000\</property\>\<!\-- 前端最大连接数 \--\>
+<property name="maxConnections">5000</property><!-- 前端最大连接数 -->
 
-\<property name=\"maxUserConnections\"\>0\</property\>\<!\--用户前端最大连接数, 0为不限制\--\>
+<property name="maxUserConnections">0</property><!--用户前端最大连接数, 0为不限制-->
 
 maxConnections为前端最大连接数，默认5000；
 
@@ -873,7 +841,7 @@ maxUserConnections为前端最大用户连接数，默认0为不限制；
 
 若要了解计算节点错误码详情，请参考《分布式事务数据库HotDB Server【计算节点错误码】》。
 
-若要了解管理平台错误码详情，可以点击"帮助中心"\>\>"API接口说明"页面中的【状态码】查看错误码详情。
+若要了解管理平台错误码详情，可以点击"帮助中心">>"API接口说明"页面中的【状态码】查看错误码详情。
 
 ![](assets/standard/image28.png)
 
@@ -891,7 +859,7 @@ maxUserConnections为前端最大用户连接数，默认0为不限制；
 
 ### 配置校验
 
-登录管理平台，选择"配置"-\>[配置校验](#配置校验)进入配置校验面板，点击"开始校验"按钮，将校验分布式事务数据库平台中[配置校验](#配置校验)菜单中的配置项。如下图所示：
+登录管理平台，选择"配置"->[配置校验](#配置校验)进入配置校验面板，点击"开始校验"按钮，将校验分布式事务数据库平台中[配置校验](#配置校验)菜单中的配置项。如下图所示：
 
 ![](assets/standard/image31.png)
 
@@ -925,7 +893,7 @@ maxUserConnections为前端最大用户连接数，默认0为不限制；
 
 在计算节点的配置文件server.xml中，将死锁检测周期设置为大于0的值，将开启死锁的自动检测功能。默认情况下，死锁检测是开启状态，检测周期为3000ms。
 
-\<property name=\" deadlockCheckPeriod \"\>3000\</property\>
+<property name=" deadlockCheckPeriod ">3000</property>
 
 当deadlockCheckPeriod值设置为0时，将不启动死锁检测功能。
 
@@ -933,41 +901,41 @@ maxUserConnections为前端最大用户连接数，默认0为不限制；
 
 会话一，开启事务：
 
-mysql\> start transaction;
+mysql> start transaction;
 
 Query OK, 0 rows affected (0.00 sec)
 
 会话二，开启事务：
 
-mysql\> start transaction;
+mysql> start transaction;
 
 Query OK, 0 rows affected (0.00 sec)
 
 会话一，在DNID为15的数据节点上执行DELETE语句：
 
-mysql\> delete from customer where dnid=15 and id=1;
+mysql> delete from customer where dnid=15 and id=1;
 
 Query OK, 1 row affected (0.00 sec)
 
 会话二，在DNID为13的数据节点上执行DELETE 语句
 
-mysql\> delete from customer where dnid=13 and id=4;
+mysql> delete from customer where dnid=13 and id=4;
 
 Query OK, 1 row affected (0.00 sec)
 
 会话一，在DNID为13的数据节点上执行DELETE语句；DELETE操作将被会话二阻塞：
 
-mysql\> delete from customer where dnid=13 and id=4;
+mysql> delete from customer where dnid=13 and id=4;
 
 会话二，在DNID为15的数据节点上执行DELETE语句；此操作将被会话一阻塞；因会话一被会话二阻塞，会话二也被会话一阻塞，此时将产生死锁。
 
-mysql\> delete from customer where dnid=15 and id=1;
+mysql> delete from customer where dnid=15 and id=1;
 
 Query OK, 1 row affected (1.59 sec)
 
 计算节点检测到死锁，回滚了会话一的事务：
 
-mysql\> delete from customer where dnid=13 and id=4;
+mysql> delete from customer where dnid=13 and id=4;
 
 ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting transaction
 
@@ -1025,17 +993,17 @@ ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting trans
 
 例如，执行一条出现主键冲突的SQL如下：
 
-mysql\> insert into table01 (id,title,author,submission_date) values (3,\"apple\", \"apple pie\", \'2019-10-11-20-05\');
+mysql> insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');
 
-ERROR 1062 (23000): Duplicate entry \'3\' for key \'PRIMARY\'
+ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'
 
 查看计算节点日志（hotdb-unusualsql.log）：
 
-2019-10-12 15:27:45.051 \[INFO\] **\[UNUSUALSQL\]** \[\$NIOREACTOR-7-RW\] cn.hotpu.hotdb.mysql.nio.MySQLConnection(415) - ERROR 1062:Duplicate entry \'3\' for key \'PRIMARY\' \[frontend:\[thread=\$NIOREACTOR-7-RW,id=453,user=root,host=192.168.210.225,port=3323,localport=65442,schema=DBY\]; backend:null; frontend_sql:insert into table01 (id,title,author,submission_date) values (3,\"apple\", \"apple pie\", \'2019-10-11-20-05\');backend_sql:null\]
+2019-10-12 15:27:45.051 \[INFO\] **\[UNUSUALSQL\]** \[\$NIOREACTOR-7-RW\] cn.hotpu.hotdb.mysql.nio.MySQLConnection(415) - ERROR 1062:Duplicate entry '3' for key 'PRIMARY' \[frontend:\[thread=\$NIOREACTOR-7-RW,id=453,user=root,host=192.168.210.225,port=3323,localport=65442,schema=DBY\]; backend:null; frontend_sql:insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');backend_sql:null\]
 
 又如，执行一条被SQL防火墙拦截SQL如下：
 
-mysql\> select \* from test;
+mysql> select * from test;
 
 ERROR 1064 (HY000): Intercepted by sql firewall, because: not allowed to execute select without where expression
 
@@ -1049,45 +1017,45 @@ MySQL错误码解释可参考官方文档：<https://dev.mysql.com/doc/refman/8.
 
 该类日志信息默认保存在HotDB Server安装目录/logs/extra/unusualsql/目录下的hotdb_unusualsql.log文件中。若日志未记录至文件，可检查HotDB Server安装目录/conf目录下的log4j2.xml下，是否存在以下配置：
 
-\</RollingFile\>
+</RollingFile>
 
-\<RollingFile
+<RollingFile
 
-name=\"**Unusualsql**\"
+name="**Unusualsql**"
 
-filename=\"\${sys:HOTDB_HOME}**/logs/extra/unusualsql/hotdb-unusualsql.log**\"
+filename="\${sys:HOTDB_HOME}**/logs/extra/unusualsql/hotdb-unusualsql.log**"
 
-filepattern=\"\${sys:HOTDB_HOME}/logs/extra/unusualsql/hotdb-unusualsql-%d{yyyy-MM-dd-HH-mm-ss}.log\"\>
+filepattern="\${sys:HOTDB_HOME}/logs/extra/unusualsql/hotdb-unusualsql-%d{yyyy-MM-dd-HH-mm-ss}.log">
 
-\<PatternLayout
+<PatternLayout
 
-pattern=\"%d{yyyy-MM-dd HH:mm:ss.SSS} \[%-4p\] \[%marker\] \[%t\] %c(%L) - %msg%n\"/\>
+pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} \[%-4p\] \[%marker\] \[%t\] %c(%L) - %msg%n"/>
 
-\<Policies\>
+<Policies>
 
-\<SizeBasedTriggeringPolicy size=\"100 MB\"/\>
+<SizeBasedTriggeringPolicy size="100 MB"/>
 
-\</Policies\>
+</Policies>
 
-\<!\-- 只记录unusual sql日志 \--\>
+<!-- 只记录unusual sql日志 -->
 
-\<filters\>
+<filters>
 
-\<MarkerFilter marker=\"U**NUSUALSQL**\" onMatch=\"ACCEPT\" onMismatch=\"DENY\"\>\</MarkerFilter\>
+<MarkerFilter marker="U**NUSUALSQL**" onMatch="ACCEPT" onMismatch="DENY"></MarkerFilter>
 
-\</filters\>
+</filters>
 
-\<DefaultRolloverStrategy max=\"1000\"/\>
+<DefaultRolloverStrategy max="1000"/>
 
-\</RollingFile\>
+</RollingFile>
 
-\</Appenders\>
+</Appenders>
 
-\<Loggers\>
+<Loggers>
 
-\<Root level=\"info\"\>
+<Root level="info">
 
-\<AppenderRef ref=\"**Unusualsql**\" /\>
+<AppenderRef ref="**Unusualsql**" />
 
 ## 安全
 
@@ -1106,7 +1074,7 @@ HotDB Server有两类用户，一类是计算节点数据库用户，用于操�
   UPDATE         UPDATE
   DELETE         DELETE,REPLACE
   INSERT         INSERT,REPLACE,INSERT...SELECT
-  SUPER          管理端的语句, /\*!HotDB:dnid=?\*/
+  SUPER          管理端的语句, /*!HotDB:dnid=?*/
   FILE           SELECT...INTO OUTFILE,LOAD DATA
 -------------- ---------------------------------------------------
 
@@ -1116,7 +1084,7 @@ HotDB Server有两类用户，一类是计算节点数据库用户，用于操�
 
 拥有SUPER权限的user，可在3323端口执行HINT语句。如:
 
-/\*!hotdb:dnid=1\*/select \* from table
+/*!hotdb:dnid=1*/select * from table
 
 **权限范围：**
 
@@ -1150,7 +1118,7 @@ HotDB-Server 2.5.5版本开始支持SSL加密连接方式登录计算节点。
 
 可参考[MySQL官方文档](https://dev.mysql.com/doc/refman/5.7/en/creating-ssl-rsa-files.html)生成自签名的秘钥。例如：可以用MySQL自带的命令mysql_ssl_rsa_setup来生成证书和密钥文件。
 
-mysql_ssl_rsa_setup \--datadir=/usr/local/crt/
+mysql_ssl_rsa_setup --datadir=/usr/local/crt/
 
 ![](assets/standard/image36.png)
 
@@ -1164,7 +1132,7 @@ mysql_ssl_rsa_setup \--datadir=/usr/local/crt/
 
 如果需要生成能够进行CA认证的自签名证书，需要使用openssl工具，可参考下列步骤进行：
 
-1.生成CA根证书私钥：openssl genrsa 2048 \> ca-key.pem
+1.生成CA根证书私钥：openssl genrsa 2048 > ca-key.pem
 
 2.生成CA根证书：openssl req -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem，注意信息填写步骤中Common Name最好填入有效域名，并且不能与签发的证书中的Common Name一样，这里我们填写127.0.0.1
 
@@ -1205,21 +1173,21 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 
 生成好TLS秘钥后，将相应的秘钥文件分别传输到计算节点服务端和客户端所在的服务器上，并在计算节点中按要求配置如下三个参数之后才能使用：
 
-\<property name=\"enableSSL\"\>false\</property\>\<!\-- 是否开启SSL连接功能(Enable SSL connection or not) \--\>
+<property name=[enableSSL](#enableSSL)>false</property><!-- 是否开启SSL连接功能(Enable SSL connection or not) -->
 
 参数说明：true代表开启SSL功能，false代表关闭SSL功能，默认值为false
 
-\<property name=\"keyStore\"\>/server.jks\</property\>\<!\-- 用于TLS连接的数据证书.jks文件的路径(Path to the data certificate .jks file for TLS connection) \--\>
+<property name=[keyStore](#keyStore)>/server.jks</property><!-- 用于TLS连接的数据证书.jks文件的路径(Path to the data certificate .jks file for TLS connection) -->
 
 参数说明: 计算节点在conf目录下默认提供了一套server.jks和client相关的pem文件，其密码为hotdb.com，可用于进行简单的连接测试。当选择使用自己生成 TLS证书或者使用付费的TLS证书进行连接，需根据实际的路径和名称来填写。例如：/usr/local/crt/server.jks。
 
-\<property name=\"keyStorePass\"\>BB5A70F75DD5FEB214A5623DD171CEEB\</property\>\<!\-- 用于TLS连接的数据证书.jks文件的密码(Password of the data certificate .jks file for TLS connection) \--\>
+<property name=[keyStorePass](#keyStorePass)>BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- 用于TLS连接的数据证书.jks文件的密码(Password of the data certificate .jks file for TLS connection) -->
 
-参数说明：程序自带的密钥文件中密码是hotdb.com，通过select hex(aes_encrypt(\'hotdb.com\',unhex(md5(\'Hotpu\@2013\#shanghai\#2017\'))));加密得到默认keyStorePass：BB5A70F75DD5FEB214A5623DD171CEEB。若使用自己生成的密钥文件，需根据实际输入的密码来填写。例如：前文输入密码SDcrtest，通过select hex(aes_encrypt(\'SDcrtest\',unhex(md5(\'Hotpu\@2013\#shanghai\#2017\'))))查询到keyStorePass值，然后填写C43BD9DDE9C908FEE7683AED7A301E33。
+参数说明：程序自带的密钥文件中密码是hotdb.com，通过select hex(aes_encrypt('hotdb.com',unhex(md5('Hotpu\@2013\#shanghai\#'))));加密得到默认keyStorePass：BB5A70F75DD5FEB214A5623DD171CEEB。若使用自己生成的密钥文件，需根据实际输入的密码来填写。例如：前文输入密码SDcrtest，通过select hex(aes_encrypt('SDcrtest',unhex(md5('Hotpu\@2013\#shanghai\#'))))查询到keyStorePass值，然后填写C43BD9DDE9C908FEE7683AED7A301E33。
 
 配置好的参数如下图：
 
-![}\]2\_\_08H0B\`61\[421T9YIBK](media/image40.png)
+![}\]2__08H0B\`61\[421T9YIBK](media/image40.png)
 
 参数的修改无需重启计算节点服务， 动态加载时会重新读取server.jks文件。若SSL相关逻辑初始化失败，动态加载不会失败，但后续的SSL连接无法正常建立，非SSL连接不受影响。
 
@@ -1243,7 +1211,7 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 
 对于普通的MySQL客户端来说，可以使用如下方式指定秘钥文件进行连接：
 
-mysql -ujing01 -p123456 -h192.168.240.117 -P3323 \--ssl-ca=/usr/local/crt/ca.pem \--ssl-cert=/usr/local/crt/client-cert.pem \--ssl-key=/usr/local/crt/client-key.pem \--ssl-mode=verify_ca
+mysql -ujing01 -p123456 -h192.168.240.117 -P3323 --ssl-ca=/usr/local/crt/ca.pem --ssl-cert=/usr/local/crt/client-cert.pem --ssl-key=/usr/local/crt/client-key.pem --ssl-mode=verify_ca
 
 ![](assets/standard/image44.png)
 
@@ -1265,7 +1233,7 @@ jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/u
 
 2）可通过使用证书的方式：
 
-openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name \"mysqlclient\" -out client-keystore.p12
+openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name "mysqlclient" -out client-keystore.p12
 
 keytool -importkeystore -srckeystore client-keystore.p12 -srcstoretype pkcs12 -destkeystore keystore -deststoretype JKS
 
@@ -1292,11 +1260,11 @@ HotDB Server支持mysqldump功能，用法同MySQL一样。
 
 使用mysqldump从计算节点导出数据时，要求指定添加如下参数：
 
-\--set-gtid-purged=OFF \--no-tablespaces \--skip-triggers \--single-transaction \--default-character-set=utf8mb4 \--complete-insert \--compact \--skip-tz-utc \[\--replace\|\--insert-ignore\] \[\--hex-blob\] \[\--where=xxx\]
+--set-gtid-purged=OFF --no-tablespaces --skip-triggers --single-transaction --default-character-set=utf8mb4 --complete-insert --compact --skip-tz-utc \[--replace|--insert-ignore\] \[--hex-blob\] \[--where=xxx\]
 
 使用mysqldump从MySQL导出数据，再导入计算节点时，要求添加如下参数：
 
-\--no-defaults \--no-tablespaces \--complete-insert \--default-character-set=utf8mb4 \--hex-blob \--master-data=2 \--no-create-db \--set-gtid-purged=OFF \--single-transaction \--skip-add-locks \--skip-disable-keys \--skip-triggers \--skip-tz-utc \[\--replace\|\--insert-ignore\] \[\--no-create-info\|\--no-data\] \[--where=xxx\] \--databases xxx
+--no-defaults --no-tablespaces --complete-insert --default-character-set=utf8mb4 --hex-blob --master-data=2 --no-create-db --set-gtid-purged=OFF --single-transaction --skip-add-locks --skip-disable-keys --skip-triggers --skip-tz-utc \[--replace|--insert-ignore\] \[--no-create-info|--no-data\] \[--where=xxx\] --databases xxx
 
 注意：default-character-set参数的值请根据实际情况填写，例如utf8或utf8mb4等。
 
@@ -1312,19 +1280,19 @@ dbremapping @\@add\@期望被导入的数据库名:逻辑库名
 
 然后使用mysqlbinlog语句执行选中部分的binlog中SQL语句，要求使用如下语法与参数：
 
-mysqlbinlog -R -h主机名 -P端口号 -v \--base64-output=decode-rows \--skip-gtids \--to-last-log \--stop-never \--database=数据库名 \--start-position=binlog起始位置 binlog文件名 \| mysql -u用户名 -p密码 -h服务器 -P服务端口 -c \--show-warnings=false
+mysqlbinlog -R -h主机名 -P端口号 -v --base64-output=decode-rows --skip-gtids --to-last-log --stop-never --database=数据库名 --start-position=binlog起始位置 binlog文件名 | mysql -u用户名 -p密码 -h服务器 -P服务端口 -c --show-warnings=false
 
-注：\--to-last-log可替换为\--stop-position，指定binlog终止位置而非执行到最新的binlog位置。此命令需要跟远程连接的MySQL实例同版本。
+注：--to-last-log可替换为--stop-position，指定binlog终止位置而非执行到最新的binlog位置。此命令需要跟远程连接的MySQL实例同版本。
 
 例如希望将192.168.200.77:3306中的物理库db01导入计算节点192.168.210.30中的逻辑库logicdb01：
 
-1\. 先至192.168.210.30登入到[管理端口3325](#数据一致性保障)，执行：
+1. 先至192.168.210.30登入到[管理端口3325](#数据一致性保障)，执行：
 
 dbremapping @\@add\@db01:logicdb01
 
-2\. 然后在192.168.210.30服务器上执行如下命令：
+2. 然后在192.168.210.30服务器上执行如下命令：
 
-mysqlbinlog -R -h 192.168.200.77 -P3306 -v \--base64-output=decode-rows \--skip-gtids \--to-last-log \--stop-never \--database=db01 \--start-position=0 mysql-bin.000009 \| mysql -uroot -proot --h192.168.210.30 --P3323 -c -A
+mysqlbinlog -R -h 192.168.200.77 -P3306 -v --base64-output=decode-rows --skip-gtids --to-last-log --stop-never --database=db01 --start-position=0 mysql-bin.000009 | mysql -uroot -proot --h192.168.210.30 --P3323 -c -A
 
 #### mysqldump与mysqlbinlog的实际应用
 
@@ -1334,43 +1302,43 @@ mysqlbinlog -R -h 192.168.200.77 -P3306 -v \--base64-output=decode-rows \--skip-
 
 场景描述：希望将源端192.168.210.45:3309（该实例为有生产数据的普通MySQL实例）中的物理库db01导入计算节点192.168.210.32中的逻辑库logicdb01，参考步骤如下：
 
-1\. 使用mysqldump从数据迁移的源端（即192.168.210.45:3309）导出表结构，在192.168.210.45服务器上执行如下命令（必须添加如下参数）：
+1. 使用mysqldump从数据迁移的源端（即192.168.210.45:3309）导出表结构，在192.168.210.45服务器上执行如下命令（必须添加如下参数）：
 
-root\> mysqldump \--no-defaults -h127.0.0.1 -P3309 -uhotdb_datasource -photdb_datasource **\--no-data** \--skip-triggers \--set-gtid-purged=OFF \--no-tablespaces \--single-transaction \--default-character-set=utf8mb4 \--hex-blob \--no-create-db \--skip-add-locks \--skip-disable-keys \--skip-tz-utc \--databases db01 \>db01.sql
+root> mysqldump --no-defaults -h127.0.0.1 -P3309 -uhotdb_datasource -photdb_datasource **--no-data** --skip-triggers --set-gtid-purged=OFF --no-tablespaces --single-transaction --default-character-set=utf8mb4 --hex-blob --no-create-db --skip-add-locks --skip-disable-keys --skip-tz-utc --databases db01 >db01.sql
 
-2\. 将表结构的SQL文件上传至计算节点所在服务器，即192.168.210.32后，登录到计算节点上执行如下命令，导入表结构成功：
+2. 将表结构的SQL文件上传至计算节点所在服务器，即192.168.210.32后，登录到计算节点上执行如下命令，导入表结构成功：
 
-mysql\> source /root/db01.sql
+mysql> source /root/db01.sql
 
-3\. 使用mysqldump从数据迁移的源端（即192.168.210.45:3309）导出表数据，在192.168.210.45服务器上执行如下命令（必须添加如下参数）：
+3. 使用mysqldump从数据迁移的源端（即192.168.210.45:3309）导出表数据，在192.168.210.45服务器上执行如下命令（必须添加如下参数）：
 
-root\> mysqldump \--no-defaults -h127.0.0.1 -P3309 -uhotdb_datasource -photdb_datasource **\--no-create-info** \--skip-triggers \--set-gtid-purged=OFF \--no-tablespaces \--single-transaction \--default-character-set=utf8mb4 \--hex-blob \--master-data=2 \--no-create-db \--skip-add-locks \--skip-disable-keys \--skip-tz-utc \--databases db01 \>db01-1.sql
+root> mysqldump --no-defaults -h127.0.0.1 -P3309 -uhotdb_datasource -photdb_datasource **--no-create-info** --skip-triggers --set-gtid-purged=OFF --no-tablespaces --single-transaction --default-character-set=utf8mb4 --hex-blob --master-data=2 --no-create-db --skip-add-locks --skip-disable-keys --skip-tz-utc --databases db01 >db01-1.sql
 
-4\. 打开表数据的导出文件，查看当前binlog位置，如下显示则binlog位置为2410，binlog文件为mysql-bin.000076：
+4. 打开表数据的导出文件，查看当前binlog位置，如下显示则binlog位置为2410，binlog文件为mysql-bin.000076：
 
-CHANGE MASTER TO MASTER_LOG_FILE=\'mysql-bin.000076\', MASTER_LOG_POS=2410;
+CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000076', MASTER_LOG_POS=2410;
 
-5\. 将表数据的SQL文件上传至计算节点所在服务器，即192.168.210.32后，登录到计算节点上执行如下命令，导入表数据成功：
+5. 将表数据的SQL文件上传至计算节点所在服务器，即192.168.210.32后，登录到计算节点上执行如下命令，导入表数据成功：
 
-mysql\> source /root/db01.sql
+mysql> source /root/db01.sql
 
 特别注意，如果使用了外键，需要额外执行以下命令：
 
-mysql\> set foreign_key_checks=0
+mysql> set foreign_key_checks=0
 
-mysql\> source /root/db01.sql
+mysql> source /root/db01.sql
 
 执行过程中，应密切关注是否出现警告或错误，否则可能会出现数据会不一致的问题。
 
 Tips：如果业务数据没有数据乱码问题，可以考虑split切分文件，并行导入计算节点以加快处理速度。
 
-6\. 使用mysqlbinlog做增量数据同步。若源端数据库名与计算节点的逻辑库名不相同，则需要在管理端口先添加数据库映射关系，例如：
+6. 使用mysqlbinlog做增量数据同步。若源端数据库名与计算节点的逻辑库名不相同，则需要在管理端口先添加数据库映射关系，例如：
 
 dbremapping @\@add\@db01:logicdb01
 
 然后到计算节点（192.168.210.32）所在服务器上执行如下命令，binlog开始位置为第四步记录的位置（此例子中为2410，binlog文件为mysql-bin.000076）：
 
-mysqlbinlog -R -h192.168.210.45 -P3309 -uhotdb_datasource -photdb_datasource -v \--base64-output=decode-rows \--skip-gtids \--to-last-log \--stop-never \--database=db01 **\--start-position=2410 mysql-bin.000076** \| mysql -uroot -proot --h192.168.210.32 --P3323 -c -A
+mysqlbinlog -R -h192.168.210.45 -P3309 -uhotdb_datasource -photdb_datasource -v --base64-output=decode-rows --skip-gtids --to-last-log --stop-never --database=db01 **--start-position=2410 mysql-bin.000076** | mysql -uroot -proot --h192.168.210.32 --P3323 -c -A
 
 为了加快追数据的速度，建议执行mysqlbinlog命令的服务器就是计算节点所在服务器，这样节省了MySQL命令行客户端执行SQL时SQL和ok包通过网络来回的时间开销，可以极大提高计算节点单线程执行SQL的速度。
 
@@ -1382,51 +1350,45 @@ use xxx //逻辑库名
 
 set session group_concat_max_len=1048576;
 
-set \@mytablename=\'xxx\'; //表名
+set \@mytablename='xxx'; //表名
 
 set \@mydbname=database();
 
-select concat(\'select sum(crc32(concat(ifnull(\',group_concat(column_name separator \',\\\'NULL\\\'),ifnull(\'),\',\\\'NULL\\\')))) as sum from \',table_name,\';\') as sqltext from information_schema.columns where table_schema=\@mydbname and table_name=\@mytablename \\G
+select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=\@mydbname and table_name=\@mytablename \\G
 
 若执行结果一致，则表数据大概率一致。
 
 例如在源端（192.168.200.77）MySQL实例中执行如下：
 
-mysql\> use db01
+mysql> use db01
 
 Database changed
 
-mysql\> set session group_concat_max_len=1048576;
+mysql> set session group_concat_max_len=1048576;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> set \@mytablename=\'table02\';
+mysql> set \@mytablename='table02';
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> set \@mydbname=database();
+mysql> set \@mydbname=database();
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select concat(\'select sum(crc32(concat(ifnull(\',group_concat(column_name separator \',\\\'NULL\\\'),ifnull(\'),\',\\\'NULL\\\')))) as sum from \',table_name,\';\') as sqltext from information_schema.columns where table_schema=\@mydbname and table_name=\@mytablename \\G
+mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=\@mydbname and table_name=\@mytablename \\G
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* 1. row \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+*************************** 1. row ***************************
 
-sqltext: select sum(crc32(concat(ifnull(id,\'NULL\'),ifnull(name,\'NULL\')))) as sum from table02;
+sqltext: select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
 
 1 row in set (0.00 sec)
 
-msyql\> select sum(crc32(concat(ifnull(id,\'NULL\'),ifnull(name,\'NULL\')))) as sum from table02;
+msyql> select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
 
-+\-\-\-\-\-\-\-\-\-\-\--+
+| sum |
 
-\| sum \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 1812521567 \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+
+| 1812521567 |
 
 1 row in set (0.00 sec)
 
@@ -1442,21 +1404,15 @@ HotDB Server提供数据节点中的主从存储节点一致性校验的功能�
 
 登录计算节点的[管理端(3325端口)](#管理端信息监控)，执行show @\@masterslaveconsistency命令，即可查看表在主库和备库上是否一致：
 
-mysql\> show @\@masterslaveconsistency;
+mysql> show @\@masterslaveconsistency;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| db | table | dn | result | info |
 
-\| db \| table \| dn \| result \| info \|
+| DB_T | FB_STUDENT | dn_04 | NO | 存在数据不一致, 因为 存储节点: 5, 表: FB_STUDENT, MySQL错误: Table 'db252.fb_student' doesn't exist |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| DB_A | SP | dn_04 | NO | 表: SP在节点: 4存在数据不一致，列: ID, 分布区间为: 0-17;, 并且不一致行唯一键为: (ID) :(2),(1) |
 
-\| DB_T \| FB_STUDENT \| dn_04 \| NO \| 存在数据不一致, 因为 存储节点: 5, 表: FB_STUDENT, MySQL错误: Table \'db252.fb_student\' doesn\'t exist \|
-
-\| DB_A \| SP \| dn_04 \| NO \| 表: SP在节点: 4存在数据不一致，列: ID, 分布区间为: 0-17;, 并且不一致行唯一键为: (ID) :(2),(1) \|
-
-\| DB_T \| JOIN_Z \| \| YES \| \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| DB_T | JOIN_Z | | YES | |
 
 3 row in set (0.07 sec)
 
@@ -1474,11 +1430,11 @@ mysql\> show @\@masterslaveconsistency;
 
 --------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------
   表的大量数据不一致                                  Table: ... in datanode: ... exist a large amount of data inconsistency
-  表的部分数据不一致                                  Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows\' primary key (...)：
-  从库表不存在                                        exist data inconsistency, because DS: ... Table \'...\' doesn\'t exist
+  表的部分数据不一致                                  Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows' primary key (...)：
+  从库表不存在                                        exist data inconsistency, because DS: ... Table '...' doesn't exist
   表索引不存在                                        DN: ... not exsit index of table:...
   主从故障检测（例如从机Slave_SQL_Running: NO状态）   DN: ... ERROR! Check your replication.
-  主从延迟超过10S                                     DN：... delay too much,can\'t check master-slave data consistency
+  主从延迟超过10S                                     DN：... delay too much,can't check master-slave data consistency
   延迟超过2S                                          Replication latency is more than 2s, Master-Slave consistency detection result may be incorrect or cannot be detected in datanode:
   
   --------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------
@@ -1487,7 +1443,7 @@ mysql\> show @\@masterslaveconsistency;
 
 全局AUTO_INCREMENT，是指表的AUTO_INCREMENT列在整个分布式系统中的各个节点间有序自增。HotDB Server提供全局AUTO_INCREMENT的支持，当表中包含AUTO_INCREMENT列，并且在server.xml文件中，将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为非0（[设置为1](#参数设置为1)或者[设置为2](#参数设置为2)）时，即可以像使用MySQL的AUTO_INCRMENT一样使用计算节点的全局AUTO_INCREMENT。配置示例如：
 
-\<property name=\"autoIncrement\"\>1\</property\>
+<property name=[autoIncrement](#autoIncrement)>1</property>
 
 #### 参数设置为0
 
@@ -1495,31 +1451,25 @@ mysql\> show @\@masterslaveconsistency;
 
 例如：customer为auto分片表，分片字段为id，且name定义为自增序列。则name的自增特性由各个存储节点控制：
 
-mysql\> create table customer(id int ,name int auto_increment primary key);
+mysql> create table customer(id int ,name int auto_increment primary key);
 
-mysql\> insert into customer values (1,null),(2,null),(3,null),(4,null);
+mysql> insert into customer values (1,null),(2,null),(3,null),(4,null);
 
 Query OK, 4 rows affected (0.01 sec)
 
 Records: 4 Duplicates:0 Warnings: 0
 
-mysql\> select \* from customer;
+mysql> select * from customer;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
+| id | name | DNID |
 
-\| id \| name \| DNID \|
+| 4 | 1 | 1001 |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
+| 2 | 1 | 1006 |
 
-\| 4 \| 1 \| 1001 \|
+| 3 | 1 | 1004 |
 
-\| 2 \| 1 \| 1006 \|
-
-\| 3 \| 1 \| 1004 \|
-
-\| 1 \| 1 \| 1008 \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
+| 1 | 1 | 1008 |
 
 4 rows in set (0.00 sec)
 
@@ -1527,41 +1477,35 @@ mysql\> select \* from customer;
 
 若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为1，则由计算节点接管所有表的自增，可以保证全局自增。
 
-\<property name=\"autoIncrement\"\>1\</property\>
+<property name=[autoIncrement](#autoIncrement)>1</property>
 
 例如：customer为auto分片表，分片字段为id，且name定义为自增序列。则name的自增特性由计算节点控制，可实现全局自增：
 
-mysql\> create table customer(id int ,name int auto_increment primary key);
+mysql> create table customer(id int ,name int auto_increment primary key);
 
-mysql\> insert into customer values (1,null),(2,null),(3,null),(4,null);
+mysql> insert into customer values (1,null),(2,null),(3,null),(4,null);
 
 Query OK, 4 rows affected (0.01 sec)
 
 Records: 4 Duplicates: 0 Warnings: 0
 
-mysql\> select \* From customer order by id;
+mysql> select * From customer order by id;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
+| id | name | DNID |
 
-\| id \| name \| DNID \|
+| 1 | 1 | 1008 |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
+| 2 | 2 | 1006 |
 
-\| 1 \| 1 \| 1008 \|
+| 3 | 3 | 1004 |
 
-\| 2 \| 2 \| 1006 \|
-
-\| 3 \| 3 \| 1004 \|
-
-\| 4 \| 4 \| 1001 \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
+| 4 | 4 | 1001 |
 
 4 rows in set (0.00 sec)
 
 若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为1，自增字段类型必须为INT或BIGINT，否则建表提示warning：
 
-mysql\> create table table_test(id tinyint auto_increment primary key);
+mysql> create table table_test(id tinyint auto_increment primary key);
 
 Query OK, 0 rows affected, 1 warning (0.05 sec)
 
@@ -1575,101 +1519,83 @@ Warning (Code 10212): auto_increment column must be bigint or int
 
 例如：若现有Primary计算节点A，Secondary计算节点B和Secondary计算节点C，设置批次大小（[prefetchBatchInit](#prefetchbatchinit)）初始值为100，则计算节点A的自增序列预取区间为\[1,100\]，计算节点B的预取区间为\[101,200\]以及计算节点C的预取区间为\[201,300\]，即：
 
-mysql\> create table test(id int auto_increment primary key,num int);
+mysql> create table test(id int auto_increment primary key,num int);
 
 在计算节点A上执行：
 
-mysql\> insert into test values(null,1),(null,2),(null,3),(null,4);
+mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
 
-mysql\> select \* from test order by id;
+mysql> select * from test order by id;
 
-+\-\-\--+\-\-\-\-\--+
+| id | num |
 
-\| id \| num \|
+| 1 | 1 |
 
-+\-\-\--+\-\-\-\-\--+
+| 2 | 2 |
 
-\| 1 \| 1 \|
+| 3 | 3 |
 
-\| 2 \| 2 \|
-
-\| 3 \| 3 \|
-
-\| 4 \| 4 \|
-
-+\-\-\--+\-\-\-\-\--+
+| 4 | 4 |
 
 //自增序列预取范围为\[1,100\]
 
 在计算节点B上执行：
 
-mysql\> insert into test values(null,1),(null,2),(null,3),(null,4);
+mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
 
-mysql\> select \* from test order by id;
+mysql> select * from test order by id;
 
-+\-\-\-\--+\-\-\-\-\--+
+| id | num |
 
-\| id \| num \|
+| 1 | 1 |
 
-+\-\-\-\--+\-\-\-\-\--+
+| 2 | 2 |
 
-\| 1 \| 1 \|
+| 3 | 3 |
 
-\| 2 \| 2 \|
+| 4 | 4 |
 
-\| 3 \| 3 \|
+| 101 | 1 |
 
-\| 4 \| 4 \|
+| 102 | 2 |
 
-\| 101 \| 1 \|
+| 103 | 3 |
 
-\| 102 \| 2 \|
-
-\| 103 \| 3 \|
-
-\| 104 \| 4 \|
-
-+\-\-\-\--+\-\-\-\-\--+
+| 104 | 4 |
 
 //自增序列预取范围为\[101,200\]
 
 在计算节点C上执行：
 
-mysql\> insert into test values(null,1),(null,2),(null,3),(null,4);
+mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
 
-mysql\> select \* from test order by id;
+mysql> select * from test order by id;
 
-+\-\-\-\--+\-\-\-\-\--+
+| id | num |
 
-\| id \| num \|
+| 1 | 1 |
 
-+\-\-\-\--+\-\-\-\-\--+
+| 2 | 2 |
 
-\| 1 \| 1 \|
+| 3 | 3 |
 
-\| 2 \| 2 \|
+| 4 | 4 |
 
-\| 3 \| 3 \|
+| 101 | 1 |
 
-\| 4 \| 4 \|
+| 102 | 2 |
 
-\| 101 \| 1 \|
+| 103 | 3 |
 
-\| 102 \| 2 \|
+| 104 | 4 |
 
-\| 103 \| 3 \|
+| 201 | 1 |
 
-\| 104 \| 4 \|
+| 202 | 2 |
 
-\| 201 \| 1 \|
+| 203 | 3 |
 
-\| 202 \| 2 \|
-
-\| 203 \| 3 \|
-
-\| 204 \| 4 \|
-
-+\-\-\-\--+\-\-\-\-\--+
+| 204 | 4 |
 
 //自增序列预取范围为\[201,300\]
 
@@ -1683,47 +1609,35 @@ mysql\> select \* from test order by id;
 
 在计算节点A上执行
 
-mysql\> insert into test values(null,1);
+mysql> insert into test values(null,1);
 
-mysql\> insert into test values (11,5);
+mysql> insert into test values (11,5);
 
-mysql\> insert into test values(null,1);
+mysql> insert into test values(null,1);
 
-mysql\> select \* from test order by id;
+mysql> select * from test order by id;
 
-+\-\-\--+\-\-\-\-\--+
+| id | num |
 
-\| id \| num \|
+| 1 | 1 |
 
-+\-\-\--+\-\-\-\-\--+
+| 11 | 5 |
 
-\| 1 \| 1 \|
-
-\| 11 \| 5 \|
-
-\| 12 \| 1 \|
-
-+\-\-\--+\-\-\-\-\--+
+| 12 | 1 |
 
 在计算节点B上执行
 
-mysql\> insert into test values(null,1);
+mysql> insert into test values(null,1);
 
-+\-\-\--+\-\-\-\-\--+
+| id | num |
 
-\| id \| num \|
+| 1 | 1 |
 
-+\-\-\--+\-\-\-\-\--+
+| 11 | 5 |
 
-\| 1 \| 1 \|
+| 12 | 1 |
 
-\| 11 \| 5 \|
-
-\| 12 \| 1 \|
-
-\| 101 \| 1 \|
-
-+\-\-\--+\-\-\-\-\--+
+| 101 | 1 |
 
 注意：
 
@@ -1733,7 +1647,7 @@ mysql\> insert into test values(null,1);
 
 若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为2，自增字段类型必须为bigint，否则建表失败：
 
-mysql\> create table table_test(id tinyint auto_increment primary key);
+mysql> create table table_test(id tinyint auto_increment primary key);
 
 ERROR 10212 (HY000): auto_increment column must be bigint
 
@@ -1747,11 +1661,11 @@ HotDB Server利用MySQL提供的外部XA事务，可解决跨库事务场景中�
 
 在计算节点中，默认情况下，XA事务是关闭的。要使用XA事务，需在server.xml文件中，将属性enableXA设置为TRUE：
 
-\<property name=\"enableXA\"\>true\</property\>
+<property name=[enableXA](#enableXA)>true</property>
 
 重新启动计算节点后方能生效。若XA事务开关被修改后，未重启计算节点直接进行动态加载，修改结果不会生效且会在计算节点日志中有INFO信息：
 
-Can\'t reset XA in reloading, please restart the hotdb to enable XA
+Can't reset XA in reloading, please restart the hotdb to enable XA
 
 计算节点在开启XA事务功能后，对于应用程序或者客户端MySQL命令操作都是透明的，SQL命令，事务流程没有任何变化，可像普通事务一样使用。用START TRANSACTION或者BEGIN，SET AUTOCOMMIT=0开启事务， COMMIT或ROLLBACK提交或者回滚事务；开启自动提交也同样支持。
 
@@ -1775,7 +1689,7 @@ XA模式下：参照SQL99标准，begin\\start transaction会立即开启一个�
 
 2020-10-30 15:42:29.857 \[WARN\] \[MANAGER\] \[\$NIOExecutor-2-10\] cn.hotpu.hotdb.manager.response.v(39) - \[thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT\]killed by manager
 
-2020-10-30 15:42:29.857 \[INFO\] \[INNER\] \[\$NIOExecutor-2-10\] cn.hotpu.hotdb.server.d.c(1066) - XATransactionSession in \[thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT\]\'s query will be killed due to a kill command, current sql:null
+2020-10-30 15:42:29.857 \[INFO\] \[INNER\] \[\$NIOExecutor-2-10\] cn.hotpu.hotdb.server.d.c(1066) - XATransactionSession in \[thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT\]'s query will be killed due to a kill command, current sql:null
 
 2020-10-30 15:42:29.859 \[INFO\] \[CONNECTION\] \[\$NIOExecutor-2-10\] cn.hotpu.hotdb.server.b(3599) - \[thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT\] will be closed because a kill command.
 
@@ -1821,31 +1735,25 @@ XA模式下，当开启读写分离时：无法保证隔离级别正确性，但
 
 为保证数据的正确性，针对不同存储节点服务器存在设置不同时区，导致数据库中时间类型的数据错误的问题，HotDB Server 提供对全局时区的支持，包括：
 
--   当time_zone参数为具体的相同值或者全为SYSTEM并且system_time_zone全为相同的具体值时，HotDB Server不做特殊处理，否则HotDB Server会统一将time_zone设置为固定值："+8:00"且会记录警告级别的日志（The datasources\' time_zones are not consistent）；
+-   当time_zone参数为具体的相同值或者全为SYSTEM并且system_time_zone全为相同的具体值时，HotDB Server不做特殊处理，否则HotDB Server会统一将time_zone设置为固定值："+8:00"且会记录警告级别的日志（The datasources' time_zones are not consistent）；
 
 > 如登入服务端口后输入命令：
 
-set time_zone = \'+0:00\';
+set time_zone = '+0:00';
 
-show variables like \'%time_zone\';
+show variables like '%time_zone';
 
-> 仍会显示time_zone为\'+8:00\':
+> 仍会显示time_zone为'+8:00':
 
-mysql\> set time_zone=\'+0:00\';
+mysql> set time_zone='+0:00';
 
-mysql\> show variables like \'%time_zone\';
+mysql> show variables like '%time_zone';
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+
+| Variable_name | Value |
 
-\| Variable_name \| Value \|
+| system_time_zone | CST |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+
-
-\| system_time_zone \| CST \|
-
-\| time_zone \| +08:00 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+
+| time_zone | +08:00 |
 
 2 rows in set (0.09 sec)
 
@@ -1863,7 +1771,7 @@ HotDB Server 2.5.3将全局唯一约束优化精确到表级别，默认为所�
 
 可以通过修改server.xml中的如下参数或在管理平台计算节点参数配置中修改此参数。修改参数只为未来添加的表设置全局唯一的默认值，但并不影响历史数据表的全局唯一性。
 
-\<property name=\"globalUniqueConstraint\"\>false\</property\>\<!\--全局唯一约束\--\>
+<property name=[globalUniqueConstraint](#globalUniqueConstraint)>false</property><!--全局唯一约束-->
 
 ![](assets/standard/image52.png)
 
@@ -1873,31 +1781,31 @@ HotDB Server 2.5.3将全局唯一约束优化精确到表级别，默认为所�
 
 添加表信息时可以为某张表单独开启／关闭全局唯一约束
 
-1\. 在管理平台上添加表信息时，根据计算节点参数默认显示全局唯一约束开关状态，可手动修改：
+1. 在管理平台上添加表信息时，根据计算节点参数默认显示全局唯一约束开关状态，可手动修改：
 
 ![](assets/standard/image53.png)
 
 垂直分片表与全局表没有此入口，因为不需要对唯一约束做额外处理。添加完表配置后即可使用建表语句添加表结构后使用。
 
-2.使用[自动建表](#_建表即分片)功能，可通过table option GLOBAL_UNIQUE \[=\] {0 \| 1}设置全局唯一约束的开关。例如：
+2.使用[自动建表](#_建表即分片)功能，可通过table option GLOBAL_UNIQUE \[=\] {0 | 1}设置全局唯一约束的开关。例如：
 
-mysql\> create table test02(id not null auto_increment primary key,a char(8),b decimal(4,2),c int) **GLOBAL_UNIQUE=0**;
+mysql> create table test02(id not null auto_increment primary key,a char(8),b decimal(4,2),c int) **GLOBAL_UNIQUE=0**;
 
-mysql\> create table test03(id int primary key,id1 int) **GLOBAL_UNIQUE =1**;
+mysql> create table test03(id int primary key,id1 int) **GLOBAL_UNIQUE =1**;
 
-若不使用GLOBAL_UNIQUE \[=\] {0 \| 1}，则默认根据计算节点参数配置的默认值或在管理平台上添加的表配置设置开启或关闭；若GLOBAL_UNIQUE=1则判断为开启；若GLOBAL_UNIQUE=0则判断为关闭。
+若不使用GLOBAL_UNIQUE \[=\] {0 | 1}，则默认根据计算节点参数配置的默认值或在管理平台上添加的表配置设置开启或关闭；若GLOBAL_UNIQUE=1则判断为开启；若GLOBAL_UNIQUE=0则判断为关闭。
 
 -   若GLOBAL_UNIQUE设置与默认值不同，则以GLOBAL_UNIQUE为准；
 
 -   若GLOBAL_UNIQUE设置与管理平台中此表的全局唯一约束配置不同，则会建表失败，并给出error提醒，例如管理平台添加test01时关闭了全局唯一约束：
 
-mysql\> create table test01(id int)global_unique=1;
+mysql> create table test01(id int)global_unique=1;
 
 ERROR 10172 (HY000): CREATE TABLE FAILED due to generated table config already in HotDB config datasource. You may need to check config datasource or reload HotDB config.
 
 -   若在垂直分片表或全局表的建表语句中使用GLOBAL_UNIQUE，则会建表成功，但会给出warning信息，因为不需要对其唯一约束做额外处理，例如test03是一张垂直分片表：
 
-mysql\> create table test03(id int)**global_unique=1**;
+mysql> create table test03(id int)**global_unique=1**;
 
 Query OK, 0 rows affected, 2 warnings (0.09 sec)
 
@@ -1907,37 +1815,31 @@ Note (Code 10210): Global_unique is not applicable to vertical-sharding tables o
 
 为了满足MySQL的兼容性，例如使用mysqldump时不用担心GLOBAL_UNIQUE对备份结果造成干扰，将GLOBAL_UNIQUE语法解析为注释格式，例如：
 
-mysql\> create table test02(id int) GLOBAL_UNIQUE=1;
+mysql> create table test02(id int) GLOBAL_UNIQUE=1;
 
-mysql\> show create table test02
+mysql> show create table test02
 
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Table | Create Table |
 
-\| Table \| Create Table \|
-
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| test3 \| CREATE TABLE \`test3\` (
+| test3 | CREATE TABLE \`test3\` (
 
 \`id\` int(11) DEFAULT NULL
 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4**/\*hotdb:020503 global_unique=1\*/** \|
-
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4**/*hotdb:020503 global_unique=1*/** |
 
 1 row in set (0.00 sec)
 
 将含有GLOBAL_UNIQUE语法的建表语句导入MySQL不会对结果有影响。在计算节点也可以直接用注释语法操作GLOBAL_UNIQUE，使用-c作为MySQL登陆参数允许执行注释。
 
-root\> mysql -c -uroot -proot -h127.0.0.1 -P3323
+root> mysql -c -uroot -proot -h127.0.0.1 -P3323
 
 例如执行如下语句，表示在HotDB Server版本高于2.5.3时会执行GLOBAL_UNIQUE=0：
 
-mysql\> create table test02(id not null auto_increment primary key,a char(8),b decimal(4,2),c int) /\*hotdb:020503 GLOBAL_UNIQUE=0\*/;
+mysql> create table test02(id not null auto_increment primary key,a char(8),b decimal(4,2),c int) /*hotdb:020503 GLOBAL_UNIQUE=0*/;
 
 #### 修改表时的表级别控制
 
-1\. 可以在管理平台的表信息管理页面修改表配置：
+1. 可以在管理平台的表信息管理页面修改表配置：
 
 ![](assets/standard/image54.png)
 
@@ -1945,23 +1847,17 @@ mysql\> create table test02(id not null auto_increment primary key,a char(8),b d
 
 ![](assets/standard/image55.png)
 
-2\. 在计算节点通过ALTER TABLE使用GLOBAL_UNIQUE语法，开启全局唯一，同理，出现warning信息说明需要执行unique @\@create后方能生效：
+2. 在计算节点通过ALTER TABLE使用GLOBAL_UNIQUE语法，开启全局唯一，同理，出现warning信息说明需要执行unique @\@create后方能生效：
 
-mysql\> alter table keevey01 global_unique=1;
+mysql> alter table keevey01 global_unique=1;
 
 Query OK, 0 rows affected, 1 warning (0.01 sec)
 
-mysql\> show warnings;
+mysql> show warnings;
 
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Level | Code | Message |
 
-\| Level \| Code \| Message \|
-
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| Note \| 10210 \| please go to HotDB Server manager port and execute this command: unique @\@create, otherwise this global_unique setting doesn\'t work. \|
-
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Note | 10210 | please go to HotDB Server manager port and execute this command: unique @\@create, otherwise this global_unique setting doesn't work. |
 
 1 row in set (0.00 sec)
 
@@ -1979,13 +1875,13 @@ mysql\> show warnings;
 
 此功能还支持在SELECT查询语句中不包含分片字段但包含唯一约束字段时，通过查询辅助索引定位到固定节点，将SELECT查询语句仅下发到指定的节点而非所有节点。
 
-\<property name=\"routeByRelativeCol\"\>false\</property\>\<!\--不包含分片字段时通过辅助索引字段路由\--\>
+<property name=[routeByRelativeCol](#routeByRelativeCol)>false</property><!--不包含分片字段时通过辅助索引字段路由-->
 
 此项功能默认关闭，可通过修改server.xml中的routeByRelativeCol参数或在管理平台配置菜单下的计算节点参数配置中添加参数"不包含分片字段时是否开启通过辅助索引字段路由"。
 
 此参数开启后，作用举例如下：现有一个水平分片表table01，分片字段为id，分片规则为auto_mod，执行如下查询语句时：
 
-SELECT \* FROM table01 WHERE unique_col = 100; //unique_col是唯一约束列
+SELECT * FROM table01 WHERE unique_col = 100; //unique_col是唯一约束列
 
 此查询语句将只下发到 unique_col = 100 的那一个数据节点，而不是所有数据节点
 
@@ -1995,7 +1891,7 @@ SELECT \* FROM table01 WHERE unique_col = 100; //unique_col是唯一约束列
 
 因此增加计算节点参数[failoverAutoresetslave](#_fail)，默认关闭。
 
-\<property name=\"failoverAutoresetslave\"\>false\</property\>\<!\-- 故障切换时，是否自动重置主从复制关系 \--\>
+<property name=[failoverAutoresetslave](#failoverAutoresetslave)>false</property><!-- 故障切换时，是否自动重置主从复制关系 -->
 
 故障切换后，会暂停原主从之间IO线程，并对原主库每分钟进行一次心跳检测直到原主库恢复正常。原主库恢复正常后，对比原主库的binlog位置，检测原从库（现主库）是否存在切换前没有获取到的事务，若存在，开启此参数则自动重置主从复制关系。若不存在未接收的事务，则重新开启IO线程并不再做任何处理。
 
@@ -2023,53 +1919,53 @@ DBA is required to deal with the new master, which is the original slave before 
 
 -   **人为操作**
 
-1\. 人为或应用程序直接操作存储节点，可能导致任意类型的不一致；
+1. 人为或应用程序直接操作存储节点，可能导致任意类型的不一致；
 
-2\. 使用HINT语句操作数据，可能导致任意类型的不一致；
+2. 使用HINT语句操作数据，可能导致任意类型的不一致；
 
-3\. 未正确使用外键约束；在不支持的场景下使用存储过程、触发器、视图；未正确使用event等。对于计算节点来说，这些操作相当于"人为或应用程序直接操作存储节点"；
+3. 未正确使用外键约束；在不支持的场景下使用存储过程、触发器、视图；未正确使用event等。对于计算节点来说，这些操作相当于"人为或应用程序直接操作存储节点"；
 
-4\. 强行修改表的配置规则而没有对应调整数据路由，或使用过去遗留的有BUG的分片规则等，可能导致路由不正确；
+4. 强行修改表的配置规则而没有对应调整数据路由，或使用过去遗留的有BUG的分片规则等，可能导致路由不正确；
 
-5\. 设置server.xml 参数checkUpdate=false时，即允许更新分片字段，可能导致路由不正确，进而导致数据操作时存在与预期不一致的问题；
+5. 设置server.xml 参数checkUpdate=false时，即允许更新分片字段，可能导致路由不正确，进而导致数据操作时存在与预期不一致的问题；
 
-6\. 未use逻辑库的情况下，执行了连接绑定语句（包括HINT、set \[session\] foreign_key_checks=0、START TRANSACTION /\*!40100 WITH CONSISTENT SNAPSHOT \*/、set \[session\] UNIQUE_CHECKS=0等），导致其SQL语句均直接下发至存储节点执行，进而可能导致任意类型的不一致；
+6. 未use逻辑库的情况下，执行了连接绑定语句（包括HINT、set \[session\] foreign_key_checks=0、START TRANSACTION /*!40100 WITH CONSISTENT SNAPSHOT */、set \[session\] UNIQUE_CHECKS=0等），导致其SQL语句均直接下发至存储节点执行，进而可能导致任意类型的不一致；
 
 -   **环境配置**
 
-1\. 存储节点所在服务器时间不一致，在低于2.5.1版本时，会存在导致全局表timestamp类型数据不一致的问题、事务内时间不一致问题；在大于等于2.5.1版本，则参考[timestampProxy](#timestampproxy)设置的模式与场景；
+1. 存储节点所在服务器时间不一致，在低于2.5.1版本时，会存在导致全局表timestamp类型数据不一致的问题、事务内时间不一致问题；在大于等于2.5.1版本，则参考[timestampProxy](#timestampproxy)设置的模式与场景；
 
-2\. 存储节点搭建从机方法不当，例如使用extrabackup备份恢复数据的方式搭建从机；
+2. 存储节点搭建从机方法不当，例如使用extrabackup备份恢复数据的方式搭建从机；
 
-3\. 主从存储节点MySQL发行分支、版本不一致；
+3. 主从存储节点MySQL发行分支、版本不一致；
 
-4\. 不合理的存储节点MySQL参数设置、复制架构等导致不一致，包括但不限于：使用语句格式的binlog、部分复制、多主复制、配置不正确的二级从、主从或节点间字符集、时区配置不一致等；
+4. 不合理的存储节点MySQL参数设置、复制架构等导致不一致，包括但不限于：使用语句格式的binlog、部分复制、多主复制、配置不正确的二级从、主从或节点间字符集、时区配置不一致等；
 
-5\. 在没有开启全局唯一约束的情况下，不含分片字段的唯一键无法保证全局唯一；
+5. 在没有开启全局唯一约束的情况下，不含分片字段的唯一键无法保证全局唯一；
 
 -   **异常情况**
 
-1\. 在做DDL操作时存储节点故障、后端连接异常中断导致存储节点间表结构不一致，表结构不一致在部分时候可能带来更多不一致的数据；
+1. 在做DDL操作时存储节点故障、后端连接异常中断导致存储节点间表结构不一致，表结构不一致在部分时候可能带来更多不一致的数据；
 
-2\. 故障切换后，业务上数据正确，但无法完全保证故障的主与切换到的从的数据一。同时，被标记为"不可用"的存储节点如果操作不当，例如在未校验数据一致性的情况下将其重新标记为"可用"并加入数据节点，会导致不一致；
+2. 故障切换后，业务上数据正确，但无法完全保证故障的主与切换到的从的数据一。同时，被标记为"不可用"的存储节点如果操作不当，例如在未校验数据一致性的情况下将其重新标记为"可用"并加入数据节点，会导致不一致；
 
-3\. 非XA模式下：计算节点被强杀、存储节点故障、后端连接异常中断导致连接断开所产生的部分提交；
+3. 非XA模式下：计算节点被强杀、存储节点故障、后端连接异常中断导致连接断开所产生的部分提交；
 
-4\. 计算节点高可用（HA）模式下，多个服务端口（3323）开启提供服务；
+4. 计算节点高可用（HA）模式下，多个服务端口（3323）开启提供服务；
 
-5\. 服务器（包括计算节点、存储节点等）磁盘已满等操作系统故障；
+5. 服务器（包括计算节点、存储节点等）磁盘已满等操作系统故障；
 
-6\. 计算节点/MySQL OOM等服务异常；
+6. 计算节点/MySQL OOM等服务异常；
 
-7\. 备份恢复数据时出现异常，例如部分节点backup服务关闭，存储节点出现故障等 ，可能导致数据出现不一致；
+7. 备份恢复数据时出现异常，例如部分节点backup服务关闭，存储节点出现故障等 ，可能导致数据出现不一致；
 
 -   **其他**
 
-1\. MySQL自身BUG，可能导致任意类型的数据不一致。应尽量使用稳定的MySQL版本与功能，不能盲目追求MySQL新功能；
+1. MySQL自身BUG，可能导致任意类型的数据不一致。应尽量使用稳定的MySQL版本与功能，不能盲目追求MySQL新功能；
 
-2\. 计算节点自身BUG，或者设计上还有遗漏的地方，可能导致任意类型的数据不一致。应及时更新至计算节点最新版本；
+2. 计算节点自身BUG，或者设计上还有遗漏的地方，可能导致任意类型的数据不一致。应及时更新至计算节点最新版本；
 
-3\. 非XA模式下读到半个事务，主从读写分离读到旧数据等非永久性的不一致。
+3. 非XA模式下读到半个事务，主从读写分离读到旧数据等非永久性的不一致。
 
 ## 高可用服务
 
@@ -2093,19 +1989,19 @@ MySQL数据库主从的配置方式，请参考MySQL的官方网站（注意对�
 
 默认情况下，计算节点心跳功能是开启的：
 
-\<property name=\"enableHeartbeat\"\>true\</property\>
+<property name="enableHeartbeat">true</property>
 
 假设192.168.200.202的3309实例与192.168.200.203的3313实例为一对主从复制的MySQL数据库。
 
 配置同一个节点内的主从存储节点，可以在管理平台中的"添加节点"页面或者"存储节点更新"页面中设置。
 
-在管理平台页面中选择"配置"-\>"节点管理"-\>"添加节点"，跳转到"添加节点"页面：
+在管理平台页面中选择"配置"->"节点管理"->"添加节点"，跳转到"添加节点"页面：
 
 在下述操作中，生成一个数据节点"dn_08"，并为该数据节点添加了一个主存储节点"ds_failover_master"和一个从存储节点"ds_failover_slave"：
 
 ![](assets/standard/image59.png)
 
-可直接勾选"自动适配切换规则"，添加节点同时自动适配故障切换优先级。或在管理平台页面中选择"配置"-\>"节点管理"-\>"高可用配置"-\>"切换规则"-\>"添加切换规则"，在数据节点下拉框中选择"dn_08"，在存储节点的下拉框中选择主存储节点"ds_failover_master，在备用存储节点下拉框中选择"ds_failover_slave"，在故障切换优先级选择高：
+可直接勾选"自动适配切换规则"，添加节点同时自动适配故障切换优先级。或在管理平台页面中选择"配置"->"节点管理"->"高可用配置"->"切换规则"->"添加切换规则"，在数据节点下拉框中选择"dn_08"，在存储节点的下拉框中选择主存储节点"ds_failover_master，在备用存储节点下拉框中选择"ds_failover_slave"，在故障切换优先级选择高：
 
 ![](assets/standard/image60.png)
 
@@ -2115,7 +2011,7 @@ MySQL数据库主从的配置方式，请参考MySQL的官方网站（注意对�
 
 主从复制关系搭建：
 
-虽然在节点dn_08下添加了一对主从存储节点，但若这2个存储节点实际并没有搭建主从复制关系，此时可以在"配置"-\>"节点管理"-\>"高可用配置"-\>"主从搭建"中，选择"dn_08"节点。
+虽然在节点dn_08下添加了一对主从存储节点，但若这2个存储节点实际并没有搭建主从复制关系，此时可以在"配置"->"节点管理"->"高可用配置"->"主从搭建"中，选择"dn_08"节点。
 
 ![](assets/standard/image62.jpeg)
 
@@ -2125,7 +2021,7 @@ MySQL数据库主从的配置方式，请参考MySQL的官方网站（注意对�
 
 ##### 手动切换
 
-在"配置"-\>"节点管理"，点击某个数据节点的切换即可完成：
+在"配置"->"节点管理"，点击某个数据节点的切换即可完成：
 
 ![](assets/standard/image64.jpeg)
 
@@ -2201,59 +2097,59 @@ WARN \[pool-1-thread-177\] (?:?) -datanode id failover failed due to found no ba
 
 配置库、部分存储节点部署在同一MySQL实例或同一服务器时，若该实例出现故障，故障信息无法记入配置库，故计算节点支持配置库高可用功能，保证配置库可正常使用。
 
-1\. 在server.xml里配置主从配置库的连接信息，保证主从关系正常
+1. 在server.xml里配置主从配置库的连接信息，保证主从关系正常
 
-\<property name=\"url\"\>jdbc:mysql://192.168.200.191:3310/hotdb_config\</property\>\<!\-- 主配置库地址 \--\>
+<property name="url">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- 主配置库地址 -->
 
-\<property name=\"username\"\>hotdb_config\</property\>\<!\-- 主配置库用户名 \--\>
+<property name="username">hotdb_config</property><!-- 主配置库用户名 -->
 
-\<property name=\"password\"\>hotdb_config\</property\>\<!\-- 主配置库密码 \--\>
+<property name="password">hotdb_config</property><!-- 主配置库密码 -->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.200.190:3310/hotdb_config\</property\>\<!\-- 从配置库地址 \--\>
+<property name="bakUrl">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- 从配置库地址 -->
 
-\<property name=\"bakUsername\"\>hotdb_config\</property\>\<!\-- 从配置库用户名 \--\>
+<property name="bakUsername">hotdb_config</property><!-- 从配置库用户名 -->
 
-\<property name=\"bakPassword\"\>hotdb_config\</property\>\<!\-- 从配置库密码 \--\>
+<property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
 
 -   当主配置库发生故障时会自动切换到从配置库。切换过程中若存在延迟会等待从配置库复制延迟追上后切换成功并提供服务。
 
 -   在计算节点版本高于2.5.6 （包含）时主配置库发生故障，在从配置库接管前会将被接管的从配置库更新为主库，原主配置库更新为从库，且会同步调整server.xml配置文件，如下图：
 
-> \<property name=\"url\"\>jdbc:mysql://192.168.200.190:3310/hotdb_config\</property\>\<!\-- 主配置库地址 \--\>
+> <property name="url">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- 主配置库地址 -->
 >
-> \<property name=\"username\"\>hotdb_config\</property\>\<!\-- 主配置库用户名 \--\>
+> <property name="username">hotdb_config</property><!-- 主配置库用户名 -->
 >
-> \<property name=\"password\"\>hotdb_config\</property\>\<!\-- 主配置库密码 \--\>
+> <property name="password">hotdb_config</property><!-- 主配置库密码 -->
 >
-> \<property name=\"bakUrl\"\>jdbc:mysql://192.168.200.191:3310/hotdb_config\</property\>\<!\-- 从配置库地址 \--\>
+> <property name="bakUrl">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- 从配置库地址 -->
 >
-> \<property name=\"bakUsername\"\>hotdb_config\</property\>\<!\-- 从配置库用户名 \--\>
+> <property name="bakUsername">hotdb_config</property><!-- 从配置库用户名 -->
 >
-> \<property name=\"bakPassword\"\>hotdb_config\</property\>\<!\-- 从配置库密码 \--\>
+> <property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
 
 -   若计算节点高可用服务涉及配置库的主从关系，需保证server.xml中一组计算节点高可用的主从配置库的配置完全相同，不能交错配置。
 
-2\. 配置库同时支持MGR配置库(MySQL必须是5.7以上，配置库MGR暂时只支持三个节点)，在server.xml中配置具有MGR关系的配置库信息，并且保证MGR关系正常。MGR关系不正确的情况下，配置库可能会无法正常提供服务，以及可能造成启动不成功。
+2. 配置库同时支持MGR配置库(MySQL必须是5.7以上，配置库MGR暂时只支持三个节点)，在server.xml中配置具有MGR关系的配置库信息，并且保证MGR关系正常。MGR关系不正确的情况下，配置库可能会无法正常提供服务，以及可能造成启动不成功。
 
-\<property name=\"url\"\>jdbc:mysql://192.168.210.22:3308/hotdb_config_test250\</property\>\<!\-- 配置库地址 \--\>
+<property name="url">jdbc:mysql://192.168.210.22:3308/hotdb_config_test250</property><!-- 配置库地址 -->
 
-\<property name=\"username\"\>hotdb_config\</property\>\<!\-- 配置库用户名 \--\>
+<property name="username">hotdb_config</property><!-- 配置库用户名 -->
 
-\<property name=\"password\"\>hotdb_config\</property\>\<!\-- 配置库密码 \--\>
+<property name="password">hotdb_config</property><!-- 配置库密码 -->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.210.23:3308/hotdb_config_test250\</property\>\<!\-- 从配置库地址(如配置库使用MGR,必须配置此项) \--\>
+<property name="bakUrl">jdbc:mysql://192.168.210.23:3308/hotdb_config_test250</property><!-- 从配置库地址(如配置库使用MGR,必须配置此项) -->
 
-\<property name=\"bakUsername\"\>hotdb_config\</property\>\<!\-- 从配置库用户名(如配置库使用MGR,必须配置此项) \--\>
+<property name="bakUsername">hotdb_config</property><!-- 从配置库用户名(如配置库使用MGR,必须配置此项) -->
 
-\<property name=\"bakPassword\"\>hotdb_config\</property\>\<!\-- 从配置库密码(如配置库使用MGR,必须配置此项) \--\>
+<property name="bakPassword">hotdb_config</property><!-- 从配置库密码(如配置库使用MGR,必须配置此项) -->
 
-\<property name=\"configMGR\"\>true\</property\>\<!\-- 配置库是否使用MGR \--\>
+<property name="configMGR">true</property><!-- 配置库是否使用MGR -->
 
-\<property name=\"bak1Url\"\>jdbc:mysql://192.168.210.24:3308/hotdb_config_test250\</property\>\<!\-- MGR配置库地址(如配置库使用MGR,必须配置此项) \--\>
+<property name="bak1Url">jdbc:mysql://192.168.210.24:3308/hotdb_config_test250</property><!-- MGR配置库地址(如配置库使用MGR,必须配置此项) -->
 
-\<property name=\"bak1Username\"\>hotdb_config\</property\>\<!\-- MGR配置库用户名(如配置库使用MGR,必须配置此项) \--\>
+<property name="bak1Username">hotdb_config</property><!-- MGR配置库用户名(如配置库使用MGR,必须配置此项) -->
 
-\<property name=\"bak1Password\"\>hotdb_config\</property\>\<!\-- MGR配置库密码(如配置库使用MGR,必须配置此项) \--\>
+<property name="bak1Password">hotdb_config</property><!-- MGR配置库密码(如配置库使用MGR,必须配置此项) -->
 
 MGR配置库在主库发生故障时，根据实际MySQL的重新选主逻辑，在选出新的主库时，会及时切换到新的主配置库。
 
@@ -2265,7 +2161,7 @@ HotDB Server支持高可用架构部署，利用keepalived高可用服务原理�
 
 在启动高可用架构下的主备计算节点服务时，需要注意启动的顺序问题，如下为标准启动顺序：
 
-1\. 先启动主计算节点，再启动主计算节点所在服务器上的Keepalived：
+1. 先启动主计算节点，再启动主计算节点所在服务器上的Keepalived：
 
 查看计算节点日志：
 
@@ -2275,21 +2171,21 @@ HotDB Server支持高可用架构部署，利用keepalived高可用服务原理�
 
 查看端口监听状态：
 
-root\> ss -npl \| grep 3323
+root> ss -npl | grep 3323
 
-LISTEN 0 1000 \*:3323 \*:\* users:((\"java\",12639,87))
+LISTEN 0 1000 *:3323 *:* users:(("java",12639,87))
 
-root\> ps -aux \|grep hotdb
+root> ps -aux |grep hotdb
 
-Warning: bad syntax, perhaps a bogus \'-\'? See /usr/share/doc/procps-3.2.8/FAQ
+Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
 
 root 12639 60.7 34.0 4194112 2032134 ? Sl Jun04 7043:58 /usr/java/jdk1.7.0_80/bin/java -DHOTDB_HOME=/usr/local/hotdb-2.4/hotdb-server -classpath /usr/local/hotdb-2.4/hotdb-server/conf: ...省略更多... -Xdebug -Xrunjdwp:transport=dt_socket,address=8065,server=y,suspend=n -Djava.net.preferIPv4Stack=true cn.hotpu.hotdb.HotdbStartup
 
 使用命令"ip a"可查看当前主计算节点的Keepalived VIP是否已绑定成功，如下例子中，192.168.200.190为主计算节点所在服务器地址；192.168.200.140为配置的VIP地址
 
-root\> ip a
+root> ip a
 
-1: lo: \<LOOPBACK,UP,LOWER_UP\> mtu 65536 qdisc noqueue state UNKNOWN
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
 
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 
@@ -2299,7 +2195,7 @@ inet6 ::1/128 scope host
 
 valid_lft forever preferred_lft forever
 
-2: eth1: \<BROADCAST,MULTICAST,UP,LOWER_UP\> mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
+2: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
 
 link/ether 00:1d:0f:14:8b:fa brd ff:ff:ff:ff:ff:ff
 
@@ -2311,7 +2207,7 @@ inet6 fe80::21d:ff:fe14:8bfa/64 scope link
 
 valid_lft forever preferred_lft forever
 
-2\. 再启动备计算节点，再启动备计算节点所在服务器上的Keepalived：
+2. 再启动备计算节点，再启动备计算节点所在服务器上的Keepalived：
 
 查看计算节点日志：
 
@@ -2323,13 +2219,13 @@ valid_lft forever preferred_lft forever
 
 查看端口监听状态：
 
-root\> ss -npl \| grep 3325
+root> ss -npl | grep 3325
 
-LISTEN 0 1000 \*:3325 \*:\* users:((\"java\",11603,83))
+LISTEN 0 1000 *:3325 *:* users:(("java",11603,83))
 
-root\> ps -aux \|grep hotdb
+root> ps -aux |grep hotdb
 
-Warning: bad syntax, perhaps a bogus \'-\'? See /usr/share/doc/procps-3.2.8/FAQ
+Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
 
 root 11603 12.0 13.6 3788976 1086196 ? Sl Jun04 1389:44 /usr/java/jdk1.7.0_80/bin/java -DHOTDB_HOME=/usr/local/hotdb-2.4/hotdb-server -classpath /usr/local/hotdb-2.4/hotdb-server/conf: ...省略更多... -Xdebug -Xrunjdwp:transport=dt_socket,address=8065,server=y,suspend=n -Djava.net.preferIPv4Stack=true cn.hotpu.hotdb.HotdbStartup
 
@@ -2345,7 +2241,7 @@ root 11603 12.0 13.6 3788976 1086196 ? Sl Jun04 1389:44 /usr/java/jdk1.7.0_80/bi
 
 2018-06-12 21:54:45.141 \[INFO\] \[MANAGER\] \[Labor-4\] q(-1) -- Failed to offline master Because mysql: \[Warning\] Using a password on the command line interface can be insecure.
 
-ERROR 2003 (HY000): Can\'t connect to MySQL server on \'192.168.200.190\' (111)
+ERROR 2003 (HY000): Can't connect to MySQL server on '192.168.200.190' (111)
 
 2018-06-12 21:54:45.141 \[INFO\] \[RESPONSE\] \[\$NIOREACTOR-8-RW\] af(-1) -- connection killed for HotDB backup startup
 
@@ -2353,9 +2249,9 @@ ERROR 2003 (HY000): Can\'t connect to MySQL server on \'192.168.200.190\' (111)
 
 Keepalived的VIP已在192.168.200.191服务器上:
 
-root\> ip a
+root> ip a
 
-1: lo: \<LOOPBACK,UP,LOWER_UP\> mtu 65536 qdisc noqueue state UNKNOWN
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
 
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 
@@ -2365,7 +2261,7 @@ inet6 ::1/128 scope host
 
 valid_lft forever preferred_lft forever
 
-2: eth0: \<BROADCAST,MULTICAST,UP,LOWER_UP\> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
 
 link/ether 18:a9:05:1b:0f:a8 brd ff:ff:ff:ff:ff:ff
 
@@ -2391,7 +2287,7 @@ HotDB Server支持多计算节点集群的节点自治。以下简称计算节�
 
 HotDB Server支持负载均衡：可选择使用LVS等方式，进行SQL请求的分发。应用端可借助LVS的VIP访问HotDB Server的数据库服务，同时保证使用透明与服务不间断。也可使用其余负载均衡方案进行处理，例如F5加自定义检测；应用直连计算节点，但发生异常时更换节点等方式。
 
-![9R8QD\$VPCV%J\$4\_\]YYIOGHX](media/image65.png)
+![9R8QD\$VPCV%J\$4_\]YYIOGHX](media/image65.png)
 
 ##### 启动说明
 
@@ -2590,7 +2486,7 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 ---------------- -------------------------------------------------------- --------------------------------------- ----------------------
   **参数值**       **参数说明**                                             **参考值**                              **动态加载是否生效**
   haMode           高可用模式：0：主备；1：集群                             集群环境下参数值为1                     是
-  serverId         集群节点编号1-N（节点数)，集群内唯一且N\<=集群节点总数   serverID要从1开始，且集群内连续不重复   是
+  serverId         集群节点编号1-N（节点数)，集群内唯一且N<=集群节点总数   serverID要从1开始，且集群内连续不重复   是
   clusterName      集群组名称                                               HotDB-Cluster                           是
   clusterSize      集群节点总数                                             默认值3，根据实际节点数配置             是
   clusterNetwork   集群所在网段                                             192.168.200.0/24，跟集群IP同网段        是
@@ -2626,7 +2522,7 @@ HA模式扩展到集群多节点，主要在于如何将keepalived切换到LVS�
 
 cd /usr/local/hotdb/Install_Package
 
-sh hotdbinstall_v\*.sh \--dry-run=no \--install-lvs=master \--lvs-vip-with-perfix=192.168.210.218/24 \--lvs-port=3323 \--lvs-virtual-router-id=44 \--lvs-net-interface-name=eth0:1 \--lvs-real-server-list=192.168.210.134:3323:3325,192.168.210.67:3323:3325,192.168.210.68:3323:3325 \--ntpdate-server-ip=182.92.12.11
+sh hotdbinstall_v*.sh --dry-run=no --install-lvs=master --lvs-vip-with-perfix=192.168.210.218/24 --lvs-port=3323 --lvs-virtual-router-id=44 --lvs-net-interface-name=eth0:1 --lvs-real-server-list=192.168.210.134:3323:3325,192.168.210.67:3323:3325,192.168.210.68:3323:3325 --ntpdate-server-ip=182.92.12.11
 
 （2）计算节点服务器（HotDB_01/HotDB_02/HotDB_03）配置LVS服务
 
@@ -2634,7 +2530,7 @@ sh hotdbinstall_v\*.sh \--dry-run=no \--install-lvs=master \--lvs-vip-with-perfi
 
 cd /usr/local/hotdb/Install_Package
 
-sh hotdbinstall_v\*.sh \--dry-run=no \--lvs-real-server-startup-type=service \--lvs-vip-with-perfix=192.168.210.218/24 \--install-ntpd=yes \--ntpdate-server-host=182.92.12.11
+sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-vip-with-perfix=192.168.210.218/24 --install-ntpd=yes --ntpdate-server-host=182.92.12.11
 
 （3）LVS服务器启动LVS服务
 
@@ -2707,9 +2603,9 @@ ipvsadm -a -t 192.168.210.216:3323 -r 192.168.210.134
 
 cd /usr/local/hotdb/Install_Package/
 
-sh hotdbinstall_v\*.sh \--dry-run=no \--lvs-real-server-startup-type=service \--lvs-vip-with-perfix=192.168.210.216/24 \--install-ntpd=no \--ntpdate-server-host=182.92.12.11
+sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-vip-with-perfix=192.168.210.216/24 --install-ntpd=no --ntpdate-server-host=182.92.12.11
 
-**说明**：\--lvs-vip-with-perfix：当前集群的VIP
+**说明**：--lvs-vip-with-perfix：当前集群的VIP
 
 **第三步：调整参数并启动新集群成员**
 
@@ -2727,7 +2623,7 @@ sh hotdbinstall_v\*.sh \--dry-run=no \--lvs-real-server-startup-type=service \--
 
 **第五步：管理平台适配调整**
 
-进入"集群管理"-\>"计算节点集群"页面，将新引入的计算节点纳入管理。
+进入"集群管理"->"计算节点集群"页面，将新引入的计算节点纳入管理。
 
 编辑计算节点集群，通过计算节点右侧操作栏的"+"按钮可添加新引入的计算节点，保存后管理平台会根据计算节点个数自动识别计算节点模式，如下图：
 
@@ -2749,17 +2645,11 @@ sh hotdbinstall_v\*.sh \--dry-run=no \--lvs-real-server-startup-type=service \--
 
 涉及的参数配置如下:
 
-+------------+--------------------------------------------------+------------------------------------------------+----------------------+
 | **参数值** | **参数说明**                                     | **参考值**                                     | **动态加载是否生效** |
-+------------+--------------------------------------------------+------------------------------------------------+----------------------+
 | haMode     | 高可用模式：0：主备；1：集群                     | 集群环境下参数值为1                            | 是                   |
-+------------+--------------------------------------------------+------------------------------------------------+----------------------+
 | HaState    | 计算节点HA模式下的主备角色配置                   | 主计算节点配置：master，备计算节点配置：backup | 是                   |
-+------------+--------------------------------------------------+------------------------------------------------+----------------------+
-| haNodeHost | 计算节点高可用模式下对应的当前主计算节点连接信息 | 配置格式为IP:PORT                              | 是                   |
-|            |                                                  |                                                |                      |
+| haNodeHost | 计算节点高可用模式下对应的当前主计算节点连接信息 | 配置格式为IP:PORT                              | 是
 |            |                                                  | 192.168.200.1:3325                             |                      |
-+------------+--------------------------------------------------+------------------------------------------------+----------------------+
 
 ###### 集群模式缩容为HA模式
 
@@ -2781,13 +2671,13 @@ sh hotdbinstall_v\*.sh \--dry-run=no \--lvs-real-server-startup-type=service \--
 
 /usr/local/hotdb/Install_Package
 
-sh hotdbinstall_v\*.sh \--dry-run=no \--install-keepalived=master \--keepalived-vip-with-prefix=192.168.210.218/24 \--keepalived-virtual-router-id=218 \--keepalived-net-interface-name=eth0:1 \--ntpdate-server-host=182.92.12.11 \--install-ntpd=yes
+sh hotdbinstall_v*.sh --dry-run=no --install-keepalived=master --keepalived-vip-with-prefix=192.168.210.218/24 --keepalived-virtual-router-id=218 --keepalived-net-interface-name=eth0:1 --ntpdate-server-host=182.92.12.11 --install-ntpd=yes
 
 **HotDB_02服务器执行脚本：**
 
 cd /usr/local/hotdb/Install_Package
 
-sh hotdbinstall_v\*.sh \--dry-run=no \--install-keepalived=backup \--keepalived-vip-with-prefix=192.168.210.218/24 \--keepalived-virtual-router-id=218 \--keepalived-net-interface-name=eth0:1 \--ntpdate-server-host=182.92.12.11 \--install-ntpd=yes
+sh hotdbinstall_v*.sh --dry-run=no --install-keepalived=backup --keepalived-vip-with-prefix=192.168.210.218/24 --keepalived-virtual-router-id=218 --keepalived-net-interface-name=eth0:1 --ntpdate-server-host=182.92.12.11 --install-ntpd=yes
 
 （2）修改HotDB_01、HotDB_02服务器的keepalived.conf配置，内容参考《安装部署》文档第2.1.2.2章节。
 
@@ -2857,7 +2747,7 @@ HotDB Server支持读写分离功能，并且支持配置读写分离权重
 
 读写分离功能默认设置为关闭。开启读写分离功能，可在计算节点的配置文件server.xml中，将strategyForRWSplit属性设置为大于0的值。例如：
 
-\<property name=\"strategyForRWSplit\"\>1\</property\>
+<property name=[strategyForRWSplit](#strategyForRWSplit)>1</property>
 
 strategyForRWSplit允许设置的值为0，1，2，3。当设置为0时，读写操作都在主存储节点，也即关闭读写分离。当设置为1时，代表可分离的读请求发往所有可用存储节点（包含主存储节点），写操作与不可分离的读请求在主存储节点上进行。当设置为2时，代表可分离的读请求发往可用的备存储节点，写操作与不可分离的读请求在主存储节点上进行。当设置为3时，代表事务（非XA模式）中发生写前的读请求与自动提交的读请求发往可用的备存储节点。其余请求在主存储节点上进行。
 
@@ -2869,19 +2759,19 @@ HotDB Server读写分离对应用研发者和数据库管理员完全透明，�
 
 指定SQL语句在主存储节点上执行：
 
-/\*!hotdb:rw=master\*/select \* from customer;
+/*!hotdb:rw=master*/select * from customer;
 
 指定SQL语句在从库存储节点上执行：
 
-/\*!hotdb:rw=slave\*/select \* from customer;
+/*!hotdb:rw=slave*/select * from customer;
 
 #### 读写分离权重配置
 
 计算节点支持读写分离的同时，可以通过server.xml中配置参数控制主从读的比例。进入计算节点的安装目录的conf目录下，并编辑server.xml，修改如下相关设置：
 
-\<property name=\"strategyForRWSplit\"\>0\</property\>\<!\-- 不开启读写分离：0；可分离的读请求发往所有可用数据源：1；可分离的读请求发往可用备数据源：2；事务中发生写前的读请求发往可用备数据源：3\--\>
+<property name=[strategyForRWSplit](#strategyForRWSplit)>0</property><!-- 不开启读写分离：0；可分离的读请求发往所有可用数据源：1；可分离的读请求发往可用备数据源：2；事务中发生写前的读请求发往可用备数据源：3-->
 
-\<property name=\"weightForSlaveRWSplit\"\>50\</property\>\<!\-- 从机读比例，默认50（百分比）,为0时代表该参数无效\--\>
+<property name=[weightForSlaveRWSplit](#weightForSlaveRWSplit)>50</property><!-- 从机读比例，默认50（百分比）,为0时代表该参数无效-->
 
 说明：
 
@@ -2911,7 +2801,7 @@ DNID是数据节点DATANODE_ID的缩写
 
 -   **在SELECT、UPDATE、DELETE子句中，使用DNID字段**
 
-SELECT \* FROM customer WHERE dnid=1;
+SELECT * FROM customer WHERE dnid=1;
 
 执行该SELECT语句，计算节点将会返回分片表customer在数据节点ID为1上的数据。
 
@@ -2919,13 +2809,13 @@ DELETE FROM customer WHERE dnid=1 AND id=3;
 
 执行该DELETE语句，计算节点将会删除分片表customer在数据节点ID为1，字段ID等于3的数据。
 
-UPDATE customer SET id=4 WHERE dnid=1 AND name=\'a\';
+UPDATE customer SET id=4 WHERE dnid=1 AND name='a';
 
-执行该DELETE语句，计算节点将会修改分片表customer在数据节点ID为1，字段name等于\'a\'的数据。
+执行该DELETE语句，计算节点将会修改分片表customer在数据节点ID为1，字段name等于'a'的数据。
 
 -   **执行SELECT语句使用DNID作为查询项**
 
-SELECT \*,dnid FROM tab_name;
+SELECT *,dnid FROM tab_name;
 
 执行该SELECT语句，计算节点将会在结果集里显示所有结果的dnid值／
 
@@ -2933,27 +2823,21 @@ SELECT \*,dnid FROM tab_name;
 
 登录到计算节点以后，执行SET SHOW_DNID=1语句，计算节点将会在SELECT语句中返回每一行结果的DNID（数据节点ID）。
 
-mysql\> set show_dnid=1;
+mysql> set show_dnid=1;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select \* from customer where id in (77,67,52,20);
+mysql> select * from customer where id in (77,67,52,20);
 
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
+| id | name | telephone | provinceid | province | city | address | **DNID** |
 
-\| id \| name \| telephone \| provinceid \| province \| city \| address \| **DNID** \|
+| 52 | 马深圳 | 13912340052 | 7 | Guangdong | 深圳 | 某某街某某号| 13 |
 
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
+| 77 | 郝上海 | 13912340077 | 25 | Shanghai | 上海 | 某某街某某号| 14 |
 
-\| 52 \| 马深圳 \| 13912340052 \| 7 \| Guangdong \| 深圳 \| 某某街某某号\| 13 \|
+| 20 | 许重庆 | 13912340020 | 4 | Chongqing | 重庆 | 某某街某某号| 12 |
 
-\| 77 \| 郝上海 \| 13912340077 \| 25 \| Shanghai \| 上海 \| 某某街某某号\| 14 \|
-
-\| 20 \| 许重庆 \| 13912340020 \| 4 \| Chongqing \| 重庆 \| 某某街某某号\| 12 \|
-
-\| 67 \| 岑南昌 \| 13912340067 \| 17 \| Jiangxi \| 南昌 \| 某某街某某号\| 15 \|
-
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
+| 67 | 岑南昌 | 13912340067 | 17 | Jiangxi | 南昌 | 某某街某某号| 15 |
 
 4 rows in set (0.00 sec)
 
@@ -2961,49 +2845,37 @@ mysql\> select \* from customer where id in (77,67,52,20);
 
 执行SET SHOW_DNID=1语句，查询全局表时，计算节点将会在SELECT语句中返回每一行结果的DNID（GLOBAL）。
 
-mysql\> set show_dnid=1;
+mysql> set show_dnid=1;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select \* from tb_quan;
+mysql> select * from tb_quan;
 
-+\-\-\-\-\--+\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
+| id | a | b | **DNID** |
 
-\| id \| a \| b \| **DNID** \|
+| 1 | 1 | 1.10 | **GLOBAL** |
 
-+\-\-\-\-\--+\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
+| 2 | 2 | 1.20 | **GLOBAL** |
 
-\| 1 \| 1 \| 1.10 \| **GLOBAL** \|
-
-\| 2 \| 2 \| 1.20 \| **GLOBAL** \|
-
-\| 3 \| 3 \| 1.30 \| **GLOBAL** \|
-
-+\-\-\-\-\--+\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
+| 3 | 3 | 1.30 | **GLOBAL** |
 
 SET SHOW_DNID=0，将取消在结果集中显示DNID列。
 
-mysql\> set show_dnid=0;
+mysql> set show_dnid=0;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select \* from customer where id in (77,67,52,20);
+mysql> select * from customer where id in (77,67,52,20);
 
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| id | name | telephone | provinceid | province | city | address |
 
-\| id \| name \| telephone \| provinceid \| province \| city \| address \|
+| 52 | 马深圳 | 13912340052 | 7 | Guangdong | 深圳 | 某某街某某号|
 
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| 77 | 郝上海 | 13912340077 | 25 | Shanghai | 上海 | 某某街某某号|
 
-\| 52 \| 马深圳 \| 13912340052 \| 7 \| Guangdong \| 深圳 \| 某某街某某号\|
+| 20 | 许重庆 | 13912340020 | 4 | Chongqing | 重庆 | 某某街某某号|
 
-\| 77 \| 郝上海 \| 13912340077 \| 25 \| Shanghai \| 上海 \| 某某街某某号\|
-
-\| 20 \| 许重庆 \| 13912340020 \| 4 \| Chongqing \| 重庆 \| 某某街某某号\|
-
-\| 67 \| 岑南昌 \| 13912340067 \| 17 \| Jiangxi \| 南昌 \| 某某街某某号\|
-
-+\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| 67 | 岑南昌 | 13912340067 | 17 | Jiangxi | 南昌 | 某某街某某号|
 
 4 rows in set (0.00 sec)
 
@@ -3023,13 +2895,13 @@ DNID只适用于SELECT，UPDATE，DELETE的简单单表语句；并且，DNID只
 
 语法：
 
-/\*!hotdb:dnid = dnid_value\*/ 要执行的SQL
+/*!hotdb:dnid = dnid_value*/ 要执行的SQL
 
 注：dnid_value的值为某个数据节点的ID号。用户可以替换dnid_value的值来指定具体的分片节点。
 
 例如：
 
-/\*!hotdb:dnid = 1\*/select \* from customer where age \> 20;
+/*!hotdb:dnid = 1*/select * from customer where age > 20;
 
 该语句将在数据库节点1上执行。用户可以通过分布式事务数据库平台中的"数据节点"页面，找到数据节点ID为1的存储节点名称，并在"存储节点"页面中搜索指定的存储节点名称，即可定位到实际的MySQL数据库。
 
@@ -3037,23 +2909,23 @@ DNID只适用于SELECT，UPDATE，DELETE的简单单表语句；并且，DNID只
 
 HINT语句支持指定datasource_id跳过计算节点直接向存储节点发送语句。可利用[服务端口命令](#使用已有分片规则建表相关命令)查看存储节点datasource_id：
 
-语法：SHOW \[full\] HOTDB ｛datasources｝ \[LIKE \'pattern\' \| WHERE expr\]
+语法：SHOW \[full\] HOTDB ｛datasources｝ \[LIKE 'pattern' | WHERE expr\]
 
 示例：
 
-hotdb\> show hotdb datasources where datasource_id like \'22\';
+hotdb> show hotdb datasources where datasource_id like '22';
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--
++-------------+---------------+---------------------------+-----------------+--------------
 
-\| DATANODE_ID \| DATASOURCE_ID \| DATASOURCE_NAME \| DATASOURCE_TYPE \| DATASOURCE_STATUS \| HOST \| PORT \| SCHEMA \| IDC_ID \|
+| DATANODE_ID | DATASOURCE_ID | DATASOURCE_NAME | DATASOURCE_TYPE | DATASOURCE_STATUS | HOST | PORT | SCHEMA | IDC_ID |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--
++-------------+---------------+---------------------------+-----------------+---------------
 
-\| 23 \| 22 \| 192.168.210.41_3308_hotdb157 \| 1 \| 1 \| 192.168.210.41 \| 3308 \| hotdb157 \| 1 \|
+| 23 | 22 | 192.168.210.41_3308_hotdb157 | 1 | 1 | 192.168.210.41 | 3308 | hotdb157 | 1 |
 
 -   指定具体datasource_id且不写binlog：
 
-/\*!hotdb:dsid=nobinlog:datasource_id\*/要执行的SQL
+/*!hotdb:dsid=nobinlog:datasource_id*/要执行的SQL
 
 注：datasource_id的值为某个存储节点的ID，可以指定多个节点用英文","隔开。此语法不会将执行的语句记入存储节点二进制日志文件binlog中，若使用不当，可能存在导致双主数据不一致、GTID位置错乱的情况，使用时需谨慎。
 
@@ -3061,33 +2933,27 @@ hotdb\> show hotdb datasources where datasource_id like \'22\';
 
 在datasource_id=22的存储节点上创建用户hpt，并且不写binlog
 
-hotdb\> /\*!hotdb:dsid=nobinlog:22\*/create user \'hpt\'@\'%\' identified by \'123456\';
+hotdb> /*!hotdb:dsid=nobinlog:22*/create user 'hpt'@'%' identified by '123456';
 
 Query OK, 0 rows affected (0.00 sec)
 
 在datasource_id=22的存储节点上设置参数
 
-hotdb\> /\*!hotdb:dsid=nobinlog:22\*/set wait_timeout=1200;
+hotdb> /*!hotdb:dsid=nobinlog:22*/set wait_timeout=1200;
 
 Query OK, 0 rows affected (0.01 sec)
 
-hotdb\> /\*!hotdb:dsid=nobinlog:22\*/show variables like \'wait_timeout\';
+hotdb> /*!hotdb:dsid=nobinlog:22*/show variables like 'wait_timeout';
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+
+| Variable_name | Value |
 
-\| Variable_name \| Value \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+
-
-\| wait_timeout \| 1200 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+
+| wait_timeout | 1200 |
 
 1 row in set (0.01 sec)
 
 -   指定所有datasource_id且不写binlog：
 
-/\*!hotdb:dsid=nobinlog:all\*/要执行的SQL
+/*!hotdb:dsid=nobinlog:all*/要执行的SQL
 
 注：all为所有存储节点(包括灾备模式下灾备机房存储节点)，此语法不会将执行的语句记入二进制日志文件binlog中。
 
@@ -3095,49 +2961,45 @@ hotdb\> /\*!hotdb:dsid=nobinlog:22\*/show variables like \'wait_timeout\';
 
 在所有存储节点上更新table1表且不写binlog：
 
-/\*!hotdb:dsid=nobinlog:all\*/update table1 set name='hotdb' where id=100;
+/*!hotdb:dsid=nobinlog:all*/update table1 set name='hotdb' where id=100;
 
 在所有存储节点上设置参数。
 
-hotdb\> /\*!hotdb:dsid=nobinlog:all\*/set wait_timeout=1200;
+hotdb> /*!hotdb:dsid=nobinlog:all*/set wait_timeout=1200;
 
 Query OK, 0 rows affected (0.00 sec)
 
-hotdb\> /\*!hotdb:dsid=nobinlog:all\*/show variables like \'wait_timeout\';
+hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+
+| Variable_name | Value |
 
-\| Variable_name \| Value \|
+| wait_timeout | 1200 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
-\| wait_timeout \| 1200 \|
-
-\| wait_timeout \| 1200 \|
-
-\| wait_timeout \| 1200 \|
+| wait_timeout | 1200 |
 
 8 rows in set (0.00 sec)
 
 -   指定具体datasource_id且写binlog的语法：
 
-/\*!hotdb:dsid=datasource_id\*/要执行的SQL
+/*!hotdb:dsid=datasource_id*/要执行的SQL
 
 注：此语法会将执行的语句记入对应存储节点的二进制日志文件binlog中。同时操作具有复制关系的存储节点时需要谨慎处理，以免导致主从复制同步异常。
 
 -   指定所有datasource_id且写binlog的语法：
 
-/\*!hotdb:dsid=all\*/要执行的SQL
+/*!hotdb:dsid=all*/要执行的SQL
 
 注：all为所有存储节点(包括灾备模式下灾备机房存储节点)，此语法会将执行的语句记入二进制日志文件binlog中，同时写binlog可能存在导致具有复制关系的存储节点复制异常、GTID位置错乱的情况，使用时需谨慎。
 
@@ -3147,13 +3009,13 @@ hotdb\> /\*!hotdb:dsid=nobinlog:all\*/show variables like \'wait_timeout\';
 
 语法：
 
-/!hotdb:table = table_name:column_value\*/ 要执行的SQL
+/!hotdb:table = table_name:column_value*/ 要执行的SQL
 
 注：table_name即某个分片表的表名；column_value即该表上分片字段某个值。用户可以替换table_name的值指定相应的拆分规则，通过替换column_value的值来指定使用该分片字段的值对应的分片节点。
 
 例如：
 
-/\*!hotdb: table = customer:10001\*/select \* from customer where age \> 20;
+/*!hotdb: table = customer:10001*/select * from customer where age > 20;
 
 使用方法：
 
@@ -3161,33 +3023,21 @@ hotdb\> /\*!hotdb:dsid=nobinlog:all\*/show variables like \'wait_timeout\';
 
 在dn_id=2的分片节点上查找cutomer表
 
-mysql\> /\*!hotdb: dnid=2\*/ select count(\*) from customer;
+mysql> /*!hotdb: dnid=2*/ select count(*) from customer;
 
-+\-\-\-\-\-\-\-\-\-\-\--+
+| count(*) |
 
-\| count(\*) \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 50 \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+
+| 50 |
 
 1 row in set (0.00 sec)
 
 查找customer表上provinceid为1的分片节点的customer表
 
-mysql\> /\*!hotdb: table=customer:1\*/ select count(\*) from customer;
+mysql> /*!hotdb: table=customer:1*/ select count(*) from customer;
 
-+\-\-\-\-\-\-\-\-\-\-\--+
+| count(*) |
 
-\| count(\*) \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 11 \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+
+| 11 |
 
 1 row in set (0.00 sec)
 
@@ -3203,7 +3053,7 @@ mysql\> /\*!hotdb: table=customer:1\*/ select count(\*) from customer;
 
 set \[session\] foreign_key_checks=0;
 
-START TRANSACTION /\*!40100 WITH CONSISTENT SNAPSHOT \*/
+START TRANSACTION /*!40100 WITH CONSISTENT SNAPSHOT */
 
 set \[session\] UNIQUE_CHECKS=0;
 
@@ -3211,29 +3061,23 @@ set \[session\] UNIQUE_CHECKS=0;
 
 如执行如下语句时会有warning提示：
 
-mysql\> use db_a
+mysql> use db_a
 
 Database changed
 
-mysql\> /\*!hotdb:dnid=all\*/select \* From tba;
+mysql> /*!hotdb:dnid=all*/select * From tba;
 
-+\-\-\-\-\--+\-\-\-\--+
+| id | a |
 
-\| id \| a \|
+| 1 | 1 |
 
-+\-\-\-\-\--+\-\-\-\--+
+| 2 | 2 |
 
-\| 1 \| 1 \|
+| 3 | 3 |
 
-\| 2 \| 2 \|
+| 4 | 4 |
 
-\| 3 \| 3 \|
-
-\| 4 \| 4 \|
-
-\| 5 \| 5 \|
-
-+\-\-\-\-\--+\-\-\-\--+
+| 5 | 5 |
 
 5 rows in set, 1 warning (0.01 sec)
 
@@ -3245,27 +3089,21 @@ Warning (Code 10041): The current session has been bound to the backend connecti
 
 当操作涉及到与原逻辑库绑定的后端连接之外的新的数据节点时,SHOW WARNINGS会有如下提示且连接会断开：
 
-mysql\> use db_b
+mysql> use db_b
 
 Database changed
 
-mysql\> show warnings;
+mysql> show warnings;
 
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Level | Code | Message
 
-\| Level \| Code \| Message
+|
 
-\|
-
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| Note \| 10042 \| The connection in current LogicDB was a binded connection, operations under current LogicDB may cause connect abort. \|
-
-+\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Note | 10042 | The connection in current LogicDB was a binded connection, operations under current LogicDB may cause connect abort. |
 
 1 row in set (0.00 sec)
 
-mysql\> select \* from tbb;
+mysql> select * from tbb;
 
 ERROR 2013 (HY000): Lost connection to MySQL server during query
 
@@ -3295,61 +3133,55 @@ DROP TABLE IF EXISTS table_test;
 
 连接绑定中，无论是否USE逻辑库，都不允许执行对存储节点存在破坏性的SQL（注意HINT本身对如下类型的SQL是不做限制的）：
 
-CREATE\|ALTER\|DROP DATABASE / SET SESSION SQL_LOG_BIN\|GTID_NEXT / SET GLOBAL / RESET MASTER\|SLAVE / CHANGE MASTER / START\|STOP SLAVE\|GROUP_REPLICATION / CREATE\|ALTER\|DROP\|RENAME USER\|ROLE / GRANT / REVOKE / SET PASSWORD / SET DEFAULT ROLE / CLONE等SQL类型。
+CREATE|ALTER|DROP DATABASE / SET SESSION SQL_LOG_BIN|GTID_NEXT / SET GLOBAL / RESET MASTER|SLAVE / CHANGE MASTER / START|STOP SLAVE|GROUP_REPLICATION / CREATE|ALTER|DROP|RENAME USER|ROLE / GRANT / REVOKE / SET PASSWORD / SET DEFAULT ROLE / CLONE等SQL类型。
 
 例如：执行绑定连接语句，再执行DROP DATABASE操作:
 
-\> set foreign_key_checks=0;
+> set foreign_key_checks=0;
 
 Query OK, 0 rows affected, 1 warning (0.02 sec)
 
 Warning (Code 10195): The current session has been bound to the backend connection associated with the current LogicDB. It is recommended to rebuild the session after use.
 
-\> drop database TEST_DB;
+> drop database TEST_DB;
 
-ERROR 1289 (HY000): Command \'{CREATE \| ALTER \| DROP} {DATABASE \| SCHEMA}\' is forbidden
+ERROR 1289 (HY000): Command '{CREATE | ALTER | DROP} {DATABASE | SCHEMA}' is forbidden
 
-在没有USE逻辑库的情况下，执行绑定连接语句后，可以执行带逻辑库.且限定单一逻辑库的SQL:SELECT/INSERT/REPLACE/UPDATE/DELETE/LOAD/CREATE TABLE/ALTER TABLE/DROP TABLE/TRUNCATE TABLE/RENAME TABLE/PREPARE/EXECUTE/DEALLOCATE，也可执行：SET SESSION（不包括SQL_LOG_BIN\|GTID_NEXT）、SHOW 、非XA模式下开启事务的语句、SAVEPOINT、提交事务、回滚事务等语句。
+在没有USE逻辑库的情况下，执行绑定连接语句后，可以执行带逻辑库.且限定单一逻辑库的SQL:SELECT/INSERT/REPLACE/UPDATE/DELETE/LOAD/CREATE TABLE/ALTER TABLE/DROP TABLE/TRUNCATE TABLE/RENAME TABLE/PREPARE/EXECUTE/DEALLOCATE，也可执行：SET SESSION（不包括SQL_LOG_BIN|GTID_NEXT）、SHOW 、非XA模式下开启事务的语句、SAVEPOINT、提交事务、回滚事务等语句。
 
 例如：执行绑定连接语句不USE逻辑库，再执行带逻辑库名的CREATE TABLE语句，将被允许；执行不带逻辑库名的CREATE TABLE语句，将被拒绝:
 
-\> set foreign_key_checks=0;
+> set foreign_key_checks=0;
 
 Query OK, 0 rows affected, 1 warning (0.02 sec)
 
 Warning (Code 10195): The current session has been bound to the backend connection associated with the current LogicDB. It is recommended to rebuild the session after use.
 
-\>create table logic_db1.table_test (id int);
+>create table logic_db1.table_test (id int);
 
 Query OK, 0 rows affected, 1 warning (0.18 sec)
 
-\> create table table_test2 (id int);
+> create table table_test2 (id int);
 
-ERROR 1289 (HY000): Command \'create table table_test2 (id int)\' is forbidden when sql don\'t use database with table or use multi database, because he current session has been bound to the backend connection.
+ERROR 1289 (HY000): Command 'create table table_test2 (id int)' is forbidden when sql don't use database with table or use multi database, because he current session has been bound to the backend connection.
 
 ### EXPLAIN
 
 在计算节点中，EXPLAIN语句用于显示SQL语句的路由计划。
 
-mysql\> explain select id,name,telephone from customer;
+mysql> explain select id,name,telephone from customer;
 
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| DATANODE | SQL |
 
-\| DATANODE \| SQL \|
+| 1 | SELECT id, name, telephone FROM customer |
 
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 2 | SELECT id, name, telephone FROM customer |
 
-\| 1 \| SELECT id, name, telephone FROM customer \|
+| 3 | SELECT id, name, telephone FROM customer |
 
-\| 2 \| SELECT id, name, telephone FROM customer \|
+| 4 | SELECT id, name, telephone FROM customer |
 
-\| 3 \| SELECT id, name, telephone FROM customer \|
-
-\| 4 \| SELECT id, name, telephone FROM customer \|
-
-\| 5 \| SELECT id, name, telephone FROM customer \|
-
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 5 | SELECT id, name, telephone FROM customer |
 
 5 rows in set (0.01 sec)
 
@@ -3357,17 +3189,11 @@ DATANODE列为数据节点ID，上述结果显示，该SQL语句将在ID为1，2
 
 若要在EXPLAIN中显示MySQL的执行计划，可以结合计算节点的[HINT](#_Toc7182625)功能：
 
-mysql\> /\*!hotdb:dnid=13\*/explain select \* from customer;
+mysql> /*!hotdb:dnid=13*/explain select * from customer;
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
+| id | select_type | table | type | possible_keys | key | key_len | ref | rows | Extra |
 
-\| id \| select_type \| table \| type \| possible_keys \| key \| key_len \| ref \| rows \| Extra \|
-
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
-
-\| 1 \| SIMPLE \| customer \| NULL \| NULL \| NULL \| NULL \| NULL \| 53 \| NULL \|
-
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+
+| 1 | SIMPLE | customer | NULL | NULL | NULL | NULL | NULL | 53 | NULL |
 
 1 row in set (0.00 sec)
 
@@ -3379,23 +3205,17 @@ EXPLAIN语句只适用于INSERT，SELECT，UPDATE，DELETE的简单单表语句�
 
 计算节点[管理端（3325）](#管理端信息监控)支持OnlineDDL功能，保证了在进行表变更时，不会阻塞线上业务读写，库依然能正常对外提供访问，具体使用方法如下：
 
--   登录3325端管理端口，使用onlineddl \"\[DDLSTATEMENT\]\"语法可以执行onlineddl语句，例如：onlineddl \"alter table customer add column testddl varchar(20) default \'测试onlineddl\'\";
+-   登录3325端管理端口，使用onlineddl "\[DDLSTATEMENT\]"语法可以执行onlineddl语句，例如：onlineddl "alter table customer add column testddl varchar(20) default '测试onlineddl'";
 
 -   执行show @\@onlineddl语句，即可显示当前正在运行的OnlineDDL语句及语句执行速度，progress显示当前DDL执行进度（单位：%），speed显示为当前DDL运行速度（单位：行/ms），例如：
 
-mysql\> show @\@onlineddl;
+mysql> show @\@onlineddl;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| schema | onlineddl
 
-\| schema \| onlineddl
+| progress | speed |
 
-\| progress \| speed \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
-
-\| TEST_DML_JWY \| ALTER TABLE CUSTOMER ADD COLUMN TESTDDL VARCHAR(20) DEFAULT \'测试ONLINEDDL\' \| 0.2300 \| 23.3561 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| TEST_DML_JWY | ALTER TABLE CUSTOMER ADD COLUMN TESTDDL VARCHAR(20) DEFAULT '测试ONLINEDDL' | 0.2300 | 23.3561 |
 
 特殊说明：onlineddl 语句不是执行下去就代表DDL完成， 返回了"Query OK, 0 rows affected "仅代表DDL语句可以执行， 如果想看是否执行完成，要查看 show @\@onlineddl中progress 显示的进度。show @\@onlineddl结果为空时，代表所有DDL执行完毕且当前无其他DDL任务，如果中途因为网络或其他异常DDL中断，会回滚整个DDL。
 
@@ -3420,9 +3240,9 @@ mysql\> show @\@onlineddl;
 ------------------- ---------------------------------- -------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   **MySQL语句类型**   **子句类型**                       **功能**                                     **说明**
 
-SELECT              INNER/LEFT JOIN/RIGHT JOIN WHERE   运算表达式                                   column1+column2、column1-column2、column1\*column2、column1/column2
+SELECT              INNER/LEFT JOIN/RIGHT JOIN WHERE   运算表达式                                   column1+column2、column1-column2、column1*column2、column1/column2
 
-\<=\>或\<\>                                  
+<=>或<>                                  
     
                                                          \% 或 MOD                                    仅支持column%常量；不支持column1%column2
     
@@ -3430,9 +3250,9 @@ SELECT              INNER/LEFT JOIN/RIGHT JOIN WHERE   运算表达式          
     
                                                          / 或 DIV                                     仅支持column DIV 常量；不支持column1 DIV column2
     
-                      INNER/LEFT JOIN/RIGHT JOIN ON      IN/IS NOT NULL/IS NULL/BETWEEN\...AND/LIKE   
+                      INNER/LEFT JOIN/RIGHT JOIN ON      IN/IS NOT NULL/IS NULL/BETWEEN...AND/LIKE   
     
-                                                         \<=\>或\<\>                                  
+                                                         <=>或<>                                  
     
                                                          XOR                                          
     
@@ -3440,7 +3260,7 @@ SELECT              INNER/LEFT JOIN/RIGHT JOIN WHERE   运算表达式          
     
                                                          CONCAT()                                     不支持CONCAT()在运算表达式中做JOIN条件（ON子句条件），或WHERE子句中的关联条件
     
-                                                         CASE\...WHEN\...END                          仅支持CASE WHEN判断的是单个表的字段；不支持多表字段的条件判断如：CASE WHEN column_name1=xx THEN column_name2 END ；CASE WHEN必须使用表别名
+                                                         CASE...WHEN...END                          仅支持CASE WHEN判断的是单个表的字段；不支持多表字段的条件判断如：CASE WHEN column_name1=xx THEN column_name2 END ；CASE WHEN必须使用表别名
     
                       函数                               MIN(MIN(column_name))\                       函数嵌套不支持
                                                          ABS(MAX())                                   
@@ -3469,7 +3289,7 @@ alter table table_name change shard column new_column；
 
 例如将源表sbtest1分片字段id修改为k，执行：
 
-root\@127.0.0.1:hotdb 5.7.25 06:44:26\> alter table sbtest1 change shard column k;
+root\@127.0.0.1:hotdb 5.7.25 06:44:26> alter table sbtest1 change shard column k;
 
 Query OK, 0 rows affected (2 min 2.27 sec)
 
@@ -3567,85 +3387,41 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 
 计算节点支持字符集相关设置，目前可支持的字符集及校对集如下：
 
-\| Collation \| Charset \|
+| Collation | Charset |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| latin1_swedish_ci | latin1 |
 
-\| latin1_swedish_ci \| latin1 \|
+| latin1_bin | latin1 |
 
-\| latin1_bin \| latin1 \|
+| gbk_chinese_ci | gbk |
 
-\| gbk_chinese_ci \| gbk \|
+| gbk_bin | gbk |
 
-\| gbk_bin \| gbk \|
+| utf8_general_ci | utf8 |
 
-\| utf8_general_ci \| utf8 \|
+| utf8_bin | utf8 |
 
-\| utf8_bin \| utf8 \|
+| utf8mb4_general_ci | utf8mb4 |
 
-\| utf8mb4_general_ci \| utf8mb4 \|
-
-\| utf8mb4_bin \| utf8mb4 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| utf8mb4_bin | utf8mb4 |
 
 与字符集相关的语法如下，HotDB Server也可同步支持，功能同MySQL一致：
 
-+--------------+----------------------------------------------------------------------------------------------------------------------+
 | **功能分类** | **语法相关**                                                                                                         |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
-| CREATE TABLE | col_name {CHAR \| VARCHAR \| TEXT} (col_length)                                                                      |
-|              |                                                                                                                      |
-|              | \[CHARACTER SET charset_name\]                                                                                       |
-|              |                                                                                                                      |
-|              | \[COLLATE collation_name\]                                                                                           |
-|              |                                                                                                                      |
-|              | col_name {ENUM \| SET} (val_list)                                                                                    |
-|              |                                                                                                                      |
-|              | \[CHARACTER SET charset_name\]                                                                                       |
-|              |                                                                                                                      |
-|              | \[COLLATE collation_name\]                                                                                           |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
+| CREATE TABLE | col_name {CHAR | VARCHAR | TEXT} (col_length) \[CHARACTER SET charset_name\] \[COLLATE collation_name\] col_name {ENUM | SET} (val_list) \[CHARACTER SET charset_name\] \[COLLATE collation_name\]                                                                                           |
 | ALTER TABLE  | ALTER TABLE tbl_name CONVERT TO CHARACTER SET charset_name \[COLLATE collation_name\];                               |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
 |              | ALTER TABLE tbl_name DEFAULT CHARACTER SET charset_name \[COLLATE collation_name\];                                  |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
 |              | ALTER TABLE tbl_name MODIFY col_name column_definition CHARACTER SET charset_name \[COLLATE collation_name\];        |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
-| SET          | SET NAMES \'charset_name\' \[COLLATE \'collation_name\'\]                                                            |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
+| SET          | SET NAMES 'charset_name' \[COLLATE 'collation_name'\]                                                            |
 |              | SET CHARACTER SET charset_name                                                                                       |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
-|              | set \[session\] {character_set_client\|character_set_results\|character_set_connection\|collation_connection} = xxx; |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
-| WITH         | With ORDER BY:                                                                                                       |
-|              |                                                                                                                      |
-|              | SELECT k FROM t1 ORDER BY k COLLATE latin1_swedish_ci;                                                               |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
-|              | With AS:                                                                                                             |
-|              |                                                                                                                      |
-|              | SELECT k COLLATE latin1_swedish_ci AS k1 FROM t1 ORDER BY k1;                                                        |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
-|              | With GROUP BY:                                                                                                       |
-|              |                                                                                                                      |
-|              | SELECT k FROM t1 GROUP BY k COLLATE latin1_swedish_ci;                                                               |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
-|              | With aggregate functions:                                                                                            |
-|              |                                                                                                                      |
-|              | SELECT MAX(k COLLATE latin1_swedish_ci) FROM t1;                                                                     |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
-|              | With DISTINCT:                                                                                                       |
-|              |                                                                                                                      |
-|              | SELECT DISTINCT k COLLATE latin1_swedish_ci FROM t1;                                                                 |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
-|              | With WHERE:                                                                                                          |
-|              |                                                                                                                      |
-|              | SELECT \* FROM k WHERE a=\'a\' COLLATE utf8_bin;                                                                     |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
-|              | With HAVING:                                                                                                         |
-|              |                                                                                                                      |
-|              | SELECT \* FROM k WHERE a=\'a\' having a=\'a\' COLLATE utf8_bin order by id;                                          |
-+--------------+----------------------------------------------------------------------------------------------------------------------+
+|              | set \[session\] {character_set_client|character_set_results|character_set_connection|collation_connection} = xxx; |
+| WITH         | With ORDER BY: SELECT k FROM t1 ORDER BY k COLLATE latin1_swedish_ci;                                                               |
+|              | With AS: SELECT k COLLATE latin1_swedish_ci AS k1 FROM t1 ORDER BY k1;                                                        |
+|              | With GROUP BY: SELECT k FROM t1 GROUP BY k COLLATE latin1_swedish_ci;                                                               |
+|              | With aggregate functions: SELECT MAX(k COLLATE latin1_swedish_ci) FROM t1;                                                                     |
+|              | With DISTINCT: SELECT DISTINCT k COLLATE latin1_swedish_ci FROM t1;                                                                 |
+|              | With WHERE: SELECT * FROM k WHERE a='a' COLLATE utf8_bin;                                                                     |
+|              | With HAVING: SELECT * FROM k WHERE a='a' having a='a' COLLATE utf8_bin order by id;                                          |
 
 ## 函数与操作符支持
 
@@ -3673,7 +3449,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
   [ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
   [AVG()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                         支持           否             　
   [BENCHMARK()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                不支持         是             　
-  [BETWEEN \... AND \...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                       支持           否             　
+  [BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                       支持           否             　
   [BIN()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
   [BINARY](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                            支持           否             　
   [BIT_AND()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                     不支持         是             　
@@ -3683,7 +3459,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
   [BIT_XOR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                     不支持         是             　
   [&](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                  支持           否             　
   [\~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                 支持           否             　
-  [\|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                 支持           否             　
+  [|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                 支持           否             　
   [\^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                 支持           否             　
   [Buffer()](http://dev.mysql.com/doc/refman/5.6/en/spatial-operator-functions.html)                                                                              支持           否             　
   [CASE](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                      支持           否             　
@@ -3744,7 +3520,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
   [ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                支持           否             　
   [EndPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                     支持           否             　
   [Envelope()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                        支持           否             　
-  [\<=\>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                       限制支持       是             　
+  [<=>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                       限制支持       是             　
   [=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                           支持           否             　
   [Equals()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                          支持           否             　
   [EXP()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
@@ -3770,8 +3546,8 @@ Query OK, 0 rows affected (2 min 2.27 sec)
   [GET_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
   [GET_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                               不支持         是             　
   [GLength()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                      支持           否             　
-  [\>=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                         支持           否             　
-  [\>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                          支持           否             　
+  [>=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                         支持           否             　
+  [>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                          支持           否             　
   [GREATEST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  支持           否             　
   [GROUP_CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                支持           否             　
   [GROUPING()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html)                                                                              不支持         是             MySQL8.0新增功能
@@ -3810,17 +3586,17 @@ Query OK, 0 rows affected (2 min 2.27 sec)
   [JSON_PRETTY(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-pretty)                                               不支持         是             MySQL8.0与5.7新增功能
   [JSON_STORAGE_FREE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                                   不支持         是             MySQL8.0新增功能
   [JSON_STORAGE_SIZE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                                   不支持         是             MySQL8.0与5.7新增功能
-  [JSON_MERGE_PATCH(json_doc, json_doc\[, json_doc\] \...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch)   不支持         是             MySQL8.0与5.7新增功能
+  [JSON_MERGE_PATCH(json_doc, json_doc\[, json_doc\] ...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch)   不支持         是             MySQL8.0与5.7新增功能
   [JSON_TABLE(expr, path COLUMNS (column_list) \[AS\] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html#function_json-table)              不支持         是             MySQL8.0新增功能
   [LAST_DAY](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 支持           否             　
   [LAST_INSERT_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                           支持           否             　
   [LCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
   [LEAST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                     支持           否             　
-  [\<\<](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               支持           否             　
+  [<<](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               支持           否             　
   [LEFT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                          支持           否             　
   [LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
-  [\<=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                         支持           否             　
-  [\<](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                          支持           否             　
+  [<=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                         支持           否             　
+  [<](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                          支持           否             　
   [LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                                 支持           否             　
   [LineFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                                                 支持           否             　
   [LineFromWKB(), LineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                             支持           否             　
@@ -3869,8 +3645,8 @@ Query OK, 0 rows affected (2 min 2.27 sec)
   [MultiPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                        支持           否             　
   [MultiPolygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                      支持           否             　
   [NAME_CONST()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                             支持           否             　
-  [NOT BETWEEN \... AND \...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                   支持           否             　
-  [!=, \<\>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    支持           否             　
+  [NOT BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                   支持           否             　
+  [!=, <>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    支持           否             　
   [NOT IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    支持           否             　
   [NOT LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                             支持           否             　
   [NOT REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                                支持           否             　
@@ -3883,7 +3659,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
   [OCT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
   [OCTET_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                  支持           否             　
   [OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                           支持           否             　
-  [\|\|, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                       支持           否             　
+  [||, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                       支持           否             　
   [ORD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
   [Overlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                        支持           否             　
   [PASSWORD()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                  支持           否             　
@@ -3914,7 +3690,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
   [REPEAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
   [REPLACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       支持           否             　
   [REVERSE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       支持           否             　
-  [\>\>](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               支持           否             　
+  [>>](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               支持           否             　
   [RIGHT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
   [RLIKE](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                                     支持           否             　
   [ROLES_GRAPHML()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html)                                                                           不支持         是             MySQL8.0新增功能
@@ -3957,7 +3733,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
   [TIME_TO_SEC()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
   [TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                   支持           否             　
   [TIMEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
-  [\*](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                          支持           否             　
+  [*](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                          支持           否             　
   [TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              支持           否             　
   [TIMESTAMPADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           支持           否             　
   [TIMESTAMPDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          支持           否             　
@@ -4009,49 +3785,37 @@ MERGE_RESULT控制计算节点对聚合函数的结果是否进行合并。当�
 
 MERGE_RESULT=0时，含有聚合函数的SQL语句，计算节点将不合并结果集，每个数据节点的查询结果单独返回：
 
-mysql\> select count(\*) from customer;
+mysql> select count(*) from customer;
 
-+\-\-\-\-\-\-\-\-\-\-\--+
+| COUNT(*) |
 
-\| COUNT(\*) \|
+| 23 |
 
-+\-\-\-\-\-\-\-\-\-\-\--+
+| 11 |
 
-\| 23 \|
+| 13 |
 
-\| 11 \|
-
-\| 13 \|
-
-\| 53 \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+
+| 53 |
 
 4 rows in set (0.00 sec)
 
 SET MERGE_RESULT=0 和SET SHOW_DNID=1，可用于统计业务表在各个数据节点上的分布情况：
 
-mysql\> set MERGE_RESULT=0;
+mysql> set MERGE_RESULT=0;
 
-mysql\> set show_dnid=1;
+mysql> set show_dnid=1;
 
-mysql\> select count(\*) from customer;
+mysql> select count(*) from customer;
 
-+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
+| COUNT(*) | DNID |
 
-\| COUNT(\*) \| DNID \|
+| 13 | 12 |
 
-+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
+| 11 | 15 |
 
-\| 13 \| 12 \|
+| 53 | 13 |
 
-\| 11 \| 15 \|
-
-\| 53 \| 13 \|
-
-\| 23 \| 14 \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+
+| 23 | 14 |
 
 4 rows in set (0.00 sec)
 
@@ -4059,21 +3823,15 @@ mysql\> select count(\*) from customer;
 
 MERGE_RESULT=1时，含有聚合函数的SQL语句，计算节点将所有数据节点的结果按SQL语义返回查询结果：
 
-mysql\> set show_dnid=0;
+mysql> set show_dnid=0;
 
-mysql\> set MERGE_RESULT=1;
+mysql> set MERGE_RESULT=1;
 
-mysql\> select count(\*) from customer;
+mysql> select count(*) from customer;
 
-+\-\-\-\-\-\-\-\-\-\-\--+
+| COUNT(*) |
 
-\| COUNT(\*) \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 100 \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+
+| 100 |
 
 1 row in set (0.00 sec)
 
@@ -4085,11 +3843,11 @@ mysql\> select count(\*) from customer;
 
 单库DML语句，指SQL语句只需在一个节点上运行，即可计算出正确结果。假设分片表customer分片字段为provinceid，则下列语句为单库SELECT，因为该条语句只会在provinceid=1所路由的那个节点上运行：
 
-SELECT \* FROM customer WHERE provinceid=1;
+SELECT * FROM customer WHERE provinceid=1;
 
-跨库DML语句，指SQL语句需要多个数据节点的数据，经过计算节点的二次处理，才能整合计算出最终的结果。假设分片表customer分片字段为provinceid，则下面的SELECT语句为跨库语句，因为 id\>10的数据可能分布在多个节点，为了整合并排序得出最终结果，需要获取多个节点的数据：
+跨库DML语句，指SQL语句需要多个数据节点的数据，经过计算节点的二次处理，才能整合计算出最终的结果。假设分片表customer分片字段为provinceid，则下面的SELECT语句为跨库语句，因为 id>10的数据可能分布在多个节点，为了整合并排序得出最终结果，需要获取多个节点的数据：
 
-SELECT \* FROM customer WHERE id\>10 ORDER BY id;
+SELECT * FROM customer WHERE id>10 ORDER BY id;
 
 显然，单库的SQL语句要比跨库的SQL语句性能高。在使用计算节点的时候，尽量使用单库的DML语句。
 
@@ -4122,7 +3880,7 @@ DELETE FROM t PARTITION(p0);
 ------------------- -------------------------- --------------- -------------- --------------------
   **MySQL语句类型**   **子句类型**               **功能**        **支持状态**   **说明**
   DELETE              PARTITION                  　              支持           　
-                      ORDER BY DESC\|ASC         　              支持           　
+                      ORDER BY DESC|ASC         　              支持           　
                       LIMIT                      　              支持           　
                       ORDER BY ... LIMIT ...     　              支持           父子表不支持
                       ORDER BY字段值大小写敏感   　              支持           　
@@ -4134,7 +3892,7 @@ DELETE FROM t PARTITION(p0);
 
 DELETE \[LOW_PRIORITY\] \[QUICK\] \[IGNORE\]
 
-FROM tbl_name\[.\*\] \[, tbl_name\[.\*\]\] \...
+FROM tbl_name\[.*\] \[, tbl_name\[.*\]\] ...
 
 USING table_references
 
@@ -4162,37 +3920,31 @@ USING table_references
                                                                               子表       条件限制       父表的关联字段不是分片字段时不支持。
 ------------------- ------------------------------------------------------- ---------- -------------- --------------------------------------
 
--   INSERT INTO\...SELECT\...
+-   INSERT INTO...SELECT...
 
-对于INSERT INTO\...SELECT\...语句，若SELECT子句为不支持的语句，则INSERT INTO\... SELECT\...亦无法支持，其他情况均可执行。
+对于INSERT INTO...SELECT...语句，若SELECT子句为不支持的语句，则INSERT INTO... SELECT...亦无法支持，其他情况均可执行。
 
 -   INSERT IGNORE
 
 在计算节点上，INSERT IGNORE保留了MySQL原有的特性。当出现主键/唯一键冲突时，将忽略数据与冲突信息。
 
-mysql\> create table test(id int not null primary key,provinceid int)engine=innodb;
+mysql> create table test(id int not null primary key,provinceid int)engine=innodb;
 
 Query OK, 0 rows affected (0.02 sec)
 
-mysql\> insert into test set id = 1,provinceid=2;
+mysql> insert into test set id = 1,provinceid=2;
 
 Query OK, 1 row affected (0.00 sec)
 
-mysql\> select \* from test;
+mysql> select * from test;
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
+| id | provinceid |
 
-\| id \| provinceid \|
-
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 1 \| 2 \|
-
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
+| 1 | 2 |
 
 1 row in set (0.00 sec)
 
-mysql\> insert ignore into test set id = 1,provinceid=2; \--主键id为1的记录已经存在，数据被忽略。
+mysql> insert ignore into test set id = 1,provinceid=2; --主键id为1的记录已经存在，数据被忽略。
 
 Query OK, 0 rows affected (0.00 sec)
 
@@ -4200,7 +3952,7 @@ Query OK, 0 rows affected (0.00 sec)
 
 例如 test 表为分片表，id 为分片字段
 
-mysql\> CREATE TABLE \`test2\` (
+mysql> CREATE TABLE \`test2\` (
 
 \`id\` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 
@@ -4212,9 +3964,9 @@ UNIQUE KEY \`name\` (\`name\`)
 
 ) ENGINE=InnoDB;
 
-mysql\> insert ignore into test2(name) values (\'e\');
+mysql> insert ignore into test2(name) values ('e');
 
-mysql\> insert ignore into test2(name) values (\'e\')
+mysql> insert ignore into test2(name) values ('e')
 
 当关闭表全局唯一约束时，插入第2条时，如果id 列1、2 值路由到同一个节点，则第2条SQL 会忽略，若不是同一节点，则第2条会插入成功。
 
@@ -4230,11 +3982,11 @@ mysql\> insert ignore into test2(name) values (\'e\')
 
 ##### 跨库INSERT语句
 
-在分布式事务数据库中，INSERT语句只有在INSERT\... SELECT与INSERT BATCH两种情况下，才会产生跨库INSERT语句。
+在分布式事务数据库中，INSERT语句只有在INSERT... SELECT与INSERT BATCH两种情况下，才会产生跨库INSERT语句。
 
 INSERT BATCH指的是单条INSERT语句，写入多行记录的方式：
 
-INSERT INTO \... table_name VALUES(),VALUES(),VALUES();
+INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 
 ------------------- ----------------------- ---------- -------------- --------------------------------------------------------------------
   **MySQL语句类型**   **子句类型**            **功能**   **支持状态**   **说明**
@@ -4250,45 +4002,21 @@ INSERT INTO \... table_name VALUES(),VALUES(),VALUES();
 
 #### LOAD DATA语句
 
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL语句类型** | **子句类型**                            | **功能** | **支持状态** | **说明**                                                                                                                                                         |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| LOAD DATA         | LOAD DATA ... INFILE ... INTO TABLE     |          | 支持         | 1\. 要求执行语句的计算节点数据库用户拥有FILE权限                                                                                                                 |
-|                   |                                         |          |              |                                                                                                                                                                  |
-|                   |                                         |          |              | 2\. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，导入文件都必须上传至当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP。 |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| LOAD DATA         | LOAD DATA ... INFILE ... INTO TABLE     |          | 支持         | 1. 要求执行语句的计算节点数据库用户拥有FILE权限 2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，导入文件都必须上传至当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP。 |
 |                   | LOW_PRIORITY                            |          | 不支持       |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | CONCURRENT                              |          | 不支持       |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | LOCAL                                   |          | 不支持       |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | REPLACE                                 |          | 支持         |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | IGNORE                                  |          | 支持         |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | PARTITION                               |          | 不支持       |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | CHARACTER SET                           |          | 不支持       |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | {FIELDS \| COLUMNS}                     |          | 支持         |                                                                                                                                                                  |
-|                   |                                         |          |              |                                                                                                                                                                  |
-|                   | \[TERMINATED BY \'string\'\]            |          |              |                                                                                                                                                                  |
-|                   |                                         |          |              |                                                                                                                                                                  |
-|                   | \[\[OPTIONALLY\] ENCLOSED BY \'char\'\] |          |              |                                                                                                                                                                  |
-|                   |                                         |          |              |                                                                                                                                                                  |
-|                   | \[ESCAPED BY \'char\'\]                 |          |              |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | LINES STARTING BY \'string\'            |          | 不支持       |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | LINES TERMINATED BY \'string\'          |          | 支持         |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                   | {FIELDS | COLUMNS}                     |          | 支持              |                                                                                                                                                                  |
+|                   | \[TERMINATED BY 'string'\] \[\[OPTIONALLY\] ENCLOSED BY 'char'\] \[ESCAPED BY 'char'\] LINES STARTING BY 'string'            |          | 不支持       |                                                                                                                                                                  |
+|                   | LINES TERMINATED BY 'string'          |          | 支持         |                                                                                                                                                                  |
 |                   | 导入指定字段                            |          | 支持         |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | SET                                     |          | 支持         |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | IGNORE number {LINES \| ROWS}           |          | 支持         |                                                                                                                                                                  |
-+-------------------+-----------------------------------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                   | IGNORE number {LINES | ROWS}           |          | 支持         |                                                                                                                                                                  |
 
 #### REPLACE语句
 
@@ -4336,621 +4064,309 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 ##### 单库SELECT语句
 
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL语句类型** | **子句类型**                   | **功能**                           | **支持状态** | **说明**                                                                                                                                                     |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | SELECT            | JOIN                           | LEFT JOIN                          | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | INNER JOIN                         | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | RIGHT JOIN                         | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | CROSS JOIN                         | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | 普通JOIN（无JOIN关键字的多表查询） | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | PARTITION分区表                    | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | 单种表类型的混合JOIN               | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | 多表类型的混合JOIN                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | 子查询                         | JOIN                               | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | IFNULL/NULLIF                      | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | UNION/UNION ALL                    | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | IS NULL/IS NOT NULL                | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | PARTITION分区表                    | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | Select from where表达式            | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | Select select表达式                | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | SELECT FROM SELECT表达式           | 支持         | 需使用NDB且满足NDB限制条件的场景支持                                                                                                                         |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | UNION/UNION ALL                | 简单单表查询                       | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | JOIN                               | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | 子查询                             | 支持         | 同子查询的支持语法相同                                                                                                                                       |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | Having聚合函数                     | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                | PARTITION分区表                    | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | DISTINCTROW                    | 　                                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | DISTINCT                       | 　                                 | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | SELECT INTO                    | 　                                 | 不支持       | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | STRAIGHT_JOIN                  | 　                                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | SQL_NO_CACHE                   | 　                                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | PARTITION                      | 　                                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | WHERE                          | dnid                               | 支持         | 1、SET show_dnid=1之后，不支持WHERE 条件带dnid；                                                                                                             |
-|                   |                                |                                    |              |                                                                                                                                                              |
-|                   |                                |                                    |              | 2、dnid与其他条件用or关联，仅取dnid条件；                                                                                                                    |
-|                   |                                |                                    |              |                                                                                                                                                              |
-|                   |                                |                                    |              | 3、不支持SELECT子句中跟dnid表达式，例如：SELECT dnid=4 FROM dml_a\_jwy;                                                                                      |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                   | WHERE                          | dnid                               | 支持         | 1、SET show_dnid=1之后，不支持WHERE 条件带dnid； 2、dnid与其他条件用or关联，仅取dnid条件； 3、不支持SELECT子句中跟dnid表达式，例如：SELECT dnid=4 FROM dml_a_jwy;                                                                                      |
 |                   |                                | 函数                               | 支持         | 请参考函数说明                                                                                                                                               |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | GROUP BY ASC\|DESC WITH ROLLUP | 　                                 | 支持         |                                                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                   | GROUP BY ASC|DESC WITH ROLLUP | 　                                 | 支持         |                                                                                                                                                              |
 |                   | HAVING                         | 　                                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | ORDER BY ASC\|DESC             | 　                                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                   | ORDER BY ASC|DESC             | 　                                 | 支持         | 　                                                                                                                                                           |
 |                   | LIMIT n,m                      | 　                                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | PROCEDURE                      | 　                                 | 不支持       | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | INTO OUTFILE                   | 　                                 | 支持         | 1\. 要求执行语句的计算节点数据库用户拥有FILE权限                                                                                                             |
-|                   |                                |                                    |              |                                                                                                                                                              |
-|                   |                                |                                    |              | 2\. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，输出文件都将保存在当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP |
-|                   |                                |                                    |              |                                                                                                                                                              |
-|                   |                                |                                    |              | 3\. 若输出时集群发生切换，仍能保证数据输出正常                                                                                                               |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                   | INTO OUTFILE                   | 　                                 | 支持         | 1. 要求执行语句的计算节点数据库用户拥有FILE权限 2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，输出文件都将保存在当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP 3. 若输出时集群发生切换，仍能保证数据输出正常                                                                                                               |
 |                   | INTO DUMPFILE                  | 　                                 | 不支持       | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | INTO 变量                      | 　                                 | 不支持       | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | FOR UPDATE                     | 　                                 | 支持         | 不支持与NOWAIT或SKIP LOCKED连用                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | LOCK IN SHARE MODE             | 　                                 | 支持         | 与MySQL8.0的FOR SHARE功能相同，为保证向下兼容，仍保留支持                                                                                                    |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | FOR SHARE                      |                                    | 支持         | 支持在MySQL8.0及以上存储节点使用；                                                                                                                           |
-|                   |                                |                                    |              |                                                                                                                                                              |
-|                   |                                |                                    |              | 不支持与NOWAIT或SKIP LOCKED连用                                                                                                                              |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                   | FOR SHARE                      |                                    | 支持         | 支持在MySQL8.0及以上存储节点使用； 不支持与NOWAIT或SKIP LOCKED连用                                                                                                                              |
 |                   | 函数                           | 包括聚合函数                       | 支持         | 支持单表聚合函数括号外的复杂运算                                                                                                                             |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | DUAL                           | 　                                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | FORCE INDEX                    | 　                                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | USING INDEX                    | 　                                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | IGNORE INDEX                   | 　                                 | 支持         | 　                                                                                                                                                           |
-+-------------------+--------------------------------+------------------------------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ##### 跨库SELECT语句
 
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL语句类型** | **子句类型**                      | **功能**               | **状态** | **说明**                                                                                                                                                       |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | SELECT            | LIMIT n,m                         | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | ORDER BY                          | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | ORDER BY LIMIT n,m                | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | GROUP BY ASC\|DESC WITH ROLLUP    | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                   | GROUP BY ASC|DESC WITH ROLLUP    | 　                     | 支持     | 　                                                                                                                                                             |
 |                   | GROUP BY ORDER BY LIMIT m,n       | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | GROUP BY/ORDER BY字段值大小写敏感 | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | 聚合函数                          | SELECT子句中的聚合函数 | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                   | HAVING子句中的聚合函数 | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                   | COUNT(DISTINCT)        | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | DISTINCT                          | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | INTO                              | 　                     | 不支持   | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | WHERE                             | 函数                   | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | PARTITION                         | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | HAVING                            | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | PROCEDURE                         | 　                     | 不支持   | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | INTO OUTFILE                      | 　                     | 支持     | 1\. 要求执行语句的计算节点数据库用户拥有FILE权限。                                                                                                             |
-|                   |                                   |                        |          |                                                                                                                                                                |
-|                   |                                   |                        |          | 2\. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，输出文件都将保存在当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP。 |
-|                   |                                   |                        |          |                                                                                                                                                                |
-|                   |                                   |                        |          | 3\. 若输出时集群发生切换，仍能保证数据输出正常。                                                                                                               |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                   | INTO OUTFILE                      | 　                     | 支持     | 1. 要求执行语句的计算节点数据库用户拥有FILE权限。 2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，输出文件都将保存在当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP。 3. 若输出时集群发生切换，仍能保证数据输出正常。                                                                                                               |
 |                   | INTO DUMPFILE                     | 　                     | 不支持   | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | INTO 变量                         | 　                     | 不支持   | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | FOR UPDATE                        | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | LOCK IN SHARE MODE                | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | FORCE INDEX                       | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | USING INDEX                       | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | IGNORE INDEX                      | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | STRAIGHT_JOIN                     | 　                     | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | JOIN                              | 　                     | 限制支持 | 请参考[跨库JOIN](#_跨库JOIN)；部分不支持的使用NDB且满足NDB限制的支持                                                                                           |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | 子查询                            | JOIN                   | 支持     | 　                                                                                                                                                             |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                   | IFNULL/NULLIF          | 支持     |                                                                                                                                                                |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                   | UNION/UNION ALL        | 支持     |                                                                                                                                                                |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                   | IS NULL /IS NOT NULL   | 支持     |                                                                                                                                                                |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                   | PARTITION分区表        | 支持     |                                                                                                                                                                |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                   | AVG/SUM/MIN/MAX函数    | 支持     |                                                                                                                                                                |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   |                                   | 横向派生表             | 不支持   | MySQL8.0新功能                                                                                                                                                 |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | UNION/UNION ALL                   | join                   | 支持     |                                                                                                                                                                |
-+-------------------+-----------------------------------+------------------------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 #### UPDATE语句
 
 ##### 单库UPDATE语句
 
-+-------------------+--------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL语句类型** | **子句类型** | **功能** | **支持状态** | **说明**                                                                                                                     |
-+-------------------+--------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 | UPDATE            | LOW_PRIORITY | 　       | 支持         | 　                                                                                                                           |
-+-------------------+--------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 |                   | IGNORE       | 　       | 支持         | 　                                                                                                                           |
-+-------------------+--------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 |                   | ORDER BY     | 　       | 支持         | 　                                                                                                                           |
-+-------------------+--------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 |                   | LIMIT n      | 　       | 支持         | 　                                                                                                                           |
-+-------------------+--------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------+
-|                   | SET          |          | 支持         | 1\. 允许更新分片字段，但要求分片字段值的变更不会影响数据路由，即修改后的分片字段值与修改前的值路由到相同节点，否则执行不成功 |
-|                   |              |          |              |                                                                                                                              |
-|                   |              |          |              | 2\. 父子表不允许使用表达式语法更新父子表的关联字段，即使分片字段值的变更不会影响数据路由，例如SET id=id或SET id=id+3         |
-|                   |              |          |              |                                                                                                                              |
-|                   |              |          |              | 3\. 不支持一条语句多次更新分片字段，例如：UPDATE table1 SET id =31,id=41 WHERE id =1;                                        |
-+-------------------+--------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------+
+|                   | SET          |          | 支持         | 1. 允许更新分片字段，但要求分片字段值的变更不会影响数据路由，即修改后的分片字段值与修改前的值路由到相同节点，否则执行不成功 2. 父子表不允许使用表达式语法更新父子表的关联字段，即使分片字段值的变更不会影响数据路由，例如SET id=id或SET id=id+3 3. 不支持一条语句多次更新分片字段，例如：UPDATE table1 SET id =31,id=41 WHERE id =1;                                        |
 |                   | WHERE        | dnid     | 支持         | DML WHERE条件里dnid作为OR条件时，仅判断dnid条件，其他限制条件忽略                                                            |
-+-------------------+--------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 |                   |              | 函数     | 支持         | 　                                                                                                                           |
-+-------------------+--------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 |                   | 函数         | 　       | 支持         | 　                                                                                                                           |
-+-------------------+--------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 |                   | 多表关联     | 　       | 支持         | 　                                                                                                                           |
-+-------------------+--------------+----------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 
 ##### 跨库UPDATE语句
 
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL语句类型** | **子句类型**                 | **功能**     | **支持状态** | **说明**                                                                                                                     |
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
-| UPDATE            | ORDER BY DESC\|ASC           | 　           | 支持         | 　                                                                                                                           |
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
+| UPDATE            | ORDER BY DESC|ASC           | 　           | 支持         | 　                                                                                                                           |
 |                   | LIMIT n                      | 　           | 支持         | 　                                                                                                                           |
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
-|                   | ORDER BY DESC\|ASC LIMIT n,m | 　           | 支持         | 父子表不支持                                                                                                                 |
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
+|                   | ORDER BY DESC|ASC LIMIT n,m | 　           | 支持         | 父子表不支持                                                                                                                 |
 |                   | ORDER BY字段值大小写敏感     | 　           | 支持         | 　                                                                                                                           |
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 |                   | WHERE                        | 　           | 支持         | 　                                                                                                                           |
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
-|                   | SET                          |              | 支持         | 1\. 允许更新分片字段，但要求分片字段值的变更不会影响数据路由，即修改后的分片字段值与修改前的值路由到相同节点，否则执行不成功 |
-|                   |                              |              |              |                                                                                                                              |
-|                   |                              |              |              | 2\. 父子表不允许使用表达式语法更新父子表关联字段，即使关联字段值的变更不会影响数据路由，例如SET id=id或SET id=id+3           |
-|                   |                              |              |              |                                                                                                                              |
-|                   |                              |              |              | 3\. 不支持一条语句多次更新分片字段，例如：UPDATE table1 SET id =31,id=41 WHERE id =1;                                        |
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
+|                   | SET                          |              | 支持         | 1. 允许更新分片字段，但要求分片字段值的变更不会影响数据路由，即修改后的分片字段值与修改前的值路由到相同节点，否则执行不成功 2. 父子表不允许使用表达式语法更新父子表关联字段，即使关联字段值的变更不会影响数据路由，例如SET id=id或SET id=id+3 3. 不支持一条语句多次更新分片字段，例如：UPDATE table1 SET id =31,id=41 WHERE id =1;                                        |
 |                   |                              | 子句中的函数 | 支持         | 　                                                                                                                           |
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
-|                   | WHERE中的函数                | 　           | 限制支持     | 例如：UPDATE更新父子表关联字段，更新值是函数；UPDATE SET或者WHERE包含不支持的子查询；UPDATE包含不支持的JOIN。                |
-|                   |                              |              |              |                                                                                                                              |
-|                   |                              |              |              | 但若引入NDB均可支持                                                                                                          |
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
+|                   | WHERE中的函数                | 　           | 限制支持     | 例如：UPDATE更新父子表关联字段，更新值是函数；UPDATE SET或者WHERE包含不支持的子查询；UPDATE包含不支持的JOIN。 但若引入NDB均可支持                                                                                                          |
 |                   | PARTITION                    | 　           | 支持         | 　                                                                                                                           |
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 |                   | JOIN                         | 　           | 支持         | 　                                                                                                                           |
-+-------------------+------------------------------+--------------+--------------+------------------------------------------------------------------------------------------------------------------------------+
 
 #### 跨库JOIN
 
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **一级功能** | **二级功能**         | **三级功能**                           | **支持状态** | **说明**                                                                                                                                                                          |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| INNER/       | UNION ALL            | 　                                     | 支持         | 　                                                                                                                                                                                |
-|              |                      |                                        |              |                                                                                                                                                                                   |
-| LEFT JON     |                      |                                        |              |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              | UNION                | 　                                     | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| INNER/       | UNION ALL            | 　                                     | 支持         | 　                                                                                                                                                                                   |
+| LEFT JON              | UNION                | 　                                     | 支持         | 　                                                                                                                                                                                |
 |              | HAVING               | 无条件字段                             | 不支持       | SELECT子句必须包含HAVING过滤字段，MySQL也一样                                                                                                                                     |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | COUNT(\*)                              | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|              |                      | COUNT(*)                              | 支持         |                                                                                                                                                                                   |
 |              |                      | AVG()                                  | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | MAX()                                  | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | MIN()                                  | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | SUM()                                  | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 别名                                   | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | ORDER BY             | 单字段                                 | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 多字段相同顺序                         | 支持         | order by *column_name1* desc,*column_name2* desc                                                                                                                                  |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 多字段不同顺序                         | 支持         | order by *column_name1* desc,*column_name2* asc                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 字段别名                               | 支持         | 别名不能与表中的字段名称相同                                                                                                                                                      |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 字段值大小写敏感                       | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | ENUM类型                               | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 函数                                   | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              | OR                   |                                        | 限制支持     | 跨库JOIN支持能转换成in条件的情况；                                                                                                                                                |
-|              |                      |                                        |              |                                                                                                                                                                                   |
-|              |                      |                                        |              | 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              | WHERE                | 不同字段OR条件                         | 限制支持     | 类似 a=x and b=x or c=x的形式不支持；仅支持OR表达式为AND表达式的子节点的情况以及不限OR个数的情况，例如：select xxx from a,b where (a.c1 OR a.c2) and b.c1=100 and (a.c4 OR a.c6): |
-|              |                      |                                        |              |                                                                                                                                                                                   |
-|              |                      |                                        |              | 其中OR子句中每个条件(c1、c2等)仅支持table.column \[=\|\<\|\<=\|\>\|\>=\|!=\] value 或 IS \[NOT\] NULL 或 具体的值(0/1/TRUE/FALSE/字符串等)；                                      |
-|              |                      |                                        |              |                                                                                                                                                                                   |
-|              |                      |                                        |              | 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | 单个字段的or条件                       | 限制支持     | left join中的or表达式不为and表达式子节点的不支持；                                                                                                                                |
-|              |                      |                                        |              |                                                                                                                                                                                   |
-|              |                      |                                        |              | 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|              | OR                   |                                        | 限制支持     | 跨库JOIN支持能转换成in条件的情况； 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
+|              | WHERE                | 不同字段OR条件                         | 限制支持     | 类似 a=x and b=x or c=x的形式不支持；仅支持OR表达式为AND表达式的子节点的情况以及不限OR个数的情况，例如：select xxx from a,b where (a.c1 OR a.c2) and b.c1=100 and (a.c4 OR a.c6): 其中OR子句中每个条件(c1、c2等)仅支持table.column \[=|<|<=|>|>=|!=\] value 或 IS \[NOT\] NULL 或 具体的值(0/1/TRUE/FALSE/字符串等)； 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
+|              |                      | 单个字段的or条件                       | 限制支持     | left join中的or表达式不为and表达式子节点的不支持； 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
 |              |                      | IN                                     | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | AND                                    | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | IS NOT NULL                            | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | IS NULL                                | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | BETWEEN ... AND ...                    | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | \>、\>= 、\< 、\<=                     | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | NOW()等常量表达式                      | 支持         | column1 \> NOW() 或 column1 \> DATE_ADD(NOW(), INTERVAL +3 day )                                                                                                                  |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|              |                      | >、>= 、< 、<=                     | 支持         | 　                                                                                                                                                                                |
+|              |                      | NOW()等常量表达式                      | 支持         | column1 > NOW() 或 column1 > DATE_ADD(NOW(), INTERVAL +3 day )                                                                                                                  |
 |              |                      | 运算表达式                             | 特殊支持     | column1=column2+1（使用NDB且满足NDB限制的支持）                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | LIKE                                   | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | GROUP BY             | 单字段                                 | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 多字段                                 | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | ORDER BY NULL                          | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | WITH ROLLUP                            | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 字段别名                               | 支持         | 别名不能与表名中的字段名称相同                                                                                                                                                    |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 字段值大小写                           | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | FORCE INDEX          |                                        | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | USING INDEX          |                                        | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | IGNORE INDEX         |                                        | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | AVG                  | AVG()                                  | 支持         | 不支持函数嵌套,AVG(SUM(*column_name*))                                                                                                                                            |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | AVG(IFNULL())                          | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | AVG(*column1-column2*)                 | 支持         | 仅支持单表的column做运算，多表字段不支持;已拦截多表字段的运算                                                                                                                     |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | COUNT                | COUNT()                                | 支持         | 函数嵌套不支持                                                                                                                                                                    |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | COUNT DISTINCT                         | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | COUNT(\*)                              | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|              |                      | COUNT(*)                              | 支持         |                                                                                                                                                                                   |
 |              |                      | COUNT(1)                               | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | MIN                  | MIN()                                  | 支持         | 函数嵌套不支持                                                                                                                                                                    |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | MAX                  | MAX()                                  | 支持         | 函数嵌套不支持                                                                                                                                                                    |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | SUM                  | SUM()                                  | 支持         | 函数嵌套不支持                                                                                                                                                                    |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | SUM(CASE \... WHEN\...)                | 支持         | 仅支持CASE WHEN判断的是单个表的字段，且CASE WHEN字段必须带表别名                                                                                                                  |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|              |                      | SUM(CASE ... WHEN...)                | 支持         | 仅支持CASE WHEN判断的是单个表的字段，且CASE WHEN字段必须带表别名                                                                                                                  |
 |              |                      | SUM(IFNULL())                          | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | SUM(*column1*-*column2*)               | 支持         | 仅支持单表的column做运算，多表字段不支持;已拦截多表字段的运算                                                                                                                     |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              | INTO OUTFILE         |                                        | 支持         | 1\. 要求执行语句的计算节点数据库用户拥有FILE权限                                                                                                                                  |
-|              |                      |                                        |              |                                                                                                                                                                                   |
-|              |                      |                                        |              | 2\. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，输出文件都将保存在当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP                      |
-|              |                      |                                        |              |                                                                                                                                                                                   |
-|              |                      |                                        |              | 3\. 若输出时集群发生切换，仍能保证数据输出正常                                                                                                                                    |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|              | INTO OUTFILE         |                                        | 支持         | 1. 要求执行语句的计算节点数据库用户拥有FILE权限 2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，输出文件都将保存在当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP 3. 若输出时集群发生切换，仍能保证数据输出正常                                                                                                                                    |
 |              | FOR UPDATE           |                                        | 不支持       | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | LOCK IN SHARE MODE   |                                        | 不支持       | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | 子查询               |                                        | 支持         | 详情请参考《HotDB Server -v2.5.4 最新功能清单》子查询相关                                                                                                                         |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | 表别名               |                                        | 支持         | 支持使用表别名WHERE a.column或者SELECT a.column                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | ON子句               | 单个=                                  | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | \<=\>                                  | 特殊支持     | 使用NDB且满足NDB限制的支持                                                                                                                                                        |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | != \<\>                                | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | \>= \> \<= \<                          | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | 多个\>= \> \<= \<条件                  | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|              |                      | <=>                                  | 特殊支持     | 使用NDB且满足NDB限制的支持                                                                                                                                                        |
+|              |                      | != <>                                | 支持         | 　                                                                                                                                                                                |
+|              |                      | >= > <= <                          | 支持         | 　                                                                                                                                                                                |
+|              |                      | 多个>= > <= <条件                  | 支持         | 　                                                                                                                                                                                |
 |              |                      | 多个 and = 条件                        | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | IN                                     | 支持         | LEFT JOIN时不支持ON条件中，左表字段使用IN条件过滤                                                                                                                                 |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | IS NOT NULL                            | 支持         | LEFT JOIN时不支持ON条件中，左表字段使用IS NOT NULL条件过滤                                                                                                                        |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | IS NULL                                | 支持         | LEFT JOIN时不支持ON条件中，左表或者右表字段使用IS NULL条件过滤                                                                                                                    |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | BETWEEN ... AND ...                    | 支持         | LEFT JOIN时不支持ON条件中，左表字段使用BETWEEN \... AND \...条件过滤                                                                                                              |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|              |                      | BETWEEN ... AND ...                    | 支持         | LEFT JOIN时不支持ON条件中，左表字段使用BETWEEN ... AND ...条件过滤                                                                                                              |
 |              |                      | LIKE                                   | 支持         | LEFT JOIN时不支持ON条件中，左表字段使用LIKE条件过滤                                                                                                                               |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | or条件                                 | 特殊支持     | 使用NDB且满足NDB限制的支持                                                                                                                                                        |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 数学表达式                             | 特殊支持     | 使用NDB且满足NDB限制的支持，如：column1=column2+1                                                                                                                                 |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              | SELECT子句           | 显示空列                               | 支持         | SELECT \'\' AS A FROM ... 查询结果中能正确显示空列                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|              | SELECT子句           | 显示空列                               | 支持         | SELECT '' AS A FROM ... 查询结果中能正确显示空列                                                                                                                                |
 |              |                      | STRAIGHT_JOIN                          | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | 函数                 | UNIX_TIMESTAMP()                       | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | NOW()                                  | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | DATE_FORMAT()                          | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | DATE_ADD()                             | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | DATEDIFF()                             | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | FROM_UNIXTIME()                        | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | CONVERT                                | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | SUBSTRING_INDEX()                      | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | SUBSTRING()                            | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | TRIM()                                 | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | RTRIM()                                | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | LTRIM()                                | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | UCASE()                                | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | UPPER()                                | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | FLOOR()                                | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | \% 或 MOD                              | 支持         | 仅支持column%常量；不支持column1%column2                                                                                                                                          |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | RAND()                                 | 特殊支持     | 使用NDB且满足NDB限制的支持                                                                                                                                                        |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | TRUNCATE()                             | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | / 或 DIV                               | 支持         | 仅支持column DIV 常量；不支持column1 DIV column2                                                                                                                                  |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | ABS()                                  | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | LENGTH()                               | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | CONCAT()                               | 支持         | 不支持CONCAT()在运算表达式中做JOIN条件（on子句条件），或WHERE子句中的关联条件                                                                                                     |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | CAST()                                 | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | IF()                                   | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | IFNULL                                 | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|              |                      | CASE\...WHEN\...END                    | 支持         | 仅支持CASE WHEN判断的是单个表的字段；不支持多表字段的条件判断如：CASE WHEN column_name1=xx THEN column_name2 END ；CASE WHEN必须使用表别名                                        |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|              |                      | CASE...WHEN...END                    | 支持         | 仅支持CASE WHEN判断的是单个表的字段；不支持多表字段的条件判断如：CASE WHEN column_name1=xx THEN column_name2 END ；CASE WHEN必须使用表别名                                        |
 |              |                      | DISTINCT                               | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | USING(column)        |                                        | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | PARTITION            |                                        | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | LIMIT                | LIMIT n,m                              | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | LIMIT n                                | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | 多表(三表及以上)查询 | 单种LEFT JOIN                          | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 单种INNER JION                         | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 单种NATURAL JOIN                       | 特殊支持     | 使用NDB且满足NDB限制的支持                                                                                                                                                        |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 混合的LEFT/INNER JOIN/RIGHT JOIN       | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | 混合的LEFT/INNER/NATURAL JOIN          | 特殊支持     | 使用NDB且满足NDB限制的支持                                                                                                                                                        |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              |                      | TABLE a ... JOIN (TABLE b,TABLE c) ... | 支持         | LEFT JOIN,RIGHT JOIN不支持ON条件的IN                                                                                                                                              |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | NATURAL JOIN         |                                        | 特殊支持     | 使用NDB且满足NDB限制的支持                                                                                                                                                        |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | 不同节点的表JOIN     |                                        | 支持         |                                                                                                                                                                                   |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | JOIN         | UPDATE ... JOIN      |                                        | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |              | DELETE ... JOIN      |                                        | 支持         | 　                                                                                                                                                                                |
-+--------------+----------------------+----------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ### DDL语句
 
 #### ALTER语句
 
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL语句类型** | **子句类型**                                                                | **支持状态** | **说明**                                                                                                                                                                                                                                            |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ALTER TABLE       | ADD COLUMN                                                                  | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY                       | 支持         | 支持 ADD UNIQUE \[index_name\]\[index_type\]index_col_name                                                                                                                                                                                          |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | 父子表的ADD FOREIGN KEY                                                     | 限制支持     | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。                                                                                                                                                                                      |
-|                   |                                                                             |              |                                                                                                                                                                                                                                                     |
-|                   |                                                                             |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式环境中，当非分片字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：       |
-|                   |                                                                             |              |                                                                                                                                                                                                                                                     |
+|                   | 父子表的ADD FOREIGN KEY                                                     | 限制支持     | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
+|                   |                                                                             |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式环境中，当非分片字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
 |                   |                                                                             |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | ADD SPATIAL \[INDEX\|KEY\]                                                  | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                   | ADD SPATIAL \[INDEX|KEY\]                                                  | 支持         | 　                                                                                                                                                                                                                                                  |
 |                   | ADD CONSTRAINT \[CONSTRAINT \[symbol\]\] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | 父子表的ADD CONSTRAINT \[CONSTRAINT \[symbol\]\] FOREIGN KEY                | 限制支持     | 非字段作为外键关联字段时，无法跨节点保证父子表数据关联性。                                                                                                                                                                                          |
-|                   |                                                                             |              |                                                                                                                                                                                                                                                     |
-|                   |                                                                             |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败： |
-|                   |                                                                             |              |                                                                                                                                                                                                                                                     |
+|                   | 父子表的ADD CONSTRAINT \[CONSTRAINT \[symbol\]\] FOREIGN KEY                | 限制支持     | 非字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
+|                   |                                                                             |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
 |                   |                                                                             |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | ALGORITHM                                                                   | 支持         | MySQL8.0新增INSTANT，且默认使用INSTANT                                                                                                                                                                                                              |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | ALTER COLUMN                                                                | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | LOCK                                                                        | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | MODIFY/CHANGE \[COLUMN\]                                                    | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | DROP COLUMN                                                                 | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | DROP PRIMARY KEY/KEY/INDEX/FOREIGN KEY                                      | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | DISABLE KEYS                                                                | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | ENABLE KEYS                                                                 | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | DISCARD TABLESPACE                                                          | 不支持       | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | IMPORT TABLESPACE                                                           | 不支持       | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | ADD/DROP/TRUNCATE PARTITION                                                 | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | GENERATED COLUMNS                                                           | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | SECONDARY INDEXES                                                           | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | CHECK                                                                       | 支持         | MySQL8.0新增功能                                                                                                                                                                                                                                    |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ALTER             | VIEW                                                                        | 支持         | 计算节点版本高于（包含）2.5.6时支持                                                                                                                                                                                                                 |
-+-------------------+-----------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 #### CREATE语句
 
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL语句类型** | **子句类型**                   | **支持状态** | **说明**                                                                                                                                                                                                                                            |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CREATE DATABASE   | 　                             | 支持         | V2.5.6版本以上可支持直接创建逻辑库，功能使用说明可见表格下方补充描述。　                                                                                                                                                                            |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CREATE EVENT      | 　                             | 禁用         | 　                                                                                                                                                                                                                                                  |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CREATE FUNCTION   | 　                             | 限制支持     | 　单库场景下可支持                                                                                                                                                                                                                                  |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | 　                |                                |              |                                                                                                                                                                                                                                                     |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CREATE INDEX      | FOREIGN KEY                    | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | UNIQUE                         | 支持         |                                                                                                                                                                                                                                                     |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | 父子表的FOREIGN KEY            | 限制支持     | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。                                                                                                                                                                                      |
-|                   |                                |              |                                                                                                                                                                                                                                                     |
-|                   |                                |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败： |
-|                   |                                |              |                                                                                                                                                                                                                                                     |
+|                   | 父子表的FOREIGN KEY            | 限制支持     | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
+|                   |                                |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
 |                   |                                |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | FULLTEXT                       | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | SPATIAL                        | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | ALGORITHM                      | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | LOCK                           | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | FUNCTIONAL KEYS                | 支持         | MySQL8.0新增功能                                                                                                                                                                                                                                    |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | 　                |                                |              |                                                                                                                                                                                                                                                     |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CREATE TABLE      | CREATE TEMPORARY TABLE         | 禁用         |                                                                                                                                                                                                                                                     |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | CREATE TABLE \[IF NOT EXISTS\] | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | CREATE TABLE LIKE              | 支持         | 　                                                                                                                                                                                                                                                  |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                   | CREATE TABLE AS SELECT ...     | 支持         | 1.要求存储节点用户拥有CREATE TEMPORARY TABLE权限。                                                                                                                                                                                                  |
-|                   |                                |              |                                                                                                                                                                                                                                                     |
-|                   |                                |              | 2\. 要求CREATE的表和SELECT的表关联至少一个相同的数据节点，否则执行不成功：ERROR 10215 (HY000): \[LOADTEST1\] no overlapping datanode                                                                                                                |
-|                   |                                |              |                                                                                                                                                                                                                                                     |
-|                   |                                |              | 3\. 不支持CREATE TABLE \... IGNORE SELECT 和 CREATE TABLE \... REPLACE SELECT                                                                                                                                                                       |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                   | CREATE TABLE AS SELECT ...     | 支持         | 1.要求存储节点用户拥有CREATE TEMPORARY TABLE权限。
+|                   |                                |              | 2. 要求CREATE的表和SELECT的表关联至少一个相同的数据节点，否则执行不成功：ERROR 10215 (HY000): \[LOADTEST1\] no overlapping datanode
+|                   |                                |              | 3. 不支持CREATE TABLE ... IGNORE SELECT 和 CREATE TABLE ... REPLACE SELECT                                                                                                                                                                       |
 |                   | GENERATED COLUMNS              | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | SECONDARY INDEXES              | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                   | CHECK                          | 支持         | MySQL8.0新增功能                                                                                                                                                                                                                                    |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | 　                |                                |              |                                                                                                                                                                                                                                                     |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CREATE TRIGGER    | 　                             | 支持         | 　目前仅支持单库，且需要赋予CREATE权限，内部语句不验证权限，DEFINER相关目前不支持，show trrigers时相关字段显示当前用户                                                                                                                              |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CREATE VIEW       | 　                             | 支持         | 　计算节点版本高于（包含）2.5.6时支持                                                                                                                                                                                                               |
-+-------------------+--------------------------------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 CREATE DATABASE 在计算节点使用时对应为创建逻辑库的功能，语法使用说明如下：
 
-CREATE {DATABASE \| SCHEMA} \[IF NOT EXISTS\] db_name \[create_option\] \... \[DEFAULT DATANODE \'datanodeid\'\]
+CREATE {DATABASE | SCHEMA} \[IF NOT EXISTS\] db_name \[create_option\] ... \[DEFAULT DATANODE 'datanodeid'\]
 
 **说明：**
 
-create_option: \[DEFAULT\] { CHARACTER SET \[=\] charset_name \| COLLATE \[=\] collation_name }
+create_option: \[DEFAULT\] { CHARACTER SET \[=\] charset_name | COLLATE \[=\] collation_name }
 
-\[DEFAULT DATANODE \'datanodeid\'\] 可以指定默认分片节点。当不单独指定时，默认关联所有数据节点；当指定时，按指定数据节点关联成逻辑库默认分片节点；当指定的datanodeid不存在时，提示：datanodeid not exists。
+\[DEFAULT DATANODE 'datanodeid'\] 可以指定默认分片节点。当不单独指定时，默认关联所有数据节点；当指定时，按指定数据节点关联成逻辑库默认分片节点；当指定的datanodeid不存在时，提示：datanodeid not exists。
 
 服务端创建逻辑库语法示例：
 
-create database if not exists zjj_d3 default datanode \'1,4\';
+create database if not exists zjj_d3 default datanode '1,4';
 
 -   关联不存在的数据节点
 
@@ -4980,106 +4396,59 @@ create database if not exists zjj_d3 default datanode \'1,4\';
   DROP TABLE          DROP \[TEMPORARY\] TABLE \[IF EXISTS\]          禁用           　
                       DROP TABLE                                      支持           　
                       DROP TABLE 多表                                 支持           必须保证多表在相同节点
-                      DROP TABLE table_name \[RESTRICT \| CASCADE\]   支持           　
+                      DROP TABLE table_name \[RESTRICT | CASCADE\]   支持           　
   DROP TRIGGER        　                                              支持           需要赋予DROP权限
   DROP VIEW           　                                              支持           　
 ------------------- ----------------------------------------------- -------------- ------------------------
 
 #### TRUNCATE与RENAME语句
 
-+-------------------+--------------+--------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL语句类型** | **子句类型** | **支持状态** | **说明**                                                                                                                                              |
-+-------------------+--------------+--------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| RENAME TABLE      | 　           | 支持         | 1\. 支持RENAME多张表，但要求这些表都在相同节点，否则将执行失败并报错：ERROR 10042 (HY000): unsupported to rename multi table with different datanodes |
-|                   |              |              |                                                                                                                                                       |
-|                   |              |              | 2\. RENAME中的目标表不需要提前添加表配置，若添加新表的表配置，需要保证新表表配置与原表一致，否则RENAME将不成功                                        |
-|                   |              |              |                                                                                                                                                       |
+| RENAME TABLE      | 　           | 支持         | 1. 支持RENAME多张表，但要求这些表都在相同节点，否则将执行失败并报错：ERROR 10042 (HY000): unsupported to rename multi table with different datanodes
+|                   |              |              | 2. RENAME中的目标表不需要提前添加表配置，若添加新表的表配置，需要保证新表表配置与原表一致，否则RENAME将不成功
 |                   |              |              | 注意：计算节点数据库用户需要对旧表拥有ALTER和DROP权限，以及对新表拥有CREATE和INSERT权限                                                               |
-+-------------------+--------------+--------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
 | TRUNCATE TABLE    | 　           | 支持         | 　                                                                                                                                                    |
-+-------------------+--------------+--------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ### 事务管理与锁语句
 
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **语句类型**     | **事务语句**             | **语句参数**                            | **状态** | **说明**                                                                                                                                                                                                                                                                      |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | 事务管理         | START TRANSACTION        | 无参数                                  | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  |                          | WITH CONSISTENT SNAPSHOT                | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  |                          | READ WRITE                              | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  |                          | READ ONLY                               | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | BEGIN                    |                                         | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | COMMIT                   |                                         | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | COMMIT                   | \[AND \[NO\] CHAIN\] \[\[NO\] RELEASE\] | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | ROLLBACK                 |                                         | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | ROLLBACK                 | \[AND \[NO\] CHAIN\] \[\[NO\] RELEASE\] | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                  | SET autocommit           | 0\|1                                    | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                  | SET autocommit           | 0|1                                    | 支持     |                                                                                                                                                                                                                                                                               |
 | SAVEPOINT        | SAVEPOINT                |                                         | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | ROLLBACK ... TO ...      |                                         | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | RELEASE SAVEPOINT        |                                         | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | LOCK             | LOCK TABLES              | READ \[LOCAL\]                          | 禁用     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  |                          | \[LOW_PRIORITY\] WRITE                  | 禁用     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | UNLOCK TABLES            |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | LOCK INSTANCE FOR BACKUP |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | UNLOCK INSTANCE;         |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | 事务隔离级别语句 | SET SESSION TRANSACTION  | REPEATABLE READ                         | 支持     | XA模式可完整支持， 普通模式下会存在读到部分提交的情况                                                                                                                                                                                                                         |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                  |                          | READ COMMITTED                          | 支持     | 普通模式下会存在读写不一致的问题；                                                                                                                                                                                                                                            |
-|                  |                          |                                         |          |                                                                                                                                                                                                                                                                               |
-|                  |                          |                                         |          | XA模式下，2.5.5版本以下不支持，2.5.5版本及以上支持，但跨库多次查询的情况下不保证读写强一致；即：对select 、insert select 这类SQL，如果出现一个SQL转成多个SQL执行的SQL语句，则SQL执行结果在该隔离级别下可能不正确。可参考[数据强一致性（XA事务）](#数据强一致性xa事务)章节描述 |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                  |                          | READ COMMITTED                          | 支持     | 普通模式下会存在读写不一致的问题； XA模式下，2.5.5版本以下不支持，2.5.5版本及以上支持，但跨库多次查询的情况下不保证读写强一致；即：对select 、insert select 这类SQL，如果出现一个SQL转成多个SQL执行的SQL语句，则SQL执行结果在该隔离级别下可能不正确。可参考[数据强一致性（XA事务）](#数据强一致性xa事务)章节描述 |
 |                  |                          | READ UNCOMMITTED                        | 不支持   |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  |                          | SERIALIZABLE                            | 支持     | XA模式可完整支持， 普通模式下会存在读到部分提交的情况                                                                                                                                                                                                                         |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | SET GLOBAL TRANSACTION   | REPEATABLE READ                         | 不支持   | 不支持SET GLOBAL的方式，只支持SET SESSION                                                                                                                                                                                                                                     |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  |                          | READ COMMITTED                          | 不支持   | 不支持SET GLOBAL的方式，只支持SET SESSION                                                                                                                                                                                                                                     |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  |                          | READ UNCOMMITTED                        | 不支持   |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  |                          | SERIALIZABLE                            | 不支持   |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | SET SESSION TRANSACTION  | READ ONLY                               | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  |                          | READ WRITE                              | 支持     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | SET GLOBAL TRANSACTION   | READ ONLY                               | 不支持   |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  |                          | READ WRITE                              | 不支持   |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| 分布式事务       | XA START\|BEGIN ...      | \[JOIN\|RESUME\]                        | 禁用     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 分布式事务       | XA START|BEGIN ...      | \[JOIN|RESUME\]                        | 禁用     |                                                                                                                                                                                                                                                                               |
 |                  | XA END                   | \[SUSPEND \[FOR MIGRATE\]\]             | 禁用     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | XA PREPARE               |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | XA COMMIT                | \[ONE PHASE\]                           | 禁用     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | XA ROLLBACK              |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | XA RECOVER               |                                         | 禁用     |                                                                                                                                                                                                                                                                               |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                  | XA RECOVER               | \[CONVERT XID\]                         | 禁用     | 5.7新增参数                                                                                                                                                                                                                                                                   |
-+------------------+--------------------------+-----------------------------------------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ### 其他MySQL语句
 
@@ -5087,51 +4456,28 @@ create database if not exists zjj_d3 default datanode \'1,4\';
 
 HotDB Server当前仅支持垂直库（即逻辑库仅关联一个数据节点）场景下下使用存储过程，自定义函数等语句。
 
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 | **语句类型**                          | **SQL语句**                                                                          | **支持状态** | **说明**                   |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 | 存储过程                              | BEGIN ... END ...                                                                    | 限制支持     | **　**垂直库下可使用，下同 |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | DECLARE                                                                              | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | CASE                                                                                 | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | IF                                                                                   | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | ITRATE                                                                               | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | LEAVE                                                                                | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | LOOP                                                                                 | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | REPEAT                                                                               | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | RETURN                                                                               | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | WHILE                                                                                | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | CURSOR                                                                               | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | DECLARE ... CONDITION...                                                             | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | DECLARE ... HANDLER ...                                                              | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | GET DIAGNOSTICS                                                                      | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | RESIGNAL                                                                             | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | SIGNAL                                                                               | 限制支持     | **　**                     |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
-| Plugin and User-Defined Function 语句 | CREATE \[AGGREGATE\] FUNCTION function_name RETURNS {STRING\|INTEGER\|REAL\|DECIMAL} | 限制支持     |                            |
-|                                       |                                                                                      |              |                            |
+| Plugin and User-Defined Function 语句 | CREATE \[AGGREGATE\] FUNCTION function_name RETURNS {STRING|INTEGER|REAL|DECIMAL} | 限制支持                            |
 |                                       | SONAME shared_library_name                                                           |              |                            |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | DROP FUNCTION                                                                        | 限制支持     |                            |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | INSTALL PLUGIN                                                                       | 禁用         |                            |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 |                                       | UNINSTALL PLUGIN                                                                     | 禁用         |                            |
-+---------------------------------------+--------------------------------------------------------------------------------------+--------------+----------------------------+
 
 #### Prepare SQL Statement
 
@@ -5139,7 +4485,7 @@ HotDB Server当前仅支持垂直库（即逻辑库仅关联一个数据节点�
   **语句类型**            **SQL语句**                    **支持状态**   **说明**
   Prepare SQL Statement   PREPARE ... FROM ...           支持           
                           EXECUTE ...                    支持           　
-                          {DEALLOCATE \| DROP} PREPARE   支持           
+                          {DEALLOCATE | DROP} PREPARE   支持           
 ----------------------- ------------------------------ -------------- ----------
 
 #### 用户管理语句
@@ -5163,11 +4509,11 @@ HotDB Server实现了一套自己的用户名与权限管理的系统，可以�
 
 创建用户语法：
 
-CREATE USER \[IF NOT EXISTS\] \'user_name\'@\'host_name\'   IDENTIFIED BY  \'password_auth_string\'\[,\'user_name\'@\'host_name\'   IDENTIFIED BY  \'password_auth_string\'\]\...
+CREATE USER \[IF NOT EXISTS\] 'user_name'@'host_name'   IDENTIFIED BY  'password_auth_string'\[,'user_name'@'host_name'   IDENTIFIED BY  'password_auth_string'\]...
 
 服务端创建用户语法示例：
 
-create user \'jingjingjing\'@\'%\' identified by \'jing\' with max_user_connections 3;
+create user 'jingjingjing'@'%' identified by 'jing' with max_user_connections 3;
 
 创建用户时执行用户必须具有super权限且不支持空密码创建，用户名最大长度限制64字符，密码暂未限制。
 
@@ -5191,11 +4537,11 @@ create user \'jingjingjing\'@\'%\' identified by \'jing\' with max_user_connecti
 
 删除用户语法：
 
-DROP USER \[IF EXISTS\] \'user_name\'@\'host_name\' \[,\'user_name\'@\'host_name\'\]\...
+DROP USER \[IF EXISTS\] 'user_name'@'host_name' \[,'user_name'@'host_name'\]...
 
 服务端删除用户语法示例：
 
-drop user \'jingjingjing\'@\'%\';
+drop user 'jingjingjing'@'%';
 
 删除用户时执行用户必须具有super权限。
 
@@ -5213,9 +4559,9 @@ GRANT赋权语法：
 
 GRANT
 
-priv_type\[, priv_type \] \...
+priv_type\[, priv_type \] ...
 
-ON  priv_level TO \'user_name\'@\'host_name\'\[,\'user_name\'@\'host_name\'\] \...
+ON  priv_level TO 'user_name'@'host_name'\[,'user_name'@'host_name'\] ...
 
 \[WITH MAX_USER_CONNECTIONS con_num \]
 
@@ -5225,23 +4571,23 @@ ON  priv_level TO \'user_name\'@\'host_name\'\[,\'user_name\'@\'host_name\'\] \.
 
 可使用[ALL \[PRIVILEGES\]](https://dev.mysql.com/doc/refman/5.6/en/privileges-provided.html#priv_all) 为用户赋予所有权限（包括SUPER权限）在内，用法等同MySQL。
 
-可授权的权限范围priv_level包括： \*  \| \*.\*  \| db_name.\*  \|db_name.tbl_name  \| tbl_name  \| db_name.routine_name
+可授权的权限范围priv_level包括： *  | *.*  | db_name.*  |db_name.tbl_name  | tbl_name  | db_name.routine_name
 
-其中 \*：表示当前数据库中的所有表(必须use 逻辑库之后才能执行)；\*.\*：表示所有数据库中的所有表；db_name.\*：表示某个数据库中的所有表，db_name 指定数据库名；db_name.tbl_name：表示某个数据库中的某个表，db_name 数据库名，tbl_name 表名；tbl_name：表示某个表，tbl_name 指定表名(必须use 逻辑库之后才能执行)
+其中 *：表示当前数据库中的所有表(必须use 逻辑库之后才能执行)；*.*：表示所有数据库中的所有表；db_name.*：表示某个数据库中的所有表，db_name 指定数据库名；db_name.tbl_name：表示某个数据库中的某个表，db_name 数据库名，tbl_name 表名；tbl_name：表示某个表，tbl_name 指定表名(必须use 逻辑库之后才能执行)
 
 服务端GRANT语法示例：
 
 全局权限：
 
-grant all on \*.\* to \' test_ct \'@\'localhost\' identified by \' test_ct \' with max_user_connections 3;
+grant all on *.* to ' test_ct '@'localhost' identified by ' test_ct ' with max_user_connections 3;
 
 库级权限：
 
-grant all on test_ct.\* to \'test_ct\'@\'localhost\' identified by \'test_ct\';
+grant all on test_ct.* to 'test_ct'@'localhost' identified by 'test_ct';
 
 表级权限：
 
-grant update on test_ct.test_aa to \'test_ct\'@\'localhost\' identified by \'test_ct\';
+grant update on test_ct.test_aa to 'test_ct'@'localhost' identified by 'test_ct';
 
 赋权注意事项：
 
@@ -5283,11 +4629,11 @@ grant update on test_ct.test_aa to \'test_ct\'@\'localhost\' identified by \'tes
 
 REVOKE删除权限语法：
 
-REVOKE priv_type \[, priv_type \] \...ON priv_level FROM \'user_name\'@\'host_name\' \[, \'user_name\'@\'host_name\'\] \...
+REVOKE priv_type \[, priv_type \] ...ON priv_level FROM 'user_name'@'host_name' \[, 'user_name'@'host_name'\] ...
 
 服务端REVOKE语法示例：
 
-revoke select,update,delete,insert,create,drop,alter,file,super on \*.\* from jingjing05;
+revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jingjing05;
 
 解权注意事项：
 
@@ -5338,139 +4684,77 @@ revoke select,update,delete,insert,create,drop,alter,file,super on \*.\* from ji
 
 #### SET语句
 
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
 | **语句类型** | **SQL语句**                     | **支持状态** | **说明**                                                                                             |
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
 | SET语句      | SET GLOBAL                      | 不支持       | 　                                                                                                   |
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
 |              | SET SESSION                     | 部分支持     | 如:SET SESSION TRANSACTION/SET TX_READONLY/SET NAMES等                                               |
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
 |              | SET @\@global.                  | 不支持       | 　                                                                                                   |
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
 |              | SET @\@session.                 | 部分支持     | 例如支持设置字符集相关（连接字符集、查询结果字符集、字符集校对规则），最大连接数、是否进行外键约束等 |
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
 |              | SET @@                          | 不支持       | 　                                                                                                   |
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
 |              | SET ROLE                        | 禁用         | 计算节点不支持MySQL8.0新增角色功能                                                                   |
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
 |              | 用户自定义变量                  | 支持         | 仅支持单库下调用                                                                                     |
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
-|              | SET CHARACTER SET               | 支持         | 仅支持：CHARACTER_SET_CLIENT                                                                         |
-|              |                                 |              |                                                                                                      |
-|              |                                 |              | CHARACTER_SET_CONNECTION                                                                             |
-|              |                                 |              |                                                                                                      |
+|              | SET CHARACTER SET               | 支持         | 仅支持：CHARACTER_SET_CLIENT
+|              |                                 |              | CHARACTER_SET_CONNECTION
 |              |                                 |              | CHARACTER_SET_RESULTS                                                                                |
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
 |              | SET NAMES                       | 支持         | 　                                                                                                   |
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
-|              | SET TRANSACTION ISOLATION LEVEL | 支持         | 普通模式下支持的级别为REPEATABLE READ，READ COMMITTED，SERIALIZABLE                                  |
-|              |                                 |              |                                                                                                      |
+|              | SET TRANSACTION ISOLATION LEVEL | 支持         | 普通模式下支持的级别为REPEATABLE READ，READ COMMITTED，SERIALIZABLE
 |              |                                 |              | XA 模式只支持 REPEATABLE READ、SERIALIZABLE                                                          |
-+--------------+---------------------------------+--------------+------------------------------------------------------------------------------------------------------+
 
 #### SHOW语句
 
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 | **语句类型** | **SQL语句**                                                                           | **支持状态** | **说明**                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 | SHOW语句     | SHOW AUTHORS                                                                          | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW BINARY LOGS                                                                      | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW BINLOG EVENTS                                                                    | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW CHARACTER SET                                                                    | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW COLLATION                                                                        | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW FIELDS FROM                                                                      | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
-|              | SHOW COLUMNS FROM\|IN tbl_name                                                        | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
-|              | SHOW FULL COLUMNS FROM\|IN tbl_name                                                   | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
+|              | SHOW COLUMNS FROM|IN tbl_name                                                        | 支持         | 　                                                                    |
+|              | SHOW FULL COLUMNS FROM|IN tbl_name                                                   | 支持         | 　                                                                    |
 |              | SHOW CONTRIBUTORS                                                                     | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW CREATE DATABASE                                                                  | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW CREATE EVENT                                                                     | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW CREATE FUNCTION                                                                  | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW CREATE PROCEDURE                                                                 | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW CREATE TABLE                                                                     | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW CREATE TRIGGER                                                                   | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW CREATE VIEW                                                                      | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW DATABASES                                                                        | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW ENGINES                                                                          | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW ERRORS                                                                           | 支持         |                                                                       |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW EVENTS                                                                           | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW FUNCTION STATUS                                                                  | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW GRANTS                                                                           | 支持         | 显示计算节点的权限控制情况                                            |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW INDEX FROM *db_name.table_name*                                                  | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW INDEX FROM table_name WHERE...                                                   | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW MASTER STATUS                                                                    | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW OPEN TABLES                                                                      | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW PLUGINS                                                                          | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW PRIVILEGES                                                                       | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW PROCEDURE STATUS                                                                 | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW PROCESSLIST                                                                      | 支持         | 显示计算节点的连接情况                                                |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW PROFILES                                                                         | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
-|              | SHOW RELAYLOG EVENTS \[IN \'log_name\'\] \[FROM pos\] \[LIMIT \[offset,\] row_count\] | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
+|              | SHOW RELAYLOG EVENTS \[IN 'log_name'\] \[FROM pos\] \[LIMIT \[offset,\] row_count\] | 支持         | 返回空集                                                              |
 |              | SHOW SLAVE HOSTS                                                                      | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW SLAVE STATUS                                                                     | 支持         | 返回空集                                                              |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW GLOBAL STATUS                                                                    | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW SESSION STATUS                                                                   | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW STATUS                                                                           | 支持         |                                                                       |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW TABLE STATUS                                                                     | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW FULL TABLES                                                                      | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW TABLES                                                                           | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 |              | SHOW TRIGGERS                                                                         | 支持         | 返回空集　                                                            |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
-|              | SHOW GLOBAL\|SESSION VARIABLES                                                        | 支持         | 　                                                                    |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
+|              | SHOW GLOBAL|SESSION VARIABLES                                                        | 支持         | 　                                                                    |
 |              | SHOW WARNINGS                                                                         | 支持         |                                                                       |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
-|              | SHOW HOTDB TABLES                                                                     | 支持         | 支持\[{FROM \| IN} *db_name*\] \[LIKE \'*pattern*\' \| WHERE *expr*\] |
-|              |                                                                                       |              |                                                                       |
+|              | SHOW HOTDB TABLES                                                                     | 支持         | 支持\[{FROM | IN} *db_name*\] \[LIKE '*pattern*' | WHERE *expr*\]
 |              |                                                                                       |              | 显示计算节点的分片信息                                                |
-+--------------+---------------------------------------------------------------------------------------+--------------+-----------------------------------------------------------------------+
 
 #### HotDB PROFILE
 
 -------------- ------------------------------------------------------------- -------------- --------------------------------------
   **语句类型**   **SQL语句**                                                   **支持状态**   **说明**
-  SET语句        SET hotdb_profiling={0\|1\|on\|off}                           支持           支持 set \[session\] hotdb_profiling
+  SET语句        SET hotdb_profiling={0|1|on|off}                           支持           支持 set \[session\] hotdb_profiling
   SHOW语句       SHOW HOTDB_PROFILES                                           支持           　
-                 SHOW HOTDB_PROFILE FOR QUERY N \[relative time\|real time\]   支持           N代表执行的SQL id
+                 SHOW HOTDB_PROFILE FOR QUERY N \[relative time|real time\]   支持           N代表执行的SQL id
 -------------- ------------------------------------------------------------- -------------- --------------------------------------
 
 **功能说明**：该功能仅限session级别
@@ -5485,23 +4769,17 @@ SHOW HOTDB_PROFILES输出与MySQL相同：
 
 示例：
 
-mysql\> show hotdb_profiles;
+mysql> show hotdb_profiles;
 
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Query_ID | Duration | Query |
 
-\| Query_ID \| Duration \| Query \|
+| 1 | 422 | SELECT DATABASE() |
 
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 1 \| 422 \| SELECT DATABASE() \|
-
-\| 2 \| 1962 \| select \* from aa \|
-
-+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 2 | 1962 | select * from aa |
 
 2 rows in set (0.01 sec)
 
-SHOW HOTDB_PROFILE FOR QUERY N \[relative time\|real time\]与MySQL相似：
+SHOW HOTDB_PROFILE FOR QUERY N \[relative time|real time\]与MySQL相似：
 
 第一列Status，即SQL 语句执行的状态；
 
@@ -5511,45 +4789,39 @@ SHOW HOTDB_PROFILE FOR QUERY N \[relative time\|real time\]与MySQL相似：
 
 示例：
 
-mysql\> show hotdb_profile for query 2 relative time;
+mysql> show hotdb_profile for query 2 relative time;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
+| Status | Relative_time | Duration |
 
-\| Status \| Relative_time \| Duration \|
+| SQL receive start time | 0 | NULL |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
+| SQL receive end time | 67 | 67 |
 
-\| SQL receive start time \| 0 \| NULL \|
+| multiquery parse end time | 125 | 58 |
 
-\| SQL receive end time \| 67 \| 67 \|
+| multiquery other SQL execute wait end time | 155 | 30 |
 
-\| multiquery parse end time \| 125 \| 58 \|
+| SQL parse end time | 709 | 553 |
 
-\| multiquery other SQL execute wait end time \| 155 \| 30 \|
+| backend SQL 1 request generate start time | 709 | NULL |
 
-\| SQL parse end time \| 709 \| 553 \|
+| backend SQL 1 request generate end time | 892 | 182 |
 
-\| backend SQL 1 request generate start time \| 709 \| NULL \|
+| backend SQL 1 request send start time | 1329 | NULL |
 
-\| backend SQL 1 request generate end time \| 892 \| 182 \|
+| backend SQL 1 request send end time | 1390 | 61 |
 
-\| backend SQL 1 request send start time \| 1329 \| NULL \|
+| backend SQL 1 result receive start time | 1733 | NULL |
 
-\| backend SQL 1 request send end time \| 1390 \| 61 \|
+| backend SQL 1 result receive end time | 1842 | 109 |
 
-\| backend SQL 1 result receive start time \| 1733 \| NULL \|
+| backend SQL 1 result rewrite start time | 1733 | NULL |
 
-\| backend SQL 1 result receive end time \| 1842 \| 109 \|
+| backend SQL 1 result rewrite end time | 1849 | 116 |
 
-\| backend SQL 1 result rewrite start time \| 1733 \| NULL \|
+| result send start time | 1849 | NULL |
 
-\| backend SQL 1 result rewrite end time \| 1849 \| 116 \|
-
-\| result send start time \| 1849 \| NULL \|
-
-\| result send end time \| 1962 \| 112 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
+| result send end time | 1962 | 112 |
 
 15 rows in set (0.00 sec)
 
@@ -5565,7 +4837,7 @@ multiquery other SQL execute wait end time：计算节点开始SQL解析的时�
 
 SQL parse end time：计算节点完成SQL解析的时间点（发生解析失败后续行不再继续输出）
 
-backend SQL N request generate start time：计算节点开始后端SQL N 生成的时间点(N为后端SQL的序列号1，2，3，4\...)
+backend SQL N request generate start time：计算节点开始后端SQL N 生成的时间点(N为后端SQL的序列号1，2，3，4...)
 
 backend SQL N request generate end time：计算节点完成后端SQL N 的时间点
 
@@ -5589,14 +4861,14 @@ result send end time：计算节点完成向前端写出最后一个结果集的
 
 -------------------------- ------------------------------ -------------- ----------------------------------
   **语句类型**               **SQL语句**                    **支持状态**   **说明**
-  其他管理语句               BINLOG \'str\'                 禁用           　
+  其他管理语句               BINLOG 'str'                 禁用           　
                              CACHE INDEX                    禁用           　
-                             KILL \[CONNECTION \| QUERY\]   支持           
+                             KILL \[CONNECTION | QUERY\]   支持           
                              LOAD INDEX INTO CACHE          禁用           　
                              RESET MASTER                   禁用           　
                              RESET QUERY CACHE              禁用           　
                              RESET SLAVE                    禁用           　
-  MySQL Utility Statements   DESCRIBE\|DESC                 支持           
+  MySQL Utility Statements   DESCRIBE|DESC                 支持           
                              EXPLAIN                        支持           请参考[EXPLAIN](#explain)
                              EXPLAIN EXTENDED               不支持         
                              HELP                           不支持         　
@@ -5613,111 +4885,42 @@ HotDB Server对MySQL部分variables及status的显示结果做了支持，可通
 
 以下参数特殊处理，具体显示结果，见显示说明：
 
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **MySQL VARIABLES**      | **显示说明**                                                                                                                                              |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| BIND_ADDRESS             | \* 始终显示\*                                                                                                                                             |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| TX_ISOLATION             | 根据server.xml中配置的隔离级别设置，默认REPEATABLE-READ,session也按照server.xml中配置显示                                                                 |
-|                          |                                                                                                                                                           |
-|                          | 此参数在MySQL8.0时被移除，用transaction_isolation代替此参数                                                                                               |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| BIND_ADDRESS             | * 始终显示*                                                                                                                                             |
+| TX_ISOLATION             | 根据server.xml中配置的隔离级别设置，默认REPEATABLE-READ,session也按照server.xml中配置显示 此参数在MySQL8.0时被移除，用transaction_isolation代替此参数                                                                                               |
 | TRANSACTION_ISOLATION    | MySQL8.0新增参数，用于代替tx_isalation                                                                                                                    |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | AUTO_INCREMENT_OFFSET    | 目前显示 1                                                                                                                                                |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CHARACTER_SET_CONNECTION | 仅支持utf8/gbk/latin1/utf8mb4字符集                                                                                                                       |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CHARACTER_SET_RESULTS    | 仅支持utf8/gbk/latin1/utf8mb4字符集                                                                                                                       |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | MAX_CONNECTIONS          | 按计算节点实际配置显示                                                                                                                                    |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | MAX_USER_CONNECTIONS     | 按计算节点实际配置显示                                                                                                                                    |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | MAX_JOIN_SIZE            | 仅支持set session max_join_size=xxx , 按照计算节点设置的值显示, global的按照server.xml中[JOIN中间结果集行数](#maxjoinsize)参数设置                        |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CHARACTER_SET_SERVER     | 仅支持utf8/gbk/latin1/utf8mb4字符集                                                                                                                       |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | VERSION_COMMENT          | HotDB Server by Hotpu Tech                                                                                                                                |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | INTERACTIVE_TIMEOUT      | 172800                                                                                                                                                    |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | SERVER_UUID              | 始终显示00000000-0000-0000-0000-0000000000                                                                                                                |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| TX_READ_ONLY             | 默认OFF， session的按照session的显示                                                                                                                      |
-|                          |                                                                                                                                                           |
-|                          | 此参数在MySQL8.0时被移除，用transaction_ready_only代替                                                                                                    |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| TX_READ_ONLY             | 默认OFF， session的按照session的显示 此参数在MySQL8.0时被移除，用transaction_ready_only代替                                                                                                    |
 | TRANSACTION_READ_ONLY    | MySQL8.0新增参数，用于代替tx_read_only                                                                                                                    |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | PORT                     | 按照配置的服务端口值显示                                                                                                                                  |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | AUTOCOMMIT               | 默认ON，session级别的按照session的显示                                                                                                                    |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | HOSTNAME                 | MySQL5.7,显示为计算节点服务器的主机名                                                                                                                     |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | COLLATION_DATABASE       | 仅支持utf8/gbk/latin1/utf8mb4字符集                                                                                                                       |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CHARACTER_SET_DATABASE   | 仅支持utf8/gbk/latin1/utf8mb4字符集                                                                                                                       |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | PROTOCOL_VERSION         | 按照计算节点实际使用的通讯协议版本显示                                                                                                                    |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | READ_ONLY                | 按照计算节点实际使用的模式设置                                                                                                                            |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | VERSION                  | MySQL版本号-HotDB Server版本号，按照计算节点实际使用的显示                                                                                                |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| COLLATION_SERVER         | 目前仅支持：latin1_swedish_ci                                                                                                                             |
-|                          |                                                                                                                                                           |
-|                          | latin1_bin                                                                                                                                                |
-|                          |                                                                                                                                                           |
-|                          | gbk_chinese_ci                                                                                                                                            |
-|                          |                                                                                                                                                           |
-|                          | gbk_bin                                                                                                                                                   |
-|                          |                                                                                                                                                           |
-|                          | utf8_general_ci                                                                                                                                           |
-|                          |                                                                                                                                                           |
-|                          | utf8_bin                                                                                                                                                  |
-|                          |                                                                                                                                                           |
-|                          | utf8mb4_general_ci                                                                                                                                        |
-|                          |                                                                                                                                                           |
-|                          | utf8mb4_bin                                                                                                                                               |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| COLLATION_SERVER         | 目前仅支持：latin1_swedish_ci latin1_bin gbk_chinese_ci gbk_bin utf8_general_ci utf8_bin utf8mb4_general_ci utf8mb4_bin                                                                                                                                               |
 | SOCKET                   | 显示空字符串                                                                                                                                              |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | SERVER_ID                | 显示0                                                                                                                                                     |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | WAIT_TIMEOUT             | 172800                                                                                                                                                    |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | SSL_CIPHER               | 返回空字符串                                                                                                                                              |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| COLLATION_CONNECTION     | 目前仅支持：latin1_swedish_ci                                                                                                                             |
-|                          |                                                                                                                                                           |
-|                          | latin1_bin                                                                                                                                                |
-|                          |                                                                                                                                                           |
-|                          | gbk_chinese_ci                                                                                                                                            |
-|                          |                                                                                                                                                           |
-|                          | gbk_bin                                                                                                                                                   |
-|                          |                                                                                                                                                           |
-|                          | utf8_general_ci                                                                                                                                           |
-|                          |                                                                                                                                                           |
-|                          | utf8_bin                                                                                                                                                  |
-|                          |                                                                                                                                                           |
-|                          | utf8mb4_general_ci                                                                                                                                        |
-|                          |                                                                                                                                                           |
-|                          | utf8mb4_bin                                                                                                                                               |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| COLLATION_CONNECTION     | 目前仅支持：latin1_swedish_ci latin1_bin gbk_chinese_ci gbk_bin utf8_general_ci utf8_bin utf8mb4_general_ci utf8mb4_bin                                                                                                                                               |
 | FOREIGN_KEY_CHECKS       | 显示ON                                                                                                                                                    |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CHARACTER_SET_CLIENT     | 仅支持utf8/gbk/latin1/utf8mb4字符集                                                                                                                       |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | TIME_ZONE                | time_zone参数为具体的相同值，或全为SYSTEM并且system_time_zone全相同的具体值。计算节点在SHOW \[GLOBAL\] VARIABLES时，将time_zone统一显示为+08:00这个字符串 |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | MAX_ALLOWED_PACKET       | 计算节点控制，默认：64M                                                                                                                                   |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ADMIN_ADDRESS            | 始终显示空字符串，MySQL8.0新增                                                                                                                            |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | INNODB_BUFFER_POOL_SIZE  | 逻辑库下所有节点总和，主备节点按主节点算                                                                                                                  |
-+--------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ------------------------------------------------------- ----------------------------------------------------------------
   **Status Name**                                         **显示说明**
@@ -5775,7 +4978,7 @@ HotDB Server对MySQL部分variables及status的显示结果做了支持，可通
 
 在使用分片数据库时，需要先将表的分片规则信息配置好之后才能创建表。实际使用过程中，用户可能对分片数据库及分片规则不了解，这就需要一种能直接从MySQL过渡到分片数据库HotDB Server的方案，该方案能根据逻辑库关联的分片节点数量自动对表生成分片规则，称为默认分片规则。
 
-**使用前提：**逻辑库已设置分片节点。为逻辑库设置分片节点的方法如下：登录分布式事务数据库管理平台,选择"配置"-\>"逻辑库"，给逻辑库设置默认分片节点，然后点动态加载。
+**使用前提：**逻辑库已设置分片节点。为逻辑库设置分片节点的方法如下：登录分布式事务数据库管理平台,选择"配置"->"逻辑库"，给逻辑库设置默认分片节点，然后点动态加载。
 
 ![](assets/standard/image130.png)
 
@@ -5783,7 +4986,7 @@ HotDB Server对MySQL部分variables及status的显示结果做了支持，可通
 
 如果逻辑库只设置了一个分片节点，则HotDB Server对创建的表不做分片处理（和MySQL原生的表一致），在HotDB Server中将此类表称为创建垂直分片表。
 
-如果逻辑库设置了多个分片节点，则HotDB Server对创建的表进行水平分片，分片算法是对每行数据分片字段的值进行AUTO_CRC32从而确定该行数据应被存储在哪个分片节点中，分片字段选取顺序：主键字段 -\> 唯一键字段 -\>第一个整型字段（BIGINT、INT、MEDIUMINT、SMALLINT、TINYINT） -\>没有整型字段时取字符串类型字段（CHAR、VARCHAR），以上类型全部没有时默认随机选择一个字段作为分片字段。
+如果逻辑库设置了多个分片节点，则HotDB Server对创建的表进行水平分片，分片算法是对每行数据分片字段的值进行AUTO_CRC32从而确定该行数据应被存储在哪个分片节点中，分片字段选取顺序：主键字段 -> 唯一键字段 ->第一个整型字段（BIGINT、INT、MEDIUMINT、SMALLINT、TINYINT） ->没有整型字段时取字符串类型字段（CHAR、VARCHAR），以上类型全部没有时默认随机选择一个字段作为分片字段。
 
 ![](assets/standard/image131.png)
 
@@ -5805,17 +5008,17 @@ HotDB Server中对表分为三类：全局表、水平分片表、垂直分片�
 
 假设"test001"逻辑库配置了一个默认分片节点，则"test01"表为垂直分片表；假设"test002"逻辑库配置了两个默认分片节点，则"test02"表为水平分片表。
 
-mysql\> use TEST001;
+mysql> use TEST001;
 
 Database changed
 
-mysql\> create table test01(id not null auto_increment primary key,a char(8),b decimal(4,2),c int);
+mysql> create table test01(id not null auto_increment primary key,a char(8),b decimal(4,2),c int);
 
-mysql\> use TEST002;
+mysql> use TEST002;
 
 Database changed
 
-mysql\> create table test02(id not null auto_increment primary key,a char(8),b decimal(4,2),c int);
+mysql> create table test02(id not null auto_increment primary key,a char(8),b decimal(4,2),c int);
 
 ![](assets/standard/image132.png)
 
@@ -5827,57 +5030,45 @@ mysql\> create table test02(id not null auto_increment primary key,a char(8),b d
 
 ![](assets/standard/image133.png)
 
-利用[服务端口命令](#使用已有分片规则建表相关命令)查看分片规则的functionid \| functionname\| functiontype\| ruleid \| rulename等信息，根据相关字段信息创建表。
+利用[服务端口命令](#使用已有分片规则建表相关命令)查看分片规则的functionid | functionname| functiontype| ruleid | rulename等信息，根据相关字段信息创建表。
 
-mysql\> show hotdb functions;
+mysql> show hotdb functions;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| function_id | function_name | function_type | auto_generated |
 
-\| function_id \| function_name \| function_type \| auto_generated \|
+| 1 | AUTO_GENERATE_CRC32 | AUTO_CRC32 | 1 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 2 | AUTO_CRC32_4 | AUTO_CRC32 | 0 |
 
-\| 1 \| AUTO_GENERATE_CRC32 \| AUTO_CRC32 \| 1 \|
+| 3 | AUTO_CRC32_1 | AUTO_CRC32 | 0 |
 
-\| 2 \| AUTO_CRC32_4 \| AUTO_CRC32 \| 0 \|
+| 26 | AUTO_GENERATE_MOD | AUTO_MOD | 1 |
 
-\| 3 \| AUTO_CRC32_1 \| AUTO_CRC32 \| 0 \|
+| 31 | 29__MATCH1 | MATCH | 0 |
 
-\| 26 \| AUTO_GENERATE_MOD \| AUTO_MOD \| 1 \|
+| 33 | 32_SIMPLE_MOD | SIMPLE_MOD | 0 |
 
-\| 31 \| 29\_\_MATCH1 \| MATCH \| 0 \|
+| 36 | 36_SIMPLE_MOD | SIMPLE_MOD | 0 |
 
-\| 33 \| 32_SIMPLE_MOD \| SIMPLE_MOD \| 0 \|
-
-\| 36 \| 36_SIMPLE_MOD \| SIMPLE_MOD \| 0 \|
-
-\| 37 \| 37_CRC32_MOD \| CRC32_MOD \| 0 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 37 | 37_CRC32_MOD | CRC32_MOD | 0 |
 
 8 rows in set (0.01 sec)
 
-mysql\> show hotdb rules;
+mysql> show hotdb rules;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| rule_id | rule_name | rule_column | function_id | auto_generated |
 
-\| rule_id \| rule_name \| rule_column \| function_id \| auto_generated \|
+| 4 | hotdb-cloud_555f9d00-27c3-4eaa-860c-309312672908 | id | 3 | 0 |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 12 | hotdb-cloud_8b7d9b8d-f711-476c-aa33-a4e2af184ab5 | adnid | 2 | 0 |
 
-\| 4 \| hotdb-cloud_555f9d00-27c3-4eaa-860c-309312672908 \| id \| 3 \| 0 \|
+| 13 | hotdb-cloud_7f8fff18-6016-47f1-ab0a-1912f5b75523 | adnid | 2 | 0 |
 
-\| 12 \| hotdb-cloud_8b7d9b8d-f711-476c-aa33-a4e2af184ab5 \| adnid \| 2 \| 0 \|
+| 21 | AUTO_GENERATE_3_JOIN_A_JWY | ID | 1 | 1 |
 
-\| 13 \| hotdb-cloud_7f8fff18-6016-47f1-ab0a-1912f5b75523 \| adnid \| 2 \| 0 \|
+| 50 | AUTO_GENERATE_9_FT_ADDR | ID | 26 | 1 |
 
-\| 21 \| AUTO_GENERATE_3\_JOIN_A\_JWY \| ID \| 1 \| 1 \|
-
-\| 50 \| AUTO_GENERATE_9\_FT_ADDR \| ID \| 26 \| 1 \|
-
-\| 64 \| AUTO_GENERATE_23_S03 \| A \| 1 \| 1 \|
-
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 64 | AUTO_GENERATE_23_S03 | A | 1 | 1 |
 
 6 rows in set (0.01 sec)
 
@@ -5887,35 +5078,35 @@ mysql\> show hotdb rules;
 
 水平分片表创建语法如下：
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functionid \| functionname} \'functionid \| functionname\' USING COLUMN \'shardcolumnname\' **（table define\...）**
+CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functionid | functionname} 'functionid | functionname' USING COLUMN 'shardcolumnname' **（table define...）**
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functiontype} \'functiontype\' USING COLUMN \'shardcolumnname\' on datanode \'datanodeid\' **（table define\...）**
+CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid' **（table define...）**
 
 同时也可以将SHARD BY 之后的关键字放置表定义之后（垂直分片表、全局表亦同），示例：
 
-CREATE TABLE \[IF NOT EXISTS\] tbl_name **（table define\...）** SHARD BY {functiontype} \'functiontype\' USING COLUMN \'shardcolumnname\' on datanode \'datanodeid\'(\.....);
+CREATE TABLE \[IF NOT EXISTS\] tbl_name **（table define...）** SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid'(.....);
 
 水平分片表创建语法说明：
 
-SHARD BY {FUNCTIONID \| FUNCTIONNAME \| FUNCTIONTYPE}：指分片函数ID、分片函数名称、分片函数类型的关键字。
+SHARD BY {FUNCTIONID | FUNCTIONNAME | FUNCTIONTYPE}：指分片函数ID、分片函数名称、分片函数类型的关键字。
 
-\' functionid_value \| functionname_value \| functiontype_value \'：指具体的分片函数ID、分片函数名称、分片函数类型的值。
+' functionid_value | functionname_value | functiontype_value '：指具体的分片函数ID、分片函数名称、分片函数类型的值。
 
 USING COLUMN：指分片列的关键字。
 
-\'shardcolumnname\'：指具体的分片列的列名。
+'shardcolumnname'：指具体的分片列的列名。
 
 ON DATANODE：指数据节点的关键字。
 
-\'datanodeid\'：指具体的数据节点的值，多个不连续的值可以用逗号间隔，多个连续的值可以使用区间形式指定，如:\'1,3,4,5-10,12-40\'。
+'datanodeid'：指具体的数据节点的值，多个不连续的值可以用逗号间隔，多个连续的值可以使用区间形式指定，如:'1,3,4,5-10,12-40'。
 
 登录服务端，切换逻辑库，输入建表语句并执行。
 
-mysql\> use fun_zy
+mysql> use fun_zy
 
 Database changed
 
-mysql\> CREATE TABLE match1_tb shard by functionname \'test_match1\' using column \'aname\' (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT \'\', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
+mysql> CREATE TABLE match1_tb shard by functionname 'test_match1' using column 'aname' (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
 
 Query OK, 0 rows affected (0.09 sec)
 
@@ -5925,93 +5116,75 @@ Query OK, 0 rows affected (0.09 sec)
 
 对于此语法规则建表，需要注意以下几点:
 
--   \'functionid \| functionname \| functiontype\'为具体指定的分片函数ID、分片函数名称、分片函数类型
+-   'functionid | functionname | functiontype'为具体指定的分片函数ID、分片函数名称、分片函数类型
 
--   \'shardcolumnname\' 为指定的分片字段
+-   'shardcolumnname' 为指定的分片字段
 
--   \'datanodeid\'为节点ID，可以逗号间隔，且支持区间形式指定，如:\'1,3,4,5-10,12-40\'，节点ID可登录分布式事务数据库平台页面，选择"配置"-\>"节点管理"查看，也可以登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)show hotdb datanodes;查看：
+-   'datanodeid'为节点ID，可以逗号间隔，且支持区间形式指定，如:'1,3,4,5-10,12-40'，节点ID可登录分布式事务数据库平台页面，选择"配置"->"节点管理"查看，也可以登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)show hotdb datanodes;查看：
 
-mysql\> show hotdb datanodes;
+mysql> show hotdb datanodes;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| datanode_id | datanode_name | datanode_type |
 
-\| datanode_id \| datanode_name \| datanode_type \|
+| 9 | dn_01 | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 11 | dn_02 | 0 |
 
-\| 9 \| dn_01 \| 0 \|
+| 13 | dn_03 | 0 |
 
-\| 11 \| dn_02 \| 0 \|
+| 15 | dn_04 | 0 |
 
-\| 13 \| dn_03 \| 0 \|
+| 19 | dn_failover | 0 |
 
-\| 15 \| dn_04 \| 0 \|
-
-\| 19 \| dn_failover \| 0 \|
-
-\| 20 \| dn_rmb_01 \| 0 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 20 | dn_rmb_01 | 0 |
 
 6 rows in set (0.00 sec)
 
 -   functiontype 只支持 auto_crc32/auto_mod, 若使用了其他类型会提示：ERROR:The fucntiontype can only be auto_crc32/auto_mod.
 
-mysql\> create table ft_match shard by functiontype \'match\' using column \'id\' on datanode \'11,13\'(id int(10) primary key, a char(20) not null);
+mysql> create table ft_match shard by functiontype 'match' using column 'id' on datanode '11,13'(id int(10) primary key, a char(20) not null);
 
 ERROR 10070 (HY000): The functiontype can only by auto_crc32/auto_mode.
 
--   使用functionid \| functionname建表时，当指定的function信息关联的function_type 是auto_crc32/auto_mod 时，需要指定on datanode \'datanodes\' ，否则会提示：The function must be specified datanodes。 如果是其他类型，则无需指定。
+-   使用functionid | functionname建表时，当指定的function信息关联的function_type 是auto_crc32/auto_mod 时，需要指定on datanode 'datanodes' ，否则会提示：The function must be specified datanodes。 如果是其他类型，则无需指定。
 
-mysql\> create table mod_ft shard by functionid \'15\' using column \'id\'(id int(10) primary key, a char(20) not null);
+mysql> create table mod_ft shard by functionid '15' using column 'id'(id int(10) primary key, a char(20) not null);
 
 ERROR 10090 (HY000): The function must be specified datanodes.
 
-mysql\> create table testsa shard by functionid \'3\' using column \'id\'(id int,a int);
+mysql> create table testsa shard by functionid '3' using column 'id'(id int,a int);
 
 Query OK, 0 rows affected, 1 warning (0.10 sec)
 
-mysql\> CREATE TABLE match_tb shard by functionname \'test_match1\' using column \'ananme\' on datanode \'1,2\'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT \'\', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
+mysql> CREATE TABLE match_tb shard by functionname 'test_match1' using column 'ananme' on datanode '1,2'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
 
-ERROR 10090 (HY000): This rule doesn\'t need to specify a datanodes;
+ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
 
 表结构类似的表可以使用相同的分片规则，使用如下语法可直接引用分片规则创建水平分片表：
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {ruleid \| rulename} \'ruleid\\rulename\' \[on datanode \'datanodes\'\] (\...\...
+CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY {ruleid | rulename} 'ruleid\\rulename' \[on datanode 'datanodes'\] (......
 
 登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)，show hotdb rules;和show hotdb functions;可以看到与之分片函数关联的分片规则：
 
-mysql\> show hotdb rules;
+mysql> show hotdb rules;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| rule_id | rule_name | rule_column | function_id | auto_generated |
 
-\| rule_id \| rule_name \| rule_column \| function_id \| auto_generated \|
-
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 17 \| AUTO_GENERATE_3\_ROUTE1_TB \| A \| 1 \| 1 \|
-
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 17 | AUTO_GENERATE_3_ROUTE1_TB | A | 1 | 1 |
 
 21 rows in set (0.01 sec)
 
-mysql\> show hotdb functions;
+mysql> show hotdb functions;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| function_id | function_name | **function_type** | auto_generated |
 
-\| function_id \| function_name \| **function_type** \| auto_generated \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 1 \| test_route1 \| ROUTE \| 1 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 1 | test_route1 | ROUTE | 1 |
 
 13 rows in set (0.01 sec)
 
 用户可用ruleid/rulename来直接创建表：
 
-mysql\> CREATE TABLE rt_table shard by ruleid \'17\'(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,I char(20) charcter set utf8,j varchar(30) character set utf8mb4,k char(20) character set gbk,l text character set latin1, m enum(\'\',\'null\',\'1\',\'2\',\'3\'),n set(\'\',\'null\',\'1\',\'2\',\'3\'));
+mysql> CREATE TABLE rt_table shard by ruleid '17'(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,I char(20) charcter set utf8,j varchar(30) character set utf8mb4,k char(20) character set gbk,l text character set latin1, m enum('','null','1','2','3'),n set('','null','1','2','3'));
 
 Query OK, 0 rows affected (0.07 sec)
 
@@ -6019,47 +5192,35 @@ Query OK, 0 rows affected (0.07 sec)
 
 对于此语法规则建表，需要注意以下几点：
 
-当指定的rule关联的function_type是auto_crc32/auto_mod 时，需要指定on datanode \'datanodes\'；如果是其他类型，则无需指定datanode。
+当指定的rule关联的function_type是auto_crc32/auto_mod 时，需要指定on datanode 'datanodes'；如果是其他类型，则无需指定datanode。
 
-mysql\> show hotdb rules;
+mysql> show hotdb rules;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| rule_id | rule_name | rule_column | function_id | auto_generated |
 
-\| rule_id \| rule_name \| rule_column \| function_id \| auto_generated \|
-
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 17 \| **AUTO_GENERATE_3\_ROUTE1_TB** \| A \| 1 \| 1 \|
-
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 17 | **AUTO_GENERATE_3_ROUTE1_TB** | A | 1 | 1 |
 
 21 rows in set (0.01 sec)
 
-mysql\> show hotdb functions;
+mysql> show hotdb functions;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| function_id | function_name | **function_type** | auto_generated |
 
-\| function_id \| function_name \| **function_type** \| auto_generated \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 1 \| test_route1 \| ROUTE \| 1 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 1 | test_route1 | ROUTE | 1 |
 
 13 rows in set (0.01 sec)
 
-mysql\> CREATE TABLE route2_rptb1 shard by rulename \'AUTO_GENERATE_3\_ROUTE1_TB\' on datanode \'9,11,13\'(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) charcter set utf8,j varchar(30) character set utf8mb4,k char(20) character set gbk,l text character set latin1, m enum(\'\',\'null\',\'1\',\'2\',\'3\'),n set(\'\',\'null\',\'1\',\'2\',\'3\'));
+mysql> CREATE TABLE route2_rptb1 shard by rulename 'AUTO_GENERATE_3_ROUTE1_TB' on datanode '9,11,13'(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) charcter set utf8,j varchar(30) character set utf8mb4,k char(20) character set gbk,l text character set latin1, m enum('','null','1','2','3'),n set('','null','1','2','3'));
 
-ERROR 10090 (HY000): This rule doesn\'t need to specify a datanodes;
+ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
 
 当指定的rule关联的function_type是auto_crc32/auto_mod 时， 指定的datanode 个数与参数不符时，则会提示：ERROR:The total number of datanodes must be XXX（XXX为实际ruleid 关联的 function info的 column_value值）：
 
-mysql\> CREATE TABLE auto_c shard by ruleid \'63\' on datanode \'9\'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT \'\',adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE=INNODB;
+mysql> CREATE TABLE auto_c shard by ruleid '63' on datanode '9'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '',adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE=INNODB;
 
 ERROR 10090 (HY000): The total number of datanodes must be 2
 
-mysql\> CREATE TABLE auto_c shard by ruleid \'63\' on datanode \'9,15\'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT \'\',adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE=INNODB;
+mysql> CREATE TABLE auto_c shard by ruleid '63' on datanode '9,15'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '',adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE=INNODB;
 
 Query OK, 0 rows affected (0.13 sec)
 
@@ -6069,13 +5230,13 @@ Query OK, 0 rows affected (0.13 sec)
 
 创建垂直分片表语法：
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY vertical on datanode \'datanodeid\'(\.....
+CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY vertical on datanode 'datanodeid'(.....
 
 语法说明：
 
-SHARD BY VERTICAL是垂直分片关键字，ON DATANODE \'datanodeid\'只能指定一个数据节点，不指定数据节点或指定多个数据节点都会报错。
+SHARD BY VERTICAL是垂直分片关键字，ON DATANODE 'datanodeid'只能指定一个数据节点，不指定数据节点或指定多个数据节点都会报错。
 
-mysql\> CREATE TABLE tb_vertical shard by vertical on datanode\'9\'( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCAHR(32) DEFAULT \'\', adept VARCHAR(40), adate DATETIME DEFAULT NULL)ENGINE=INNODB;
+mysql> CREATE TABLE tb_vertical shard by vertical on datanode'9'( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCAHR(32) DEFAULT '', adept VARCHAR(40), adate DATETIME DEFAULT NULL)ENGINE=INNODB;
 
 Query OK, 0 rows affected(0.07 sec)
 
@@ -6083,13 +5244,13 @@ Query OK, 0 rows affected(0.07 sec)
 
 未指定datanode：
 
-mysql\> CREATE TABLE tb1_vertical shard by vertical( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCAHR(32) DEFAULT \'\', adept VARCHAR(40), adate DATETIME DEFAULT NULL)ENGINE=INNODB;
+mysql> CREATE TABLE tb1_vertical shard by vertical( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCAHR(32) DEFAULT '', adept VARCHAR(40), adate DATETIME DEFAULT NULL)ENGINE=INNODB;
 
 ERROR 10090 (HY000): This table has to specify a datanodes.
 
 指定多个节点：
 
-mysql\> CREATE TABLE tb1_vertical shard by vertical on datanode\'9,11,13\'( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCAHR(32) DEFAULT \'\', adept VARCHAR(40), adate DATETIME DEFAULT NULL)ENGINE=INNODB;
+mysql> CREATE TABLE tb1_vertical shard by vertical on datanode'9,11,13'( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCAHR(32) DEFAULT '', adept VARCHAR(40), adate DATETIME DEFAULT NULL)ENGINE=INNODB;
 
 ERROR 10090 (HY000): Can only specify one datanodes.
 
@@ -6099,31 +5260,31 @@ ERROR 10090 (HY000): Can only specify one datanodes.
 
 创建全局表语法如下：
 
-CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY global on datanode \'datanodeid\'(\.....
+CREATE  TABLE \[IF NOT EXISTS\] tbl_name SHARD BY global on datanode 'datanodeid'(.....
 
 语法说明：
 
 SHARD BY GLOBAL：是全局表关键字。
 
-\[ON DATANODE \'datanodeid\'\]：是指定数据节点的语法。计算节点版本高于（包含）2.5.6时，不指定datanodeid则默认按逻辑库默认分片节点+逻辑库下所有表关联节点的并集建表；指定则必须包括全部数据节点，指定部分数据节点会报错。
+\[ON DATANODE 'datanodeid'\]：是指定数据节点的语法。计算节点版本高于（包含）2.5.6时，不指定datanodeid则默认按逻辑库默认分片节点+逻辑库下所有表关联节点的并集建表；指定则必须包括全部数据节点，指定部分数据节点会报错。
 
-mysql\> CREATE TABLE tb_quan shard by global(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,I char(20) null,j varchar(30),k blob,l text, m enum(\'\',\'null\',\'1\',\'2\',\'3\'),n set(\'\',\'null\',\'1\',\'2\',\'3\'));
+mysql> CREATE TABLE tb_quan shard by global(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,I char(20) null,j varchar(30),k blob,l text, m enum('','null','1','2','3'),n set('','null','1','2','3'));
 
 Query OK, 0 rows affected (0.07 sec)
 
 ![](assets/standard/image137.png)
 
-语法规则里的global是创建全局表的标志，\'datanodeid\'为节点ID，可以逗号间隔，且支持区间形式指定，如:\'1,3,4,5-10,12-40\'，使用该语法创建分片规则的全局表，该表的节点应该包括逻辑库下所有节点。
+语法规则里的global是创建全局表的标志，'datanodeid'为节点ID，可以逗号间隔，且支持区间形式指定，如:'1,3,4,5-10,12-40'，使用该语法创建分片规则的全局表，该表的节点应该包括逻辑库下所有节点。
 
 -   如果逻辑库下没有默认分片节点也没有已经定义的表，则使用特殊语法进行全局表的创建时，需要指定全局表分布的节点：
 
-mysql\> CREATE TABLE tb2_quan shard by global(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) null,j varchar(30),k blob,l text, m enum(\'\',\'null\',\'1\',\'2\',\'3\'),n set(\'\',\'null\',\'1\',\'2\',\'3\'));
+mysql> CREATE TABLE tb2_quan shard by global(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) null,j varchar(30),k blob,l text, m enum('','null','1','2','3'),n set('','null','1','2','3'));
 
 ERROR 10090 (HY000): This table has to specify a datanodes.
 
 如果逻辑库下存在已经定义的表，则可以不指定节点或指定节点的时候，需要为该逻辑库下包含节点的最大非重复个数（即所有表所选节点的并集），否则指定部分数据节点会提示建表错误：
 
-mysql\> CREATE TABLE tb1_quan shard by global on datanodes\'9,11\'(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) null,j varchar(30),k blob,l text, m enum(\'\',\'null\',\'1\',\'2\',\'3\'),n set(\'\',\'null\',\'1\',\'2\',\'3\'));
+mysql> CREATE TABLE tb1_quan shard by global on datanodes'9,11'(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) null,j varchar(30),k blob,l text, m enum('','null','1','2','3'),n set('','null','1','2','3'));
 
 ERROR 10090 (HY000): The specified datanodes must cover all datanodes of the logical database.
 
@@ -6131,11 +5292,11 @@ ERROR 10090 (HY000): The specified datanodes must cover all datanodes of the log
 
 此小节介绍的命令登录到计算节点服务端口、管理端口均可执行。
 
-1\. show hotdb datanodes -- 显示当前可用的节点：
+1. show hotdb datanodes -- 显示当前可用的节点：
 
 此命令用于查看配置库中hotdb_datanodes表，语法：
 
-mysql\> show hotdb datanodes \[LIKE \'pattern\' \| WHERE expr\];
+mysql> show hotdb datanodes \[LIKE 'pattern' | WHERE expr\];
 
 **命令包含参数及其说明：**
 
@@ -6156,55 +5317,43 @@ mysql\> show hotdb datanodes \[LIKE \'pattern\' \| WHERE expr\];
 
 例子：
 
-mysql\> show hotdb datanodes;
+mysql> show hotdb datanodes;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| datanode_id | datanode_name | datanode_type |
 
-\| datanode_id \| datanode_name \| datanode_type \|
+| 1 | dn_01 | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 2 | dn_02 | 0 |
 
-\| 1 \| dn_01 \| 0 \|
+| 4 | dn_04 | 0 |
 
-\| 2 \| dn_02 \| 0 \|
+| 101 | dn_101 | 0 |
 
-\| 4 \| dn_04 \| 0 \|
+| 127 | dn_03 | 0 |
 
-\| 101 \| dn_101 \| 0 \|
+| 186 | dn_199 | 0 |
 
-\| 127 \| dn_03 \| 0 \|
-
-\| 186 \| dn_199 \| 0 \|
-
-\| 203 \| dn_19 \| 0 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 203 | dn_19 | 0 |
 
 例子：
 
-mysql\> show hotdb datanodes like \'dn_0%\';
+mysql> show hotdb datanodes like 'dn_0%';
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| datanode_id | datanode_name | datanode_type |
 
-\| datanode_id \| datanode_name \| datanode_type \|
+| 1 | dn_01 | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 2 | dn_02 | 0 |
 
-\| 1 \| dn_01 \| 0 \|
+| 4 | dn_04 | 0 |
 
-\| 2 \| dn_02 \| 0 \|
+| 127 | dn_03 | 0 |
 
-\| 4 \| dn_04 \| 0 \|
-
-\| 127 \| dn_03 \| 0 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-2\. show hotdb functions -- 显示当前可用的分片函数：
+2. show hotdb functions -- 显示当前可用的分片函数：
 
 此命令用于查看配置库中hotdb_function表，语法：
 
-mysql\> show hotdb functions;
+mysql> show hotdb functions;
 
 **命令包含参数及其说明：**
 
@@ -6226,77 +5375,59 @@ mysql\> show hotdb functions;
 
 例子：
 
-mysql\> show hotdb functions;
+mysql> show hotdb functions;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| function_id \| function_name \| function_type \| auto_generated \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| function_id | function_name | function_type | auto_generated |
 
 ...省略更多...
 
-\| 40 \| AUTO_CRC32_8 \| AUTO_CRC32 \| 0 \|
+| 40 | AUTO_CRC32_8 | AUTO_CRC32 | 0 |
 
-\| 41 \| th_fun_range \| RANGE \| 0 \|
+| 41 | th_fun_range | RANGE | 0 |
 
-\| 42 \| AUTO_MOD_5 \| AUTO_MOD \| 0 \|
+| 42 | AUTO_MOD_5 | AUTO_MOD | 0 |
 
-\| 43 \| 43_RANGE \| RANGE \| 0 \|
+| 43 | 43_RANGE | RANGE | 0 |
 
-\| 44 \| AUTO_CRC32_15 \| AUTO_CRC32 \| 0 \|
+| 44 | AUTO_CRC32_15 | AUTO_CRC32 | 0 |
 
-\| 45 \| AUTO_CRC32_5 \| AUTO_CRC32 \| 0 \|
+| 45 | AUTO_CRC32_5 | AUTO_CRC32 | 0 |
 
-\| 46 \| yds_RANGE \| RANGE \| 0 \|
+| 46 | yds_RANGE | RANGE | 0 |
 
-\| 47 \| AUTO_CRC32_11 \| AUTO_CRC32 \| 0 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 47 | AUTO_CRC32_11 | AUTO_CRC32 | 0 |
 
 例子：
 
-mysql\> show hotdb functions like \'%range%\';
+mysql> show hotdb functions like '%range%';
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| function_id | function_name | function_type | auto_generated |
 
-\| function_id \| function_name \| function_type \| auto_generated \|
+| 41 | th_fun_range | RANGE | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 43 | 43_RANGE | RANGE | 0 |
 
-\| 41 \| th_fun_range \| RANGE \| 0 \|
-
-\| 43 \| 43_RANGE \| RANGE \| 0 \|
-
-\| 46 \| yds_RANGE \| RANGE \| 0 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 46 | yds_RANGE | RANGE | 0 |
 
 3 rows in set (0.00 sec)
 
-mysql\> show hotdb functions where function_name like \'%range%\';
+mysql> show hotdb functions where function_name like '%range%';
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| function_id | function_name | function_type | auto_generated |
 
-\| function_id \| function_name \| function_type \| auto_generated \|
+| 41 | th_fun_range | RANGE | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 43 | 43_RANGE | RANGE | 0 |
 
-\| 41 \| th_fun_range \| RANGE \| 0 \|
-
-\| 43 \| 43_RANGE \| RANGE \| 0 \|
-
-\| 46 \| yds_RANGE \| RANGE \| 0 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 46 | yds_RANGE | RANGE | 0 |
 
 3 rows in set (0.00 sec)
 
-3\. show hotdb function infos - 显示当前可用的分片函数信息：
+3. show hotdb function infos - 显示当前可用的分片函数信息：
 
 此命令用于查看配置库中hotdb_function_info 表，语法：
 
-mysql\> show hotdb function infos \[WHERE expr\];
+mysql> show hotdb function infos \[WHERE expr\];
 
 **命令包含参数及其说明：**
 
@@ -6316,67 +5447,57 @@ mysql\> show hotdb function infos \[WHERE expr\];
 
 例子：
 
-mysql\> show hotdb function infos;
+mysql> show hotdb function infos;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| function_id | column_value | datanode_id |
 
-\| function_id \| column_value \| datanode_id \|
+| 2 | 4 | 0 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| 3 | 1 | 0 |
 
-\| 2 \| 4 \| 0 \|
+| 4 | 2 | 0 |
 
-\| 3 \| 1 \| 0 \|
+| 31 | '' | 4 |
 
-\| 4 \| 2 \| 0 \|
+| 31 | 1 | 1 |
 
-\| 31 \| \'\' \| 4 \|
+| 31 | 2 | 2 |
 
-\| 31 \| 1 \| 1 \|
+| 31 | null | 127 |
 
-\| 31 \| 2 \| 2 \|
+| 33 | 0:1 | 1 |
 
-\| 31 \| null \| 127 \|
+| 33 | 10:10 | 191 |
 
-\| 33 \| 0:1 \| 1 \|
+| 33 | 11:11 | 186 |
 
-\| 33 \| 10:10 \| 191 \|
+| 33 | 12 | 0 |
 
-\| 33 \| 11:11 \| 186 \|
-
-\| 33 \| 12 \| 0 \|
-
-\| 33 \| 2:3 \| 2 \|
+| 33 | 2:3 | 2 |
 
 ...省略更多...
 
 例子：
 
-mysql\> show hotdb function infos where function_id=38;
+mysql> show hotdb function infos where function_id=38;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| function_id | column_value | datanode_id |
 
-\| function_id \| column_value \| datanode_id \|
+| 38 | 10:12 | 1 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| 38 | 1:2 | 1 |
 
-\| 38 \| 10:12 \| 1 \|
+| 38 | 20 | 0 |
 
-\| 38 \| 1:2 \| 1 \|
-
-\| 38 \| 20 \| 0 \|
-
-\| 38 \| 4:8 \| 1 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| 38 | 4:8 | 1 |
 
 4 rows in set (0.00 sec)
 
-4\. show hotdb rules -- 显示当前可用的分片规则：
+4. show hotdb rules -- 显示当前可用的分片规则：
 
 此命令用于查看配置库中hotdb_rule 表，语法：
 
-mysql\> show hotdb rules \[LIKE \'pattern\' \| WHERE expr\];
+mysql> show hotdb rules \[LIKE 'pattern' | WHERE expr\];
 
 **命令包含参数及其说明：**
 
@@ -6399,61 +5520,49 @@ mysql\> show hotdb rules \[LIKE \'pattern\' \| WHERE expr\];
 
 例子：
 
-mysql\> show hotdb rules;
+mysql> show hotdb rules;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| rule_id | rule_name | rule_column | function_id | auto_generated |
 
-\| rule_id \| rule_name \| rule_column \| function_id \| auto_generated \|
+| 21 | AUTO_GENERATE_3_JOIN_A_JWY | ID | 1 | 1 |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 22 | hotdb-cloud_0374c02e-58a7-4263-9b80-9c5b46fb42af | id | 5 | 0 |
 
-\| 21 \| AUTO_GENERATE_3\_JOIN_A\_JWY \| ID \| 1 \| 1 \|
+| 25 | hotdb-cloud_f3979d19-93cb-4925-8dee-e4fbf8803c7c | id | 5 | 0 |
 
-\| 22 \| hotdb-cloud_0374c02e-58a7-4263-9b80-9c5b46fb42af \| id \| 5 \| 0 \|
+| 32 | hotdb-cloud_6ccd2f69-cf53-4e81-ab3d-61345134fb7a | id | 5 | 0 |
 
-\| 25 \| hotdb-cloud_f3979d19-93cb-4925-8dee-e4fbf8803c7c \| id \| 5 \| 0 \|
-
-\| 32 \| hotdb-cloud_6ccd2f69-cf53-4e81-ab3d-61345134fb7a \| id \| 5 \| 0 \|
-
-\| 33 \| hotdb-cloud_b5bc16e6-3481-40ed-83ff-e81d488e47a5 \| ID \| 4 \| 0 \|
+| 33 | hotdb-cloud_b5bc16e6-3481-40ed-83ff-e81d488e47a5 | ID | 4 | 0 |
 
 ...省略更多...
 
 例子：
 
-mysql\> show hotdb rules like \'%auto%\';
+mysql> show hotdb rules like '%auto%';
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| rule_id | rule_name | rule_column | function_id | auto_generated |
 
-\| rule_id \| rule_name \| rule_column \| function_id \| auto_generated \|
+| 21 | AUTO_GENERATE_3_JOIN_A_JWY | ID | 1 | 1 |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 50 | AUTO_GENERATE_9_FT_ADDR | ID | 26 | 1 |
 
-\| 21 \| AUTO_GENERATE_3\_JOIN_A\_JWY \| ID \| 1 \| 1 \|
+| 64 | AUTO_GENERATE_23_S03 | A | 1 | 1 |
 
-\| 50 \| AUTO_GENERATE_9\_FT_ADDR \| ID \| 26 \| 1 \|
-
-\| 64 \| AUTO_GENERATE_23_S03 \| A \| 1 \| 1 \|
-
-\| 65 \| AUTO_GENERATE_23_S04 \| B \| 1 \| 1 \|
+| 65 | AUTO_GENERATE_23_S04 | B | 1 | 1 |
 
 ...省略更多...
 
-mysql\> show hotdb rules where rule_name like \'%auto%\';
+mysql> show hotdb rules where rule_name like '%auto%';
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| rule_id | rule_name | rule_column | function_id | auto_generated |
 
-\| rule_id \| rule_name \| rule_column \| function_id \| auto_generated \|
+| 21 | AUTO_GENERATE_3_JOIN_A_JWY | ID | 1 | 1 |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 50 | AUTO_GENERATE_9_FT_ADDR | ID | 26 | 1 |
 
-\| 21 \| AUTO_GENERATE_3\_JOIN_A\_JWY \| ID \| 1 \| 1 \|
+| 64 | AUTO_GENERATE_23_S03 | A | 1 | 1 |
 
-\| 50 \| AUTO_GENERATE_9\_FT_ADDR \| ID \| 26 \| 1 \|
-
-\| 64 \| AUTO_GENERATE_23_S03 \| A \| 1 \| 1 \|
-
-\| 65 \| AUTO_GENERATE_23_S04 \| B \| 1 \| 1 \|
+| 65 | AUTO_GENERATE_23_S04 | B | 1 | 1 |
 
 ...省略更多...
 
@@ -6463,7 +5572,7 @@ mysql\> show hotdb rules where rule_name like \'%auto%\';
 
 可通过修改server.xml中的dropTableRetentionTime参数或在管理平台配置菜单下的计算节点参数配置中添加参数"被删除表保留时长(小时)"。
 
-\<property name=\"dropTableRetentionTime\"\>0\</property\>\<!\--被删除表保留时长,默认为0,不保留\--\>
+<property name=[dropTableRetentionTime](#dropTableRetentionTime)>0</property><!--被删除表保留时长,默认为0,不保留-->
 
 dropTableRetentionTime参数默认为0，表示不保留被删除的表数据，例如DROP TABLE立即会删除表无法瞬间恢复；dropTableRetentionTime大于0时，单位以小时计算，保留被删除的表数据到设置时长，超过设置时长后自动删除被保留的表。
 
@@ -6471,19 +5580,13 @@ dropTableRetentionTime参数默认为0，表示不保留被删除的表数据，
 
 当该功能开启时，以dropTableRetentionTime=24为例，将保留被DROP的表，24小时后删除被保留的表。若想要还原被DROP的表，首先查询计算节点配置库中的hotdb_dropped_table_log，查看被DROP的表的映射关系。例如：
 
-mysql\> select \* from hotdb_dropped_table_log;
+mysql> select * from hotdb_dropped_table_log;
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| table_name | datanodes | drop_time | renamed_table_name |
 
-\| table_name \| datanodes \| drop_time \| renamed_table_name \|
+| TABLE25 | 11 | 2019-03-26 17:18:07 | HOTDB_TEMP_33_20190326171807 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| TABLE25 \| 11 \| 2019-03-26 17:18:07 \| HOTDB_TEMP_33_20190326171807 \|
-
-\| TABLE30 \| 11 \| 2019-03-26 17:18:13 \| HOTDB_TEMP_34_20190326171812 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| TABLE30 | 11 | 2019-03-26 17:18:13 | HOTDB_TEMP_34_20190326171812 |
 
 2 rows in set (0.00 sec)
 
@@ -6613,7 +5716,7 @@ INFORMATION_SCHEMA库提供当前计算节点的信息与数据，例如数据�
 
 server.xml中adaptiveProcessor参数配置 如下配置：
 
-\<property name=\"adaptiveProcessor\"\>true\</property\>\<!\--控制启动服务时是否自动适配\--\>
+<property name=[adaptiveProcessor](#adaptiveProcessor)>true</property><!--控制启动服务时是否自动适配-->
 
 adaptiveProcessor参数默认为true，即开启自动适配，包括[processor](#processors)、[processorExecutor](#pinglogcleanperiod)和[timerExecutor](#timerexecutor)值都将自动适配。为false时则关闭自动适配。
 
@@ -6621,77 +5724,65 @@ adaptiveProcessor参数默认为true，即开启自动适配，包括[processor]
 
 开启自动适配后，计算节点会根据当前服务器配置和自动适配规则设定参数，即使在server.xml中对以下参数值进行配置，也不会生效，仍然会按照适配规则设置参数值。
 
-\<property name=\"processors\"\>16\</property\>\<!\--处理器数\--\>
+<property name="processors">16</property><!--处理器数-->
 
-\<property name=\"processorExecutor\"\>4\</property\>\<!\--各处理器线程数\--\>
+<property name=[processorExecutor](#processorExecutor)>4</property><!--各处理器线程数-->
 
-\<property name=\"timerExecutor\"\>4\</property\>\<!\--定时器线程数\--\>
+<property name=[timerExecutor](#timerExecutor)>4</property><!--定时器线程数-->
 
 登录3325端口，执行show @\@threadpool;命令，查看当前processor、processorExecutor和timerExecutor值。例如：
 
-mysql\> show @\@threadpool;
+mysql> show @\@threadpool;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
+| name | pool_size | active_count | task_queue_size | completed_task | total_task |
 
-\| name \| pool_size \| active_count \| task_queue_size \| completed_task \| total_task \|
+| TimerExecutor | 4 | 0 | 15 | 50376807 | 50376822 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
+| \$NIOExecutor-0- | 4 | 0 | 0 | 99254 | 99254 |
 
-\| TimerExecutor \| 4 \| 0 \| 15 \| 50376807 \| 50376822 \|
+| \$NIOExecutor-1- | 4 | 1 | 0 | 81195 | 81196 |
 
-\| \$NIOExecutor-0- \| 4 \| 0 \| 0 \| 99254 \| 99254 \|
+| \$NIOExecutor-2- | 4 | 2 | 0 | 140921 | 140923 |
 
-\| \$NIOExecutor-1- \| 4 \| 1 \| 0 \| 81195 \| 81196 \|
+| \$NIOExecutor-3- | 4 | 1 | 0 | 48218 | 48219 |
 
-\| \$NIOExecutor-2- \| 4 \| 2 \| 0 \| 140921 \| 140923 \|
+| \$NIOExecutor-4- | 4 | 0 | 0 | 39073 | 39073 |
 
-\| \$NIOExecutor-3- \| 4 \| 1 \| 0 \| 48218 \| 48219 \|
+| \$NIOExecutor-5- | 4 | 0 | 0 | 31656 | 31656 |
 
-\| \$NIOExecutor-4- \| 4 \| 0 \| 0 \| 39073 \| 39073 \|
+| \$NIOExecutor-6- | 4 | 0 | 0 | 167007 | 167007 |
 
-\| \$NIOExecutor-5- \| 4 \| 0 \| 0 \| 31656 \| 31656 \|
-
-\| \$NIOExecutor-6- \| 4 \| 0 \| 0 \| 167007 \| 167007 \|
-
-\| \$NIOExecutor-7- \| 4 \| 1 \| 0 \| 27221 \| 27222 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
+| \$NIOExecutor-7- | 4 | 1 | 0 | 27221 | 27222 |
 
 9 rows in set (0.00 sec)
 
 \$NIOExecutor有0到7，表示当前processor=8，对应的pool_size为4，表示processorExecutor=4，TimerExecutor对应的pool_size为4，表示timerExecutor=4。
 
-cat /proc/cpuinfo\| grep \"processor\"\| wc -l
+cat /proc/cpuinfo| grep "processor"| wc -l
 
 注意：计算节点在刚刚启动时并不会生成所有线程，而是用多少创建多少，因此执行show @\@threadpool;命令，可能会显示如下图：
 
-mysql\> show @\@threadpool;
+mysql> show @\@threadpool;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
+| name | pool_size | active_count | task_queue_size | completed_task | total_task |
 
-\| name \| pool_size \| active_count \| task_queue_size \| completed_task \| total_task \|
+| TimerExecutor | 4 | 0 | 14 | 73720 | 73734 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
+| \$NIOExecutor-0- | 1 | 0 | 0 | 1 | 1 |
 
-\| TimerExecutor \| 4 \| 0 \| 14 \| 73720 \| 73734 \|
+| \$NIOExecutor-1- | 1 | 0 | 0 | 1 | 1 |
 
-\| \$NIOExecutor-0- \| 1 \| 0 \| 0 \| 1 \| 1 \|
+| \$NIOExecutor-2- | 1 | 0 | 0 | 1 | 1 |
 
-\| \$NIOExecutor-1- \| 1 \| 0 \| 0 \| 1 \| 1 \|
+| \$NIOExecutor-3- | 1 | 0 | 0 | 1 | 1 |
 
-\| \$NIOExecutor-2- \| 1 \| 0 \| 0 \| 1 \| 1 \|
+| \$NIOExecutor-4- | 2 | 0 | 0 | 2 | 2 |
 
-\| \$NIOExecutor-3- \| 1 \| 0 \| 0 \| 1 \| 1 \|
+| \$NIOExecutor-5- | 5 | 0 | 0 | 5 | 5 |
 
-\| \$NIOExecutor-4- \| 2 \| 0 \| 0 \| 2 \| 2 \|
+| \$NIOExecutor-6- | 1 | 0 | 0 | 1 | 1 |
 
-\| \$NIOExecutor-5- \| 5 \| 0 \| 0 \| 5 \| 5 \|
-
-\| \$NIOExecutor-6- \| 1 \| 0 \| 0 \| 1 \| 1 \|
-
-\| \$NIOExecutor-7- \| 1 \| 1 \| 0 \| 1 \| 1 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+
+| \$NIOExecutor-7- | 1 | 1 | 0 | 1 | 1 |
 
 9 rows in set (0.00 sec)
 
@@ -6715,7 +5806,7 @@ mysql\> show @\@threadpool;
 
 Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
-\<property name=\"allowRCWithoutReadConsistentInXA\"\>0\</property\>\<!\-- 是否允许XA模式下使用不保证读写强一致性的RC隔离级别，0为是，1为否 \--\>
+<property name=[allowRCWithoutReadConsistentInXA](#allowRCWithoutReadConsistentInXA)>0</property><!-- 是否允许XA模式下使用不保证读写强一致性的RC隔离级别，0为是，1为否 -->
 
 **参数作用：**
 
@@ -6731,23 +5822,13 @@ Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
 **参数说明：**
 
-+----------------+-------------------------------------------+
 | **Property**   | **Value**                                 |
-+----------------+-------------------------------------------+
 | 参数值         | autoIncrement                             |
-+----------------+-------------------------------------------+
 | 是否可见       | 是                                        |
-+----------------+-------------------------------------------+
-| 参数说明       | 2.5.4以下版本代表：是否采用全局自增序列。 |
-|                |                                           |
-|                | 2.5.4及以上版本代表：全局自增序列模式。   |
-+----------------+-------------------------------------------+
+| 参数说明       | 2.5.4以下版本代表：是否采用全局自增序列。 2.5.4及以上版本代表：全局自增序列模式。   |
 | 默认值         | 1                                         |
-+----------------+-------------------------------------------+
 | Reload是否生效 | 是                                        |
-+----------------+-------------------------------------------+
 | 最低兼容版本   | 2.4.3                                     |
-+----------------+-------------------------------------------+
 
 **参数作用：**
 
@@ -6771,7 +5852,7 @@ Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
 **参数设置：**
 
-\<property name=\"badConnAfterContinueGet\"\>true\</property\>\<!\-- 是否继续获取连接 true 为继续获取连接，false 为返回null，不继续获取，由外层创建新连接或其他操作 \--\>
+<property name=[badConnAfterContinueGet](#badConnAfterContinueGet)>true</property><!-- 是否继续获取连接 true 为继续获取连接，false 为返回null，不继续获取，由外层创建新连接或其他操作 -->
 
 **参数作用：**
 
@@ -6793,7 +5874,7 @@ Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
 **参数设置：**
 
-\<property name=\"badConnAfterFastCheckAllIdle\"\>true\</property\>\<!\-- 当获取坏的后端连接时，是否快速检测所有空闲连接，true为检测，false为不检测，默认为true\--\>
+<property name=[badConnAfterFastCheckAllIdle](#badConnAfterFastCheckAllIdle)>true</property><!-- 当获取坏的后端连接时，是否快速检测所有空闲连接，true为检测，false为不检测，默认为true-->
 
 **参数作用：**
 
@@ -6841,17 +5922,17 @@ bakUrl和bakUsername以及bakPassword属于配套参数，用于配置库高可�
 
 若不需要主备配置库，则这里配置为跟主配置库信息一致或不配置从配置库即可。
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.210.31:3306/hotdb_config\</property\>\<!\-- 从配置库地址，需指定配置库服务所在的真实IP地址 \--\>
+<property name="bakUrl">jdbc:mysql://192.168.210.31:3306/hotdb_config</property><!-- 从配置库地址，需指定配置库服务所在的真实IP地址 -->
 
-\<property name=\"bakUsername\"\>hotdb_config\</property\>\<!\-- 从配置库用户名 \--\>
+<property name="bakUsername">hotdb_config</property><!-- 从配置库用户名 -->
 
-\<property name=\"bakPassword\"\>hotdb_config\</property\>\<!\-- 从配置库密码 \--\>
+<property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
 
 当配置库因主库故障发生切换后，主库恢复正常且检测过数据主从一致，此时可恢复主备配置库重新到可切换状态，需要将配置库里的houdb_config_info表里k字段为hotdb_master_config_status这一行的v值从0更新为1，并在管理端执行reload @\@config，才会重新使用主配置库（使用管理平台启用主配置库的操作方法请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》）。
 
-mysql\> select \* from hotdb_config_info\\G
+mysql> select * from hotdb_config_info\\G
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*1.row\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+***************************1.row**************************
 
 k: hotdb_master_config_status
 
@@ -6877,23 +5958,17 @@ description: NULL
 
 **参数设置：**
 
-\<property name=\"checkConnLastUsedTime\"\>false\</property\>\<!\-- 后端连接最后一次使用最大允许间隔时间，超过将校验该连接是否有效 单位：毫秒 \--\>
+<property name=[checkConnLastUsedTime](#checkConnLastUsedTime)>false</property><!-- 后端连接最后一次使用最大允许间隔时间，超过将校验该连接是否有效 单位：毫秒 -->
 
 **参数作用：**
 
 后端连接超过此参数配置的时长没有被使用过，计算节点从连接池获取连接时会先校验该连接的连通性，保证获取到的连接可用。
 
-mysql\> show @\@session;
+mysql> show @\@session;
 
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| id | running | trx_started | trx_time | trx_query | bk_count | bk_dnid | bk_dsid | bk_id | bk_mysqlid | bk_state | bk_closed | bk_autocommit | bk_host | bk_port | bk_db | bk_query | bk_last_read_time | **bk_last_write_time** |
 
-\| id \| running \| trx_started \| trx_time \| trx_query \| bk_count \| bk_dnid \| bk_dsid \| bk_id \| bk_mysqlid \| bk_state \| bk_closed \| bk_autocommit \| bk_host \| bk_port \| bk_db \| bk_query \| bk_last_read_time \| **bk_last_write_time** \|
-
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 60615 \| FALSE \| NULL \| NULL \| NULL \| 0 \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \| NULL \|
-
-+\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 60615 | FALSE | NULL | NULL | NULL | 0 | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL |
 
 1 row in set (0.00 sec)
 
@@ -6915,7 +5990,7 @@ mysql\> show @\@session;
 
 server.xml中手动添加一条CheckConnValid的配置
 
-\<property name=\"CheckConnValid\"\>true\</property\>
+<property name=[CheckConnValid](#CheckConnValid)>true</property>
 
 **参数作用：**
 
@@ -6937,7 +6012,7 @@ server.xml中手动添加一条CheckConnValid的配置
 
 **参数设置：**
 
-\<property name=\"checkConnValidTimeout\"\>500\</property\>\<!\-- 后端连接有效校验时，最大超时时间 单位：毫秒 \--\>
+<property name=[checkConnValidTimeout](#checkConnValidTimeout)>500</property><!-- 后端连接有效校验时，最大超时时间 单位：毫秒 -->
 
 **参数作用：**
 
@@ -6947,31 +6022,19 @@ server.xml中手动添加一条CheckConnValid的配置
 
 **参数说明：**
 
-+----------------+-----------------------------------------+
 | **Property**   | **Value**                               |
-+----------------+-----------------------------------------+
 | 参数值         | checkMySQLParamInterval                 |
-+----------------+-----------------------------------------+
 | 是否可见       | 否                                      |
-+----------------+-----------------------------------------+
 | 参数说明       | 检查MySQL参数设置 间隔时间（单位:毫秒） |
-+----------------+-----------------------------------------+
 | 默认值         | 600000                                  |
-+----------------+-----------------------------------------+
 | 最小值         | 1000                                    |
-+----------------+-----------------------------------------+
 | 最大值         | 86400000                                |
-+----------------+-----------------------------------------+
-| Reload是否生效 | 2.4.5版本为N，                          |
-|                |                                         |
-|                | 2.4.7及以上为Y                          |
-+----------------+-----------------------------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y                          |
 | 最低兼容版本   | 2.4.3                                   |
-+----------------+-----------------------------------------+
 
 **参数设置：**
 
-\<property name=\"checkMySQLParamInterval\"\>60000\</property\>\<!\-- 检查MySQL参数设置是否合理的间隔时间（单位:毫秒） \--\>
+<property name=[checkMySQLParamInterval](#checkMySQLParamInterval)>60000</property><!-- 检查MySQL参数设置是否合理的间隔时间（单位:毫秒） -->
 
 **参数作用：**
 
@@ -6997,29 +6060,23 @@ server.xml中手动添加一条CheckConnValid的配置
 
 设置为true的情况，更新分片字段会有如下提示：
 
-mysql\> update ss set id=13 where a=\'aa\';
+mysql> update ss set id=13 where a='aa';
 
-ERROR 1064 (HY000): sharding column\'s value cannot be changed.
+ERROR 1064 (HY000): sharding column's value cannot be changed.
 
 设置为false的情况，更新分片字段可以执行成功。
 
-mysql\> update ss set id=13 where a=\'aa\';
+mysql> update ss set id=13 where a='aa';
 
 Query OK, 1 row affected (0.01 sec)
 
 Rows matched: 1 Changed: 1 Warnings: 0
 
-mysql\> select \* from ss where a=\'aa\';
+mysql> select * from ss where a='aa';
 
-+\-\-\-\-\--+\-\-\-\-\--+
+| id | a |
 
-\| id \| a \|
-
-+\-\-\-\-\--+\-\-\-\-\--+
-
-\| 13 \| aa \|
-
-+\-\-\-\-\--+\-\-\-\-\--+
+| 13 | aa |
 
 1 row in set (0.00 sec)
 
@@ -7027,29 +6084,19 @@ mysql\> select \* from ss where a=\'aa\';
 
 **参数说明：**
 
-+----------------+---------------------------------------+
 | **Property**   | **Value**                             |
-+----------------+---------------------------------------+
 | 参数值         | clientFoundRows                       |
-+----------------+---------------------------------------+
 | 是否可见       | 否                                    |
-+----------------+---------------------------------------+
 | 参数说明       | 用found rows代替OK包中的affected rows |
-+----------------+---------------------------------------+
 | 默认值         | false                                 |
-+----------------+---------------------------------------+
 | Reload是否生效 | 是                                    |
-+----------------+---------------------------------------+
-| 最低兼容版本   | 2.4.9                                 |
-|                |                                       |
-|                | （2.5.5版本废弃）                     |
-+----------------+---------------------------------------+
+| 最低兼容版本   | 2.4.9 （2.5.5版本废弃）                     |
 
 **参数设置：**
 
 server.xml中clientFoundRows参数配置 如下配置：
 
-\<property name=\" clientFoundRows \"\>false\</property\>\<!\--用found rows代替OK包中的affected rows \--\>
+<property name=" clientFoundRows ">false</property><!--用found rows代替OK包中的affected rows -->
 
 **参数作用：**
 
@@ -7081,7 +6128,7 @@ jdbc传入useAffectedRows=true，返回影响行数
 
 server.xml中clusterElectionTimeoutMs参数配置 如下配置：
 
-\<property name=\"clusterElectionTimeoutMs\"\>2000\</property\>\<!\-- 集群选举超时时间(ms) \--\>
+<property name=[clusterElectionTimeoutMs](#clusterElectionTimeoutMs)>2000</property><!-- 集群选举超时时间(ms) -->
 
 **参数作用：**
 
@@ -7105,7 +6152,7 @@ server.xml中clusterElectionTimeoutMs参数配置 如下配置：
 
 server.xml中clusterHeartbeatTimeoutMs参数配置 如下配置：
 
-\<property name=\"clusterHeartbeatTimeoutMs\"\>5000\</property\>\<!\-- 集群心跳超时时间(ms) \--\>
+<property name=[clusterHeartbeatTimeoutMs](#clusterHeartbeatTimeoutMs)>5000</property><!-- 集群心跳超时时间(ms) -->
 
 **参数作用：**
 
@@ -7129,7 +6176,7 @@ server.xml中clusterHeartbeatTimeoutMs参数配置 如下配置：
 
 Server.xml中clusterHost参数配置 如下配置：
 
-\<property name=\"clusterHost\"\>192.168.200.1\</property\>\<!\-- 本节点所在IP \--\>
+<property name=[clusterHost](#clusterHost)>192.168.200.1</property><!-- 本节点所在IP -->
 
 **参数作用：**
 
@@ -7153,7 +6200,7 @@ Server.xml中clusterHost参数配置 如下配置：
 
 Server.xml中clusterName参数配置 如下配置：
 
-\<property name=\" HotDB-Cluster \"\> HotDB-Cluster \</property\>\<!\-- 集群组名称 \--\>
+<property name=" HotDB-Cluster "> HotDB-Cluster </property><!-- 集群组名称 -->
 
 **参数作用：**
 
@@ -7177,7 +6224,7 @@ Server.xml中clusterName参数配置 如下配置：
 
 Server.xml中clusterNetwork参数配置 如下配置：
 
-\<property name=\"clusterNetwork\"\>192.168.200.0/24\</property\>\<!\-- 集群所在网段 \--\>
+<property name=[clusterNetwork](#clusterNetwork)>192.168.200.0/24</property><!-- 集群所在网段 -->
 
 **参数作用：**
 
@@ -7201,7 +6248,7 @@ Server.xml中clusterNetwork参数配置 如下配置：
 
 Server.xml中clusterPacketTimeoutMs参数配置 如下配置：
 
-\<property name=\"clusterPacketTimeoutMs\"\>5000\</property\>\<!\-- 集群间通讯包失效时间(ms) \--\>
+<property name=[clusterPacketTimeoutMs](#clusterPacketTimeoutMs)>5000</property><!-- 集群间通讯包失效时间(ms) -->
 
 **参数作用：**
 
@@ -7225,7 +6272,7 @@ Server.xml中clusterPacketTimeoutMs参数配置 如下配置：
 
 Server.xml中clusterPort参数配置 如下配置：
 
-\<property name=\"clusterPort\"\>3326\</property\>\<!\-- 集群通信端口 \--\>
+<property name=[clusterPort](#clusterPort)>3326</property><!-- 集群通信端口 -->
 
 **参数作用：**
 
@@ -7249,7 +6296,7 @@ Server.xml中clusterPort参数配置 如下配置：
 
 Server.xml中clusterSize参数配置 如下配置：
 
-\<property name=\"clusterSize\"\>3\</property\>\<!\-- 集群中节点总数 \--\>
+<property name=[clusterSize](#clusterSize)>3</property><!-- 集群中节点总数 -->
 
 **参数作用：**
 
@@ -7273,7 +6320,7 @@ Server.xml中clusterSize参数配置 如下配置：
 
 Server.xml中clusterStartedPacketTimeoutMs参数配置 如下配置：
 
-\<property name=\"clusterStartedPacketTimeoutMs\"\>5000\</property\>\<!\-- 集群Started广播包失效时间(ms) \--\>
+<property name=[clusterStartedPacketTimeoutMs](#clusterStartedPacketTimeoutMs)>5000</property><!-- 集群Started广播包失效时间(ms) -->
 
 **参数作用：**
 
@@ -7327,13 +6374,13 @@ Server.xml中clusterStartedPacketTimeoutMs参数配置 如下配置：
 
 configMGR和bak1Url和bak1Username以及bak1Password属于配套参数，用于MGR配置库功能。若使用MGR配置库，则需要设置为对应MGR配置库的信息且保证MGR配置库实例的复制关系正常，且互为MGR，当主配置库发生故障时会自动切换到新的主配置库。MGR配置库最多支持3个。
 
-\<property name=\"configMGR\"\>true\</property\> \<!\-- 配置库是否使用MGR \--\>
+<property name="configMGR">true</property> <!-- 配置库是否使用MGR -->
 
-\<property name=\"bak1Url\"\>jdbc:mysql://192.168.210.32:3306/hotdb_config\</property\> \<!\-- MGR配置库地址(如配置库使用MGR,必须配置此项)，需指定配置库服务所在的真实IP地址 \--\>
+<property name="bak1Url">jdbc:mysql://192.168.210.32:3306/hotdb_config</property> <!-- MGR配置库地址(如配置库使用MGR,必须配置此项)，需指定配置库服务所在的真实IP地址 -->
 
-\<property name=\"bak1Username\"\>hotdb_config\</property\> \<!\-- MGR配置库用户名(如配置库使用MGR,必须配置此项) \--\>
+<property name="bak1Username">hotdb_config</property> <!-- MGR配置库用户名(如配置库使用MGR,必须配置此项) -->
 
-\<property name=\"bak1Password\"\>hotdb_config\</property\> \<!\-- MGR配置库密码(如配置库使用MGR,必须配置此项) \--\>
+<property name="bak1Password">hotdb_config</property> <!-- MGR配置库密码(如配置库使用MGR,必须配置此项) -->
 
 #### crossDbXa
 
@@ -7353,7 +6400,7 @@ configMGR和bak1Url和bak1Username以及bak1Password属于配套参数，用于M
 
 server.xml中crossDbXa参数如下配置：
 
-\<property name=\"crossDbXa\"\>false\</property\>
+<property name=[crossDbXa](#crossDbXa)>false</property>
 
 **参数作用：**
 
@@ -7361,69 +6408,69 @@ server.xml中crossDbXa参数如下配置：
 
 **数据准备：**
 
-1\. 开启XA
+1. 开启XA
 
-2\. 逻辑库A，默认节点为1，2；逻辑库B，默认节点为2,3,4
+2. 逻辑库A，默认节点为1，2；逻辑库B，默认节点为2,3,4
 
-3\. 逻辑库A创建表a；逻辑库B创建表b；两张表的表结构一致
+3. 逻辑库A创建表a；逻辑库B创建表b；两张表的表结构一致
 
-4\. 表a中插入1000条数据；表b无数据
+4. 表a中插入1000条数据；表b无数据
 
 **场景一、crossDbXa 关闭时，不保证数据强一致：**
 
-1\. 开启一个session，执行如下SQL：
+1. 开启一个session，执行如下SQL：
 
-use A;begin;insert into B.b select \* from A.a;commit;use B;begin;delete from b;commit;
+use A;begin;insert into B.b select * from A.a;commit;use B;begin;delete from b;commit;
 
 两个事务反复交替执行，无间隔时间；2. 开启另外一个session，反复执行：
 
 use A;
 
-select count(\*) from B.b;
+select count(*) from B.b;
 
-结果：Count (\*)得出的结果不一定全为0或1000
+结果：Count (*)得出的结果不一定全为0或1000
 
 ![](assets/standard/image140.png)
 
 **场景二、crossDbXa 开启时，保证数据强一致：**
 
-1\. 开启一个session，执行如下SQL：
+1. 开启一个session，执行如下SQL：
 
-use A;begin;insert into B.b select \* from A.a;commit;use B;begin;delete from b;commit;
+use A;begin;insert into B.b select * from A.a;commit;use B;begin;delete from b;commit;
 
 两个事务反复交替执行，无间隔时间；2. 开启另外一个session，反复执行：
 
 use A;
 
-select count(\*) from B.b;
+select count(*) from B.b;
 
-结果：Count (\*)得出的结果为0或1000
+结果：Count (*)得出的结果为0或1000
 
 ![](assets/standard/image141.png)
 
 **场景三、crossDbXa 关闭时，事务内加入节点会报错：**
 
-1\. 开启一个session，执行如下SQL：
+1. 开启一个session，执行如下SQL：
 
 use A;
 
-begin;select \* from A.a;
+begin;select * from A.a;
 
-select \* from B.b;
+select * from B.b;
 
-结果：select \* from B.b;执行会报错
+结果：select * from B.b;执行会报错
 
 ![](assets/standard/image142.png)
 
 **场景四、crossDbXa 开启时，事务内加入节点正常执行：**
 
-1\. 开启一个session，执行如下SQL：
+1. 开启一个session，执行如下SQL：
 
 use A;
 
-begin;select \* from A.a;select \* from B.b;
+begin;select * from A.a;select * from B.b;
 
-结果：select \* from B.b;正常执行
+结果：select * from B.b;正常执行
 
 ![](assets/standard/image143.png)
 
@@ -7443,7 +6490,7 @@ begin;select \* from A.a;select \* from B.b;
 
 **参数设置：**
 
-\<property name=\"cryptMandatory\"\>false\</property\>\<!\-- 是否强制加密密码，是：true，否：false \--\>
+<property name=[cryptMandatory](#cryptMandatory)>false</property><!-- 是否强制加密密码，是：true，否：false -->
 
 **参数作用：**
 
@@ -7465,31 +6512,19 @@ begin;select \* from A.a;select \* from B.b;
 
 **参数说明：**
 
-+----------------+--------------------------------+
 | **Property**   | **Value**                      |
-+----------------+--------------------------------+
 | 参数值         | dataNodeIdleCheckPeriod        |
-+----------------+--------------------------------+
 | 是否可见       | 是                             |
-+----------------+--------------------------------+
 | 参数说明       | 数据节点默认空闲检查时间（秒） |
-+----------------+--------------------------------+
 | 默认值         | 120                            |
-+----------------+--------------------------------+
 | 最小值         | 1                              |
-+----------------+--------------------------------+
 | 最大值         | 3600                           |
-+----------------+--------------------------------+
-| Reload是否生效 | 2.4.5版本为N，                 |
-|                |                                |
-|                | 2.4.7及以上为Y                 |
-+----------------+--------------------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y                 |
 | 最低兼容版本   | 2.4.3                          |
-+----------------+--------------------------------+
 
 **参数设置：**
 
-\<property name=\"dataNodeIdleCheckPeriod\"\>120\</property\>\<!\-- 数据节点默认空闲检查时间（秒） \--\>
+<property name=[dataNodeIdleCheckPeriod](#dataNodeIdleCheckPeriod)>120</property><!-- 数据节点默认空闲检查时间（秒） -->
 
 **参数作用：**
 
@@ -7501,39 +6536,27 @@ begin;select \* from A.a;select \* from B.b;
 
 **参数说明：**
 
-+----------------+-----------------------------------+
 | **Property**   | **Value**                         |
-+----------------+-----------------------------------+
 | 参数值         | deadlockCheckPeriod               |
-+----------------+-----------------------------------+
 | 是否可见       | 是                                |
-+----------------+-----------------------------------+
 | 参数说明       | 死锁检测周期（毫秒），0代表不启用 |
-+----------------+-----------------------------------+
 | 默认值         | 3000                              |
-+----------------+-----------------------------------+
 | 最小值         | 0                                 |
-+----------------+-----------------------------------+
 | 最大值         | 100000                            |
-+----------------+-----------------------------------+
-| Reload是否生效 | 2.4.5版本为N，                    |
-|                |                                   |
-|                | 2.4.7及以上为Y                    |
-+----------------+-----------------------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y                    |
 | 最低兼容版本   | 2.4.3                             |
-+----------------+-----------------------------------+
 
 **参数作用：**
 
 开启死锁检测时，会根据设置的周期定时检测跨库死锁。如果发现跨库死锁，会杀掉其中trx_weight最小的事务。
 
-mysql\> select \* from autoi where id=4 for update;
+mysql> select * from autoi where id=4 for update;
 
 ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting transaction
 
 不开启死锁检测，发生死锁时会一直等待到锁超时，锁超时时间依据MySQL存储节点中的innodb_lock_wait_timeout参数值。
 
-mysql\> select \* from autoi where id=10 for update;
+mysql> select * from autoi where id=10 for update;
 
 ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 
@@ -7555,7 +6578,7 @@ ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 
 server.xml中defaultMaxLimit参数配置 如下配置：
 
-\<property name=\"defaultMaxLimit\"\>10000\</property\>\<!\--默认最大有序数量\--\>
+<property name=[defaultMaxLimit](#defaultMaxLimit)>10000</property><!--默认最大有序数量-->
 
 **参数作用：**
 
@@ -7563,57 +6586,51 @@ server.xml中defaultMaxLimit参数配置 如下配置：
 
 体现在show processlist中State为Flow control，等待下一批执行。下图为方便测试，设置defaultMaxLimit=5，highCostSqlConcurrency=10，采用20并发执行跨库update limit n场景，可见10个连接在执行，另外的10个连接已经被限制。
 
-ztm\@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45\> show processlist;
+ztm\@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45> show processlist;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Id | User | Host | db | Command | Time | State | Info |
 
-\| Id \| User \| Host \| db \| Command \| Time \| State \| Info \|
+| 4 | ztm | 10.10.0.201:57882 | PM | Query | 0 | executing | show processlist |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 6 | ztm | 10.10.0.201:57905 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 4 \| ztm \| 10.10.0.201:57882 \| PM \| Query \| 0 \| executing \| show processlist \|
+| 7 | ztm | 10.10.0.201:57902 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 6 \| ztm \| 10.10.0.201:57905 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 8 | ztm | 10.10.0.201:57912 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 7 \| ztm \| 10.10.0.201:57902 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 9 | ztm | 10.10.0.201:57900 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 8 \| ztm \| 10.10.0.201:57912 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 10 | ztm | 10.10.0.201:57919 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 9 \| ztm \| 10.10.0.201:57900 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 11 | ztm | 10.10.0.201:57911 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 10 \| ztm \| 10.10.0.201:57919 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 12 | ztm | 10.10.0.201:57904 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 11 \| ztm \| 10.10.0.201:57911 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 13 | ztm | 10.10.0.201:57906 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 12 \| ztm \| 10.10.0.201:57904 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 14 | ztm | 10.10.0.201:57903 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 13 \| ztm \| 10.10.0.201:57906 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 15 | ztm | 10.10.0.201:57910 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 14 \| ztm \| 10.10.0.201:57903 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 16 | ztm | 10.10.0.201:57908 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 15 \| ztm \| 10.10.0.201:57910 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 17 | ztm | 10.10.0.201:57920 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 16 \| ztm \| 10.10.0.201:57908 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 18 | ztm | 10.10.0.201:57907 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 17 \| ztm \| 10.10.0.201:57920 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 19 | ztm | 10.10.0.201:57913 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 18 \| ztm \| 10.10.0.201:57907 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 20 | ztm | 10.10.0.201:57909 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 19 \| ztm \| 10.10.0.201:57913 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 21 | ztm | 10.10.0.201:57921 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 20 \| ztm \| 10.10.0.201:57909 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 22 | ztm | 10.10.0.201:57918 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 21 \| ztm \| 10.10.0.201:57921 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 23 | ztm | 10.10.0.201:57962 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 22 \| ztm \| 10.10.0.201:57918 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
+| 24 | ztm | 10.10.0.201:57915 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
-\| 23 \| ztm \| 10.10.0.201:57962 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
-
-\| 24 \| ztm \| 10.10.0.201:57915 \| PM \| Query \| 1 \| Flow control \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
-
-\| 25 \| ztm \| 10.10.0.201:57914 \| PM \| Query \| 1 \| Sending data \| UPDATE customer_route_1 SET address = \'abcd\' order by id LIMIT 20 \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 25 | ztm | 10.10.0.201:57914 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
 
 21 rows in set (0.01 sec)
 
@@ -7637,7 +6654,7 @@ ztm\@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45\> show processlist;
 
 server.xml中dropTableRetentionTime参数配置：
 
-\<property name=\" dropTableRetentionTime\"\>0\</property\>\<!\--被删除表保留时长,默认为0,不保留\--\>
+<property name=" dropTableRetentionTime">0</property><!--被删除表保留时长,默认为0,不保留-->
 
 **参数作用：**
 
@@ -7681,11 +6698,11 @@ server.xml中dropTableRetentionTime参数配置：
 
 drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机房配置库高可用功能。当灾备机房切换为当前主机房时，若使用配置库高可用，则需要设置为对应从配置库的信息且保证主从配置库实例的复制关系正常，且互为主备。当灾备机房切换为当前主机房时，主配置库发生故障时会自动切换到从配置库，此时配置库的高可用切换可参考中心机房从配置库参数[bakUrl，bakUsername，bakPassword](#_bakUrl & bakUsername & bakPassword)的描述。
 
-\<property name=\"drBakUrl\"\>jdbc:mysql://192.168.240.77:3316/hotdb_config\</property\>\<!\-- 灾备机房从配置库地址 \--\>
+<property name="drBakUrl">jdbc:mysql://192.168.240.77:3316/hotdb_config</property><!-- 灾备机房从配置库地址 -->
 
-\<property name=\"drBakUsername\"\>hotdb_config\</property\>\<!\-- 灾备机房从配置库用户名 \--\>
+<property name="drBakUsername">hotdb_config</property><!-- 灾备机房从配置库用户名 -->
 
-\<property name=\"drBakPassword\"\>hotdb_config\</property\>\<!\-- 灾备机房从配置库密码 \--\>
+<property name="drBakPassword">hotdb_config</property><!-- 灾备机房从配置库密码 -->
 
 #### drUrl & drUsername & drPassword
 
@@ -7725,11 +6742,11 @@ drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机�
 
 drUrl,drUsername,drPassword属于配套参数，,drUrl是指灾备机房计算节点配置信息的配置库路径，drUsername,drPassword是指连接该物理库的用户名密码，该配置库用于存储灾备机房配置信息。可参考与中心机房配置库相关参数[url,username,password](#_url & username & password)。
 
-\<property name=\"drUrl\"\>jdbc:mysql://192.168.240.76:3316/hotdb_config\</property\>\<!\-- 灾备机房配置库地址 \--\>
+<property name="drUrl">jdbc:mysql://192.168.240.76:3316/hotdb_config</property><!-- 灾备机房配置库地址 -->
 
-\<property name=\"drUsername\"\>hotdb_config\</property\>\<!\-- 灾备机房配置库用户名 \--\>
+<property name="drUsername">hotdb_config</property><!-- 灾备机房配置库用户名 -->
 
-\<property name=\"drPassword\"\>hotdb_config\</property\>\<!\-- 灾备机房配置库密码 \--\>
+<property name="drPassword">hotdb_config</property><!-- 灾备机房配置库密码 -->
 
 #### enableCursor
 
@@ -7749,7 +6766,7 @@ drUrl,drUsername,drPassword属于配套参数，,drUrl是指灾备机房计算�
 
 server.xml的enableCursor参数：
 
-\<property name=\"enableCursor\"\>false\</property\>
+<property name=[enableCursor](#enableCursor)>false</property>
 
 **参数作用：**
 
@@ -7759,63 +6776,47 @@ server.xml的enableCursor参数：
 
 **参数说明：**
 
-+----------------+----------------------+
 | **Property**   | **Value**            |
-+----------------+----------------------+
 | 参数值         | enableFlowControl    |
-+----------------+----------------------+
 | 是否可见       | 是                   |
-+----------------+----------------------+
 | 参数说明       | 是否开启存储节点流控 |
-+----------------+----------------------+
 | 默认值         | False                |
-+----------------+----------------------+
-| Reload是否生效 | 2.4.5版本为N，       |
-|                |                      |
-|                | 2.4.7及以上为Y       |
-+----------------+----------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y       |
 | 最低兼容版本   | 2.4.5                |
-+----------------+----------------------+
 
 **参数作用：**
 
 在2.4.8版本以后默认开启，开启后将智能控制后端流量，可以控制存储节点的压力，使存储节点在最佳状态下运行。通过管理端show @\@datasource查看流控状态flow_control。
 
-mysql\> show @\@datasource;
+mysql> show @\@datasource;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | **flow_control** | idc_id | listener_id | listener_status |
 
-\| dn \| ds \| name \| type \| status \| host \| port \| schema \| active \| idle \| size \| unavailable_reason \| **flow_control** \| idc_id \| listener_id \| listener_status \|
+| 17 | 17 | 10.10.0.140_3313_db01 | 1 | 1 | 10.10.0.140 | 3313 | db01 | 0 | 45 | 45 | NULL | 0/64 | 1 | 8 | 1 |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 16 | 16 | 10.10.0.140_3312_db01 | 1 | 1 | 10.10.0.140 | 3312 | db01 | 0 | 47 | 47 | NULL | 0/64 | 1 | 7 | 1 |
 
-\| 17 \| 17 \| 10.10.0.140_3313_db01 \| 1 \| 1 \| 10.10.0.140 \| 3313 \| db01 \| 0 \| 45 \| 45 \| NULL \| 0/64 \| 1 \| 8 \| 1 \|
+| 19 | 19 | 10.10.0.155_3311_db01 | 1 | 1 | 10.10.0.155 | 3311 | db01 | 0 | 49 | 49 | NULL | 0/64 | 1 | 10 | 1 |
 
-\| 16 \| 16 \| 10.10.0.140_3312_db01 \| 1 \| 1 \| 10.10.0.140 \| 3312 \| db01 \| 0 \| 47 \| 47 \| NULL \| 0/64 \| 1 \| 7 \| 1 \|
+| 18 | 18 | 10.10.0.155_3310_db01 | 1 | 1 | 10.10.0.155 | 3310 | db01 | 0 | 53 | 53 | NULL | 0/64 | 1 | 9 | 1 |
 
-\| 19 \| 19 \| 10.10.0.155_3311_db01 \| 1 \| 1 \| 10.10.0.155 \| 3311 \| db01 \| 0 \| 49 \| 49 \| NULL \| 0/64 \| 1 \| 10 \| 1 \|
+| 21 | 21 | 10.10.0.155_3313_db01 | 1 | 1 | 10.10.0.155 | 3313 | db01 | 0 | 55 | 55 | NULL | 0/64 | 1 | 12 | 1 |
 
-\| 18 \| 18 \| 10.10.0.155_3310_db01 \| 1 \| 1 \| 10.10.0.155 \| 3310 \| db01 \| 0 \| 53 \| 53 \| NULL \| 0/64 \| 1 \| 9 \| 1 \|
+| 20 | 20 | 10.10.0.155_3312_db01 | 1 | 1 | 10.10.0.155 | 3312 | db01 | 0 | 47 | 47 | NULL | 0/64 | 1 | 11 | 1 |
 
-\| 21 \| 21 \| 10.10.0.155_3313_db01 \| 1 \| 1 \| 10.10.0.155 \| 3313 \| db01 \| 0 \| 55 \| 55 \| NULL \| 0/64 \| 1 \| 12 \| 1 \|
+| 10 | 10 | 10.10.0.125_3310_db01 | 1 | 1 | 10.10.0.125 | 3310 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 1 | 1 |
 
-\| 20 \| 20 \| 10.10.0.155_3312_db01 \| 1 \| 1 \| 10.10.0.155 \| 3312 \| db01 \| 0 \| 47 \| 47 \| NULL \| 0/64 \| 1 \| 11 \| 1 \|
+| 11 | 11 | 10.10.0.125_3311_db01 | 1 | 1 | 10.10.0.125 | 3311 | db01 | 0 | 43 | 43 | NULL | 0/64 | 1 | 2 | 1 |
 
-\| 10 \| 10 \| 10.10.0.125_3310_db01 \| 1 \| 1 \| 10.10.0.125 \| 3310 \| db01 \| 0 \| 44 \| 44 \| NULL \| 0/64 \| 1 \| 1 \| 1 \|
+| 12 | 12 | 10.10.0.125_3312_db01 | 1 | 1 | 10.10.0.125 | 3312 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 3 | 1 |
 
-\| 11 \| 11 \| 10.10.0.125_3311_db01 \| 1 \| 1 \| 10.10.0.125 \| 3311 \| db01 \| 0 \| 43 \| 43 \| NULL \| 0/64 \| 1 \| 2 \| 1 \|
+| 13 | 13 | 10.10.0.125_3313_db01 | 1 | 1 | 10.10.0.125 | 3313 | db01 | 0 | 48 | 48 | NULL | 0/64 | 1 | 4 | 1 |
 
-\| 12 \| 12 \| 10.10.0.125_3312_db01 \| 1 \| 1 \| 10.10.0.125 \| 3312 \| db01 \| 0 \| 44 \| 44 \| NULL \| 0/64 \| 1 \| 3 \| 1 \|
+| 14 | 14 | 10.10.0.140_3310_db01 | 1 | 1 | 10.10.0.140 | 3310 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 5 | 1 |
 
-\| 13 \| 13 \| 10.10.0.125_3313_db01 \| 1 \| 1 \| 10.10.0.125 \| 3313 \| db01 \| 0 \| 48 \| 48 \| NULL \| 0/64 \| 1 \| 4 \| 1 \|
+| 15 | 15 | 10.10.0.140_3311_db01 | 1 | 1 | 10.10.0.140 | 3311 | db01 | 0 | 62 | 62 | NULL | 0/64 | 1 | 6 | 1 |
 
-\| 14 \| 14 \| 10.10.0.140_3310_db01 \| 1 \| 1 \| 10.10.0.140 \| 3310 \| db01 \| 0 \| 44 \| 44 \| NULL \| 0/64 \| 1 \| 5 \| 1 \|
-
-\| 15 \| 15 \| 10.10.0.140_3311_db01 \| 1 \| 1 \| 10.10.0.140 \| 3311 \| db01 \| 0 \| 62 \| 62 \| NULL \| 0/64 \| 1 \| 6 \| 1 \|
-
-\| -1 \| -1 \| configDatasource \| 1 \| 1 \| 10.10.0.121 \| 3306 \| hotdb_config \| 1 \| 11 \| 12 \| NULL \| N/A \| -1 \| 0 \| 1 \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| -1 | -1 | configDatasource | 1 | 1 | 10.10.0.121 | 3306 | hotdb_config | 1 | 11 | 12 | NULL | N/A | -1 | 0 | 1 |
 
 注：存储节点流控是计算节点内部控制算法。
 
@@ -7823,67 +6824,33 @@ mysql\> show @\@datasource;
 
 **参数说明：**
 
-+----------------+-----------------------------------+
 | **Property**   | **Value**                         |
-+----------------+-----------------------------------+
 | 参数值         | enableHeartbeat                   |
-+----------------+-----------------------------------+
 | 是否可见       | 是                                |
-+----------------+-----------------------------------+
 | 参数说明       | 是否启用心跳，是：true，否：false |
-+----------------+-----------------------------------+
 | 默认值         | true                              |
-+----------------+-----------------------------------+
-| Reload是否生效 | 2.4.5版本为N，                    |
-|                |                                   |
-|                | 2.4.7及以上为Y                    |
-+----------------+-----------------------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y                    |
 | 最低兼容版本   | 2.4.3                             |
-+----------------+-----------------------------------+
 
-+----------------+-----------------+
 | **Property**   | **Value**       |
-+----------------+-----------------+
 | 参数值         | heartbeatPeriod |
-+----------------+-----------------+
 | 是否可见       | 是              |
-+----------------+-----------------+
 | 参数说明       | 心跳周期（秒）  |
-+----------------+-----------------+
 | 默认值         | 2               |
-+----------------+-----------------+
 | 最大值         | 60              |
-+----------------+-----------------+
 | 最小值         | 1               |
-+----------------+-----------------+
-| Reload是否生效 | 2.4.5版本为N，  |
-|                |                 |
-|                | 2.4.7及以上为Y  |
-+----------------+-----------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y  |
 | 最低兼容版本   | 2.4.3           |
-+----------------+-----------------+
 
-+----------------+----------------------+
 | **Property**   | **Value**            |
-+----------------+----------------------+
 | 参数值         | heartbeatTimeoutMs   |
-+----------------+----------------------+
 | 是否可见       | 是                   |
-+----------------+----------------------+
 | 参数说明       | 心跳超时时间（毫秒） |
-+----------------+----------------------+
 | 默认值         | 500                  |
-+----------------+----------------------+
 | 最大值         | 10000                |
-+----------------+----------------------+
 | 最小值         | 100                  |
-+----------------+----------------------+
-| Reload是否生效 | 2.4.5版本为N，       |
-|                |                      |
-|                | 2.4.7及以上为Y       |
-+----------------+----------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y       |
 | 最低兼容版本   | 2.4.3                |
-+----------------+----------------------+
 
 enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检测周期，默认值为2s，即心跳定时检测每2秒执行一次。heartbeatTimeoutMs设置心跳超时时间，默认值为500ms。
 
@@ -7893,7 +6860,7 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 
 启用心跳检测后，会根据心跳检测周期去检测存储节点是否正常。当网络不可达或存储节点故障时，存在备存储节点且配置了切换规则的情况下，会切换到备存储节点，主存储节点会被置为不可用；存储节点切换逻辑请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》。
 
-当一个存储节点同时被多个计算节点服务使用时，计算节点通过日志提示：there\'s another HotDB using this datasource\...restart heartbeat. 不启用心跳检测的情况下，则数据节点/配置库高可用无法实现，无法进行故障切换，无法检测出存储节点共用等情况。
+当一个存储节点同时被多个计算节点服务使用时，计算节点通过日志提示：there's another HotDB using this datasource...restart heartbeat. 不启用心跳检测的情况下，则数据节点/配置库高可用无法实现，无法进行故障切换，无法检测出存储节点共用等情况。
 
 心跳超时时间：心跳开启的情况下，出现存储节点故障或心跳操作执行过慢超出阈值，会有日志heartbeat time out输出:
 
@@ -7905,45 +6872,23 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 
 **参数说明：**
 
-+----------------+----------------------+
 | **Property**   | **Value**            |
-+----------------+----------------------+
 | 参数值         | enableLatencyCheck   |
-+----------------+----------------------+
 | 是否可见       | 是                   |
-+----------------+----------------------+
 | 参数说明       | 是否开启主从延迟检测 |
-+----------------+----------------------+
 | 默认值         | true                 |
-+----------------+----------------------+
-| Reload是否生效 | 2.4.5版本为N，       |
-|                |                      |
-|                | 2.4.7及以上为Y       |
-+----------------+----------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y       |
 | 最低兼容版本   | 2.4.5                |
-+----------------+----------------------+
 
-+----------------+----------------------+
 | **Property**   | **Value**            |
-+----------------+----------------------+
 | 参数值         | latencyCheckPeriod   |
-+----------------+----------------------+
 | 是否可见       | 是                   |
-+----------------+----------------------+
 | 参数说明       | 主从延迟检测周期(ms) |
-+----------------+----------------------+
 | 默认值         | 500                  |
-+----------------+----------------------+
 | 最大值         | 1000                 |
-+----------------+----------------------+
 | 最小值         | 100                  |
-+----------------+----------------------+
-| Reload是否生效 | 2.4.5版本为N，       |
-|                |                      |
-|                | 2.4.7及以上为Y       |
-+----------------+----------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y       |
 | 最低兼容版本   | 2.4.5                |
-+----------------+----------------------+
 
 设置主从延迟检测周期，默认值为500ms，即定时检测每500ms秒执行一次主从延迟检测。
 
@@ -7953,25 +6898,19 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 
 登录管理端口，使用show @\@latency; 可以查看主从延迟时间。
 
-mysql\> show @\@latency;
+mysql> show @\@latency;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| dn | info | backup_info | latency |
 
-\| dn \| info \| backup_info \| latency \|
+| 186 | 192.168.210.68:3307/db252 | 192.168.210.68:3308/db252 | 501 ms |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 4 | 192.168.210.43:3308/db252 | 192.168.210.44:3308/db252 | 0 ms |
 
-\| 186 \| 192.168.210.68:3307/db252 \| 192.168.210.68:3308/db252 \| 501 ms \|
+| 190 | 192.168.200.191:3307/db252 | 192.168.200.190:3307/db252 | 0 ms |
 
-\| 4 \| 192.168.210.43:3308/db252 \| 192.168.210.44:3308/db252 \| 0 ms \|
+| 191 | 192.168.200.191:3308/db252 | 192.168.200.190:3308/db252 | 0 ms |
 
-\| 190 \| 192.168.200.191:3307/db252 \| 192.168.200.190:3307/db252 \| 0 ms \|
-
-\| 191 \| 192.168.200.191:3308/db252 \| 192.168.200.190:3308/db252 \| 0 ms \|
-
-\| 127 \| 192.168.210.41:3308/db252 \| 192.168.210.42:3308/db252 \| STOPPED \|
-
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 127 | 192.168.210.41:3308/db252 | 192.168.210.42:3308/db252 | STOPPED |
 
 5 rows in set (0.02 sec)
 
@@ -7991,47 +6930,41 @@ mysql\> show @\@latency;
 
 **参数设置：**
 
-\<property name=\"enableListener\"\>false\</property\>\<!\--启用Listener模式(Enable Listener mode or not)\--\>
+<property name=[enableListener](#enableListener)>false</property><!--启用Listener模式(Enable Listener mode or not)-->
 
 **参数作用：**
 
 HotDB Listener是计算节点一个可拔插组件，开启后可解决集群强一致模式下的性能线性扩展问题。要使用Listener需满足：计算节点是多节点集群模式并开启XA、在存储节点服务器上成功部署Listener并启用enableListener参数。执行动态加载，在计算节点管理端执行以下命令可通过listener_status一列查看是否识别成功以及Listener的实时状态。
 
-MySQL \[(none)\]\> show @\@datasource;
+MySQL \[(none)\]> show @\@datasource;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
 
-\| dn \| ds \| name \| type \| status \| host \| port \| schema \| active \| idle \| size \| unavailable_reason \| flow_control \| idc_id \| listener_id \| listener_status \|
+| 17 | 17 | 10.10.0.140_3313_db01 | 1 | 1 | 10.10.0.140 | 3313 | db01 | 0 | 45 | 45 | NULL | 0/64 | 1 | 8 | 1 |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 16 | 16 | 10.10.0.140_3312_db01 | 1 | 1 | 10.10.0.140 | 3312 | db01 | 0 | 47 | 47 | NULL | 0/64 | 1 | 7 | 1 |
 
-\| 17 \| 17 \| 10.10.0.140_3313_db01 \| 1 \| 1 \| 10.10.0.140 \| 3313 \| db01 \| 0 \| 45 \| 45 \| NULL \| 0/64 \| 1 \| 8 \| 1 \|
+| 19 | 19 | 10.10.0.155_3311_db01 | 1 | 1 | 10.10.0.155 | 3311 | db01 | 0 | 49 | 49 | NULL | 0/64 | 1 | 10 | 1 |
 
-\| 16 \| 16 \| 10.10.0.140_3312_db01 \| 1 \| 1 \| 10.10.0.140 \| 3312 \| db01 \| 0 \| 47 \| 47 \| NULL \| 0/64 \| 1 \| 7 \| 1 \|
+| 18 | 18 | 10.10.0.155_3310_db01 | 1 | 1 | 10.10.0.155 | 3310 | db01 | 0 | 53 | 53 | NULL | 0/64 | 1 | 9 | 1 |
 
-\| 19 \| 19 \| 10.10.0.155_3311_db01 \| 1 \| 1 \| 10.10.0.155 \| 3311 \| db01 \| 0 \| 49 \| 49 \| NULL \| 0/64 \| 1 \| 10 \| 1 \|
+| 21 | 21 | 10.10.0.155_3313_db01 | 1 | 1 | 10.10.0.155 | 3313 | db01 | 0 | 55 | 55 | NULL | 0/64 | 1 | 12 | 1 |
 
-\| 18 \| 18 \| 10.10.0.155_3310_db01 \| 1 \| 1 \| 10.10.0.155 \| 3310 \| db01 \| 0 \| 53 \| 53 \| NULL \| 0/64 \| 1 \| 9 \| 1 \|
+| 20 | 20 | 10.10.0.155_3312_db01 | 1 | 1 | 10.10.0.155 | 3312 | db01 | 0 | 47 | 47 | NULL | 0/64 | 1 | 11 | 1 |
 
-\| 21 \| 21 \| 10.10.0.155_3313_db01 \| 1 \| 1 \| 10.10.0.155 \| 3313 \| db01 \| 0 \| 55 \| 55 \| NULL \| 0/64 \| 1 \| 12 \| 1 \|
+| 10 | 10 | 10.10.0.125_3310_db01 | 1 | 1 | 10.10.0.125 | 3310 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 1 | 1 |
 
-\| 20 \| 20 \| 10.10.0.155_3312_db01 \| 1 \| 1 \| 10.10.0.155 \| 3312 \| db01 \| 0 \| 47 \| 47 \| NULL \| 0/64 \| 1 \| 11 \| 1 \|
+| 11 | 11 | 10.10.0.125_3311_db01 | 1 | 1 | 10.10.0.125 | 3311 | db01 | 0 | 43 | 43 | NULL | 0/64 | 1 | 2 | 1 |
 
-\| 10 \| 10 \| 10.10.0.125_3310_db01 \| 1 \| 1 \| 10.10.0.125 \| 3310 \| db01 \| 0 \| 44 \| 44 \| NULL \| 0/64 \| 1 \| 1 \| 1 \|
+| 12 | 12 | 10.10.0.125_3312_db01 | 1 | 1 | 10.10.0.125 | 3312 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 3 | 1 |
 
-\| 11 \| 11 \| 10.10.0.125_3311_db01 \| 1 \| 1 \| 10.10.0.125 \| 3311 \| db01 \| 0 \| 43 \| 43 \| NULL \| 0/64 \| 1 \| 2 \| 1 \|
+| 13 | 13 | 10.10.0.125_3313_db01 | 1 | 1 | 10.10.0.125 | 3313 | db01 | 0 | 48 | 48 | NULL | 0/64 | 1 | 4 | 1 |
 
-\| 12 \| 12 \| 10.10.0.125_3312_db01 \| 1 \| 1 \| 10.10.0.125 \| 3312 \| db01 \| 0 \| 44 \| 44 \| NULL \| 0/64 \| 1 \| 3 \| 1 \|
+| 14 | 14 | 10.10.0.140_3310_db01 | 1 | 1 | 10.10.0.140 | 3310 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 5 | 1 |
 
-\| 13 \| 13 \| 10.10.0.125_3313_db01 \| 1 \| 1 \| 10.10.0.125 \| 3313 \| db01 \| 0 \| 48 \| 48 \| NULL \| 0/64 \| 1 \| 4 \| 1 \|
+| 15 | 15 | 10.10.0.140_3311_db01 | 1 | 1 | 10.10.0.140 | 3311 | db01 | 0 | 62 | 62 | NULL | 0/64 | 1 | 6 | 1 |
 
-\| 14 \| 14 \| 10.10.0.140_3310_db01 \| 1 \| 1 \| 10.10.0.140 \| 3310 \| db01 \| 0 \| 44 \| 44 \| NULL \| 0/64 \| 1 \| 5 \| 1 \|
-
-\| 15 \| 15 \| 10.10.0.140_3311_db01 \| 1 \| 1 \| 10.10.0.140 \| 3311 \| db01 \| 0 \| 62 \| 62 \| NULL \| 0/64 \| 1 \| 6 \| 1 \|
-
-\| -1 \| -1 \| configDatasource \| 1 \| 1 \| 10.10.0.121 \| 3306 \| hotdb_config \| 1 \| 11 \| 12 \| NULL \| N/A \| -1 \| 0 \| 1 \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| -1 | -1 | configDatasource | 1 | 1 | 10.10.0.121 | 3306 | hotdb_config | 1 | 11 | 12 | NULL | N/A | -1 | 0 | 1 |
 
 13 rows in set (0.00 sec)
 
@@ -8059,9 +6992,9 @@ MySQL \[(none)\]\> show @\@datasource;
 
 enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中。参数默认值false，如下配置：
 
-> \<property name=\"enableOracleFunction\"\>false\</property\>\<!\-- 是否优先解析oracle
+> <property name=[enableOracleFunction](#enableOracleFunction)>false</property><!-- 是否优先解析oracle
 >
-> 函数(support oracle function or not) \--\>
+> 函数(support oracle function or not) -->
 
 **参数作用：**
 
@@ -8073,27 +7006,27 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 
 设置为true时，Oracle函数解析识别支持改写，执行成功。示例：
 
-> root\@192.168.210.202:cc 5.7.23 05:09:07\> select to_char(sysdate,\'yyyy-MM-dd H
+> root\@192.168.210.202:cc 5.7.23 05:09:07> select to_char(sysdate,'yyyy-MM-dd H
 >
-> H24:mi:ss\') from dual;
+> H24:mi:ss') from dual;
 >
-> +\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+> +------------------------------------------+
 >
-> \| to_char(sysdate,\'yyyy-MM-dd HH24:mi:ss\') \|
+> | to_char(sysdate,'yyyy-MM-dd HH24:mi:ss') |
 >
-> +\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+> +------------------------------------------+
 >
-> \| 2020-09-24 17:09:30 \|
+> | 2020-09-24 17:09:30 |
 >
-> +\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+> +------------------------------------------+
 >
 > 1 row in set (0.01 sec)
 
 设置为false时，对于MySQL不支持的函数报不支持或函数不存在
 
-> root\@192.168.210.225:cc 5.7.23 05:09:11\> select to_char(sysdate,\'yyyy-MM-dd H
+> root\@192.168.210.225:cc 5.7.23 05:09:11> select to_char(sysdate,'yyyy-MM-dd H
 >
-> H24:mi:ss\') from dual;
+> H24:mi:ss') from dual;
 >
 > ERROR 1305 (42000): FUNCTION db256_01.TO_CHAR does not exist
 
@@ -8101,29 +7034,29 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 
 设置为true时，sequence相关能执行成功。示例：
 
-> root\@192.168.210.202:cc 5.7.23 11:30:09\> create sequence sequence_test
+> root\@192.168.210.202:cc 5.7.23 11:30:09> create sequence sequence_test
 >
-> -\> minvalue 1
+> -> minvalue 1
 >
-> -\> maxvalue 1000
+> -> maxvalue 1000
 >
-> -\> start with 1
+> -> start with 1
 >
-> -\> increment by 10;
+> -> increment by 10;
 >
 > Query OK, 1 row affected (0.04 sec)
 
 设置为false时，当前是提示语法错误：
 
-> root\@192.168.210.225:cc 5.7.23 11:43:11\> create sequence sequence_256
+> root\@192.168.210.225:cc 5.7.23 11:43:11> create sequence sequence_256
 >
-> -\> minvalue 1
+> -> minvalue 1
 >
-> -\> maxvalue 1000
+> -> maxvalue 1000
 >
-> -\> start with 1
+> -> start with 1
 >
-> -\> increment by 10;
+> -> increment by 10;
 >
 > ERROR 10010 (HY000): expect VIEW. lexer state: token=IDENTIFIER, sqlLeft=sequence_256
 
@@ -8143,7 +7076,7 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 
 **参数设置：**
 
-\<property name=\"enableSleep\"\>false\</property\>\<!\-- 是否允许SLEEP函数，是：true，否：false \--\>
+<property name=[enableSleep](#enableSleep)>false</property><!-- 是否允许SLEEP函数，是：true，否：false -->
 
 **参数作用：**
 
@@ -8151,23 +7084,17 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 
 不允许sleep 函数：
 
-mysql\> select sleep(2);
+mysql> select sleep(2);
 
 ERROR 1064 (HY000): forbidden function:SLEEP, go check your config file to enable it.
 
 允许执行sleep 函数:
 
-mysql\> select sleep(2);
+mysql> select sleep(2);
 
-+\-\-\-\-\-\-\-\-\-\-\--+
+| sleep(2) |
 
-\| sleep(2) \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 0 \|
-
-+\-\-\-\-\-\-\-\-\-\-\--+
+| 0 |
 
 1 row in set (2.00 sec)
 
@@ -8187,7 +7114,7 @@ mysql\> select sleep(2);
 
 **参数设置：**
 
-\<property name=\"enableSSL\"\>false\</property\>\<!\-- 是否开启SSL连接功能，是：true，否：false \--\>
+<property name=[enableSSL](#enableSSL)>false</property><!-- 是否开启SSL连接功能，是：true，否：false -->
 
 **参数作用：**
 
@@ -8213,25 +7140,21 @@ mysql\> select sleep(2);
 
 当设置为false时，即表示不允许子查询里面的表是分片表，会有如下提示：
 
-mysql\> select \* from test3 where id in (select id from test31);
+mysql> select * from test3 where id in (select id from test31);
 
 ERROR 1064 (HY000): Unsupported table type in subquery.
 
 当设置为true时，表示支持子查询里面的表是分片表。
 
-mysql\> select \* from test3 where id in (select id from test31);
+mysql> select * from test3 where id in (select id from test31);
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| id | name |
 
-\| id \| name \|
+| 5 | dfff56f |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| 7 | aa78bca |
 
-\| 5 \| dfff56f \|
-
-\| 7 \| aa78bca \|
-
-\| 15 \| dfff56f \|
+| 15 | dfff56f |
 
 ...省略更多...
 
@@ -8239,35 +7162,25 @@ mysql\> select \* from test3 where id in (select id from test31);
 
 **参数说明：**
 
-+----------------+------------------+
 | **Property**   | **Value**        |
-+----------------+------------------+
 | 参数值         | enableWatchdog   |
-+----------------+------------------+
 | 是否可见       | 是               |
-+----------------+------------------+
 | 参数说明       | 是否开启Watchdog |
-+----------------+------------------+
 | 默认值         | False            |
-+----------------+------------------+
-| Reload是否生效 | 2.4.5版本为N，   |
-|                |                  |
-|                | 2.4.7及以上为Y   |
-+----------------+------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y   |
 | 最低兼容版本   | 2.4.5            |
-+----------------+------------------+
 
 **参数设置：**
 
-\<property name=\"enableWatchdog\"\>true\</property\>\<!\-- 是否开启Watchdog \--\>
+<property name=[enableWatchdog](#enableWatchdog)>true</property><!-- 是否开启Watchdog -->
 
 **参数作用：**
 
 用于检测计算节点前端连接、后端连接池的异常连接及其他异常状态，检测异常后记录日志并终止连接。
 
-可以通过查看日志tail -f hotdb.log\|grep "watchdog"是否已经开启：
+可以通过查看日志tail -f hotdb.log|grep "watchdog"是否已经开启：
 
-root\> cat hotdb.log\|grep \'watchdog\'
+root> cat hotdb.log|grep 'watchdog'
 
 2018-06-01 18:26:50.983 \[WARN\] \[WATCHDOG\] \[\$NIOREACTOR-7-RW\] watchdogTableCheckHandler(78) - Table TABLEB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection \[node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false\]. You may need to contact HotDB administrator to get help.
 
@@ -8287,7 +7200,7 @@ root\> cat hotdb.log\|grep \'watchdog\'
 
 可以通过日志查看超过24小时未提交的事务检测信息：
 
-2018-10-26 16:14:55.787 \[INFO\] \[WATCHDOG\] \[\$NIOREACTOR-0-RW\] WatchDogLongTransactionCheckHandler(123) - Session \[thread=Thread-5,id=1720,user=rmb,host=192.168.200.3,port=3323,localport=54330,schema=FUNTEST_RMB\] has not been queryed for 839s. executed IUD5:\[INSERT INTO rmb_cbc VALUES (tuanjian, 4000)\]. binded connection:\[MySQLConnection \[node=11, id=1330, threadld=18085, state=borrowed, closed=false, autocommit=false, host=192.168.210.42, port=3307, database=db251, localPort=15722, isCiose:false, toBeClose:false\] lastSQL:INSERT INTO rmb_cbc VALUES (tuanjian, 4000)\]. innodb_trx:\[(ds:11 trx_id:25765462 trx_state:RUNNING trx_started:2018-10-26 16:00:56 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:2 trx_mysql.\_thread_id:18085 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:1 trx_lock_memory_bytes:1136 trx_rows_locked:0 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )\]. we will close this session now.
+2018-10-26 16:14:55.787 \[INFO\] \[WATCHDOG\] \[\$NIOREACTOR-0-RW\] WatchDogLongTransactionCheckHandler(123) - Session \[thread=Thread-5,id=1720,user=rmb,host=192.168.200.3,port=3323,localport=54330,schema=FUNTEST_RMB\] has not been queryed for 839s. executed IUD5:\[INSERT INTO rmb_cbc VALUES (tuanjian, 4000)\]. binded connection:\[MySQLConnection \[node=11, id=1330, threadld=18085, state=borrowed, closed=false, autocommit=false, host=192.168.210.42, port=3307, database=db251, localPort=15722, isCiose:false, toBeClose:false\] lastSQL:INSERT INTO rmb_cbc VALUES (tuanjian, 4000)\]. innodb_trx:\[(ds:11 trx_id:25765462 trx_state:RUNNING trx_started:2018-10-26 16:00:56 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:2 trx_mysql._thread_id:18085 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:1 trx_lock_memory_bytes:1136 trx_rows_locked:0 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )\]. we will close this session now.
 
 可以通过日志查看存储节点切换检测信息：
 
@@ -8295,15 +7208,15 @@ root\> cat hotdb.log\|grep \'watchdog\'
 
 2018-10-26 19:30:24.384 \[INFO\] \[FAILOVER\] \[\$NlOExecutor-7-2\] SwitchDataSource(111) - received switch datasource 24 command from Manager: \[thread=\$NIOExecutor-7-2,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440,schema=null\]
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-484\] InitSequenceHandler(270) - FUN_RMB.BC\'s sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-484\] InitSequenceHandler(270) - FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-474\] InitSequenceHandler(270) - FUN_RMB.CBC\'s sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-474\] InitSequenceHandler(270) - FUN_RMB.CBC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-484\] InitSequenceHandler(270) • FUN_RMB.BC\'s sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-484\] InitSequenceHandler(270) • FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-474\] InitSequenceHandler(270) - FUN_RMB.CBC\'s sequence in Backup datasource: 25 is greater than current sequence
+2018-10-26 19:30:24.387 \[WARN\] \[RESPONSE\] \[Labor-474\] InitSequenceHandler(270) - FUN_RMB.CBC's sequence in Backup datasource: 25 is greater than current sequence
 
-2018-10-26 19:30:24.407 \[INFO\] \[FAILOVER\] \[Labor-464\] CheckSlaveHandler(852) - DN:20(dn_rmb_01) switch datasource 24(192.168.210.41_3310_rmbol)-\>25(192.168.210.42_3310_rmb0l). current slave status:Slave_IO_State:Waiting for master to send event Master_Host:192.168.210.41 Master_User:hotdb_datasource Master_Port:3310 Connect_Retry:60 Master_Log_File:mysql-bin.000002 Read_Master_Log_Pos:3871570 Relay_Log_File:mysql-relay-bin.000006 Relay_Log_Pos:3871783 Relay_Master_Log_File:mysql-bin.000002 Slave_IO_Running:Yes Slave_SQL_Running:Yes Replicate_Do_DB: Replicate_Ignore_DB: Replicate_Do_Table: Replicate_Ignore_Table: Replicate_Wild_Do_Table: Replicate_Wild_Ignore_Table: Last_Errno:0 Last_Error: Skip_Counter:0 Exec_Master_Log_Pos:3871570 Relay_Log_Space:5058376 Until_Condition:None Until_Log_File: Until_Log_Pos:0 Master_SSL_Allowed:No Master_SSL_CA_File: Master_SSL_CA_Path: Master_SSL_Cert: Master_SSL_Cipher: Master_SSL_Key: Seconds_Behind_Master:0 Master_SSL_Verify_Server_Cert:No Last_IO_Errno:0 Last_IO_Error: Last_SQL_Errno:0 Last_SQL_Error: Replicate_Ignore_Server_Ids: Master_Server_Id:210413310 Master_UUID:919cbf03-9f2d-11e8-b8af-525400636cd2 Master_Info_File:mysql.slave_master_info SQL_Delay:0 SQL_Remaining_Delay:NULL Slave_SQL_Running_State:Slave has read all relay log; waiting for more updates Master_Retry_Count:86400 Master_Bind: Last_IO_Error_Timestamp: Last_SQL_Error_Timestamp: Master_SSL_Crl: Master_SSL_Crlpath: Retrieved_Gtid_Set:919cbf03-9f2d-11e8-b8af-525400636cd2:22735-1367727 Executed_Gtid_Set:1aef7172-9f2e-11e8-b62c-525400fcfb5b: 1-3281,919cbf03-9f2d-11e8-b8af-525400636cd2:1-1367727 Auto_Position:1 Replicate_Rewrite_DB: Channel_Name: Master_TLS_Version:
+2018-10-26 19:30:24.407 \[INFO\] \[FAILOVER\] \[Labor-464\] CheckSlaveHandler(852) - DN:20(dn_rmb_01) switch datasource 24(192.168.210.41_3310_rmbol)->25(192.168.210.42_3310_rmb0l). current slave status:Slave_IO_State:Waiting for master to send event Master_Host:192.168.210.41 Master_User:hotdb_datasource Master_Port:3310 Connect_Retry:60 Master_Log_File:mysql-bin.000002 Read_Master_Log_Pos:3871570 Relay_Log_File:mysql-relay-bin.000006 Relay_Log_Pos:3871783 Relay_Master_Log_File:mysql-bin.000002 Slave_IO_Running:Yes Slave_SQL_Running:Yes Replicate_Do_DB: Replicate_Ignore_DB: Replicate_Do_Table: Replicate_Ignore_Table: Replicate_Wild_Do_Table: Replicate_Wild_Ignore_Table: Last_Errno:0 Last_Error: Skip_Counter:0 Exec_Master_Log_Pos:3871570 Relay_Log_Space:5058376 Until_Condition:None Until_Log_File: Until_Log_Pos:0 Master_SSL_Allowed:No Master_SSL_CA_File: Master_SSL_CA_Path: Master_SSL_Cert: Master_SSL_Cipher: Master_SSL_Key: Seconds_Behind_Master:0 Master_SSL_Verify_Server_Cert:No Last_IO_Errno:0 Last_IO_Error: Last_SQL_Errno:0 Last_SQL_Error: Replicate_Ignore_Server_Ids: Master_Server_Id:210413310 Master_UUID:919cbf03-9f2d-11e8-b8af-525400636cd2 Master_Info_File:mysql.slave_master_info SQL_Delay:0 SQL_Remaining_Delay:NULL Slave_SQL_Running_State:Slave has read all relay log; waiting for more updates Master_Retry_Count:86400 Master_Bind: Last_IO_Error_Timestamp: Last_SQL_Error_Timestamp: Master_SSL_Crl: Master_SSL_Crlpath: Retrieved_Gtid_Set:919cbf03-9f2d-11e8-b8af-525400636cd2:22735-1367727 Executed_Gtid_Set:1aef7172-9f2e-11e8-b62c-525400fcfb5b: 1-3281,919cbf03-9f2d-11e8-b8af-525400636cd2:1-1367727 Auto_Position:1 Replicate_Rewrite_DB: Channel_Name: Master_TLS_Version:
 
 2018-10-26 19:30:24.407 \[WARN\] \[FAILOVER\] \[Labor-484\] BackendDataNode(726) - datanode 20 switch datasource 24 to 25 in failover. due to: Manual Switch by User: root
 
@@ -8353,73 +7266,61 @@ XA模式指强一致模式。在分布式事务数据库系统中，数据被拆
 
 设置为False时，当MySQL返回错误时，会有如下提示：
 
-mysql\> begin;
+mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> insert into autoi values(null,\'aa\');
+mysql> insert into autoi values(null,'aa');
 
 Query OK, 1 row affected (0.00 sec)
 
-mysql\> select \* from autoi;
+mysql> select * from autoi;
 
-ERROR 1146 (HY000): Table \'db249.autoi\' doesn\'t exist
+ERROR 1146 (HY000): Table 'db249.autoi' doesn't exist
 
-mysql\> select \* from autoi where id=1;
+mysql> select * from autoi where id=1;
 
 ERROR 1003 (HY000): errors occurred in transaction, you need to rollback now
 
-mysql\> commit;
+mysql> commit;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select \* from autoi where id=1;
+mysql> select * from autoi where id=1;
 
 Empty set (0.00 sec)
 
 设置为true时，事务内出现错误，事务仍然可以提交成功。
 
-mysql\> begin;
+mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> insert into autoi values(null,\'aa\');
+mysql> insert into autoi values(null,'aa');
 
 Query OK, 1 row affected (0.00 sec)
 
-mysql\> select \* from ss;
+mysql> select * from ss;
 
-ERROR 1146 (HY000): Table \'db249.ss\' doesn\'t exist
+ERROR 1146 (HY000): Table 'db249.ss' doesn't exist
 
-mysql\> select \* from ss where id=1;
+mysql> select * from ss where id=1;
 
-+\-\-\-\-\--+\-\-\-\--+
+| id | a |
 
-\| id \| a \|
-
-+\-\-\-\-\--+\-\-\-\--+
-
-\| 1 \| aa \|
-
-+\-\-\-\-\--+\-\-\-\--+
+| 1 | aa |
 
 1 row in set (0.01 sec)
 
-mysql\> commit;
+mysql> commit;
 
 Query OK, 0 rows affected (0.01 sec)
 
-mysql\> select \* from ss where id=1;
+mysql> select * from ss where id=1;
 
-+\-\-\-\-\--+\-\-\-\--+
+| id | a |
 
-\| id \| a \|
-
-+\-\-\-\-\--+\-\-\-\--+
-
-\| 1 \| aa \|
-
-+\-\-\-\-\--+\-\-\-\--+
+| 1 | aa |
 
 1 row in set (0.01 sec)
 
@@ -8441,7 +7342,7 @@ mysql\> select \* from ss where id=1;
 
 **参数设置：**
 
-\<property name=\"failoverAutoresetslave\"\>false\</property\>\<!\-- 故障切换时，是否自动重置主从复制关系 \--\>
+<property name=[failoverAutoresetslave](#failoverAutoresetslave)>false</property><!-- 故障切换时，是否自动重置主从复制关系 -->
 
 **参数作用：**
 
@@ -8463,7 +7364,7 @@ mysql\> select \* from ss where id=1;
 
 **参数设置：**
 
-\<property name=\"frontConnectionTrxIsoLevel\"\>2\</property\>
+<property name=[frontConnectionTrxIsoLevel](#frontConnectionTrxIsoLevel)>2</property>
 
 **参数作用：**
 
@@ -8475,27 +7376,15 @@ mysql\> select \* from ss where id=1;
 
 **参数说明：**
 
-+----------------+------------------------+
 | **Property**   | **Value**              |
-+----------------+------------------------+
 | 参数值         | frontWriteBlockTimeout |
-+----------------+------------------------+
 | 是否可见       | 是                     |
-+----------------+------------------------+
 | 参数说明       | 前端连接写阻塞超时时间 |
-+----------------+------------------------+
 | 默认值         | 10000ms                |
-+----------------+------------------------+
 | 最小值         | 2000ms                 |
-+----------------+------------------------+
 | 最大值         | 600000ms               |
-+----------------+------------------------+
-| Reload是否生效 | 2.4.5版本为N，         |
-|                |                        |
-|                | 2.4.7及以上为Y         |
-+----------------+------------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y         |
 | 最低兼容版本   | 2.4.5                  |
-+----------------+------------------------+
 
 **参数作用：**
 
@@ -8503,7 +7392,7 @@ mysql\> select \* from ss where id=1;
 
 前端连接写阻塞超时时，会关闭前端连接，然后输出对应的日志提示" closed, due to write block timeout"，如下：
 
-2018-06-14 13:46:48.355 \[INFO\] \[\] \[TimerExecutor1\] FrontendConnection(695) -- \[thread=TimerExecutori,id=9,user=cara,host=192.168.200.82,port=8883,localport=61893,schema=TEST_LGG\] closed, due to write block timeout, executing SQL: select \* from customer_auto_1
+2018-06-14 13:46:48.355 \[INFO\] \[\] \[TimerExecutor1\] FrontendConnection(695) -- \[thread=TimerExecutori,id=9,user=cara,host=192.168.200.82,port=8883,localport=61893,schema=TEST_LGG\] closed, due to write block timeout, executing SQL: select * from customer_auto_1
 
 #### generatePrefetchCostRatio
 
@@ -8523,7 +7412,7 @@ mysql\> select \* from ss where id=1;
 
 **参数设置：**
 
-\<property name=\"generatePrefetchCostRatio\"\>70\</property\>
+<property name=[generatePrefetchCostRatio](#generatePrefetchCostRatio)>70</property>
 
 **参数作用：**
 
@@ -8549,7 +7438,7 @@ mysql\> select \* from ss where id=1;
 
 server.xml中globalUniqueConstraint参数配置 如下配置：
 
-\<property name=\"globalUniqueConstraint\"\>false\</property\>\<!\--新增表是否默认开启全局唯一约束\--\>
+<property name=[globalUniqueConstraint](#globalUniqueConstraint)>false</property><!--新增表是否默认开启全局唯一约束-->
 
 **参数作用：**
 
@@ -8575,7 +7464,7 @@ server.xml中globalUniqueConstraint参数配置 如下配置：
 
 server.xml中haMode参数配置 如下配置：
 
-\<property name=\"haMode\"\>0\</property\>\<!\-- 高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房 \--\>
+<property name=[haMode](#haMode)>0</property><!-- 高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房 -->
 
 **参数作用：**
 
@@ -8619,81 +7508,59 @@ haNodeHost参数仅在高可用模式下对backup角色的计算节点生效，�
 
 例如192.168.210.22:3326,192.168.210.23:3326与192.168.210.24:3326属于多计算节点，需要指定配置与之关联的主服务的IP和通信端口。
 
-高可用模式主节点示例：\<property name=\"haState\"\>master\</property\>\<!\-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） \--\>
+高可用模式主节点示例：<property name="haState">master</property><!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
 
-\<property name=\"haNodeHost\"/\>\<!\-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）\--\>
+<property name="haNodeHost"/><!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）-->
 
-高可用模式备节点示例：\<property name=\"haState\"\>backup\</property\>\<!\-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） \--\>
+高可用模式备节点示例：<property name="haState">backup</property><!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
 
-\<property name=\"haNodeHost\"/\>192.168.200.51:3325\<!\-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）\--\>
+<property name="haNodeHost"/>192.168.200.51:3325<!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）-->
 
-集群模式实例：\<property name=\"haState\"\>backup\</property\>\<!\-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） \--\>
+集群模式实例：<property name="haState">backup</property><!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
 
-\<property name=\"haNodeHost\"/\>192.168.210.23:3326,192.168.310.24:3326\<!\-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）\--\>
+<property name="haNodeHost"/>192.168.210.23:3326,192.168.310.24:3326<!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）-->
 
 #### highCostSqlConcurrency
 
 **参数说明：**
 
-+----------------+------------------------+
 | **Property**   | **Value**              |
-+----------------+------------------------+
 | 参数值         | highCostSqlConcurrency |
-+----------------+------------------------+
 | 是否可见       | 否                     |
-+----------------+------------------------+
 | 参数说明       | 高消耗语句的并发数     |
-+----------------+------------------------+
 | 默认值         | 32                     |
-+----------------+------------------------+
 | 最小值         | 1                      |
-+----------------+------------------------+
 | 最大值         | 2048                   |
-+----------------+------------------------+
-| Reload是否生效 | 2.4.5版本为N，         |
-|                |                        |
-|                | 2.4.7及以上为Y         |
-+----------------+------------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y         |
 | 最低兼容版本   | 2.4.3                  |
-+----------------+------------------------+
 
 **参数作用：**
 
-此参数为计算节点过载保护相关参数，用于控制高消耗语句的并发数（包括跨库join、union、update/delete\...limit等），当前端执行并发数超过设置时，相关连接会被hold住，等待前面执行完后，才能执行下一批。
+此参数为计算节点过载保护相关参数，用于控制高消耗语句的并发数（包括跨库join、union、update/delete...limit等），当前端执行并发数超过设置时，相关连接会被hold住，等待前面执行完后，才能执行下一批。
 
 Show processlist中的flow control为lock状态，等待下一批执行。
 
 可从管理端口中查看当前剩余可用的并发数。
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\--+
+| Id | User | Host | db | Command | Time | State | Info |
 
-\| Id \| User \| Host \| db \| Command \| Time \| State \| Info \|
+| 150 | _HotDB_Cluster_USER_ | 192.168.210.31:51428 | TEST_LGG | Query | 0 | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\--+\-\-\-\-\--+
+| 126 | _HotDB_Cluster_USER_ | 192.168.210.31:51412 | TEST_LGG | Query | 0 | **Flow control** | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
 
-\| 150 \| \_HotDB_Cluster_USER\_ \| 192.168.210.31:51428 \| TEST_LGG \| Query \| 0 \| Sending data \| select a.\*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 \|
+| 222 | _HotDB_Cluster_USER_ | 192.168.210.32:16636 | TEST_LGG | Query | 0 | optimizing | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
 
-\| 126 \| \_HotDB_Cluster_USER\_ \| 192.168.210.31:51412 \| TEST_LGG \| Query \| 0 \| **Flow control** \| select a.\*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 \|
+| 174 | _HotDB_Cluster_USER_ | 192.168.210.32:16604 | TEST_LGG | Query | 0 | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
 
-\| 222 \| \_HotDB_Cluster_USER\_ \| 192.168.210.32:16636 \| TEST_LGG \| Query \| 0 \| optimizing \| select a.\*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 \|
-
-\| 174 \| \_HotDB_Cluster_USER\_ \| 192.168.210.32:16604 \| TEST_LGG \| Query \| 0 \| Sending data \| select a.\*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 \|
-
-\| 129 \| \_HotDB_Cluster_USER\_ \| 192.168.210.31:51414 \| TEST_LGG \| Query \| 0 \| **Flow control** \| select a.\*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 \|
+| 129 | _HotDB_Cluster_USER_ | 192.168.210.31:51414 | TEST_LGG | Query | 0 | **Flow control** | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
 
 ...省略更多...
 
-mysql\> show @\@debug;
+mysql> show @\@debug;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| join_limit | committing |
 
-\| join_limit \| committing \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 32 \| 0 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+
+| 32 | 0 |
 
 1 row in set (0.00 sec)
 
@@ -8727,9 +7594,9 @@ mysql\> show @\@debug;
 
 例如，在中心机房server.xml中设置idcId为1，idcNodeHost填写灾备机房所有计算节点信息；在灾备机房server.xml中设置idcId为2，idcNodeHost填写中心机房所有计算节点信息。
 
-\<property name=\"idcId\"\>2\</property\>\<!\-- 机房ID, 1:中心机房，2:灾备机房 \--\>
+<property name="idcId">2</property><!-- 机房ID, 1:中心机房，2:灾备机房 -->
 
-\<property name=\"idcNodeHost\"\>192.168.220.188:3325,192.168.220.189:3325\</property\>\<!\-- 另一个机房的连接信息（Computer node info in the other IDC）\--\>
+<property name="idcNodeHost">192.168.220.188:3325,192.168.220.189:3325</property><!-- 另一个机房的连接信息（Computer node info in the other IDC）-->
 
 #### idleTimeout
 
@@ -8751,7 +7618,7 @@ mysql\> show @\@debug;
 
 server.xml中idleTimeout参数配置如下：
 
-\<property name=\"idleTimeout\"\>28800\</property\>\<!\-- 前端空闲连接超时时间，单位：秒\--\>
+<property name=[idleTimeout](#idleTimeout)>28800</property><!-- 前端空闲连接超时时间，单位：秒-->
 
 **参数作用：**
 
@@ -8759,75 +7626,51 @@ server.xml中idleTimeout参数配置如下：
 
 为方便演示，测试中设定该值为60秒。
 
-mysql \> show processlist;
+mysql > show processlist;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Id | User | Host | db | Command | Time | State | Info |
 
-\| Id \| User \| Host \| db \| Command \| Time \| State \| Info \|
+| 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 9 \| root \| 192.168.220.211:26568 \| NULL \| Query \| 0 \| executing \| show processlist \|
-
-\| 7 \| ztm \| 192.168.220.211:26470 \| INFORMATION_SCHEMA \| Sleep \| 59 \| \| NULL \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 7 | ztm | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep | 59 | | NULL |
 
 2 rows in set (0.00 sec)
 
-mysql \> show processlist;
+mysql > show processlist;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Id | User | Host | db | Command | Time | State | Info |
 
-\| Id \| User \| Host \| db \| Command \| Time \| State \| Info \|
+| 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 9 \| root \| 192.168.220.211:26568 \| NULL \| Query \| 0 \| executing \| show processlist \|
-
-\| 7 \| ztm \| 192.168.220.211:26470 \| INFORMATION_SCHEMA \| Sleep \| 60 \| \| NULL \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 7 | ztm | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep | 60 | | NULL |
 
 2 rows in set (0.00 sec)
 
-mysql \> show processlist;
+mysql > show processlist;
 
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Id | User | Host | db | Command | Time | State | Info |
 
-\| Id \| User \| Host \| db \| Command \| Time \| State \| Info \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| 9 \| root \| 192.168.220.211:26568 \| NULL \| Query \| 0 \| executing \| show processlist \|
-
-+\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |
 
 1 row in set (0.00 sec)
 
 此时前端连接会话超时输入SQL会提示已断开连接，并尝试重连，最终重连成功：
 
-msyql\> show databases;
+msyql> show databases;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| DATABASE |
 
-\| DATABASE \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| INFORMATION_SCHEMA \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| INFORMATION_SCHEMA |
 
 1 row in set (0.00 sec)
 
-mysql\> show databases;
+mysql> show databases;
 
 ERROR 2013 (HY000): Lost connection to MySQL server during query
 
 ERROR 2006 (HY000): MySQL server has gone away
 
-No connection. Trying to reconnect\...
+No connection. Trying to reconnect...
 
 Connection id: 10
 
@@ -8855,31 +7698,25 @@ Current database: INFORMATION_SCHEMA
 
 将joinable设置为false，在该环境下执行语句，报错ERROR 1064 (HY000): joinable is not configured.
 
-mysql\> select \* from join_cross_a\_jwy a inner join join_cross_b\_jwy b on a.adnid between 108 and 110;
+mysql> select * from join_cross_a_jwy a inner join join_cross_b_jwy b on a.adnid between 108 and 110;
 
 ERROR 1064 (HY000): joinable is not configured.
 
-mysql\> select a.adept from join_a\_jwy a join join_b\_jwy b on a.adept=b.bdept limit 5;
+mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept limit 5;
 
 ERROR 1064 (HY000): joinable is not configured.
 
 将joinable设置为true，在该环境下执行语句:
 
-mysql\> select a.adept from join_a\_jwy a join join_b\_jwy b on a.adept=b.bdept limit 5;
+mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept limit 5;
 
-+\-\-\-\-\-\-\-\--+
+| adept |
 
-\| adept \|
+| aa |
 
-+\-\-\-\-\-\-\-\--+
+| bb |
 
-\| aa \|
-
-\| bb \|
-
-\| cc \|
-
-+\-\-\-\-\-\-\-\--+
+| cc |
 
 3 rows in set (0.03 sec)
 
@@ -8903,11 +7740,11 @@ mysql\> select a.adept from join_a\_jwy a join join_b\_jwy b on a.adept=b.bdept 
 
 跨库有交叉结果集的JOIN等值查询，批量转成IN查询的每批次的最大值，需查询的行数超过设置的值会分多次转成IN。该参数属于JOIN查询优化参数，可以提升JOIN查询速度。例如：
 
-\<property name=\"joinBatchSize\"\>3\</property\>\<!---JOIN等值查询时每批量转成IN查询的记录数 \--\>
+<property name=[joinBatchSize](#joinBatchSize)>3</property><!---JOIN等值查询时每批量转成IN查询的记录数 -->
 
 此时执行：
 
-mysql\> select b.\* from customer_auto_1 a join customer_auto_3 b on a.id=b.id where a.postcode=123456;
+mysql> select b.* from customer_auto_1 a join customer_auto_3 b on a.id=b.id where a.postcode=123456;
 
 查看general_log实际执行效果如下：
 
@@ -8941,19 +7778,19 @@ JOIN操作可使用的直接内存大小，可影响大中间结果集的JOIN的
 
 当JOIN使用的直接内存超过设置值时，将会被临时存放到本地磁盘, JOIN语句执行完后临时文件自动删除。
 
-root\> pwd
+root> pwd
 
 /usr/local/hotdb-2.4.9/hotdb-server/HotDB-TEMP
 
 You have mail in /var/spool/mail/root
 
-root\> ll
+root> ll
 
--rw-r\--r\-- 1 root root 8778410 May 9 17:28 positions_5302007528422328273.tmp
+-rw-r--r-- 1 root root 8778410 May 9 17:28 positions_5302007528422328273.tmp
 
--rw-r\--r\-- 1 root root 141868981 May 9 17:28 row_411809270296834018.tmp
+-rw-r--r-- 1 root root 141868981 May 9 17:28 row_411809270296834018.tmp
 
--rw-r\--r\-- 1 root root 26113612 May 9 18:01 row_4342139033645193593.tmp
+-rw-r--r-- 1 root root 26113612 May 9 18:01 row_4342139033645193593.tmp
 
 #### joinLoopSize
 
@@ -8975,19 +7812,19 @@ root\> ll
 
 使用BNL算法执行JOIN时各节点每批次下发查询的数量。该参数属于JOIN查询优化参数，可提升JOIN查询速度。
 
-\<property name=\"joinLoopSize\"\>1000\</property\>\<!\-- 使用BNL算法做JOIN时各节点每批次查询数量 \--\>
+<property name=[joinLoopSize](#joinLoopSize)>1000</property><!-- 使用BNL算法做JOIN时各节点每批次查询数量 -->
 
-例如： joinLoopSize设置为1000。bn_a\_jwy为auto分片表，分片字段为id，bn_b\_jwy为match分片表，分片字段为a，bn_c\_jwy为auto分片表，分片字段为a，三张表的数据量都为2w。
+例如： joinLoopSize设置为1000。bn_a_jwy为auto分片表，分片字段为id，bn_b_jwy为match分片表，分片字段为a，bn_c_jwy为auto分片表，分片字段为a，三张表的数据量都为2w。
 
-mysql\> select \* from bn_a\_Jwy as a inner join bn_b\_jwy as b on a.a=b.a limit 9000;
+mysql> select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 9000;
 
 查看实际general_log执行效果：
 
-1187022 Query SELECT A.id, A.a, A.bchar, A.cdeci, A.dtime FROM bn_a\_jwy AS a ORDER BY A.ID LIMIT 1001
+1187022 Query SELECT A.id, A.a, A.bchar, A.cdeci, A.dtime FROM bn_a_jwy AS a ORDER BY A.ID LIMIT 1001
 
-1187022 Query SELECT C.id, C.a, C.bchar, C.cdeci, C.dtime FROM bn_c\_jwy AS c WHERE C.id IN (0) ORDER BY C.ID LIMIT 0 , 1001
+1187022 Query SELECT C.id, C.a, C.bchar, C.cdeci, C.dtime FROM bn_c_jwy AS c WHERE C.id IN (0) ORDER BY C.ID LIMIT 0 , 1001
 
-1187022 Query SELECT B.id, B.a, B.bchar, B.cdeci, B.dtime FROM bn_b\_jwy AS b WHERE B.a COLLATE utf8_general_ci IN (\'d\') ORDER BY B.ID LIMIT 0 , 1001 ...省略更多...
+1187022 Query SELECT B.id, B.a, B.bchar, B.cdeci, B.dtime FROM bn_b_jwy AS b WHERE B.a COLLATE utf8_general_ci IN ('d') ORDER BY B.ID LIMIT 0 , 1001 ...省略更多...
 
 #### keyStore
 
@@ -9005,7 +7842,7 @@ mysql\> select \* from bn_a\_Jwy as a inner join bn_b\_jwy as b on a.a=b.a limit
 
 **参数设置：**
 
-\<property name=\"keyStore\"\>/server.jks\</property\>\<!\-- 指定用于TLS连接的数据证书.jks文件的路径 \--\>
+<property name=[keyStore](#keyStore)>/server.jks</property><!-- 指定用于TLS连接的数据证书.jks文件的路径 -->
 
 **参数作用：**
 
@@ -9027,7 +7864,7 @@ mysql\> select \* from bn_a\_Jwy as a inner join bn_b\_jwy as b on a.a=b.a limit
 
 **参数设置：**
 
-\<property name=\"keyStorePass\"\>BB5A70F75DD5FEB214A5623DD171CEEB\</property\>\<!\-- 指定用于TLS连接的数据证书.jks文件的密码 \--\>
+<property name=[keyStorePass](#keyStorePass)>BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- 指定用于TLS连接的数据证书.jks文件的密码 -->
 
 **参数作用：**
 
@@ -9053,7 +7890,7 @@ mysql\> select \* from bn_a\_Jwy as a inner join bn_b\_jwy as b on a.a=b.a limit
 
 lockWaitTimeout此参数指获取元数据锁的超时时间(s)，允许值1-31536000s，默认值31536000s，即365天，代表发生元数据锁超时超过365天，则客户端提示锁超时。
 
-\<property name=\"lockWaitTimeout\"\>31536000\</property\> \<!\-- 元数据锁超时时间 \--\>
+<property name=[lockWaitTimeout](#lockWaitTimeout)>31536000</property> <!-- 元数据锁超时时间 -->
 
 session A执行：
 
@@ -9109,23 +7946,17 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 
 **参数作用：**
 
-控制前端连接发送的包大小。默认64M，当发送SQL语句的大小超过默认值64M时，计算节点会给出提示（Get a packet bigger than \'max_allowed_packet\'）。
+控制前端连接发送的包大小。默认64M，当发送SQL语句的大小超过默认值64M时，计算节点会给出提示（Get a packet bigger than 'max_allowed_packet'）。
 
-ERROR 1153 (HY000): Get a packet bigger than \'max allowed packet\'
+ERROR 1153 (HY000): Get a packet bigger than 'max allowed packet'
 
 同时，show variables能够显示配置的值。
 
-mysql\> show variables like \'%allowed%;
+mysql> show variables like '%allowed%;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| variable_name | value |
 
-\| variable_name \| value \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| max_allowed_packet \| 16777216 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| max_allowed_packet | 16777216 |
 
 #### maxConnections & maxUserConnections
 
@@ -9165,7 +7996,7 @@ maxUserConnections是同一个账号能够同时连接到计算节点的最大�
 
 当连接数大于所设置的值时，创建前端连接会有如下提示:
 
-root\> mysql -uzy -pzy -h127.0.0.1 -P9993
+root> mysql -uzy -pzy -h127.0.0.1 -P9993
 
 Warning: Using a password on the command line interface can be insecure.
 
@@ -9173,37 +8004,25 @@ ERROR 1040 (HY000): too many connections
 
 可以通过在服务端口set修改maxConnections和maxUserConnections的值，参数为GLOBAL级别：
 
-mysql\> set global max_connections = 5000;
+mysql> set global max_connections = 5000;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> show variables like \'%max_connections%;
+mysql> show variables like '%max_connections%;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| variable_name | value |
 
-\| variable_name \| value \|
+| max_connections | 5000 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| max_connections \| 5000 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-mysql\> set global max_user_connections = 1000;
+mysql> set global max_user_connections = 1000;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> show variables like \'%max_user_connections%;
+mysql> show variables like '%max_user_connections%;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| variable_name | value |
 
-\| variable_name \| value \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| max_user_connections \| 1000 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| max_user_connections | 1000 |
 
 #### maxIdleTransactionTimeout
 
@@ -9223,7 +8042,7 @@ mysql\> show variables like \'%max_user_connections%;
 
 **参数设置：**
 
-\<property name=\"maxIdleTransactionTimeout\"\>864000000\</property\>
+<property name=[maxIdleTransactionTimeout](#maxIdleTransactionTimeout)>864000000</property>
 
 maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示事务内最后一次SQL完成后超过24小时未提交事务，则判定为超时事务，HotDB在hotdb.log中以\[INFO\] \[WATCHDOG\] WatchDogLongTransactionCheckHandler标签记录连接IP、端口、用户名、逻辑库、lastsql、是否autocommit、后端连接的innodb_trx等信息，并关闭连接，自动回滚事务。
 
@@ -9231,7 +8050,7 @@ maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示
 
 例如，事务空闲时间超出设定的阈值，将关闭连接，此时查看日志：
 
-2019-07-01 18:09:24.528 \[INFO\] \[WATCHDOG\] \[\$NIOREACTOR-20-RW\] cn.hotpu.hotdb.mysql.nio.handler.WatchDogLongTransactionCheckHandler(123) - Session \[thread=Thread-13,id=1,user=ztm,host=127.0.0.1,port=3323,localport=46138,schema=PM\] has not been queryed for 593s. executed IUDs:\[UPDATE customer_auto_1 SET city = \'xxxx\' WHERE id = 1\]. binded connection:\[MySQLConnection \[node=2, id=59, threadId=14921, state=borrowed, closed=false, autocommit=false, host=10.10.0.202, port=3307, database=db_test251, localPort=52736, isClose:false, toBeClose:false\] lastSQL:SET autocommit=0;UPDATE customer_auto_1 SET city = \'xxxx\' WHERE id = 1\]. innodb_trx:\[(ds:2 trx_id:3435056156 trx_state:RUNNING trx_started:2019-07-01 17:59:33 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:3 trx_mysql_thread_id:14921 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:2 trx_lock_memory_bytes:1136 trx_rows_locked:1 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )\]. we will close this session now.
+2019-07-01 18:09:24.528 \[INFO\] \[WATCHDOG\] \[\$NIOREACTOR-20-RW\] cn.hotpu.hotdb.mysql.nio.handler.WatchDogLongTransactionCheckHandler(123) - Session \[thread=Thread-13,id=1,user=ztm,host=127.0.0.1,port=3323,localport=46138,schema=PM\] has not been queryed for 593s. executed IUDs:\[UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1\]. binded connection:\[MySQLConnection \[node=2, id=59, threadId=14921, state=borrowed, closed=false, autocommit=false, host=10.10.0.202, port=3307, database=db_test251, localPort=52736, isClose:false, toBeClose:false\] lastSQL:SET autocommit=0;UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1\]. innodb_trx:\[(ds:2 trx_id:3435056156 trx_state:RUNNING trx_started:2019-07-01 17:59:33 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:3 trx_mysql_thread_id:14921 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:2 trx_lock_memory_bytes:1136 trx_rows_locked:1 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )\]. we will close this session now.
 
 参数设置为0时，代表永不超时，即对事务提交时间不做限制。
 
@@ -9257,43 +8076,31 @@ JOIN中间结果集允许执行的最大行数。中间结果集的计算方法�
 
 当JOIN中间结果集大于设置的行数时，会提示如下信息：
 
-mysql\> select \* from customer_auto_1 a join customer_auto_3 b on a.postcode=b.postcode;
+mysql> select * from customer_auto_1 a join customer_auto_3 b on a.postcode=b.postcode;
 
 ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml
 
 可通过set session max_join_size修改当前会话参数值，使JOIN中间结果集在1\~ 2124000000之间：
 
-mysql\> show variables like \'%max_join_size%;
+mysql> show variables like '%max_join_size%;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| variable_name | value |
 
-\| variable_name \| value \|
+| max_join_size | 5000 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| max_join_size \| 5000 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-mysql\> set session max_join_size=1;
+mysql> set session max_join_size=1;
 
 //为方便测试，此处将参数设置为1，生产环境推荐最小值为1000
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> show variables like \'%max_user_connections%;
+mysql> show variables like '%max_user_connections%;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| variable_name | value |
 
-\| variable_name \| value \|
+| max_user_connections | 1 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| max_user_connections \| 1 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-mysql\> select \* from bn_a\_jwy a join bn_c\_jwy b on a.a=b.a where a.a=\'d\';
+mysql> select * from bn_a_jwy a join bn_c_jwy b on a.a=b.a where a.a='d';
 
 ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml
 
@@ -9317,49 +8124,37 @@ ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check
 
 开启读写分离后，主从延迟小于设置的延迟时间时，读从库:
 
-mysql\> select \* from cd;
+mysql> select * from cd;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| id | name |
 
-\| id \| name \|
+| 1 | slave |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 2 | slave |
 
-\| 1 \| slave \|
+| 3 | slave |
 
-\| 2 \| slave \|
+| 4 | slave |
 
-\| 3 \| slave \|
-
-\| 4 \| slave \|
-
-\| 5 \| slave \|
-
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 5 | slave |
 
 5 rows in set (0.00 sec)
 
 开启读写分离后，当可读从库的延迟超过设置的时间后，会读主库:
 
-mysql\> select \* from cd;
+mysql> select * from cd;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
+| id | name |
 
-\| id \| name \|
+| 1 | master |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
+| 2 | master |
 
-\| 1 \| master \|
+| 3 | master |
 
-\| 2 \| master \|
+| 4 | master |
 
-\| 3 \| master \|
-
-\| 4 \| master \|
-
-\| 5 \| master \|
-
-+\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+
+| 5 | master |
 
 5 rows in set (0.00 sec)
 
@@ -9381,7 +8176,7 @@ mysql\> select \* from cd;
 
 server.xml中maxNotInSubquery参数配置 如下配置：
 
-\<property name=\"maxNotInSubquery\"\>20000\</property\>\<!\--子查询中最大not in个数 \--\>
+<property name=[maxNotInSubquery](#maxNotInSubquery)>20000</property><!--子查询中最大not in个数 -->
 
 **参数作用：**
 
@@ -9393,41 +8188,35 @@ server.xml中maxNotInSubquery参数配置 如下配置：
 
 （为方便测试，设置maxNotInSubquery 为10）
 
-mysql\> use pm
+mysql> use pm
 
 Database changed
 
-mysql\> show tables;
+mysql> show tables;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| Tables_in_PM |
 
-\| Tables_in_PM \|
+| customer_quan_2 |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| customer_route_1 |
 
-\| customer_quan_2 \|
-
-\| customer_route_1 \|
-
-\| customer_route_2 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| customer_route_2 |
 
 3 rows in set (0.00 sec)
 
-mysql\> select \* from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id \> 205119 limit 20);
+mysql> select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20);
 
 ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml
 
 日志中会以\[INFO\] \[SQL\]标签记录对应信息
 
-2019-10-08 14:33:41.725 \[INFO\] \[SQL\] \[\$NIOExecutor-3-2\] cn.hotpu.hotdb.j.h(2626) - unsupported subquery:\[thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM\] AutoCommitTransactionSession in \[thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM\], sql:select \* from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id \> 205119 limit 20), error code:1104, error msg:The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml
+2019-10-08 14:33:41.725 \[INFO\] \[SQL\] \[\$NIOExecutor-3-2\] cn.hotpu.hotdb.j.h(2626) - unsupported subquery:\[thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM\] AutoCommitTransactionSession in \[thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM\], sql:select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20), error code:1104, error msg:The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml
 
 同时，在日志和3325端口show @\@systemconfig能够查看配置的值，该参数在修改后可reload生效。
 
-mysql\> show @\@systemconfig;
+mysql> show @\@systemconfig;
 
-config \| {\"enableFlowControl\":\"true\",\"recordSql\":\"false\",\"defaultMaxLimit\":\"10000\",\"bakPassword\":\"hotdb_config\",\"bakUrl\":\"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha\",\"managerPort\":\"3325\",\"heartbeatPeriod\":\"2\",\"cryptMandatory\":\"false\",\"password\":\"hotdb_config\",\"enableCursor\":\"false\",\"username\":\"hotdb_config\",\"enableXA\":\"false\",\"errorsPermittedInTransaction\":\"true\",\"strategyForRWSplit\":\"0\",\"enableWatchdog\":\"false\",\"haNodeHost\":\"192.168.220.139:3325\",\"maxJoinSize\":\"9148M\",\"maxNotInSubquery\":\"10\",\"pingLogCleanPeriodUnit\":\"0\",\"clientFoundRows\":\"false\",\"joinCacheSize\":\"236\",\"enableHeartbeat\":\"true\",\"url\":\"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha\",\"parkPeriod\":\"100000\",\"maxSqlRecordLength\":\"4000\",\"joinBatchSize\":\"46000\",\"enableSubquery\":\"true\",\"heartbeatTimeoutMs\":\"500\",\"pingPeriod\":\"300\",\"joinLoopSize\":\"18500\",\"VIP\":\"192.168.220.171\",\"joinable\":\"true\",\"maxUserConnections\":\"4900\",\"pingLogCleanPeriod\":\"1\",\"dataNodeIdleCheckPeriod\":\"120\",\"deadlockCheckPeriod\":\"3000\",\"sqlTimeout\":\"3600\",\"bakUsername\":\"hotdb_config\",\"enableLatencyCheck\":\"true\",\"waitSyncFinishAtStartup\":\"true\",\"checkVIPPeriod\":\"500\",\"statisticsUpdatePeriod\":\"0\",\"usingAIO\":\"0\",\"showAllAffectedRowsInGlobalTable\":\"false\",\"maxLatencyForRWSplit\":\"1000\",\"maxConnections\":\"5000\",\"enableSleep\":\"false\",\"waitForSlaveInFailover\":\"true\",\"autoIncrement\":\"true\",\"processorExecutor\":\"4\",\"highCostSqlConcurrency\":\"400\",\"latencyCheckPeriod\":\"500\",\"processors\":\"16\",\"weightForSlaveRWSplit\":\"50\",\"haState\":\"master\",\"readOnly\":\"false\",\"timerExecutor\":\"4\",\"serverPort\":\"3323\",\"frontWriteBlockTimeout\":\"10000\",\"switchoverTimeoutForTrans\":\"3000\"}
+config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql):"false",[defaultMaxLimit](#defaultMaxLimit):"10000","bakPassword":"hotdb_config","bakUrl":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha","managerPort":"3325","heartbeatPeriod":"2",[cryptMandatory](#cryptMandatory):"false","password":"hotdb_config",[enableCursor](#enableCursor):"false","username":"hotdb_config",[enableXA](#enableXA):"false",[errorsPermittedInTransaction](#errorsPermittedInTransaction):"true",[strategyForRWSplit](#strategyForRWSplit):"0",[enableWatchdog](#enableWatchdog):"false","haNodeHost":"192.168.220.139:3325",[maxJoinSize](#maxJoinSize):"9148M",[maxNotInSubquery](#maxNotInSubquery):"10",[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit):"0",[clientFoundRows](#clientFoundRows):"false",[joinCacheSize](#joinCacheSize):"236","enableHeartbeat":"true","url":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha",[parkPeriod](#parkPeriod):"100000",[maxSqlRecordLength](#maxSqlRecordLength):"4000",[joinBatchSize](#joinBatchSize):"46000",[enableSubquery](#enableSubquery):"true","heartbeatTimeoutMs":"500",[pingPeriod](#pingPeriod):"300",[joinLoopSize](#joinLoopSize):"18500","VIP":"192.168.220.171",[joinable](#joinable):"true","maxUserConnections":"4900",[pingLogCleanPeriod](#pingLogCleanPeriod):"1",[dataNodeIdleCheckPeriod](#dataNodeIdleCheckPeriod):"120",[deadlockCheckPeriod](#deadlockCheckPeriod):"3000",[sqlTimeout](#sqlTimeout):"3600","bakUsername":"hotdb_config","enableLatencyCheck":"true",[waitSyncFinishAtStartup](#waitSyncFinishAtStartup):"true","checkVIPPeriod":"500",[statisticsUpdatePeriod](#statisticsUpdatePeriod):"0",[usingAIO](#usingAIO):"0",[showAllAffectedRowsInGlobalTable](#showAllAffectedRowsInGlobalTable):"false",[maxLatencyForRWSplit](#maxLatencyForRWSplit):"1000","maxConnections":"5000",[enableSleep](#enableSleep):"false",[waitForSlaveInFailover](#waitForSlaveInFailover):"true",[autoIncrement](#autoIncrement):"true",[processorExecutor](#processorExecutor):"4",[highCostSqlConcurrency](#highCostSqlConcurrency):"400","latencyCheckPeriod":"500","processors":"16",[weightForSlaveRWSplit](#weightForSlaveRWSplit):"50","haState":"master",[readOnly](#readOnly):"false",[timerExecutor](#timerExecutor):"4","serverPort":"3323",[frontWriteBlockTimeout](#frontWriteBlockTimeout):"10000",[switchoverTimeoutForTrans](#switchoverTimeoutForTrans):"3000"}
 
 1 row in set (0.01 sec)
 
@@ -9451,11 +8240,11 @@ config \| {\"enableFlowControl\":\"true\",\"recordSql\":\"false\",\"defaultMaxLi
 
 server.xml中maxReconnectConfigDBTimes参数如下配置：
 
-\<property name=\" maxReconnectConfigDBTimes \"\>3\</property\>\<!\-- 最大重试连接配置库次数 \--\>
+<property name=" maxReconnectConfigDBTimes ">3</property><!-- 最大重试连接配置库次数 -->
 
 **参数作用：**
 
-防止计算节点启动、HA切换或reload时配置库连接耗时过长，增加配置库重连次数。超过最大重试连接次数（重连耗时默认是3\*2s），会自动切换到从配置库连接。
+防止计算节点启动、HA切换或reload时配置库连接耗时过长，增加配置库重连次数。超过最大重试连接次数（重连耗时默认是3*2s），会自动切换到从配置库连接。
 
 #### maxSqlRecordLength
 
@@ -9519,11 +8308,11 @@ server.xml中maxReconnectConfigDBTimes参数如下配置：
 
 ndbSqlAddr，ndbSqlUser，ndbSqlPass是配套参数，ndbSqlAddr是NDB SQL节点的物理地址，ndbSqlUser和ndbSqlPass属于连接NDB SQL节点的用户名和密码。
 
-\<property name=\"ndbSqlAddr\"\>localhost:3329\</property\>
+<property name="ndbSqlAddr">localhost:3329</property>
 
-\<property name=\"ndbSqlUser\"\>root\</property\>
+<property name="ndbSqlUser">root</property>
 
-\<property name=\"ndbSqlPass\"\>root\</property\>
+<property name="ndbSqlPass">root</property>
 
 #### ndbSqlDataAddr
 
@@ -9543,7 +8332,7 @@ ndbSqlAddr，ndbSqlUser，ndbSqlPass是配套参数，ndbSqlAddr是NDB SQL节点
 
 NDB SQL到计算节点的连接，即计算节点所在服务器IP及NDB SQL到计算节点的通信端口，默认值为127.0.0.1:3327。
 
-property name=\"ndbSqlDataAddr\"\>127.0.0.1:3327\</property\>
+property name=[ndbSqlDataAddr](#ndbSqlDataAddr)>127.0.0.1:3327</property>
 
 #### ndbSqlMode
 
@@ -9563,7 +8352,7 @@ property name=\"ndbSqlDataAddr\"\>127.0.0.1:3327\</property\>
 
 none：为默认值，代表禁用NDB功能；local：NDB服务与计算节点在同一IP地址上，满足相关条件的SQL，通过NDB逻辑执行。
 
-\<property name=\"ndbSqlMode\"\>none\</property\>
+<property name=[ndbSqlMode](#ndbSqlMode)>none</property>
 
 #### ndbSqlVersion & ndbVersion
 
@@ -9593,9 +8382,9 @@ none：为默认值，代表禁用NDB功能；local：NDB服务与计算节点�
 
 ndbSqlVersion与ndbVersion是相对应的关系，具体对应关系可参考MySQL官方文档。ndbSqlVersion默认的版本为5.7.24，ndbVersion默认的版本为7.5.12。当前计算节点支持的NDB引擎版本为7.5.4及以上，使用NDB版本要求存储节点版本为5.7.16及以上。
 
-\<property name=\"ndbSqlVersion\"\>5.7.24\</property\>
+<property name="ndbSqlVersion">5.7.24</property>
 
-\<property name=\"ndbVersion\"\>7.5.12\</property\>
+<property name="ndbVersion">7.5.12</property>
 
 #### operateMode
 
@@ -9615,7 +8404,7 @@ ndbSqlVersion与ndbVersion是相对应的关系，具体对应关系可参考MyS
 
 server.xml中operateMode参数配置如下：
 
-\<property name=\"operateMode\"\>0\</property\>\<!\--计算节点工作模式，0：正常模式，1：性能模式，2：调试模式(Operating mode, 0: normal mode, 1: performance mode, 2: debug mode)\--\>
+<property name=[operateMode](#operateMode)>0</property><!--计算节点工作模式，0：正常模式，1：性能模式，2：调试模式(Operating mode, 0: normal mode, 1: performance mode, 2: debug mode)-->
 
 **参数作用：**
 
@@ -9683,33 +8472,21 @@ recordSql=true,recordSQLSyntaxError=true,recordCrossDNJoin=true,recordUNION=true
 
 **参数说明：**
 
-+----------------+----------------------------------+
 | **Property**   | **Value**                        |
-+----------------+----------------------------------+
 | 参数值         | parkPeriod                       |
-+----------------+----------------------------------+
 | 是否可见       | 是                               |
-+----------------+----------------------------------+
 | 参数说明       | 消息系统空闲时线程休眠周期（ns） |
-+----------------+----------------------------------+
 | 默认值         | 100000                           |
-+----------------+----------------------------------+
 | 最大值         | 1000000                          |
-+----------------+----------------------------------+
 | 最小值         | 1000                             |
-+----------------+----------------------------------+
-| Reload是否生效 | 2.4.5版本为N，                   |
-|                |                                  |
-|                | 2.4.7及以上为Y                   |
-+----------------+----------------------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y                   |
 | 最低兼容版本   | 2.4.3                            |
-+----------------+----------------------------------+
 
 **参数设置：**
 
 server.xml的parkPeriod参数设置 如下图:
 
-\<property name=\"parkPeriod\"\>100000\</property\>
+<property name=[parkPeriod](#parkPeriod)>100000</property>
 
 **参数作用：**
 
@@ -9733,7 +8510,7 @@ server.xml的parkPeriod参数设置 如下图:
 
 server.xml中pingLogCleanPeriod参数配置 如下配置：
 
-\<property name=\"pingLogCleanPeriod\"\>3\</property\>\<!\--ping日志清理周期，默认3 \--\>
+<property name=[pingLogCleanPeriod](#pingLogCleanPeriod)>3</property><!--ping日志清理周期，默认3 -->
 
 **参数作用：**
 
@@ -9757,7 +8534,7 @@ pingLogCleanPeriod参数默认为3，单位可选项为小时、天、月，由�
 
 server.xml中pingLogCleanPeriodUnit参数配置 如下配置：
 
-\<property name=\"pingLogCleanPeriodUnit\"\>2\</property\>\<!\--ping日志清理周期单位，默认2， 0:小时，1:天，2:月 \--\>
+<property name=[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit)>2</property><!--ping日志清理周期单位，默认2， 0:小时，1:天，2:月 -->
 
 **参数作用：**
 
@@ -9781,7 +8558,7 @@ pingLogCleanPeriodUnit参数默认为2，代表ping日志清理周期的单位�
 
 server.xml中pingPeriod参数配置 如下配置：
 
-\<property name=\"pingPeriod\"\>3600\</property\>\<!\--ping服务器周期，单位秒,默认3600秒,最小300秒 \--\>
+<property name=[pingPeriod](#pingPeriod)>3600</property><!--ping服务器周期，单位秒,默认3600秒,最小300秒 -->
 
 **参数作用：**
 
@@ -9809,7 +8586,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-\<property name=\"prefetchBatchInit\"\>100\</property\>
+<property name=[prefetchBatchInit](#prefetchBatchInit)>100</property>
 
 **参数作用：**
 
@@ -9835,7 +8612,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-\<property name=\"prefetchBatchMax\"\>10000\</property\>
+<property name=[prefetchBatchMax](#prefetchBatchMax)>10000</property>
 
 **参数作用：**
 
@@ -9859,11 +8636,11 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-\<property name=\"prefetchBatchMin\"\>10\</property\>
+<property name=[prefetchBatchMin](#prefetchBatchMin)>10</property>
 
 **参数作用：**
 
-自增长序列号预取批次大小的下限，如果设置了100，每次预取区间范围差值的最小值为100，例如若预取从123开始，则预取区间中最大值不小于223，即下一批的预取批次至少从223开始预取，下一个预取批次\[\>=223，223+预取批次大小\]。
+自增长序列号预取批次大小的下限，如果设置了100，每次预取区间范围差值的最小值为100，例如若预取从123开始，则预取区间中最大值不小于223，即下一批的预取批次至少从223开始预取，下一个预取批次\[>=223，223+预取批次大小\]。
 
 #### prefetchValidTimeout
 
@@ -9883,7 +8660,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-\<property name=\"prefetchValidTimeout\"\>30\</property\>
+<property name=[prefetchValidTimeout](#prefetchValidTimeout)>30</property>
 
 **参数作用：**
 
@@ -9907,7 +8684,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-\<property name=\"processorExecutor\"\>4\</property\>\<!\-- 各处理器线程数 \--\>
+<property name=[processorExecutor](#processorExecutor)>4</property><!-- 各处理器线程数 -->
 
 **参数作用：**
 
@@ -9933,7 +8710,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-\<property name=\"processors\"\>8\</property\>\<!\-- 处理器数 \--\>
+<property name="processors">8</property><!-- 处理器数 -->
 
 **参数作用：**
 
@@ -9957,7 +8734,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-\<property name=\"readOnly\"\>false\</property\>\<!\-- 是否为只读模式 \--\>
+<property name=[readOnly](#readOnly)>false</property><!-- 是否为只读模式 -->
 
 **参数作用：**
 
@@ -9967,7 +8744,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 开启状态：
 
-mysql\> drop table customer;
+mysql> drop table customer;
 
 ERROR 1289 (HY000): Command not allowed in Read-Only mode.
 
@@ -9989,11 +8766,11 @@ ERROR 1289 (HY000): Command not allowed in Read-Only mode.
 
 server.xml中recordAuditlog参数如下配置：
 
-\<property name=\"recordAuditlog\"\>true\</property\>\<!\-- 记录审计日志 \--\>
+<property name=[recordAuditlog](#recordAuditlog)>true</property><!-- 记录审计日志 -->
 
 **参数作用：**
 
-recordAuditlog参数用于控制是否记录管理端操作信息，开启的情况可通过管理平台中的事件-\>审计日志查看管理端操作记录。
+recordAuditlog参数用于控制是否记录管理端操作信息，开启的情况可通过管理平台中的事件->审计日志查看管理端操作记录。
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10015,7 +8792,7 @@ recordAuditlog参数用于控制是否记录管理端操作信息，开启的情
 
 server.xml中recordCrossDNJoin参数如下配置：
 
-\<property name=\"recordCrossDNJoin\"\>true\</property\>
+<property name=[recordCrossDNJoin](#recordCrossDNJoin)>true</property>
 
 **参数作用：**
 
@@ -10029,11 +8806,11 @@ borrower表auto_mod分片，分片字段id，节点2
 
 执行如下：
 
-mysql\> SELECT \* FROM account a JOIN borrower b;
+mysql> SELECT * FROM account a JOIN borrower b;
 
 查看计算节点安装目录的/logs/sql.log日志。
 
-2018-05-22 16:17:11.607 \[INFO\] \[CROSSDNJOIN\] \[\$NIOExecutor-6-2\] JoinVisitor(4947) -- SELECT \* FROM account a JOIN borrower b
+2018-05-22 16:17:11.607 \[INFO\] \[CROSSDNJOIN\] \[\$NIOExecutor-6-2\] JoinVisitor(4947) -- SELECT * FROM account a JOIN borrower b
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10055,13 +8832,13 @@ mysql\> SELECT \* FROM account a JOIN borrower b;
 
 server.xml中recordDDL参数如下配置：
 
-\<property name=\"recordDDL\"\>true\</property\>
+<property name=[recordDDL](#recordDDL)>true</property>
 
 **参数作用：**
 
 recordDDL日志中记录DDL语句，执行如下语句：
 
-mysql\> create table abc(id int);
+mysql> create table abc(id int);
 
 查看计算节点安装目录的/logs/sql.log日志：
 
@@ -10089,15 +8866,15 @@ mysql\> create table abc(id int);
 
 server.xml中recordDeadLockSQL参数如下配置：
 
-\<property name=\"recordDeadLockSQL\"\>true\</property\>
+<property name=[recordDeadLockSQL](#recordDeadLockSQL)>true</property>
 
 **参数作用：**
 
 recordDeadLockSQL日志中记录引发死锁的语句：
 
-1\. 制造死锁场景
+1. 制造死锁场景
 
-2\. 查看计算节点安装目录的/logs/hotdb.log日志：
+2. 查看计算节点安装目录的/logs/hotdb.log日志：
 
 2018-05-23 14:54:30.865 \[INFO\] \[DEADLOCK\] \[\$NIOREACTOR-1-RW\] am(-1) -- sql: INSERT INTO table2000 VALUES (3); error response from MySQLConnection \[node=4, id=277, threadId=133815, state=borrowed, close=false, autocommit=false, host=192.168.220.102, port=3309, database=db249, localPort=15332, isClose:false, toBeClose:false\], err: Lock wait timeout exceeded; try restarting transaction, code: 1205
 
@@ -10121,7 +8898,7 @@ recordDeadLockSQL日志中记录引发死锁的语句：
 
 server.xml中recordHotDBErrors参数如下配置：
 
-\<property name=\"recordHotDBErrors\"\>true\</property\>
+<property name=[recordHotDBErrors](#recordHotDBErrors)>true</property>
 
 **参数作用：**
 
@@ -10129,7 +8906,7 @@ recordHotDBErrors日志中记录计算节点返回的错误信息。
 
 例：使用没有create权限的用户执行create语句，提示如下：
 
-2018-06-04 10:43:07.316 \[INFO\] \[HOTDBERROR\] \[\$NIOExecutor-3-0\] ServerConnection(155) -- sql: create table a001(id int), err: \[CREATE\] command denied to user \'jzl\' to logic database \'TEST_JZL\'
+2018-06-04 10:43:07.316 \[INFO\] \[HOTDBERROR\] \[\$NIOExecutor-3-0\] ServerConnection(155) -- sql: create table a001(id int), err: \[CREATE\] command denied to user 'jzl' to logic database 'TEST_JZL'
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10151,7 +8928,7 @@ recordHotDBErrors日志中记录计算节点返回的错误信息。
 
 server.xml中recordHotDBWarnings参数如下配置：
 
-\<property name=\"recordHotDBWarnings\"\>true\</property\>
+<property name=[recordHotDBWarnings](#recordHotDBWarnings)>true</property>
 
 **参数作用：**
 
@@ -10185,7 +8962,7 @@ create table abc(id int);
 
 server.xml中recordLimitOffsetWithoutOrderby参数如下配置：
 
-\<property name=\"recordLimitOffsetWithoutOrderby\"\>true\</property\>
+<property name=[recordLimitOffsetWithoutOrderby](#recordLimitOffsetWithoutOrderby)>true</property>
 
 **参数作用：**
 
@@ -10193,15 +8970,15 @@ recordLimitOffsetWithoutOrderby记录无orderby的limit语句。
 
 举例如下：
 
-mysql\> select \* FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ) limit 1,3;
+mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ) limit 1,3;
 
 查看计算节点安装目录的/logs/sql.log日志
 
-2018-05-23 14:05:14.915 \[INFO\] \[LIMITOFFSETWITHOUTORDERBY\] \[\$NIOExecutor-6-l\] SubqueryExecutor(97) - sql: select \* FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3
+2018-05-23 14:05:14.915 \[INFO\] \[LIMITOFFSETWITHOUTORDERBY\] \[\$NIOExecutor-6-l\] SubqueryExecutor(97) - sql: select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3
 
-2018-05-23 14:05:14.922 \[INFO\] \[LIMITOFFSETWITHOUTORDERBY\] \[\$NIOExecutor-2-3\] BaseSession(97) - sql: SELECT A.\`Balance\`, A.\`Branch_name\`, A.\`Account_number\`, A.\`account_date\` FROM account AS a WHERE a.Branch_name IN (UNHEX(\'4272696768746F6E\'), UNHEX(\'4272696768746F6E\'), UNHEX(\'526564776F6F64\'), UNHEX(\'50657272797269646765\'), UNHEX(\'50657272797269646765\'), UNHEX(\'526564776
+2018-05-23 14:05:14.922 \[INFO\] \[LIMITOFFSETWITHOUTORDERBY\] \[\$NIOExecutor-2-3\] BaseSession(97) - sql: SELECT A.\`Balance\`, A.\`Branch_name\`, A.\`Account_number\`, A.\`account_date\` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776
 
-F6f64\'), NULL) LIMIT 1 , 3
+F6f64'), NULL) LIMIT 1 , 3
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10223,7 +9000,7 @@ F6f64\'), NULL) LIMIT 1 , 3
 
 server.xml中recordMySQLErrors参数如下配置：
 
-\<property name=\"recordMySQLErrors\"\>true\</property\>
+<property name=[recordMySQLErrors](#recordMySQLErrors)>true</property>
 
 **参数作用：**
 
@@ -10231,11 +9008,11 @@ recordMySQLErrors记录MySQL返回的错误信息。
 
 举例如下：
 
-msyql\> select form;
+msyql> select form;
 
 查看计算节点安装目录的/logs/hotdb.log日志：
 
-2018-05-23 14:38:55.843 \[INFO\] \[MYSQLERROR\] \[\$NIOREACTOR-7-RW\] MySQLConnection(56) -- sql: select form, error response from MySQLConnection \[node=4, id=223, threadId=118551, state=borrowed, close=false, autocommit=true, host=192.168.220.103, port=3309, database=db249, localPort=27007, isClose:false, toBeClose:false\], err: Unknown column \'form\' in \'field list\', code: 1054
+2018-05-23 14:38:55.843 \[INFO\] \[MYSQLERROR\] \[\$NIOREACTOR-7-RW\] MySQLConnection(56) -- sql: select form, error response from MySQLConnection \[node=4, id=223, threadId=118551, state=borrowed, close=false, autocommit=true, host=192.168.220.103, port=3309, database=db249, localPort=27007, isClose:false, toBeClose:false\], err: Unknown column 'form' in 'field list', code: 1054
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10257,7 +9034,7 @@ msyql\> select form;
 
 server.xml中recordMySQLWarnings参数如下配置：
 
-\<property name=\"recordMySQLWarnings\"\>true\</property\>
+<property name=[recordMySQLWarnings](#recordMySQLWarnings)>true</property>
 
 **参数作用：**
 
@@ -10265,17 +9042,17 @@ recordMySQLWarnings记录MySQL返回的警告信息。
 
 举例如下：
 
-mysql\> update account set Account_number=\"\$!\\\\\'\'\#\#\";
+mysql> update account set Account_number="\$!\\\''\#\#";
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-06-12 10:52:07.011 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\#\#\', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 1, code: 1265
+2018-06-12 10:52:07.011 \[INFO\] \[MYSQLWARNING\] |\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\\'\'\#\#', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column 'Account_number' at row 1, code: 1265
 
-2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\#\#\', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 2, code: 1265
+2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] |\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\\'\'\#\#', warninq from MySQLConnection \[node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column 'Account_number' at row 2, code: 1265
 
-2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\#\#\', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 1, code: 1265
+2018-06-12 10:52:07.012 \[INFO\] \[MYSQLWARNING\] |\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\\'\'\#\#', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column 'Account_number' at row 1, code: 1265
 
-2018-06-12 10:52:07.013 \[INFO\] \[MYSQLWARNING\] \|\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = \'\*\$!\\\\\\\'\\\'\#\#\', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column \'Account_number\' at row 2, code: 1265
+2018-06-12 10:52:07.013 \[INFO\] \[MYSQLWARNING\] |\[\$NIOREACTOR-3-RW\] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\\'\'\#\#', warninq from MySQLConnection \[node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false\], warning: Data truncated for column 'Account_number' at row 2, code: 1265
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10295,7 +9072,7 @@ mysql\> update account set Account_number=\"\$!\\\\\'\'\#\#\";
 
 **参数设置：**
 
-\<property name=\"recordSql\"\>false\</property\>\<!---是否统计SQL执行情况，是：true，否：false
+<property name=[recordSql](#recordSql)>false</property><!---是否统计SQL执行情况，是：true，否：false
 
 **参数作用：**
 
@@ -10313,9 +9090,9 @@ mysql\> update account set Account_number=\"\$!\\\\\'\'\#\#\";
 
 2.通过server配置库查看SQL执行统计情况
 
-mysql\> select \* from hotdb_query_records order by db_id limit 1\\G
+mysql> select * from hotdb_query_records order by db_id limit 1\\G
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*1. row\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+******************************1. row***************************
 
 id: 2
 
@@ -10323,7 +9100,7 @@ db_id: 1
 
 type: SELECT
 
-query: SELECT COUNT(\*) FROM union b
+query: SELECT COUNT(*) FROM union b
 
 total_hotdb_time: 67934
 
@@ -10409,7 +9186,7 @@ crc: 321944166562
 
 server.xml的recordSqlAuditlog参数默认false：
 
-\<property name=\"recordSqlAuditlog\"\>false\</property\>
+<property name=[recordSqlAuditlog](#recordSqlAuditlog)>false</property>
 
 **参数作用：**
 
@@ -10417,7 +9194,7 @@ server.xml的recordSqlAuditlog参数默认false：
 
 如：计算节点服务端执行DDL，查看日志输出
 
-{\"affected_rows\":\"0\",\"command\":\"CREATE TABLE \`t_sharding_01\` (\\n\`id\` int(10) NOT NULL AUTO_INCREMENT,\\n\`name\` varchar(50) NOT NULL,\\n\`age\` int(3),\\nPRIMARY KEY (\`id\`)\\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4\",\"connection_id\":\"44\",\"end_time\":\"2020-04-27 14:58:34.769\",\"failed_reason\":\"\",\"host\":\"127.0.0.1\",\"ip\":\"127.0.0.1\",\"log_id\":\"9524067900080128\",\"logic_db\":\"CXD_DB\",\"matched_rows\":\"0\",\"port\":\"3323\",\"query_rows\":\"0\",\"sql_subtype\":\"CREATE\",\"sql_type\":\"DDL\",\"status\":\"1\",\"time\":\"2020-04-27 14:58:34.736\",\"user\":\"cxd@%\"}
+{"affected_rows":"0","command":"CREATE TABLE \`t_sharding_01\` (\\n\`id\` int(10) NOT NULL AUTO_INCREMENT,\\n\`name\` varchar(50) NOT NULL,\\n\`age\` int(3),\\nPRIMARY KEY (\`id\`)\\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4","connection_id":"44","end_time":"2020-04-27 14:58:34.769","failed_reason":"","host":"127.0.0.1","ip":"127.0.0.1","log_id":"9524067900080128","logic_db":"CXD_DB","matched_rows":"0","port":"3323","query_rows":"0","sql_subtype":"CREATE","sql_type":"DDL","status":"1","time":"2020-04-27 14:58:34.736","user":"cxd@%"}
 
 注：日志输出为json格式，特殊字符如双引号采用\\进行转义，json中部分key代表的含义如下：
 
@@ -10469,11 +9246,11 @@ end_time：SQL执行结束时间。
 
 server.xml中recordSQLIntercepted参数如下配置：
 
-\<property name=\"recordSQLIntercepted\"\>true\</property\>
+<property name=[recordSQLIntercepted](#recordSQLIntercepted)>true</property>
 
 **参数作用：**
 
-recordSQLIntercepted记录被拦截的SQL语句，拦截的语句配置在中间件管理平台-\>安全-\>SQL防火墙。
+recordSQLIntercepted记录被拦截的SQL语句，拦截的语句配置在中间件管理平台->安全->SQL防火墙。
 
 查看计算节点安装目录的/logs/sql.log日志：
 
@@ -10499,7 +9276,7 @@ recordSQLIntercepted记录被拦截的SQL语句，拦截的语句配置在中间
 
 server.xml中recordSQLKeyConflict参数如下配置：
 
-\<property name=\"recordSQLKeyConflict\"\>true\</property\>
+<property name=[recordSQLKeyConflict](#recordSQLKeyConflict)>true</property>
 
 **参数作用：**
 
@@ -10509,19 +9286,19 @@ recordSQLKeyConflict记录主键冲突、违反外键约束的语句。
 
 建表：
 
-mysql\> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`));
+mysql> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`));
 
 执行一次插入语句：
 
-mysql\> insert into vtab001 values(1,\'aaa\');
+mysql> insert into vtab001 values(1,'aaa');
 
 再次执行使之违反主键约束：
 
-mysql\> insert into vtab001 values(1,\'aaa\');
+mysql> insert into vtab001 values(1,'aaa');
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-06-01 14:09:47.139 \[INFO\] \[SQLKEYCONFLICT\] \[\$NIOREACTOR-1-RW\] MySQLConnection(65) -- sql: insert into vtab001 values(1,\'aaa\'), error response from MySQLConnection \[node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false\], err: Duplicate entry \'1\' for key \'PRIMARY\', CODE: 1062
+2018-06-01 14:09:47.139 \[INFO\] \[SQLKEYCONFLICT\] \[\$NIOREACTOR-1-RW\] MySQLConnection(65) -- sql: insert into vtab001 values(1,'aaa'), error response from MySQLConnection \[node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false\], err: Duplicate entry '1' for key 'PRIMARY', CODE: 1062
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10543,7 +9320,7 @@ mysql\> insert into vtab001 values(1,\'aaa\');
 
 server.xml中recordSQLSyntaxError参数如下配置：
 
-\<property name=\"recordSQLSyntaxError\"\>true\</property\>
+<property name=[recordSQLSyntaxError](#recordSQLSyntaxError)>true</property>
 
 **参数作用：**
 
@@ -10551,11 +9328,11 @@ recordSQLSyntaxError记录语法错误的SQL。
 
 例如：
 
-mysql\> SELECT \* FROM;
+mysql> SELECT * FROM;
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-22 16:12:42.686 \[INFO\] \[SQLSYNTAXERROR\] \[\$NIOExecutor-6-3\] ServerConnection(671) - SELECT \* FROM
+2018-05-22 16:12:42.686 \[INFO\] \[SQLSYNTAXERROR\] \[\$NIOExecutor-6-3\] ServerConnection(671) - SELECT * FROM
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10577,7 +9354,7 @@ mysql\> SELECT \* FROM;
 
 server.xml中recordSQLUnsupported参数如下配置：
 
-\<property name=\"recordSQLUnsupported\"\>true\</property\>
+<property name=[recordSQLUnsupported](#recordSQLUnsupported)>true</property>
 
 **参数作用：**
 
@@ -10585,13 +9362,13 @@ recordSQLUnsupported记录不支持的语句。
 
 例如：
 
-建表：mysql\> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`));
+建表：mysql> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`));
 
-执行HotDB暂不支持的语句: mysql\> select \* into vtab001_bak from vtab001;
+执行HotDB暂不支持的语句: mysql> select * into vtab001_bak from vtab001;
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-22 14:19:54.395 \[INFO\] \[SQLUNSUPPORTED\] \[\$NIOExecutor-6-2\] ServerConnection(110) -- sql: select \* into vtab001_bak from vtab001
+2018-05-22 14:19:54.395 \[INFO\] \[SQLUNSUPPORTED\] \[\$NIOExecutor-6-2\] ServerConnection(110) -- sql: select * into vtab001_bak from vtab001
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10613,7 +9390,7 @@ recordSQLUnsupported记录不支持的语句。
 
 server.xml中recordSubQuery参数如下配置：
 
-\<property name=\"recordSubQuery\"\>true\</property\>
+<property name=[recordSubQuery](#recordSubQuery)>true</property>
 
 **参数作用：**
 
@@ -10621,11 +9398,11 @@ recordSubQuery记录子查询。
 
 例如：
 
-mysql\> select \* FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b );
+mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b );
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-23 13:56:11.714 \[INFO\] \[SUBQUERY\] \[\$NIOExecutor-6-0\] SubqueryExecutor(169) -- select \* FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b )
+2018-05-23 13:56:11.714 \[INFO\] \[SUBQUERY\] \[\$NIOExecutor-6-0\] SubqueryExecutor(169) -- select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b )
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10647,7 +9424,7 @@ mysql\> select \* FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FRO
 
 server.xml中recordUNION参数如下配置：
 
-\<property name=\"recordUNION\"\>true\</property\>
+<property name=[recordUNION](#recordUNION)>true</property>
 
 **参数作用：**
 
@@ -10655,11 +9432,11 @@ recordUNION记录UNION语句。
 
 例如：
 
-mysql\> SELECT \* FROM trends UNION SELECT \* from trends_uint;
+mysql> SELECT * FROM trends UNION SELECT * from trends_uint;
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-23 13:30:27.156 \[INFO\] \[UNION\] \[\$NIOREACTOR-5-RW\] UnionExecutor(162) - SELECT \* FROM trends UNION SELECT \* from trends_uint
+2018-05-23 13:30:27.156 \[INFO\] \[UNION\] \[\$NIOREACTOR-5-RW\] UnionExecutor(162) - SELECT * FROM trends UNION SELECT * from trends_uint
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -10681,7 +9458,7 @@ mysql\> SELECT \* FROM trends UNION SELECT \* from trends_uint;
 
 server.xml中routeByRelativeCol参数如下配置：
 
-\<property name=\"routeByRelativeCol\"\>false\</property\>\<!\--不包含分片字段时通过辅助索引字段路由\--\>
+<property name=[routeByRelativeCol](#routeByRelativeCol)>false</property><!--不包含分片字段时通过辅助索引字段路由-->
 
 **参数作用：**
 
@@ -10705,7 +9482,7 @@ server.xml中routeByRelativeCol参数如下配置：
 
 server.xml中serverId参数如下配置：
 
-\<property name=\"serverId\"\>1\</property\>\<!\-- 集群节点编号1-N（节点数)，集群内唯一 \--\>
+<property name=[serverId](#serverId)>1</property><!-- 集群节点编号1-N（节点数)，集群内唯一 -->
 
 **参数作用：**
 
@@ -10759,19 +9536,19 @@ server.xml中serverId参数如下配置：
 
 showAllAffectedRowsInGlobalTable参数设置为true后，全局表执行insert,delete,update相关的SQL语句,结果将显示所有影响到的行数总和。
 
-例如：全局表join_c06_ct关联8个节点，执行该条SQL语句实际数据更新1条，将该参数设置为true时，结果将显示影响到的行数为8（即：更新行数\*影响节点数）。
+例如：全局表join_c06_ct关联8个节点，执行该条SQL语句实际数据更新1条，将该参数设置为true时，结果将显示影响到的行数为8（即：更新行数*影响节点数）。
 
-mysql\> delete from join_us06_ct where id = 8;
+mysql> delete from join_us06_ct where id = 8;
 
 Query OK, 8 rows affected (0.01 sec)
 
-mysql\> update join_us06_ct set e = \'y\' where id =7;
+mysql> update join_us06_ct set e = 'y' where id =7;
 
 Query OK, 8 rows affected (0.04 sec)
 
 Rows matched: 8 Changed: 8 Warnings: 0
 
-mysql\> insert into join_us06_ct values (8,6,1.3,1.4,\'y\',\'u\',now(),now(),2017);
+mysql> insert into join_us06_ct values (8,6,1.3,1.4,'y','u',now(),now(),2017);
 
 Query OK, 8 rows affected (0.01 sec)
 
@@ -10779,7 +9556,7 @@ Records: 8 Duplicates: 0 Warnings: 0
 
 将该参数设置为false时，只显示影响的行数，有如下提示:
 
-mysql\> update join_us06_ct set e = \'m\' where id =4;
+mysql> update join_us06_ct set e = 'm' where id =4;
 
 Query OK, 1 rows affected (0.10 sec)
 
@@ -10789,29 +9566,19 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 **参数说明：**
 
-+----------------+----------------------------------------+
 | **Property**   | **Value**                              |
-+----------------+----------------------------------------+
 | 参数值         | skipDatatypeCheck                      |
-+----------------+----------------------------------------+
 | 是否可见       | 否                                     |
-+----------------+----------------------------------------+
 | 参数说明       | 控制是否跳过表结构中对列数据类型的校验 |
-+----------------+----------------------------------------+
 | 默认值         | false                                  |
-+----------------+----------------------------------------+
-| Reload是否生效 | 2.4.5版本为N，                         |
-|                |                                        |
-|                | 2.4.7及以上为Y                         |
-+----------------+----------------------------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y                         |
 | 最低兼容版本   | 2.4.5                                  |
-+----------------+----------------------------------------+
 
 **参数设置：**
 
 server.xml中skipDatatypeCheck参数
 
-\<property name=\"skipDatatypeCheck\"\>true\</property\>
+<property name=[skipDatatypeCheck](#skipDatatypeCheck)>true</property>
 
 **参数作用：**
 
@@ -10819,17 +9586,17 @@ server.xml中skipDatatypeCheck参数
 
 例如：
 
-mysql\> alter table skipDatatypeCheck add(phone double(10,3));
+mysql> alter table skipDatatypeCheck add(phone double(10,3));
 
 skipDatatypeCheck=false:
 
-mysql\> alter table skipDatatypeCheck add(phone double(10,3));
+mysql> alter table skipDatatypeCheck add(phone double(10,3));
 
-ERROR 1064 (HY000): Column type:\'DOUBLE\' is forbidden, you could change column:\'PHONE\' to type \'DECIMAL\'
+ERROR 1064 (HY000): Column type:'DOUBLE' is forbidden, you could change column:'PHONE' to type 'DECIMAL'
 
 skipDatatypeCheck=true:
 
-mysql\> alter table skipDatatypeCheck add(phone double(10,3));
+mysql> alter table skipDatatypeCheck add(phone double(10,3));
 
 Query OK, 0 rows affected (0.23 sec)
 
@@ -10851,7 +9618,7 @@ Query OK, 0 rows affected (0.23 sec)
 
 **参数设置：**
 
-\<property name=\"socketBacklog\"\>1000\</property\>\<!\-- 服务端Socket backlog（单位个） \--\>
+<property name=[socketBacklog](#socketBacklog)>1000</property><!-- 服务端Socket backlog（单位个） -->
 
 **参数作用：**
 
@@ -10861,27 +9628,15 @@ Query OK, 0 rows affected (0.23 sec)
 
 **参数说明：**
 
-+----------------+-----------------------+
 | **Property**   | **Value**             |
-+----------------+-----------------------+
 | 参数值         | sqlTimeout            |
-+----------------+-----------------------+
 | 是否可见       | 是                    |
-+----------------+-----------------------+
 | 参数说明       | sql执行超时时间（秒） |
-+----------------+-----------------------+
 | 默认值         | 3600                  |
-+----------------+-----------------------+
 | 最小值         | 1                     |
-+----------------+-----------------------+
 | 最大值         | 28800                 |
-+----------------+-----------------------+
-| Reload是否生效 | 2.4.5版本为N，        |
-|                |                       |
-|                | 2.4.7及以上为Y        |
-+----------------+-----------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y        |
 | 最低兼容版本   | 2.4.3                 |
-+----------------+-----------------------+
 
 **参数作用：**
 
@@ -10889,7 +9644,7 @@ Query OK, 0 rows affected (0.23 sec)
 
 SQL执行时间超过设置时间时，会有如下提示：
 
-mysql\> select a.\*,b.\*,c.\* from customer_auto_3 a join customer_auto_1 b on a.postcode=b.postcode join customer_auto_2 c on a.provinceid=c.provinceid where c.provinceid in (12,15) and b.province !=\'anhui\' group by a.postcode order by a.birthday,a.provinceid,b.birthday,c.postcode limit 1000;
+mysql> select a.*,b.*,c.* from customer_auto_3 a join customer_auto_1 b on a.postcode=b.postcode join customer_auto_2 c on a.provinceid=c.provinceid where c.provinceid in (12,15) and b.province !='anhui' group by a.postcode order by a.birthday,a.provinceid,b.birthday,c.postcode limit 1000;
 
 ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a new transaction started automatically
 
@@ -10921,7 +9676,7 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 >
 > server.xml中sslUseSM4参数如下配置：
 
-\<property name=\"sslUseSM4\"\>true\</property\>\<!\--是否支持国密算法 \--\>
+<property name=[sslUseSM4](#sslUseSM4)>true</property><!--是否支持国密算法 -->
 
 > **参数作用：**
 
@@ -10936,27 +9691,15 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 **参数说明：**
 
-+----------------+--------------------------------+
 | **Property**   | **Value**                      |
-+----------------+--------------------------------+
 | 参数值         | statisticsUpdatePeriod         |
-+----------------+--------------------------------+
 | 是否可见       | 是                             |
-+----------------+--------------------------------+
 | 参数说明       | 命令统计持久化周期，单位：毫秒 |
-+----------------+--------------------------------+
 | 默认值         | 0 不持久化                     |
-+----------------+--------------------------------+
 | 最小值         | 0                              |
-+----------------+--------------------------------+
 | 最大值         | 3600000                        |
-+----------------+--------------------------------+
-| Reload是否生效 | 2.4.5版本为N，                 |
-|                |                                |
-|                | 2.4.7及以上为Y                 |
-+----------------+--------------------------------+
+| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y                 |
 | 最低兼容版本   | 2.4.3                          |
-+----------------+--------------------------------+
 
 **参数作用：**
 
@@ -10966,11 +9709,11 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 在客户端执行SQL语句，会把相关命令统计在配置库中。当设置为0时，则不统计到配置库。
 
-mysql\> use test_ct
+mysql> use test_ct
 
 Database changed
 
-mysql\> select \* from tid;
+mysql> select * from tid;
 
 Empty set (0.03 sec)
 
@@ -10994,49 +9737,37 @@ Empty set (0.03 sec)
 
 参数设置为0时，代表不开启读写分离，全部读主机。
 
-mysql\> select \* from ss order by id;
+mysql> select * from ss order by id;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| id | a |
 
-\| id \| a \|
+| 1 | master |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 2 | master |
 
-\| 1 \| master \|
+| 3 | master |
 
-\| 2 \| master \|
+| 4 | master |
 
-\| 3 \| master \|
-
-\| 4 \| master \|
-
-\| 5 \| master \|
-
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 5 | master |
 
 5 rows in set (0.00 sec)
 
 参数设置为1时，代表可分离的读请求发往所有可用存储节点，根据设置的从机读比例，读取从机或主机。
 
-mysql\> select \* from ss;
+mysql> select * from ss;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| id | a |
 
-\| id \| a \|
+| 1 | master |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 2 | master |
 
-\| 1 \| master \|
+| 3 | master |
 
-\| 2 \| master \|
+| 4 | slave |
 
-\| 3 \| master \|
-
-\| 4 \| slave \|
-
-\| 5 \| slave \|
-
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 5 | slave |
 
 5 rows in set (0.00 sec)
 
@@ -11044,117 +9775,93 @@ mysql\> select \* from ss;
 
 -   事务外：
 
-mysql\> select \* from ss;
+mysql> select * from ss;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| id | a |
 
-\| id \| a \|
+| 1 | slave |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 2 | slave |
 
-\| 1 \| slave \|
+| 3 | slave |
 
-\| 2 \| slave \|
+| 4 | slave |
 
-\| 3 \| slave \|
-
-\| 4 \| slave \|
-
-\| 5 \| slave \|
-
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 5 | slave |
 
 5 rows in set (0.00 sec)
 
 -   事务内：
 
-mysql\> select \* from ss order by id;
+mysql> select * from ss order by id;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| id | a |
 
-\| id \| a \|
+| 1 | master |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 2 | master |
 
-\| 1 \| master \|
+| 3 | master |
 
-\| 2 \| master \|
+| 4 | master |
 
-\| 3 \| master \|
-
-\| 4 \| master \|
-
-\| 5 \| master \|
-
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 5 | master |
 
 5 rows in set (0.00 sec)
 
 参数设置为3时，代表事务中发生写前的读请求发往可用备存储节点。事务外的读请求发往可用备存储节点。
 
-mysql\> begin
+mysql> begin
 
 Query OK, 0 row affected (0.00 sec)
 
-mysql\> select \* from ss;
+mysql> select * from ss;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| id | a |
 
-\| id \| a \|
+| 4 | slave |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 5 | slave |
 
-\| 4 \| slave \|
+| 600004 | write |
 
-\| 5 \| slave \|
+| 600007 | write |
 
-\| 600004 \| write \|
+| 600013 | write |
 
-\| 600007 \| write \|
+| 1 | slave |
 
-\| 600013 \| write \|
+| 2 | slave |
 
-\| 1 \| slave \|
-
-\| 2 \| slave \|
-
-\| 3 \| slave \|
-
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 3 | slave |
 
 8 rows in set (0.00 sec)
 
-mysql\> insert into ss values(null,\'write\');
+mysql> insert into ss values(null,'write');
 
 Query OK, 0 row affected (0.01 sec)
 
-mysql\> select \* from ss;
+mysql> select * from ss;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| id | a |
 
-\| id \| a \|
+| 1 | master |
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 2 | master |
 
-\| 1 \| master \|
+| 3 | master |
 
-\| 2 \| master \|
+| 600014 | write |
 
-\| 3 \| master \|
+| 4 | master |
 
-\| 600014 \| write \|
+| 5 | master |
 
-\| 4 \| master \|
+| 600004 | write |
 
-\| 5 \| master \|
+| 600007 | write |
 
-\| 600004 \| write \|
-
-\| 600007 \| write \|
-
-\| 600013 \| write \|
-
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 600013 | write |
 
 9 rows in set (0.00 sec)
 
@@ -11176,7 +9883,7 @@ mysql\> select \* from ss;
 
 **参数设置：**
 
-\<property name=\"switchByLogInFailover\"\>false\</property\>\<!\-- 故障切换时根据Read_Master_Log_Pos选择切换优先级 \--\>
+<property name=[switchByLogInFailover](#switchByLogInFailover)>false</property><!-- 故障切换时根据Read_Master_Log_Pos选择切换优先级 -->
 
 **参数作用：**
 
@@ -11206,7 +9913,7 @@ False状态：根据用户的故障切换规则进行切换。
 
 server.xml的switchoverTimeoutForTrans参数设置 如下图:
 
-\<property name=\"switchoverTimeoutForTrans\"\>3000\</property\>
+<property name=[switchoverTimeoutForTrans](#switchoverTimeoutForTrans)>3000</property>
 
 **参数作用：**
 
@@ -11220,29 +9927,23 @@ server.xml的switchoverTimeoutForTrans参数设置 如下图:
 
 2.开启事务执行插入操作，手动执行主备切换，在36000ms内提交事务。提交成功如下：
 
-mysql\> begin;
+mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> insert into TEST_001 values(1);
+mysql> insert into TEST_001 values(1);
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> commit;
+mysql> commit;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> select \* from TEST_001;
+mysql> select * from TEST_001;
 
-+\-\-\-\-\--+
+| id |
 
-\| id \|
-
-+\-\-\-\-\--+
-
-\| 1 \|
-
-+\-\-\-\-\--+
+| 1 |
 
 1 row in set (0.01 sec)
 
@@ -11250,17 +9951,17 @@ mysql\> select \* from TEST_001;
 
 3.开启事务执行插入操作，手动执行主备切换，超过36000 ms事务未提交，由于提交超时，事务回滚如下：
 
-mysql\> begin;
+mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql\> insert into TEST_001 values(2);
+mysql> insert into TEST_001 values(2);
 
 Query OK, 0 rows affected (0.00 sec)
 
 一分钟后执行查询语句：
 
-mysql\> select \* from TEST_001;
+mysql> select * from TEST_001;
 
 ERROR 2013 (HY000): Lost connection to MySQL server during query
 
@@ -11274,17 +9975,11 @@ Current database: test_jzl
 
 重新登录后查询，发现事务没有提交：
 
-mysql\> select \* from TEST_001;
+mysql> select * from TEST_001;
 
-+\-\-\-\-\--+
+| id |
 
-\| id \|
-
-+\-\-\-\-\--+
-
-\| 1 \|
-
-+\-\-\-\-\--+
+| 1 |
 
 1 row in set (0.01 sec)
 
@@ -11306,7 +10001,7 @@ mysql\> select \* from TEST_001;
 
 **参数设置：**
 
-\<property name=\"timerExecutor\"\>4\</property\>\<!\-- 定时器线程数 \--\>
+<property name=[timerExecutor](#timerExecutor)>4</property><!-- 定时器线程数 -->
 
 **参数作用：**
 
@@ -11330,15 +10025,15 @@ mysql\> select \* from TEST_001;
 
 timestampProxy参数为0时，代表自动模式，当计算节点检测到存储节点时间差异大于0.5秒时，自动全局代理时间函数。小于0.5秒时，只代理全局表、高精度时间戳和跨节点语句的时间函数。
 
-\<property name=\"timestampProxy\"\>0\</property\>
+<property name=[timestampProxy](#timestampProxy)>0</property>
 
 参数设置为1时，代表global_table_only，仅全局表模式，计算节点仅代理全局表的时间函数。
 
-\<property name=\"timestampProxy\"\>1\</property\>
+<property name=[timestampProxy](#timestampProxy)>1</property>
 
 参数设置为2时，代表all，全局模式，计算节点全局代理时间函数。
 
-\<property name=\"timestampProxy\"\>2\</property\>
+<property name=[timestampProxy](#timestampProxy)>2</property>
 
 **参数作用：**
 
@@ -11382,21 +10077,21 @@ timestampProxy参数为0时，代表自动模式，当计算节点检测到存�
 
 url,username,password属于配套参数，url是存储计算节点配置信息的配置库路径，username,password属于连接该物理库的用户名密码，该配置库用于存储配置信息。
 
-\<property name=\"url\"\>jdbc:mysql://192.168.200.191:3310/hotdb_config\</property\>\<!\-- 主配置库地址 \--\>
+<property name="url">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- 主配置库地址 -->
 
-\<property name=\"username\"\>hotdb_config\</property\>\<!\-- 主配置库用户名 \--\>
+<property name="username">hotdb_config</property><!-- 主配置库用户名 -->
 
-\<property name=\"password\"\>hotdb_config\</property\>\<!\-- 主配置库密码 \--\>
+<property name="password">hotdb_config</property><!-- 主配置库密码 -->
 
-\<property
+<property
 
 该用户名和密码需要在MySQL实例中创建，并赋予权限方可登录该配置库。用户名和密码均可自定义。
 
-mysql\> grant select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload,lock tables,replication slave,replication client on \*.\* to \'hotdb_config\'@\'%\';
+mysql> grant select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload,lock tables,replication slave,replication client on *.* to 'hotdb_config'@'%';
 
 Query OK, 0 row affected (0.00 sec)
 
-root\> mysql -uhotdb_config_9 -photdb_config_9 -h127.0.0.1 -P3306
+root> mysql -uhotdb_config_9 -photdb_config_9 -h127.0.0.1 -P3306
 
 mysql: \[Warning\] Using a password on the command line interface can be insecure.
 
@@ -11414,7 +10109,7 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type \'help;\' or \'\\h\' for help. Type \'\\c\' to clear the current input statement.
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
 当启动计算节点，没有配置库高可用且配置库无法连接时，计算节点会间隔3秒重连，直到最终重试超过30分钟仍无法连接，则中断启动：
 
@@ -11438,7 +10133,7 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 
 **参数设置：**
 
-\<property name=\"usingAIO\"\>0\</property\>\<!\-- 是否使用AIO，是：1，否：0 \--\>
+<property name=[usingAIO](#usingAIO)>0</property><!-- 是否使用AIO，是：1，否：0 -->
 
 当参数为0时，计算节点使用的是NIO，标记AIO与NIO互斥。
 
@@ -11448,7 +10143,7 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 
 AIO：异步非阻塞，服务器实现模式为一个有效请求创建一个线程，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处理，IO方式适用于连接数目多且连接比较长（重操作）的架构。由于目前Linux上AIO的实现尚未完成，计算节点对AIO的优化也远远不如NIO，建议不要开启这个参数**。**
 
-root\> tail -n 300 hotdb.log \| grep \'aio\'
+root> tail -n 300 hotdb.log | grep 'aio'
 
 2018-06-01 13:51:18.961 \[INFO\] \[INIT\] \[main\] j(-1) -- using aio network handler
 
@@ -11472,11 +10167,11 @@ root\> tail -n 300 hotdb.log \| grep \'aio\'
 
 计算节点对外显示的版本号，可自定义修改，能指定低版本的相关连接协议。
 
-\<property name=\"version\"\>**5.6.1**\</property\>\<!\-- 版本号 \--\>
+<property name=[version](#version)>**5.6.1**</property><!-- 版本号 -->
 
 登陆MySQL 实例时可查看相应版本号：
 
-root\> mysql -uct -pct -h127.0.0.1 -P2473
+root> mysql -uct -pct -h127.0.0.1 -P2473
 
 mysql: \[Warning\] Using a password on the command line interface can be insecure.
 
@@ -11494,19 +10189,13 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type \'help;\' or \'\\h\' for help. Type \'\\c\' to clear the current input statement.
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
 
-root\@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14\> select version();
+root\@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| VERSION() |
 
-\| VERSION() \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| **5.6.1**-HotDB-2.4.7 \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| **5.6.1**-HotDB-2.4.7 |
 
 1 row in set (0.03 sec)
 
@@ -11532,7 +10221,7 @@ root\@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14\> select version();
 
 例如：
 
-配置为空：\<property name=\"versionComment\"\>\</property\>，连接计算节点：
+配置为空：<property name=[versionComment](#versionComment)></property>，连接计算节点：
 
 \[root\@hotdb\]\## mysql -uroot -proot -P3323 -h192.168.210.49
 
@@ -11544,9 +10233,9 @@ Your MySQL connection id is 235
 
 **Server version: 5.7.23 HotDB-2.5.3 HotDB Server by Hotpu Tech**
 
-\...\...
+......
 
-配置为空格： \<property name=\"versionComment\"\> \</property\>，连接计算节点：
+配置为空格： <property name=[versionComment](#versionComment)> </property>，连接计算节点：
 
 \[root\@hotdb\]\## mysql -uroot -proot -P3323 -h192.168.210.49
 
@@ -11558,9 +10247,9 @@ Your MySQL connection id is 235
 
 **Server version: 5.7.23**
 
-\...\...
+......
 
-配置为自定义字符串： \<property name=\"versionComment\"\>hotpu\</property\>，连接计算节点：
+配置为自定义字符串： <property name=[versionComment](#versionComment)>hotpu</property>，连接计算节点：
 
 \[root\@hotdb\]\## mysql -uroot -proot -P3323 -h192.168.210.49
 
@@ -11572,15 +10261,15 @@ Your MySQL connection id is 235
 
 **Server version: 5.7.23 hotpu**
 
-\...\...
+......
 
 注：连接后的status结果及客户端连接计算节点时的提示信息均会同步按照版本备注信息显示。例如：
 
-\...\...
+......
 
-root\@192.168.210.49:(none) 5.7.23 08:41:42\> status;
+root\@192.168.210.49:(none) 5.7.23 08:41:42> status;
 
-\-\-\-\-\-\-\-\-\-\-\-\-\--
+--------------
 
 mysql Ver 14.14 Distrib 5.7.21, for linux-glibc2.12 (x86_64) using EditLine wrapper
 
@@ -11594,7 +10283,7 @@ SSL: Not in use
 
 Current pager: stdout
 
-Using outfile: \'\'
+Using outfile: ''
 
 Using delimiter: ;
 
@@ -11604,7 +10293,7 @@ Protocol version: 10
 
 Connection: 192.168.210.49 via TCP/IP
 
-\...\...
+......
 
 #### VIP & checkVIPPeriod
 
@@ -11638,9 +10327,9 @@ VIP与checkVIPPeriod属于配套参数，VIP设置为Keepalived虚拟IP，checkV
 
 server.xml的VIP参数设置为Keepalived的虚拟IP，CheckVIPPeriod为检测周期，单位ms
 
-\<property name=\"VIP\"\>192.168.220.106\</property\>\<!\-- 虚拟IP(不填或格式不为IPv4表示此选项为空) \--\>
+<property name="VIP">192.168.220.106</property><!-- 虚拟IP(不填或格式不为IPv4表示此选项为空) -->
 
-\<property name=\"checkVIPPeriod\"\>500\</property\>\<!\-- 虚拟IP检测周期(如VIP有效，检测VIP周期，单位ms) \--\>
+<property name="checkVIPPeriod">500</property><!-- 虚拟IP检测周期(如VIP有效，检测VIP周期，单位ms) -->
 
 查看Keepalived的配置脚本：
 
@@ -11660,7 +10349,7 @@ virtual_ipaddress {
 
 主计算节点：
 
-2019-12-19 15:08:49.595 \[INFO\] \[EXIT\[ FLOW \]\] \[ShutdownHook\] cn.hotpu.hotdb.c(691) - begin to exit\...
+2019-12-19 15:08:49.595 \[INFO\] \[EXIT\[ FLOW \]\] \[ShutdownHook\] cn.hotpu.hotdb.c(691) - begin to exit...
 
 2019-12-19 15:08:49.596 \[WARN\] \[CONNECTION\] \[ShutdownHook\] cn.hotpu.hotdb.net.t(175) - HotDB SocketChannel close due to:System exit
 
@@ -11678,7 +10367,7 @@ virtual_ipaddress {
 
 2019-12-19 15:09:02.911 \[INFO\] \[MANAGER\] \[Labor-2\] cn.hotpu.hotdb.c(2134) - VIP online start
 
-2019-12-19 15:09:02.911 \[INFO\] \[TIMER\] \[Labor-2\] cn.hotpu.hotdb.c(2148) - CheckVIP timer execute online\...
+2019-12-19 15:09:02.911 \[INFO\] \[TIMER\] \[Labor-2\] cn.hotpu.hotdb.c(2148) - CheckVIP timer execute online...
 
 2019-12-19 15:09:03.142 \[INFO\] \[INIT\] \[\$I-NIOREACTOR-1-RW\] cn.hotpu.hotdb.c(3594) - persist sequence at abnormal starting server.
 
@@ -11690,7 +10379,7 @@ virtual_ipaddress {
 
 2019-12-19 15:09:03.249 \[INFO\] \[INIT\] \[\$NIOREACTOR-1-RW\] cn.hotpu.hotdb.c(1442) - persist XID at abnormal starting server.
 
-2019-12-19 15:09:03.257 \[INFO\] \[MANAGER\] \[Labor-7\] cn.hotpu.hotdb.a(5360) - Some sharding table have unique key, and the unique key don\'t contain rule column, you can turn on global unique key according to the actual.
+2019-12-19 15:09:03.257 \[INFO\] \[MANAGER\] \[Labor-7\] cn.hotpu.hotdb.a(5360) - Some sharding table have unique key, and the unique key don't contain rule column, you can turn on global unique key according to the actual.
 
 2019-12-19 15:09:03.340 \[INFO\] \[INIT\] \[Labor-7\] cn.hotpu.hotdb.c(1808) - HotDB-Server listening on 3323
 
@@ -11718,7 +10407,7 @@ virtual_ipaddress {
 
 **参数设置：**
 
-\<property name=\"waitConfigSyncFinish\"\>true\</property\>\<!\-- 启动时是否等待配置库同步追上 \--\>
+<property name=[waitConfigSyncFinish](#waitConfigSyncFinish)>true</property><!-- 启动时是否等待配置库同步追上 -->
 
 **参数作用：**
 
@@ -11728,7 +10417,7 @@ virtual_ipaddress {
 
 关闭状态：启动时若连上主配置库，则若当前配置库存在延迟的情况下也直接继续启动：
 
-2018-06-01 16:21:14.958 \[INFO\] \[INIT\] \[main\] j(-1) - reading config\...
+2018-06-01 16:21:14.958 \[INFO\] \[INIT\] \[main\] j(-1) - reading config...
 
 2018-06-01 16:21:15.170 \[info\] \[INIT\] \[main\] a(-1) - using config datasource in start up:\[id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8\]
 
@@ -11736,7 +10425,7 @@ virtual_ipaddress {
 
 2018-06-01 16:21:16.892 \[info\] \[INIT\] \[main\] j(-1) - ===============================================
 
-2018-06-01 16:21:16.893 \[info\] \[INIT\] \[main\] j(-1) - HotDB-2.4.9 is ready to startup \...
+2018-06-01 16:21:16.893 \[info\] \[INIT\] \[main\] j(-1) - HotDB-2.4.9 is ready to startup ...
 
 2018-06-01 16:21:16.894 \[info\] \[INIT\] \[main\] j(-1) - Sysconfig params:SystemConfig \[ frontwriteQueueSize=2048, serverPort=9993, managerPort=999S, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferchunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://l27.0.0.l:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://l27.0.0.l:3306/botdb_config_249, usingAIO=0, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=1, heartbeatTimeoutMs=100, joinable=true, joincachesize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,viP=nul1,checkVIPPeriod=l600\]
 
@@ -11766,7 +10455,7 @@ virtual_ipaddress {
 
 **参数设置：**
 
-\<property name=\"waitForSlaveInFailover\"\>true\</property\>\<!---高可用切换是否等待从机追上复制
+<property name=[waitForSlaveInFailover](#waitForSlaveInFailover)>true</property><!---高可用切换是否等待从机追上复制
 
 **参数作用：**
 
@@ -11776,23 +10465,17 @@ virtual_ipaddress {
 
 当从机存在复制延迟时，无法切换到从机上, 计算节点会一直检测，等到复制追平才能进行切换：
 
-mysql\> show @\@latency;
+mysql> show @\@latency;
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| dn | info | | latency |
 
-\| dn \| info \| \| latency \|
+| 4 | 192.168.200.51:3310/phy248 | 192.168.200.51:3310/phy248 | 0 ms |
 
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 5 | 192.168.200.51:3311/phy248 | 192.168.200.51:3311/phy248 | 0 ms |
 
-\| 4 \| 192.168.200.51:3310/phy248 \| 192.168.200.51:3310/phy248 \| 0 ms \|
+| 6 | 192.168.200.51:3312/phy248 | 192.168.200.51:3312/phy248 | 19582 ms |
 
-\| 5 \| 192.168.200.51:3311/phy248 \| 192.168.200.51:3311/phy248 \| 0 ms \|
-
-\| 6 \| 192.168.200.51:3312/phy248 \| 192.168.200.51:3312/phy248 \| 19582 ms \|
-
-\| 7 \| 192.168.200.51:3313/phy248 \| 192.168.200.51:3313/phy248 \| 0 ms \|
-
-+\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 7 | 192.168.200.51:3313/phy248 | 192.168.200.51:3313/phy248 | 0 ms |
 
 4 rows in set (0.02 sec)
 
@@ -11826,7 +10509,7 @@ mysql\> show @\@latency;
 
 **参数设置：**
 
-\<property name=\"waitSyncFinishAtStartup\"\>true\</property\>\<!\-- 启动时是否等待主存储节点同步追上 \--\>
+<property name=[waitSyncFinishAtStartup](#waitSyncFinishAtStartup)>true</property><!-- 启动时是否等待主存储节点同步追上 -->
 
 **参数作用：**
 
@@ -11866,7 +10549,7 @@ mysql\> show @\@latency;
 
 server.xml的weightForSlaveRWSplit参数设置为50：
 
-\<property name=\"weightForSlaveRWSplit\"\>50\</property\>
+<property name=[weightForSlaveRWSplit](#weightForSlaveRWSplit)>50</property>
 
 **参数作用：**
 
@@ -11878,43 +10561,31 @@ weightForSlaveRWSplit和strategyForRWSplit参数属于配套参数，读写分�
 
 例如：主库标识：name= Master
 
-mysql\> select \* from vrab001;
+mysql> select * from vrab001;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| id | name |
 
-\| id \| name \|
+| 1 | Master |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 2 | Master |
 
-\| 1 \| Master \|
+| 3 | Master |
 
-\| 2 \| Master \|
-
-\| 3 \| Master \|
-
-\| 4 \| Master \|
-
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 4 | Master |
 
 备库标识：name= Slave
 
-mysql\> select \* from vrab001;
+mysql> select * from vrab001;
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| id | name |
 
-\| id \| name \|
+| 1 | slave |
 
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 2 | slave |
 
-\| 1 \| slave \|
+| 3 | slave |
 
-\| 2 \| slave \|
-
-\| 3 \| slave \|
-
-\| 4 \| slave \|
-
-+\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| 4 | slave |
 
 多次执行select查询操作，主从各读50%。
 
@@ -11934,23 +10605,23 @@ mysql\> select \* from vrab001;
 
 若开启了日志记录相关参数仍无法找到该日志类型的记录，例如，开启参数recordDDL却无法查看DDL相关的记录，可检查HotDB Server安装目录/conf目录下的log4j2.xml下，与"特殊SQL记录在另外一个文件"的相关代码中是否有对应日志类型。
 
-\<!\-- 特殊SQL记录在另外一个文件 \--\>
+<!-- 特殊SQL记录在另外一个文件 -->
 
-\<filters\>
+<filters>
 
-\<MarkerFilter marker=\"DDL\" onMatch=\"**ACCEPT**\" onMismatch=\"NEUTRAL\"\>\</MarkerFilter\>
+<MarkerFilter marker="DDL" onMatch="**ACCEPT**" onMismatch="NEUTRAL"></MarkerFilter>
 
-\</filters\>
+</filters>
 
 以及"不在hotdb.log中记录特殊SQL"的相关代码中不存在对应日志类型：
 
-\<!\-- 不在hotdb.log中记录特殊SQL \--\>
+<!-- 不在hotdb.log中记录特殊SQL -->
 
-\<filters\>
+<filters>
 
-\<MarkerFilter marker=\"DDL\" onMatch=\"**DENY**\" onMismatch=\"NEUTRAL\"\>\</MarkerFilter\>
+<MarkerFilter marker="DDL" onMatch="**DENY**" onMismatch="NEUTRAL"></MarkerFilter>
 
-\</filters\>
+</filters>
 
 Marker所有类型(All Markers):AUTHORITY, BUFFER, CONNECTION, DEADLOCK, EXIT, FAILOVER, HEARTBEAT, HOLD, INIT, INNER, JOIN, MANAGER, ONLINEDDL, RELATIVE, RESPONSE, ROUTE, SQL, SQLSYNTAXERROR, CROSSDNJOIN, UNION, SUBQUERY, MYSQLWARNING, MYSQLERROR, HOTDBWARNING, HOTDBERROR, LIMITOFFSETWITHOUTORDERBY, SQLKEYCONFLICT, SQLUNSUPPORTED, DDL, SQLINTERCEPTED, TIMER, TRANSFER, WATCHDOG。
 

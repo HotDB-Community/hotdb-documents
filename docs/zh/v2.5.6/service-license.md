@@ -18,7 +18,7 @@
 
 total 4
 
-**-rw-r\--r\--. 1 root root 1313 Dec 25 17:57 management-license**
+**-rw-r--r--. 1 root root 1313 Dec 25 17:57 management-license**
 
 #### 激活试用许可证
 
@@ -90,7 +90,7 @@ customer info用户信息备注
 
 total 144
 
--rw-r\--r\--. 1 hotdb hotdb 145748 Nov 25 10:43 hotdb_management_license.jar
+-rw-r--r--. 1 hotdb hotdb 145748 Nov 25 10:43 hotdb_management_license.jar
 
 \[root\@hotdb_171_221 utils\]\## **java -jar hotdb_management_license.jar -f**
 
@@ -102,9 +102,9 @@ The fingerprint file was successfully generated in ./management-fingerprint-2020
 
 total 148
 
--rw-r\--r\--. 1 hotdb hotdb 145748 Nov 25 10:43 hotdb_management_license.jar
+-rw-r--r--. 1 hotdb hotdb 145748 Nov 25 10:43 hotdb_management_license.jar
 
--rw-r\--r\--. 1 root root 1025 Dec 28 10:17 management-fingerprint-2020-12-28-10-17-08
+-rw-r--r--. 1 root root 1025 Dec 28 10:17 management-fingerprint-2020-12-28-10-17-08
 
 #### 申请正式许可证
 
@@ -220,7 +220,7 @@ HotDB计算节点能正常提供服务，需要使用热璞科技正规的授权
 
 total 4
 
--rw-r\--r\-- 1 root root 1369 Aug 6 16:21 **license-trail**
+-rw-r--r-- 1 root root 1369 Aug 6 16:21 **license-trail**
 
 #### 激活试用许可证
 
@@ -292,9 +292,9 @@ customer info：用户信息备注
 
 或者登录3325端口执行show @\@usbkey\\G也可查看许可证信息，如下所示：
 
-root\@127.0.0.1:(none) 8.0.15 01:46:08\> **show @\@usbkey\\G**
+root\@127.0.0.1:(none) 8.0.15 01:46:08> **show @\@usbkey\\G**
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* 1. row \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+*************************** 1. row ***************************
 
 left_time: 0
 
@@ -340,11 +340,11 @@ The fingerprint file was successfully generated in ./fingerprint-2020-09-15-14-4
 
 total 136
 
--rw-r\--r\-- 1 root root 2049 Sep 15 14:41 fingerprint-2020-09-15-14-41-53
+-rw-r--r-- 1 root root 2049 Sep 15 14:41 fingerprint-2020-09-15-14-41-53
 
--rw-r\--r\-- 1 root root 98165 Aug 25 14:43 hotdb_license.jar
+-rw-r--r-- 1 root root 98165 Aug 25 14:43 hotdb_license.jar
 
--rw-r\--r\-- 1 root root 34976 Aug 25 14:43 SM4-1.0.jar
+-rw-r--r-- 1 root root 34976 Aug 25 14:43 SM4-1.0.jar
 
 #### 申请正式许可证
 
@@ -402,9 +402,9 @@ customer info: license_for_test
 
 或者登录3325端口执行show @\@usbkey\\G也可查看许可证信息，如下所示：
 
-root\@127.0.0.1:(none) 5.7.22 03:00:56\> show @\@usbkey\\G
+root\@127.0.0.1:(none) 5.7.22 03:00:56> show @\@usbkey\\G
 
-\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* 1. row \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+*************************** 1. row ***************************
 
 left_time: 550796
 
@@ -488,7 +488,7 @@ time left: 89 days 22 hours 55 minutes 48 seconds.
 
 此时在3325端口执行reload @\@config会报失败：
 
-root\@127.0.0.1:(none) 5.7.22 12:06:55\> reload @\@config;
+root\@127.0.0.1:(none) 5.7.22 12:06:55> reload @\@config;
 
 ERROR 10190 (HY000): Reload config failure, Number of Datanodes Exceeded Maximum Size Limit. For more details, please check the log
 
@@ -496,7 +496,7 @@ ERROR 10190 (HY000): Reload config failure, Number of Datanodes Exceeded Maximum
 
 2020-12-15 00:10:47.388 \[ERROR\] \[AUTHORITY\] \[checker-1\] cn.hotpu.hotdb.util.V(158) - no available matched license detected. we will shutdown now.
 
-2020-12-15 00:10:47.389 \[INFO\] \[EXIT\[ FLOW \]\] \[ShutdownHook\] cn.hotpu.hotdb.c(770) - begin to exit\...
+2020-12-15 00:10:47.389 \[INFO\] \[EXIT\[ FLOW \]\] \[ShutdownHook\] cn.hotpu.hotdb.c(770) - begin to exit...
 
 因此，当许可证有效期不足时，应尽快申请并更新新许可证。
 
@@ -506,7 +506,7 @@ ERROR 10190 (HY000): Reload config failure, Number of Datanodes Exceeded Maximum
 
 授权逻辑库数超过已有配置限制提醒示例：
 
-root\> show databases;
+root> show databases;
 
 ERROR 10161 (HY000): Wrong HotDB Config, due to: Number of Logic Database Exceeded Maximum Size Limit. expect:3 limit:2
 
@@ -515,7 +515,7 @@ ERROR 10161 (HY000): Wrong HotDB Config, due to: Number of Logic Database Exceed
 
 当计算节点使用过程中，许可证授权节点数、逻辑库数小于当前配置的数据节点数、逻辑库数，则不允许动态加载，提示示例如下：
 
-root\> reload @\@config;
+root> reload @\@config;
 
 ERROR 10190 (HY000): Reload config failure, Number of Logic Database Exceeded Maximum Size Limit. For more details, please check the log
 

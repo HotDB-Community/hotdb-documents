@@ -8,19 +8,19 @@
 
 此命令用于查看HotDB Server与存储节点之间的连接状态，例如：
 
-mysql\> show @\@backend;
+mysql> show @\@backend;
 
 ![](assets/management-port-command/image3.png)
 
 或像查询一张普通表一样查询backend：
 
-mysql\> select \* from backend where MYSQLID=198865;
+mysql> select * from backend where MYSQLID=198865;
 
 ![](assets/management-port-command/image4.png)
 
 或使用HINT语法：
 
-mysql\> /\*!hotdb:dnid=all\*/select \* from information_schema.processlist where info!=\'NULL\' and id=198865;
+mysql> /*!hotdb:dnid=all*/select * from information_schema.processlist where info!='NULL' and id=198865;
 
 ![](assets/management-port-command/image5.png)
 
@@ -65,7 +65,7 @@ mysql\> /\*!hotdb:dnid=all\*/select \* from information_schema.processlist where
 
 此命令用于查看缓冲池状态，例如：
 
-mysql\> show @\@bufferpool;
+mysql> show @\@bufferpool;
 
 ![](assets/management-port-command/image6.png)
 
@@ -87,7 +87,7 @@ mysql\> show @\@bufferpool;
 
 该命令用于显示当前客户端查询统计，例如：
 
-mysql\> show @\@clientquery;
+mysql> show @\@clientquery;
 
 ![](assets/management-port-command/image7.jpeg)
 
@@ -113,7 +113,7 @@ mysql\> show @\@clientquery;
 
 此命令用于查看当前集群成员状态。该命令只用于查看集群成员状态，对于单节点及主备节点，该参数不具备参考意义，例如：
 
-mysql\> show @\@cluster;
+mysql> show @\@cluster;
 
 ![](assets/management-port-command/image8.png)
 
@@ -134,7 +134,7 @@ mysql\> show @\@cluster;
 
 该命令用于获取HotDB Server的前端连接状态，例如：
 
-mysql\> show @\@connection;
+mysql> show @\@connection;
 
 ![](assets/management-port-command/image9.png)
 
@@ -166,7 +166,7 @@ mysql\> show @\@connection;
 
 该命令用于获取HotDB Server当前存活的前端连接信息，例如：
 
-mysql\> show @\@connection_statistics;
+mysql> show @\@connection_statistics;
 
 ![](assets/management-port-command/image10.png)
 
@@ -191,7 +191,7 @@ mysql\> show @\@connection_statistics;
 
 该命令用于显示当前可用逻辑库信息，等同于MySQL下的show databases命令，例如：
 
-mysql\> show @\@database;
+mysql> show @\@database;
 
 ![](assets/management-port-command/image11.png)
 
@@ -208,67 +208,38 @@ mysql\> show @\@database;
 
 该命令用于显示当前物理库的节点信息，例如：
 
-mysql\> show @\@datanode;
+mysql> show @\@datanode;
 
 ![](assets/management-port-command/image12.png)
 
 **结果包含字段及其说明：**
 
-+-----------------+--------------------------------------------------------------+------------------------------------+
 | **列名**        | **说明**                                                     | **值类型/范围**                    |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 | dn              | 数据节点号（可使用restart @\@heartbeat指令进行恢复心跳检测） | INT/\[number\]                     |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 | ds              | 当前存储节点信息                                             | STRING/\[host:port/database\]      |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 | ds_id           | 当前存储节点号                                               | INT/\[number\]                     |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 | type            | 当前存储节点类型                                             | 1：主库                            |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 |                 |                                                              | 2：主从库                          |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 |                 |                                                              | 3：从库                            |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 |                 |                                                              | 4：MGR                             |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 | active          | 活动连接数                                                   | INT/\[number\]                     |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 | idle            | 空闲连接数                                                   | INT/\[number\]                     |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 | size            | 总连接数                                                     | INT/\[number\]                     |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 | state           | 节点状态                                                     | normal: 正常                       |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 |                 |                                                              | Failover: 故障转移                 |
-+-----------------+--------------------------------------------------------------+------------------------------------+
-| last_failover\_ | 上一次故障切换开始时间                                       | STRING/\[yyyy-MM-dd HH:mm:ss.SSS\] |
-|                 |                                                              |                                    |
-| start_time      |                                                              |                                    |
-+-----------------+--------------------------------------------------------------+------------------------------------+
-| last_failover\_ | 上一次故障切换持续时间(ms)                                   | STRING/\[number\]                  |
-|                 |                                                              |                                    |
-| duration        |                                                              |                                    |
-+-----------------+--------------------------------------------------------------+------------------------------------+
-| last_failover\_ | 上一次故障切换原因                                           | STRING                             |
-|                 |                                                              |                                    |
-| reason          |                                                              |                                    |
-+-----------------+--------------------------------------------------------------+------------------------------------+
-| last_failover\_ | 上一次故障切换信息                                           | STRING                             |
-|                 |                                                              |                                    |
-| info            |                                                              |                                    |
-+-----------------+--------------------------------------------------------------+------------------------------------+
+| last_failover_ | 上一次故障切换开始时间                                       | STRING/\[yyyy-MM-dd HH:mm:ss.SSS\] start_time      |                                                              |                                    |
+| last_failover_ | 上一次故障切换持续时间(ms)                                   | STRING/\[number\] duration        |                                                              |                                    |
+| last_failover_ | 上一次故障切换原因                                           | STRING reason          |                                                              |                                    |
+| last_failover_ | 上一次故障切换信息                                           | STRING info            |                                                              |                                    |
 | negotiation     | MGR节点协商状态                                              | OK：正常                           |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 |                 |                                                              | ERROR：异常                        |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 |                 |                                                              | NULL：非MGR                        |
-+-----------------+--------------------------------------------------------------+------------------------------------+
 
 #### show @\@datasource - 显示存储节点信息
 
 该命令用于查看当前存储节点配置信息及状态，例如：
 
-mysql\> show @\@datasource;
+mysql> show @\@datasource;
 
 ![](assets/management-port-command/image13.png)
 
@@ -301,63 +272,34 @@ mysql\> show @\@datasource;
 
 该命令用于检测全局表是否一致，例如：
 
-mysql\> show @\@globaltableconsistency;
+mysql> show @\@globaltableconsistency;
 
 ![](assets/management-port-command/image14.png)
 
 **结果包含字段及其说明：**
 
-+---------------------------+----------------------------------------------+---------------------+
 | **列名**                  | **说明**                                     | **值类型/范围**     |
-+---------------------------+----------------------------------------------+---------------------+
 | db                        | 逻辑库名                                     | STRING/\[database\] |
-+---------------------------+----------------------------------------------+---------------------+
-| table                     | 全局表名                                     | STRING/\[host:port/ |
-|                           |                                              |                     |
-|                           |                                              | database\]          |
-+---------------------------+----------------------------------------------+---------------------+
+| table                     | 全局表名                                     | STRING/\[host:port/                           |                                              | database\]          |
 | status                    | 状态                                         | 0：无法检测         |
-+---------------------------+----------------------------------------------+---------------------+
 |                           |                                              | 1：一致             |
-+---------------------------+----------------------------------------------+---------------------+
 |                           |                                              | -1：不一致          |
-+---------------------------+----------------------------------------------+---------------------+
 | result                    | 检测结果                                     | STRING              |
-+---------------------------+----------------------------------------------+---------------------+
-| less_half_dn_lost_and\_   | 小于二分之一节点缺失且第一节点有数据的行数   | INT/\[number\]      |
-|                           |                                              |                     |
-| first_dn_exsitdata_count  |                                              |                     |
-+---------------------------+----------------------------------------------+---------------------+
+| less_half_dn_lost_and_   | 小于二分之一节点缺失且第一节点有数据的行数   | INT/\[number\] first_dn_exsitdata_count  |                                              |                     |
 | repair                    | 恢复状态                                     | STRING              |
-+---------------------------+----------------------------------------------+---------------------+
-| less_half_dn_lost_and\_   | 小于二分之一节点缺失且第一节点没有数据的行数 | INT/\[number\]      |
-|                           |                                              |                     |
-| first_dn_nodata_count     |                                              |                     |
-+---------------------------+----------------------------------------------+---------------------+
-| greater_half_dn_lost\_    | 大于二分之一节点缺失的行数                   | INT/\[number\]      |
-|                           |                                              |                     |
-| count                     |                                              |                     |
-+---------------------------+----------------------------------------------+---------------------+
-| only_one_dn_not_lost_row  | 仅有一个节点未丢失的数据的行数               | INT/\[number\]      |
-|                           |                                              |                     |
-| \_count                   |                                              |                     |
-+---------------------------+----------------------------------------------+---------------------+
+| less_half_dn_lost_and_   | 小于二分之一节点缺失且第一节点没有数据的行数 | INT/\[number\] first_dn_nodata_count     |                                              |                     |
+| greater_half_dn_lost_    | 大于二分之一节点缺失的行数                   | INT/\[number\] count                     |                                              |                     |
+| only_one_dn_not_lost_row  | 仅有一个节点未丢失的数据的行数               | INT/\[number\] _count                   |                                              |                     |
 | inconsist_row_count       | 大于一个节点不一致                           | INT/\[number\]      |
-+---------------------------+----------------------------------------------+---------------------+
-| only_one_dn_inconsist_row | 仅有一个节点不一致且无缺失的行数             | INT/\[number\]      |
-|                           |                                              |                     |
-| \_count                   |                                              |                     |
-+---------------------------+----------------------------------------------+---------------------+
+| only_one_dn_inconsist_row | 仅有一个节点不一致且无缺失的行数             | INT/\[number\] _count                   |                                              |                     |
 | inconsist_and_lost_count  | 同时存在不一致和缺失行数                     | INT/\[number\]      |
-+---------------------------+----------------------------------------------+---------------------+
 | version                   | 检测版本                                     | INT/\[number\]      |
-+---------------------------+----------------------------------------------+---------------------+
 
 #### show @\@heartbeat - 显示后端心跳状态
 
 该命令用于报告心跳状态，例如：
 
-mysql\> show @\@heartbeat;
+mysql> show @\@heartbeat;
 
 ![](assets/management-port-command/image15.png)
 
@@ -393,7 +335,7 @@ mysql\> show @\@heartbeat;
 
 ![](assets/management-port-command/image16.png)
 
-mysql\> show @\@latency;
+mysql> show @\@latency;
 
 ![](assets/management-port-command/image17.png)
 
@@ -417,13 +359,13 @@ mysql\> show @\@latency;
 
 此命令用于查看长事务信息，例如：
 
-mysql\> show @\@longtransaction;
+mysql> show @\@longtransaction;
 
 ![](assets/management-port-command/image19.png)
 
 长事务判断依据：事务执行时间超过10s,都会判断为长事务，参考规则：
 
-select trx_id, trx_started from information_schema.innodb_trx where trx_started\<=date_sub(now(),interval 10 second);
+select trx_id, trx_started from information_schema.innodb_trx where trx_started<=date_sub(now(),interval 10 second);
 
 **结果包含字段及其说明：**
 
@@ -440,7 +382,7 @@ select trx_id, trx_started from information_schema.innodb_trx where trx_started\
 
 该命令用于显示表在主库和从库上是否一致，例如：
 
-mysql\> show @\@masterslaveconsistency;
+mysql> show @\@masterslaveconsistency;
 
 ![](assets/management-port-command/image20.png)
 
@@ -450,7 +392,7 @@ mysql\> show @\@masterslaveconsistency;
 
 又如上图
 
-结果中显示逻辑库LGG中的CC表未定义索引，无法进行一致性检测；DML_A\_JWY表结构不一致。
+结果中显示逻辑库LGG中的CC表未定义索引，无法进行一致性检测；DML_A_JWY表结构不一致。
 
 **结果包含字段及其说明：**
 
@@ -469,15 +411,15 @@ mysql\> show @\@masterslaveconsistency;
 
 该命令用于显示实际使用的存储节点，后端执行命令次数的统计情况，例如前端执行插入操作：
 
-mysql\> insert into tid values(10),(2);
+mysql> insert into tid values(10),(2);
 
-mysql\> insert into tid values(1677870),(233333333);
+mysql> insert into tid values(1677870),(233333333);
 
 ![](assets/management-port-command/image22.png)
 
 查询结果显示为后端当前使用存储节点表的执行情况:
 
-mysql\> select \* from operation where \`TABLE\` like \'%tid%\';
+mysql> select * from operation where \`TABLE\` like '%tid%';
 
 ![](assets/management-port-command/image23.png)
 
@@ -507,7 +449,7 @@ mysql\> select \* from operation where \`TABLE\` like \'%tid%\';
 
 该命令用于显示以逻辑库为单位的命令执行统计情况，例如：
 
-mysql\> show @\@operation_db;
+mysql> show @\@operation_db;
 
 ![](assets/management-port-command/image24.png)
 
@@ -531,7 +473,7 @@ mysql\> show @\@operation_db;
 
 该命令用于显示以数据节点为单位的命令执行统计情况，例如：
 
-mysql\> show @\@operation_dn;
+mysql> show @\@operation_dn;
 
 ![](assets/management-port-command/image25.jpeg)
 
@@ -557,7 +499,7 @@ mysql\> show @\@operation_dn;
 
 该命令用于显示以存储节点为单位的命令执行统计情况，例如：
 
-mysql\> show @\@operation_ds;
+mysql> show @\@operation_ds;
 
 ![](assets/management-port-command/image26.jpeg)
 
@@ -584,7 +526,7 @@ mysql\> show @\@operation_ds;
 
 该命令用于显示以逻辑数据表为单位的命令执行统计情况，例如：
 
-mysql\> show @\@operation_table;
+mysql> show @\@operation_table;
 
 ![](assets/management-port-command/image27.png)
 
@@ -608,7 +550,7 @@ mysql\> show @\@operation_table;
 
 此命令用于查看当前线程处理信息，例如：
 
-mysql\> show @\@processor;
+mysql> show @\@processor;
 
 ![](assets/management-port-command/image28.png)
 
@@ -632,7 +574,7 @@ mysql\> show @\@processor;
 
 该命令用于显示前端命令统计情况（不包含管理端），例如：
 
-mysql\> show @\@query;
+mysql> show @\@query;
 
 ![](assets/management-port-command/image29.jpeg)
 
@@ -654,7 +596,7 @@ mysql\> show @\@query;
 
 该命令用于显示每个逻辑库执行命令统计情况，例如：
 
-mysql\> show @\@query_db;
+mysql> show @\@query_db;
 
 ![](assets/management-port-command/image30.jpeg)
 
@@ -677,7 +619,7 @@ mysql\> show @\@query_db;
 
 该命令用于显示每个数据表据执行命令统计情况，例如：
 
-mysql\> show @\@query_tb;
+mysql> show @\@query_tb;
 
 ![](assets/management-port-command/image31.jpeg)
 
@@ -701,7 +643,7 @@ mysql\> show @\@query_tb;
 
 该命令用于显示当前会话信息，例如：
 
-mysql\> show @\@session;
+mysql> show @\@session;
 
 ![](assets/management-port-command/image32.png)
 
@@ -736,7 +678,7 @@ mysql\> show @\@session;
 
 该命令用于查看每个数据表的数据信息，例如：
 
-mysql\> show @\@tableinfo;
+mysql> show @\@tableinfo;
 
 ![](assets/management-port-command/image33.png)
 
@@ -763,7 +705,7 @@ mysql\> show @\@tableinfo;
 
 该命令用于查看以逻辑数据库为单位的表的数据信息，例如：
 
-mysql\> show @\@tableinfo_db;
+mysql> show @\@tableinfo_db;
 
 ![](assets/management-port-command/image34.jpeg)
 
@@ -782,7 +724,7 @@ mysql\> show @\@tableinfo_db;
 
 该命令用于查看以数据节点为单位的表的数据信息，仅统计当前使用存储节点的表信息。例如：
 
-mysql\> show @\@tableinfo_dn
+mysql> show @\@tableinfo_dn
 
 ![](assets/management-port-command/image35.jpeg)
 
@@ -801,7 +743,7 @@ mysql\> show @\@tableinfo_dn
 
 该命令用于显示以存储节点为单位的表的数据信息，包含当前所有存储节点信息（不可用存储节点也统计在内）。例如：
 
-mysql\> show @\@tableinfo_ds
+mysql> show @\@tableinfo_ds
 
 ![](assets/management-port-command/image36.jpeg)
 
@@ -820,7 +762,7 @@ mysql\> show @\@tableinfo_ds
 
 该命令用于显示以逻辑数据表为单位的表的数据信息，例如：
 
-mysql\> show @\@tableinfo_table;
+mysql> show @\@tableinfo_table;
 
 ![](assets/management-port-command/image37.jpeg)
 
@@ -839,35 +781,25 @@ mysql\> show @\@tableinfo_table;
 
 此命令用于查看线程池状态，例如：
 
-mysql\> show @\@threadpool;
+mysql> show @\@threadpool;
 
 ![](assets/management-port-command/image38.png)
 
 **结果包含字段及其说明：**
 
-+-----------------+--------------+--------------------------------------------+
 | **列名**        | **说明**     | **值类型/范围**                            |
-+-----------------+--------------+--------------------------------------------+
-| name            | 线程池名称   | STRING/\"TimeExecutor\",\"\$NIOExecutor-\" |
-|                 |              |                                            |
-|                 |              | +number+\"-\"                              |
-+-----------------+--------------+--------------------------------------------+
+| name            | 线程池名称   | STRING/"TimeExecutor","\$NIOExecutor-"                 |              | +number+"-"                              |
 | pool_size       | 线程池大小   | INT/\[number\]                             |
-+-----------------+--------------+--------------------------------------------+
 | acive_count     | 活跃线程数   | LONG/\[number\]                            |
-+-----------------+--------------+--------------------------------------------+
 | task_queue_size | 任务队列大小 | LONG/\[number\]                            |
-+-----------------+--------------+--------------------------------------------+
 | completed_task  | 完成任务数   | LONG/\[number\]                            |
-+-----------------+--------------+--------------------------------------------+
 | total_task      | 总任务数     | LONG/\[number\]                            |
-+-----------------+--------------+--------------------------------------------+
 
 #### show @\@transaction - 显示事务数
 
 此命令用于查看每个逻辑库，统计当前已完成的自动提交及非自动提交的事务数，例如：
 
-mysql\> show @\@transaction;
+mysql> show @\@transaction;
 
 ![](assets/management-port-command/image39.jpeg)
 
@@ -885,7 +817,7 @@ mysql\> show @\@transaction;
 
 此命令用于查看配置库中hotdb_datanodes表，语法：
 
-mysql\> show hotdb datanodes \[LIKE \'pattern\' \| WHERE expr\];
+mysql> show hotdb datanodes \[LIKE 'pattern' | WHERE expr\];
 
 参数说明:
 
@@ -920,7 +852,7 @@ mysql\> show hotdb datanodes \[LIKE \'pattern\' \| WHERE expr\];
 
 此命令用于查看配置库中hotdb_function 表，语法：
 
-mysql\> show hotdb functions;
+mysql> show hotdb functions;
 
 参数说明:
 
@@ -958,7 +890,7 @@ mysql\> show hotdb functions;
 
 此命令用于查看配置库中hotdb_function_info 表，语法：
 
-mysql\> show hotdb function infos \[WHERE expr\];
+mysql> show hotdb function infos \[WHERE expr\];
 
 **参数说明:**
 
@@ -992,7 +924,7 @@ mysql\> show hotdb function infos \[WHERE expr\];
 
 此命令用于查看配置库中hotdb_rule 表，语法：
 
-mysql\> show hotdb rules \[LIKE \'pattern\' \| WHERE expr\];
+mysql> show hotdb rules \[LIKE 'pattern' | WHERE expr\];
 
 参数说明:
 
@@ -1031,7 +963,7 @@ mysql\> show hotdb rules \[LIKE \'pattern\' \| WHERE expr\];
 
 此命令用于查看指定数据节点\[DNID\]主备的复制延迟大小，语法：
 
-mysql\> show backupmasterdelay \[DNID\];
+mysql> show backupmasterdelay \[DNID\];
 
 参数说明:
 
@@ -1066,7 +998,7 @@ mysql\> show backupmasterdelay \[DNID\];
 
 例如：
 
-mysql\> show @\@config_master_status
+mysql> show @\@config_master_status
 
 ![](assets/management-port-command/image51.png)
 
@@ -1091,55 +1023,34 @@ mysql\> show @\@config_master_status
 
 例如：
 
-mysql\> show @\@server;
+mysql> show @\@server;
 
 ![](assets/management-port-command/image53.jpeg)
 
 **结果包含字段及其说明：**
 
-+--------------------+---------------------+------------------------------------------+
 | **列名**           | **说明**            | **值类型/范围**                          |
-+--------------------+---------------------+------------------------------------------+
 | uptime             | HotDB实例已创建时间 | STRING/\[number"h" number"m" number"s"\] |
-+--------------------+---------------------+------------------------------------------+
 | online_time        | HotDB已启动时间     | STRING/\[number"h" number"m" number"s"\] |
-+--------------------+---------------------+------------------------------------------+
 | used_memory        | 已用内存            | STRING/\[number + "M"\]                  |
-+--------------------+---------------------+------------------------------------------+
 | total_memory       | 总内存              | STRING/\[number + "M"\]                  |
-+--------------------+---------------------+------------------------------------------+
 | max_memory         | 最大内存            | STRING/\[number + "M"\]                  |
-+--------------------+---------------------+------------------------------------------+
 | max_direct_memory  | 最大直接内存        | STRING/\[number + "M"\]                  |
-+--------------------+---------------------+------------------------------------------+
 | used_direct_memory | 已用直接内存        | STRING/\[number + "M"\]                  |
-+--------------------+---------------------+------------------------------------------+
 | reload_time        | 上次重读配置时间    | STRING/\[yyyy-MM-dd hh:mm:ss\]           |
-+--------------------+---------------------+------------------------------------------+
 | charset            | 字符集              | STRING/\[ charset\]                      |
-+--------------------+---------------------+------------------------------------------+
 | role               | 主备角色            | MASTER:主                                |
-+--------------------+---------------------+------------------------------------------+
 |                    |                     | BACKUP:备                                |
-+--------------------+---------------------+------------------------------------------+
 | status             | HotDB状态           | ON: 开启                                 |
-+--------------------+---------------------+------------------------------------------+
 |                    |                     | OFF: 关闭                                |
-+--------------------+---------------------+------------------------------------------+
-| mode               | HotDB读写模式       | STRING/\["READ-ONLY"，"READ-             |
-|                    |                     |                                          |
-|                    |                     | WRITE"\]                                 |
-+--------------------+---------------------+------------------------------------------+
-| version            | HotDB版本号         | STRING/\[number.number.number.           |
-|                    |                     |                                          |
-|                    |                     | number\]                                 |
-+--------------------+---------------------+------------------------------------------+
+| mode               | HotDB读写模式       | STRING/\["READ-ONLY"，"READ-                    |                     | WRITE"\]                                 |
+| version            | HotDB版本号         | STRING/\[number.number.number.                    |                     | number\]                                 |
 
 #### show @\@serversourceusage - 当前服务器的资源使用情况
 
 该命令用于查看当前HotDB Server服务器的资源使用情况，例如：
 
-mysql\> show @\@serversourceusage;
+mysql> show @\@serversourceusage;
 
 ![](assets/management-port-command/image54.png)
 
@@ -1164,7 +1075,7 @@ mysql\> show @\@serversourceusage;
 
 该命令用于查看当前计算节点的内存参数使用情况，例如：
 
-mysql\> show @\@systemconfig_memory;
+mysql> show @\@systemconfig_memory;
 
 ![](assets/management-port-command/image55.png)
 
@@ -1181,7 +1092,7 @@ mysql\> show @\@systemconfig_memory;
 
 此命令用于查看当前时间，例如：
 
-mysql\> show @\@time_current;
+mysql> show @\@time_current;
 
 ![](assets/management-port-command/image56.png)
 
@@ -1198,7 +1109,7 @@ mysql\> show @\@time_current;
 
 此命令用于查看HotDB Server启动时间，例如：
 
-mysql\> show @\@time_startup;
+mysql> show @\@time_startup;
 
 ![](assets/management-port-command/image57.png)
 
@@ -1215,49 +1126,26 @@ mysql\> show @\@time_startup;
 
 该命令用于显示USB-KEY状态（即授权情况）和检测授权是否有异常信息，例如：
 
-mysql\> show @\@usbkey;
+mysql> show @\@usbkey;
 
 ![](assets/management-port-command/image58.png)
 
 **结果包含字段及其说明：**
 
-+-----------------+----------------------+----------------------------------+
 | **列名**        | **说明**             | **值类型/范围**                  |
-+-----------------+----------------------+----------------------------------+
 | left_time       | 剩余时间(s)          | LONG/\[number\]                  |
-+-----------------+----------------------+----------------------------------+
 | usbkey_status   | USB_KEY状态          | 0:异常                           |
-+-----------------+----------------------+----------------------------------+
 |                 |                      | 1:正常                           |
-+-----------------+----------------------+----------------------------------+
 | usbkey_type     | USB_KEY类型          | 1:试用                           |
-+-----------------+----------------------+----------------------------------+
 |                 |                      | 2:有期限                         |
-+-----------------+----------------------+----------------------------------+
 |                 |                      | 3:永久                           |
-+-----------------+----------------------+----------------------------------+
 | node_limit      | 节点数限制           | INT/\[number\]                   |
-+-----------------+----------------------+----------------------------------+
 | last_check_time | 上次检测结束时间     | STRING/\[ yyyy-MM-dd HH:mm:sss\] |
-+-----------------+----------------------+----------------------------------+
-| usbkey_check\_  | USB_KEY 检测是否卡住 | 0:未被卡住                       |
-|                 |                      |                                  |
-| stuck           |                      |                                  |
-+-----------------+----------------------+----------------------------------+
-|                 |                      | 1:卡住                           |
-+-----------------+----------------------+----------------------------------+
-| last_exception  | 上次检测抛出异常时间 | STRING/\[ yyyy-MM-dd HH:mm:sss\] |
-|                 |                      |                                  |
-| \_time          |                      |                                  |
-+-----------------+----------------------+----------------------------------+
-| last_exception  | 上次检测抛出异常信息 | STRING                           |
-|                 |                      |                                  |
-| \_info          |                      |                                  |
-+-----------------+----------------------+----------------------------------+
+| usbkey_check_  | USB_KEY 检测是否卡住 | 0:未被卡住 stuck 1:卡住                           |
+| last_exception  | 上次检测抛出异常时间 | STRING/\[ yyyy-MM-dd HH:mm:sss\] _time          |                      |                                  |
+| last_exception  | 上次检测抛出异常信息 | STRING _info          |                      |                                  |
 | exception_count | 累计检测抛出异常次数 | INT/\[number\]                   |
-+-----------------+----------------------+----------------------------------+
 | comment         | 备注信息             | STRING                           |
-+-----------------+----------------------+----------------------------------+
 
 注：left_time=0代表永久或作废；
 
@@ -1269,7 +1157,7 @@ It is recommended to restart the HotDB server during the low peak period of busi
 
 此命令用于查看HotDB Server版本说明，例如：
 
-mysql\> show @\@version;
+mysql> show @\@version;
 
 ![](assets/management-port-command/image59.png)
 
@@ -1288,7 +1176,7 @@ mysql\> show @\@version;
 
 该命令用于显示表的DDL语句常信息，例如：
 
-mysql\> show @\@ddl;
+mysql> show @\@ddl;
 
 ![](assets/management-port-command/image60.png)
 
@@ -1310,7 +1198,7 @@ mysql\> show @\@ddl;
 
 此命令用于查看Borrowed连接最后执行的SQL信息，例如：
 
-mysql\> show @\@lastsql;
+mysql> show @\@lastsql;
 
 ![](assets/management-port-command/image61.png)
 
@@ -1331,7 +1219,7 @@ mysql\> show @\@lastsql;
 
 该命令显示当前正在运行的OnlineDDL语句及语句执行速度，progress按百分比显示语句执行进度，speed显示当前onlineDDL语句执行的速度(单位:行/ms)，例如：
 
-mysql\> show @\@onlineddl;
+mysql> show @\@onlineddl;
 
 ![](assets/management-port-command/image62.png)
 
@@ -1353,7 +1241,7 @@ mysql\> show @\@onlineddl;
 
 该命令用于显示每个数据表的索引结构，例如：
 
-mysql\> show @\@tableindex;
+mysql> show @\@tableindex;
 
 ![](assets/management-port-command/image63.png)
 
@@ -1389,7 +1277,7 @@ mysql\> show @\@tableindex;
 
 此命令用于分片方案在线变更的预检相关，例如：
 
-onlinemodifyrulecheck db.tablename\[=functionid,rulecol:datanodes:checkconsistency(是否检查主备一致性 1\|0)\]
+onlinemodifyrulecheck db.tablename\[=functionid,rulecol:datanodes:checkconsistency(是否检查主备一致性 1|0)\]
 
 **命令包含字段及其说明：**
 
@@ -1401,13 +1289,13 @@ onlinemodifyrulecheck db.tablename\[=functionid,rulecol:datanodes:checkconsisten
   functionid         分片规则id，参考hotdb_config配置库的hotdb_function表
   rulecol            分片字段
   datanodes          数据节点，参考hotdb_config配置库的hotdb_datanode表
-  checkconsistency   是否检查主备一致性 1\|0
+  checkconsistency   是否检查主备一致性 1|0
 
 ------------------ ------------------------------------------------------
 
 有两种用法：
 
-1\. 用于预检时，检测分片规则变更的相关项是否通过，检测项ID和对应的检测项如下表：
+1. 用于预检时，检测分片规则变更的相关项是否通过，检测项ID和对应的检测项如下表：
 
 ---------- ------------------- ------------------------------------------
 
@@ -1430,7 +1318,7 @@ onlinemodifyrulecheck db.tablename\[=functionid,rulecol:datanodes:checkconsisten
 
 如下图所示：cpd_test是逻辑库，zx_cvset_signin_result是表名，4是functionid，id是分片字段，\[1,2\]是数据节点，1是检查主备一致性。
 
-mysql\> onlinemodifyrulecheck cpd_test. zx_cvset_signin_result=4,id:1,2:1;
+mysql> onlinemodifyrulecheck cpd_test. zx_cvset_signin_result=4,id:1,2:1;
 
 ![](assets/management-port-command/image64.png)
 
@@ -1599,7 +1487,7 @@ onlinemodifyrulecancle db.tablename;
 
 该命令用于检查服务MySQL存储节点特定参数配置信息是否一致，若有参数与HotDB Server要求不同，执行命令后系统会有提示信息输出，例如：
 
-mysql\> check @\@datasource_config;
+mysql> check @\@datasource_config;
 
 ![](assets/management-port-command/image76.png)
 
@@ -1641,7 +1529,7 @@ MAX_ALLOWED_PACKET
 
 *check @\@datasource_config_new*是从非running表中读取数据节点信息并进行检查，并且不记录历史检查状态。
 
-mysql\> check @\@datasource_config*\_new*;
+mysql> check @\@datasource_config*_new*;
 
 ![](assets/management-port-command/image77.png)
 
@@ -1651,7 +1539,7 @@ mysql\> check @\@datasource_config*\_new*;
 
 该命令用于检测分片表数据路由的正确性，语法：
 
-mysql\> check @\@route \[db_name.tb_name \| tb_name\];
+mysql> check @\@route \[db_name.tb_name | tb_name\];
 
 参数说明：
 
@@ -1686,7 +1574,7 @@ mysql\> check @\@route \[db_name.tb_name \| tb_name\];
 
 该命令用于关闭指定的前端连接，可以同时关闭多个连接，语法：
 
-mysql\> kill @\@connection \[id1,id2,id3...idn\];
+mysql> kill @\@connection \[id1,id2,id3...idn\];
 
 参数说明：
 
@@ -1699,7 +1587,7 @@ mysql\> kill @\@connection \[id1,id2,id3...idn\];
 
 例如：
 
-mysql\> kill @\@connection 7;
+mysql> kill @\@connection 7;
 
 Query OK, 1 rows affected (0.00 sec)
 
@@ -1709,7 +1597,7 @@ Query OK, 1 rows affected (0.00 sec)
 
 此命令会关闭HotDB Server服务端口，断开服务端3323前端连接，例如：
 
-mysql\> offline;
+mysql> offline;
 
 ![](assets/management-port-command/image81.png)
 
@@ -1719,7 +1607,7 @@ mysql\> offline;
 
 若需要启动HotDB Server服务端口，需要在管理端运行online，该命令适用于HotDB Server启动服务端口或发生高可用切换场景，语法：
 
-mysql\> online;
+mysql> online;
 
 ![](assets/management-port-command/image83.png)
 
@@ -1729,7 +1617,7 @@ mysql\> online;
 
 开启灾备模式下，灾备机房的主备计算节点在服务未发生机房级别切换之前，均为备用状态，且仅管理端（默认端口3325）提供服务。因此灾备机房的主备计算节点在服务未发生机房级别切换之前，均禁用online命令。为区别于中心机房的切换操作，当执行online命令时，会提示如下：
 
-root\@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 07:58:26\> online;
+root\@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 07:58:26> online;
 
 ERROR 10192 (HY000): access denied. online is not allowed in a DR HotDB Server.
 
@@ -1737,17 +1625,17 @@ ERROR 10192 (HY000): access denied. online is not allowed in a DR HotDB Server.
 
 开启灾备模式下，灾备机房的主计算节点不参与中心机房HA高可用切换，除可执行一些show命令以外，只能执行此命令切换机房：
 
-root\@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 08:12:31\> online_dr;
+root\@192.168.220.183:(none) 8.0.15-HotDB-2.5.3.1 08:12:31> online_dr;
 
 Query OK, 1 row affected (5 min 4.35 sec)
 
 当计算节点发生机房级别切换后，即灾备机房的主计算节点提供服务时，若此时灾备机房主计算节点也发生故障，可执行enable_online；命令之后，再执行online_dr命令启动灾备机房备计算节点。此时灾备机房备计算节点可自动开启服务端口（默认3323）继续服务。
 
-root\@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:10:31\> enable_online;
+root\@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:10:31> enable_online;
 
 Query OK, 1 row affected (11 min 5.39 sec)
 
-root\@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:22:27\> online_dr;
+root\@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:22:27> online_dr;
 
 Query OK, 1 row affected (0.01 sec)
 
@@ -1755,7 +1643,7 @@ Query OK, 1 row affected (0.01 sec)
 
 该命令用于重建当前HotDB Server的后端连接及存储节点的连接信息，语法：
 
-mysql\> rebuild @\@pool;
+mysql> rebuild @\@pool;
 
 Query OK, 1 row affected (0.24 sec)
 
@@ -1763,7 +1651,7 @@ Query OK, 1 row affected (0.24 sec)
 
 该命令用于更新配置，例如更新server.xml文件及内存使用的配置，在命令行窗口输入该命令，可不用重启HotDB Server服务即进行配置参数更新，此命令与管理平台动态加载功能相同。运行结果参考如下：\#不是所有参数可以用这命令
 
-mysql\> reload @\@config;
+mysql> reload @\@config;
 
 Query OK, 1 row affected (2.31 sec)
 
@@ -1775,13 +1663,13 @@ Reload config success
 
 例如执行动态加载卡住时：
 
-root\> reload @\@config;
+root> reload @\@config;
 
 ...卡住无返回结果...
 
 此时确认强制释放正在进行的reload状态无影响后，可执行此命令强制取消动态加载：
 
-root\> reset @\@reloading;
+root> reset @\@reloading;
 
 Query OK, 1 row affected (0.00 sec)
 
@@ -1789,7 +1677,7 @@ Reset reloading success
 
 此时之前动态加载被卡住的状态会被取消，转变为显示如下信息：
 
-root\> reload @\@config;
+root> reload @\@config;
 
 ERROR 1003 (HY000): Reload config failure, Reloading was set to false manually.
 
@@ -1803,7 +1691,7 @@ ERROR 1003 (HY000): Reload config failure, Reloading was set to false manually.
 
 该命令用于恢复指定节点指定数据节点上的心跳检测功能，语法：
 
-mysql\> restart @\@heartbeat \[datanode_id\];
+mysql> restart @\@heartbeat \[datanode_id\];
 
 参数说明:
 
@@ -1816,7 +1704,7 @@ mysql\> restart @\@heartbeat \[datanode_id\];
 
 例如：
 
-mysql\> restart @\@heartbeat 1; \#恢复1节点的心跳检测功能
+mysql> restart @\@heartbeat 1; \#恢复1节点的心跳检测功能
 
 Query OK, 2 rows affected (0.00 sec)
 
@@ -1824,7 +1712,7 @@ Query OK, 2 rows affected (0.00 sec)
 
 该命令用于将指定数据节点上的心跳暂停一段时间。当time为-1时，系统会取消指定节点的暂停状态。语法：
 
-mysql\> stop @\@heartbeat \[datanode_id:time(s)\]
+mysql> stop @\@heartbeat \[datanode_id:time(s)\]
 
 参数说明:
 
@@ -1838,11 +1726,11 @@ mysql\> stop @\@heartbeat \[datanode_id:time(s)\]
 
 例如：
 
-mysql\> stop @\@heartbeat 1:60; \#将节点1暂停60秒
+mysql> stop @\@heartbeat 1:60; \#将节点1暂停60秒
 
 Query OK, 1 row affected (0.01 sec)
 
-mysql\> stop @\@heartbeat 1:-1;
+mysql> stop @\@heartbeat 1:-1;
 
 Query OK, 1 row affected (0.00 sec)
 
@@ -1850,15 +1738,15 @@ Query OK, 1 row affected (0.00 sec)
 
 该命令用于将指定数据节点的存储节点切换为下一个备用存储节点，语法：
 
-mysql\> switch @\@datasource \[datanode_id\];
+mysql> switch @\@datasource \[datanode_id\];
 
 例如：
 
-mysql\> stop @\@heartbeat 1:60; \#将节点1暂停60秒
+mysql> stop @\@heartbeat 1:60; \#将节点1暂停60秒
 
 Query OK, 1 row affected (0.01 sec)
 
-mysql\> stop @\@heartbeat 1:-1;
+mysql> stop @\@heartbeat 1:-1;
 
 Query OK, 1 row affected (0.00 sec)
 
@@ -1868,7 +1756,7 @@ Query OK, 1 row affected (0.00 sec)
 
 ### disable_election不允许集群选举
 
-mysql\> disable_election;
+mysql> disable_election;
 
 Query OK, 1 row affected (0.01 sec)
 
@@ -1876,13 +1764,13 @@ Query OK, 1 row affected (0.01 sec)
 
 ### enable_election允许集群选举
 
-mysql\> enable_election;
+mysql> enable_election;
 
 Query OK, 1 row affected (0.01 sec)
 
 ### disable_non_query_command仅允许查询命令
 
-mysql\> disable_non_query_command;
+mysql> disable_non_query_command;
 
 Query OK, 1 row affected (0.01 sec)
 
@@ -1890,31 +1778,31 @@ Query OK, 1 row affected (0.01 sec)
 
 ### enable_non_query_command允许非查询命令
 
-mysql\> enable_non_query_command;
+mysql> enable_non_query_command;
 
 Query OK, 1 row affected (0.01 sec)
 
 ### offline_to_dr执行offline并且不允许online
 
-mysql\> offline_to_dr;
+mysql> offline_to_dr;
 
 Query OK, 1 row affected (0.01 sec)
 
 ### exchangeconfig交换机房配置
 
-mysql\> exchangeconfig;
+mysql> exchangeconfig;
 
 Query OK, 1 row affected (0.01 sec)
 
 ### exchangememoryconfig交换内存中的机房配置
 
-mysql\> exchangememoryconfig;
+mysql> exchangememoryconfig;
 
 Query OK, 1 row affected (0.01 sec)
 
 ### online_dr_check机房切换检查
 
-mysql\> online_dr_check;
+mysql> online_dr_check;
 
 Query OK, 1 row affected (0.01 sec)
 
@@ -1930,7 +1818,7 @@ Query OK, 1 row affected (0.01 sec)
 
 **列名**     **说明**                                                                                                                                                                                                      **值类型/范围**
   process      处理过程，0-8                                                                                                                                                                                                 INTEGER
-  error        错误信息（错误格式：srcDs1:dstDs1,srcDs2:dstDs2,\...;errormsg或者ds,ds:ds,\...;errormsg，存储节点格式(datanodeID_datasourceID_datasourceIP_port_dbname)，如果包含：则src代表原中心机房，dst代表原灾备机房）   STRING
+  error        错误信息（错误格式：srcDs1:dstDs1,srcDs2:dstDs2,...;errormsg或者ds,ds:ds,...;errormsg，存储节点格式(datanodeID_datasourceID_datasourceIP_port_dbname)，如果包含：则src代表原中心机房，dst代表原灾备机房）   STRING
   error_code   错误码 status 状态，1表示完成，0表示未完成                                                                                                                                                                    INTEGER
   status       状态，1代表完成，0表示未完成                                                                                                                                                                                  INTEGER
 
@@ -1938,7 +1826,7 @@ Query OK, 1 row affected (0.01 sec)
 
 ### reset dberrorcount将所有逻辑库报错信息清空
 
-mysql\> reset dberrorcount;
+mysql> reset dberrorcount;
 
 Query OK, 1 row affected (0.01 sec)
 
@@ -1948,17 +1836,17 @@ Query OK, 1 row affected (0.01 sec)
 
 此命令用于增加数据库映射关系，语法：
 
-mysql\> dbremapping @\@add@\[database_name\]:\[database_name\],\[database_name\]:\[database_name\]...;
+mysql> dbremapping @\@add@\[database_name\]:\[database_name\],\[database_name\]:\[database_name\]...;
 
 例如：
 
-mysql\> dbremapping @\@add\@db01:logic_db01,db02:logic_db02; \#添加多条映射关系
+mysql> dbremapping @\@add\@db01:logic_db01,db02:logic_db02; \#添加多条映射关系
 
 Query OK, 0 rows affected (0.00 sec)
 
 增加数据库db01到逻辑库logic_db的映射关系，从而执行SQL语句USE db01相当于执行USE logic_db:
 
-mysql\> dbremapping @\@add\@db01:logic_db;
+mysql> dbremapping @\@add\@db01:logic_db;
 
 注意：若为同名的物理库添加映射关系到不同逻辑库，将会覆盖之前的映射关系。允许不同的物理库添加映射关系到相同的逻辑库。
 
@@ -1978,11 +1866,11 @@ dbremapping @\@add\@db01:logic_db02
 
 此命令用于移除 [dbremapping @\@add@](#dbremapping-add---增加数据库映射关系) 所添加的数据库映射关系，语法：
 
-mysql\> dbremapping @\@remove@\[database_name\]:\[database_name\],\[database_name\]:\[database_name\]...;
+mysql> dbremapping @\@remove@\[database_name\]:\[database_name\],\[database_name\]:\[database_name\]...;
 
 例如：
 
-mysql\> dbremapping @\@remove\@db01:logic_db01,db02:logic_db02; \#移除多条映射关系
+mysql> dbremapping @\@remove\@db01:logic_db01,db02:logic_db02; \#移除多条映射关系
 
 Query OK, 0 rows affected (0.00 sec)
 
@@ -1990,11 +1878,11 @@ Query OK, 0 rows affected (0.00 sec)
 
 此命令保证了在对数据表结构修改时，不会堵塞线上业务的读写，数据库依然可以提供正常的数据访问服务，语法：
 
-mysql\> onlineddl \"\[DDLSTATEMENT\]\";
+mysql> onlineddl "\[DDLSTATEMENT\]";
 
 例如：
 
-mysql\> onlineddl \"alter table mytb add column cl1 varchar(90) default \'1\'\";
+mysql> onlineddl "alter table mytb add column cl1 varchar(90) default '1'";
 
 注意：在线修改表结构时，各分片上的数据表结构需要一致，并且需要修改的数据表有唯一索引。
 
@@ -2002,7 +1890,7 @@ mysql\> onlineddl \"alter table mytb add column cl1 varchar(90) default \'1\'\";
 
 此命令用于查看获取conf目录下的文件及最后修改时间，例如：
 
-mysql\> file @\@list;
+mysql> file @\@list;
 
 ![](assets/management-port-command/image87.png)
 
@@ -2019,7 +1907,7 @@ mysql\> file @\@list;
 
 在HotDB Server的命令行监控窗口执行hold commit，服务端口事务的提交会被HOLD住（含事务提交及普通的自动提交）。例如自动提交事务类型时：
 
-mysql\> hold commit;
+mysql> hold commit;
 
 Query OK, 1 row affected (0.02 sec)
 
@@ -2029,7 +1917,7 @@ Query OK, 1 row affected (0.02 sec)
 
 在HotDB Server的命令行监控窗口执行hold ddl，服务端口执行相关的ddl语句将暂时被HOLD住，例如：
 
-mysql\> hold ddl;
+mysql> hold ddl;
 
 Query OK, 1 row affected (0.02 sec)
 
@@ -2039,7 +1927,7 @@ Query OK, 1 row affected (0.02 sec)
 
 执行完 [hold commit](#hold-commit---将所有客户端的连接状态置为hold_all_commit) 后，使用此命令解除HOLD状态，事务提交成功。例如：
 
-mysql\> releasehold commit;
+mysql> releasehold commit;
 
 Query OK, 1 row affected (0.00 sec)
 
@@ -2049,7 +1937,7 @@ Query OK, 1 row affected (0.00 sec)
 
 执行完 [hold ddl](#hold-ddl---将所有客户端的连接状态置为hold_ddl) 后，使用此命令解除HOLD状态，语句执行成功。例如：
 
-mysql\> releasehold ddl;
+mysql> releasehold ddl;
 
 Query OK, 1 row affected (0.00 sec)
 
@@ -2063,39 +1951,29 @@ Query OK, 1 row affected (0.00 sec)
 
 该命令用于检测指定表的唯一约束键的历史数据是否唯一，语法：
 
-mysql\> check @\@history_unique \[db_name.tb_name\];
+mysql> check @\@history_unique \[db_name.tb_name\];
 
-1\. 不指定表名：检测所有开启全局唯一约束的表，它们的唯一约束键历史数据是否唯一。若都唯一，则会返回空集：
+1. 不指定表名：检测所有开启全局唯一约束的表，它们的唯一约束键历史数据是否唯一。若都唯一，则会返回空集：
 
-mysql\> check @\@history_unique;
+mysql> check @\@history_unique;
 
 Empty set (0.01 sec)
 
 若存在少量不一致的数据，则会提示不一致值：
 
-mysql\> check @\@history_unique;
+mysql> check @\@history_unique;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| db_name | tb_name | messege |
 
-\| db_name \| tb_name \| messege \|
-
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-\| DB1 \| test1 \| duplicate data in unique constraint: ID1:\[2\] \|
-
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| DB1 | test1 | duplicate data in unique constraint: ID1:\[2\] |
 
 若存在大量不一致，长度超过2048个字符，则会提示下载文件查看：
 
-mysql\> check @\@history_unique;
+mysql> check @\@history_unique;
 
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| ZJJ_DB1 | UCON1 | duplicate data in unique constraint, for more information,please download: ZJJ_DB1_UCON1_duplicates_1561353006576 |
 
-\| ZJJ_DB1 \| UCON1 \| duplicate data in unique constraint, for more information,please download: ZJJ_DB1_UCON1_duplicates_1561353006576 \|
-
-+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
-
-2\. 指定表名：检测指定表的唯一约束键历史数据是否唯一，例如：
+2. 指定表名：检测指定表的唯一约束键历史数据是否唯一，例如：
 
 check @\@history_unique db01.table01,db01.table02,db01.table03
 
@@ -2103,25 +1981,19 @@ check @\@history_unique db01.table01,db01.table02,db01.table03
 
 该命令用于检测指定表的唯一约束键历史数据唯一后，为其创建辅助索引，语法：
 
-mysql\> unique @\@create \[db_name.tb_name\];
+mysql> unique @\@create \[db_name.tb_name\];
 
-1\. 不指定表名：检测所有表的唯一约束键是否唯一，若唯一，则为其创建辅助索引，例如：
+1. 不指定表名：检测所有表的唯一约束键是否唯一，若唯一，则为其创建辅助索引，例如：
 
-mysql\> unique @\@create;
+mysql> unique @\@create;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| db_name | tb_name | result | messege |
 
-\| db_name \| tb_name \| result \| messege \|
+| HOTDB_SERVER_253 | ORDERFORM | fail | global_unique is turned off |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| HOTDB_SERVER_253 | CLIENT | success | |
 
-\| HOTDB_SERVER_253 \| ORDERFORM \| fail \| global_unique is turned off \|
-
-\| HOTDB_SERVER_253 \| CLIENT \| success \| \|
-
-\| HOTDB_SERVER_253 \| KEEVEY01 \| success \| \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+
+| HOTDB_SERVER_253 | KEEVEY01 | success | |
 
 -   若辅助索引创建成功，则result结果为success；
 
@@ -2131,7 +2003,7 @@ mysql\> unique @\@create;
 
 -   若检测历史数据不唯一，则result结果为fail，并显示不一致结果，同命令[check @\@history_unique](#check-history_unique-检查唯一键的历史数据唯一性)。
 
-2\. 指定表名：检测指定表的唯一约束键历史数据是否唯一，例如：
+2. 指定表名：检测指定表的唯一约束键历史数据是否唯一，例如：
 
 unique @\@create db01.table01,db01.table02,db01.table03
 
@@ -2141,25 +2013,19 @@ unique @\@create db01.table01,db01.table02,db01.table03
 
 该命令用于为指定表删除辅助索引，语法：
 
-mysql\> unique @\@drop \[db_name.tb_name\];
+mysql> unique @\@drop \[db_name.tb_name\];
 
 例如：
 
-mysql\> unique @\@drop HOTDB_SERVER_253.beyond1,HOTDB_SERVER_253.test1,HOTDB_SERVER_253.keevey01;
+mysql> unique @\@drop HOTDB_SERVER_253.beyond1,HOTDB_SERVER_253.test1,HOTDB_SERVER_253.keevey01;
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| db_name | tb_name | result | messege |
 
-\| db_name \| tb_name \| result \| messege \|
+| HOTDB_SERVER_253 | BEYOND1 | success | |
 
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| HOTDB_SERVER_253 | KEEVEY01 | success | |
 
-\| HOTDB_SERVER_253 \| BEYOND1 \| success \| \|
-
-\| HOTDB_SERVER_253 \| KEEVEY01 \| success \| \|
-
-\| HOTDB_SERVER_253 \| TEST1 \| success \| \|
-
-+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+\-\-\-\-\-\-\-\--+
+| HOTDB_SERVER_253 | TEST1 | success | |
 
 -   若辅助索引删除成功，则result结果为success；
 

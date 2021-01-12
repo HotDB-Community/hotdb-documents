@@ -26,11 +26,11 @@
 
 **使用mysqldump备份配置库数据**
 
-\#mysqldump -S /data/mysql/mysqldata3316/sock/mysql.sock \--set-gtid-purged=off ---single-transaction \--master-data=1 \--databases hotdb_cloud_config \--default-character-set=utf8 -uroot \> /usr/local/hotdb/hotdb_cloud_config_2.5.3_20190815.sql
+\#mysqldump -S /data/mysql/mysqldata3316/sock/mysql.sock --set-gtid-purged=off ---single-transaction --master-data=1 --databases hotdb_cloud_config --default-character-set=utf8 -uroot > /usr/local/hotdb/hotdb_cloud_config_2.5.3_20190815.sql
 
 #### 执行配置库升级脚本
 
-**特殊说明：**若管理平台升级的目标版本大于等于V2.5.3，此步骤无需手动执行，可在管理平台替换好新版本程序包并更新完配置文件后，由程序完成配置库的升级操作。半自动升级管理平台配置库可参考《分布式事务数据库HotDB Server-V2.5.x【管理平台】功能使用手册》升级中心-\>管理平台配置库升级功能说明。
+**特殊说明：**若管理平台升级的目标版本大于等于V2.5.3，此步骤无需手动执行，可在管理平台替换好新版本程序包并更新完配置文件后，由程序完成配置库的升级操作。半自动升级管理平台配置库可参考《分布式事务数据库HotDB Server-V2.5.x【管理平台】功能使用手册》升级中心->管理平台配置库升级功能说明。
 
 **执行配置库升级脚本**
 
@@ -48,7 +48,7 @@
 
 -   复制升级脚本内容时注意区分管理平台配置库升级SQL与计算节点配置库升级SQL。
 
--   若管理平台是跨版本升级（例如从2.4.9-\>2.5.3）,则配置库脚本需要按照版本顺序一个版本一个版本执行，不可将顺序打乱或遗漏某一版本的升级内容。
+-   若管理平台是跨版本升级（例如从2.4.9->2.5.3）,则配置库脚本需要按照版本顺序一个版本一个版本执行，不可将顺序打乱或遗漏某一版本的升级内容。
 
 -   配置库升级要求所有升级SQL语句执行成功，无报错内容。
 
@@ -108,7 +108,7 @@
 
 \## vi application.properties
 
-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--配置内容\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--
+-----------------------------------配置内容-----------------------------------------
 
 \## http port
 
@@ -154,17 +154,17 @@ spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 
 对启动脚本bin/hotdb_management脚本只需调整一下2处：
 
-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--原配置内容\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--
+----------------------------------原配置内容----------------------------------------
 
 JAVA_BIN=\$shellPath/../../jdk/bin/java
 
-JAVA_VERSION=\"1.7.0_80\"
+JAVA_VERSION="1.7.0_80"
 
-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--新配置内容\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--
+----------------------------------新配置内容----------------------------------------
 
 JAVA_BIN=/usr/local/jdk8/jdk8u252-b09/bin/java
 
-JAVA_VERSION=\"1.8.0_252\"
+JAVA_VERSION="1.8.0_252"
 
 ### 启动管理平台与启动异常处理
 
@@ -272,7 +272,7 @@ drwxr-xr-x. 2 hotdb hotdb 4096 Aug 19 10:35 lib
 
 drwxr-xr-x. 2 hotdb hotdb 4096 Jul 8 11:33 logs
 
-lrwxrwxrwx. 1 root root 58 Aug 26 17:50 ndbsql_bin -\> /usr/local/mysql-cluster-gpl-7.5.12-linux-glibc2.12-x86_64
+lrwxrwxrwx. 1 root root 58 Aug 26 17:50 ndbsql_bin -> /usr/local/mysql-cluster-gpl-7.5.12-linux-glibc2.12-x86_64
 
 drwxr-xr-x. 3 hotdb hotdb 4096 Aug 26 17:53 ndbsql_data
 
@@ -280,7 +280,7 @@ drwxr-xr-x. 2 hotdb hotdb 4096 Aug 19 10:35 utils
 
 **从备份目录中将NDB SQL内容拷贝到升级后的计算节点目录下**
 
-\#cp -rp /usr/local/hotdb/hotdb_server_253/ndbsql\* /usr/local/hotdb/hotdb-server/
+\#cp -rp /usr/local/hotdb/hotdb_server_253/ndbsql* /usr/local/hotdb/hotdb-server/
 
 #### 更新配置文件
 
@@ -292,63 +292,63 @@ drwxr-xr-x. 2 hotdb hotdb 4096 Aug 19 10:35 utils
 
 \## vi server.xml
 
-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--配置内容\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--
+-----------------------------------配置内容-----------------------------------------
 
-\<?xml version=\"1.0\" encoding=\"UTF-8\"?\>
+<?xml version="1.0" encoding="UTF-8"?>
 
-\<!DOCTYPE hotdb:server SYSTEM \"server.dtd\"\>
+<!DOCTYPE hotdb:server SYSTEM "server.dtd">
 
-\<hotdb:server xmlns:hotdb=\"http://cn.hotpu/\"\>
+<hotdb:server xmlns:hotdb="http://cn.hotpu/">
 
-\<system\>
+<system>
 
-\<property name=\"url\"\>jdbc:mysql://192.168.210.30:3307/hotdb_config_test253\</property\>\<!\-- 主配置库地址，需指定配置库服务所在的真实IP地址 \--\>
+<property name="url">jdbc:mysql://192.168.210.30:3307/hotdb_config_test253</property><!-- 主配置库地址，需指定配置库服务所在的真实IP地址 -->
 
-\<property name=\"username\"\>hotdb_config\</property\>\<!\-- 主配置库用户名 \--\>
+<property name="username">hotdb_config</property><!-- 主配置库用户名 -->
 
-\<property name=\"password\"\>hotdb_config\</property\>\<!\-- 主配置库密码 \--\>
+<property name="password">hotdb_config</property><!-- 主配置库密码 -->
 
-\<property name=\"bakUrl\"\>jdbc:mysql://192.168.210.30:3307/hotdb_config_test253\</property\>\<!\-- 从配置库地址，需指定配置库服务所在的真实IP地址 \--\>
+<property name="bakUrl">jdbc:mysql://192.168.210.30:3307/hotdb_config_test253</property><!-- 从配置库地址，需指定配置库服务所在的真实IP地址 -->
 
-\<property name=\"bakUsername\"\>hotdb_config\</property\>\<!\-- 从配置库用户名 \--\>
+<property name="bakUsername">hotdb_config</property><!-- 从配置库用户名 -->
 
-\<property name=\"bakPassword\"\>hotdb_config\</property\>\<!\-- 从配置库密码 \--\>
+<property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
 
-\<property name=\"configMGR\"\>false\</property\>\<!\-- 配置库是否使用MGR \--\>
+<property name="configMGR">false</property><!-- 配置库是否使用MGR -->
 
-\<property name=\"bak1Url\"\>\</property\>\<!\-- MGR配置库地址(如配置库使用MGR,必须配置此项)，需指定配置库服务所在的真实IP地址 \--\>
+<property name="bak1Url"></property><!-- MGR配置库地址(如配置库使用MGR,必须配置此项)，需指定配置库服务所在的真实IP地址 -->
 
-\<property name=\"bak1Username\"\>\</property\>\<!\-- MGR配置库用户名(如配置库使用MGR,必须配置此项) \--\>
+<property name="bak1Username"></property><!-- MGR配置库用户名(如配置库使用MGR,必须配置此项) -->
 
-\<property name=\"bak1Password\"\>\</property\>\<!\-- MGR配置库密码(如配置库使用MGR,必须配置此项) \--\>
+<property name="bak1Password"></property><!-- MGR配置库密码(如配置库使用MGR,必须配置此项) -->
 
-\<property name=\"haMode\"\>1\</property\>\<!\-- 高可用模式：0：主备；1：集群 \--\>
+<property name="haMode">1</property><!-- 高可用模式：0：主备；1：集群 -->
 
-\<property name=\"serverId\"\>1\</property\>\<!\-- 集群节点编号1-N（节点数)，集群内唯一且N\<=集群中节点总数 \--\>
+<property name="serverId">1</property><!-- 集群节点编号1-N（节点数)，集群内唯一且N<=集群中节点总数 -->
 
-\<property name=\"clusterName\"\>HotDB-Cluster30\</property\>\<!\-- 集群组名称 \--\>
+<property name="clusterName">HotDB-Cluster30</property><!-- 集群组名称 -->
 
-\<property name=\"clusterSize\"\>3\</property\>\<!\-- 集群中节点总数 \--\>
+<property name="clusterSize">3</property><!-- 集群中节点总数 -->
 
-\<property name=\"clusterNetwork\"\>192.168.210.0/24\</property\>\<!\-- 集群所在网段 \--\>
+<property name="clusterNetwork">192.168.210.0/24</property><!-- 集群所在网段 -->
 
-\<property name=\"clusterHost\"\>192.168.210.30\</property\>\<!\-- 本节点所在IP \--\>
+<property name="clusterHost">192.168.210.30</property><!-- 本节点所在IP -->
 
-\<property name=\"clusterPort\"\>3326\</property\>\<!\-- 集群通信端口 \--\>
+<property name="clusterPort">3326</property><!-- 集群通信端口 -->
 
-\<property name=\"haState\"\>master\</property\>\<!\-- HA角色，主节点：master，备节点：backup (集群模式下，此项无效） \--\>
+<property name="haState">master</property><!-- HA角色，主节点：master，备节点：backup (集群模式下，此项无效） -->
 
-\<property name=\"haNodeHost\"\>\</property\>\<!\-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325） \--\>
+<property name="haNodeHost"></property><!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325） -->
 
-\<property name=\"serverPort\"\>3323\</property\>\<!\-- 服务端口 \--\>
+<property name="serverPort">3323</property><!-- 服务端口 -->
 
-\<property name=\"managerPort\"\>3325\</property\>\<!\-- 管理端口 \--\>
+<property name="managerPort">3325</property><!-- 管理端口 -->
 
-\<property name=\"processors\"\>16\</property\>\<!\-- 处理器数 \--\>
+<property name="processors">16</property><!-- 处理器数 -->
 
 ......（此处省略部分参数，具体以实际server.xml为准）
 
-\</hotdb:server\>
+</hotdb:server>
 
 ##### 计算节点启动脚本
 
@@ -356,37 +356,37 @@ drwxr-xr-x. 2 hotdb hotdb 4096 Aug 19 10:35 utils
 
 \#!/bin/sh
 
-PID_DIR=\"\$HOTDB_HOME\"/run
+PID_DIR="\$HOTDB_HOME"/run
 
-PID_FILE=\"\$PID_DIR\"/hotdb-server.pid
+PID_FILE="\$PID_DIR"/hotdb-server.pid
 
-HA_STARTUP=\"\$HOTDB_HOME\"/bin/keepalived
+HA_STARTUP="\$HOTDB_HOME"/bin/keepalived
 
-DRIVER_DIR=\"\$HOTDB_HOME\"/utils
+DRIVER_DIR="\$HOTDB_HOME"/utils
 
-HOTDB_LOGS=\"\$HOTDB_HOME\"/logs/hotdb.log
+HOTDB_LOGS="\$HOTDB_HOME"/logs/hotdb.log
 
-HOTDB_CONSOLE_LOG=\"\$HOTDB_HOME\"/logs/console.log
+HOTDB_CONSOLE_LOG="\$HOTDB_HOME"/logs/console.log
 
-DRIVER_PACKAGE=\"\$DRIVER_DIR\"/aksusbd-7\*.tar.gz
+DRIVER_PACKAGE="\$DRIVER_DIR"/aksusbd-7*.tar.gz
 
-TMPFILE_DIR=\"\$HOTDB_HOME\"/HotDB-TEMP
+TMPFILE_DIR="\$HOTDB_HOME"/HotDB-TEMP
 
-JAVA_BIN=\"\$HOTDB_HOME\"/../jdk/bin/java
+JAVA_BIN="\$HOTDB_HOME"/../jdk/bin/java
 
-JAVA_VERSION=\"1.7.0_80\"
+JAVA_VERSION="1.7.0_80"
 
 \#with CMS Garbage Collection
 
-JAVA_OPTS=\"-server -Xms4G -Xmx4G -XX:MaxDirectMemorySize=24G\"
+JAVA_OPTS="-server -Xms4G -Xmx4G -XX:MaxDirectMemorySize=24G"
 
 \#with G1 Garbage Collection
 
-\#JAVA_OPTS=\"-server -Xms16G -Xmx16G -XX:MaxDirectMemorySize=24G\"
+\#JAVA_OPTS="-server -Xms16G -Xmx16G -XX:MaxDirectMemorySize=24G"
 
 ......（此处省略部分参数，具体以实际hotdb_server脚本内容为准）
 
-HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
+HOTDB_CLASSPATH="\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes"
 
 ##### 其他配置文件
 
@@ -506,13 +506,13 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 -   **当前主计算节点server.xml配置**
 
-> \<property name=\"haState\"\>master\</property\>\< HA 角色，主节点：master，备节点：backup\>\<property name=\"haNodeHost\"\>\</property\>\<HA 角色，其他节点 IP:PORT\>
+> <property name="haState">master</property>< HA 角色，主节点：master，备节点：backup><property name="haNodeHost"></property><HA 角色，其他节点 IP:PORT>
 
 -   **当前备计算节点server.xml配置**
 
-> \<property name=\"haState\"\>backup\</property\>\< HA 角色，主节点：master，备节点：backup\>
+> <property name="haState">backup</property>< HA 角色，主节点：master，备节点：backup>
 >
-> \<property name=\"haNodeHost\"\>192.168.200.190:3325\</property\>\<HA 角色，其他节点 IP:PORT\>
+> <property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
 >
 > **注意：**上述IP地址需填写当前主计算节点所在服务器IP地址，端口号为当前主计算节点管理端口
 
@@ -530,9 +530,9 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 >
 > vrrp_script check_HotDB Server_process {
 >
-> script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+> script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 >
-> rocess.sh process\"
+> rocess.sh process"
 >
 > interval 5
 >
@@ -550,9 +550,9 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 >
 > code
 >
-> script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+> script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 >
-> rocess.sh connect_master\"
+> rocess.sh connect_master"
 >
 > interval 5
 >
@@ -610,15 +610,15 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 >
 > }
 >
-> notify_master \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+> notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 >
-> k_hotdb_process.sh master_notify_master\"
+> k_hotdb_process.sh master_notify_master"
 >
-> notify_backup \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+> notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 >
-> k_hotdb_process.sh master_notify_backup\"
+> k_hotdb_process.sh master_notify_backup"
 >
-> notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup\"
+> notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
 >
 > }
 
@@ -634,9 +634,9 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 >
 > vrrp_script check_HotDB Server_process {
 >
-> script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+> script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 >
-> rocess.sh process\"
+> rocess.sh process"
 >
 > interval 5
 >
@@ -654,9 +654,9 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 >
 > code
 >
-> script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+> script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 >
-> rocess.sh connect_backup\"
+> rocess.sh connect_backup"
 >
 > interval 5
 >
@@ -712,21 +712,21 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 >
 > }
 >
-> notify_master \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+> notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 >
-> k_hotdb_process.sh backup_notify_master\"
+> k_hotdb_process.sh backup_notify_master"
 >
-> notify_backup \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+> notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 >
-> k_hotdb_process.sh backup_notify_backup\"
+> k_hotdb_process.sh backup_notify_backup"
 >
-> notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup\"
+> notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
 >
 > }
 
 4.  **配置校验正常**
 
--   配置校验正常通过，可在管理平台中"配置-\>配置校验"菜单中检测配置库配置是否正确
+-   配置校验正常通过，可在管理平台中"配置->配置校验"菜单中检测配置库配置是否正确
 
 -   计算节点内存信息与配置库保持一致，可通过管理平台"动态加载"功能或登录管理端口（默认3325）执行reload @\@config命令确保两者信息一致
 
@@ -790,7 +790,7 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 \## vi server.xml
 
-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--配置内容\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--
+-----------------------------------配置内容-----------------------------------------
 
 **注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中[更新server.xml配置文件](#server.xml配置文件)说明。
 
@@ -802,7 +802,7 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 \## vi hotdb_server
 
-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--配置内容\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--
+-----------------------------------配置内容-----------------------------------------
 
 **注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中更新[计算节点启动脚本](#计算节点启动脚本)说明。
 
@@ -874,7 +874,7 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 \## vi server.xml
 
-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--配置内容\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--
+-----------------------------------配置内容-----------------------------------------
 
 **注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中[更新server.xml配置文件](#server.xml配置文件)说明。
 
@@ -886,7 +886,7 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 \## vi hotdb_server
 
-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--配置内容\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\--
+-----------------------------------配置内容-----------------------------------------
 
 **注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中更新[计算节点启动脚本](#计算节点启动脚本)说明。
 
@@ -910,7 +910,7 @@ HOTDB_CLASSPATH=\"\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes\"
 
 **当前主（有VIP）计算节点server.xml配置修改**
 
-\<property name=\"haState\"\>master\</property\>\< HA 角色，主节点：master，备节点：backup\>\<property name=\"haNodeHost\"\>\</property\>\<HA 角色，其他节点 IP:PORT\>
+<property name="haState">master</property>< HA 角色，主节点：master，备节点：backup><property name="haNodeHost"></property><HA 角色，其他节点 IP:PORT>
 
 **当前备（无VIP）计算节点keepalived.conf配置修改**
 
@@ -924,9 +924,9 @@ router_id HotDB Server-ha
 
 vrrp_script check_HotDB Server_process {
 
-script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 
-rocess.sh process\"
+rocess.sh process"
 
 interval 5
 
@@ -944,9 +944,9 @@ state
 
 code
 
-script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 
-rocess.sh connect_master\"
+rocess.sh connect_master"
 
 interval 5
 
@@ -1004,15 +1004,15 @@ virtual_ipaddress {
 
 }
 
-notify_master \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 
-k_hotdb_process.sh master_notify_master\"
+k_hotdb_process.sh master_notify_master"
 
-notify_backup \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 
-k_hotdb_process.sh master_notify_backup\"
+k_hotdb_process.sh master_notify_backup"
 
-notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup\"
+notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
 
 }
 
@@ -1020,9 +1020,9 @@ notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.s
 
 **当前备计算节点server.xml配置**
 
-\<property name=\"haState\"\>backup\</property\>\< HA 角色，主节点：master，备节点：backup\>
+<property name="haState">backup</property>< HA 角色，主节点：master，备节点：backup>
 
-\<property name=\"haNodeHost\"\>192.168.200.190:3325\</property\>\<HA 角色，其他节点 IP:PORT\>
+<property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
 
 **注意：**上述IP地址需填写当前主计算节点所在服务器IP地址，端口号为当前主计算节点管理端口
 
@@ -1038,9 +1038,9 @@ router_id HotDB Server-ha
 
 vrrp_script check_HotDB Server_process {
 
-script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 
-rocess.sh process\"
+rocess.sh process"
 
 interval 5
 
@@ -1058,9 +1058,9 @@ state
 
 code
 
-script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 
-rocess.sh connect_backup\"
+rocess.sh connect_backup"
 
 interval 5
 
@@ -1116,15 +1116,15 @@ virtual_ipaddress {
 
 }
 
-notify_master \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 
-k_hotdb_process.sh backup_notify_master\"
+k_hotdb_process.sh backup_notify_master"
 
-notify_backup \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 
-k_hotdb_process.sh backup_notify_backup\"
+k_hotdb_process.sh backup_notify_backup"
 
-notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup\"
+notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
 
 }
 

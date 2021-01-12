@@ -28,7 +28,7 @@ HotDB Server集群部署对服务器、操作系统、依赖软件等有一定�
 
 **推荐配置：**
 
-硬件环境配置推荐参考《分布式事务数据库产品HotDB Server硬件配置推荐\-\--热璞科技》
+硬件环境配置推荐参考《分布式事务数据库产品HotDB Server硬件配置推荐---热璞科技》
 
 集群运行环境配置要求与推荐参考《分布式事务数据库HotDB Server-【集群环境要求说明】》
 
@@ -80,7 +80,7 @@ JDK          JDK1.7_80
 
 - 执行下列命令，将 JDK 安装到/usr/local/目录下：
 
-\## rpm -ivh jdk-7u80-linux-x64.rpm \--prefix=/usr/java/
+\## rpm -ivh jdk-7u80-linux-x64.rpm --prefix=/usr/java/
 
 - 配置JDK环境变量
 
@@ -116,7 +116,7 @@ JDK1.8的安装，推荐使用OpenJDK8安装包，其操作步骤推荐如下：
 
 **查看服务器glibc安装情况：**（有输出glibc版本信息为正常）
 
-\## rpm -q glibc \|egrep \'glibc.\*i.86.\*\'
+\## rpm -q glibc |egrep 'glibc.*i.86.*'
 
 2. **安装配置库**
 
@@ -140,7 +140,7 @@ HotDB Server能正常启动并提供服务需要通过热璞科技正规的授�
 
 **配置库表结构在计算节点的安装目录conf下，使用下列命令可导入表结构到配置库中。（导入表结构，会创建配置库hotdb_config）**
 
-\#mysql --uroot \--socket=/data/mysqldata3306/sock/mysql.sock \< /usr/local/hotdb/hotdb-server/conf/hotdb_config.sql
+\#mysql --uroot --socket=/data/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-server/conf/hotdb_config.sql
 
 5. **添加配置库账户**
 
@@ -148,11 +148,11 @@ HotDB Server能正常启动并提供服务需要通过热璞科技正规的授�
 
 **创建hotdb_config账户**
 
-create user \'hotdb_config\'@\'%\' identified by \'hotdb_config\';
+create user 'hotdb_config'@'%' identified by 'hotdb_config';
 
 **赋予权限**
 
-GRANT select,insert,update,delete,create,drop,index,alter,reload,references,create temporary tables,super,lock tables,replication slave,replication client ON \*.\* TO \'hotdb_config\'@\'%\';
+GRANT select,insert,update,delete,create,drop,index,alter,reload,references,create temporary tables,super,lock tables,replication slave,replication client ON *.* TO 'hotdb_config'@'%';
 
 6. **修改计算节点配置文件**
 
@@ -160,15 +160,15 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,references,crea
 
 \#vi /usr/local/hotdb/hotdb-server/conf/server.xml
 
-\<property name=\"url\"\>jdbc:mysql://192.168.200.1:3306/hotdb_config\</property\>\<!\-- 配置库地址 \--\>
+<property name="url">jdbc:mysql://192.168.200.1:3306/hotdb_config</property><!-- 配置库地址 -->
 
-\<property name=\"username\"\>hotdb_config\</property\>\<!\-- 配置库用户名 \--\>
+<property name="username">hotdb_config</property><!-- 配置库用户名 -->
 
-\<property name=\"password\"\>hotdb_config\</property\>\<!\-- 配置库密码 \--\>
+<property name="password">hotdb_config</property><!-- 配置库密码 -->
 
-\<property name=\"serverPort\"\>3323\</property\>\<!\-- 服务端口 \--\>
+<property name="serverPort">3323</property><!-- 服务端口 -->
 
-\<property name=\"managerPort\"\>3325\</property\>\<!\-- 管理端口 \--\>
+<property name="managerPort">3325</property><!-- 管理端口 -->
 
 **注：**若配置库与计算节点安装在同一服务器上，server.xml中的配置库IP地址也需要写具体的IP值，不可用127.0.0.1代替。
 
@@ -184,7 +184,7 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,references,crea
 
 **查看计算节点是否启动成功**
 
-\#jps \| grep -i HotdbStartup
+\#jps | grep -i HotdbStartup
 
 19833 HotdbStartup
 
@@ -216,15 +216,15 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,references,crea
 
 **创建hotdb_cloud账户**
 
-create user \'hotdb_cloud\'@\'%\' identified by \'hotdb_cloud\';
+create user 'hotdb_cloud'@'%' identified by 'hotdb_cloud';
 
 **赋予权限**
 
-GRANT select,insert,update,delete,create,drop,index,alter,references ON \*.\* TO \'hotdb_cloud\'@\'%\';
+GRANT select,insert,update,delete,create,drop,index,alter,references ON *.* TO 'hotdb_cloud'@'%';
 
 **导入管理平台配置到配置库中**
 
-\#mysql -uroot \--socket=/data/mysqldata3306/sock/mysql.sock \< /usr/local/hotdb/hotdb-management/doc/hotdb_cloud_config.sql
+\#mysql -uroot --socket=/data/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-management/doc/hotdb_cloud_config.sql
 
 3. **修改管理平台配置文件**
 
@@ -274,7 +274,7 @@ language=English/Chinese
 
 **查看服务是否启动成功（启动成功后可在浏览器中打开并登陆管理平台）**
 
-\#jps \| grep -i hotdb-management
+\#jps | grep -i hotdb-management
 
 6595 hotdb-management-xxx.jar
 
@@ -310,7 +310,7 @@ language=English/Chinese
 
 **查看是否安装命令：**
 
-\## rpm -qa\|grep mariadb
+\## rpm -qa|grep mariadb
 
 mariadb-libs-5.5.44-2.el7.centos.x86_64
 
@@ -326,7 +326,7 @@ mariadb-libs-5.5.44-2.el7.centos.x86_64
 
 **或者可以执行**
 
-\#yum -y localinstall MySQL-\*.rpm
+\#yum -y localinstall MySQL-*.rpm
 
 4. **MySQL配置文件**
 
@@ -354,7 +354,7 @@ log = /data/multi.log
 
 \[mysqld\]
 
-\#\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*common parameters\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+\#***********************************common parameters******************************
 
 basedir=/usr
 
@@ -382,7 +382,7 @@ lower_case_table_names=1
 
 explicit_defaults_for_timestamp
 
-sql_mode=\'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION\'
+sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION'
 
 user=mysql
 
@@ -438,7 +438,7 @@ query_cache_size=0
 
 \#query_cache_limit=1M
 
-\#\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* Logs related settings \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+\#******************************* Logs related settings ***************************
 
 \#general_log
 
@@ -476,7 +476,7 @@ sync_binlog=0
 
 expire_logs_days=10
 
-\#\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* Replication related settings \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+\#******************************* Replication related settings *********************
 
 server-id= 3306
 
@@ -496,7 +496,7 @@ innodb_support_xa=1
 
 sysdate-is-now
 
-\#\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* MyISAM Specific options \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+\#******************************* MyISAM Specific options ***************************
 
 key_buffer_size=8M
 
@@ -512,7 +512,7 @@ myisam-recover-options=default
 
 read_buffer_size=1M
 
-\#\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\* INNODB Specific options \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+\#***************************** INNODB Specific options ****************************
 
 innodb_use_sys_malloc=1
 
@@ -598,7 +598,7 @@ default-character-set=utf8
 
 no-auto-rehash
 
-prompt=\"\\\\u@\\\\h : \\\\d \\\\r:\\\\m:\\\\s\> \"
+prompt="\\\\u@\\\\h : \\\\d \\\\r:\\\\m:\\\\s> "
 
 default-character-set=utf8
 
@@ -646,9 +646,9 @@ interactive-timeout
 
 执行mysql_install_db初始系统数据库到指定目录。
 
-\#mysql_install_db \--defaults-file=/etc/my.cnf \--user=mysql
+\#mysql_install_db --defaults-file=/etc/my.cnf --user=mysql
 
-\--datadir=/data/mysqldata3306/mydata
+--datadir=/data/mysqldata3306/mydata
 
 7. **启动配置库MySQL实例**
 
@@ -660,7 +660,7 @@ interactive-timeout
 
 **使用netsat命令检测MySQL是否启动成功**
 
-\#netstat -npl \|grep mysql
+\#netstat -npl |grep mysql
 
 **命令有输出即代表启动成功**
 
@@ -682,11 +682,11 @@ interactive-timeout
 
 创建数据库用户
 
-\#create user \'hotdb_datasource\'@\'%\' identified by \'hotdb_datasource\';
+\#create user 'hotdb_datasource'@'%' identified by 'hotdb_datasource';
 
 用户赋权
 
-\#GRANT select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,create temporary tables,alter routine,execute,event ON \*.\* TO \'hotdb_datasource\'@\'%\';
+\#GRANT select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,create temporary tables,alter routine,execute,event ON *.* TO 'hotdb_datasource'@'%';
 
 **注意：**当存储节点的MySQL版本大于等于8.0时，需要多加一个权限"xa_recover_admin"
 
@@ -694,11 +694,11 @@ interactive-timeout
 
 创建数据库用户
 
-\#create user \'dbbackup\'@\'%\' identified by \' dbbackup\';
+\#create user 'dbbackup'@'%' identified by ' dbbackup';
 
 用户赋权
 
-\## GRANT select,insert,update,delete,create,drop,index,alter,reload,process,references,super,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,event ON \*.\* TO \'dbbackup\'@\'127.0.0.1\';
+\## GRANT select,insert,update,delete,create,drop,index,alter,reload,process,references,super,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,event ON *.* TO 'dbbackup'@'127.0.0.1';
 
 ##### 备份程序
 
@@ -732,7 +732,7 @@ interactive-timeout
 
 启动成功后会打印以下日志
 
-INFO: Start HotDB-backup \...
+INFO: Start HotDB-backup ...
 
 INFO: HotDB-backup start successed.
 
@@ -742,7 +742,7 @@ INFO: HotDB-backup start successed.
 
 关闭成功后会打印以下日志
 
-INFO: Stopping HotDB-backup \...
+INFO: Stopping HotDB-backup ...
 
 INFO: HotDB-backup stopped success.
 
@@ -831,19 +831,19 @@ HA计算节点部署示意图
 
 主计算节点192.168.200.190上server.xml配置修改
 
-\<property name=\"haState\"\>master\</property\>\< HA 角色，主节点：master，备节点：backup\>
+<property name="haState">master</property>< HA 角色，主节点：master，备节点：backup>
 
-\<property name=\"haNodeHost\"\>\</property\>\<HA 角色，其他节点 IP:PORT\>
+<property name="haNodeHost"></property><HA 角色，其他节点 IP:PORT>
 
-\<property name=\"VIP\"\>192.168.200.140\</property\>\<虚拟IP地址\>
+<property name="VIP">192.168.200.140</property><虚拟IP地址>
 
 备计算节点192.168.200.191上server.xml配置修改
 
-\<property name=\"haState\"\>backup\</property\>\< HA 角色，主节点：master，备节点：backup\>
+<property name="haState">backup</property>< HA 角色，主节点：master，备节点：backup>
 
-\<property name=\"haNodeHost\"\>192.168.200.190:3325\</property\>\<HA 角色，其他节点 IP:PORT\>
+<property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
 
-\<property name=\"VIP\"\>192.168.200.140\</property\>\<虚拟IP地址\>
+<property name="VIP">192.168.200.140</property><虚拟IP地址>
 
 **说明：**
 
@@ -887,9 +887,9 @@ router_id HotDB Server-ha
 
 vrrp_script check_HotDB Server_process {
 
-script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 
-rocess.sh process\"
+rocess.sh process"
 
 interval 5
 
@@ -907,9 +907,9 @@ state
 
 code
 
-script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 
-rocess.sh connect_master\"
+rocess.sh connect_master"
 
 interval 5
 
@@ -967,15 +967,15 @@ virtual_ipaddress {
 
 }
 
-notify_master \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 
-k_hotdb_process.sh master_notify_master\"
+k_hotdb_process.sh master_notify_master"
 
-notify_backup \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 
-k_hotdb_process.sh master_notify_backup\"
+k_hotdb_process.sh master_notify_backup"
 
-notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup\"
+notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
 
 }
 
@@ -991,9 +991,9 @@ router_id HotDB Server-ha
 
 vrrp_script check_HotDB Server_process {
 
-script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 
-rocess.sh process\"
+rocess.sh process"
 
 interval 5
 
@@ -1011,9 +1011,9 @@ state
 
 code
 
-script \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
 
-rocess.sh connect_backup\"
+rocess.sh connect_backup"
 
 interval 5
 
@@ -1069,15 +1069,15 @@ virtual_ipaddress {
 
 }
 
-notify_master \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 
-k_hotdb_process.sh backup_notify_master\"
+k_hotdb_process.sh backup_notify_master"
 
-notify_backup \"/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
 
-k_hotdb_process.sh backup_notify_backup\"
+k_hotdb_process.sh backup_notify_backup"
 
-notify_fault \"/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup\"
+notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
 
 }
 
@@ -1153,7 +1153,7 @@ NDB SQL服务可用于在分布式环境下帮助计算节点完成相对复杂�
 
 - 与NDB SQL服务对应的计算节点版本必须是V2.5.2及以上版本，否则不支持NDB SQL服务。
 
-- 推荐NDB SQL服务与计算节点一次性跟随部署，若目前已有计算节点需要追加NDB SQL服务则需要严格注意：\--install-ntpd、\--ntpdate-server-ip、\--ntpdate-server-host传参问题，需要同当前部署的集群同步时间配置一致。
+- 推荐NDB SQL服务与计算节点一次性跟随部署，若目前已有计算节点需要追加NDB SQL服务则需要严格注意：--install-ntpd、--ntpdate-server-ip、--ntpdate-server-host传参问题，需要同当前部署的集群同步时间配置一致。
 
 2. **计算节点与NDB SQL一同部署过程说明**
 
@@ -1163,11 +1163,11 @@ NDB SQL服务可用于在分布式环境下帮助计算节点完成相对复杂�
 
 - 登录主计算节点服务器，进入一键部署默认安装目录执行：
 
-sh hotdbinstall_v2.42.sh \--install-hotdb-server=yes \--hotdb-version=2.5 \--install-ndbsql=yes \--install-ntpd=yes \--ntpdate-server-host=182.92.12.11
+sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --install-ntpd=yes --ntpdate-server-host=182.92.12.11
 
 - 登录备计算节点服务器，进入一键部署默认安装目录执行：
 
-sh hotdbinstall_v2.42.sh \--install-hotdb-server=yes \--hotdb-version=2.5 \--install-ndbsql=yes \--ntpdate-server-host=主计算节点服务器IP地址
+sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --ntpdate-server-host=主计算节点服务器IP地址
 
 3. **单独部署NDB SQL过程说明**
 
@@ -1177,7 +1177,7 @@ sh hotdbinstall_v2.42.sh \--install-hotdb-server=yes \--hotdb-version=2.5 \--ins
 
 **示例：**
 
-sh hotdbinstall_v2.xx.sh \--install-ndbsql=yes --ntpdate-server-host=182.92.12.11
+sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
 
 **注意：**
 
@@ -1253,7 +1253,7 @@ host默认0.0.0.0，无需修改；port默认3330，不建议修改，除非被�
 
 \#sh hotdb_listener
 
-Usage: sh hotdb_listener \[start\|stop\|restart\]
+Usage: sh hotdb_listener \[start|stop|restart\]
 
 example:
 
@@ -1319,13 +1319,13 @@ HotDB-Listener restart : sh hotdb_listener restart
 
 \#mkdir /usr/local/hotdb
 
-\#tar -zxvf auto_hotdbinstall_HotDB2.\*.tar.gz -C /usr/local/hotdb/
+\#tar -zxvf auto_hotdbinstall_HotDB2.*.tar.gz -C /usr/local/hotdb/
 
 2. **执行安装脚本安装管理平台**
 
 \#cd /usr/local/hotdb/Install_Package/
 
-\#sh hotdbinstall_v\*.sh \--ntpdate-server-ip=182.92.12.11 \--mysql-version=5.7 \--hotdb-config-port=3316 \--hotdb-version=2.5 \--install-hotdb-server-management=yes
+\#sh hotdbinstall_v*.sh --ntpdate-server-ip=182.92.12.11 --mysql-version=5.7 --hotdb-config-port=3316 --hotdb-version=2.5 --install-hotdb-server-management=yes
 
 3. **查看安装日志获取安装进度**
 
@@ -1345,7 +1345,7 @@ ings
 
 启动成功后 打开浏览器输入：
 
-\|admin）http://服务器的IP地址:3324/page/index.html成功打开页面后登录账号到管理员界面。（管理员用户名密码默认为 admin
+|admin）http://服务器的IP地址:3324/page/index.html成功打开页面后登录账号到管理员界面。（管理员用户名密码默认为 admin
 
 ##### 集群部署功能说明
 
@@ -1353,7 +1353,7 @@ ings
 
 ###### 添加集群部署任务
 
-admin用户登录管理平台后进入"集群管理-\>计算节点集群"，点击【集群部署】按钮进入集群部署功能页面。
+admin用户登录管理平台后进入"集群管理->计算节点集群"，点击【集群部署】按钮进入集群部署功能页面。
 
 ![](assets/install-and-deploy/image11.png)
 
@@ -1617,7 +1617,7 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 
 ###### 添加部署任务
 
-通过admin用户登录到管理平台后，选择"计算节点集群-\>单机部署"点击【添加部署任务】
+通过admin用户登录到管理平台后，选择"计算节点集群->单机部署"点击【添加部署任务】
 
 ![](assets/install-and-deploy/image39.png)
 
@@ -1869,62 +1869,62 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 
 #### 部署脚本说明
 
-脱离管理平台您也可以直接使用安装脚本进行安装，在hotdbinstall.sh脚本后添加\--xxx=xxx的方式使用
+脱离管理平台您也可以直接使用安装脚本进行安装，在hotdbinstall.sh脚本后添加--xxx=xxx的方式使用
 
 ##### 脚本参数说明
 
 ------------------------------------ ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 **参数名称**                         **参数说明**
-dry-run                              只做检查，不做任何修改，可选范围\"yes\" \"no\"，默认\"no\"
-hotdb-version                        指定HotDB大版本号，可选范围\"2.3\" \"2.4\" \"zabbix\"，默认\"2.4\"
-install-hotdb-server                 是否安装HotDB-server，可选范围\"yes\" \"no\"，默认\"no\"
-install-ndbsql                       是否安装ndbsql，可选范围\"yes\" \"no\"，默认\"no\"
-install-hotdb-listener               是否安装HotDB-listener，可选范围\"yes\" \"no\"，默认\"no\"
-\--listener-heap-mem-size-gb         如果指定，会帮助将HotDB Listener启动脚本中堆内存大小由4G修改为指定值，默认不修改
-\--listener-max-direct-mem-size-gb   如果指定，会帮助将HotDB Listener启动脚本中直接内存大小由24G修改为指定值，默认不修改
+dry-run                              只做检查，不做任何修改，可选范围"yes" "no"，默认"no"
+hotdb-version                        指定HotDB大版本号，可选范围"2.3" "2.4" "zabbix"，默认"2.4"
+install-hotdb-server                 是否安装HotDB-server，可选范围"yes" "no"，默认"no"
+install-ndbsql                       是否安装ndbsql，可选范围"yes" "no"，默认"no"
+install-hotdb-listener               是否安装HotDB-listener，可选范围"yes" "no"，默认"no"
+--listener-heap-mem-size-gb         如果指定，会帮助将HotDB Listener启动脚本中堆内存大小由4G修改为指定值，默认不修改
+--listener-max-direct-mem-size-gb   如果指定，会帮助将HotDB Listener启动脚本中直接内存大小由24G修改为指定值，默认不修改
 hotdb-use-g1                         如果指定，会帮助将hotdb启动脚本修改为使用G1垃圾回收器，默认不修改
 hotdb-heap-mem-size-gb               如果指定，会帮助将hotdb启动脚本中堆内存大小由4G修改为指定值，默认不修改
 hotdb-max-direct-mem-size-gb         如果指定，会帮助将hotdb启动脚本中直接内存大小由24G修改为指定值，默认不修改
-install-hotdb-server-management      是否安装HotDB-server-management，可选范围\"yes\" \"no\"，默认\"no\"
-install-hotdb-backup                 是否安装HotDB-backup，可选范围\"yes\" \"no\"，默认\"no\"
-mysql-version                        指定MySQL大版本号，可选范围\"5.6\" \"5.7\"，默认\"5.6\"
-mysql-port-list                      指定要安装的MySQL数据源端口列表，逗号分隔，要求递增顺序排列，示例：\"3306,3307,3308,3309\"，默认为空
+install-hotdb-server-management      是否安装HotDB-server-management，可选范围"yes" "no"，默认"no"
+install-hotdb-backup                 是否安装HotDB-backup，可选范围"yes" "no"，默认"no"
+mysql-version                        指定MySQL大版本号，可选范围"5.6" "5.7"，默认"5.6"
+mysql-port-list                      指定要安装的MySQL数据源端口列表，逗号分隔，要求递增顺序排列，示例："3306,3307,3308,3309"，默认为空
 hotdb-config-port                    指定要安装的配置库端口列表，不可以和MySQL数据源端口冲突，默认为空
-hotdb-config-init                    是否要在hotdb-config-port指定的实例初始化hotdb_config库，可选范围\"yes\" \"no\"，默认安装HotDB-server时为yes，不安装HotDB-server时为no。
+hotdb-config-init                    是否要在hotdb-config-port指定的实例初始化hotdb_config库，可选范围"yes" "no"，默认安装HotDB-server时为yes，不安装HotDB-server时为no。
 mysql-data-diskname                  指定用于MySQL数据目录的磁盘设备名称，如果该设备没有挂载，且没有被格式化过，将自动格式化此设备并挂载到数据目录，默认为空
-mysql-data-rootdir                   指定要使用的MySQL数据目录根目录，默认\"/data\"，必须是绝对路径
-rename-datadir-before-initdb         指定在初始化数据库前，是否重命名可能存在的旧数据目录，默认为\"yes\"
+mysql-data-rootdir                   指定要使用的MySQL数据目录根目录，默认"/data"，必须是绝对路径
+rename-datadir-before-initdb         指定在初始化数据库前，是否重命名可能存在的旧数据目录，默认为"yes"
 server-id-perfix                     指定server-id使用的前缀，要求为小于429496的数字，默认自动计算，但不保证绝对无冲突
-character-set-server                 指定字符集，可选范围\"latin1\" \"gbk\" \"utf8\" \"utf8mb4\"，默认\"utf8mb4\"
-collation-server                     指定校对集，可选范围\"latin1_swedish_ci\" \"latin1_bin\" \"gbk_chinese_ci\" \"gbk_bin\" \"utf8_general_ci\",\"utf8_bin\" \"utf8mb4_general_ci\" \"utf8mb4_bin\"，默认值为配置的字符集的默认校对集
+character-set-server                 指定字符集，可选范围"latin1" "gbk" "utf8" "utf8mb4"，默认"utf8mb4"
+collation-server                     指定校对集，可选范围"latin1_swedish_ci" "latin1_bin" "gbk_chinese_ci" "gbk_bin" "utf8_general_ci","utf8_bin" "utf8mb4_general_ci" "utf8mb4_bin"，默认值为配置的字符集的默认校对集
 innodb-buffer-pool-size-mb           单位为MB的innodb-buffer-pool-size大小，默认自动计算
 innodb-log-file-size-mb              单位为MB的innodb-log-file-size大小，默认自动计算
-innodb-data-file-size-mb             单位为MB的ibdata文件大小，默认\"4096\"
+innodb-data-file-size-mb             单位为MB的ibdata文件大小，默认"4096"
 innodb-io-capacity                   指定innodb-io-capacity的大小，默认自动计算
-innodb-flush-log-at-trx-commit       指定innodb-flush-log-at-trx-commit设置，默认\"2\"
-sync-binlog                          指定sync-binlog的设置，默认\"10\"
-binlog-format                        指定binlog-format的设置，可选范围\"MIXED\" \"ROW\"，默认\"MIXED\"
-gtid-mode                            是否启用gtid，可选范围\"on\" \"off\"，默认\"on\"
-rpl-semi-sync-enabled                是否启动半同步复制，可选范围\"on\" \"off\"，默认\"on\"
-mgr-group-name-list                  MySQL端口号:MGR组UUID:MGR本地端口号列表，逗号分隔，如果提供该参数，将为对应端口打开MGR，例如\"3306:540c2b46-5d73-11e8-ad9b-00a0c9000000:33060,3308:5f5c1e2d-5d73-11e8-ad9b-00a0c9000000:33080\"，默认为空。（注意，仍然需要在mysql-port-list、hotdb-config-port中指定欲创建的MySQL实例）
+innodb-flush-log-at-trx-commit       指定innodb-flush-log-at-trx-commit设置，默认"2"
+sync-binlog                          指定sync-binlog的设置，默认"10"
+binlog-format                        指定binlog-format的设置，可选范围"MIXED" "ROW"，默认"MIXED"
+gtid-mode                            是否启用gtid，可选范围"on" "off"，默认"on"
+rpl-semi-sync-enabled                是否启动半同步复制，可选范围"on" "off"，默认"on"
+mgr-group-name-list                  MySQL端口号:MGR组UUID:MGR本地端口号列表，逗号分隔，如果提供该参数，将为对应端口打开MGR，例如"3306:540c2b46-5d73-11e8-ad9b-00a0c9000000:33060,3308:5f5c1e2d-5d73-11e8-ad9b-00a0c9000000:33080"，默认为空。（注意，仍然需要在mysql-port-list、hotdb-config-port中指定欲创建的MySQL实例）
 mgr-group-local-ip                   MGR本地端口绑定的本地IP地址，默认自动计算。
-mgr-group-seeds-list                 MySQL端口号:MGR组成员IP:端口逗号分隔列表，斜杠分隔，如果提供该参数，将在my.cnf文件中对应端口添加该值，默认为空，例如\"3306:192.168.200.101:33060,192.168.200.102:33060,192.168.200.103:33060/3308:192.168.200.101:33080,192.168.200.102:33080,192.168.200.103:33080\"
-creat-hotdbroot-in-mysql             是否在MySQL中创建hotdb_root用户，用户拥有所有权限，并且可以从任意位置连接，默认密码hotdb_root，可选范围\"yes\" \"no\"，默认\"no\"
-install-keepalived                   是否安装keepalive，可选范围\"master\" \"backup\" \"no\"，默认\"no\"
+mgr-group-seeds-list                 MySQL端口号:MGR组成员IP:端口逗号分隔列表，斜杠分隔，如果提供该参数，将在my.cnf文件中对应端口添加该值，默认为空，例如"3306:192.168.200.101:33060,192.168.200.102:33060,192.168.200.103:33060/3308:192.168.200.101:33080,192.168.200.102:33080,192.168.200.103:33080"
+creat-hotdbroot-in-mysql             是否在MySQL中创建hotdb_root用户，用户拥有所有权限，并且可以从任意位置连接，默认密码hotdb_root，可选范围"yes" "no"，默认"no"
+install-keepalived                   是否安装keepalive，可选范围"master" "backup" "no"，默认"no"
 keepalived-vip-with-perfix           如果指定，会帮助将keepalive配置中的vip由192.168.200.140/24替换为该值，默认不修改
 keepalived-virtual-router-id         如果指定，会帮助将keepalive配置中的virtual-router-id由151替换为该值，默认不修改
 keepalived-net-interface-name        如果指定，会帮助将keepalive配置中的vip设备名称由eth0:1替换为该值，默认不修改
-install-lvs                          是否安装lvs服务端，可选范围\"master\" \"backup\" \"no\"，默认\"no\"
+install-lvs                          是否安装lvs服务端，可选范围"master" "backup" "no"，默认"no"
 lvs-vip-with-perfix                  如果指定，会帮助将lvs配置中的vip由192.168.56.203/24替换为该值，默认不修改
 lvs-port                             如果指定，会帮助将lvs配置中的监听端口由3306替换为该值，默认不修改，端口需要和HotDB集群的数据服务端口相同
 lvs-virtual-router-id                如果指定，会帮助将lvs配置中的virtual-router-id由51替换为该值，默认不修改
 lvs-net-interface-name               如果指定，会帮助将lvs配置中的vip设备名称由eth1:2替换为该值，默认不修改
-lvs-real-server-list                 lvs后端HotDB服务器IP:数据服务端口:管理端口列表，逗号分隔，例如\"192.168.0.1:3323:3325,192.168.0.2:4323:4325\"，默认为空
-lvs-real-server-user                 lvs健康检查脚本连接后端HotDB服务器管理端口使用的用户名，默认\"root\"
-lvs-real-server-password             lvs健康检查脚本连接后端HotDB服务器管理端口使用的用密码，默认\"root\"
-lvs-real-server-startup-type         作为lvs的realserver时，服务器相关调整的配置方式，可选范围\"no\" \"config\" \"service\" 默认\"no\"
-install-ntpd                         是否安装ntpd，可选范围\"yes\" \"no\"，如果安装HotDB，则默认安装ntpd，否则默认不安装。注意，一个HotDB集群里面，应当只有一个ntpd；HotDB备机应当向HotDB主机同步时间。如果内网有ntp源，则不必安装ntpd。
+lvs-real-server-list                 lvs后端HotDB服务器IP:数据服务端口:管理端口列表，逗号分隔，例如"192.168.0.1:3323:3325,192.168.0.2:4323:4325"，默认为空
+lvs-real-server-user                 lvs健康检查脚本连接后端HotDB服务器管理端口使用的用户名，默认"root"
+lvs-real-server-password             lvs健康检查脚本连接后端HotDB服务器管理端口使用的用密码，默认"root"
+lvs-real-server-startup-type         作为lvs的realserver时，服务器相关调整的配置方式，可选范围"no" "config" "service" 默认"no"
+install-ntpd                         是否安装ntpd，可选范围"yes" "no"，如果安装HotDB，则默认安装ntpd，否则默认不安装。注意，一个HotDB集群里面，应当只有一个ntpd；HotDB备机应当向HotDB主机同步时间。如果内网有ntp源，则不必安装ntpd。
 ntpdate-server-ip                    配置时间同步的ip地址，该参数与ntpdate-server-host必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。
 ntpdate-server-host                  配置时间同步的主机地址，允许为域名或ip，脚本不会对该参数做任何处理与检查，需要依赖调用者保证正确性，该参数与ntpdate-server-ip必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。
 
@@ -1934,23 +1934,23 @@ ntpdate-server-host                  配置时间同步的主机地址，允许�
 
 参数的组合使用：参数名=值+空格+参数名=值 ，例如：
 
-\--hotdb-heap-mem-size-gb=1 \--hotdb-max-direct-mem-size-gb=1 \--ntpdate-server-ip=192
+--hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192
 
-.168.200.140 \--rpl-semi-sync-enabled=on \--mysql-version=5.7 \--hotdb-config-port=3316 \--install-ntpd=yes \--install-hotdb-server=yes \--hotdb-version=2.5 \--install-hotdb-backup=yes \--mysql-port-list=3307,3308 \--install-hotdb-server-management=yes
+.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
 
 脚本安装存储节点监听程序：
 
-\--hotdb-heap-mem-size-gb=1 \--hotdb-max-direct-mem-size-gb=1 \--ntpdate-server-ip=192
+--hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192
 
-.168.200.140 \--rpl-semi-sync-enabled=on \--mysql-version=5.7 \--hotdb-config-port=3316 \--install-ntpd=yes \--install-hotdb-server=yes \--install-hotdb-listener=yes \--hotdb-version=2.5 \--install-hotdb-backup=yes \--mysql-port-list=3307,3308 \--install-hotdb-server-management=yes
+.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --install-hotdb-listener=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
 
 运行脚本使用方法：
 
 sh -x 脚本名称.sh+空格+参数串
 
-sh -x hotdbinstall_v\*.sh \--hotdb-heap-mem-size-gb=1 \--hotdb-max-direct-mem-size-gb=1
+sh -x hotdbinstall_v*.sh --hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1
 
-\--ntpdate-server-ip=192.168.200.140 \--rpl-semi-sync-enabled=on \--mysql-version=5.6 \--hotdb-config-port=3316 \--install-ntpd=yes \--install-hotdb-server=yes \--hotdb-version=2.4 \--install-hotdb-backup=yes \--mysql-port-list=3307,3308 \--install-hotdb-server-management=yes
+--ntpdate-server-ip=192.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.6 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.4 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
 
 ##### 脚本其他说明
 
