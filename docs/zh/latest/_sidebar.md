@@ -3,8 +3,8 @@
   * [简介](introduce.md)<!--内容来自：https://www.hotdb.com/server-->
   * [产品白皮书](white-paper.md)<!--内容来自：分布式事务数据库HotDB Server产品白皮书[v2.5.6].doc-->
   * [What's New](whats-new.md)
-* **快速开始**
-  * [快速开始指南](quick-start-guide.md)
+* **快速上手**
+  * [快速上手指南](quick-start-guide.md)
   * [基本操作](basic-operations.md)
 * **安装部署及升级**
   * [安装部署](install-and-deploy.md)<!--内容来自：分布式事务数据库HotDB Server-v2.5.6.1【安装部署】功能使用手册v1.0.doc-->

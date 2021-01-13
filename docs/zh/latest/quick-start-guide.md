@@ -1,4 +1,4 @@
-# 快速开始手册
+# 快速上手指南
 
 ## 快速使用说明
 
@@ -67,9 +67,7 @@ tail -f /usr/local/hotdb/Install_Package/hotdbinstall.log
 
 浏览器打开管理平台。
 
-启动成功后，打开浏览器输入：`http://服务器的IP地址:3324/page/index.html`，成功打开页面后登录账号到管理员界面。
-
-（管理员用户名密码默认为 admin/admin）
+启动成功后，打开浏览器输入：`http://服务器的IP地址:3324/page/index.html`，成功打开页面后登录账号到管理员界面。（管理员用户名密码默认为 admin/admin）
 
 ### 部署数据库集群
 

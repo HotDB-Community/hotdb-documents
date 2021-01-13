@@ -22,16 +22,18 @@
     body {
       font-family: "Source Sans Pro", Arial, sans-serif;
     }
+    pre>code{
+      padding-top: 1em;
+      padding-bottom: 1em;
+    }
     .app-name {
       font-weight: bold !important;
     }
     .app-nav {
       position: fixed;
       width: 100%;
-      top: 0;
       min-height: 60px;
-      margin-top: 0;
-      /*margin: 0 0 0 0 !important;*/
+      margin: 0 0 0 0 !important;
       padding: 10px 75px 10px 75px !important;
       z-index: 100;
       border-bottom: 1px solid rgba(0, 0, 0, .07);
@@ -48,6 +50,9 @@
     }
     .app-nav > ul > li {
       padding-top: 20px;
+    }
+    .github-corner{
+      z-index: 200;
     }
     .content {
       margin-top: 80px !important;

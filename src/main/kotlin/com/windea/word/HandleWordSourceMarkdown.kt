@@ -89,7 +89,7 @@ fun handleWordSourceMarkdown(parent: String, fileName: String) {
 	println("Handle word source markdown: ${parent}/${fileName} finished.")
 }
 
-private val unescapeRegex = """\\([<>\-_"'*|@\[\]])""".toRegex()
+private val unescapeRegex = """\\([<>\-_"'*|@\[\]#`$])""".toRegex()
 
 private fun String.replaceToNormalWhiteSpace(): String {
 	return this.replace(" ", " ")
