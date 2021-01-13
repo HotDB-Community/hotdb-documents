@@ -10,8 +10,8 @@
   <meta name="author" content="shicheng">
   <meta name="description" content="上海热璞网络科技有限公司总部位于上海，在北京、南京和深圳设有分部，是一家专注基础软件分布式事务数据库产品和关系型云数据库产品的研发厂商，致力成为分布式事务数据库与私有云数据库行业的领导者，帮助企业零门槛使用分布式事务数据库和关系型云数据库。">
   <link rel="shortcut icon" type="image/ico" href="assets/favicon-colorful.png">
-  <!--Vue主题-->
-  <link rel="stylesheet" href="assets/themes/vue.css">
+  <!--自定义主题-->
+  <link rel="stylesheet" href="assets/themes/hotdb.css">
   <!--侧边栏可折叠插件：https://github.com/iPeng6/docsify-sidebar-collapse -->
   <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />-->
   <!--font awesome图标：https://github.com/erickjx/docsify-fontawesome -->
@@ -167,15 +167,27 @@
           "/zh/": "<i class='fa fa-download'></i> 下载文档",
           "/en/": "<i class='fa fa-download'></i> Download Document"
         },
+        downloadTitle:{
+          "/zh/": "下载整合的PDF文档",
+          "/en/": "Download integrated pdf document"
+        },
         editUrl: `${repositoryUrl}/blob/master/docs`,
         editText: {
           "/zh/": "<i class='fa fa-edit'></i> 编辑文档",
           "/en/": "<i class='fa fa-edit'></i> Edit Document"
         },
+        editTitle: {
+          "/zh/": "在Github上编辑文档",
+          "/en/": "Edit document on Github"
+        },
         issuesUrl: `${repositoryUrl}/issues`,
         issuesText: {
           "/zh/": "<i class='fa fa-comment'></i> 反馈问题",
           "/en/": "<i class='fa fa-comment'></i> Report Issues"
+        },
+        issuesTitle: {
+          "/zh/": "在Github上反馈问题",
+          "/en/": "Report Issues on Github"
         }
       },
       fileName: "",
@@ -207,13 +219,16 @@
     function createTopBar() {
       return `<div class="topbar">
         <p style="float: right">
-          <a class="topbar-link" href="${window.$docsify.topbar.downloadUrl}" target="_blank">
+          <a class="topbar-link" href="${window.$docsify.topbar.downloadUrl}"  target="_blank"
+           title="${getText(window.$docsify.topbar.downloadTitle)}">
             ${getText(window.$docsify.topbar.downloadText)}
           </a class="topbar-link">
-          <a class="topbar-link" href="${window.$docsify.topbar.editUrl}${window.$docsify.fileName}" target="_blank">
+          <a class="topbar-link" href="${window.$docsify.topbar.editUrl}${window.$docsify.fileName}" target="_blank"
+           title="${getText(window.$docsify.topbar.editTitle)}">
             ${getText(window.$docsify.topbar.editText)}
           </a class="topbar-link">
-          <a class="topbar-link" href="${window.$docsify.topbar.issuesUrl}" target="_blank">
+          <a class="topbar-link" href="${window.$docsify.topbar.issuesUrl}" target="_blank"
+           title="${getText(window.$docsify.topbar.issuesTitle)}">
             ${getText(window.$docsify.topbar.issuesText)}
           </a>
         </p>
