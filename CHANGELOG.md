@@ -22,3 +22,4 @@
 * [X] `docs/zh/v2.5.6/cluster-environment-requirement.md`
 * [X] `docs/zh/v2.5.6/cross-idc-disaster-recovery.md`
 * [X] `docs/zh/v2.5.6/white-paper.md`
+* [X] `docs/zh/latest/quick-start-guide.md`
