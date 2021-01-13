@@ -23,5 +23,5 @@
   * [可视化机房](visual-idc.md)<!--内容来自：分布式事务数据库HotDB Server-v2.5.6【可视化机房切换、修复、移除、演练】功能使用手册v1.0.doc-->
 * **附录**
   * [名词解释](glossary.md)<!--内容来自：分布式事务数据库HotDB Server-v2.5.6【名词解释】功能使用手册v1.0.doc-->
-  * [管理平台参数说明](hotdb-management-parameters.md)<!--内容来自：HotDB Server&管理平台参数说明列表_2.5.6.xlsx-->
-  * [计算节点错误码说明](hotdb-server-error-codes.md)<!--内容来自：分布式事务数据库HotDB Server-v2.5.6【计算节点错误码】v1.0.xlsx-->
+  * [参数说明](parameters.md)<!--内容来自：HotDB Server&管理平台参数说明列表_2.5.6.xlsx-->
+  * [计算节点错误码说明](error-codes.md)<!--内容来自：分布式事务数据库HotDB Server-v2.5.6【计算节点错误码】v1.0.xlsx-->

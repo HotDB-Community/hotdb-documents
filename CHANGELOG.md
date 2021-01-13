@@ -19,9 +19,32 @@
 
 # 检查Markdown文档
 
-* [X] `docs/zh/latest/quick-start-guide.md`
-* [X] `docs/zh/v2.5.6/white-paper.md`
-* [X] `docs/zh/latest/install-and-deploy.md`
-* [X] `docs/zh/latest/hardware-config-recommendation.md`
-* [X] `docs/zh/v2.5.6/cluster-environment-requirement.md`
-* [X] `docs/zh/v2.5.6/cross-idc-disaster-recovery.md` X
+> D - 原文档已过时
+> T - 待编写
+
+* `introduce`
+  * [X] `docs/zh/latest/introduce.md`
+  * [X] `docs/zh/latest/white-paper.md` 
+  * [ ] `docs/zh/latest/whats-new.md` T
+* `quick-start`
+  * [X] `docs/zh/latest/quick-start-guide.md`
+  * [ ] `docs/zh/latest/basic-operations.md` T
+* `install-deploy-update`
+  * [X] `docs/zh/latest/install-and-deploy.md`
+  * [ ] `docs/zh/latest/service-license.md`
+  * [X] `docs/zh/latest/manual-update.md`
+  * [X] `docs/zh/latest/cluster-environment-requirement.md`
+  * [X] `docs/zh/latest/hardware-config-recommendation.md`
+* `hotdb-server`
+  * [ ] `docs/zh/latest/standard.md` D
+  * [ ] `docs/zh/latest/management-port-command.md
+* `hotdb-management`
+  * [ ] `docs/zh/latest/standard.md`
+  * [ ] `docs/zh/latest/intelligent-inspection.md`
+* `idc`
+  * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` D
+  * [ ] `docs/zh/latest/visual-idc.md`
+* `appendix`
+  * [X] `docs/zh/latest/glossary.md`
+  * [X] `docs/zh/latest/parameters.md`
+  * [X] `docs/zh/latest/error-codes.md`
