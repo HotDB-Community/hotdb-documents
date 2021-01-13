@@ -119,7 +119,7 @@ spring.datasource.username=hotdb_cloud
 spring.datasource.password=hotdb_cloud
 spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 ......（此处省略部分参数，具体以实际application.properties为准）
-## tomcat connection pool specific settingshotdb.config.sqlFirewall.interceptType=0:\\u8BEF\\u64CD\\u4F5C,1:SQL\\u6CE8\\u5165,2:\\u4E0D\\u826F\\u64CD\\u4F5C,3:\\u8BEF\\u8BBE\\u7F6Ehotdb.server.log.days=14
+## tomcat connection pool specific settingshotdb.config.sqlFirewall.interceptType=0:/u8BEF/u64CD/u4F5C,1:SQL/u6CE8/u5165,2:/u4E0D/u826F/u64CD/u4F5C,3:/u8BEF/u8BBE/u7F6Ehotdb.server.log.days=14
 ```
 
 ### 升级JDK版本
@@ -234,7 +234,7 @@ chown -R hotdb:hotdb /usr/local/hotdb/hotdb-server
 restorecon -R /usr/local/hotdb/hotdb-server
 ```
 
-##### NDB SQL服务
+##### NDB SQL服务{#单节点升级NDB_SQL服务}
 
 若升级前的计算节点版本大于等于V2.5.3需要注意，之前备份的计算节点目录中是否包含NDB SQL服务（以ndbsql开头的目录）。若存在则需要将之前备份的计算节点目录中的NDB SQL目录重新拷贝到升级后的计算节点目录中。
 
@@ -259,7 +259,7 @@ cp -rp /usr/local/hotdb/hotdb_server_253/ndbsql* /usr/local/hotdb/hotdb-server/
 
 #### 更新配置文件
 
-##### server.xml配置文件
+##### server.xml配置文件{#单节点更新server.xml配置文件}
 
 建议打开备份的计算节点目录中的server.xml配置文件，对照着将变更的参数值同步更新至新版本目录下的配置文件中。
 
@@ -361,21 +361,19 @@ sh hotdb_server start
 
 #### 停止计算节点与keepalived服务
 
-**停止备keepalived服务**
+```
+# 停止备keepalived服务
+service keepalived stop
 
-# service keepalived stop
+# 停止备计算节点服务
+sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
-**停止备计算节点服务**
+# 停止主keepalived服务
+service keepalived stop
 
-# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
-
-**停止主keepalived服务**
-
-# service keepalived stop
-
-**停止主计算节点服务**
-
-# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+# 停止主计算节点服务
+sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+```
 
 #### 升级主备计算节点版本
 
@@ -385,33 +383,29 @@ sh hotdb_server start
 
 若升级前的计算节点版本大于等于V2.5.3需要注意，之前备份的计算节点目录中是否包含NDB SQL服务（以ndbsql开头的目录）。若存在则需要将之前备份的计算节点目录中的NDB SQL目录重新拷贝到升级后的计算节点目录中。
 
-具体操作方式请参照[单节点集群计算节点升级NDB SQL服务](#ndb-sql服务-2)处理说明。
+具体操作方式请参照[单节点集群计算节点升级NDB SQL服务](#单节点升级NDB_SQL服务)处理说明。
 
 #### 启动keepalived与计算节点服务
 
 先启动主计算节点服务，**待计算节点服务完全启动成功**（服务端口与管理端口都可正常连接）后再启动主计算节点keepalived服务。
 
-**启动主计算节点服务**
+```
+# 启动主计算节点服务
+cd /usr/local/hotdb/hotdb-server/bin
+sh hotdb_server start
 
-**#cd** /usr/local/hotdb/hotdb-server/bin
+# 启动主keepalived服务
+service keepalived start
 
-# sh hotdb_server start
+# 待ping通主keepalived的VIP地址后，再启动备计算节点服务。 备计算节点服务完全启动成功（服务端口关闭，管理端口能正常连接）后再启动备keepalived服务。
 
-**启动主keepalived服务**
+# 启动备计算节点服务
+cd /usr/local/hotdb/hotdb-server/bin
+sh hotdb_server start
 
-# service keepalived start
-
-**待ping通主keepalived的VIP地址**后，再启动备计算节点服务。 备计算节点服务**完全启动成功**（服务端口关闭，管理端口能正常连接）后再启动备keepalived服务。
-
-**启动备计算节点服务**
-
-**#cd** /usr/local/hotdb/hotdb-server/bin
-
-# sh hotdb_server start
-
-**启动备keepalived服务**
-
-# service keepalived start
+# 启动备keepalived服务
+service keepalived start
+```
 
 ### 主备节点集群模式不停机升级
 
@@ -422,10 +416,8 @@ sh hotdb_server start
 主备节点集群模式选择不停机升级要求必须满足以下前提才能进行，否则只能在[停机条件下对计算节点版本进行升级](#主备节点集群模式停机升级)操作。
 
 - 计算节点配置库的升级SQL中不包含任何"alter table"修改已有字段（修改增加字段长度或范围的除外）的语句。
-
 - 计算节点配置库的升级SQL中不包含任何"drop table"的语句。
-
-- 计算节点配置库的升级SQL中不包含任何"update\\delete"已有数据的语句。
+- 计算节点配置库的升级SQL中不包含任何"update/delete"已有数据的语句。
 
 #### 高可用切换检查
 
@@ -435,247 +427,152 @@ sh hotdb_server start
 
 1. **主备计算节点服务正常**
 
-> **要求：**当前主计算节点服务端口（默认3323）正常开放，管理端口（默认3325）正常开放，当前备
->
-> 计算节点服务端口状态关闭，管理端口正常开放。
+**要求：**当前主计算节点服务端口（默认3323）正常开放，管理端口（默认3325）正常开放，当前备
+
+计算节点服务端口状态关闭，管理端口正常开放。
 
 2. **主备计算节点配置文件server.xml配置正确**
 
-- **当前主计算节点server.xml配置**
+**当前主计算节点server.xml配置**
 
-> <property name="haState">master</property>< HA 角色，主节点：master，备节点：backup><property name="haNodeHost"></property><HA 角色，其他节点 IP:PORT>
+```
+<property name="haState">master</property>< HA 角色，主节点：master，备节点：backup>
+<property name="haNodeHost"></property><HA 角色，其他节点 IP:PORT>
+```
 
-- **当前备计算节点server.xml配置**
+**当前备计算节点server.xml配置**
 
-> <property name="haState">backup</property>< HA 角色，主节点：master，备节点：backup>
->
-> <property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
->
-> **注意：**上述IP地址需填写当前主计算节点所在服务器IP地址，端口号为当前主计算节点管理端口
+```
+<property name="haState">backup</property>< HA 角色，主节点：master，备节点：backup>
+<property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
+```
+
+**注意：**上述IP地址需填写当前主计算节点所在服务器IP地址，端口号为当前主计算节点管理端口
 
 3. **主备keepalived配置文件keepalived.conf配置正确**
 
-- **当前主计算节点keepalived.conf配置**
+**当前主计算节点keepalived.conf配置**
 
-> ! Configuration File for keepalived
->
-> global_defs {
->
-> router_id HotDB Server-ha
->
-> }
->
-> vrrp_script check_HotDB Server_process {
->
-> script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
->
-> rocess.sh process"
->
-> interval 5
->
-> fall 2
->
-> rise 1
->
-> weight -10
->
-> }
->
-> vrrp_script check_HotDB Server_connect_state {
->
-> state
->
-> code
->
-> script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
->
-> rocess.sh connect_master"
->
-> interval 5
->
-> fall 3
->
-> rise 1
->
-> timeout 5
->
-> weight -10
->
-> }
->
-> vrrp_instance VI_1 {
->
-> state BACKUP
->
-> interface eth1
->
-> virtual_router_id 89
->
-> nopreempt
->
-> priority 100
->
-> advert_int 1
->
-> authentication {
->
-> auth_type PASS
->
-> auth_pass 1111
->
-> }
->
-> track_script {
->
-> check_HotDB Server_process
->
-> check_HotDB Server_connect_state
->
-> }
->
-> # be careful in red hat
->
-> track_interface {
->
-> eth1
->
-> }
->
-> virtual_ipaddress {
->
-> 192.168.200.140/24 dev eth1 label eth1:1
->
-> }
->
-> notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
->
-> k_hotdb_process.sh master_notify_master"
->
-> notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
->
-> k_hotdb_process.sh master_notify_backup"
->
-> notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
->
-> }
+```
+! Configuration File for keepalived
 
-- **当前备计算节点keepalived.conf配置**
+global_defs {
+  router_id HotDB Server-ha
+}
+vrrp_script check_HotDB Server_process {
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh process"
+  interval 5
+  fall 2
+  rise 1
+  weight -10
+}
+vrrp_script check_HotDB Server_connect_state {
+  state
+  code
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh connect_master"
+  interval 5
+  fall 3
+  rise 1
+  timeout 5
+  weight -10
+}
+vrrp_instance VI_1 {
+  state BACKUP
+  interface eth1
+  virtual_router_id 89
+  nopreempt
+  priority 100
+  advert_int 1
+  authentication {
+    auth_type PASS
+    auth_pass 1111
+  }
+  track_script {
+    check_HotDB Server_process
+    check_HotDB Server_connect_state
+  }
+  # be careful in red hat
+  track_interface {
+    eth1
+  }
+  virtual_ipaddress {
+    192.168.200.140/24 dev eth1 label eth1:1
+  }
+  notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh master_notify_master"
+  notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh master_notify_backup"
+  notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
+}
+```
 
-> ! Configuration File for keepalived
->
-> global_defs {
->
-> router_id HotDB Server-ha
->
-> }
->
-> vrrp_script check_HotDB Server_process {
->
-> script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
->
-> rocess.sh process"
->
-> interval 5
->
-> fall 2
->
-> rise 1
->
-> weight -10
->
-> }
->
-> vrrp_script check_HotDB Server_connect_state {
->
-> state
->
-> code
->
-> script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
->
-> rocess.sh connect_backup"
->
-> interval 5
->
-> fall 3
->
-> rise 1
->
-> timeout 5
->
-> weight -10
->
-> }
->
-> vrrp_instance VI_1 {
->
-> state BACKUP
->
-> interface eth0
->
-> virtual_router_id 89
->
-> priority 95
->
-> advert_int 1
->
-> authentication {
->
-> auth_type PASS
->
-> auth_pass 1111
->
-> }
->
-> track_script {
->
-> check_HotDB Server_process
->
-> check_HotDB Server_connect_state
->
-> }
->
-> # be careful in red hat
->
-> track_interface {
->
-> eth0
->
-> }
->
-> virtual_ipaddress {
->
-> 192.168.200.140/24 dev eth0 label eth0:1
->
-> }
->
-> notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
->
-> k_hotdb_process.sh backup_notify_master"
->
-> notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
->
-> k_hotdb_process.sh backup_notify_backup"
->
-> notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
->
-> }
+**当前备计算节点keepalived.conf配置**
+
+```
+! Configuration File for keepalived
+
+global_defs {
+  router_id HotDB Server-ha
+}
+vrrp_script check_HotDB Server_process {
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh process"
+  interval 5
+  fall 2
+  rise 1
+  weight -10
+}
+vrrp_script check_HotDB Server_connect_state {
+  state
+  code
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh connect_backup"
+  interval 5
+  fall 3
+  rise 1
+  timeout 5
+  weight -10
+}
+vrrp_instance VI_1 {
+  state BACKUP
+  interface eth0
+  virtual_router_id 89
+  priority 95
+  advert_int 1
+  authentication {
+    auth_type PASS
+    auth_pass 1111
+  }
+  track_script {
+    check_HotDB Server_process
+    check_HotDB Server_connect_state
+  }
+  # be careful in red hat
+  track_interface {
+    eth0
+  }
+  virtual_ipaddress {
+    192.168.200.140/24 dev eth0 label eth0:
+  }
+  notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh backup_notify_master"
+  notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh backup_notify_backup"
+  notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
+}
+```
 
 4. **配置校验正常**
 
-- 配置校验正常通过，可在管理平台中"配置->配置校验"菜单中检测配置库配置是否正确
+配置校验正常通过，可在管理平台中"配置->配置校验"菜单中检测配置库配置是否正确
 
-- 计算节点内存信息与配置库保持一致，可通过管理平台"动态加载"功能或登录管理端口（默认3325）执行reload @@config命令确保两者信息一致
+计算节点内存信息与配置库保持一致，可通过管理平台"动态加载"功能或登录管理端口（默认3325）执行reload @@config命令确保两者信息一致
 
 5. **Keepalived程序运行正常**
 
-- 主备keepalived程序运行正常，可在主备计算节点服务器中通过"service keepalived statu
-
-> s"命令查询
+主备keepalived程序运行正常，可在主备计算节点服务器中通过`service keepalived status`命令查询
 
 6. **Keepalived的VIP在当前主计算节点上**
 
-- 在当前主计算节点服务器上执行"ip addr"显示内容包含keepalived配置的虚拟IP地址
+在当前主计算节点服务器上执行"ip addr"显示内容包含keepalived配置的虚拟IP地址
 
 #### 配置库升级
 
@@ -685,61 +582,62 @@ sh hotdb_server start
 
 ##### 停止备计算节点服务
 
-登录备计算节点服务器执行停止服务命令：
-
-# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+```
+# 登录备计算节点服务器执行停止服务命令：
+sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+```
 
 ##### 备份备计算节点目录
 
-# cd /usr/local/hotdb/
-
-# mv hotdb-server hotdb_server_249
+```
+cd /usr/local/hotdb/
+mv hotdb-server hotdb_server_249
+```
 
 ##### 上传并解压新版本包
 
-**上传新版本包**
+```
+# 上传新版本包
+# 可使用rz命令或ftp文件传输工具上传新版本包
 
-可使用rz命令或ftp文件传输工具上传新版本包
+# 解压新版本包
 
-**解压新版本包**
+tar -xvf hotdb-server-2.4.9-ga-20190812.tar.gz -C /usr/local/hotdb
 
-# tar -xvf hotdb-server-2.4.9-ga-20190812.tar.gz -C /usr/local/hotdb
+# 为hotdb用户赋予文件夹权限
+chown -R hotdb:hotdb /usr/local/hotdb/hotdb-server
 
-**为hotdb用户赋予文件夹权限**
-
-# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-server
-
-**恢复目录默认上下文**
-
-# restorecon -R /usr/local/hotdb/hotdb-server
+# 恢复目录默认上下文
+restorecon -R /usr/local/hotdb/hotdb-server
+```
 
 ##### NDB SQL服务
 
 若升级前的计算节点版本大于等于V2.5.3需要注意，之前备份的计算节点目录中是否包含NDB SQL服务（以ndbsql开头的目录）。若存在则需要将之前备份的计算节点目录中的NDB SQL目录重新拷贝到升级后的计算节点目录中。
 
-具体操作方式请参照[单节点集群计算节点升级NDB SQL服务](#ndb-sql服务-2)处理说明。
+具体操作方式请参照[单节点集群计算节点升级NDB SQL服务](#单节点升级NDB_SQL服务)处理说明。
 
 ##### server.xml配置文件
 
 建议打开旧计算节点目录中的server.xml配置文件，对照着将变更的参数值同步更新至新版本目录下的配置文件中。
 
-## cd /usr/local/hotdb/hotdb-server/conf/
+```
+cd /usr/local/hotdb/hotdb-server/conf/
+vi server.xml
+```
 
-## vi server.xml
-
------------------------------------配置内容-----------------------------------------
-
-**注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中[更新server.xml配置文件](#server.xml配置文件)说明。
+**注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中[更新server.xml配置文件](#单节点更新server.xml配置文件)说明。
 
 ##### 计算节点启动脚本
 
 建议打开备份的计算节点bin/目录下的hotdb_server脚本，对照着将变更的参数值同步更新至新版本目录下的脚本文件中。
 
-## cd /usr/local/hotdb/hotdb-server/bin/
-
-## vi hotdb_server
+```
+cd /usr/local/hotdb/hotdb-server/bin/
+vi hotdb_server
 
 -----------------------------------配置内容-----------------------------------------
+```
 
 **注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中更新[计算节点启动脚本](#计算节点启动脚本)说明。
 
@@ -749,9 +647,10 @@ sh hotdb_server start
 
 ##### 启动备计算节点服务
 
-# cd /usr/local/hotdb/hotdb-server/bin
-
-# sh hotdb_server start
+```
+cd /usr/local/hotdb/hotdb-server/bin
+sh hotdb_server start
+```
 
 **注意：**备计算节点服务启动后服务端口（默认3323）是关闭的，管理端口（默认3325）是开启的才算正常。
 
@@ -759,71 +658,72 @@ sh hotdb_server start
 
 ##### 停止主计算节点服务
 
-**登录主计算节点服务器执行停止服务命令：**
-
-# cd /usr/local/hotdb/hotdb-server/bin
-
-# sh hotdb_server stop
+```
+# 登录主计算节点服务器执行停止服务命令：
+cd /usr/local/hotdb/hotdb-server/bin
+sh hotdb_server stop
+```
 
 ##### 检查高可用是否切换成功
 
 主计算节点服务关闭后，程序会发生高可用切换，切换后备计算节点的**服务端口（默认3323）会被启动**，
 
-且在备计算节点服务器上执行"ip addr"命令可查看**keepalived配置的虚拟IP地址已漂移**过来。
+且在备计算节点服务器上执行`ip addr`命令可查看**keepalived配置的虚拟IP地址已漂移**过来。
 
 **注：**若以上任一要求未满足则代表高可用切换失败，则需要由非停机升级转为[停机升级](#多节点集群模式停机升级)。
 
 ##### 备份主计算节点目录
 
-# cd /usr/local/hotdb/
-
-# mv hotdb-server hotdb-server_249
+```
+cd /usr/local/hotdb/
+mv hotdb-server hotdb-server_249
+```
 
 ##### 上传并解压新版本包
 
-**上传新版本包**
+```
+# 上传新版本包
+# 可使用rz命令或ftp文件传输工具上传新版本包
 
-可使用rz命令或ftp文件传输工具上传新版本包
+# 解压新版本包
+tar -xvf hotdb-server-2.4.9-ga-20190812.tar.gz -C /usr/local/hotdb
 
-**解压新版本包**
+# 为hotdb用户赋予文件夹权限
+chown -R hotdb:hotdb /usr/local/hotdb/hotdb-server
 
-# tar -xvf hotdb-server-2.4.9-ga-20190812.tar.gz -C /usr/local/hotdb
-
-**为hotdb用户赋予文件夹权限**
-
-# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-server
-
-**恢复目录默认上下文**
-
-# restorecon -R /usr/local/hotdb/hotdb-server
+# 恢复目录默认上下文
+restorecon -R /usr/local/hotdb/hotdb-server
+```
 
 ##### NDB SQL服务
 
 若升级前的计算节点版本大于等于V2.5.3需要注意，之前备份的计算节点目录中是否包含NDB SQL服务（以ndbsql开头的目录）。若存在则需要将之前备份的计算节点目录中的NDB SQL目录重新拷贝到升级后的计算节点目录中。
 
-具体操作方式请参照[单节点集群计算节点升级NDB SQL服务](#ndb-sql服务-2)处理说明。
+具体操作方式请参照[单节点集群计算节点升级NDB SQL服务](#单节点升级NDB_SQL服务)处理说明。
 
 ##### server.xml配置文件
 
 建议打开旧计算节点目录中的server.xml配置文件，对照着将变更的参数值同步更新至新版本目录下的配置文件中。
 
-## cd /usr/local/hotdb/hotdb-server/conf/
-
-## vi server.xml
+```
+cd /usr/local/hotdb/hotdb-server/conf/
+vi server.xml
 
 -----------------------------------配置内容-----------------------------------------
+```
 
-**注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中[更新server.xml配置文件](#server.xml配置文件)说明。
+**注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中[更新server.xml配置文件](#单节点更新server.xml配置文件)说明。
 
 ##### 计算节点启动脚本
 
 建议打开备份的计算节点bin/目录下的hotdb_server脚本，对照着将变更的参数值同步更新至新版本目录下的脚本文件中。
 
-## cd /usr/local/hotdb/hotdb-server/bin/
-
-## vi hotdb_server
+```
+cd /usr/local/hotdb/hotdb-server/bin/
+vi hotdb_server
 
 -----------------------------------配置内容-----------------------------------------
+```
 
 **注：**参考修改内容此处不再赘述，可查看单节点集群模式升级中更新[计算节点启动脚本](#计算节点启动脚本)说明。
 
@@ -841,229 +741,136 @@ sh hotdb_server start
 
 1. **停止当前备（无VIP）keepalived服务**
 
-# service keepalived stop
+```
+service keepalived stop
+```
 
 2. **当前主（有VIP）计算节点server.xml与keepalived.conf修改**
 
 **当前主（有VIP）计算节点server.xml配置修改**
 
+```
 <property name="haState">master</property>< HA 角色，主节点：master，备节点：backup><property name="haNodeHost"></property><HA 角色，其他节点 IP:PORT>
+```
 
 **当前备（无VIP）计算节点keepalived.conf配置修改**
 
+```
 ! Configuration File for keepalived
 
 global_defs {
-
-router_id HotDB Server-ha
-
+  router_id HotDB Server-ha
 }
-
 vrrp_script check_HotDB Server_process {
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh process"
-
-interval 5
-
-fall 2
-
-rise 1
-
-weight -10
-
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh process"
+  interval 5
+  fall 2
+  rise 1
+  weight -10
 }
-
 vrrp_script check_HotDB Server_connect_state {
-
-state
-
-code
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh connect_master"
-
-interval 5
-
-fall 3
-
-rise 1
-
-timeout 5
-
-weight -10
-
+  state
+  code
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh connect_master"
+  interval 5
+  fall 3
+  rise 1
+  timeout 5
+  weight -10
 }
-
 vrrp_instance VI_1 {
-
-state BACKUP
-
-interface eth1
-
-virtual_router_id 89
-
-nopreempt
-
-priority 100
-
-advert_int 1
-
-authentication {
-
-auth_type PASS
-
-auth_pass 1111
-
+  state BACKUP
+  interface eth1
+  virtual_router_id 89
+  nopreempt
+  priority 100
+  advert_int 1
+  authentication {
+    auth_type PASS
+    auth_pass 1111
+  }
+  track_script {
+    check_HotDB Server_process
+    check_HotDB Server_connect_state
+  }
+  # be careful in red hat
+  track_interface {
+    eth1
+  }
+  virtual_ipaddress {
+    192.168.200.140/24 dev eth1 label eth1:1
+  }
+  notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh master_notify_master"
+  notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh master_notify_backup"
+  notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
 }
-
-track_script {
-
-check_HotDB Server_process
-
-check_HotDB Server_connect_state
-
-}
-
-# be careful in red hat
-
-track_interface {
-
-eth1
-
-}
-
-virtual_ipaddress {
-
-192.168.200.140/24 dev eth1 label eth1:1
-
-}
-
-notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh master_notify_master"
-
-notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh master_notify_backup"
-
-notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
-
-}
+```
 
 3. **当前备（无VIP）计算节点server.xml与keepalived.conf修改**
 
 **当前备计算节点server.xml配置**
 
+```
 <property name="haState">backup</property>< HA 角色，主节点：master，备节点：backup>
-
 <property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
+```
 
 **注意：**上述IP地址需填写当前主计算节点所在服务器IP地址，端口号为当前主计算节点管理端口
 
 **当前备（无VIP）计算节点keepalived.conf配置**
 
+```
 ! Configuration File for keepalived
 
 global_defs {
-
-router_id HotDB Server-ha
-
+  router_id HotDB Server-ha
 }
-
 vrrp_script check_HotDB Server_process {
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh process"
-
-interval 5
-
-fall 2
-
-rise 1
-
-weight -10
-
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh process"
+  interval 5
+  fall 2
+  rise 1
+  weight -10
 }
-
 vrrp_script check_HotDB Server_connect_state {
-
-state
-
-code
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh connect_backup"
-
-interval 5
-
-fall 3
-
-rise 1
-
-timeout 5
-
-weight -10
-
+  state
+  code
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+  rocess.sh connect_backup"
+  interval 5
+  fall 3
+  rise 1
+  timeout 5
+  weight -10
 }
-
 vrrp_instance VI_1 {
-
-state BACKUP
-
-interface eth0
-
-virtual_router_id 89
-
-priority 95
-
-advert_int 1
-
-authentication {
-
-auth_type PASS
-
-auth_pass 1111
-
+  state BACKUP
+  interface eth0
+  virtual_router_id 89
+  priority 95
+  advert_int 1
+  authentication {
+    auth_type PASS
+    auth_pass 1111
+  }
+  track_script {
+    check_HotDB Server_process
+    check_HotDB Server_connect_state
+  }
+  # be careful in red hat
+  track_interface {
+    eth0
+  }
+  virtual_ipaddress {
+    192.168.200.140/24 dev eth0 label eth0:1
+  }
+  notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_master"
+  notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
+  notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
 }
-
-track_script {
-
-check_HotDB Server_process
-
-check_HotDB Server_connect_state
-
-}
-
-# be careful in red hat
-
-track_interface {
-
-eth0
-
-}
-
-virtual_ipaddress {
-
-192.168.200.140/24 dev eth0 label eth0:1
-
-}
-
-notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh backup_notify_master"
-
-notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh backup_notify_backup"
-
-notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
-
-}
+```
 
 4. **当前主（有VIP）keepalived服务执行配置重新加载**
 
@@ -1071,23 +878,21 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 ##### 启动当前备（无VIP）计算节点服务与keepalived
 
-**启动计算节点服务**
+```
+# 启动计算节点服务
 
-# cd /usr/local/hotdb/hotdb-server/bin
+cd /usr/local/hotdb/hotdb-server/bin
+sh hotdb_server start
 
-# sh hotdb_server start
-
-**计算节点服务启动成功后再启动keepalived服务**
-
-# service keepalived start
+# 计算节点服务启动成功后再启动keepalived服务
+service keepalived start
+```
 
 ##### 特殊说明
 
 - 按不停机升级流程完成后，keepalived的虚拟IP会发生漂移。集群中的主备计算节点角色会进行互换。
-
 - 若需要将主备计算节点角色还原成升级前的状态，可通过管理平台提供的"高可用切换"功能，或使用手动切换的方式（直接停止当前主服务模拟故障切换）对计算节点角色进行再次互换。
-
-- 注意切换完成后必须进行一次高可用重建，可使用管理平台提供的"高可用重建"功能或参照"[手动执行高可用环境重建](#server.xml配置文件-2)"进行操作。
+- 注意切换完成后必须进行一次高可用重建，可使用管理平台提供的"高可用重建"功能或参照"[手动执行高可用环境重建](#手动执行高可用环境重建)"进行操作。
 
 ### 多节点集群模式停机升级
 
@@ -1095,17 +900,16 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 ##### 停止计算节点服务
 
-**停止secondary1计算节点服务**
+```
+# 停止secondary1计算节点服务
+sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
-# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+# 停止secondary2计算节点服务
+sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
-**停止secondary2计算节点服务**
-
-# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
-
-**停止primary计算节点服务**
-
-# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+停止primary计算节点服务
+sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+```
 
 ##### 升级配置库
 
@@ -1127,14 +931,10 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 多节点集群模式选择不停机升级要求必须满足以下前提才能进行，否则只能在[停机条件下对计算节点版本进行升级](#灾备模式的集群升级)操作。
 
-- 计算节点配置库的升级SQL中不包含任何"alter table"修改已有字段（修改增加字段长度或范围的除外）的语句。
-
-- 计算节点配置库的升级SQL中不包含任何"drop table"的语句。
-
-- 计算节点配置库的升级SQL中不包含任何"update\\delete"已有数据的语句。
-
+- 计算节点配置库的升级SQL中不包含任何`alter table`修改已有字段（修改增加字段长度或范围的除外）的语句。
+- 计算节点配置库的升级SQL中不包含任何`drop table`的语句。
+- 计算节点配置库的升级SQL中不包含任何`update/delete`已有数据的语句。
 - 升级前的计算节点版本不低于V2.5.1。
-
 - 升级前的计算节点版本若为V2.5.1或V2.5.3则要求版本中的日期必须大于等于20190821。
 
 **升级须知：**
@@ -1159,9 +959,10 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 ##### 停止primary计算节点服务
 
-# cd /usr/local/hotdb/hotdb-server/bin
-
-# sh hotdb_server stop
+```
+cd /usr/local/hotdb/hotdb-server/bin
+sh hotdb_server stop
+```
 
 **注：**停止primary计算节点服务会导致集群发生一次换主动作，请保证停止primary计算节点前其余secondary计算节点服务运行正常。
 
@@ -1205,39 +1006,40 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 停止备份程序服务前，请确认当前管理平台中没有未完成的备份任务，否则可能导致备份任务的异常中断。
 
-# cd /usr/local/hotdb/hotdb-backup/bin
-
-# sh hotdb_backup stop
+```
+cd /usr/local/hotdb/hotdb-backup/bin
+sh hotdb_backup stop
+```
 
 ### 备份旧备份程序目录
 
-# cd /usr/local/hotdb/
-
-# mv hotdb-backup/ hotdb-backup_1.0
+```
+cd /usr/local/hotdb/
+mv hotdb-backup/ hotdb-backup_1.0
+```
 
 ### 上传并解压新版本包
 
-**上传新版本包**
+```
+# 上传新版本包
+# 可使用rz命令或ftp文件传输工具上传新版本包
 
-可使用rz命令或ftp文件传输工具上传新版本包
+# 解压新版本包
+tar -xvf hotdb-backup-2.0-20190109.tar.gz -C /usr/local/hotdb
 
-**解压新版本包**
+# 为hotdb用户赋予文件夹权限
+chown -R hotdb:hotdb /usr/local/hotdb/hotdb-backup
 
-# tar -xvf hotdb-backup-2.0-20190109.tar.gz -C /usr/local/hotdb
-
-**为hotdb用户赋予文件夹权限**
-
-# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-backup
-
-**恢复目录默认上下文**
-
-# restorecon -R /usr/local/hotdb/hotdb-backup
+# 恢复目录默认上下文
+restorecon -R /usr/local/hotdb/hotdb-backup
+```
 
 ### 启动服务
 
-# cd /usr/local/hotdb/hotdb-backup/bin
-
-# sh hotdb_backup start -h 192.168.220.104 -p 3322
+```
+cd /usr/local/hotdb/hotdb-backup/bin
+sh hotdb_backup start -h 192.168.220.104 -p 3322
+```
 
 **注：**IP地址为备份程序所关联的管理平台服务器地址，端口号为管理平台配置文件application.properties中server.backup.port参数值
 
@@ -1251,51 +1053,50 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 停止监听程序服务前，请确认当前计算节点是否有正在进行SQL操作，否则可能存在事务损失。
 
-# cd /usr/local/hotdb/hotdb-listener/bin
-
-# sh hotdb_listener stop
+```
+cd /usr/local/hotdb/hotdb-listener/bin
+sh hotdb_listener stop
+```
 
 ### 备份旧备份程序目录
 
-# cd /usr/local/hotdb/
-
-# mv hotdb-listener/ hotdb-listener_1.0
+```
+cd /usr/local/hotdb/
+mv hotdb-listener/ hotdb-listener_1.0
+```
 
 ### 上传并解压新版本包
 
-**上传新版本包**
+```
+# 上传新版本包
+# 可使用rz命令或ftp文件传输工具上传新版本包
 
-可使用rz命令或ftp文件传输工具上传新版本包
+# 解压新版本包
+tar -zvxf hotdb-listener-0.0.1-linux.tar.gz -C /usr/local/hotdb
 
-**解压新版本包**
+# 为hotdb用户赋予文件夹权限
+chown -R hotdb:hotdb /usr/local/hotdb/hotdb-listener
 
-# tar -zvxf hotdb-listener-0.0.1-linux.tar.gz -C /usr/local/hotdb
-
-**为hotdb用户赋予文件夹权限**
-
-# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-listener
-
-**恢复目录默认上下文**
-
-# restorecon -R /usr/local/hotdb/hotdb-listener
+# 恢复目录默认上下文
+restorecon -R /usr/local/hotdb/hotdb-listener
+```
 
 ### 修改配置文件
 
-**修改管理端口配置文件同服务停止前一致，默认3330：**
+```
+# 修改管理端口配置文件同服务停止前一致，默认3330
+cd /usr/local/hotdb/hotdb-listener/conf
+vi config.properties
 
-# cd /usr/local/hotdb/hotdb-listener/conf
-
-# vi config.properties
-
-host=0.0.0.0
-
-port=3330
+# host=0.0.0.0
+# port=3330
+```
 
 ### 启动服务
 
-# cd /usr/local/hotdb/hotdb-listener/bin
-
-# sh hotdb_listener start
+```
+cd /usr/local/hotdb/hotdb-listener/bin
+sh hotdb_listener start
+```
 
 **特殊说明：**其余存储节点服务器上的监听程序升级只需按照上述流程操作即可。
-
