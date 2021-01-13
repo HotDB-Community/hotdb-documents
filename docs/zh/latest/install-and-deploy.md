@@ -433,7 +433,7 @@ max_allowed_packet=2G
 default-character-set=utf8
 [mysql]
 no-auto-rehash
-prompt="\\\\u@\\\\h : \\\\d \\\\r:\\\\m:\\\\s> "
+prompt="//u@//h : //d //r://m://s> "
 default-character-set=utf8
 show-warnings
 [myisamchk]
@@ -608,6 +608,7 @@ Got a quit signal from user, will quit after backup is finished #备份程序正
 | 服务器属性                   | 物理机                                  |
 | 操作系统                    | CentOS Linux release 7.6.1810 (Core) |
 | MySQL版本    MySQL 5.7.25 |                                      |
+
 JDK          JDK1.7_80
 
 ------------ --------------------------------------
@@ -634,13 +635,10 @@ JDK          JDK1.7_80
 
 **部署规划：**
 
------------- ----------------- -------------- -------------- ------------
-
-**实例**     **IP**            **服务端口**   **管理端口**   **HA角色**
-主计算节点   192.168.200.190   3323           3325           Master
-备计算节点   192.168.200.191   3323           3325           Slave
-
------------- ----------------- -------------- -------------- ------------
+|  实例   |       IP        | 服务端口 | 管理端口 |  HA角色  |
+|-------|-----------------|------|------|--------|
+| 主计算节点 | 192.168.200.190 | 3323 | 3325 | Master |
+| 备计算节点 | 192.168.200.191 | 3323 | 3325 | Slave  |
 
 ![](assets/install-and-deploy/image5.png)
 
@@ -660,272 +658,168 @@ HA计算节点部署示意图
 
 主计算节点192.168.200.190上server.xml配置修改
 
+```xml
 <property name="haState">master</property>< HA 角色，主节点：master，备节点：backup>
-
 <property name="haNodeHost"></property><HA 角色，其他节点 IP:PORT>
-
 <property name="VIP">192.168.200.140</property><虚拟IP地址>
+```
 
 备计算节点192.168.200.191上server.xml配置修改
 
+```xml
 <property name="haState">backup</property>< HA 角色，主节点：master，备节点：backup>
-
 <property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
-
 <property name="VIP">192.168.200.140</property><虚拟IP地址>
+```
 
 **说明：**
 
 - 配置文件中的haNodeHost为主计算节点的IP+管理端口，只需在备计算节点上配置该参数即可。
-
 - 启动主备服务时，如果haState的角色为master则会开启服务端口（3323）、管理端口（3325）；如果是 Backup 角色，则只会开启管理端口（3325）。
-
-- 当 master服务故障后，keepalived 检测到服务不可用，会自动切换 vip 到 backup 所在的服务器，并启用 backup 的服务端口（3323），保证服务不中断。
+- 当master服务故障后，keepalived 检测到服务不可用，会自动切换 vip 到 backup 所在的服务器，并启用 backup 的服务端口（3323），保证服务不中断。
 
 ##### Keepalived
 
 1. **安装keepalived**
 
-可用yum方式安装keepalived，也可在keepalived官网<https://www.keepalived.org/download.html>下载安装tar包。
+可用yum方式安装keepalived，也可在[keepalived官网](https://www.keepalived.org/download.html)下载安装tar包。
 
-**yum方式安装keepalived（主备计算节点所在服务器上执行keepalived安装命令）**
+```bash
+# yum方式安装keepalived（主备计算节点所在服务器上执行keepalived安装命令）
+yum -y install keepalived
 
-#yum -y install keepalived
+# 启动或关闭keepalived
+service keepalived start / server keepalived stop
 
-**启动或关闭keepalived**
+# 查看keepalived运行状态
+service keepalived status
+```
 
-#service keepalived start / server keepalived stop
-
-**查看keepalived运行状态**
-
-#service keepalived status
-
-1. **修改keepalived配置文件**
+2. **修改keepalived配置文件**
 
 Keepalived配置文件默认存放在/etc目录下为"keepalived.conf"，将下列实例内容复制替换到对应的keepalived配置文件中，并按照标红位置进行实际修改（标准的HotDB Server 安装包中对应的conf 目录下也有keepalived主备模式的配置文件，也可将其直接复制到/etc目录下，进行自定义修改）。
 
 主计算节点：192.168.200.190的keepalived配置信息：
 
+```
 ! Configuration File for keepalived
-
 global_defs {
-
-router_id HotDB Server-ha
-
+  router_id HotDB Server-ha
 }
-
 vrrp_script check_HotDB Server_process {
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh process"
-
-interval 5
-
-fall 2
-
-rise 1
-
-weight -10
-
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+  rocess.sh process"
+  interval 5
+  fall 2
+  rise 1
+  weight -10
 }
-
 vrrp_script check_HotDB Server_connect_state {
-
-state
-
-code
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh connect_master"
-
-interval 5
-
-fall 3
-
-rise 1
-
-timeout 5
-
-weight -10
-
+  state
+  code
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+  rocess.sh connect_master"
+  interval 5
+  fall 3
+  rise 1
+  timeout 5
+  weight -10
 }
-
 vrrp_instance VI_1 {
-
-state BACKUP
-
-interface eth1
-
-virtual_router_id 89
-
-nopreempt
-
-priority 100
-
-advert_int 1
-
-authentication {
-
-auth_type PASS
-
-auth_pass 1111
-
+  state BACKUP
+  interface eth1
+  virtual_router_id 89
+  nopreempt
+  priority 100
+  advert_int 1
+  authentication {
+    auth_type PASS
+    auth_pass 1111
+  }
+  track_script {
+    check_HotDB Server_process
+    check_HotDB Server_connect_state
+  }
+  #be careful in red hat
+  track_interface {
+    eth1
+  }
+  virtual_ipaddress {
+    192.168.200.140/24 dev eth1 label eth1:1
+  }
+  notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh master_notify_master"
+  notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh master_notify_backup"
+  notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
 }
-
-track_script {
-
-check_HotDB Server_process
-
-check_HotDB Server_connect_state
-
-}
-
-#be careful in red hat
-
-track_interface {
-
-eth1
-
-}
-
-virtual_ipaddress {
-
-192.168.200.140/24 dev eth1 label eth1:1
-
-}
-
-notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh master_notify_master"
-
-notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh master_notify_backup"
-
-notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
-
-}
+```
 
 备计算节点：192.168.200.191的keepalived配置信息：
 
+```
 ! Configuration File for keepalived
-
 global_defs {
-
-router_id HotDB Server-ha
-
+  router_id HotDB Server-ha
 }
-
 vrrp_script check_HotDB Server_process {
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh process"
-
-interval 5
-
-fall 2
-
-rise 1
-
-weight -10
-
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+  rocess.sh process"
+  interval 5
+  fall 2
+  rise 1
+  weight -10
 }
-
 vrrp_script check_HotDB Server_connect_state {
-
-state
-
-code
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh connect_backup"
-
-interval 5
-
-fall 3
-
-rise 1
-
-timeout 5
-
-weight -10
-
+  state
+  code
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+  rocess.sh connect_backup"
+  interval 5
+  fall 3
+  rise 1
+  timeout 5
+  weight -10
 }
-
 vrrp_instance VI_1 {
-
-state BACKUP
-
-interface eth0
-
-virtual_router_id 89
-
-priority 95
-
-advert_int 1
-
-authentication {
-
-auth_type PASS
-
-auth_pass 1111
-
+  state BACKUP
+  interface eth0
+  virtual_router_id 89
+  priority 95
+  advert_int 1
+  authentication {
+    auth_type PASS
+    auth_pass 1111
+  }
+  track_script {
+    check_HotDB Server_process
+    check_HotDB Server_connect_state
+  }
+  #be careful in red hat
+  track_interface {
+    eth0
+  }
+  virtual_ipaddress {
+    192.168.200.140/24 dev eth0 label eth0:1
+  }
+  notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh backup_notify_master"
+  notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh backup_notify_backup"
+  notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
 }
-
-track_script {
-
-check_HotDB Server_process
-
-check_HotDB Server_connect_state
-
-}
-
-#be careful in red hat
-
-track_interface {
-
-eth0
-
-}
-
-virtual_ipaddress {
-
-192.168.200.140/24 dev eth0 label eth0:1
-
-}
-
-notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh backup_notify_master"
-
-notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh backup_notify_backup"
-
-notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
-
-}
+```
 
 **注：**主备 keepalived 的相关配置也可参考计算节点安装目录 conf 目录下的keepalived.conf.master, keepalived.conf.backup 脚本，红色区域需要根据实际信息修改其他使用默认即可。
 
 **关于自定义修改内容说明：**
 
 - script 脚本路径为计算节点实际安装路径，调用的 master/backup 脚本根据实际的主备角色进行配置
-
 - interface：绑定的网卡
-
 - nopreempt：设置是否开启抢占模式。添加此参数，将不开启抢占模式；否则开启抢占模式。例如主的参数值是 priority 100，备的参数值是 priority 95, 该参数只需要在主 keepalived 配置脚本设置
-
 - priority：优先级，优先级高的为 master
-
 - virtual_ipaddress：instance 绑定的 vip（vip 需与计算节点所在的ip 同网段）
-
 - Label：给本地网卡起一个虚拟名称，用于绑定虚拟网卡 IP ，例如把虚拟网卡 eth0:1 绑定到本地网卡 eth0 上
-
 - Script：判断服务是否正常的脚本路径，通常存放在 HotDB Server 的 bin目录下， 例如：/usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh，该脚本可检查 HotDB Serve 主备服务的进程是否存在，主备 HotDB Serve 的 3323端口和 3325 端口的状态是否正常
 
 2. **启动说明**
@@ -936,27 +830,28 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 先启动主（192.168.200.190）的keepalived，**待ping通vip**后再启动主计算节点服务
 
-**启动主keepalived服务**
+```bash
+# 启动主keepalived服务
+service keepalived start
 
-#service keepalived start
+# Ping通vip后再启动主计算节点服务
+sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
+```
 
-**Ping通vip后再启动主计算节点服务**
-
-#sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
-
-ip a可查看当前主的keepalived VIP是已绑定成功
+`ip a`可查看当前主的keepalived VIP是已绑定成功
 
 ![](assets/install-and-deploy/image6.png)
 
 主计算节点服务启动完**等待20秒**后再启动备（192.168.200.191）的keepalived，keepalived启动完成后**等待10秒**再启动备计算节点服务
 
-**启动备keepalived服务**
-
+```
+# 启动备keepalived服务
 #service keepalived start
 
-**启动备计算节点服务**
+# 启动备计算节点服务
 
-#sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
+sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
+```
 
 ##### 高可用切换说明
 
@@ -979,9 +874,7 @@ NDB SQL服务可用于在分布式环境下帮助计算节点完成相对复杂�
 1. **手动安装前须知**
 
 - NDB SQL服务与计算节点服务是一一对应的，即每台计算节点所在服务器如果需要使用NDB SQL服务支持都需部署该服务程序。
-
-- 与NDB SQL服务对应的计算节点版本必须是V2.5.2及以上版本，否则不支持NDB SQL服务。
-
+- 与NDB SQL服务对应的计算节点版本必须是V2.5.2及以上版本，否则不支持NDB SQL服务
 - 推荐NDB SQL服务与计算节点一次性跟随部署，若目前已有计算节点需要追加NDB SQL服务则需要严格注意：--install-ntpd、--ntpdate-server-ip、--ntpdate-server-host传参问题，需要同当前部署的集群同步时间配置一致。
 
 2. **计算节点与NDB SQL一同部署过程说明**
@@ -992,11 +885,16 @@ NDB SQL服务可用于在分布式环境下帮助计算节点完成相对复杂�
 
 - 登录主计算节点服务器，进入一键部署默认安装目录执行：
 
+```bash
 sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --install-ntpd=yes --ntpdate-server-host=182.92.12.11
+```
 
 - 登录备计算节点服务器，进入一键部署默认安装目录执行：
 
-sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --ntpdate-server-host=主计算节点服务器IP地址
+```
+sh hotdbinsta
+l_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --ntpdate-server-host=主计算节点服务器IP地址
+```
 
 3. **单独部署NDB SQL过程说明**
 
@@ -1006,7 +904,9 @@ sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --instal
 
 **示例：**
 
+```bash
 sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
+```
 
 **注意：**
 
@@ -1020,7 +920,7 @@ sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
 
 - NDB SQL服务安装完成后需要在对应的计算节点安装conf目录下修改server.xml文件配置。需将配置文件中的ndbSqlMode修改为local。具体如下所示：
 
-![%[7%3OP7(I(A]7I95QGAG0H](media/image9.png)
+![](media/image9.png)
 
 5. **NDB SQL启动关闭说明**
 
@@ -1036,25 +936,28 @@ HotDB Listener由JDK1.7.0_80进行编译，对操作系统和Java环境的要求
 
 将一键部署安装包auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz（2.5.5为版本号，不同版本其编号不同，注意同步替换）上传至存储节点服务器/usr/local/hotdb目录下，执行下列命令解压：
 
-#cd /usr/local/hotdb
-
-#tar -zxvf auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz
+```bash
+cd /usr/local/hotdb
+tar -zxvf auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz
+```
 
 ##### 安装Listener
 
 一键部署安装包内置Listener安装包。执行下列命令，将Listener安装在/usr/local/hotdb目录下：
 
-#cd /usr/local/hotdb/Install_Package
-
+```
+cd /usr/local/hotdb/Install_Package
 #tar -zxvf hotdb-listener-0.0.1-alpha-20200420-linux.tar.gz -C /usr/local/hotdb/
+```
 
 ##### 配置Listener
 
 在启动之前，先根据服务器可用内存空间，调整Listener的堆内存大小。
 
-#cd /usr/local/hotdb/hotdb-listener/bin
-
-#vi hotdb_listener
+```
+cd /usr/local/hotdb/hotdb-listener/bin
+vi hotdb_listener
+```
 
 将第24行堆内存大小设置为合理范围。
 
@@ -1062,9 +965,10 @@ HotDB Listener由JDK1.7.0_80进行编译，对操作系统和Java环境的要求
 
 接着配置Listener启动端口（若无特殊需求，此步可省略）
 
-#cd /usr/local/hotdb/hotdb-listener/conf
-
+```bash
+cd /usr/local/hotdb/hotdb-listener/conf
 #vi config.properties
+```
 
 host默认0.0.0.0，无需修改；port默认3330，不建议修改，除非被占用。
 
@@ -1072,31 +976,32 @@ host默认0.0.0.0，无需修改；port默认3330，不建议修改，除非被�
 
 执行下列命令即可启动Listener：
 
+```
 #cd /usr/local/hotdb/hotdb-listener/bin
 
 #sh hotdb_listener start
+```
 
 启动成功窗口会提示"HotDB-Listener start successed."
 
 除了start外，还有其他参数可以使用，使用方法如下：
 
-#sh hotdb_listener
 
-Usage: sh hotdb_listener [start|stop|restart]
+```
+sh hotdb_listener
+# Usage: sh hotdb_listener [start|stop|restart]
+# example:
+# HotDB-Listener start : sh hotdb_listener start
+# HotDB-Listener stop : sh hotdb_listener stop
+# HotDB-Listener restart : sh hotdb_listener restart
+```
 
-example:
+# 启动完毕，可切换到logs目录查看日志输出，可查看到Listener的相关信息。
 
-HotDB-Listener start : sh hotdb_listener start
-
-HotDB-Listener stop : sh hotdb_listener stop
-
-HotDB-Listener restart : sh hotdb_listener restart
-
-启动完毕，可切换到logs目录查看日志输出，可查看到Listener的相关信息。
-
-#tailf listener.log
-
-2020-05-25 12:09:54.089 [INFO] [INIT] [main] cn.hotpu.hotdb.ListenerServer(158) - Listener-Manager start listening on host 0.0.0.0 port 3330
+```
+tailf listener.log
+# 2020-05-25 12:09:54.089 [INFO] [INIT] [main] cn.hotpu.hotdb.ListenerServer(158) - Listener-Manager start listening on host 0.0.0.0 port 3330
+```
 
 ### 自动部署
 
@@ -1112,69 +1017,61 @@ HotDB-Listener restart : sh hotdb_listener restart
 
 ##### 功能使用须知
 
-- 集群部署只支持CentOS6\\7 RHEL6\\7，MySQL 5.6\\5.7\\8.0，HotDB-Server2.4，HotDB-Server2.5；
-
+- 集群部署只支持CentOS6/7 RHEL6/7，MySQL 5.6/5.7/8.0，HotDB-Server2.4，HotDB-Server2.5；
 - 超过2EB的硬盘可能会出现计算错误；
-
 - 不支持一台服务器上安装多个计算节点或多个管理平台或多个备份程序；
-
 - 建议添加干净的操作系统环境服务器；
-
 - 服务器的SSH信息须使用root权限的用户进行配置；
-
 - 添加的服务器要求已配置可用的yum源或安装脚本目录下有对应操作系统版本的iso镜像文件；
-
-- 安装部署包名称默认以"auto_hotdbinstall"开头，请不要随意更改服务器下部署包名称；
-
+- 安装部署包名称默认以`auto_hotdbinstall`开头，请不要随意更改服务器下部署包名称；
 - 程序默认上传部署包存放路径为 /usr/local/hotdb ；
-
 - MySQL默认可安装5.6.41、5.7.25、8.0.16版本，如需要安装其他版本，自行在安装目录下替换相关安装包即可；
-
 - 管理平台在部署集群前需确认在管理平台服务器以下任一目录中存在集群安装部署包资源。集群部署时会在以下目录寻找资源包上传至目标服务器/usr/local/hotdb路径下。（查找优先级按以下为准）
-
-> /opt
->
-> /opt/hotdb
->
-> /usr/local
->
-> /usr/local/hotdb
-
+  * /opt
+  * /opt/hotdb
+  * /usr/local
+  * /usr/local/hotdb
 - 一键部署安装包下载过程中可能存在一些损坏，此时进行部署可能导致部署出错。故在管理平台版本为2.5.6.1（包含）版本以上，增加了完整性校验功能，对上传的安装包进行MD5值校验。即在上传部署安装包时，需同步上传当前安装包对应的MD5值文件至服务器相同目录下，如下图：![](assets/install-and-deploy/image10.png)
 
 ##### 部署管理平台
 
-2. **将部署安装包和对应MD5值文件上传至服务器，并解压到指定目录**
+1. **将部署安装包和对应MD5值文件上传至服务器，并解压到指定目录**
 
-#mkdir /usr/local/hotdb
-
-#tar -zxvf auto_hotdbinstall_HotDB2.*.tar.gz -C /usr/local/hotdb/
+```bash
+mkdir /usr/local/hotdb
+tar -zxvf auto_hotdbinstall_HotDB2.*.tar.gz -C /usr/local/hotdb/
+```
 
 2. **执行安装脚本安装管理平台**
 
-#cd /usr/local/hotdb/Install_Package/
-
-#sh hotdbinstall_v*.sh --ntpdate-server-ip=182.92.12.11 --mysql-version=5.7 --hotdb-config-port=3316 --hotdb-version=2.5 --install-hotdb-server-management=yes
+```bash
+cd /usr/local/hotdb/Install_Package/
+sh hotdbinstall_v*.sh --ntpdate-server-ip=182.92.12.11 --mysql-version=5.7 --hotdb-config-port=3316 --hotdb-version=2.5 --install-hotdb-server-management=yes
+```
 
 3. **查看安装日志获取安装进度**
 
-## tail -f /usr/local/hotdb/Install_Package/hotdbinstall.log
+```bash
+tail -f /usr/local/hotdb/Install_Package/hotdbinstall.log
+```
 
 4. **日志打印如下标记则为安装成功正常结束**
 
-[INFO] hotdbinstall finished without error, but you should check if there is any warn
-
-ings
+```
+[INFO] hotdbinstall finished without error, but you should check if there is any warnings
+```
 
 5. **启动管理平台**
 
-## sh /usr/local/hotdb/hotdb-management/bin/hotdb_management start
+```
+#sh /usr/local/hotdb/hotdb-management/bin/hotdb_management start
+```
 
 6. **浏览器打开管理平台**
 
-启动成功后 打开浏览器输入：
+启动成功后，打开浏览器输入：`http://服务器的IP地址:3324/page/index.html`，成功打开页面后登录账号到管理员界面。
 
-|admin）http://服务器的IP地址:3324/page/index.html成功打开页面后登录账号到管理员界面。（管理员用户名密码默认为 admin
+（管理员用户名密码默认为 admin/admin）
 
 ##### 集群部署功能说明
 
@@ -1292,7 +1189,7 @@ admin用户登录管理平台后进入"集群管理->计算节点集群"，点�
 
 3. "virtual_router_id的值可自行在范围【1-255】选定一个值，但该值必须在集群使用的网段内是唯一的，即没有与其他服务程序选取的值冲突。
 
-4. 主备"lvs_net_interface_name"是LVS所在服务器的网关设备名称，该名称必须与实际服务器上显示的一致（可通过 ip a命令查看）,格式为：网关设备名称+ ":2" 例如："eth0:2"。
+4. 主备lvs_net_interface_name是LVS所在服务器的网关设备名称，该名称必须与实际服务器上显示的一致（可通过 ip a命令查看）,格式为：网关设备名称+ ":2" 例如："eth0:2"。
 
 **（四）存储节点参数**
 
@@ -1434,11 +1331,11 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 
 ##### 功能使用须知
 
-单机部署功能使用须知同"[集群部署功能使用须知](#功能使用须知)"一致，参照该描述即可。
+单机部署功能使用须知同[集群部署功能使用须知](#功能使用须知)一致，参照该描述即可。
 
 ##### 部署管理平台
 
-单机部署属于管理平台中的功能，在使用前需要先安装好管理平台。安装步骤说明请参照"[集群部署功能管理平台部署说明](#部署管理平台)"。
+单机部署属于管理平台中的功能，在使用前需要先安装好管理平台。安装步骤说明请参照[集群部署功能管理平台部署说明](#部署管理平台)。
 
 ##### 单机部署组件安装
 
@@ -1702,84 +1599,85 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 
 ##### 脚本参数说明
 
------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-**参数名称**                         **参数说明**
-dry-run                              只做检查，不做任何修改，可选范围"yes" "no"，默认"no"
-hotdb-version                        指定HotDB大版本号，可选范围"2.3" "2.4" "zabbix"，默认"2.4"
-install-hotdb-server                 是否安装HotDB-server，可选范围"yes" "no"，默认"no"
-install-ndbsql                       是否安装ndbsql，可选范围"yes" "no"，默认"no"
-install-hotdb-listener               是否安装HotDB-listener，可选范围"yes" "no"，默认"no"
---listener-heap-mem-size-gb         如果指定，会帮助将HotDB Listener启动脚本中堆内存大小由4G修改为指定值，默认不修改
---listener-max-direct-mem-size-gb   如果指定，会帮助将HotDB Listener启动脚本中直接内存大小由24G修改为指定值，默认不修改
-hotdb-use-g1                         如果指定，会帮助将hotdb启动脚本修改为使用G1垃圾回收器，默认不修改
-hotdb-heap-mem-size-gb               如果指定，会帮助将hotdb启动脚本中堆内存大小由4G修改为指定值，默认不修改
-hotdb-max-direct-mem-size-gb         如果指定，会帮助将hotdb启动脚本中直接内存大小由24G修改为指定值，默认不修改
-install-hotdb-server-management      是否安装HotDB-server-management，可选范围"yes" "no"，默认"no"
-install-hotdb-backup                 是否安装HotDB-backup，可选范围"yes" "no"，默认"no"
-mysql-version                        指定MySQL大版本号，可选范围"5.6" "5.7"，默认"5.6"
-mysql-port-list                      指定要安装的MySQL数据源端口列表，逗号分隔，要求递增顺序排列，示例："3306,3307,3308,3309"，默认为空
-hotdb-config-port                    指定要安装的配置库端口列表，不可以和MySQL数据源端口冲突，默认为空
-hotdb-config-init                    是否要在hotdb-config-port指定的实例初始化hotdb_config库，可选范围"yes" "no"，默认安装HotDB-server时为yes，不安装HotDB-server时为no。
-mysql-data-diskname                  指定用于MySQL数据目录的磁盘设备名称，如果该设备没有挂载，且没有被格式化过，将自动格式化此设备并挂载到数据目录，默认为空
-mysql-data-rootdir                   指定要使用的MySQL数据目录根目录，默认"/data"，必须是绝对路径
-rename-datadir-before-initdb         指定在初始化数据库前，是否重命名可能存在的旧数据目录，默认为"yes"
-server-id-perfix                     指定server-id使用的前缀，要求为小于429496的数字，默认自动计算，但不保证绝对无冲突
-character-set-server                 指定字符集，可选范围"latin1" "gbk" "utf8" "utf8mb4"，默认"utf8mb4"
-collation-server                     指定校对集，可选范围"latin1_swedish_ci" "latin1_bin" "gbk_chinese_ci" "gbk_bin" "utf8_general_ci","utf8_bin" "utf8mb4_general_ci" "utf8mb4_bin"，默认值为配置的字符集的默认校对集
-innodb-buffer-pool-size-mb           单位为MB的innodb-buffer-pool-size大小，默认自动计算
-innodb-log-file-size-mb              单位为MB的innodb-log-file-size大小，默认自动计算
-innodb-data-file-size-mb             单位为MB的ibdata文件大小，默认"4096"
-innodb-io-capacity                   指定innodb-io-capacity的大小，默认自动计算
-innodb-flush-log-at-trx-commit       指定innodb-flush-log-at-trx-commit设置，默认"2"
-sync-binlog                          指定sync-binlog的设置，默认"10"
-binlog-format                        指定binlog-format的设置，可选范围"MIXED" "ROW"，默认"MIXED"
-gtid-mode                            是否启用gtid，可选范围"on" "off"，默认"on"
-rpl-semi-sync-enabled                是否启动半同步复制，可选范围"on" "off"，默认"on"
-mgr-group-name-list                  MySQL端口号:MGR组UUID:MGR本地端口号列表，逗号分隔，如果提供该参数，将为对应端口打开MGR，例如"3306:540c2b46-5d73-11e8-ad9b-00a0c9000000:33060,3308:5f5c1e2d-5d73-11e8-ad9b-00a0c9000000:33080"，默认为空。（注意，仍然需要在mysql-port-list、hotdb-config-port中指定欲创建的MySQL实例）
-mgr-group-local-ip                   MGR本地端口绑定的本地IP地址，默认自动计算。
-mgr-group-seeds-list                 MySQL端口号:MGR组成员IP:端口逗号分隔列表，斜杠分隔，如果提供该参数，将在my.cnf文件中对应端口添加该值，默认为空，例如"3306:192.168.200.101:33060,192.168.200.102:33060,192.168.200.103:33060/3308:192.168.200.101:33080,192.168.200.102:33080,192.168.200.103:33080"
-creat-hotdbroot-in-mysql             是否在MySQL中创建hotdb_root用户，用户拥有所有权限，并且可以从任意位置连接，默认密码hotdb_root，可选范围"yes" "no"，默认"no"
-install-keepalived                   是否安装keepalive，可选范围"master" "backup" "no"，默认"no"
-keepalived-vip-with-perfix           如果指定，会帮助将keepalive配置中的vip由192.168.200.140/24替换为该值，默认不修改
-keepalived-virtual-router-id         如果指定，会帮助将keepalive配置中的virtual-router-id由151替换为该值，默认不修改
-keepalived-net-interface-name        如果指定，会帮助将keepalive配置中的vip设备名称由eth0:1替换为该值，默认不修改
-install-lvs                          是否安装lvs服务端，可选范围"master" "backup" "no"，默认"no"
-lvs-vip-with-perfix                  如果指定，会帮助将lvs配置中的vip由192.168.56.203/24替换为该值，默认不修改
-lvs-port                             如果指定，会帮助将lvs配置中的监听端口由3306替换为该值，默认不修改，端口需要和HotDB集群的数据服务端口相同
-lvs-virtual-router-id                如果指定，会帮助将lvs配置中的virtual-router-id由51替换为该值，默认不修改
-lvs-net-interface-name               如果指定，会帮助将lvs配置中的vip设备名称由eth1:2替换为该值，默认不修改
-lvs-real-server-list                 lvs后端HotDB服务器IP:数据服务端口:管理端口列表，逗号分隔，例如"192.168.0.1:3323:3325,192.168.0.2:4323:4325"，默认为空
-lvs-real-server-user                 lvs健康检查脚本连接后端HotDB服务器管理端口使用的用户名，默认"root"
-lvs-real-server-password             lvs健康检查脚本连接后端HotDB服务器管理端口使用的用密码，默认"root"
-lvs-real-server-startup-type         作为lvs的realserver时，服务器相关调整的配置方式，可选范围"no" "config" "service" 默认"no"
-install-ntpd                         是否安装ntpd，可选范围"yes" "no"，如果安装HotDB，则默认安装ntpd，否则默认不安装。注意，一个HotDB集群里面，应当只有一个ntpd；HotDB备机应当向HotDB主机同步时间。如果内网有ntp源，则不必安装ntpd。
-ntpdate-server-ip                    配置时间同步的ip地址，该参数与ntpdate-server-host必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。
-ntpdate-server-host                  配置时间同步的主机地址，允许为域名或ip，脚本不会对该参数做任何处理与检查，需要依赖调用者保证正确性，该参数与ntpdate-server-ip必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。
-
------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|               参数名称                |                                                                                                           参数说明                                                                                                           |
+|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| dry-run                           | 只做检查，不做任何修改，可选范围"yes" "no"，默认"no"                                                                                                                                                                                        |
+| hotdb-version                     | 指定HotDB大版本号，可选范围"2.3" "2.4" "zabbix"，默认"2.4"                                                                                                                                                                             |
+| install-hotdb-server              | 是否安装HotDB-server，可选范围"yes" "no"，默认"no"                                                                                                                                                                                   |
+| install-ndbsql                    | 是否安装ndbsql，可选范围"yes" "no"，默认"no"                                                                                                                                                                                         |
+| install-hotdb-listener            | 是否安装HotDB-listener，可选范围"yes" "no"，默认"no"                                                                                                                                                                                 |
+| --listener-heap-mem-size-gb       | 如果指定，会帮助将HotDB Listener启动脚本中堆内存大小由4G修改为指定值，默认不修改                                                                                                                                                                         |
+| --listener-max-direct-mem-size-gb | 如果指定，会帮助将HotDB Listener启动脚本中直接内存大小由24G修改为指定值，默认不修改                                                                                                                                                                       |
+| hotdb-use-g1                      | 如果指定，会帮助将hotdb启动脚本修改为使用G1垃圾回收器，默认不修改                                                                                                                                                                                     |
+| hotdb-heap-mem-size-gb            | 如果指定，会帮助将hotdb启动脚本中堆内存大小由4G修改为指定值，默认不修改                                                                                                                                                                                  |
+| hotdb-max-direct-mem-size-gb      | 如果指定，会帮助将hotdb启动脚本中直接内存大小由24G修改为指定值，默认不修改                                                                                                                                                                                |
+| install-hotdb-server-management   | 是否安装HotDB-server-management，可选范围"yes" "no"，默认"no"                                                                                                                                                                        |
+| install-hotdb-backup              | 是否安装HotDB-backup，可选范围"yes" "no"，默认"no"                                                                                                                                                                                   |
+| mysql-version                     | 指定MySQL大版本号，可选范围"5.6" "5.7"，默认"5.6"                                                                                                                                                                                      |
+| mysql-port-list                   | 指定要安装的MySQL数据源端口列表，逗号分隔，要求递增顺序排列，示例："3306,3307,3308,3309"，默认为空                                                                                                                                                           |
+| hotdb-config-port                 | 指定要安装的配置库端口列表，不可以和MySQL数据源端口冲突，默认为空                                                                                                                                                                                      |
+| hotdb-config-init                 | 是否要在hotdb-config-port指定的实例初始化hotdb_config库，可选范围"yes" "no"，默认安装HotDB-server时为yes，不安装HotDB-server时为no。                                                                                                                     |
+| mysql-data-diskname               | 指定用于MySQL数据目录的磁盘设备名称，如果该设备没有挂载，且没有被格式化过，将自动格式化此设备并挂载到数据目录，默认为空                                                                                                                                                           |
+| mysql-data-rootdir                | 指定要使用的MySQL数据目录根目录，默认"/data"，必须是绝对路径                                                                                                                                                                                     |
+| rename-datadir-before-initdb      | 指定在初始化数据库前，是否重命名可能存在的旧数据目录，默认为"yes"                                                                                                                                                                                      |
+| server-id-perfix                  | 指定server-id使用的前缀，要求为小于429496的数字，默认自动计算，但不保证绝对无冲突                                                                                                                                                                         |
+| character-set-server              | 指定字符集，可选范围"latin1" "gbk" "utf8" "utf8mb4"，默认"utf8mb4"                                                                                                                                                                    |
+| collation-server                  | 指定校对集，可选范围"latin1_swedish_ci" "latin1_bin" "gbk_chinese_ci" "gbk_bin" "utf8_general_ci","utf8_bin" "utf8mb4_general_ci" "utf8mb4_bin"，默认值为配置的字符集的默认校对集                                                                   |
+| innodb-buffer-pool-size-mb        | 单位为MB的innodb-buffer-pool-size大小，默认自动计算                                                                                                                                                                                   |
+| innodb-log-file-size-mb           | 单位为MB的innodb-log-file-size大小，默认自动计算                                                                                                                                                                                      |
+| innodb-data-file-size-mb          | 单位为MB的ibdata文件大小，默认"4096"                                                                                                                                                                                                |
+| innodb-io-capacity                | 指定innodb-io-capacity的大小，默认自动计算                                                                                                                                                                                           |
+| innodb-flush-log-at-trx-commit    | 指定innodb-flush-log-at-trx-commit设置，默认"2"                                                                                                                                                                                 |
+| sync-binlog                       | 指定sync-binlog的设置，默认"10"                                                                                                                                                                                                  |
+| binlog-format                     | 指定binlog-format的设置，可选范围"MIXED" "ROW"，默认"MIXED"                                                                                                                                                                           |
+| gtid-mode                         | 是否启用gtid，可选范围"on" "off"，默认"on"                                                                                                                                                                                           |
+| rpl-semi-sync-enabled             | 是否启动半同步复制，可选范围"on" "off"，默认"on"                                                                                                                                                                                          |
+| mgr-group-name-list               | MySQL端口号:MGR组UUID:MGR本地端口号列表，逗号分隔，如果提供该参数，将为对应端口打开MGR，例如"3306:540c2b46-5d73-11e8-ad9b-00a0c9000000:33060,3308:5f5c1e2d-5d73-11e8-ad9b-00a0c9000000:33080"，默认为空。（注意，仍然需要在mysql-port-list、hotdb-config-port中指定欲创建的MySQL实例） |
+| mgr-group-local-ip                | MGR本地端口绑定的本地IP地址，默认自动计算。                                                                                                                                                                                                 |
+| mgr-group-seeds-list              | MySQL端口号:MGR组成员IP:端口逗号分隔列表，斜杠分隔，如果提供该参数，将在my.cnf文件中对应端口添加该值，默认为空，例如"3306:192.168.200.101:33060,192.168.200.102:33060,192.168.200.103:33060/3308:192.168.200.101:33080,192.168.200.102:33080,192.168.200.103:33080"       |
+| creat-hotdbroot-in-mysql          | 是否在MySQL中创建hotdb_root用户，用户拥有所有权限，并且可以从任意位置连接，默认密码hotdb_root，可选范围"yes" "no"，默认"no"                                                                                                                                        |
+| install-keepalived                | 是否安装keepalive，可选范围"master" "backup" "no"，默认"no"                                                                                                                                                                          |
+| keepalived-vip-with-perfix        | 如果指定，会帮助将keepalive配置中的vip由192.168.200.140/24替换为该值，默认不修改                                                                                                                                                                  |
+| keepalived-virtual-router-id      | 如果指定，会帮助将keepalive配置中的virtual-router-id由151替换为该值，默认不修改                                                                                                                                                                   |
+| keepalived-net-interface-name     | 如果指定，会帮助将keepalive配置中的vip设备名称由eth0:1替换为该值，默认不修改                                                                                                                                                                          |
+| install-lvs                       | 是否安装lvs服务端，可选范围"master" "backup" "no"，默认"no"                                                                                                                                                                             |
+| lvs-vip-with-perfix               | 如果指定，会帮助将lvs配置中的vip由192.168.56.203/24替换为该值，默认不修改                                                                                                                                                                         |
+| lvs-port                          | 如果指定，会帮助将lvs配置中的监听端口由3306替换为该值，默认不修改，端口需要和HotDB集群的数据服务端口相同                                                                                                                                                               |
+| lvs-virtual-router-id             | 如果指定，会帮助将lvs配置中的virtual-router-id由51替换为该值，默认不修改                                                                                                                                                                          |
+| lvs-net-interface-name            | 如果指定，会帮助将lvs配置中的vip设备名称由eth1:2替换为该值，默认不修改                                                                                                                                                                                |
+| lvs-real-server-list              | lvs后端HotDB服务器IP:数据服务端口:管理端口列表，逗号分隔，例如"192.168.0.1:3323:3325,192.168.0.2:4323:4325"，默认为空                                                                                                                                  |
+| lvs-real-server-user              | lvs健康检查脚本连接后端HotDB服务器管理端口使用的用户名，默认"root"                                                                                                                                                                                 |
+| lvs-real-server-password          | lvs健康检查脚本连接后端HotDB服务器管理端口使用的用密码，默认"root"                                                                                                                                                                                 |
+| lvs-real-server-startup-type      | 作为lvs的realserver时，服务器相关调整的配置方式，可选范围"no" "config" "service" 默认"no"                                                                                                                                                        |
+| install-ntpd                      | 是否安装ntpd，可选范围"yes" "no"，如果安装HotDB，则默认安装ntpd，否则默认不安装。注意，一个HotDB集群里面，应当只有一个ntpd；HotDB备机应当向HotDB主机同步时间。如果内网有ntp源，则不必安装ntpd。                                                                                                 |
+| ntpdate-server-ip                 | 配置时间同步的ip地址，该参数与ntpdate-server-host必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。                                             |
+| ntpdate-server-host               | 配置时间同步的主机地址，允许为域名或ip，脚本不会对该参数做任何处理与检查，需要依赖调用者保证正确性，该参数与ntpdate-server-ip必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。        |
 
 ##### 参数使用说明
 
 参数的组合使用：参数名=值+空格+参数名=值 ，例如：
 
+```
 --hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192
-
 .168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+```
 
 脚本安装存储节点监听程序：
 
+```
 --hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192
-
 .168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --install-hotdb-listener=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+```
 
 运行脚本使用方法：
 
+```
 sh -x 脚本名称.sh+空格+参数串
 
 sh -x hotdbinstall_v*.sh --hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1
 
 --ntpdate-server-ip=192.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.6 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.4 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+```
 
 ##### 脚本其他说明
 

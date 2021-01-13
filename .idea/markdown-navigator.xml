@@ -32,7 +32,6 @@
         <option name="ADMONITION_EXT" value="true" />
         <option name="ATTRIBUTES_EXT" value="true" />
         <option name="COMMONMARK_LISTS" value="true" />
-        <option name="EMOJI_SHORTCUTS" value="true" />
         <option name="ENUMERATED_REFERENCES_EXT" value="true" />
         <option name="GFM_TABLE_RENDERING" value="true" />
         <option name="GITBOOK_URL_ENCODING" value="true" />
