@@ -231,8 +231,10 @@
     //地址重定向
     function redirectLocation() {
       let url = window.location.href
-      if(url.charAt(url.length - 1) === "/") url = url.substring(0,url.length)
-      if(url.endsWith("/#")) {
+      if(url.charAt(url.length - 1) === "/") url = url.substring(0,url.length-1)
+      if(url.indexOf("/#") === -1){
+        window.location.href = `${url}/#/zh/latest/`
+      }else if(url.endsWith("/#")) {
         window.location.href = `${url}/zh/latest/`
       } else if(url.endsWith("/#/zh")) {
         window.location.href = `${url}/latest/`
