@@ -171,7 +171,7 @@ li input[type=checkbox] {
 }
 .github-corner svg {
   color: #fff;
-  fill: var(--theme-color, #42b983);
+  fill: var(--theme-color);
   height: 80px;
   width: 80px
 }

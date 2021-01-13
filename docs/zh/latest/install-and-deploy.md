@@ -112,7 +112,7 @@ rpm -q glibc |egrep 'glibc.*i.86.*'
 
 2. 安装配置库
 
-配置库可与计算节点安装在同一台服务器上，也可以分开单独安装。具体步骤参照"[配置库安装说明](#配置库)"。
+配置库可与计算节点安装在同一台服务器上，也可以分开单独安装。具体步骤参照[配置库安装说明](#配置库)。
 
 3. **服务授权**
 
@@ -994,11 +994,9 @@ sh hotdb_listener
 # HotDB-Listener start : sh hotdb_listener start
 # HotDB-Listener stop : sh hotdb_listener stop
 # HotDB-Listener restart : sh hotdb_listener restart
-```
 
 # 启动完毕，可切换到logs目录查看日志输出，可查看到Listener的相关信息。
 
-```
 tailf listener.log
 # 2020-05-25 12:09:54.089 [INFO] [INIT] [main] cn.hotpu.hotdb.ListenerServer(158) - Listener-Manager start listening on host 0.0.0.0 port 3330
 ```

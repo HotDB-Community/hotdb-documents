@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono|Source+Sans+Pro:300,400,600");
 :root{
   --theme-color: #3390FF;
+  --code-color: #00c1de;
 }
 * {
   -webkit-font-smoothing: antialiased;
@@ -171,7 +172,7 @@ li input[type=checkbox] {
 }
 .github-corner svg {
   color: #fff;
-  fill: var(--theme-color, #42b983);
+  fill: var(--theme-color);
   height: 80px;
   width: 80px
 }
@@ -671,7 +672,7 @@ section.cover blockquote > p > a:hover {
 }
 .markdown-section code {
   border-radius: 2px;
-  color: #e96900;
+  color: var(--code-color);
   font-size: .8rem;
   margin: 0 2px;
   padding: 3px 5px;
