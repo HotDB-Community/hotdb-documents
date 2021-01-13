@@ -4,7 +4,7 @@
 
 HotDB Server集群部署对服务器、操作系统、依赖软件等有一定要求，不符合要求的环境部署出来的集群可能无法使用或不满足使用要求。建议部署前详细了解HotDB Server集群部署对环境的[要求说明](#环境说明)。
 
-此文档将详细描述普通模式下，如何部署一套HotDB Server集群。若要了解开启灾备模式后，相较于普通模式，需要特殊注意的地方，请参考[跨机房灾备](cross-idc-disaster-covocery#安装部署)中「安装部署」章节。
+此文档将详细描述普通模式下，如何部署一套HotDB Server集群。若要了解开启灾备模式后，相较于普通模式，需要特殊注意的地方，请参考[跨机房灾备文档](cross-idc-disaster-covocery#安装部署)中「安装部署」章节。
 
 ### 部署架构示意图
 
@@ -46,29 +46,23 @@ HotDB Server集群部署对服务器、操作系统、依赖软件等有一定�
 
 **部署环境：**
 
------------- --------------------------------------
-
-**项目**     **名称**
-服务器属性   虚拟机
-操作系统     CentOS Linux release 7.6.1810 (Core)
-MySQL版本    MySQL 5.7.25
-JDK          JDK1.7_80
-
------------- --------------------------------------
+|   项目    |                  名称                  |
+|---------|--------------------------------------|
+| 服务器属性   | 虚拟机                                  |
+| 操作系统    | CentOS Linux release 7.6.1810 (Core) |
+| MySQL版本 | MySQL 5.7.25                         |
+| JDK     | JDK1.7_80                            |
 
 **部署组件：**
 
--------------- --------------
+| 组件名称 | 安装数量 |
+|------|------|
+| 计算节点 | 1    |
+| 管理平台 | 1    |
+| 配置库  | 1    |
+| 存储节点 | 4    |
 
-**组件名称**   **安装数量**
-计算节点       1
-管理平台       1
-配置库         1
-存储节点       4
-
--------------- --------------
-
-**注：**各组件名称说明可参考《分布式事务数据库产品HotDB Server -【名词解释】功能使用手册》文档
+**注：**各组件名称说明可参考[名词解释](glossary.md)文档
 
 ##### 计算节点
 
@@ -80,95 +74,88 @@ JDK          JDK1.7_80
 
 - 执行下列命令，将 JDK 安装到/usr/local/目录下：
 
-\## rpm -ivh jdk-7u80-linux-x64.rpm --prefix=/usr/java/
+```bash
+rpm -ivh jdk-7u80-linux-x64.rpm --prefix=/usr/java/
+```
 
 - 配置JDK环境变量
 
-**打开并编辑/etc/profile文件：**
-
-\#vi /etc/profile
-
-**在文件末尾加入下列信息：**
-
+```bash
+# 打开并编辑/etc/profile文件：
+vi /etc/profile
+# 在文件末尾加入下列信息：
 export JAVA_HOME=/usr/java/jdk1.7.0_80
-
 export PATH=\$JAVA_HOME/bin:\$PATH
-
-**执行source命令，使新增的环境变量生效：**
-
-\#source /etc/profile
+# 执行source命令，使新增的环境变量生效：
+source /etc/profile
+```
 
 JDK1.8的安装，推荐使用OpenJDK8安装包，其操作步骤推荐如下：
 
-**上传OpenJDK8安装包**
+```bash
+# 上传OpenJDK8安装包
+# 可使用rz命令或ftp文件传输工具上传OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz安装包，该安装包可联系热璞科技索要
 
-可使用rz命令或ftp文件传输工具上传OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz安装包，该安装包可联系热璞科技索要
+# 解压安装包即可
+mkdir -p /usr/local/jdk8
+tar -xvf OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz -C /usr/local/jdk8
+```
 
-**解压安装包即可**
-
-\#mkdir -p /usr/local/jdk8
-
-\#tar -xvf OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz -C /usr/local/jdk8
-
-1. **检测glibc**
+1. 检测glibc
 
 计算节点的服务授权需要安装加密锁的驱动包，该驱动包依赖于32位的glibc。所以在安装计算节点之前必须检测服务器中是否包含32位的glibc。检测出未安装时需要手动安装完成后再往下操作。
 
-**查看服务器glibc安装情况：**（有输出glibc版本信息为正常）
+```bash
+# 查看服务器glibc安装情况（有输出glibc版本信息为正常）
+rpm -q glibc |egrep 'glibc.*i.86.*'
+```
 
-\## rpm -q glibc |egrep 'glibc.*i.86.*'
-
-2. **安装配置库**
+2. 安装配置库
 
 配置库可与计算节点安装在同一台服务器上，也可以分开单独安装。具体步骤参照"[配置库安装说明](#配置库)"。
 
 3. **服务授权**
 
-HotDB Server能正常启动并提供服务需要通过热璞科技正规的授权许可，可理解为需要license。具体服务授权说明请参考《分布式事务数据库HotDB Server【服务授权】功能使用手册》
+HotDB Server能正常启动并提供服务需要通过热璞科技正规的授权许可，可理解为需要license。具体服务授权说明请参考[服务授权文档](service-license.md)。
 
 4. **安装计算节点**
 
 安装计算节点，需要解压计算节点安装包，修改计算节点配置文件server.xml，再导入配置库表结构到安装好的MySQL配置库实例中。
 
-**将hotdb-server-2.5.0-xxx.tar.gz二进制包上传至服务器，创建HotDB Server的安装目录，并将**
+```bash
+# 将hotdb-server-2.5.0-xxx.tar.gz二进制包上传至服务器，创建HotDB Server的安装目录，并将HotDB Server解压到安装目录。
+mkdir /usr/local/hotdb
+tar -zxvf hotdb-server-2.5.0-xxx.tar.gz -C /usr/local/hotdb/
 
-**HotDB Server解压到安装目录。**
-
-\#mkdir /usr/local/hotdb
-
-\#tar -zxvf hotdb-server-2.5.0-xxx.tar.gz -C /usr/local/hotdb/
-
-**配置库表结构在计算节点的安装目录conf下，使用下列命令可导入表结构到配置库中。（导入表结构，会创建配置库hotdb_config）**
-
-\#mysql --uroot --socket=/data/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-server/conf/hotdb_config.sql
+# 配置库表结构在计算节点的安装目录conf下，使用下列命令可导入表结构到配置库中。（导入表结构，会创建配置库hotdb_config）
+mysql --uroot --socket=/data/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-server/conf/hotdb_config.sql
+```
 
 5. **添加配置库账户**
 
-计算节点访问配置库，需要在配置库MySQL实例中添加访问账号。登录配置库执行下列MySQL语句，创建配置库账户"hotdb_config"。
+计算节点访问配置库，需要在配置库MySQL实例中添加访问账号。登录配置库执行下列MySQL语句，创建配置库账户`hotdb_config`。
 
-**创建hotdb_config账户**
-
+```sql
+# 创建hotdb_config账户
 create user 'hotdb_config'@'%' identified by 'hotdb_config';
 
-**赋予权限**
-
+# 赋予权限
 GRANT select,insert,update,delete,create,drop,index,alter,reload,references,create temporary tables,super,lock tables,replication slave,replication client ON *.* TO 'hotdb_config'@'%';
+```
 
 6. **修改计算节点配置文件**
 
 需要修改的配置文件server.xml在计算节点的安装目录conf下。需要设置计算节点连接配置库与端口号（若无特殊要求可直接用默认端口号）等参数。
 
-\#vi /usr/local/hotdb/hotdb-server/conf/server.xml
+```
+vi /usr/local/hotdb/hotdb-server/conf/server.xml
 
 <property name="url">jdbc:mysql://192.168.200.1:3306/hotdb_config</property><!-- 配置库地址 -->
-
 <property name="username">hotdb_config</property><!-- 配置库用户名 -->
-
 <property name="password">hotdb_config</property><!-- 配置库密码 -->
-
 <property name="serverPort">3323</property><!-- 服务端口 -->
-
 <property name="managerPort">3325</property><!-- 管理端口 -->
+```
 
 **注：**若配置库与计算节点安装在同一服务器上，server.xml中的配置库IP地址也需要写具体的IP值，不可用127.0.0.1代替。
 
@@ -176,26 +163,23 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,references,crea
 
 计算节点的启动脚本"hotdb_server"在计算节点的安装目录bin下。执行下列命令即可启动或关闭
 
-**启动计算节点服务**
+```bash
+# 启动计算节点服务
+cd /usr/local/hotdb/hotdb-server/bin
+sh hotdb_server start
 
-\#cd /usr/local/hotdb/hotdb-server/bin
+# 查看计算节点是否启动成功
+jps | grep -i HotdbStartup
+# 19833 HotdbStartup
 
-\#sh hotdb_server start
-
-**查看计算节点是否启动成功**
-
-\#jps | grep -i HotdbStartup
-
-19833 HotdbStartup
-
-**停止计算节点服务**
-
-\#kill 19833 或 sh hotdb_server stop
+# 停止计算节点服务
+kill 19833
+# 或者：sh hotdb_server stop
+```
 
 **说明：**
 
-- 启动时若出现异常，在可安装目录logs下查看计算节点日志"hotdb.log"。执行日志查看命令：tail -f /usr/local/hotdb/hotdb-server/logs/hotdb.log。
-
+- 启动时若出现异常，在可安装目录logs下查看计算节点日志hotdb.log。执行日志查看命令：`tail -f /usr/local/hotdb/hotdb-server/logs/hotdb.log`。
 - 若服务器未授权，或安装的计算节点服务未经授权许可都会导致计算节点服务启动失败。
 
 ##### 管理平台
@@ -206,81 +190,69 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,references,crea
 
 将hotdb-management-2.x.x-xxx.tar.gz二进制包上传至服务器安装目录，并执行以下命令。
 
-\#cd /usr/local/hotdb
-
-\#tar -zxvf hotdb-management-2.x.x-xxx.tar.gz
+```bash
+cd /usr/local/hotdb
+tar -zxvf hotdb-management-2.x.x-xxx.tar.gz
+```
 
 2. **导入管理平台配置库表结构**
 
 管理平台配置库可与计算节点配置库共用一个MySQL实例，但生产环境中不建议共用。管理平台配置库表结构在其安装目录doc下，使用导入配置命令前需要先在配置库中创建管理平台连接配置库的账户"hotdb_cloud"。
 
-**创建hotdb_cloud账户**
-
+```
+# 创建hotdb_cloud账户
 create user 'hotdb_cloud'@'%' identified by 'hotdb_cloud';
 
-**赋予权限**
-
+# 赋予权限
 GRANT select,insert,update,delete,create,drop,index,alter,references ON *.* TO 'hotdb_cloud'@'%';
 
-**导入管理平台配置到配置库中**
-
-\#mysql -uroot --socket=/data/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-management/doc/hotdb_cloud_config.sql
+# 导入管理平台配置到配置库中
+#mysql -uroot --socket=/data/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-management/doc/hotdb_cloud_config.sql
+```
 
 3. **修改管理平台配置文件**
 
 修改的配置文件在管理平台安装目录conf下为"application.properties"，主要修改管理平台对配置库的连接信息,使用端口以及管理平台的语言设置（若无特殊要求可直接用默认端口号和默认语言）。
 
-**编辑配置文件**
+```
+# 编辑配置文件
+vi /usr/local/hotdb/hotdb-management/conf/application.properties
 
-\#vi /usr/local/hotdb/hotdb-management/conf/application.properties
+# 修改参数信息
 
-**修改参数信息**
-
-\#管理平台监听端口
-
+# 管理平台监听端口
 server.port=3324
-
-\#Hotdb Backup备份程序监听端口
-
+# Hotdb Backup备份程序监听端口
 server.backup.port=3322
-
-\#HotDB Management配置库地址
-
+#HotDB Management配置库地址
 spring.datasource.url=jdbc:mysql://192.168.200.1:3306/hotdb_cloud_config?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&connectTimeout=3000
-
-\#HotDB Management配置库用户名
-
+#HotDB Management配置库用户名
 spring.datasource.username=hotdb_cloud
-
-\#HotDB Management配置库密码
-
+#HotDB Management配置库密码
 spring.datasource.password=hotdb_cloud
-
-\#HotDB Management语言设置，默认为英语，若需要使用中文，则将其设置为Chinese
-
+#HotDB Management语言设置，默认为英语，若需要使用中文，则将其设置为Chinese
 language=English/Chinese
+```
 
 4. **启动与停止管理平台**
 
-管理平台的启动脚本"hotdb_management"其安装目录bin下。执行下列命令即可启动或停止管理平台服务。
+管理平台的启动脚本hotdb_management其安装目录bin下。执行下列命令即可启动或停止管理平台服务。
 
-**进入启动脚本目录**
+```
+# 进入启动脚本目录
+cd /usr/local/hotdb/hotdb-management/bin
 
-\#cd /usr/local/hotdb/hotdb-management/bin
+# 启动管理平台服务
+sh hotdb_management start
 
-**启动管理平台服务**
+# 查看服务是否启动成功（启动成功后可在浏览器中打开并登陆管理平台）
+jps | grep -i hotdb-management
+# 6595 hotdb-management-xxx.jar
 
-\#sh hotdb_management start
-
-**查看服务是否启动成功（启动成功后可在浏览器中打开并登陆管理平台）**
-
-\#jps | grep -i hotdb-management
-
-6595 hotdb-management-xxx.jar
-
-关闭管理平台服务
-
-\#kill 6595 或 sh hotdb_management stop
+# 关闭管理平台服务
+kill 6595
+# 或者：sh hotdb_management stop
+```
 
 ##### 配置库
 
@@ -290,415 +262,263 @@ language=English/Chinese
 
 1. **下载MySQL rpm包**
 
-**从MySQL的官网下载MySQL5.6.32的版本到服务器，以下版本针对centos6.x系统推荐，其他系统可参**
-
-**考官方说明下载相应版本**
+```
+从MySQL的官网下载MySQL5.6.32的版本到服务器，以下版本针对centos6.x系统推荐，其他系统可参考官方说明下载相应版本。
 
 <http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-shared-compat-5.6.32-1.el6.x86_64.rpm>
-
 <http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-devel-5.6.32-1.el6.x86_64.rpm>
-
 <http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-client-5.6.32-1.el6.x86_64.rpm>
-
 <http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-server-5.6.32-1.el6.x86_64.rpm>
-
 <http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-shared-5.6.32-1.el6.x86_64.rpm>
+```
 
 2. **卸载MariaDB**
 
 若操作系统中已安装有MariaDB则需要卸载后才能安装MySQL。查询MariaDB安装情况与卸载参照如下：
 
-**查看是否安装命令：**
+```
+# 查看是否安装命令：
+rpm -qa|grep mariadb
+# mariadb-libs-5.5.44-2.el7.centos.x86_64
 
-\## rpm -qa|grep mariadb
-
-mariadb-libs-5.5.44-2.el7.centos.x86_64
-
-**卸载MariaDB命令：**
-
-\## yum remove mariadb-libs-5.5.44-2.el7.centos.x86_64
+# 卸载MariaDB命令：
+yum remove mariadb-libs-5.5.44-2.el7.centos.x86_64
+```
 
 3. **安装MySQL rpm包**
 
-**上传MySQL rpm包到服务器并执行rpm命令安装MySQL**
+```
+# 上传MySQL rpm包到服务器并执行rpm命令安装MySQL
+yum -y localinstall --nogpgcheck MySQL-server-5.6.32-1.el6.x86_64.rpm MySQL-shared-compat-5.6.32-1.el6.x86_64.rpm MySQL-devel-5.6.32-1.el6.x86_64.rpm MySQL-client-5.6.32-1.el6.x86_64.rpm MySQL-shared-5.6.32-1.el6.x86_64.rpm
 
-\#yum -y localinstall --nogpgcheck MySQL-server-5.6.32-1.el6.x86_64.rpm MySQL-shared-compat-5.6.32-1.el6.x86_64.rpm MySQL-devel-5.6.32-1.el6.x86_64.rpm MySQL-client-5.6.32-1.el6.x86_64.rpm MySQL-shared-5.6.32-1.el6.x86_64.rpm
-
-**或者可以执行**
-
-\#yum -y localinstall MySQL-*.rpm
+# 或者可以执行
+yum -y localinstall MySQL-*.rpm
+```
 
 4. **MySQL配置文件**
 
 将下列内容复制并替换服务器的/etc/my.cnf文件中的原有内容
 
+```ini
 [client]
-
 default-character-set=utf8
-
 [mysqld_safe]
-
 ledir=/usr/sbin
-
 user=mysql
-
 open-files-limit=8192
-
 [mysqld_multi]
-
 mysqld = /usr/bin/mysqld_safe
-
 user = root
-
 log = /data/multi.log
-
 [mysqld]
-
-\#***********************************common parameters******************************
-
+#***********************************common parameters******************************
 basedir=/usr
-
 skip-federated
-
 skip-blackhole
-
 skip-name-resolve
-
 skip_external_locking
-
 flush=OFF
-
 performance_schema=0
-
 event-scheduler=ON
-
 default-storage-engine=InnoDB
-
 character_set_server=utf8
-
 collation_server=utf8_general_ci
-
 lower_case_table_names=1
-
 explicit_defaults_for_timestamp
-
 sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION'
-
 user=mysql
-
 port=3306
-
 pid-file=/data/mysqldata3306/sock/mysql.pid
-
 socket=/data/mysqldata3306/sock/mysql.sock
-
 datadir=/data/mysqldata3306/mydata
-
 tmpdir=/data/mysqldata3306/tmpdir
-
 group_concat_max_len=1048576
-
 back_log=1000
-
 max_connections=8000
-
 max_user_connections=7900
-
 thread_cache_size=128
-
 max_connect_errors=99999
-
 wait_timeout=172800
-
 interactive_timeout=172800
-
 net_buffer_length=8K
-
 max_allowed_packet=64M
-
 max_heap_table_size=1G
-
 tmp_table_size=2M
-
 sort_buffer_size=8M
-
 max_length_for_sort_data=16k
-
-join_buffer_size=4M \#bka
-
-read_rnd_buffer_size=8M \#mrr
-
+join_buffer_size=4M #bka
+read_rnd_buffer_size=8M #mrr
 table_open_cache=1024
-
 table_open_cache_instances=16
-
 query_cache_type=0
-
 query_cache_size=0
-
-\#query_cache_limit=1M
-
-\#******************************* Logs related settings ***************************
-
-\#general_log
-
+#query_cache_limit=1M
+#******************************* Logs related settings ***************************
+#general_log
 general_log_file=/data/mysqldata3306/log/general.log
-
 log-error=/data/mysqldata3306/log/error.log
-
 long_query_time=1
-
 slow_query_log
-
 slow_query_log_file=/data/mysqldata3306/log/slow-query.log
-
-\#log_queries_not_using_indexes
-
+#log_queries_not_using_indexes
 log_warnings = 2
-
 log-bin-index=/data/mysqldata3306/binlog/mysql-bin.index
-
 log-bin=/data/mysqldata3306/binlog/mysql-bin
-
 relay-log-index=/data/mysqldata3306/relaylog/mysql-relay-bin.index
-
 relay-log=/data/mysqldata3306/relaylog/mysql-relay-bin
-
 binlog_cache_size=256K
-
 max_binlog_size=512M
-
 binlog-format=MIXED
-
 binlog-checksum=CRC32
-
 sync_binlog=0
-
 expire_logs_days=10
-
-\#******************************* Replication related settings *********************
-
+#******************************* Replication related settings *********************
 server-id= 3306
-
-\#skip-slave-start
-
+#skip-slave-start
 log_slave_updates=1
-
 log_bin_trust_function_creators=1
-
 auto_increment_increment=1
-
 auto_increment_offset=1
-
 allow-suspicious-udfs
-
 innodb_support_xa=1
-
 sysdate-is-now
-
-\#******************************* MyISAM Specific options ***************************
-
+#******************************* MyISAM Specific options ***************************
 key_buffer_size=8M
-
 bulk_insert_buffer_size=16M
-
 myisam_sort_buffer_size=64M
-
 myisam_max_sort_file_size=10G
-
 myisam_repair_threads=1
-
 myisam-recover-options=default
-
 read_buffer_size=1M
-
-\#***************************** INNODB Specific options ****************************
-
+#***************************** INNODB Specific options ****************************
 innodb_use_sys_malloc=1
-
-\#innodb_additional_mem_pool_size=32M
-
+#innodb_additional_mem_pool_size=32M
 innodb_buffer_pool_size=4G
-
 innodb_buffer_pool_instances=2
-
 innodb_max_dirty_pages_pct=40
-
 innodb_sort_buffer_size=16M
-
 innodb_data_home_dir=/data/mysqldata3306/innodb_ts
-
 innodb_data_file_path=ibdata1:1024M:autoextend
-
 innodb_autoextend_increment=128
-
 innodb_file_per_table
-
 innodb_open_files=7168
-
 innodb_file_format=Barracuda
-
 innodb_file_format_check=1
-
 innodb_fast_shutdown=1
-
 innodb_force_recovery=0
-
 innodb_flush_log_at_trx_commit=2
-
 innodb_log_buffer_size=64M
-
 innodb_log_file_size=1G
-
 innodb_log_files_in_group=2
-
 innodb_log_group_home_dir=/data/mysqldata3306/innodb_log
-
 innodb_adaptive_flushing_lwm=30
-
 innodb_read_io_threads=8
-
 innodb_write_io_threads=8
-
 innodb_io_capacity=200
-
 innodb_flush_method=O_DIRECT
-
 innodb_flush_neighbors=0
-
 innodb_lru_scan_depth=1024
-
 innodb_change_buffering=all
-
 innodb_purge_threads
-
 innodb_commit_concurrency=0
-
 innodb_thread_concurrency=0
-
 innodb_concurrency_tickets=1024
-
 innodb_autoinc_lock_mode=1
-
 innodb_stats_on_metadata=0
-
 innodb_lock_wait_timeout=120
-
 innodb_rollback_on_timeout=1
-
 [mysqldump]
-
 quick
-
 max_allowed_packet=2G
-
 default-character-set=utf8
-
 [mysql]
-
 no-auto-rehash
-
 prompt="\\\\u@\\\\h : \\\\d \\\\r:\\\\m:\\\\s> "
-
 default-character-set=utf8
-
 show-warnings
-
 [myisamchk]
-
 key_buffer=512M
-
 sort_buffer_size=512M
-
 read_buffer=8M
-
 write_buffer=8M
-
 [mysqlhotcopy]
-
 interactive-timeout
+```
 
 5. **创建MySQL目录**
 
 根据my.cnf配置文件的目录参数，创建MySQL数据目录，并设置数据目录的所有者用户。
 
-\#mkdir -p /data/mysqldata3306
-
-\#mkdir -p /data/mysqldata3306/mydata
-
-\#mkdir -p /data/mysqldata3306/binlog
-
-\#mkdir -p /data/mysqldata3306/innodb_ts
-
-\#mkdir -p /data/mysqldata3306/innodb_log
-
-\#mkdir -p /data/mysqldata3306/relaylog
-
-\#mkdir -p /data/mysqldata3306/tmpdir
-
-\#mkdir -p /data/mysqldata3306/log
-
-\#mkdir -p /data/mysqldata3306/sock
-
-\#chown -R mysql:mysql /data/mysqldata3306
+```bash
+mkdir -p /data/mysqldata3306
+mkdir -p /data/mysqldata3306/mydata
+mkdir -p /data/mysqldata3306/binlog
+mkdir -p /data/mysqldata3306/innodb_ts
+mkdir -p /data/mysqldata3306/innodb_log
+mkdir -p /data/mysqldata3306/relaylog
+mkdir -p /data/mysqldata3306/tmpdir
+mkdir -p /data/mysqldata3306/log
+mkdir -p /data/mysqldata3306/sock
+chown -R mysql:mysql /data/mysqldata3306
+```
 
 6. **初始化数据库**
 
 执行mysql_install_db初始系统数据库到指定目录。
 
-\#mysql_install_db --defaults-file=/etc/my.cnf --user=mysql
-
---datadir=/data/mysqldata3306/mydata
+```bash
+mysql_install_db --defaults-file=/etc/my.cnf --user=mysql --datadir=/data/mysqldata3306/mydata
+```
 
 7. **启动配置库MySQL实例**
 
 使用mysql的启动脚本启动数据库。
 
-**启动MySQL服务**
+```bash
+# 启动MySQL服务
+/etc/rc.d/init.d/mysql start
 
-\#/etc/rc.d/init.d/mysql start
+# 使用netstat命令检测MySQL是否启动成功
+netstat -npl |grep mysql
 
-**使用netsat命令检测MySQL是否启动成功**
-
-\#netstat -npl |grep mysql
-
-**命令有输出即代表启动成功**
-
-**注意：安装完成后请及时修改root用户密码**
+# 命令有输出即代表启动成功
+# 注意：安装完成后请及时修改root用户密码
+```
 
 ##### 存储节点
 
 存储节点实质上是一个标准的MySQL实例，用途为整套集群提供底层业务数据的存储。安装数量与搭建复制关系根据实际业务场景而定。
 
-**说明：**存储节点的手动安装过程请参照"[配置库](#配置库)"说明。批量安装存储节点建议使用管理平台"[单机部署](#单机部署)"或"[集群部署](#集群部署)"功能。
+**说明：**存储节点的手动安装过程请参照[配置库](#配置库)说明。批量安装存储节点建议使用管理平台[单机部署](#单机部署)或[集群部署](#集群部署)功能。
 
 **物理库：**存储节点是由IP+实例端口+物理库确定的。所以在管理平台上配置的存储节点需要填写物理库名称。一般手动安装的存储节点实例需要手动创建物理库，方便后期添加到管理平台中供集群使用。
 
-在存储节点实例中创建物理库
-
-\#create database db01;
+```sql
+# 在存储节点实例中创建物理库
+create database db01;
+```
 
 **连接用户：**通过手动安装部署的存储节点，还需创建用于计算节点连接存储节点实例的数据库用户。
 
-创建数据库用户
+```
+# 创建数据库用户
+#create user 'hotdb_datasource'@'%' identified by 'hotdb_datasource';
 
-\#create user 'hotdb_datasource'@'%' identified by 'hotdb_datasource';
+# 用户赋权
+#GRANT select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,create temporary tables,alter routine,execute,event ON *.* TO 'hotdb_datasource'@'%';
 
-用户赋权
-
-\#GRANT select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,create temporary tables,alter routine,execute,event ON *.* TO 'hotdb_datasource'@'%';
-
-**注意：**当存储节点的MySQL版本大于等于8.0时，需要多加一个权限"xa_recover_admin"
+# 注意：当存储节点的MySQL版本大于等于8.0时，需要多加一个权限"xa_recover_admin"
+```
 
 **备份用户：**通过手动安装部署的存储节点，若需要使用数据备份功能，还需要创建用于数据备份的数据库用户。
 
-创建数据库用户
+```sql
+# 创建数据库用户
+create user 'dbbackup'@'%' identified by ' dbbackup';
 
-\#create user 'dbbackup'@'%' identified by ' dbbackup';
-
-用户赋权
-
-\## GRANT select,insert,update,delete,create,drop,index,alter,reload,process,references,super,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,event ON *.* TO 'dbbackup'@'127.0.0.1';
+# 用户赋权
+GRANT select,insert,update,delete,create,drop,index,alter,reload,process,references,super,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,event ON *.* TO 'dbbackup'@'127.0.0.1';
+```
 
 ##### 备份程序
 
@@ -707,66 +527,74 @@ interactive-timeout
 **使用须知：**
 
 - 仅支持备份MySQL 5.6及以上版本的数据。
-
 - 被备份的存储节点实例必须开启binlog。
-
 - HotDB Management所在的服务器，必须安装MySQL Client,否则会影响备份。
 
 1. **解压备份程序安装包**
 
-将"hotdb_backup-2.0-xxxxxxxx.tar.gz"二进制包上传至服务器。创建备份程序的安装目录，并将备份程序解压到安装目录。
+将`hotdb_backup-2.0-xxxxxxxx.tar.gz`二进制包上传至服务器。创建备份程序的安装目录，并将备份程序解压到安装目录。
 
-\#mkdir /usr/local/hotdb/
-
-\#tar -zxvf hotdb_backup-2.0-20190109.tar.gz -C /usr/local/hotdb/
+```bash
+mkdir /usr/local/hotdb/
+tar -zxvf hotdb_backup-2.0-20190109.tar.gz -C /usr/local/hotdb/
+```
 
 2. **启动与停止备份程序**
 
 启动备份服务程序
 
-\#cd /usr/local/hotdb/hotdb_backup
-
-\#sh bin/hotdb_backup start -h 192.168.220.104 -p 3322
+```bash
+cd /usr/local/hotdb/hotdb_backup
+sh bin/hotdb_backup start -h 192.168.220.104 -p 3322
+```
 
 -h后面加管理平台服务器的ip，-p后面加管理平台监听备份程序端口（一般为3322,具体可在管理平台配置文件application.properties中查看参数server.backup.port）。
 
 启动成功后会打印以下日志
 
+```
 INFO: Start HotDB-backup ...
-
 INFO: HotDB-backup start successed.
+```
 
 停止备份服务程序
 
-\#sh bin/hotdb_backup stop
+
+```bash
+sh bin/hotdb_backup stop
+```
 
 关闭成功后会打印以下日志
 
+```
 INFO: Stopping HotDB-backup ...
-
 INFO: HotDB-backup stopped success.
+```
 
 查看HotDB-Backup运行状态
 
-\#sh bin/hotdb_backup status
+```
+sh bin/hotdb_backup status
 
 **已运行提示：**INFO: HotDB-backup service already running (PID: 11709).
 
 **未运行提示：**INFO: HotDB-backup service not running.
+```
 
 查看HotDB-Backup日志
 
-\#cat logs/hotdb_backup.log
+```
+#cat logs/hotdb_backup.log
+```
 
 HotDB Backup常见日志
 
-Start backup \#备份任务发起
-
-Backup is stopped \#备份任务结束
-
-Connected to server successfully! \#备份程序与HotDB Management正常建立连接
-
-Got a quit signal from user, will quit after backup is finished \#备份程序正常退出
+```
+Start backup #备份任务发起
+Backup is stopped #备份任务结束
+Connected to server successfully! #备份程序与HotDB Management正常建立连接
+Got a quit signal from user, will quit after backup is finished #备份程序正常退出
+```
 
 #### HA（主备）模式集群部署
 
@@ -774,12 +602,12 @@ Got a quit signal from user, will quit after backup is finished \#备份程序�
 
 **部署环境：**
 
------------- --------------------------------------
 
-**项目**     **名称**
-服务器属性   物理机
-操作系统     CentOS Linux release 7.6.1810 (Core)
-MySQL版本    MySQL 5.7.25
+|           项目            |                  名称                  |
+|-------------------------|--------------------------------------|
+| 服务器属性                   | 物理机                                  |
+| 操作系统                    | CentOS Linux release 7.6.1810 (Core) |
+| MySQL版本    MySQL 5.7.25 |                                      |
 JDK          JDK1.7_80
 
 ------------ --------------------------------------
@@ -788,12 +616,13 @@ JDK          JDK1.7_80
 
 -------------- --------------
 
-**组件名称**   **安装数量**
-计算节点       2
-Keepalived     2
-管理平台       1
-配置库         1
-存储节点       4
+|     组件名称      | 安装数量 |
+|---------------|------|
+| 计算节点          | 2    |
+| Keepalived    | 2    |
+| 管理平台          | 1    |
+| 配置库         1 |      |
+| 存储节点       4  |      |
 
 -------------- --------------
 
@@ -861,15 +690,15 @@ HA计算节点部署示意图
 
 **yum方式安装keepalived（主备计算节点所在服务器上执行keepalived安装命令）**
 
-\#yum -y install keepalived
+#yum -y install keepalived
 
 **启动或关闭keepalived**
 
-\#service keepalived start / server keepalived stop
+#service keepalived start / server keepalived stop
 
 **查看keepalived运行状态**
 
-\#service keepalived status
+#service keepalived status
 
 1. **修改keepalived配置文件**
 
@@ -953,7 +782,7 @@ check_HotDB Server_connect_state
 
 }
 
-\#be careful in red hat
+#be careful in red hat
 
 track_interface {
 
@@ -1055,7 +884,7 @@ check_HotDB Server_connect_state
 
 }
 
-\#be careful in red hat
+#be careful in red hat
 
 track_interface {
 
@@ -1109,11 +938,11 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 **启动主keepalived服务**
 
-\#service keepalived start
+#service keepalived start
 
 **Ping通vip后再启动主计算节点服务**
 
-\#sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
+#sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
 
 ip a可查看当前主的keepalived VIP是已绑定成功
 
@@ -1123,11 +952,11 @@ ip a可查看当前主的keepalived VIP是已绑定成功
 
 **启动备keepalived服务**
 
-\#service keepalived start
+#service keepalived start
 
 **启动备计算节点服务**
 
-\#sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
+#sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
 
 ##### 高可用切换说明
 
@@ -1207,25 +1036,25 @@ HotDB Listener由JDK1.7.0_80进行编译，对操作系统和Java环境的要求
 
 将一键部署安装包auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz（2.5.5为版本号，不同版本其编号不同，注意同步替换）上传至存储节点服务器/usr/local/hotdb目录下，执行下列命令解压：
 
-\#cd /usr/local/hotdb
+#cd /usr/local/hotdb
 
-\#tar -zxvf auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz
+#tar -zxvf auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz
 
 ##### 安装Listener
 
 一键部署安装包内置Listener安装包。执行下列命令，将Listener安装在/usr/local/hotdb目录下：
 
-\#cd /usr/local/hotdb/Install_Package
+#cd /usr/local/hotdb/Install_Package
 
-\#tar -zxvf hotdb-listener-0.0.1-alpha-20200420-linux.tar.gz -C /usr/local/hotdb/
+#tar -zxvf hotdb-listener-0.0.1-alpha-20200420-linux.tar.gz -C /usr/local/hotdb/
 
 ##### 配置Listener
 
 在启动之前，先根据服务器可用内存空间，调整Listener的堆内存大小。
 
-\#cd /usr/local/hotdb/hotdb-listener/bin
+#cd /usr/local/hotdb/hotdb-listener/bin
 
-\#vi hotdb_listener
+#vi hotdb_listener
 
 将第24行堆内存大小设置为合理范围。
 
@@ -1233,9 +1062,9 @@ HotDB Listener由JDK1.7.0_80进行编译，对操作系统和Java环境的要求
 
 接着配置Listener启动端口（若无特殊需求，此步可省略）
 
-\#cd /usr/local/hotdb/hotdb-listener/conf
+#cd /usr/local/hotdb/hotdb-listener/conf
 
-\#vi config.properties
+#vi config.properties
 
 host默认0.0.0.0，无需修改；port默认3330，不建议修改，除非被占用。
 
@@ -1243,15 +1072,15 @@ host默认0.0.0.0，无需修改；port默认3330，不建议修改，除非被�
 
 执行下列命令即可启动Listener：
 
-\#cd /usr/local/hotdb/hotdb-listener/bin
+#cd /usr/local/hotdb/hotdb-listener/bin
 
-\#sh hotdb_listener start
+#sh hotdb_listener start
 
 启动成功窗口会提示"HotDB-Listener start successed."
 
 除了start外，还有其他参数可以使用，使用方法如下：
 
-\#sh hotdb_listener
+#sh hotdb_listener
 
 Usage: sh hotdb_listener [start|stop|restart]
 
@@ -1265,7 +1094,7 @@ HotDB-Listener restart : sh hotdb_listener restart
 
 启动完毕，可切换到logs目录查看日志输出，可查看到Listener的相关信息。
 
-\#tailf listener.log
+#tailf listener.log
 
 2020-05-25 12:09:54.089 [INFO] [INIT] [main] cn.hotpu.hotdb.ListenerServer(158) - Listener-Manager start listening on host 0.0.0.0 port 3330
 
@@ -1317,19 +1146,19 @@ HotDB-Listener restart : sh hotdb_listener restart
 
 2. **将部署安装包和对应MD5值文件上传至服务器，并解压到指定目录**
 
-\#mkdir /usr/local/hotdb
+#mkdir /usr/local/hotdb
 
-\#tar -zxvf auto_hotdbinstall_HotDB2.*.tar.gz -C /usr/local/hotdb/
+#tar -zxvf auto_hotdbinstall_HotDB2.*.tar.gz -C /usr/local/hotdb/
 
 2. **执行安装脚本安装管理平台**
 
-\#cd /usr/local/hotdb/Install_Package/
+#cd /usr/local/hotdb/Install_Package/
 
-\#sh hotdbinstall_v*.sh --ntpdate-server-ip=182.92.12.11 --mysql-version=5.7 --hotdb-config-port=3316 --hotdb-version=2.5 --install-hotdb-server-management=yes
+#sh hotdbinstall_v*.sh --ntpdate-server-ip=182.92.12.11 --mysql-version=5.7 --hotdb-config-port=3316 --hotdb-version=2.5 --install-hotdb-server-management=yes
 
 3. **查看安装日志获取安装进度**
 
-\## tail -f /usr/local/hotdb/Install_Package/hotdbinstall.log
+## tail -f /usr/local/hotdb/Install_Package/hotdbinstall.log
 
 4. **日志打印如下标记则为安装成功正常结束**
 
@@ -1339,7 +1168,7 @@ ings
 
 5. **启动管理平台**
 
-\## sh /usr/local/hotdb/hotdb-management/bin/hotdb_management start
+## sh /usr/local/hotdb/hotdb-management/bin/hotdb_management start
 
 6. **浏览器打开管理平台**
 
