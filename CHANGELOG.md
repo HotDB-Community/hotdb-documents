@@ -31,7 +31,7 @@
   * [ ] `docs/zh/latest/basic-operations.md` T
 * `install-deploy-update`
   * [X] `docs/zh/latest/install-and-deploy.md`
-  * [ ] `docs/zh/latest/service-license.md`
+  * [X] `docs/zh/latest/service-license.md`
   * [X] `docs/zh/latest/manual-update.md`
   * [X] `docs/zh/latest/cluster-environment-requirement.md`
   * [X] `docs/zh/latest/hardware-config-recommendation.md`
