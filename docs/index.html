@@ -109,18 +109,14 @@
       relativePath: true,
       auto2top: true,
       fallbackLanguages: ["zh"],
-      alias: {
-        "/zh/latest/(.*)": "/zh/v2.5.6/$1",
-        "/en/latest/(.*)": "/en/v2.5.6/$1"
-      },
       //不开启首页
       //coverpage: ["/","/zh/", "/en/"], 
       //onlyCover: true,
       loadSidebar: true,
       loadNavbar: true,
       mergeNavbar: true,
-      maxLevel: 3,
-      subMaxLevel: 3,
+      maxLevel: 2,
+      subMaxLevel: 2,
       notFoundPage: true,
       search: {
         noData: {
@@ -236,13 +232,13 @@
     //地址重定向
     function redirectLocation() {
       let url = window.location.href
-      if(url.charAt(url.length - 1) !== "/") url += "/"
-      if(url.endsWith("/#/")) {
-        window.location.href = `${url}zh/latest/`
-      } else if(url.endsWith("/#/zh/")) {
-        window.location.href = `${url}latest/`
-      } else if(url.endsWith("/#/en/")) {
-        window.location.href = `${url}latest/`
+      if(url.charAt(url.length - 1) === "/") url = url.substring(0,url.length)
+      if(url.endsWith("/#")) {
+        window.location.href = `${url}/zh/latest/`
+      } else if(url.endsWith("/#/zh")) {
+        window.location.href = `${url}/latest/`
+      } else if(url.endsWith("/#/en")) {
+        window.location.href = `${url}/latest/`
       } else {
         const matchGroup = url.match(/(.*?\/#\/)((latest)|(v[\w-]+?))/)
         if(matchGroup != null) {
