@@ -9,6 +9,8 @@ import java.util.*
 //
 //**列名**          **说明**           **值类型/范围**
 //  id                连接id             INTEGER/[number]
+//
+//----------------- ------------------ ---------------------
 
 private val scanner = Scanner(System.`in`)
 
@@ -20,7 +22,7 @@ fun main(){
 			val file = File(filePath)
 			val text = file.readText()
 			val handledText = handleText(text)
-			File(filePath + ".bak").writeText(handledText)
+			file.writeText(handledText)
 			println("OK.")
 			println()
 		} catch(e: Exception) {
@@ -30,9 +32,10 @@ fun main(){
 }
 
 private val tableStartLineRegex = """^-{3,}( -{3,})+$""".toRegex()
-private val blankRegex = """[ ]+""".toRegex()
+private val blankRegex = """ [ ]+""".toRegex()
 private var tableStart = false
 private var tableHeader = false
+private var tableHeaderSize = 1
 
 private fun handleText(text:String):String{
 	//遍历每一行
@@ -51,27 +54,22 @@ private fun handleText(text:String):String{
 			}
 			//去除其中的空行
 			tableStart && line.isBlank() -> null
-			//以空白分割，去除每一列作为前后缀的"*"
+			//以空白分割，去除每一列作为前后缀的"*"（不准确，暂且使用2个空格分割）
 			tableStart && tableHeader -> {
 				tableHeader = false
 				val cols = line.trim().split(blankRegex)
-				cols.joinToString(" | ","| "," |"){ it.trim('*') } + "\n" + cols.indices.joinToString(" | ","| "," |"){ "---" }
+				tableHeaderSize = cols.size
+				cols.joinToString(" | ","| "," |"){ it.trim('*') } + "\n" + (1..tableHeaderSize).joinToString(" | ","| "," |"){ "---" }
 			}
 			tableStart && !tableHeader -> {
-				val cols = line.trim().split(blankRegex)
+				val cols = line.trim().split(blankRegex).toMutableList()
+				//在左侧补充缺失的行
+				while(cols.size < tableHeaderSize){
+					cols.add(0,"   ")
+				}
 				cols.joinToString(" | ","| "," |")
 			}
 			else -> line
 		}
 	}.joinToString("\n")
 }
-
-
-
-
-
-
-
-
-
-
