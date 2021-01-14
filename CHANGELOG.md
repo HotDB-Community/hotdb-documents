@@ -23,8 +23,10 @@
 
 > * D - 原文档已过时
 > * T - 待编写
-> * L - 优化列表
+> * L - 优化列表，将
 > * C - 标注代码块语言
+
+中文文档（截止时间：2021-01-14 15:00:21）
 
 * `introduce`
   * [X] `docs/zh/latest/introduce.md`
@@ -41,13 +43,13 @@
   * [X] `docs/zh/latest/hardware-config-recommendation.md`
 * `hotdb-server`
   * [ ] `docs/zh/latest/standard.md` D
-  * [ ] `docs/zh/latest/management-port-command.md
+  * [ ] `docs/zh/latest/management-port-command.md` D
 * `hotdb-management`
   * [X] `docs/zh/latest/hotdm-management.md`
   * [X] `docs/zh/latest/intelligent-inspection.md` L C
 * `idc`
   * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` D
-  * [ ] `docs/zh/latest/visual-idc.md`
+  * [X] `docs/zh/latest/visual-idc.md` L C
 * `appendix`
   * [X] `docs/zh/latest/glossary.md`
   * [X] `docs/zh/latest/parameters.md`

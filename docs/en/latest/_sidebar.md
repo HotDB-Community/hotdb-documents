@@ -23,5 +23,5 @@
   * [Visual IDC](visual-idc.md) 
 * **Appendix**
   * [Glossary](glossary.md)
-  * [Parameter Explanation](hotdb-management-parameters.md)
+  * [Parameter Explanation](parameters.md)
   * [HotDB Server Error Code Explanation](error-codes.md)
