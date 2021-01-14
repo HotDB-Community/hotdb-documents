@@ -48,7 +48,7 @@
   * [X] `docs/zh/latest/hotdm-management.md`
   * [X] `docs/zh/latest/intelligent-inspection.md` L C
 * `idc`
-  * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` D
+  * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` C
   * [X] `docs/zh/latest/visual-idc.md` L C
 * `appendix`
   * [X] `docs/zh/latest/glossary.md`

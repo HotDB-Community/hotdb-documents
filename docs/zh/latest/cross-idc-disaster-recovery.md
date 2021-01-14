@@ -244,16 +244,20 @@ idcNodeHost配置为中心机房的计算节点信息：主机名（IP）+管理
 
 注意：同一机房的集群内clusterName必须一致但中心机房与灾备机房不能一致。通过平台部署其默认配置为：HotDB-Cluster-idc1/idc2-groupID,（groupID为平台集群组ID，为了区别同一台服务器部署多套集群的情况）
 
-1. 除了上述描述的特殊修改项以外，灾备模式下的多计算节点集群部署还需注意：
-2. 同一个机房内的serverID必须连续，中心机房、灾备机房各自默认按计算节点个数从1开始递增。
-3. 当同机房内集群所有计算节点均部署在一台服务器上时，需要则中心机房haNodeHost配置为该机房内所有成员的集群信息：主机名（IP）+通信端口，例如：192.168.210.86:3326,192.168.210.86:3327,192.168.210.86:3328。不在同一台服务器上时，无需关注haNodeHost。
-4. configMGR（配置库是否使用MGR）参数必须配置为false，多计算节点集群模式下亦不支持配置库MGR。
-5. 其他与集群相关的修改项，例如：clusterSize、clusterNetwork、clusterHost、clusterPort均与普通单机房内的配置模式一致。
-6. 可以允许中心机房为多计算节点集群模式、灾备机房为主备计算节点模式或者反过来均可。不同架构之间可以兼容。
-7. 灾备机房的所有组件对应的主机名不能与中心机房一致，否则参数校验不予通过。
-8. 正常部署完成后的多计算节点集群信息，在列表中信息展示示例如下：
+除了上述描述的特殊修改项以外，灾备模式下的多计算节点集群部署还需注意：
 
-![](assets/cross-idc-disaster-recovery/image22.png)
+1. 同一个机房内的serverID必须连续，中心机房、灾备机房各自默认按计算节点个数从1开始递增。
+2. 当同机房内集群所有计算节点均部署在一台服务器上时，需要则中心机房haNodeHost配置为该机房内所有成员的集群信息：主机名（IP）+通信端口，例如：192.168.210.86:3326,192.168.210.86:3327,192.168.210.86:3328。不在同一台服务器上时，无需关注haNodeHost。
+3. configMGR（配置库是否使用MGR）参数必须配置为false，多计算节点集群模式下亦不支持配置库MGR。
+4. 其他与集群相关的修改项，例如：clusterSize、clusterNetwork、clusterHost、clusterPort均与普通单机房内的配置模式一致。
+
+可以允许中心机房为多计算节点集群模式、灾备机房为主备计算节点模式或者反过来均可。不同架构之间可以兼容。
+
+灾备机房的所有组件对应的主机名不能与中心机房一致，否则参数校验不予通过。
+
+正常部署完成后的多计算节点集群信息，在列表中信息展示示例如下：
+
+![](assets/cross-idc-di aster-recovery/image22.png)
 
 #### 在已运行的集群基础上部署灾备环境
 
@@ -285,7 +289,7 @@ idcNodeHost配置为中心机房的计算节点信息：主机名（IP）+管理
 
 **中心机房：**
 
-```
+```xml
 <property name="url">jdbc:mysql://192.168.220.186:3306/hotdb_config</property><!-- 主配置库地址，需指定配置库服务所在的真实IP地址(ConfigDB address) -->
 <property name="username">hotdb_config</property><!-- 主配置库用户名(ConfigDB user name) -->
 <property name="password">hotdb_config</property><!-- 主配置库密码(ConfigDB password) -->
@@ -307,7 +311,7 @@ idcNodeHost配置为中心机房的计算节点信息：主机名（IP）+管理
 
 （配置库相关与中心机房保持一致，不再赘述）
 
-```
+```xml
 <property name="haMode">3</property><!-- 高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式灾备机房(High-availability mode, 0:HA, 1:Cluster, 2:HA in Biz IDC, 3:HA in DR IDC) -->
 <property name="idcId">2</property><!-- 机房ID, 1:中心机房，2:灾备机房(ID of IDC, 1:Biz IDC, 2:DR IDC) -->
 <property name="idcNodeHost">192.168.220.186:3325,192.168.220.187:3325</property><!-- 另一个机房计算节点信息（Computer node info in the other IDC）-->
@@ -833,7 +837,7 @@ mysql> start slave;
 
 (没有标识机房类型的配置库参数代表中心机房的配置库参数)
 
-```
+```xml
 <property name="url">jdbc:mysql://192.168.220.213:3316/hotdb_config</property><!-- 主配置库地址，需指定配置库服务所在的真实IP地址(ConfigDB address) -->
 <property name="username">hotdb_config</property><!--主配置库用户名(ConfigDB user name)-->
 <property name="password">hotdb_config</property><!--主配置库密码(ConfigDB password)-->
@@ -852,15 +856,13 @@ mysql> start slave;
 
 灾备模式下，无论使用高可用还是单节点的计算节点模式，都遵从对中心机房将该参数设置为2，对灾备机房将该参数设置为3；如果是多计算节点模式，中心机房该参数设置为4，灾备机房该参数设置为5。
 
-```
 示例：
 
-中心机房：
-
+```xml
+<!--中心机房-->
 <property name="haMode">2</property><!--高可用模式，0:HA,1:集群,2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房-->
 
-灾备机房：
-
+<!--灾备机房-->
 <property name="haMode">3</property><!--高可用模式，0:HA,1:集群,2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房 -->
 ```
 
@@ -876,14 +878,17 @@ mysql> start slave;
 
 灾备机房主计算节点：
 
+```xml
 <property name="idcId">2</property><!--机房ID, 1:中心机房，2:灾备机房(ID of DC, 1:master center, 2:DR center) -->
 <property name="idcNodeHost">192.168.220.213:3325,192.168.220.214:3325</property><!--另一个机房计算节点信息(Computer node info in the other IDC)-->
+```
 
 灾备机房的备计算节点：
 
+```
 <property name="idcId">2</property><!--机房ID, 1:中心机房，2:灾备机房(ID of DC, 1:master center, 2:DR center)-->
 <property name="idcNodeHost">192.168.220.213:3325,192.168.220.214:3325</property><---另一个机房计算节点信息(Computer node info in the other IDC)-->
-
+```
 ### 监控
 
 #### 智能逻辑拓扑
@@ -1408,9 +1413,9 @@ hc01与hc02之间搭建双主复制关系；hc01与hc03之间搭建主备关系�
 4. 将所有中心机房的存储节点、配置库标记为不可用；
 5. 通过其他启动服务端口必须做的校验之后，启动灾备机房主计算节点服务端口提供服务；
 6. 同时，单数据节点内的各存储节点复制关系由计算节点自动进行判断，计算节点会根据灾备机房的存储节点角色配置，对灾备机房的复制关系进行搭建或重置：
-  - 若存储节点配置为"双主备库"，则会对比GTID复制位置：主存储节点比双主备存储节点GTID位置多或者相等时，则计算节点会自动搭建双主备库存储节点到主存储节点的复制关系（双主备存储节点为主机）；主存储节点比双主备库存储节点GTID位置少时（一般情况下不会出现这类情形，人为操作可能性较大），则对双主备库存储节点进行reset slave all操作且将双主备库置为不可用；
-  - 若灾备机房其他存储节点配置为"从库"，则仅检查GTID复制位置，若主存储节点比从存储节点GITD少，则对灾备机房"从库"类型的存储节点执行reset slave all操作清理复制关系；
-  - 其他复制架构（例如：双主带从），同上述逻辑一致，根据具体角色配置确认是否对复制关系进行搭建或重置。
+   - 若存储节点配置为"双主备库"，则会对比GTID复制位置：主存储节点比双主备存储节点GTID位置多或者相等时，则计算节点会自动搭建双主备库存储节点到主存储节点的复制关系（双主备存储节点为主机）；主存储节点比双主备库存储节点GTID位置少时（一般情况下不会出现这类情形，人为操作可能性较大），则对双主备库存储节点进行reset slave all操作且将双主备库置为不可用；
+   - 若灾备机房其他存储节点配置为"从库"，则仅检查GTID复制位置，若主存储节点比从存储节点GITD少，则对灾备机房"从库"类型的存储节点执行reset slave all操作清理复制关系；
+   - 其他复制架构（例如：双主带从），同上述逻辑一致，根据具体角色配置确认是否对复制关系进行搭建或重置。
 7. 若当前灾备机房有搭建计算节点高可用服务，则需要继续在灾备机房的备计算节点服务管理端口执行enable_online命令，保证当前主计算节点故障时，可以通过keepalived的高可用判断逻辑进行灾备机房内的计算节点服务切换。
 8. 最终检查灾备机房的keepalived状态是否正常，VIP在当前主计算节点上，主备keepalived、主备计算节点服务状态、角色状态无异常。
 9. 必要时对当前正在提供服务的计算节点执行SQL操作，确认服务正常。
@@ -1506,7 +1511,7 @@ set global rpl_semi_sync_master_wait_for_slave_count=XXX;
 
 **当前主机房备计算节点：**
 
-```
+```xml
 <property name="drUrl">jdbc:mysql://192.168.220.181:3306/hotdb_config</property><!--灾备机房配置库地址(Configuration database address in DR IDC) -->
 <property name="drBakUrl">jdbc:mysql://192.168.220.182:3306/hotdb_config</property><!--灾备机房从配置库地址(Slave configuration database address in DRIDC) -->
 <property name="haMode">2</property><!-- 高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式灾备机房(High-availability mode, 0:HA, 1:Cluster, 2:HA in Biz IDC, 3:HA in DR IDC) -->
@@ -1539,7 +1544,7 @@ set global rpl_semi_sync_master_wait_for_slave_count=XXX;
 
 **更新当前业务机房（即中心机房）配置库可用状态：**
 
-```
+```sql
 update hotdb_config_info set v='1' where k='hotdb_biz_idc_config_ok' or k='hotdb_master_config_status';
 ```
 
@@ -1594,7 +1599,7 @@ select * From hotdb_config_info limit 1,5;
 
 **更新当前业务机房（即中心机房）配置库可用状态：**
 
-```
+```sql
 update hotdb_config_info set v='1' where k='hotdb_biz_idc_config_ok' or k='hotdb_master_config_status';
 ```
 
@@ -1690,14 +1695,14 @@ set global rpl_semi_sync_master_wait_for_slave_count=XXX;
 
 第6步、登录当前主机房主配置库，将业务机房配置库是否可用情况置为1，并交换机房ID：
 
-```mysql
+```sql
 update hotdb_config_info set v='1' where k='hotdb_biz_idc_config_ok' or k='hotdb_master_config_status';
 update hotdb_datasource t1 join hotdb_datasource t2 on(t1.idc_id=1 and t2.idc_id=2) set t1.idc_id=t2.idc_id,t2.idc_id=t1.idc_id;
 ```
 
 第7步、登录管理平台配置库执行如下SQL ，将历史机房ID进行互换（注意将group_id进行替换，与管理平台集群管理页面ID一致）：
 
-```mysql
+```sql
 UPDATE hotdb_info t1 JOIN hotdb_info t2 ON (t1.group_id = ? and t2.group_id = ? and t1.room_type=1 and t2.room_type=2) SET t1.room_type = t2.room_type,t2.room_type=t1.room_type;
 UPDATE host_info t1 JOIN host_info t2 ON (t1.group_id = ? and t2.group_id = ? and t1.room_type=1 and t2.room_type=2) SET t1.room_type = t2.room_type,t2.room_type=t1.room_type;
 UPDATE host_soft_info t1 JOIN host_soft_info t2 ON (t1.group_id = ? and t2.group_id = ? and t1.room_type=1 and t2.room_type=2) SET t1.room_type = t2.room_type,t2.room_type=t1.room_type;
@@ -1757,9 +1762,7 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 该[运维管理](#运维管理)章节所有描述均以开启GTID和半同步复制的情况做说明。若考虑主备机房内存储节点、配置库主从复制开启半同步，机房间主从灾备复制为异步复制，则建议按如下建议进行相关配置：
 
 1. 建议将中心机房主实例（包括存储节点、配置库）设置`rpl_semi_sync_master_wait_no_slave=0`且`rpl_semi_sync_master_timeout`不要设置太长。灾备机房内主实例`rpl_semi_sync_slave_enabled`设置为disable。
-
 2. 发生机房级别切换后，人工打开半同步复制参数时，需要进行`stop slave;start slave`一次，使它生效。
-
 3. 灾备机房主实例故障切换后，人工关闭当前新主的`rpl_semi_sync_slave_enabled`，打开旧主实例的`rpl_semi_sync_slave_enabled`，并且两边都要执行`stop slave;start slave`一次，使它生效。
 
 或者若完全不考虑灾备机房开启半同步复制的话，可以直接将灾备机房两个实例`rpl_semi_sync_slave_enabled`都关闭，但这样灾备机房内无需维护半同步状态。若灾备复制关系不开启半同步复制，则需要严格注意RPO无法做到为0。
@@ -1922,7 +1925,7 @@ mysqldump: [Warning] Using a password on the command line interface can be insec
 
 第3步、文件导出后，检查文件内容是否可用。将文件SCP至即将作为从机的新实例所在的服务器。SCP之前检查新实例的数据目录剩余磁盘空间是否足够，要求目标数据目录剩余磁盘空间大于导出的文件大小的2.5倍+10GB。检查新实例数据目录的命令可参考：
 
-```
+```sql
 show global variables like 'datadir'
 ```
 
@@ -1940,13 +1943,13 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 
 第6步、执行如下命令刷新权限，注意刷新后，如果重新连接实例，则连接的用户名密码，和旧主实例相同。
 
-```
+```sql
 FLUSH NO_WRITE_TO_BINLOG PRIVILEGES;
 ```
 
 第7步、可以考虑为所有表执行以下语句，
 
-```
+```sql
 ANALYZE NO_WRITE_TO_BINLOG TABLE xxx;
 ```
 
@@ -1954,7 +1957,7 @@ ANALYZE NO_WRITE_TO_BINLOG TABLE xxx;
 
 第9步、使用GTID的方式搭建复制关系
 
-```mysql
+```sql
 change master to master_host = 'xxx',master_user='xxx',master_password='xxx', master_port=xxx,master_auto_position=1;
 
 # 示例：
@@ -1969,19 +1972,19 @@ change master to master_host = '192.168.220.181',master_user='repl',master_passw
 
 第2步、导出数据参考命令：
 
-```
+```bash
 mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --loose-set-gtid-purged=off --master-data=2 --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > 不重名文件 ;echo \$?
 ```
 
 第5步、导入数据参考命令：
 
-```
+```bash
 mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < 不重名文件 ;echo \$?
 ```
 
 第9步、搭建复制关系参考命令：
 
-```mysql
+```bash
 change master to master_host = 'xxx',master_user='xxx',master_password='xxx', MASTER_LOG_FILE='mysql-bin.xxx', MASTER_LOG_POS=xxx;
 ```
 
