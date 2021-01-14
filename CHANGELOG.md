@@ -40,7 +40,7 @@
   * [ ] `docs/zh/latest/standard.md` D
   * [ ] `docs/zh/latest/management-port-command.md
 * `hotdb-management`
-  * [ ] `docs/zh/latest/standard.md`
+  * [ ] `docs/zh/latest/hotdm-management.md`
   * [ ] `docs/zh/latest/intelligent-inspection.md`
 * `idc`
   * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` D
