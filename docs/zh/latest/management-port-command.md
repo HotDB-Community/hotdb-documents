@@ -1,5 +1,20 @@
 # 管理端命令
 
+## V2.5.6版本新增命令
+
+- [show backupmasterdelay \[DNID\]](#_show backupmasterdelay)显示指定数据节点中主备复制延迟大小)显示指定数据节点中主备复制延迟大小
+- [disable_election](#disable_election不允许集群选举)不允许集群选举
+- [enable_election](#enable_election允许集群选举)允许集群选举
+- [disable_non_query_command](#disable_non_query_command仅允许查询命令)仅允许查询命令
+- [enable_non_query_command](#enable_non_query_command允许非查询命令)允许非查询命令
+- [offline_to_dr](#offline_to_dr执行offline并且不允许online)执行offline并且不允许online
+- [exchangeconfig](#exchangeconfig交换机房配置)交换机房配置
+- [exchangememoryconfig](#exchangememoryconfig交换内存机房配置)交换内存中的机房配置
+- [online_dr_check](#online_dr_check机房切换检查)机房切换检查
+- [online_dr_process](#online_dr_process机房切换进度)机房切换进度
+- [check @@datasource_config_new](#check_@@datasource_config_new) 检查MySQL参数配置信息)检查MySQL参数配置信息
+- [reset @@dberrorcount](#reset_dberrorcount)将所有逻辑库报错信息清空)将逻辑库的报错信息清空
+
 ## 数据检测语句
 
 ### HotDB Server统计相关
@@ -8,104 +23,107 @@
 
 此命令用于查看HotDB Server与存储节点之间的连接状态，例如：
 
-mysql> show @@backend;
+```sql
+show @@backend;
+```
 
 ![](assets/management-port-command/image3.png)
 
 或像查询一张普通表一样查询backend：
 
-mysql> select * from backend where MYSQLID=198865;
+```sql
+select * from backend where MYSQLID=198865;
+```
 
 ![](assets/management-port-command/image4.png)
 
 或使用HINT语法：
 
-mysql> /*!hotdb:dnid=all*/select * from information_schema.processlist where info!='NULL' and id=198865;
+```
+/*!hotdb:dnid=all*/select * from information_schema.processlist where info!='NULL' and id=198865;
+```
 
 ![](assets/management-port-command/image5.png)
 
 **结果包含字段及其说明：**
 
------------- ------------------- -----------------------------------------------------------------------------------------------------------
+|     列名     |      说明      |                                 值类型/范围                                 |
+|------------|--------------|------------------------------------------------------------------------|
+| processor  | 所属的processor | `STRING/[processor number]`                                            |
+| id         | 后端连接号        | `LONG/[number]`                                                        |
+| mysqlid    | 对应的MySQL连接号  | `LONG/[number]`                                                        |
+| dnid       | 数据节点id       | `INT/[number]`                                                         |
+| host       | 主机信息         | `STRING/[host:port]`                                                   |
+| schema     | 物理数据库名       | `STRING/[database]`                                                    |
+| lport      | 本地端口号        | `INT/[number]`                                                         |
+| net_in     | 接收的字节数       | `LONG/[number]`                                                        |
+| net_out    | 发送的字节数       | `LONG/[number]`                                                        |
+| up_time    | 启动时长（秒）      | `LONG/[number]`                                                        |
+| state      | 链路状态         | `connecting` - 主动去连接服务器的过程，发起了socket建立请求，还没有建立成功                       |
+|            |              | `authenticating` - 握手认证过程                                              |
+|            |              | `idle` - 空闲可用状态                                                        |
+|            |              | `borrowed` - 租用状态：存在事务场景下，即使后端没有执行sql，但连接会被保持，直到提交commit、rollback后才会释放 |
+|            |              | `running` - 发送了请求，等待应答或者正在处理应答的状态                                      |
+|            |              | `closed` - 链路关闭                                                        |
+| send_queue | 发送队列大小       | `INT/[number]`                                                         |
+| iso_level  | 事务隔离级别       | `0` - 读未提交                                                             |
+|            |              | `1` - 读已提交                                                             |
+|            |              | `2` - 可重复读                                                             |
+|            |              | `3` - 可串行化                                                             |
+| autocommit | 是否自动提交       | `BOOLEAN/[true/false]`                                                 |
+| closed     | 是否已关闭        | `BOOLEAN/[true/false]`                                                 |
+| version    | 连接池版本号       | `INT/[number]`                                                         |
+| charset    | 结果字符集        | `STRING/[charset]`                                                     |
+| comment    | 备注           | `heartbeat` - 心跳使用的连接                                                  |
+|            |              | `latency check` - 延迟检测使用的连接                                            |
+|            |              | `idle` - 空闲状态的连接                                                       |
+|            |              | `querying` - 正在执行查询的连接                                                 |
 
-**列名**     **说明**            **值类型/范围**
-  processor    所属的processor     STRING/["Processor"number]
-  id           后端连接号          LONG/[number]
-  mysqlid      对应的MySQL连接号   LONG/[number]
-  dnid         数据节点id          INT/[number]
-  host         主机信息            STRING/[host:port]
-  schema       物理数据库名        STRING/[database]
-  lport        本地端口号          INT/[number]
-  net_in       接收的字节数        LONG/[number]
-  net_out      发送的字节数        LONG/[number]
-  up_time      启动时长（秒）      LONG/[number]
-  state        链路状态            connecting:主动去连接服务器的过程，发起了socket建立请求，还没有建立成功
-                                   authenticating:握手认证过程
-                                   idle:空闲可用状态
-                                   borrowed:租用状态:存在事务场景下，即使后端没有执行sql，但连接会被保持，直到提交commit、rollback后才会释放
-                                   running:发送了请求，等待应答或者正在处理应答的状态
-                                   closed:链路关闭
-  send_queue   发送队列大小        INT/[number]
-  iso_level    事务隔离级别        0:读未提交
-                                   1:读已提交
-                                   2:可重复读
-                                   3:可串行化
-  autocommit   是否自动提交        BOOLEAN/[true/false]
-  closed       是否已关闭          BOOLEAN/[true/false]
-  version      连接池版本号        INT/[number]
-  charset      结果字符集          STRING/[charset]
-  comment      备注                heartbeat:心跳使用的连接
-                                   latency check:延迟检测使用的连接
-                                   idle:空闲状态的连接
-                                   querying:正在执行查询的连接
-
------------- ------------------- -----------------------------------------------------------------------------------------------------------
 
 #### show @@bufferpool - 显示缓冲池状态
 
 此命令用于查看缓冲池状态，例如：
 
-mysql> show @@bufferpool;
+```sql
+show @@bufferpool;
+```
 
 ![](assets/management-port-command/image6.png)
 
 **结果包含字段及其说明：**
 
---------------------- ---------------------------- --------------------------------------------------------------------------------------
-
-**列名**              **说明**                     **值类型/范围**
-  thread                线程名                       STRING/ ["\$NIOREACTOR-"[number]"-RW", "\$NIOExecutor-"[number]"-" [number]]
-  pool_size             缓冲池大小                   INT/[number]
-  local_allocate_opts   本地缓存线程申请buffer次数   LONG /[number]
-  queue_recycle_opts    本地缓存线程回收buffer次数   LONG/[number]
-  other_allocate_opts   其他线程申请buffer次数       INT/[number]
-  other_recycle_opts    其他线程回收buffer次数       INT/[number]
-
---------------------- ---------------------------- --------------------------------------------------------------------------------------
+|列名|              说明                     |值类型/范围|
+|---|---|---|
+|thread               | 线程名                      | `STRING/ ["$NIOREACTOR-"[number]"-RW", "$NIOExecutor-"[number]"-" [number]]` |
+|pool_size            | 缓冲池大小                  | `INT/[number]`                                                               |
+|local_allocate_opts  | 本地缓存线程申请buffer次数  | `LONG /[number]`                                                             |
+|queue_recycle_opts   | 本地缓存线程回收buffer次数  | `LONG/[number]`                                                              |
+|other_allocate_opts  | 其他线程申请buffer次数      | `INT/[number]`                                                               |
+|other_recycle_opts   | 其他线程回收buffer次数      | `INT/[number]`                                                               |
 
 #### show @@clientquery - 当前客户端查询统计
 
 该命令用于显示当前客户端查询统计，例如：
 
-mysql> show @@clientquery;
+```sql
+show @@clientquery;
+```
 
 ![](assets/management-port-command/image7.jpeg)
 
 **结果包含字段及其说明：**
 
----------- -------------- ---------------------
 
-**列名**   **说明**       **值类型/范围**
-  client     客户端信息     STRING/[host]
-  db         逻辑库名       STRING/[database]
-  select     查询次数       LONG /[number]
-  insert     插入次数       LONG /[number]
-  update     更新次数       LONG /[number]
-  delete     删除次数       LONG /[number]
-  other      其它操作次数   LONG /[number]
-  all        总和           LONG/[number]
-
----------- -------------- ---------------------
+|   列名   |   说明   |       值类型/范围        |
+|--------|--------|---------------------|
+| client | 客户端信息  | `STRING/[host]`     |
+| db     | 逻辑库名   | `STRING/[database]` |
+| select | 查询次数   | `LONG/[number]`     |
+| insert | 插入次数   | `LONG/[number]`     |
+| update | 更新次数   | `LONG/[number]`     |
+| delete | 删除次数   | `LONG/[number]`     |
+| other  | 其它操作次数 | `LONG/[number]`     |
+| all    | 总和     | `LONG/[number]`     |
 
 注：other统计的是当前客户端执行DDL语句的次数
 
@@ -113,54 +131,52 @@ mysql> show @@clientquery;
 
 此命令用于查看当前集群成员状态。该命令只用于查看集群成员状态，对于单节点及主备节点，该参数不具备参考意义，例如：
 
-mysql> show @@cluster;
+```sql
+show @@cluster;
+```
 
 ![](assets/management-port-command/image8.png)
 
 **结果包含字段及其说明：**
 
--------------- ------------------ ------------------
-
-**列名**       **说明**           **值类型/范围**
-  status         成员状态           STRING
-  host           成员Host           STRING/[host]
-  port           集群通信端口       INTEGER/[port]
-  server_port    集群节点服务端口   INTEGER/[port]
-  manager_port   集群节点管理端口   INTEGER/[port]
-
--------------- ------------------ ------------------
+|      列名      |    说明    |     值类型/范围     |
+|--------------|----------|------------------|
+| status       | 成员状态     | `STRING`         |
+| host         | 成员Host   | `STRING/[host]`  |
+| port         | 集群通信端口   | `INTEGER/[port]` |
+| server_port  | 集群节点服务端口 | `INTEGER/[port]` |
+| manager_port | 集群节点管理端口 | `INTEGER/[port]` |
 
 #### show @@connection - 显示前端连接状态
 
 该命令用于获取HotDB Server的前端连接状态，例如：
 
-mysql> show @@connection;
+```sql
+show @@connection;
+```
 
 ![](assets/management-port-command/image9.png)
 
 **结果包含字段及其说明：**
 
-------------- ---------------------- ------------------------------
-
-**列名**      **说明**               **值类型/范围**
-  processor     processor名称          STRING/["Processor"number]
-  id            前端连接ID             LONG/[number]
-  host          客户端信息             STRING/[host:port]
-  dstport       目标端口号             INT/[number]
-  schema        目标数据库名           STRING/[database]
-  charset       字符集                 STRING/[charset]
-  net_in        接收的字节数           LONG/[number]
-  net_out       发送的字节数           LONG/[number]
-  up_time       启动时长（秒）         INT/[number]
-  recv_buffer   接收队列大小（字节）   LONG/[number]
-  send_queue    发送队列大小（字节）   LONG/[number]
-  iso_level     事务隔离级别           0：读未提交
-                                       1：读已提交
-                                       2：可重复读
-                                       3：可串行化
-  autocommit    是否自动提交           BOOLEAN/[true/false]
-
-------------- ---------------------- ------------------------------
+|     列名      |     说明      |           值类型/范围            |
+|-------------|-------------|-----------------------------|
+| processor   | processor名称 | `STRING/[processor number]` |
+| id          | 前端连接ID      | `LONG/[number]`             |
+| host        | 客户端信息       | `STRING/[host:port]`        |
+| dstport     | 目标端口号       | `INT/[number]`              |
+| schema      | 目标数据库名      | `STRING/[database]`         |
+| charset     | 字符集         | `STRING/[charset]`          |
+| net_in      | 接收的字节数      | `LONG/[number]`             |
+| net_out     | 发送的字节数      | `LONG/[number]`             |
+| up_time     | 启动时长（秒）     | `INT/[number]`              |
+| recv_buffer | 接收队列大小（字节）  | `LONG/[number]`             |
+| send_queue  | 发送队列大小（字节）  | `LONG/[number]`             |
+| iso_level   | 事务隔离级别      | `0` - 读未提交                  |
+|             |             | `1` - 读已提交                  |
+|             |             | `2` - 可重复读                  |
+|             |             | `3` - 可串行化                  |
+| autocommit  | 是否自动提交      | `BOOLEAN/[true/false]`      |
 
 #### show @@connection_statistics - 显示当前存活的前端连接信息
 
@@ -788,7 +804,7 @@ mysql> show @@threadpool;
 **结果包含字段及其说明：**
 
 | **列名**        | **说明**     | **值类型/范围**                            |
-| name            | 线程池名称   | STRING/"TimeExecutor","\$NIOExecutor-"                 |              | +number+"-"                              |
+| name            | 线程池名称   | STRING/"TimeExecutor","$NIOExecutor-"                 |              | +number+"-"                              |
 | pool_size       | 线程池大小   | INT/[number]                             |
 | acive_count     | 活跃线程数   | LONG/[number]                            |
 | task_queue_size | 任务队列大小 | LONG/[number]                            |
@@ -1683,7 +1699,7 @@ ERROR 1003 (HY000): Reload config failure, Reloading was set to false manually.
 
 并且计算节点日志记录如下：
 
-2019-07-19 17:49:57.626 [WARN] [MANAGER] [\$NIOExecutor-3-0] ResetHandler(27) - received reset @@reloading from [thread=\$NIOExecutor-3-0,id=780,user=re,host=127.0.0.1,port=2475,localport=28613,schema=null], reloading will be set to false.
+2019-07-19 17:49:57.626 [WARN] [MANAGER] [$NIOExecutor-3-0] ResetHandler(27) - received reset @@reloading from [thread=$NIOExecutor-3-0,id=780,user=re,host=127.0.0.1,port=2475,localport=28613,schema=null], reloading will be set to false.
 
 2019-07-19 17:50:04.336 [WARN] [MANAGER] [Labor-181] HotdbConfig(1331) - Reload config failure, Reloading was set to false manually.
 
@@ -1774,7 +1790,7 @@ mysql> disable_non_query_command;
 
 Query OK, 1 row affected (0.01 sec)
 
-[]{#_enable_non_query_command允许非查询命令 .anchor}此命令为灾备模式下机房切换时的内部调用命令，一旦调用，则计算节点实例仅允许查询，切换成功后再释放非查询命令。
+[]{id="enable_non_query_command允许非查询命令" .anchor}此命令为灾备模式下机房切换时的内部调用命令，一旦调用，则计算节点实例仅允许查询，切换成功后再释放非查询命令。
 
 ### enable_non_query_command允许非查询命令
 
