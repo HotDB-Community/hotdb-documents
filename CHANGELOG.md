@@ -21,8 +21,10 @@
 
 # 检查Markdown文档
 
-> D - 原文档已过时
-> T - 待编写
+> * D - 原文档已过时
+> * T - 待编写
+> * L - 优化列表
+> * C - 标注代码块语言
 
 * `introduce`
   * [X] `docs/zh/latest/introduce.md`
@@ -42,7 +44,7 @@
   * [ ] `docs/zh/latest/management-port-command.md
 * `hotdb-management`
   * [X] `docs/zh/latest/hotdm-management.md`
-  * [ ] `docs/zh/latest/intelligent-inspection.md`
+  * [X] `docs/zh/latest/intelligent-inspection.md` L C
 * `idc`
   * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` D
   * [ ] `docs/zh/latest/visual-idc.md`
