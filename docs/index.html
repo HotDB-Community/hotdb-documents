@@ -22,7 +22,7 @@
     body {
       font-family: "Source Sans Pro", Arial, sans-serif;
     }
-    pre>code{
+    pre > code {
       padding-top: 1em !important;
       padding-bottom: 1em !important;
       margin: 0 0 !important;
@@ -52,7 +52,7 @@
     .app-nav > ul > li {
       padding-top: 20px;
     }
-    .github-corner{
+    .github-corner {
       z-index: 200;
     }
     .content {
@@ -75,16 +75,16 @@
       cursor: pointer;
       padding: 5px 5px;
     }
-    
+
     /*作为文档标题的侧边栏TOC调小*/
-    .app-sub-sidebar>li{
+    .app-sub-sidebar > li {
       font-size: 12px !important;
       margin: 2px 0 !important;
     }
-    .app-sub-sidebar>li>a{
+    .app-sub-sidebar > li > a {
       font-size: 12px !important;
     }
-    
+
     /*表格居中显示 - 不好调整*/
     /*#main thead{*/
     /*    margin: 0 auto;*/
@@ -168,7 +168,7 @@
           "/zh/": "<i class='fa fa-download'></i> 下载文档",
           "/en/": "<i class='fa fa-download'></i> Download Document"
         },
-        downloadTitle:{
+        downloadTitle: {
           "/zh/": "下载整合的PDF文档",
           "/en/": "Download integrated pdf document"
         },
@@ -252,10 +252,10 @@
     //地址重定向
     function redirectLocation() {
       let url = window.location.href
-      if(url.charAt(url.length - 1) === "/") url = url.substring(0,url.length-1)
-      if(url.indexOf("/#") === -1){
+      if(url.charAt(url.length - 1) === "/") url = url.substring(0, url.length - 1)
+      if(url.indexOf("/#") === -1) {
         window.location.href = `${url}/#/zh/latest/`
-      }else if(url.endsWith("/#")) {
+      } else if(url.endsWith("/#")) {
         window.location.href = `${url}/zh/latest/`
       } else if(url.endsWith("/#/zh")) {
         window.location.href = `${url}/latest/`
@@ -273,39 +273,56 @@
       redirectLocation()
     }
   </script>
-  
-  <script src="https://unpkg.com/jquery@latest/dist/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
-  
+
+  <!--jquery-->
+  <!--<script src="https://cdn.jsdelivr.net/npm/jquery"></script>-->
+  <script src="assets/lib/jquery.min.js"></script>
+  <!--vue-->
+  <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+  <script src="assets/lib/vue.min.js"></script>
   <!--docsify-->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@latest/lib/docsify.min.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify"></script>-->
+  <script src="assets/lib/docsify.min.js"></script>
   <!--术语表插件：https://github.com/TheGreenToaster/docsify-glossary -->
   <!--<script src="https://unpkg.com/docsify-glossary@latest/dist/docsify-glossary.min.js"></script>-->
   <!--全局搜索插件-->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/search.min.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>-->
+  <script src="assets/lib/plugins/search.min.js"></script>
   <!--emoji插件-->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/emoji.min.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>-->
+  <script src="assets/lib/plugins/emoji.min.js"></script>
   <!--外部脚本插件-->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/external-script.min.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/external-script.min.js"></script>-->
+  <script src="assets/lib/plugins/external-script.min.js"></script>
   <!--图片缩放插件-->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@latest/lib/plugins/zoom-image.min.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>-->
+  <script src="assets/lib/plugins/zoom-image.min.js"></script>
   <!--复制代码到剪切板插件-->
-  <script src="https://unpkg.com/docsify-copy-code@latest/dist/docsify-copy-code.min.js"></script>
+  <!--<script src="https://unpkg.com/docsify-copy-code/dist/docsify-copy-code.min.js"></script>-->
+  <script src="assets/lib/plugins/docsify-copy-code.min.js"></script>
   <!--选项卡插件：https://github.com/jhildenbiddle/docsify-tabs -->
-  <!--<script src=" https://cdn.jsdelivr.net/npm/docsify-tabs.min.js"></script>-->
+  <!--<script src="https://unpkg.com/docsify-tabs/dist/docsify-tabs.min.js"></script>-->
+  <script src="assets/lib/plugins/docsify-tabs.min.js"></script>
   <!--分页插件：https://github.com/imyelo/docsify-pagination -->
-  <!--<script src="//cdn.jsdelivr.net/npm/docsify-pagination@latest/dist/docsify-pagination.min.js"></script>-->
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>-->
+  <!--<script src="assets/lib/plugins/docsify-pagination.min.js"></script>-->
   <!--警告框插件：https://github.com/fzankl/docsify-plugin-flexible-alerts -->
-  <script src="https://unpkg.com/docsify-plugin-flexible-alerts@latest/dist/docsify-plugin-flexible-alerts.min.js"></script>
+  <!--<script src="https://unpkg.com/docsify-plugin-flexible-alerts/dist/docsify-plugin-flexible-alerts.min.js"></script>-->
+  <script src="assets/lib/plugins/docsify-plugin-flexible-alerts.min.js"></script>
   <!--侧边栏可折叠插件：https://github.com/iPeng6/docsify-sidebar-collapse -->
-  <!--<script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse@latest/dist/docsify-sidebar-collapse.min.js"></script>-->
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>-->
+  <!--<script src="assets/lib/plugins/docsify-sidebar-collapse.min.js"></script>-->
   <!--嵌入式pdf插件：https://github.com/lazypanda10117/docsify-pdf-embed -->
-  <script src="https://unpkg.com/docsify-pdf-embed-plugin@latest/src/docsify-pdf-embed.js"></script>
+  <!--<script src="https://unpkg.com/docsify-pdf-embed-plugin/src/docsify-pdf-embed.js"></script>-->
+  <script src="assets/lib/plugins/docsify-pdf-embed.js"></script>
   <!--PDF转化插件：https://github.com/meff34/docsify-to-pdf-converter -->
 
   <!--代码高亮支持-->
-  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-markdown.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-sql.min.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-markdown.min.js"></script>-->
+  <script src="assets/prismjs/components/prism-markdown.min.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>-->
+  <script src="assets/prismjs/components/prism-bash.min.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-sql.min.js"></script>-->
+  <script src="assets/prismjs/components/prism-sql.min.js"></script>
 </body>
 </html>
