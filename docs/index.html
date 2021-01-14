@@ -12,11 +12,11 @@
   <link rel="shortcut icon" type="image/ico" href="assets/favicon-colorful.png">
   <!--自定义主题-->
   <link rel="stylesheet" href="assets/themes/hotdb.css">
-  <!--侧边栏可折叠插件：https://github.com/iPeng6/docsify-sidebar-collapse -->
-  <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />-->
   <!--font awesome图标：https://github.com/erickjx/docsify-fontawesome -->
   <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css"/>
-  <script src="https://unpkg.com/docsify-fontawesome/dist/docsify-fontawesome.min.js"></script>
+  <!--侧边栏可折叠插件：https://github.com/iPeng6/docsify-sidebar-collapse -->
+  <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />-->
+  <!--<link rel="stylesheet" href="assets/lib/plugins/sidebar.min.css" />-->
   <!--自定义样式-->
   <style>
     body {
@@ -236,6 +236,7 @@
       </div>`
     }
 
+    //得到基于语言的文本
     function getText(text) {
       if(typeof text === "string") {
         return text
@@ -283,6 +284,11 @@
   <!--docsify-->
   <!--<script src="https://cdn.jsdelivr.net/npm/docsify"></script>-->
   <script src="assets/lib/docsify.min.js"></script>
+
+
+  <!--font awesome图标：https://github.com/erickjx/docsify-fontawesome -->
+  <!--<script src="https://unpkg.com/docsify-fontawesome/dist/docsify-fontawesome.min.js"></script>-->
+  <script src="assets/lib/plugins/docsify-fontawesome.min.js"></script>
   <!--术语表插件：https://github.com/TheGreenToaster/docsify-glossary -->
   <!--<script src="https://unpkg.com/docsify-glossary@latest/dist/docsify-glossary.min.js"></script>-->
   <!--全局搜索插件-->
