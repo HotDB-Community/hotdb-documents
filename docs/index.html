@@ -79,10 +79,12 @@
     /*作为文档标题的侧边栏TOC调小*/
     .app-sub-sidebar > li {
       font-size: 12px !important;
+      line-height: 24px !important;
       margin: 2px 0 !important;
     }
     .app-sub-sidebar > li > a {
       font-size: 12px !important;
+      line-height: 24px !important;
     }
 
     /*表格居中显示 - 不好调整*/
@@ -108,13 +110,9 @@
       },
       repo: repositoryUrl,
       routeMode: "history",
-      //可以是其他网站或Github仓库
-      //basePath: "https://raw.githubusercontent.com/DragonKnightOfBreeze/HotDB-Document/master/docs", 
-      //使用相对路径规范文件目录结构
       relativePath: true,
       auto2top: true,
       fallbackLanguages: ["zh"],
-      //不开启首页
       //coverpage: ["/","/zh/", "/en/"], 
       //onlyCover: true,
       loadSidebar: true,

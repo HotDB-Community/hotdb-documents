@@ -3,8 +3,9 @@
 * [X] 初始化仓库，整理目录，压缩图片，导入word文档到markdown文档，保证唯一的一级标题
 * [X] 补充和压缩图片，基于脚本修正markdown文件格式
 * [X] 将库放到本地（避免莫名其妙访问不了某些库）
-* [ ] 调整markdown文档的格式
-* [ ] 关联markdown文档中的文档和标题链接
+* [ ] 检查markdown文档的格式
+* [ ] 检查markdown文档中的文档和标题链接
+* [ ] 为markdown文档中的代码块统一注明语言
 
 # TODO
 
@@ -40,7 +41,7 @@
   * [ ] `docs/zh/latest/standard.md` D
   * [ ] `docs/zh/latest/management-port-command.md
 * `hotdb-management`
-  * [ ] `docs/zh/latest/hotdm-management.md`
+  * [X] `docs/zh/latest/hotdm-management.md`
   * [ ] `docs/zh/latest/intelligent-inspection.md`
 * `idc`
   * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` D
