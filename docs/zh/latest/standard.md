@@ -1932,7 +1932,7 @@ WARN [pool-1-thread-2614] datanode id failover failed due to found no available 
 ```
 
 - 在server.xml可以配置参数waitForSlaveInFailover控制切换是否等待从库追上复制，该参数默认为true等待，在切换过程中，会等待从库追上复制，如果设置为false不等待，则会立即切换。（立即切换存在数据丢失的风险，不建议设置）。
-- 一主多从的情况下，计算节点选择优先级最高的从库进行切换，如果优先级最高从库不可用，依次选择剩余从库中优先级较高的进行切换，如果均不可用，则不切换，计算节点记录日志WARN [pool-1-thread-2614] -datanode id failover failed due to found no available backup；
+- 一主多从的情况下，计算节点选择优先级最高的从库进行切换，如果优先级最高从库不可用，依次选择剩余从库中优先级较高的进行切换，如果均不可用，则不切换，计算节点记录日志`WARN [pool-1-thread-2614] -datanode id failover failed due to found no available backup`；
 - 在HotDB Server 版本高于2.5.6 （包含）故障切换时，在新备存储节点接管前会将被接管的存储节点更新为主库，原主库更新为双主备库或从库，并置为不可用，原主库相关的从节点均被级联置为不可用（注：若为主从关系，切换时会同步清理原复制关系，且将原主库与原从库的故障切换规则进行互换，待人工进行线下的复制关系重建）
 - 故障切换过程中，主库心跳不停，如果连续两次成功，则放弃切换，计算节点记录日志
 
@@ -1975,13 +1975,9 @@ WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no back
 
 ```xml
 <property name="url">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- 主配置库地址 -->
-```xml
 <property name="username">hotdb_config</property><!-- 主配置库用户名 -->
-```
 <property name="password">hotdb_config</property><!-- 主配置库密码 -->
-```xml
 <property name="bakUrl">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- 从配置库地址 -->
-```
 <property name="bakUsername">hotdb_config</property><!-- 从配置库用户名 -->
 <property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
 ```
@@ -1992,13 +1988,9 @@ WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no back
 
 ```xml
 <property name="url">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- 主配置库地址 -->
-```xml
 <property name="username">hotdb_config</property><!-- 主配置库用户名 -->
-```
 <property name="password">hotdb_config</property><!-- 主配置库密码 -->
-```xml
 <property name="bakUrl">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- 从配置库地址 -->
-```
 <property name="bakUsername">hotdb_config</property><!-- 从配置库用户名 -->
 <property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
 ```
@@ -2009,21 +2001,13 @@ WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no back
 
 ```xml
 <property name="url">jdbc:mysql://192.168.210.22:3308/hotdb_config_test250</property><!-- 配置库地址 -->
-```xml
 <property name="username">hotdb_config</property><!-- 配置库用户名 -->
-```
 <property name="password">hotdb_config</property><!-- 配置库密码 -->
-```xml
 <property name="bakUrl">jdbc:mysql://192.168.210.23:3308/hotdb_config_test250</property><!-- 从配置库地址(如配置库使用MGR,必须配置此项) -->
-```
 <property name="bakUsername">hotdb_config</property><!-- 从配置库用户名(如配置库使用MGR,必须配置此项) -->
-```xml
 <property name="bakPassword">hotdb_config</property><!-- 从配置库密码(如配置库使用MGR,必须配置此项) -->
-```
 <property name="configMGR">true</property><!-- 配置库是否使用MGR -->
-```xml
 <property name="bak1Url">jdbc:mysql://192.168.210.24:3308/hotdb_config_test250</property><!-- MGR配置库地址(如配置库使用MGR,必须配置此项) -->
-```
 <property name="bak1Username">hotdb_config</property><!-- MGR配置库用户名(如配置库使用MGR,必须配置此项) -->
 <property name="bak1Password">hotdb_config</property><!-- MGR配置库密码(如配置库使用MGR,必须配置此项) -->
 ```
@@ -2307,12 +2291,12 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 1. Listener只需部署完成并正确识别即可，日常计算节点操作过程中可无需关注。
 2. Listener组件尽可能和存储节点安装在同一台服务器上；
-3.若一个监听程序需要监听多个存储节点，则需要为其分别填写不同的服务端口；
-4.当某个存储节点取消被Listener监听时，已分配的监听程序服务端口会一直存在，原存储节点可再次使用该监听程序服务端口绑定Listener。
-5.当某个存储节点取消被Listener监听时，已分配的监听程序服务端口会一直存在，此时其他存储节点使用该监听程序服务端口，Listener日志会报错：端口冲突，端口已存在。因此需要重启Listener后才能使用该监听程序服务端口。
-6.当集群需要重启时，建议Listener组件也一同重启，重启顺序为：先重启Listener，后重启集群，以便集群更快的识别Listener；
-7.Listener作为可插拔组件，当Listener不可用时，集群和存储节点仍然可以正常提供服务。
-8.若Listener单独重启，则需至少等待2分钟，计算节点会自动与Listener再次重连。
+3. 若一个监听程序需要监听多个存储节点，则需要为其分别填写不同的服务端口；
+4. 当某个存储节点取消被Listener监听时，已分配的监听程序服务端口会一直存在，原存储节点可再次使用该监听程序服务端口绑定Listener。
+5. 当某个存储节点取消被Listener监听时，已分配的监听程序服务端口会一直存在，此时其他存储节点使用该监听程序服务端口，Listener日志会报错：端口冲突，端口已存在。因此需要重启Listener后才能使用该监听程序服务端口。
+6. 当集群需要重启时，建议Listener组件也一同重启，重启顺序为：先重启Listener，后重启集群，以便集群更快的识别Listener；
+7. Listener作为可插拔组件，当Listener不可用时，集群和存储节点仍然可以正常提供服务。
+8. 若Listener单独重启，则需至少等待2分钟，计算节点会自动与Listener再次重连。
 
 #### 计算节点水平弹性伸缩
 
@@ -2498,7 +2482,7 @@ sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-
 
 ###### 集群模式缩容为HA模式
 
-本小节主要描述正常提供服务的集群缩减为HA的操作，涉及的组件同[HA模式扩展集群多节点模式](#_1.1.2_HA模式扩展集群多节点)一致
+本小节主要描述正常提供服务的集群缩减为HA的操作，涉及的组件同[HA模式扩展集群多节点模式](#HA模式扩展集群多节点)一致
 
 ![](assets/standard/image93.png)
 
@@ -3003,11 +2987,15 @@ Current database: db_b
 
 例如：登录服务端口，未use逻辑库，执行连接绑定语句：
 
+```
 set [session] foreign_key_checks=0;
+```
 
 之后直接执行
 
+```
 DROP TABLE IF EXISTS table_test;
+```
 
 此时DROP语句会直接下发到所有存储节点执行，进而删除原本不相关的数据。
 
@@ -3093,8 +3081,8 @@ EXPLAIN语句只适用于INSERT，SELECT，UPDATE，DELETE的简单单表语句�
 
 计算节点[管理端（3325）](#管理端信息监控)支持OnlineDDL功能，保证了在进行表变更时，不会阻塞线上业务读写，库依然能正常对外提供访问，具体使用方法如下：
 
-- 登录3325端管理端口，使用onlineddl "[DDLSTATEMENT]"语法可以执行onlineddl语句，例如：onlineddl "alter table customer add column testddl varchar(20) default '测试onlineddl'";
-- 执行show @@onlineddl语句，即可显示当前正在运行的OnlineDDL语句及语句执行速度，progress显示当前DDL执行进度（单位：%），speed显示为当前DDL运行速度（单位：行/ms），例如：
+- 登录3325端管理端口，使用`onlineddl "[DDLSTATEMENT]"`语法可以执行onlineddl语句，例如：`onlineddl "alter table customer add column testddl varchar(20) default '测试onlineddl'"`;
+- 执行`show @@onlineddl`语句，即可显示当前正在运行的OnlineDDL语句及语句执行速度，progress显示当前DDL执行进度（单位：%），speed显示为当前DDL运行速度（单位：行/ms），例如：
 
 ```
 mysql> show @@onlineddl;
@@ -3853,7 +3841,8 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 
 #### LOAD DATA语句
 
-| **MySQL语句类型** | **子句类型**                            | **功能** | **支持状态** | **说明**                                                                                                                                                         |
+| MySQL语句类型 | 子句类型                            | 功能 | 支持状态 | 说明                                                                                                                                                         |
+|---|---|---|---|---|
 | LOAD DATA         | `LOAD DATA ... INFILE ... INTO TABLE`     |          | 支持         | 1. 要求执行语句的计算节点数据库用户拥有FILE权限 2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，导入文件都必须上传至当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP。 |
 |                   | `LOW_PRIORITY`                            |          | 不支持       |                                                                                                                                                                  |
 |                   | `CONCURRENT`                              |          | 不支持       |                                                                                                                                                                  |
@@ -3917,7 +3906,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL语句类型 | 子句类型                   | 功能                           | 支持状态 | 说明  |
 |---|---|---|---|---|
-| SELECT            | JOIN                           | LEFT JOIN                          | 支持         |                                                                                                                                                              |
+| SELECT            | `JOIN`                           | LEFT JOIN                          | 支持         |                                                                                                                                                              |
 |                   |                                | INNER JOIN                         | 支持         |                                                                                                                                                              |
 |                   |                                | RIGHT JOIN                         | 支持         |                                                                                                                                                              |
 |                   |                                | CROSS JOIN                         | 支持         |                                                                                                                                                              |
@@ -3925,7 +3914,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 |                   |                                | PARTITION分区表                    | 支持         | 　                                                                                                                                                           |
 |                   |                                | 单种表类型的混合JOIN               | 支持         | 　                                                                                                                                                           |
 |                   |                                | 多表类型的混合JOIN                 | 支持         | 　                                                                                                                                                           |
-|                   | 子查询                         | JOIN                               | 支持         | 　                                                                                                                                                           |
+|                   | `子查询`                         | JOIN                               | 支持         | 　                                                                                                                                                           |
 |                   |                                | IFNULL/NULLIF                      | 支持         | 　                                                                                                                                                           |
 |                   |                                | UNION/UNION ALL                    | 支持         |                                                                                                                                                              |
 |                   |                                | IS NULL/IS NOT NULL                | 支持         |                                                                                                                                                              |
@@ -3933,45 +3922,45 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 |                   |                                | Select from where表达式            | 支持         |                                                                                                                                                              |
 |                   |                                | Select select表达式                | 支持         |                                                                                                                                                              |
 |                   |                                | SELECT FROM SELECT表达式           | 支持         | 需使用NDB且满足NDB限制条件的场景支持                                                                                                                         |
-|                   | UNION/UNION ALL                | 简单单表查询                       | 支持         |                                                                                                                                                              |
+|                   | `UNION/UNION ALL`                | 简单单表查询                       | 支持         |                                                                                                                                                              |
 |                   |                                | JOIN                               | 支持         |                                                                                                                                                              |
 |                   |                                | 子查询                             | 支持         | 同子查询的支持语法相同                                                                                                                                       |
 |                   |                                | Having聚合函数                     | 支持         |                                                                                                                                                              |
 |                   |                                | PARTITION分区表                    | 支持         | 　                                                                                                                                                           |
-|                   | DISTINCTROW                    | 　                                 | 支持         | 　                                                                                                                                                           |
-|                   | DISTINCT                       | 　                                 | 支持         |                                                                                                                                                              |
-|                   | SELECT INTO                    | 　                                 | 不支持       | 　                                                                                                                                                           |
-|                   | STRAIGHT_JOIN                  | 　                                 | 支持         | 　                                                                                                                                                           |
-|                   | SQL_NO_CACHE                   | 　                                 | 支持         | 　                                                                                                                                                           |
-|                   | PARTITION                      | 　                                 | 支持         | 　                                                                                                                                                           |
-|                   | WHERE                          | dnid                               | 支持         | 1、SET show_dnid=1之后，不支持WHERE 条件带dnid； 2、dnid与其他条件用or关联，仅取dnid条件； 3、不支持SELECT子句中跟dnid表达式，例如：SELECT dnid=4 FROM dml_a_jwy;                                                                                      |
+|                   | `DISTINCTROW`                    | 　                                 | 支持         | 　                                                                                                                                                           |
+|                   | `DISTINCT`                       | 　                                 | 支持         |                                                                                                                                                              |
+|                   | `SELECT INTO`                    | 　                                 | 不支持       | 　                                                                                                                                                           |
+|                   | `STRAIGHT_JOIN`                  | 　                                 | 支持         | 　                                                                                                                                                           |
+|                   | `SQL_NO_CACHE`                   | 　                                 | 支持         | 　                                                                                                                                                           |
+|                   | `PARTITION`                      | 　                                 | 支持         | 　                                                                                                                                                           |
+|                   | `WHERE`                          | dnid                               | 支持         | 1、SET show_dnid=1之后，不支持WHERE 条件带dnid； 2、dnid与其他条件用or关联，仅取dnid条件； 3、不支持SELECT子句中跟dnid表达式，例如：SELECT dnid=4 FROM dml_a_jwy;                                                                                      |
 |                   |                                | 函数                               | 支持         | 请参考函数说明                                                                                                                                               |
-|                   | GROUP BY ASC|DESC WITH ROLLUP | 　                                 | 支持         |                                                                                                                                                              |
-|                   | HAVING                         | 　                                 | 支持         | 　                                                                                                                                                           |
-|                   | ORDER BY ASC|DESC             | 　                                 | 支持         | 　                                                                                                                                                           |
-|                   | LIMIT n,m                      | 　                                 | 支持         | 　                                                                                                                                                           |
-|                   | PROCEDURE                      | 　                                 | 不支持       | 　                                                                                                                                                           |
-|                   | INTO OUTFILE                   | 　                                 | 支持         | 1. 要求执行语句的计算节点数据库用户拥有FILE权限 2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，输出文件都将保存在当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP 3. 若输出时集群发生切换，仍能保证数据输出正常                                                                                                               |
-|                   | INTO DUMPFILE                  | 　                                 | 不支持       | 　                                                                                                                                                           |
-|                   | INTO 变量                      | 　                                 | 不支持       | 　                                                                                                                                                           |
-|                   | FOR UPDATE                     | 　                                 | 支持         | 不支持与NOWAIT或SKIP LOCKED连用                                                                                                                              |
-|                   | LOCK IN SHARE MODE             | 　                                 | 支持         | 与MySQL8.0的FOR SHARE功能相同，为保证向下兼容，仍保留支持                                                                                                    |
-|                   | FOR SHARE                      |                                    | 支持         | 支持在MySQL8.0及以上存储节点使用； 不支持与NOWAIT或SKIP LOCKED连用                                                                                                                              |
-|                   | 函数                           | 包括聚合函数                       | 支持         | 支持单表聚合函数括号外的复杂运算                                                                                                                             |
-|                   | DUAL                           | 　                                 | 支持         | 　                                                                                                                                                           |
-|                   | FORCE INDEX                    | 　                                 | 支持         | 　                                                                                                                                                           |
-|                   | USING INDEX                    | 　                                 | 支持         | 　                                                                                                                                                           |
-|                   | IGNORE INDEX                   | 　                                 | 支持         | 　                                                                                                                                                           |
+|                   | `GROUP BY ASC|DESC WITH ROLLUP` | 　                                 | 支持         |                                                                                                                                                              |
+|                   | `HAVING`                         | 　                                 | 支持         | 　                                                                                                                                                           |
+|                   | `ORDER BY ASC|DESC`             | 　                                 | 支持         | 　                                                                                                                                                           |
+|                   | `LIMIT n,m`                      | 　                                 | 支持         | 　                                                                                                                                                           |
+|                   | `PROCEDURE`                      | 　                                 | 不支持       | 　                                                                                                                                                           |
+|                   | `INTO OUTFILE`                   | 　                                 | 支持         | 1. 要求执行语句的计算节点数据库用户拥有FILE权限 2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，输出文件都将保存在当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP 3. 若输出时集群发生切换，仍能保证数据输出正常                                                                                                               |
+|                   | `INTO DUMPFILE`                  | 　                                 | 不支持       | 　                                                                                                                                                           |
+|                   | `INTO 变量`                      | 　                                 | 不支持       | 　                                                                                                                                                           |
+|                   | `FOR UPDATE`                     | 　                                 | 支持         | 不支持与NOWAIT或SKIP LOCKED连用                                                                                                                              |
+|                   | `LOCK IN SHARE MODE`             | 　                                 | 支持         | 与MySQL8.0的FOR SHARE功能相同，为保证向下兼容，仍保留支持                                                                                                    |
+|                   | `FOR SHARE`                      |                                    | 支持         | 支持在MySQL8.0及以上存储节点使用； 不支持与NOWAIT或SKIP LOCKED连用                                                                                                                              |
+|                   | `函数`                           | 包括聚合函数                       | 支持         | 支持单表聚合函数括号外的复杂运算                                                                                                                             |
+|                   | `DUAL`                           | 　                                 | 支持         | 　                                                                                                                                                           |
+|                   | `FORCE INDEX`                    | 　                                 | 支持         | 　                                                                                                                                                           |
+|                   | `USING INDEX`                    | 　                                 | 支持         | 　                                                                                                                                                           |
+|                   | `IGNORE INDEX`                   | 　                                 | 支持         | 　                                                                                                                                                           |
 
 ##### 跨库SELECT语句
 
 | MySQL语句类型 | 子句类型                      | 功能               | 状态 | 说明                                                                                                                                                       |
 |---|---|---|---|---|
-| SELECT            | LIMIT n,m                         | 　                     | 支持     | 　                                                                                                                                                             |
-|                   | ORDER BY                          | 　                     | 支持     | 　                                                                                                                                                             |
-|                   | ORDER BY LIMIT n,m                | 　                     | 支持     | 　                                                                                                                                                             |
-|                   | GROUP BY ASC|DESC WITH ROLLUP    | 　                     | 支持     | 　                                                                                                                                                             |
-|                   | GROUP BY ORDER BY LIMIT m,n       | 　                     | 支持     | 　                                                                                                                                                             |
+| SELECT            | `LIMIT n,m`                         | 　                     | 支持     | 　                                                                                                                                                             |
+|                   | `ORDER BY`                          | 　                     | 支持     | 　                                                                                                                                                             |
+|                   | `ORDER BY LIMIT n,m`                | 　                     | 支持     | 　                                                                                                                                                             |
+|                   | `GROUP BY ASC|DESC WITH ROLLUP`    | 　                     | 支持     | 　                                                                                                                                                             |
+|                   | `GROUP BY ORDER BY LIMIT m,n`       | 　                     | 支持     | 　                                                                                                                                                             |
 |                   | GROUP BY/ORDER BY字段值大小写敏感 | 　                     | 支持     | 　                                                                                                                                                             |
 |                   | 聚合函数                          | SELECT子句中的聚合函数 | 支持     | 　                                                                                                                                                             |
 |                   |                                   | HAVING子句中的聚合函数 | 支持     | 　                                                                                                                                                             |
@@ -3982,7 +3971,9 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 |                   | PARTITION                         | 　                     | 支持     | 　                                                                                                                                                             |
 |                   | HAVING                            | 　                     | 支持     | 　                                                                                                                                                             |
 |                   | PROCEDURE                         | 　                     | 不支持   | 　                                                                                                                                                             |
-|                   | INTO OUTFILE                      | 　                     | 支持     | 1. 要求执行语句的计算节点数据库用户拥有FILE权限。 2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，输出文件都将保存在当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP。 3. 若输出时集群发生切换，仍能保证数据输出正常。                                                                                                               |
+|                   | INTO OUTFILE                      | 　                     | 支持     | 1. 要求执行语句的计算节点数据库用户拥有FILE权限。                                                                                                           |
+|                   |                        | 　                     | 支持     | 2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，输出文件都将保存在当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP。                                                                                                                |
+|                   |                        | 　                     | 支持     | 3. 若输出时集群发生切换，仍能保证数据输出正常。                                                                                                               |
 |                   | INTO DUMPFILE                     | 　                     | 不支持   | 　                                                                                                                                                             |
 |                   | INTO 变量                         | 　                     | 不支持   | 　                                                                                                                                                             |
 |                   | FOR UPDATE                        | 　                     | 支持     | 　                                                                                                                                                             |
@@ -3991,7 +3982,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 |                   | USING INDEX                       | 　                     | 支持     | 　                                                                                                                                                             |
 |                   | IGNORE INDEX                      | 　                     | 支持     | 　                                                                                                                                                             |
 |                   | STRAIGHT_JOIN                     | 　                     | 支持     | 　                                                                                                                                                             |
-|                   | JOIN                              | 　                     | 限制支持 | 请参考[跨库JOIN](#_跨库JOIN)；部分不支持的使用NDB且满足NDB限制的支持                                                                                           |
+|                   | JOIN                              | 　                     | 限制支持 | 请参考[跨库JOIN](#跨库JOIN)；部分不支持的使用NDB且满足NDB限制的支持                                                                                           |
 |                   | 子查询                            | JOIN                   | 支持     | 　                                                                                                                                                             |
 |                   |                                   | IFNULL/NULLIF          | 支持     |                                                                                                                                                                |
 |                   |                                   | UNION/UNION ALL        | 支持     |                                                                                                                                                                |
@@ -4057,7 +4048,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 |              |                      | ENUM类型                               | 支持         |                                                                                                                                                                                   |
 |              |                      | 函数                                   | 支持         |                                                                                                                                                                                   |
 |              | OR                   |                                        | 限制支持     | 跨库JOIN支持能转换成in条件的情况； 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
-|              | WHERE                | 不同字段OR条件                         | 限制支持     | 类似 a=x and b=x or c=x的形式不支持；仅支持OR表达式为AND表达式的子节点的情况以及不限OR个数的情况，例如：select xxx from a,b where (a.c1 OR a.c2) and b.c1=100 and (a.c4 OR a.c6): 其中OR子句中每个条件(c1、c2等)仅支持table.column [=|<|<=|>|>=|!=] value 或 IS [NOT] NULL 或 具体的值(0/1/TRUE/FALSE/字符串等)； 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
+|              | WHERE                | 不同字段OR条件                         | 限制支持     | 类似 a=x and b=x or c=x的形式不支持；仅支持OR表达式为AND表达式的子节点的情况以及不限OR个数的情况，例如：`select xxx from a,b where (a.c1 OR a.c2) and b.c1=100 and (a.c4 OR a.c6)`: 其中OR子句中每个条件(c1、c2等)仅支持`table.column [=|<|<=|>|>=|!=] value`或`IS [NOT] NULL`或具体的值(0/1/TRUE/FALSE/字符串等)； 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
 |              |                      | 单个字段的or条件                       | 限制支持     | left join中的or表达式不为and表达式子节点的不支持； 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                            |
 |              |                      | IN                                     | 支持         | 　                                                                                                                                                                                |
 |              |                      | AND                                    | 支持         | 　                                                                                                                                                                                |
@@ -4159,8 +4150,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | MySQL语句类型 | 子句类型                                                                | 支持状态 | 说明 |
 |---|---|---|---|
 | ALTER TABLE       | `ADD COLUMN`                                                                  | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | `ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY`                       | 支持         | 支持 ADD UNIQUE [index_name][index_type]index_col_name                                                                                                                                                                                          |
-
+|                   | `ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY`                       | 支持         | 支持`ADD UNIQUE [index_name][index_type]index_col_name`                                                                                                                                                                                          |
 |         | `父子表的ADD FOREIGN KEY`                                                     | 限制支持     | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
 |         |                                                                             |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式环境中，当非分片字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
 |         |                                                                             |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
@@ -4264,10 +4254,10 @@ create database if not exists zjj_d3 default datanode '1,4';
 |     |     | SPATIAL | 支持 |
 |     |     | ALGORITHM | 支持 |
 |     |     | LOCK | 支持 |
-|     | DROP TABLE | DROP [TEMPORARY] TABLE [IF EXISTS] | 禁用 |
+|     | DROP TABLE | `DROP [TEMPORARY] TABLE [IF EXISTS]` | 禁用 |
 |     |     | DROP TABLE | 支持 |
 |     | DROP TABLE 多表 | 支持 | 必须保证多表在相同节点 |
-|     |     | DROP TABLE table_name [RESTRICT | CASCADE] | 支持 |
+|     |     | `DROP TABLE table_name [RESTRICT | CASCADE]` | 支持 |
 | DROP TRIGGER | 　 | 支持 | 需要赋予DROP权限 |
 |     | DROP VIEW | 　 | 支持 |
 
@@ -4275,7 +4265,6 @@ create database if not exists zjj_d3 default datanode '1,4';
 
 | MySQL语句类型 | 子句类型 | 支持状态 | 说明 |
 |---|---|---|---|
-
 | RENAME TABLE      | 　           | 支持         | 1. 支持RENAME多张表，但要求这些表都在相同节点，否则将执行失败并报错：ERROR 10042 (HY000): unsupported to rename multi table with different datanodes
 | |              |              | 2. RENAME中的目标表不需要提前添加表配置，若添加新表的表配置，需要保证新表表配置与原表一致，否则RENAME将不成功
 | |              |              | 注意：计算节点数据库用户需要对旧表拥有ALTER和DROP权限，以及对新表拥有CREATE和INSERT权限                                                               |
@@ -4629,16 +4618,16 @@ revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jing
 |              | `SHOW TRIGGERS`                                                                         | 支持         | 返回空集　                                                            |
 |              | `SHOW GLOBAL|SESSION VARIABLES`                                                        | 支持         | 　                                                                    |
 |              | `SHOW WARNINGS`                                                                         | 支持         |                                                                       |
-|         | `SHOW HOTDB TABLES`                                                                     | 支持         | 支持[{FROM | IN} *db_name*] [LIKE '*pattern*' | WHERE *expr*]
+|         | `SHOW HOTDB TABLES`                                                                     | 支持         | `支持[{FROM | IN} *db_name*] [LIKE '*pattern*' | WHERE *expr*]` |
 |         |                                                                                       |              | 显示计算节点的分片信息                                                |
 
 #### HotDB PROFILE
 
 | 语句类型 | SQL语句 | 支持状态 | 说明 |
 | --- | --- | --- | --- |
-| SET语句 | SET hotdb_profiling={0|1|on|off} | 支持 | 支持 set [session] hotdb_profiling |
+| SET语句 | `SET hotdb_profiling={0|1|on|off}` | 支持 | 支持`set [session] hotdb_profiling` |
 |     | SHOW语句 | SHOW HOTDB_PROFILES | 支持 |
-|     | SHOW HOTDB_PROFILE FOR QUERY N [relative time|real time] | 支持 | N代表执行的SQL id |
+|     | `SHOW HOTDB_PROFILE FOR QUERY N [relative time|real time]` | 支持 | N代表执行的SQL id |
 
 **功能说明**：该功能仅限session级别
 
@@ -4773,7 +4762,7 @@ HotDB Server对MySQL部分variables及status的显示结果做了支持，可通
 | COLLATION_CONNECTION     | 目前仅支持：latin1_swedish_ci latin1_bin gbk_chinese_ci gbk_bin utf8_general_ci utf8_bin utf8mb4_general_ci utf8mb4_bin                                                                                                                                               |
 | FOREIGN_KEY_CHECKS       | 显示ON                                                                                                                                                    |
 | CHARACTER_SET_CLIENT     | 仅支持utf8/gbk/latin1/utf8mb4字符集                                                                                                                       |
-| TIME_ZONE                | time_zone参数为具体的相同值，或全为SYSTEM并且system_time_zone全相同的具体值。计算节点在SHOW [GLOBAL] VARIABLES时，将time_zone统一显示为+08:00这个字符串 |
+| TIME_ZONE                | time_zone参数为具体的相同值，或全为SYSTEM并且system_time_zone全相同的具体值。计算节点在`SHOW [GLOBAL] VARIABLES`时，将time_zone统一显示为+08:00这个字符串 |
 | MAX_ALLOWED_PACKET       | 计算节点控制，默认：64M                                                                                                                                   |
 | ADMIN_ADDRESS            | 始终显示空字符串，MySQL8.0新增                                                                                                                            |
 | INNODB_BUFFER_POOL_SIZE  | 逻辑库下所有节点总和，主备节点按主节点算                                                                                                                  |
@@ -6580,7 +6569,7 @@ server.xml中dropTableRetentionTime参数配置：
 
 **参数作用：**
 
-drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机房配置库高可用功能。当灾备机房切换为当前主机房时，若使用配置库高可用，则需要设置为对应从配置库的信息且保证主从配置库实例的复制关系正常，且互为主备。当灾备机房切换为当前主机房时，主配置库发生故障时会自动切换到从配置库，此时配置库的高可用切换可参考中心机房从配置库参数[bakUrl，bakUsername，bakPassword](#_bakUrl & bakUsername & bakPassword)的描述。
+drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机房配置库高可用功能。当灾备机房切换为当前主机房时，若使用配置库高可用，则需要设置为对应从配置库的信息且保证主从配置库实例的复制关系正常，且互为主备。当灾备机房切换为当前主机房时，主配置库发生故障时会自动切换到从配置库，此时配置库的高可用切换可参考中心机房从配置库参数[bakUrl，bakUsername，bakPassword](#bakUrl-bakUsername-bakPassword)的描述。
 
 ```xml
 <property name="drBakUrl">jdbc:mysql://192.168.240.77:3316/hotdb_config</property><!-- 灾备机房从配置库地址 -->
@@ -6621,7 +6610,7 @@ drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机�
 
 **参数作用：**
 
-drUrl,drUsername,drPassword属于配套参数，,drUrl是指灾备机房计算节点配置信息的配置库路径，drUsername,drPassword是指连接该物理库的用户名密码，该配置库用于存储灾备机房配置信息。可参考与中心机房配置库相关参数[url,username,password](#_url & username & password)。
+drUrl,drUsername,drPassword属于配套参数，,drUrl是指灾备机房计算节点配置信息的配置库路径，drUsername,drPassword是指连接该物理库的用户名密码，该配置库用于存储灾备机房配置信息。可参考与中心机房配置库相关参数[url,username,password](#url-username-password)。
 
 ```xml
 <property name="drUrl">jdbc:mysql://192.168.240.76:3316/hotdb_config</property><!-- 灾备机房配置库地址 -->
@@ -7070,7 +7059,9 @@ root> cat hotdb.log|grep 'watchdog'
 
 可以通过日志查看超过24小时未提交的事务检测信息：
 
+```
 2018-10-26 16:14:55.787 [INFO] [WATCHDOG] [$NIOREACTOR-0-RW] WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-5,id=1720,user=rmb,host=192.168.200.3,port=3323,localport=54330,schema=FUNTEST_RMB] has not been queryed for 839s. executed IUD5:[INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. binded connection:[MySQLConnection [node=11, id=1330, threadld=18085, state=borrowed, closed=false, autocommit=false, host=192.168.210.42, port=3307, database=db251, localPort=15722, isCiose:false, toBeClose:false] lastSQL:INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. innodb_trx:[(ds:11 trx_id:25765462 trx_state:RUNNING trx_started:2018-10-26 16:00:56 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:2 trx_mysql._thread_id:18085 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:1 trx_lock_memory_bytes:1136 trx_rows_locked:0 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now.
+```
 
 可以通过日志查看存储节点切换检测信息：
 
@@ -7941,7 +7932,7 @@ mysql> show variables like '%max_user_connections%;
 <property name="maxIdleTransactionTimeout">864000000</property>
 ```
 
-maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示事务内最后一次SQL完成后超过24小时未提交事务，则判定为超时事务，HotDB在hotdb.log中以[INFO] [WATCHDOG] WatchDogLongTransactionCheckHandler标签记录连接IP、端口、用户名、逻辑库、lastsql、是否autocommit、后端连接的innodb_trx等信息，并关闭连接，自动回滚事务。
+maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示事务内最后一次SQL完成后超过24小时未提交事务，则判定为超时事务，HotDB在hotdb.log中以`[INFO] [WATCHDOG] WatchDogLongTransactionCheckHandler`标签记录连接IP、端口、用户名、逻辑库、lastsql、是否autocommit、后端连接的innodb_trx等信息，并关闭连接，自动回滚事务。
 
 参数仅在enableWatchdog=true时生效。Watchdog中maxIdleTransactionTimeout每10分钟检测一次，在Watchdog对maxIdleTransactionTimeout的检测中判断连接的事务空闲时间，如果超出设定的阈值，则关闭连接；故实际的事务空闲时间不等于设定的阈值。
 
@@ -8490,9 +8481,9 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数作用：**
 
-自增长序列号预取批次大小的初始值，如果设置初始值为100，则预取默认区间的范围差值为100，例如若预取从123开始，则预取区间为[123，223]。
+自增长序列号预取批次大小的初始值，如果设置初始值为100，则预取默认区间的范围差值为100，例如若预取从123开始，则预取区间为`[123，223]`。
 
-初始值可配置范围在实际配置的自增长批次大小上下限（[prefetchBatchMax](#prefetchbatchmax)和[prefetchBatchMin](#prefetchbatchmin)）的范围内，默认范围为[10,10000]。
+初始值可配置范围在实际配置的自增长批次大小上下限（[prefetchBatchMax](#prefetchbatchmax)和[prefetchBatchMin](#prefetchbatchmin)）的范围内，默认范围为`[10,10000]`。
 
 #### prefetchBatchMax
 
@@ -8517,7 +8508,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数作用：**
 
-自增长序列号预取批次大小的上限，如果设置成1000，每次预取区间范围差值的最大值为1000，例如若预取从123开始，则预取区间中最大值不超过1123，即范围不超过[123，1123]。
+自增长序列号预取批次大小的上限，如果设置成1000，每次预取区间范围差值的最大值为1000，例如若预取从123开始，则预取区间中最大值不超过1123，即范围不超过`[123，1123]`。
 
 #### prefetchBatchMin
 
@@ -8542,7 +8533,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数作用：**
 
-自增长序列号预取批次大小的下限，如果设置了100，每次预取区间范围差值的最小值为100，例如若预取从123开始，则预取区间中最大值不小于223，即下一批的预取批次至少从223开始预取，下一个预取批次[>=223，223+预取批次大小]。
+自增长序列号预取批次大小的下限，如果设置了100，每次预取区间范围差值的最小值为100，例如若预取从123开始，则预取区间中最大值不小于223，即下一批的预取批次至少从223开始预取，下一个预取批次`[>=223，223+预取批次大小]`。
 
 #### prefetchValidTimeout
 
@@ -8644,7 +8635,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数作用：**
 
-用于设置当前计算节点为只读模式，在readonly模式下，计算节点只接收DQL（SELECT语句）操作，及SET命令行和SHOW类型操作，拒绝执行DDL（CREATE TABLE/VIEW/INDEX/SYN/CLUSTER语句）、DML（INSERT，UPDATE，DELETE）和DCL（GRANT，ROLLBACK [WORK] TO [SAVEPOINT]，COMMIT）等修改性操作命令
+用于设置当前计算节点为只读模式，在readonly模式下，计算节点只接收DQL（SELECT语句）操作，及SET命令行和SHOW类型操作，拒绝执行DDL（CREATE TABLE/VIEW/INDEX/SYN/CLUSTER语句）、DML（INSERT，UPDATE，DELETE）和`DCL（GRANT，ROLLBACK [WORK] TO [SAVEPOINT]，COMMIT`）等修改性操作命令
 
 **注意事项：**该参数仍然是为单计算节点服务提供的，不允许多计算节点同时提供服务，也即不允许同时开启多个计算节点并同时对外进行服务。
 
@@ -9787,7 +9778,7 @@ mysql> select * from ss;
 9 rows in set (0.00 sec)
 ```
 
-详细使用方法请参考[读写分离](#高可用服务-1)。
+详细使用方法请参考[读写分离](#高可用服务)。
 
 #### switchByLogInFailover
 
