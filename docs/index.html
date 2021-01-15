@@ -183,23 +183,32 @@
       fileName: "",
 
       plugins: [
-        //绑定window.$docsify.fileName，以斜线开始
         function(hook, vm) {
           hook.beforeEach(function(html) {
+            //绑定window.$docsify.fileName，以斜线开始
             window.$docsify.fileName = `/${vm.route.file}`
-          })
-        },
-        function(hook, vm) {
-          hook.afterEach(function(html) {
+            //添加导航栏图标
             $(document).ready(function() {
               $(".app-nav").prepend(createNavIcon())
             })
-            return createTopBar() + html
+            //解析markdown锚点
+            return resolveAnchor(html)
+          })
+          hook.afterEach(function(html) {
+            //添加topbar
+            const topbar = createTopBar()
+            return topbar + html
           })
         }
       ]
     }
-
+    
+    const anchorRegex = /{#([\w-]+)}/g
+    
+    function resolveAnchor(html){
+      return html.replaceAll(anchorRegex,":id=$1")
+    }
+    
     function createNavIcon() {
       return `<a href="https://hotdb.com">
         <img class="navicon" src="assets/navicon-colorful.png" alt="hotdb.com"/>
