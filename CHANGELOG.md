@@ -7,6 +7,8 @@
 * [ ] 检查markdown文档的格式
 * [ ] 检查markdown文档中的文档和标题链接
 * [ ] 为markdown文档中的代码块统一注明语言
+* [ ] 寻找或者自定义插件实现markdown尾注语法（`text[^1]`）
+* [X] 自定义实现markdown锚点语法（`# Title {#id}`）
 
 # TODO
 
@@ -15,7 +17,7 @@
 * [X] 自定义页面，edit-on-github按钮左侧添加编辑图标
 * [ ] 自定义页面，侧边栏导航右侧添加菜单图标
 * [ ] 修改docsify-glossary插件，允许不同语言的术语表（自行实现）
-* [ ] 寻找或者自定义插件实现markdown尾注特性
+
 * [ ] 编写脚本合并所有文档并生成pdf
 * [ ] 编写脚本从markdown生成toc
 * [ ] 编写脚本为markdown的每个标题添加正确的序号

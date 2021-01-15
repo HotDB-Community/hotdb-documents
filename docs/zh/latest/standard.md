@@ -109,13 +109,21 @@ mysql> show tables;
 <!-- 数据库映射 -->
 <!-- com.mchange.v2.c3p0.ComboPooledDataSource, org.apache.commons.dbcp.BasicDataSource -->
 <bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+```xml
 <property name="driverClass" value="com.mysql.jdbc.Driver" />
+```
 <property name="jdbcUrl" value="jdbc:mysql://192.168.137.101:**3323**/cloth?useLocalSessionState=true" /> 其中3323端口位置要修改为计算节点服务端口
+```xml
 <property name="user" value="root" />
+```
 <property name="password" value="$root" />
+```xml
 <property name="initialPoolSize" value="10" />
+```
 <property name="maxPoolSize" value="256" />
+```xml
 <property name="minPoolSize" value="10" />
+```
 <property name="maxIdleTime" value="1800" />
 <property name="maxStatements" value="1000" />
 ```
@@ -140,7 +148,7 @@ mysql> show tables;
 - 基于MySQL复制的跨机房灾备功能支持多计算节点集群模式，详情可查看《分布式事务数据库HotDB Server【跨机房灾备】功能使用手册》。
 - 支持直接解析识别部分[Oracle函数以及Sequence语法](#enableoraclefunction)，以减少Oracle迁移至HotDB Server时的业务代码修改量；
 - 支持客户端连接使用SSL+[SM4国密](#sslusesm4)认证安全通道；
-- 优化根据默认分片节点创建[全局表](#_全局表_1)的功能；
+- 优化根据默认分片节点创建[全局表](#全局表)的功能；
 - 新增[operateMode](#operatemode)参数，满足一键配置不同需求场景下的参数组合，如性能最大化、调试模式等；
 - 支持直接通过SQL语句[修改分片字段](#在线修改分片字段)（alter table ... change shard column ...）；
 - 优化[死锁检测](#死锁检测)逻辑：发生死锁根据MySQL版本号控制是否回滚事务并新开事务；
@@ -503,9 +511,9 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 - 若配置的主存储节点为可用状态，实际该存储节点无法连接，则计算节点启动时，会等待[masterSourceInitWaitTimeout](#lockwaittimeout)配置的时间（默认：300s）,判断该存储节点是否真实不可连接，若在此期间，该存储节点重连无异常，则该节点初始化成功；
 
-- 如果数据节点初始化失败且无可用逻辑库，或数据节点下无存储节点，则计算节点无法启动，日志提示：04/13 10:50:54.644 ERROR [main] (HotdbServer.java:436) -datanodes:[3] init failed. System exit.
+- 如果数据节点初始化失败且无可用逻辑库，或数据节点下无存储节点，则计算节点无法启动，日志提示：`04/13 10:50:54.644 ERROR [main] (HotdbServer.java:436) -datanodes:[3] init failed. System exit.`
 
-- 只要存在某个逻辑库对应的数据节点均可用，则可以启动计算节点，对应逻辑下的表可以正常操作。如果其他逻辑库下有不可用的节点，则该逻辑库下的表不能正常读写，客户端提示：ERROR 1003 (HY000): DATABASE is unavailable when datanodes:[datanode_id] unavailable.
+- 只要存在某个逻辑库对应的数据节点均可用，则可以启动计算节点，对应逻辑下的表可以正常操作。如果其他逻辑库下有不可用的节点，则该逻辑库下的表不能正常读写，客户端提示：`ERROR 1003 (HY000): DATABASE is unavailable when datanodes:[datanode_id] unavailable.`
 
   例如：A逻辑库包含1,2两个节点，B逻辑库包含3,4两个节点。如果1、2节点不可用，3、4节点可用，则计算节点可以启动，B逻辑库下的表可以正常操作，A逻辑库下的表无法进行读写；如果1、3节点不可用，则计算节点无法启动。
 
@@ -532,8 +540,7 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 对于下列MySQL存储节点实例的参数，计算节点要求设置为统一的固定值：
 
 1. **completion_type必须为NO_CHAN**, 如果出现该参数不符合规范，则动态加载失败；
-
-2. **innodb_rollback_on_timeout 需要为ON，**且任何时候SHOW [GLOBAL|SESSION] VARIABLES显示出来的innodb_rollback_on_timeout参数都为on，说明如下：
+2. **innodb_rollback_on_timeout需要为ON**，且任何时候`SHOW [GLOBAL|SESSION] VARIABLES`显示出来的innodb_rollback_on_timeout参数都为on，说明如下：
 
 - 如果innodb_rollback_on_timeout参数全为off， 则计算节点允许加载成功，但计算节点的行为将等同于innodb_rollback_on_timeout参数为on时的事务回滚方式，且配置校验时给出如下提示：
 
@@ -1031,19 +1038,19 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 生成好TLS秘钥后，将相应的秘钥文件分别传输到计算节点服务端和客户端所在的服务器上，并在计算节点中按要求配置如下三个参数之后才能使用：
 
 ```xml
-<property name=[enableSSL](#enableSSL)>false</property><!-- 是否开启SSL连接功能(Enable SSL connection or not) -->
+<property name="enableSSL">false</property><!-- 是否开启SSL连接功能(Enable SSL connection or not) -->
 ```
 
 参数说明：true代表开启SSL功能，false代表关闭SSL功能，默认值为false
 
 ```xml
-<property name=[keyStore](#keyStore)>/server.jks</property><!-- 用于TLS连接的数据证书.jks文件的路径(Path to the data certificate .jks file for TLS connection) -->
+<property name="keyStore">/server.jks</property><!-- 用于TLS连接的数据证书.jks文件的路径(Path to the data certificate .jks file for TLS connection) -->
 ```
 
 参数说明: 计算节点在conf目录下默认提供了一套server.jks和client相关的pem文件，其密码为hotdb.com，可用于进行简单的连接测试。当选择使用自己生成 TLS证书或者使用付费的TLS证书进行连接，需根据实际的路径和名称来填写。例如：/usr/local/crt/server.jks。
 
 ```xml
-<property name=[keyStorePass](#keyStorePass)>BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- 用于TLS连接的数据证书.jks文件的密码(Password of the data certificate .jks file for TLS connection) -->
+<property name="keyStorePass">BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- 用于TLS连接的数据证书.jks文件的密码(Password of the data certificate .jks file for TLS connection) -->
 ```
 
 参数说明：程序自带的密钥文件中密码是hotdb.com，通过select hex(aes_encrypt('hotdb.com',unhex(md5('Hotpu@2013#shanghai#'))));加密得到默认keyStorePass：BB5A70F75DD5FEB214A5623DD171CEEB。若使用自己生成的密钥文件，需根据实际输入的密码来填写。例如：前文输入密码SDcrtest，通过select hex(aes_encrypt('SDcrtest',unhex(md5('Hotpu@2013#shanghai#'))))查询到keyStorePass值，然后填写C43BD9DDE9C908FEE7683AED7A301E33。
@@ -1336,7 +1343,7 @@ mysql> show @@masterslaveconsistency;
 全局AUTO_INCREMENT，是指表的AUTO_INCREMENT列在整个分布式系统中的各个节点间有序自增。HotDB Server提供全局AUTO_INCREMENT的支持，当表中包含AUTO_INCREMENT列，并且在server.xml文件中，将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为非0（[设置为1](#参数设置为1)或者[设置为2](#参数设置为2)）时，即可以像使用MySQL的AUTO_INCRMENT一样使用计算节点的全局AUTO_INCREMENT。配置示例如：
 
 ```xml
-<property name=[autoIncrement](#autoIncrement)>1</property>
+<property name="autoIncrement">1</property>
 ```
 
 #### 参数设置为0
@@ -1371,7 +1378,7 @@ mysql> select * from customer;
 若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为1，则由计算节点接管所有表的自增，可以保证全局自增。
 
 ```xml
-<property name=[autoIncrement](#autoIncrement)>1</property>
+<property name="autoIncrement">1</property>
 ```
 
 例如：customer为auto分片表，分片字段为id，且name定义为自增序列。则name的自增特性由计算节点控制，可实现全局自增：
@@ -1412,7 +1419,7 @@ Warning (Code 10212): auto_increment column must be bigint or int
 
 若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为2，则由计算节点接管所有表的自增。在此模式下，当计算节点模式为集群模式且表中包含自增序列时，仅保证自增序列全局唯一与长期看相对递增且递增，但不保证自增的连续性（短时间内不同节点间自增值会交错）。计算节点智能控制自增特性，进而帮助提升集群模式下计算节点的性能。若计算节点模式为高可用或单节点模式，则设置为2与设置为1的结果相同。
 
-例如：若现有Primary计算节点A，Secondary计算节点B和Secondary计算节点C，设置批次大小（[prefetchBatchInit](#prefetchbatchinit)）初始值为100，则计算节点A的自增序列预取区间为[1,100]，计算节点B的预取区间为[101,200]以及计算节点C的预取区间为[201,300]，即：
+例如：若现有Primary计算节点A，Secondary计算节点B和Secondary计算节点C，设置批次大小（[prefetchBatchInit](#prefetchbatchinit)）初始值为100，则计算节点A的自增序列预取区间为`[1,100]`，计算节点B的预取区间为`[101,200]`以及计算节点C的预取区间为`[201,300]`，即：
 
 ```
 mysql> create table test(id int auto_increment primary key,num int);
@@ -1487,7 +1494,7 @@ mysql> select * from test order by id;
 
 在以下两种情况会判断是否重新预取批次并重新计算下一批次大小，由此来调整合适当前业务环境的批次大小：
 
-1. 若当前批次使用率达到隐藏参数[generatePrefetchCostRatio](#_generatePrefetchCostRatio)配置的已消耗比例，则开始预取下一批次。例如若已消耗比例为90%，当前批次大小为100，现自增值已经达到90，则此时开始预取下一批次。
+1. 若当前批次使用率达到隐藏参数[generatePrefetchCostRatio](#generateprefetchcostratio)配置的已消耗比例，则开始预取下一批次。例如若已消耗比例为90%，当前批次大小为100，现自增值已经达到90，则此时开始预取下一批次。
 2. 从取到批次时间开始计算，若已经到达超时废弃时间[prefetchValidTimeout](#prefetchvalidtimeout)，则根据当前批次使用率判断是否预取下一批次。例如若设置已消耗比例为90%，当前批次大小为100，现自增值已经达到80，此时达到超时时间且当前批次使用率达到配置的已消耗比例的50%，则开始预取下一批次。
 
 当前允许用户插入指定自增值，无论自增值的大小是否大于批次大小，都能保证自增值的全局有序递增。例如当前批次大小为100，插入小于批次大小的自增值：
@@ -1548,7 +1555,9 @@ HotDB Server利用MySQL提供的外部XA事务，可解决跨库事务场景中�
 
 在计算节点中，默认情况下，XA事务是关闭的。要使用XA事务，需在server.xml文件中，将属性enableXA设置为TRUE：
 
-<property name=[enableXA](#enableXA)>true</property>
+```xml
+<property name="enableXA">true</property>
+```
 
 重新启动计算节点后方能生效。若XA事务开关被修改后，未重启计算节点直接进行动态加载，修改结果不会生效且会在计算节点日志中有INFO信息：
 
@@ -1587,7 +1596,7 @@ XA模式下：参照SQL99标准，begin\start transaction会立即开启一个�
 - **disconnect_reason：**连接断开原因，如kill前端连接（kill）、TCP连接断开（program err:java.io.IOException: Connection reset by peer）、SQL执行超时（stream closed,read return -1）、空闲超时（idle timeout）等。
 - **trx_state：**连接断开时的事务状态，包括：1.ROLLBACKED_BY_HOTDB：在事务中且事务被计算节点回滚（对应非自动提交时应用程序未发出commit命令或commit命令中途丢失）；2.COMMITED_BY_HOTDB：在事务中且事务被计算节点提交（对应非自动提交时，计算节点收到了commit并成功提交，但是在commit中途前端连接断开，因此计算节点未能成功发出ok包）。
 
-#### XA事务与[读写分离](#高可用服务-1)的关系
+#### XA事务与读写分离的关系
 
 XA模式下，当开启读写分离时：只有非事务内的单节点的读请求是可分离的，且模式3退化成模式2；
 
@@ -1600,12 +1609,12 @@ XA模式下，当开启读写分离时：无法保证隔离级别正确性，但
 非确定性函数在使用中，会带来一系列问题，尤其是全局表的数据一致性问题，为此HotDB Server提供非确定性函数代理的功能。非确定性函数大致分为两类，一类是已知值的时间类函数，如CURDATE()、CURRENT_TIMESTAMP()等，一类是未知值的随机值函数、唯一值函数，如RAND()、UUID()等。
 
 1. 对于时间类函数，计算节点进行统一代理。
-  - 当表的字段类型有DATETIME（或者TIMESTAMP）且无默认值时，由参数[timestampProxy](#timestampproxy)控制计算节点的代理范围（默认为自动模式，可选全局处理/自动检测），将此类函数代理为具体值插入到表中；
-  - 当SELECT/INSERT/UPDATE/DELETE语句中出现curdate()、curtime()等函数时，计算节点将函数代理为具体值插入到表中；
+   - 当表的字段类型有DATETIME（或者TIMESTAMP）且无默认值时，由参数[timestampProxy](#timestampproxy)控制计算节点的代理范围（默认为自动模式，可选全局处理/自动检测），将此类函数代理为具体值插入到表中；
+   - 当SELECT/INSERT/UPDATE/DELETE语句中出现curdate()、curtime()等函数时，计算节点将函数代理为具体值插入到表中；
 2. 对于随机值函数，计算节点针对不同的SQL语句进行不同的代理办法。
 3. 对于唯一值函数，计算节点进行统一代理。
-  - 当SELECT/INSERT/UPDATE/DELETE语句中出现uuid()或uuid_short()时，计算节点按照标准的UUIDv1算法代理唯一值；
-  - 当存储节点和配置库的server_id冲突时，计算节点自动禁用uuid_short()并告知用户手动调整server_id。可参考MySQL官网说明：<https://dev.mysql.com/doc/refman/5.7/en/replication-options.html>。
+   - 当SELECT/INSERT/UPDATE/DELETE语句中出现uuid()或uuid_short()时，计算节点按照标准的UUIDv1算法代理唯一值；
+   - 当存储节点和配置库的server_id冲突时，计算节点自动禁用uuid_short()并告知用户手动调整server_id。可参考MySQL官网说明：<https://dev.mysql.com/doc/refman/5.7/en/replication-options.html>。
 
 ### 全局时区支持
 
@@ -1649,7 +1658,7 @@ HotDB Server 2.5.3将全局唯一约束优化精确到表级别，默认为所�
 可以通过修改server.xml中的如下参数或在管理平台计算节点参数配置中修改此参数。修改参数只为未来添加的表设置全局唯一的默认值，但并不影响历史数据表的全局唯一性。
 
 ```
-<property name=[globalUniqueConstraint](#globalUniqueConstraint)>false</property><!--全局唯一约束-->
+<property name="globalUniqueConstraint">false</property><!--全局唯一约束-->
 ```
 
 ![](assets/standard/image52.png)
@@ -1666,7 +1675,7 @@ HotDB Server 2.5.3将全局唯一约束优化精确到表级别，默认为所�
 
 垂直分片表与全局表没有此入口，因为不需要对唯一约束做额外处理。添加完表配置后即可使用建表语句添加表结构后使用。
 
-2.使用[自动建表](#_建表即分片)功能，可通过table option GLOBAL_UNIQUE [=] {0 | 1}设置全局唯一约束的开关。例如：
+2.使用[自动建表](#建表即分片)功能，可通过`table option GLOBAL_UNIQUE [=] {0 | 1}`设置全局唯一约束的开关。例如：
 
 ```sql
 create table test02(id not null auto_increment primary key,a char(8),b decimal(4,2),c int) GLOBAL_UNIQUE=0;
@@ -1763,7 +1772,9 @@ mysql> show warnings;
 
 此功能还支持在SELECT查询语句中不包含分片字段但包含唯一约束字段时，通过查询辅助索引定位到固定节点，将SELECT查询语句仅下发到指定的节点而非所有节点。
 
-<property name=[routeByRelativeCol](#routeByRelativeCol)>false</property><!--不包含分片字段时通过辅助索引字段路由-->
+```xml
+<property name="routeByRelativeCol">false</property><!--不包含分片字段时通过辅助索引字段路由-->
+```
 
 此项功能默认关闭，可通过修改server.xml中的routeByRelativeCol参数或在管理平台配置菜单下的计算节点参数配置中添加参数"不包含分片字段时是否开启通过辅助索引字段路由"。
 
@@ -1779,10 +1790,10 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 
 无论是异步复制还是半同步复制，都可能会存在这样一种情况：在故障切换全部完成后，原主库恢复，新主库（原从库）复制IO线程可能自动重连并获取到切换前没有获取到的事务，而这样的事务在切换的处理过程中，已经是被认定没有提交成功的事务，不能再继续复制，否则会有数据混乱的风险。
 
-因此增加计算节点参数[failoverAutoresetslave](#_fail)，默认关闭。
+因此增加计算节点参数[failoverAutoresetslave](#failoverautoresetslave)，默认关闭。
 
 ```xml
-<property name=[failoverAutoresetslave](#failoverAutoresetslave)>false</property><!-- 故障切换时，是否自动重置主从复制关系 -->
+<property name="failoverAutoresetslave">false</property><!-- 故障切换时，是否自动重置主从复制关系 -->
 ```
 
 故障切换后，会暂停原主从之间IO线程，并对原主库每分钟进行一次心跳检测直到原主库恢复正常。原主库恢复正常后，对比原主库的binlog位置，检测原从库（现主库）是否存在切换前没有获取到的事务，若存在，开启此参数则自动重置主从复制关系。若不存在未接收的事务，则重新开启IO线程并不再做任何处理。
@@ -1855,7 +1866,9 @@ MySQL数据库主从的配置方式，请参考MySQL的官方网站（注意对�
 
 默认情况下，计算节点心跳功能是开启的：
 
+```xml
 <property name="enableHeartbeat">true</property>
+```
 
 假设192.168.200.202的3309实例与192.168.200.203的3313实例为一对主从复制的MySQL数据库。
 
@@ -1962,9 +1975,13 @@ WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no back
 
 ```xml
 <property name="url">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- 主配置库地址 -->
+```xml
 <property name="username">hotdb_config</property><!-- 主配置库用户名 -->
+```
 <property name="password">hotdb_config</property><!-- 主配置库密码 -->
+```xml
 <property name="bakUrl">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- 从配置库地址 -->
+```
 <property name="bakUsername">hotdb_config</property><!-- 从配置库用户名 -->
 <property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
 ```
@@ -1975,9 +1992,13 @@ WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no back
 
 ```xml
 <property name="url">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- 主配置库地址 -->
+```xml
 <property name="username">hotdb_config</property><!-- 主配置库用户名 -->
+```
 <property name="password">hotdb_config</property><!-- 主配置库密码 -->
+```xml
 <property name="bakUrl">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- 从配置库地址 -->
+```
 <property name="bakUsername">hotdb_config</property><!-- 从配置库用户名 -->
 <property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
 ```
@@ -1988,13 +2009,21 @@ WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no back
 
 ```xml
 <property name="url">jdbc:mysql://192.168.210.22:3308/hotdb_config_test250</property><!-- 配置库地址 -->
+```xml
 <property name="username">hotdb_config</property><!-- 配置库用户名 -->
+```
 <property name="password">hotdb_config</property><!-- 配置库密码 -->
+```xml
 <property name="bakUrl">jdbc:mysql://192.168.210.23:3308/hotdb_config_test250</property><!-- 从配置库地址(如配置库使用MGR,必须配置此项) -->
+```
 <property name="bakUsername">hotdb_config</property><!-- 从配置库用户名(如配置库使用MGR,必须配置此项) -->
+```xml
 <property name="bakPassword">hotdb_config</property><!-- 从配置库密码(如配置库使用MGR,必须配置此项) -->
+```
 <property name="configMGR">true</property><!-- 配置库是否使用MGR -->
+```xml
 <property name="bak1Url">jdbc:mysql://192.168.210.24:3308/hotdb_config_test250</property><!-- MGR配置库地址(如配置库使用MGR,必须配置此项) -->
+```
 <property name="bak1Username">hotdb_config</property><!-- MGR配置库用户名(如配置库使用MGR,必须配置此项) -->
 <property name="bak1Password">hotdb_config</property><!-- MGR配置库密码(如配置库使用MGR,必须配置此项) -->
 ```
@@ -2570,7 +2599,9 @@ HotDB Server支持读写分离功能，并且支持配置读写分离权重
 
 读写分离功能默认设置为关闭。开启读写分离功能，可在计算节点的配置文件server.xml中，将strategyForRWSplit属性设置为大于0的值。例如：
 
-<property name=[strategyForRWSplit](#strategyForRWSplit)>1</property>
+```xml
+<property name="strategyForRWSplit">1</property>
+```
 
 strategyForRWSplit允许设置的值为0，1，2，3。当设置为0时，读写操作都在主存储节点，也即关闭读写分离。当设置为1时，代表可分离的读请求发往所有可用存储节点（包含主存储节点），写操作与不可分离的读请求在主存储节点上进行。当设置为2时，代表可分离的读请求发往可用的备存储节点，写操作与不可分离的读请求在主存储节点上进行。当设置为3时，代表事务（非XA模式）中发生写前的读请求与自动提交的读请求发往可用的备存储节点。其余请求在主存储节点上进行。
 
@@ -2593,8 +2624,8 @@ HotDB Server读写分离对应用研发者和数据库管理员完全透明，�
 计算节点支持读写分离的同时，可以通过server.xml中配置参数控制主从读的比例。进入计算节点的安装目录的conf目录下，并编辑server.xml，修改如下相关设置：
 
 ```xml
-<property name=[strategyForRWSplit](#strategyForRWSplit)>0</property><!-- 不开启读写分离：0；可分离的读请求发往所有可用数据源：1；可分离的读请求发往可用备数据源：2；事务中发生写前的读请求发往可用备数据源：3-->
-<property name=[weightForSlaveRWSplit](#weightForSlaveRWSplit)>50</property><!-- 从机读比例，默认50（百分比）,为0时代表该参数无效-->
+<property name="strategyForRWSplit">0</property><!-- 不开启读写分离：0；可分离的读请求发往所有可用数据源：1；可分离的读请求发往可用备数据源：2；事务中发生写前的读请求发往可用备数据源：3-->
+<property name="weightForSlaveRWSplit">50</property><!-- 从机读比例，默认50（百分比）,为0时代表该参数无效-->
 ```
 
 说明：
@@ -5403,7 +5434,7 @@ mysql> show hotdb rules where rule_name like '%auto%';
 可通过修改server.xml中的dropTableRetentionTime参数或在管理平台配置菜单下的计算节点参数配置中添加参数"被删除表保留时长(小时)"。
 
 ```xml
-<property name=[dropTableRetentionTime](#dropTableRetentionTime)>0</property><!--被删除表保留时长,默认为0,不保留-->
+<property name="dropTableRetentionTime">0</property><!--被删除表保留时长,默认为0,不保留-->
 ```
 
 dropTableRetentionTime参数默认为0，表示不保留被删除的表数据，例如DROP TABLE立即会删除表无法瞬间恢复；dropTableRetentionTime大于0时，单位以小时计算，保留被删除的表数据到设置时长，超过设置时长后自动删除被保留的表。
@@ -5437,13 +5468,9 @@ RENAME TABLE tbl_name TO new_tbl_name
 还原时需要注意以下要点：
 
 - 通过管理平台配置后创建的表，可以直接RENAME成原表名。通过自动建表功能创建的表，DROP TABLE时不保留表配置，因此不能直接RENAME成原表名。
-
 - 还原自动建表创建的表可以通过在管理平台上添加配置后RENAME成该表表名。也就是说，还原操作允许通过RENAME表名，将被删除的表还原成任何在管理平台上已配置但未定义的表。
-
 - 若被删除的表引用的分片规则发生修改，或配置了不同的分片规则，还原后，数据不会按照新的分片规则自动迁移，即实际数据路由将与配置的路由不匹配。建议按照原来的分片规则配置还原，以防出现数据丢失或不一致的问题。
-
 - 若被删除的表上存在外键或触发器，DROP TABLE时将会在临时表中删除外键与触发器。有外键约束的表因外键被删除，还原后没有相关约束，以及有可能表内数据已经不再满足相关约束。
-
 - RENAME临时表的还原操作需要动态加载（reload）后才会生效。当前计算节点的动态加载功能在配置库有变更的情况下才生效，所以若除RENAME操作，配置库无其他变更，需要进行一些变更后，执行动态加载才会生效，生效后可查看到还原的表。
 
 ## INFORMATION_SCHEMA
@@ -5549,7 +5576,9 @@ INFORMATION_SCHEMA库提供当前计算节点的信息与数据，例如数据�
 
 server.xml中adaptiveProcessor参数配置 如下配置：
 
-<property name=[adaptiveProcessor](#adaptiveProcessor)>true</property><!--控制启动服务时是否自动适配-->
+```xml
+<property name="adaptiveProcessor">true</property><!--控制启动服务时是否自动适配-->
+```
 
 adaptiveProcessor参数默认为true，即开启自动适配，包括[processor](#processors)、[processorExecutor](#pinglogcleanperiod)和[timerExecutor](#timerexecutor)值都将自动适配。为false时则关闭自动适配。
 
@@ -5557,67 +5586,61 @@ adaptiveProcessor参数默认为true，即开启自动适配，包括[processor]
 
 开启自动适配后，计算节点会根据当前服务器配置和自动适配规则设定参数，即使在server.xml中对以下参数值进行配置，也不会生效，仍然会按照适配规则设置参数值。
 
+```xml
 <property name="processors">16</property><!--处理器数-->
+```xml
+<property name="processorExecutor">4</property><!--各处理器线程数-->
+```
+<property name="timerExecutor">4</property><!--定时器线程数-->
+```
 
-<property name=[processorExecutor](#processorExecutor)>4</property><!--各处理器线程数-->
+登录3325端口，执行`show @@threadpool`命令，查看当前processor、processorExecutor和timerExecutor值。例如：
 
-<property name=[timerExecutor](#timerExecutor)>4</property><!--定时器线程数-->
-
-登录3325端口，执行show @@threadpool;命令，查看当前processor、processorExecutor和timerExecutor值。例如：
-
+```
 mysql> show @@threadpool;
 
-| name | pool_size | active_count | task_queue_size | completed_task | total_task |
-
-| TimerExecutor | 4 | 0 | 15 | 50376807 | 50376822 |
-
-| $NIOExecutor-0- | 4 | 0 | 0 | 99254 | 99254 |
-
-| $NIOExecutor-1- | 4 | 1 | 0 | 81195 | 81196 |
-
-| $NIOExecutor-2- | 4 | 2 | 0 | 140921 | 140923 |
-
-| $NIOExecutor-3- | 4 | 1 | 0 | 48218 | 48219 |
-
-| $NIOExecutor-4- | 4 | 0 | 0 | 39073 | 39073 |
-
-| $NIOExecutor-5- | 4 | 0 | 0 | 31656 | 31656 |
-
-| $NIOExecutor-6- | 4 | 0 | 0 | 167007 | 167007 |
-
-| $NIOExecutor-7- | 4 | 1 | 0 | 27221 | 27222 |
-
++-----------------+-----------+--------------+-----------------+----------------+------------+
+| name            | pool_size | active_count | task_queue_size | completed_task | total_task |
++-----------------+-----------+--------------+-----------------+----------------+------------+
+| TimerExecutor   | 4         | 0            | 15              | 50376807       | 50376822   |
+| $NIOExecutor-0- | 4         | 0            | 0               | 99254          | 99254      |
+| $NIOExecutor-1- | 4         | 1            | 0               | 81195          | 81196      |
+| $NIOExecutor-2- | 4         | 2            | 0               | 140921         | 140923     |
+| $NIOExecutor-3- | 4         | 1            | 0               | 48218          | 48219      |
+| $NIOExecutor-4- | 4         | 0            | 0               | 39073          | 39073      |
+| $NIOExecutor-5- | 4         | 0            | 0               | 31656          | 31656      |
+| $NIOExecutor-6- | 4         | 0            | 0               | 167007         | 167007     |
+| $NIOExecutor-7- | 4         | 1            | 0               | 27221          | 27222      |
++-----------------+-----------+--------------+-----------------+----------------+------------+
 9 rows in set (0.00 sec)
+```
 
 $NIOExecutor有0到7，表示当前processor=8，对应的pool_size为4，表示processorExecutor=4，TimerExecutor对应的pool_size为4，表示timerExecutor=4。
 
+```bash
 cat /proc/cpuinfo| grep "processor"| wc -l
+```
 
 注意：计算节点在刚刚启动时并不会生成所有线程，而是用多少创建多少，因此执行show @@threadpool;命令，可能会显示如下图：
 
+```
 mysql> show @@threadpool;
 
-| name | pool_size | active_count | task_queue_size | completed_task | total_task |
-
-| TimerExecutor | 4 | 0 | 14 | 73720 | 73734 |
-
-| $NIOExecutor-0- | 1 | 0 | 0 | 1 | 1 |
-
-| $NIOExecutor-1- | 1 | 0 | 0 | 1 | 1 |
-
-| $NIOExecutor-2- | 1 | 0 | 0 | 1 | 1 |
-
-| $NIOExecutor-3- | 1 | 0 | 0 | 1 | 1 |
-
-| $NIOExecutor-4- | 2 | 0 | 0 | 2 | 2 |
-
-| $NIOExecutor-5- | 5 | 0 | 0 | 5 | 5 |
-
-| $NIOExecutor-6- | 1 | 0 | 0 | 1 | 1 |
-
-| $NIOExecutor-7- | 1 | 1 | 0 | 1 | 1 |
-
++-----------------+-----------+--------------+-----------------+----------------+------------+
+| name            | pool_size | active_count | task_queue_size | completed_task | total_task |
++-----------------+-----------+--------------+-----------------+----------------+------------+
+| TimerExecutor   | 4         | 0            | 14              | 73720          | 73734      |
+| $NIOExecutor-0- | 1         | 0            | 0               | 1              | 1          |
+| $NIOExecutor-1- | 1         | 0            | 0               | 1              | 1          |
+| $NIOExecutor-2- | 1         | 0            | 0               | 1              | 1          |
+| $NIOExecutor-3- | 1         | 0            | 0               | 1              | 1          |
+| $NIOExecutor-4- | 2         | 0            | 0               | 2              | 2          |
+| $NIOExecutor-5- | 5         | 0            | 0               | 5              | 5          |
+| $NIOExecutor-6- | 1         | 0            | 0               | 1              | 1          |
+| $NIOExecutor-7- | 1         | 1            | 0               | 1              | 1          |
++-----------------+-----------+--------------+-----------------+----------------+------------+
 9 rows in set (0.00 sec)
+```
 
 直到计算节点受到足够压力时才会达到自动适配的值，也就是说，自动适配的值为最大值。
 
@@ -5636,9 +5659,11 @@ mysql> show @@threadpool;
 
 **参数设置：**
 
-Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
+server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
-<property name=[allowRCWithoutReadConsistentInXA](#allowRCWithoutReadConsistentInXA)>0</property><!-- 是否允许XA模式下使用不保证读写强一致性的RC隔离级别，0为是，1为否 -->
+```xml
+<property name="allowRCWithoutReadConsistentInXA">0</property><!-- 是否允许XA模式下使用不保证读写强一致性的RC隔离级别，0为是，1为否 -->
+```
 
 **参数作用：**
 
@@ -5648,13 +5673,16 @@ Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
 当计算节点版本高于（包含）2.5.3.1时，若参数allowRCWithoutReadConsistentInXA设置成0，XA模式下允许使用保证事务读写一致性的READ COMMITTED隔离级别，其行为等同于MySQL（但须注意原SQL涉及跨库查询被拆分多条语句多次查询时，会不停读到最新事务，故该模式下需尽量使用单库查询） ；若参数allowRCWithoutReadConsistentInXA设置成1，也允许XA模式下使用READ COMMITTED隔离级别，但是不能保证事务读写一致性，隔离级别实质介于READ COMMITED和READ UNCOMMITED之间，其性能优于设置成0的情况，且启动和同步加载时时会有日志提示，如下：
 
+```
 2020-03-12 15:36:03.719 [WARN][INIT][main] cn.hotpu.hotdb.a(519) -- Note that the READ COMMITTED isolation level in XA mode is essentially between READ COMMITTED and READ UNCOMMITTED at this time, which does not guarantee strong consistency of reading and writing.
+```
 
 #### autoIncrement
 
 **参数说明：**
 
-| **Property**   | **Value**                                 |
+| Property   | Value                                 |
+|---|---|
 | 参数值         | autoIncrement                             |
 | 是否可见       | 是                                        |
 | 参数说明       | 2.5.4以下版本代表：是否采用全局自增序列。 2.5.4及以上版本代表：全局自增序列模式。   |
@@ -5683,7 +5711,9 @@ Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
 **参数设置：**
 
-<property name=[badConnAfterContinueGet](#badConnAfterContinueGet)>true</property><!-- 是否继续获取连接 true 为继续获取连接，false 为返回null，不继续获取，由外层创建新连接或其他操作 -->
+```xml
+<property name="badConnAfterContinueGet">true</property><!-- 是否继续获取连接 true 为继续获取连接，false 为返回null，不继续获取，由外层创建新连接或其他操作 -->
+```
 
 **参数作用：**
 
@@ -5704,7 +5734,9 @@ Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
 **参数设置：**
 
-<property name=[badConnAfterFastCheckAllIdle](#badConnAfterFastCheckAllIdle)>true</property><!-- 当获取坏的后端连接时，是否快速检测所有空闲连接，true为检测，false为不检测，默认为true-->
+```xml
+<property name="badConnAfterFastCheckAllIdle">true</property><!-- 当获取坏的后端连接时，是否快速检测所有空闲连接，true为检测，false为不检测，默认为true-->
+```
 
 **参数作用：**
 
@@ -5749,23 +5781,22 @@ bakUrl和bakUsername以及bakPassword属于配套参数，用于配置库高可�
 
 若不需要主备配置库，则这里配置为跟主配置库信息一致或不配置从配置库即可。
 
+```xml
 <property name="bakUrl">jdbc:mysql://192.168.210.31:3306/hotdb_config</property><!-- 从配置库地址，需指定配置库服务所在的真实IP地址 -->
-
 <property name="bakUsername">hotdb_config</property><!-- 从配置库用户名 -->
-
 <property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
+```
 
 当配置库因主库故障发生切换后，主库恢复正常且检测过数据主从一致，此时可恢复主备配置库重新到可切换状态，需要将配置库里的houdb_config_info表里k字段为hotdb_master_config_status这一行的v值从0更新为1，并在管理端执行reload @@config，才会重新使用主配置库（使用管理平台启用主配置库的操作方法请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》）。
 
+```
 mysql> select * from hotdb_config_info\G
 
 ***************************1.row**************************
-
 k: hotdb_master_config_status
-
 v: 1
-
 description: NULL
+```
 
 #### checkConnLastUsedTime
 
@@ -5784,19 +5815,24 @@ description: NULL
 
 **参数设置：**
 
-<property name=[checkConnLastUsedTime](#checkConnLastUsedTime)>false</property><!-- 后端连接最后一次使用最大允许间隔时间，超过将校验该连接是否有效 单位：毫秒 -->
+```xml
+<property name="checkConnLastUsedTime">false</property><!-- 后端连接最后一次使用最大允许间隔时间，超过将校验该连接是否有效 单位：毫秒 -->
+```
 
 **参数作用：**
 
 后端连接超过此参数配置的时长没有被使用过，计算节点从连接池获取连接时会先校验该连接的连通性，保证获取到的连接可用。
 
+```
 mysql> show @@session;
 
-| id | running | trx_started | trx_time | trx_query | bk_count | bk_dnid | bk_dsid | bk_id | bk_mysqlid | bk_state | bk_closed | bk_autocommit | bk_host | bk_port | bk_db | bk_query | bk_last_read_time | **bk_last_write_time** |
-
-| 60615 | FALSE | NULL | NULL | NULL | 0 | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL | NULL |
-
++-------+---------+-------------+----------+-----------+----------+---------+---------+-------+------------+----------+-----------+---------------+---------+---------+-------+----------+-------------------+--------------------+
+| id    | running | trx_started | trx_time | trx_query | bk_count | bk_dnid | bk_dsid | bk_id | bk_mysqlid | bk_state | bk_closed | bk_autocommit | bk_host | bk_port | bk_db | bk_query | bk_last_read_time | bk_last_write_time |
++-------+---------+-------------+----------+-----------+----------+---------+---------+-------+------------+----------+-----------+---------------+---------+---------+-------+----------+-------------------+--------------------+
+| 60615 | FALSE   | NULL        | NULL     | NULL      | 0        | NULL    | NULL    | NULL  | NULL       | NULL     | NULL      | NULL          | NULL    | NULL    | NULL  | NULL     | NULL              | NULL               |
++-------+---------+-------------+----------+-----------+----------+---------+---------+-------+------------+----------+-----------+---------------+---------+---------+-------+----------+-------------------+--------------------+
 1 row in set (0.00 sec)
+```
 
 #### CheckConnValid
 
@@ -5815,7 +5851,9 @@ mysql> show @@session;
 
 server.xml中手动添加一条CheckConnValid的配置
 
-<property name=[CheckConnValid](#CheckConnValid)>true</property>
+```xml
+<property name="CheckConnValid">true</property>
+```
 
 **参数作用：**
 
@@ -5836,7 +5874,9 @@ server.xml中手动添加一条CheckConnValid的配置
 
 **参数设置：**
 
-<property name=[checkConnValidTimeout](#checkConnValidTimeout)>500</property><!-- 后端连接有效校验时，最大超时时间 单位：毫秒 -->
+```xml
+<property name="checkConnValidTimeout">500</property><!-- 后端连接有效校验时，最大超时时间 单位：毫秒 -->
+```
 
 **参数作用：**
 
@@ -5858,7 +5898,9 @@ server.xml中手动添加一条CheckConnValid的配置
 
 **参数设置：**
 
-<property name=[checkMySQLParamInterval](#checkMySQLParamInterval)>60000</property><!-- 检查MySQL参数设置是否合理的间隔时间（单位:毫秒） -->
+```xml
+<property name="checkMySQLParamInterval">60000</property><!-- 检查MySQL参数设置是否合理的间隔时间（单位:毫秒） -->
+```
 
 **参数作用：**
 
@@ -5883,31 +5925,36 @@ server.xml中手动添加一条CheckConnValid的配置
 
 设置为true的情况，更新分片字段会有如下提示：
 
+```
 mysql> update ss set id=13 where a='aa';
 
 ERROR 1064 (HY000): sharding column's value cannot be changed.
+```
 
 设置为false的情况，更新分片字段可以执行成功。
 
+```
 mysql> update ss set id=13 where a='aa';
 
 Query OK, 1 row affected (0.01 sec)
-
 Rows matched: 1 Changed: 1 Warnings: 0
 
 mysql> select * from ss where a='aa';
 
-| id | a |
-
++----+----+
+| id | a  |
++----+----+
 | 13 | aa |
-
++----+----+
 1 row in set (0.00 sec)
+```
 
 #### clientFoundRows
 
 **参数说明：**
 
-| **Property**   | **Value**                             |
+| Property      | Value                             |
+|---|---|
 | 参数值         | clientFoundRows                       |
 | 是否可见       | 否                                    |
 | 参数说明       | 用found rows代替OK包中的affected rows |
@@ -5919,7 +5966,9 @@ mysql> select * from ss where a='aa';
 
 server.xml中clientFoundRows参数配置 如下配置：
 
-<property name=" clientFoundRows ">false</property><!--用found rows代替OK包中的affected rows -->
+```xml
+<property name="clientFoundRows">false</property><!--用found rows代替OK包中的affected rows -->
+```
 
 **参数作用：**
 
@@ -5950,7 +5999,9 @@ jdbc传入useAffectedRows=true，返回影响行数
 
 server.xml中clusterElectionTimeoutMs参数配置 如下配置：
 
-<property name=[clusterElectionTimeoutMs](#clusterElectionTimeoutMs)>2000</property><!-- 集群选举超时时间(ms) -->
+```xml
+<property name="clusterElectionTimeoutMs">2000</property><!-- 集群选举超时时间(ms) -->
+```
 
 **参数作用：**
 
@@ -5973,7 +6024,9 @@ server.xml中clusterElectionTimeoutMs参数配置 如下配置：
 
 server.xml中clusterHeartbeatTimeoutMs参数配置 如下配置：
 
-<property name=[clusterHeartbeatTimeoutMs](#clusterHeartbeatTimeoutMs)>5000</property><!-- 集群心跳超时时间(ms) -->
+```xml
+<property name="clusterHeartbeatTimeoutMs">5000</property><!-- 集群心跳超时时间(ms) -->
+```
 
 **参数作用：**
 
@@ -5994,9 +6047,11 @@ server.xml中clusterHeartbeatTimeoutMs参数配置 如下配置：
 
 **参数设置：**
 
-Server.xml中clusterHost参数配置 如下配置：
+server.xml中clusterHost参数配置 如下配置：
 
-<property name=[clusterHost](#clusterHost)>192.168.200.1</property><!-- 本节点所在IP -->
+```xml
+<property name="clusterHost">192.168.200.1</property><!-- 本节点所在IP -->
+```
 
 **参数作用：**
 
@@ -6017,9 +6072,11 @@ Server.xml中clusterHost参数配置 如下配置：
 
 **参数设置：**
 
-Server.xml中clusterName参数配置 如下配置：
+server.xml中clusterName参数配置 如下配置：
 
-<property name=" HotDB-Cluster "> HotDB-Cluster </property><!-- 集群组名称 -->
+```
+<property name="HotDB-Cluster "> HotDB-Cluster </property><!-- 集群组名称 -->
+```
 
 **参数作用：**
 
@@ -6040,9 +6097,11 @@ Server.xml中clusterName参数配置 如下配置：
 
 **参数设置：**
 
-Server.xml中clusterNetwork参数配置 如下配置：
+server.xml中clusterNetwork参数配置 如下配置：
 
-<property name=[clusterNetwork](#clusterNetwork)>192.168.200.0/24</property><!-- 集群所在网段 -->
+```xml
+<property name="clusterNetwork">192.168.200.0/24</property><!-- 集群所在网段 -->
+```
 
 **参数作用：**
 
@@ -6063,9 +6122,11 @@ Server.xml中clusterNetwork参数配置 如下配置：
 
 **参数设置：**
 
-Server.xml中clusterPacketTimeoutMs参数配置 如下配置：
+server.xml中clusterPacketTimeoutMs参数配置 如下配置：
 
-<property name=[clusterPacketTimeoutMs](#clusterPacketTimeoutMs)>5000</property><!-- 集群间通讯包失效时间(ms) -->
+```xml
+<property name="clusterPacketTimeoutMs">5000</property><!-- 集群间通讯包失效时间(ms) -->
+```
 
 **参数作用：**
 
@@ -6086,9 +6147,11 @@ Server.xml中clusterPacketTimeoutMs参数配置 如下配置：
 
 **参数设置：**
 
-Server.xml中clusterPort参数配置 如下配置：
+server.xml中clusterPort参数配置 如下配置：
 
-<property name=[clusterPort](#clusterPort)>3326</property><!-- 集群通信端口 -->
+```xml
+<property name="clusterPort">3326</property><!-- 集群通信端口 -->
+```
 
 **参数作用：**
 
@@ -6109,9 +6172,11 @@ Server.xml中clusterPort参数配置 如下配置：
 
 **参数设置：**
 
-Server.xml中clusterSize参数配置 如下配置：
+server.xml中clusterSize参数配置 如下配置：
 
-<property name=[clusterSize](#clusterSize)>3</property><!-- 集群中节点总数 -->
+```xml
+<property name="clusterSize">3</property><!-- 集群中节点总数 -->
+```
 
 **参数作用：**
 
@@ -6132,9 +6197,11 @@ Server.xml中clusterSize参数配置 如下配置：
 
 **参数设置：**
 
-Server.xml中clusterStartedPacketTimeoutMs参数配置 如下配置：
+server.xml中clusterStartedPacketTimeoutMs参数配置 如下配置：
 
-<property name=[clusterStartedPacketTimeoutMs](#clusterStartedPacketTimeoutMs)>5000</property><!-- 集群Started广播包失效时间(ms) -->
+```xml
+<property name="clusterStartedPacketTimeoutMs">5000</property><!-- 集群Started广播包失效时间(ms) -->
+```
 
 **参数作用：**
 
@@ -6184,13 +6251,12 @@ Server.xml中clusterStartedPacketTimeoutMs参数配置 如下配置：
 
 configMGR和bak1Url和bak1Username以及bak1Password属于配套参数，用于MGR配置库功能。若使用MGR配置库，则需要设置为对应MGR配置库的信息且保证MGR配置库实例的复制关系正常，且互为MGR，当主配置库发生故障时会自动切换到新的主配置库。MGR配置库最多支持3个。
 
+```xml
 <property name="configMGR">true</property> <!-- 配置库是否使用MGR -->
-
 <property name="bak1Url">jdbc:mysql://192.168.210.32:3306/hotdb_config</property> <!-- MGR配置库地址(如配置库使用MGR,必须配置此项)，需指定配置库服务所在的真实IP地址 -->
-
 <property name="bak1Username">hotdb_config</property> <!-- MGR配置库用户名(如配置库使用MGR,必须配置此项) -->
-
 <property name="bak1Password">hotdb_config</property> <!-- MGR配置库密码(如配置库使用MGR,必须配置此项) -->
+```
 
 #### crossDbXa
 
@@ -6209,7 +6275,9 @@ configMGR和bak1Url和bak1Username以及bak1Password属于配套参数，用于M
 
 server.xml中crossDbXa参数如下配置：
 
-<property name=[crossDbXa](#crossDbXa)>false</property>
+```xml
+<property name="crossDbXa">false</property>
+```
 
 **参数作用：**
 
@@ -6218,24 +6286,31 @@ server.xml中crossDbXa参数如下配置：
 **数据准备：**
 
 1. 开启XA
-
 2. 逻辑库A，默认节点为1，2；逻辑库B，默认节点为2,3,4
-
 3. 逻辑库A创建表a；逻辑库B创建表b；两张表的表结构一致
-
 4. 表a中插入1000条数据；表b无数据
 
 **场景一、crossDbXa 关闭时，不保证数据强一致：**
 
 1. 开启一个session，执行如下SQL：
 
-use A;begin;insert into B.b select * from A.a;commit;use B;begin;delete from b;commit;
+```sql
+use A;
+begin;
+insert into B.b select * from A.a;
+commit;
+use B;
+begin;
+delete from b;
+commit;
+```
 
 两个事务反复交替执行，无间隔时间；2. 开启另外一个session，反复执行：
 
+```sql
 use A;
-
 select count(*) from B.b;
+```
 
 结果：Count (*)得出的结果不一定全为0或1000
 
@@ -6245,13 +6320,23 @@ select count(*) from B.b;
 
 1. 开启一个session，执行如下SQL：
 
-use A;begin;insert into B.b select * from A.a;commit;use B;begin;delete from b;commit;
+```sql
+use A;
+begin;
+insert into B.b select * from A.a;
+commit;
+use B;
+begin;
+delete from b;
+commit;
+```
 
 两个事务反复交替执行，无间隔时间；2. 开启另外一个session，反复执行：
 
+```
 use A;
-
 select count(*) from B.b;
+```
 
 结果：Count (*)得出的结果为0或1000
 
@@ -6261,13 +6346,14 @@ select count(*) from B.b;
 
 1. 开启一个session，执行如下SQL：
 
+```
 use A;
-
-begin;select * from A.a;
-
+begin;
+select * from A.a;
 select * from B.b;
+```
 
-结果：select * from B.b;执行会报错
+结果：`select * from B.b;`执行会报错
 
 ![](assets/standard/image142.png)
 
@@ -6275,11 +6361,14 @@ select * from B.b;
 
 1. 开启一个session，执行如下SQL：
 
+```
 use A;
+begin;
+select * from A.a;
+select * from B.b;
+```
 
-begin;select * from A.a;select * from B.b;
-
-结果：select * from B.b;正常执行
+结果：`select * from B.b;`正常执行
 
 ![](assets/standard/image143.png)
 
@@ -6298,29 +6387,27 @@ begin;select * from A.a;select * from B.b;
 
 **参数设置：**
 
-<property name=[cryptMandatory](#cryptMandatory)>false</property><!-- 是否强制加密密码，是：true，否：false -->
+```xml
+<property name="cryptMandatory">false</property><!-- 是否强制加密密码，是：true，否：false -->
+```
 
 **参数作用：**
 
 用于设置计算节点是否可以读取加密后的存储节点密码。
 
 - True状态：
-
-- 存储节点密码为明文的时候，计算节点会无法连接该存储节点
-
-- 存储节点密码为密文的时候，计算节点能够连接该存储节点
-
+  - 存储节点密码为明文的时候，计算节点会无法连接该存储节点
+  - 存储节点密码为密文的时候，计算节点能够连接该存储节点
 - False状态：
-
-- 存储节点密码为明文的时候，计算节点能够连接该存储节点
-
-- 存储节点密码为密文的时候，计算节点能够连接该存储节点
+  - 存储节点密码为明文的时候，计算节点能够连接该存储节点
+  - 存储节点密码为密文的时候，计算节点能够连接该存储节点
 
 #### dataNodeIdleCheckPeriod
 
 **参数说明：**
 
-| **Property**   | **Value**                      |
+| Property   | Value                      |
+|---|---|
 | 参数值         | dataNodeIdleCheckPeriod        |
 | 是否可见       | 是                             |
 | 参数说明       | 数据节点默认空闲检查时间（秒） |
@@ -6332,7 +6419,9 @@ begin;select * from A.a;select * from B.b;
 
 **参数设置：**
 
-<property name=[dataNodeIdleCheckPeriod](#dataNodeIdleCheckPeriod)>120</property><!-- 数据节点默认空闲检查时间（秒） -->
+```xml
+<property name="dataNodeIdleCheckPeriod">120</property><!-- 数据节点默认空闲检查时间（秒） -->
+```
 
 **参数作用：**
 
@@ -6344,7 +6433,8 @@ begin;select * from A.a;select * from B.b;
 
 **参数说明：**
 
-| **Property**   | **Value**                         |
+| Property   | Value                         |
+|---|---|
 | 参数值         | deadlockCheckPeriod               |
 | 是否可见       | 是                                |
 | 参数说明       | 死锁检测周期（毫秒），0代表不启用 |
@@ -6358,15 +6448,19 @@ begin;select * from A.a;select * from B.b;
 
 开启死锁检测时，会根据设置的周期定时检测跨库死锁。如果发现跨库死锁，会杀掉其中trx_weight最小的事务。
 
+```
 mysql> select * from autoi where id=4 for update;
 
 ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting transaction
+```
 
 不开启死锁检测，发生死锁时会一直等待到锁超时，锁超时时间依据MySQL存储节点中的innodb_lock_wait_timeout参数值。
 
+```
 mysql> select * from autoi where id=10 for update;
 
 ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
+```
 
 #### defaultMaxLimit
 
@@ -6385,7 +6479,9 @@ ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 
 server.xml中defaultMaxLimit参数配置 如下配置：
 
-<property name=[defaultMaxLimit](#defaultMaxLimit)>10000</property><!--默认最大有序数量-->
+```xml
+<property name="defaultMaxLimit">10000</property><!--默认最大有序数量-->
+```
 
 **参数作用：**
 
@@ -6393,53 +6489,36 @@ server.xml中defaultMaxLimit参数配置 如下配置：
 
 体现在show processlist中State为Flow control，等待下一批执行。下图为方便测试，设置defaultMaxLimit=5，highCostSqlConcurrency=10，采用20并发执行跨库update limit n场景，可见10个连接在执行，另外的10个连接已经被限制。
 
-ztm@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45> show processlist;
+```
+mysql> show processlist;
 
-| Id | User | Host | db | Command | Time | State | Info |
-
-| 4 | ztm | 10.10.0.201:57882 | PM | Query | 0 | executing | show processlist |
-
-| 6 | ztm | 10.10.0.201:57905 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 7 | ztm | 10.10.0.201:57902 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 8 | ztm | 10.10.0.201:57912 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 9 | ztm | 10.10.0.201:57900 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 10 | ztm | 10.10.0.201:57919 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 11 | ztm | 10.10.0.201:57911 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 12 | ztm | 10.10.0.201:57904 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 13 | ztm | 10.10.0.201:57906 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 14 | ztm | 10.10.0.201:57903 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 15 | ztm | 10.10.0.201:57910 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 16 | ztm | 10.10.0.201:57908 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 17 | ztm | 10.10.0.201:57920 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 18 | ztm | 10.10.0.201:57907 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 19 | ztm | 10.10.0.201:57913 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 20 | ztm | 10.10.0.201:57909 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 21 | ztm | 10.10.0.201:57921 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 22 | ztm | 10.10.0.201:57918 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 23 | ztm | 10.10.0.201:57962 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 24 | ztm | 10.10.0.201:57915 | PM | Query | 1 | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
-| 25 | ztm | 10.10.0.201:57914 | PM | Query | 1 | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
-
++----+------+-------------------+----+---------+------+--------------+-------------------------------------------------------------------+
+| Id | User | Host              | db | Command | Time | State        | Info                                                              |
++----+------+-------------------+----+---------+------+--------------+-------------------------------------------------------------------+
+| 4  | ztm  | 10.10.0.201:57882 | PM | Query   | 0    | executing    | show processlist                                                  |
+| 6  | ztm  | 10.10.0.201:57905 | PM | Query   | 1    | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 7  | ztm  | 10.10.0.201:57902 | PM | Query   | 1    | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 8  | ztm  | 10.10.0.201:57912 | PM | Query   | 1    | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 9  | ztm  | 10.10.0.201:57900 | PM | Query   | 1    | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 10 | ztm  | 10.10.0.201:57919 | PM | Query   | 1    | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 11 | ztm  | 10.10.0.201:57911 | PM | Query   | 1    | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 12 | ztm  | 10.10.0.201:57904 | PM | Query   | 1    | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 13 | ztm  | 10.10.0.201:57906 | PM | Query   | 1    | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 14 | ztm  | 10.10.0.201:57903 | PM | Query   | 1    | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 15 | ztm  | 10.10.0.201:57910 | PM | Query   | 1    | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 16 | ztm  | 10.10.0.201:57908 | PM | Query   | 1    | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 17 | ztm  | 10.10.0.201:57920 | PM | Query   | 1    | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 18 | ztm  | 10.10.0.201:57907 | PM | Query   | 1    | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 19 | ztm  | 10.10.0.201:57913 | PM | Query   | 1    | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 20 | ztm  | 10.10.0.201:57909 | PM | Query   | 1    | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 21 | ztm  | 10.10.0.201:57921 | PM | Query   | 1    | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 22 | ztm  | 10.10.0.201:57918 | PM | Query   | 1    | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 23 | ztm  | 10.10.0.201:57962 | PM | Query   | 1    | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 24 | ztm  | 10.10.0.201:57915 | PM | Query   | 1    | Flow control | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
+| 25 | ztm  | 10.10.0.201:57914 | PM | Query   | 1    | Sending data | UPDATE customer_route_1 SET address = 'abcd' order by id LIMIT 20 |
++----+------+-------------------+----+---------+------+--------------+-------------------------------------------------------------------+
 21 rows in set (0.01 sec)
+```
 
 #### dropTableRetentionTime
 
@@ -6460,7 +6539,9 @@ ztm@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45> show processlist;
 
 server.xml中dropTableRetentionTime参数配置：
 
+```xml
 <property name=" dropTableRetentionTime">0</property><!--被删除表保留时长,默认为0,不保留-->
+```
 
 **参数作用：**
 
@@ -6501,11 +6582,11 @@ server.xml中dropTableRetentionTime参数配置：
 
 drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机房配置库高可用功能。当灾备机房切换为当前主机房时，若使用配置库高可用，则需要设置为对应从配置库的信息且保证主从配置库实例的复制关系正常，且互为主备。当灾备机房切换为当前主机房时，主配置库发生故障时会自动切换到从配置库，此时配置库的高可用切换可参考中心机房从配置库参数[bakUrl，bakUsername，bakPassword](#_bakUrl & bakUsername & bakPassword)的描述。
 
+```xml
 <property name="drBakUrl">jdbc:mysql://192.168.240.77:3316/hotdb_config</property><!-- 灾备机房从配置库地址 -->
-
 <property name="drBakUsername">hotdb_config</property><!-- 灾备机房从配置库用户名 -->
-
 <property name="drBakPassword">hotdb_config</property><!-- 灾备机房从配置库密码 -->
+```
 
 #### drUrl & drUsername & drPassword
 
@@ -6542,11 +6623,11 @@ drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机�
 
 drUrl,drUsername,drPassword属于配套参数，,drUrl是指灾备机房计算节点配置信息的配置库路径，drUsername,drPassword是指连接该物理库的用户名密码，该配置库用于存储灾备机房配置信息。可参考与中心机房配置库相关参数[url,username,password](#_url & username & password)。
 
+```xml
 <property name="drUrl">jdbc:mysql://192.168.240.76:3316/hotdb_config</property><!-- 灾备机房配置库地址 -->
-
 <property name="drUsername">hotdb_config</property><!-- 灾备机房配置库用户名 -->
-
 <property name="drPassword">hotdb_config</property><!-- 灾备机房配置库密码 -->
+```
 
 #### enableCursor
 
@@ -6565,7 +6646,9 @@ drUrl,drUsername,drPassword属于配套参数，,drUrl是指灾备机房计算�
 
 server.xml的enableCursor参数：
 
-<property name=[enableCursor](#enableCursor)>false</property>
+```xml
+<property name="enableCursor">false</property>
+```
 
 **参数作用：**
 
@@ -6587,35 +6670,27 @@ server.xml的enableCursor参数：
 
 在2.4.8版本以后默认开启，开启后将智能控制后端流量，可以控制存储节点的压力，使存储节点在最佳状态下运行。通过管理端show @@datasource查看流控状态flow_control。
 
+```
 mysql> show @@datasource;
 
-| dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | **flow_control** | idc_id | listener_id | listener_status |
-
-| 17 | 17 | 10.10.0.140_3313_db01 | 1 | 1 | 10.10.0.140 | 3313 | db01 | 0 | 45 | 45 | NULL | 0/64 | 1 | 8 | 1 |
-
-| 16 | 16 | 10.10.0.140_3312_db01 | 1 | 1 | 10.10.0.140 | 3312 | db01 | 0 | 47 | 47 | NULL | 0/64 | 1 | 7 | 1 |
-
-| 19 | 19 | 10.10.0.155_3311_db01 | 1 | 1 | 10.10.0.155 | 3311 | db01 | 0 | 49 | 49 | NULL | 0/64 | 1 | 10 | 1 |
-
-| 18 | 18 | 10.10.0.155_3310_db01 | 1 | 1 | 10.10.0.155 | 3310 | db01 | 0 | 53 | 53 | NULL | 0/64 | 1 | 9 | 1 |
-
-| 21 | 21 | 10.10.0.155_3313_db01 | 1 | 1 | 10.10.0.155 | 3313 | db01 | 0 | 55 | 55 | NULL | 0/64 | 1 | 12 | 1 |
-
-| 20 | 20 | 10.10.0.155_3312_db01 | 1 | 1 | 10.10.0.155 | 3312 | db01 | 0 | 47 | 47 | NULL | 0/64 | 1 | 11 | 1 |
-
-| 10 | 10 | 10.10.0.125_3310_db01 | 1 | 1 | 10.10.0.125 | 3310 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 1 | 1 |
-
-| 11 | 11 | 10.10.0.125_3311_db01 | 1 | 1 | 10.10.0.125 | 3311 | db01 | 0 | 43 | 43 | NULL | 0/64 | 1 | 2 | 1 |
-
-| 12 | 12 | 10.10.0.125_3312_db01 | 1 | 1 | 10.10.0.125 | 3312 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 3 | 1 |
-
-| 13 | 13 | 10.10.0.125_3313_db01 | 1 | 1 | 10.10.0.125 | 3313 | db01 | 0 | 48 | 48 | NULL | 0/64 | 1 | 4 | 1 |
-
-| 14 | 14 | 10.10.0.140_3310_db01 | 1 | 1 | 10.10.0.140 | 3310 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 5 | 1 |
-
-| 15 | 15 | 10.10.0.140_3311_db01 | 1 | 1 | 10.10.0.140 | 3311 | db01 | 0 | 62 | 62 | NULL | 0/64 | 1 | 6 | 1 |
-
-| -1 | -1 | configDatasource | 1 | 1 | 10.10.0.121 | 3306 | hotdb_config | 1 | 11 | 12 | NULL | N/A | -1 | 0 | 1 |
++----+----+-----------------------+------+--------+-------------+------+--------------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
+| dn | ds | name                  | type | status | host        | port | schema       | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
++----+----+-----------------------+------+--------+-------------+------+--------------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
+| 17 | 17 | 10.10.0.140_3313_db01 | 1    | 1      | 10.10.0.140 | 3313 | db01         | 0      | 45   | 45   | NULL               | 0/64         | 1      | 8           | 1               |
+| 16 | 16 | 10.10.0.140_3312_db01 | 1    | 1      | 10.10.0.140 | 3312 | db01         | 0      | 47   | 47   | NULL               | 0/64         | 1      | 7           | 1               |
+| 19 | 19 | 10.10.0.155_3311_db01 | 1    | 1      | 10.10.0.155 | 3311 | db01         | 0      | 49   | 49   | NULL               | 0/64         | 1      | 10          | 1               |
+| 18 | 18 | 10.10.0.155_3310_db01 | 1    | 1      | 10.10.0.155 | 3310 | db01         | 0      | 53   | 53   | NULL               | 0/64         | 1      | 9           | 1               |
+| 21 | 21 | 10.10.0.155_3313_db01 | 1    | 1      | 10.10.0.155 | 3313 | db01         | 0      | 55   | 55   | NULL               | 0/64         | 1      | 12          | 1               |
+| 20 | 20 | 10.10.0.155_3312_db01 | 1    | 1      | 10.10.0.155 | 3312 | db01         | 0      | 47   | 47   | NULL               | 0/64         | 1      | 11          | 1               |
+| 10 | 10 | 10.10.0.125_3310_db01 | 1    | 1      | 10.10.0.125 | 3310 | db01         | 0      | 44   | 44   | NULL               | 0/64         | 1      | 1           | 1               |
+| 11 | 11 | 10.10.0.125_3311_db01 | 1    | 1      | 10.10.0.125 | 3311 | db01         | 0      | 43   | 43   | NULL               | 0/64         | 1      | 2           | 1               |
+| 12 | 12 | 10.10.0.125_3312_db01 | 1    | 1      | 10.10.0.125 | 3312 | db01         | 0      | 44   | 44   | NULL               | 0/64         | 1      | 3           | 1               |
+| 13 | 13 | 10.10.0.125_3313_db01 | 1    | 1      | 10.10.0.125 | 3313 | db01         | 0      | 48   | 48   | NULL               | 0/64         | 1      | 4           | 1               |
+| 14 | 14 | 10.10.0.140_3310_db01 | 1    | 1      | 10.10.0.140 | 3310 | db01         | 0      | 44   | 44   | NULL               | 0/64         | 1      | 5           | 1               |
+| 15 | 15 | 10.10.0.140_3311_db01 | 1    | 1      | 10.10.0.140 | 3311 | db01         | 0      | 62   | 62   | NULL               | 0/64         | 1      | 6           | 1               |
+| -1 | -1 | configDatasource      | 1    | 1      | 10.10.0.121 | 3306 | hotdb_config | 1      | 11   | 12   | NULL               | N/A          | -1     | 0           | 1               |
++----+----+-----------------------+------+--------+-------------+------+--------------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
+```
 
 注：存储节点流控是计算节点内部控制算法。
 
@@ -6623,7 +6698,8 @@ mysql> show @@datasource;
 
 **参数说明：**
 
-| **Property**   | **Value**                         |
+| Property   | Value                         |
+|---|—--|
 | 参数值         | enableHeartbeat                   |
 | 是否可见       | 是                                |
 | 参数说明       | 是否启用心跳，是：true，否：false |
@@ -6631,7 +6707,8 @@ mysql> show @@datasource;
 | Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y                    |
 | 最低兼容版本   | 2.4.3                             |
 
-| **Property**   | **Value**       |
+| Property   | Value       |
+|---|---|
 | 参数值         | heartbeatPeriod |
 | 是否可见       | 是              |
 | 参数说明       | 心跳周期（秒）  |
@@ -6641,7 +6718,8 @@ mysql> show @@datasource;
 | Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y  |
 | 最低兼容版本   | 2.4.3           |
 
-| **Property**   | **Value**            |
+| Property   | Value            |
+|---|---|
 | 参数值         | heartbeatTimeoutMs   |
 | 是否可见       | 是                   |
 | 参数说明       | 心跳超时时间（毫秒） |
@@ -6663,7 +6741,9 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 
 心跳超时时间：心跳开启的情况下，出现存储节点故障或心跳操作执行过慢超出阈值，会有日志heartbeat time out输出:
 
+```
 2018-05-29 16:32:52.924 [WARN] [HEARTBEAT] [HeartbeatTimer] a(-1) -- Datasource:-1 128.0.0.1:3306/hotdb_config time out! Last packet sent at:2018-05-29 04:32:49:886...省略...
+```
 
 注：若当前存储节点为数据节点最后一个存储节点，存储节点不会置为不可用。且会尝试一直连接；若为纯备存储节点，即使心跳失败次数已经超过阈值，只要心跳检测时能够连接存储节点成功就不标记为不可用。
 
@@ -6671,7 +6751,8 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 
 **参数说明：**
 
-| **Property**   | **Value**            |
+| Property   | Value            |
+|---|---|
 | 参数值         | enableLatencyCheck   |
 | 是否可见       | 是                   |
 | 参数说明       | 是否开启主从延迟检测 |
@@ -6679,7 +6760,8 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 | Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y       |
 | 最低兼容版本   | 2.4.5                |
 
-| **Property**   | **Value**            |
+| Property   | Value            |
+|---|---|
 | 参数值         | latencyCheckPeriod   |
 | 是否可见       | 是                   |
 | 参数说明       | 主从延迟检测周期(ms) |
@@ -6697,21 +6779,20 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 
 登录管理端口，使用show @@latency; 可以查看主从延迟时间。
 
+```
 mysql> show @@latency;
 
-| dn | info | backup_info | latency |
-
-| 186 | 192.168.210.68:3307/db252 | 192.168.210.68:3308/db252 | 501 ms |
-
-| 4 | 192.168.210.43:3308/db252 | 192.168.210.44:3308/db252 | 0 ms |
-
-| 190 | 192.168.200.191:3307/db252 | 192.168.200.190:3307/db252 | 0 ms |
-
-| 191 | 192.168.200.191:3308/db252 | 192.168.200.190:3308/db252 | 0 ms |
-
-| 127 | 192.168.210.41:3308/db252 | 192.168.210.42:3308/db252 | STOPPED |
-
++-----+----------------------------+----------------------------+---------+
+| dn  | info                       | backup_info                | latency |
++-----+----------------------------+----------------------------+---------+
+| 186 | 192.168.210.68:3307/db252  | 192.168.210.68:3308/db252  | 501 ms  |
+| 4   | 192.168.210.43:3308/db252  | 192.168.210.44:3308/db252  | 0 ms    |
+| 190 | 192.168.200.191:3307/db252 | 192.168.200.190:3307/db252 | 0 ms    |
+| 191 | 192.168.200.191:3308/db252 | 192.168.200.190:3308/db252 | 0 ms    |
+| 127 | 192.168.210.41:3308/db252  | 192.168.210.42:3308/db252  | STOPPED |
++-----+----------------------------+----------------------------+---------+
 5 rows in set (0.02 sec)
+```
 
 #### enableListener
 
@@ -6728,43 +6809,36 @@ mysql> show @@latency;
 
 **参数设置：**
 
-<property name=[enableListener](#enableListener)>false</property><!--启用Listener模式(Enable Listener mode or not)-->
+```xml
+<property name="enableListener">false</property><!--启用Listener模式(Enable Listener mode or not)-->
+```
 
 **参数作用：**
 
 HotDB Listener是计算节点一个可拔插组件，开启后可解决集群强一致模式下的性能线性扩展问题。要使用Listener需满足：计算节点是多节点集群模式并开启XA、在存储节点服务器上成功部署Listener并启用enableListener参数。执行动态加载，在计算节点管理端执行以下命令可通过listener_status一列查看是否识别成功以及Listener的实时状态。
 
-MySQL [(none)]> show @@datasource;
+```
+mysql> show @@datasource;
 
-| dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
-
-| 17 | 17 | 10.10.0.140_3313_db01 | 1 | 1 | 10.10.0.140 | 3313 | db01 | 0 | 45 | 45 | NULL | 0/64 | 1 | 8 | 1 |
-
-| 16 | 16 | 10.10.0.140_3312_db01 | 1 | 1 | 10.10.0.140 | 3312 | db01 | 0 | 47 | 47 | NULL | 0/64 | 1 | 7 | 1 |
-
-| 19 | 19 | 10.10.0.155_3311_db01 | 1 | 1 | 10.10.0.155 | 3311 | db01 | 0 | 49 | 49 | NULL | 0/64 | 1 | 10 | 1 |
-
-| 18 | 18 | 10.10.0.155_3310_db01 | 1 | 1 | 10.10.0.155 | 3310 | db01 | 0 | 53 | 53 | NULL | 0/64 | 1 | 9 | 1 |
-
-| 21 | 21 | 10.10.0.155_3313_db01 | 1 | 1 | 10.10.0.155 | 3313 | db01 | 0 | 55 | 55 | NULL | 0/64 | 1 | 12 | 1 |
-
-| 20 | 20 | 10.10.0.155_3312_db01 | 1 | 1 | 10.10.0.155 | 3312 | db01 | 0 | 47 | 47 | NULL | 0/64 | 1 | 11 | 1 |
-
-| 10 | 10 | 10.10.0.125_3310_db01 | 1 | 1 | 10.10.0.125 | 3310 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 1 | 1 |
-
-| 11 | 11 | 10.10.0.125_3311_db01 | 1 | 1 | 10.10.0.125 | 3311 | db01 | 0 | 43 | 43 | NULL | 0/64 | 1 | 2 | 1 |
-
-| 12 | 12 | 10.10.0.125_3312_db01 | 1 | 1 | 10.10.0.125 | 3312 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 3 | 1 |
-
-| 13 | 13 | 10.10.0.125_3313_db01 | 1 | 1 | 10.10.0.125 | 3313 | db01 | 0 | 48 | 48 | NULL | 0/64 | 1 | 4 | 1 |
-
-| 14 | 14 | 10.10.0.140_3310_db01 | 1 | 1 | 10.10.0.140 | 3310 | db01 | 0 | 44 | 44 | NULL | 0/64 | 1 | 5 | 1 |
-
-| 15 | 15 | 10.10.0.140_3311_db01 | 1 | 1 | 10.10.0.140 | 3311 | db01 | 0 | 62 | 62 | NULL | 0/64 | 1 | 6 | 1 |
-
-| -1 | -1 | configDatasource | 1 | 1 | 10.10.0.121 | 3306 | hotdb_config | 1 | 11 | 12 | NULL | N/A | -1 | 0 | 1 |
-
++----+----+-----------------------+------+--------+-------------+------+--------------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
+| dn | ds | name                  | type | status | host        | port | schema       | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
++----+----+-----------------------+------+--------+-------------+------+--------------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
+| 17 | 17 | 10.10.0.140_3313_db01 | 1    | 1      | 10.10.0.140 | 3313 | db01         | 0      | 45   | 45   | NULL               | 0/64         | 1      | 8           | 1               |
+| 16 | 16 | 10.10.0.140_3312_db01 | 1    | 1      | 10.10.0.140 | 3312 | db01         | 0      | 47   | 47   | NULL               | 0/64         | 1      | 7           | 1               |
+| 19 | 19 | 10.10.0.155_3311_db01 | 1    | 1      | 10.10.0.155 | 3311 | db01         | 0      | 49   | 49   | NULL               | 0/64         | 1      | 10          | 1               |
+| 18 | 18 | 10.10.0.155_3310_db01 | 1    | 1      | 10.10.0.155 | 3310 | db01         | 0      | 53   | 53   | NULL               | 0/64         | 1      | 9           | 1               |
+| 21 | 21 | 10.10.0.155_3313_db01 | 1    | 1      | 10.10.0.155 | 3313 | db01         | 0      | 55   | 55   | NULL               | 0/64         | 1      | 12          | 1               |
+| 20 | 20 | 10.10.0.155_3312_db01 | 1    | 1      | 10.10.0.155 | 3312 | db01         | 0      | 47   | 47   | NULL               | 0/64         | 1      | 11          | 1               |
+| 10 | 10 | 10.10.0.125_3310_db01 | 1    | 1      | 10.10.0.125 | 3310 | db01         | 0      | 44   | 44   | NULL               | 0/64         | 1      | 1           | 1               |
+| 11 | 11 | 10.10.0.125_3311_db01 | 1    | 1      | 10.10.0.125 | 3311 | db01         | 0      | 43   | 43   | NULL               | 0/64         | 1      | 2           | 1               |
+| 12 | 12 | 10.10.0.125_3312_db01 | 1    | 1      | 10.10.0.125 | 3312 | db01         | 0      | 44   | 44   | NULL               | 0/64         | 1      | 3           | 1               |
+| 13 | 13 | 10.10.0.125_3313_db01 | 1    | 1      | 10.10.0.125 | 3313 | db01         | 0      | 48   | 48   | NULL               | 0/64         | 1      | 4           | 1               |
+| 14 | 14 | 10.10.0.140_3310_db01 | 1    | 1      | 10.10.0.140 | 3310 | db01         | 0      | 44   | 44   | NULL               | 0/64         | 1      | 5           | 1               |
+| 15 | 15 | 10.10.0.140_3311_db01 | 1    | 1      | 10.10.0.140 | 3311 | db01         | 0      | 62   | 62   | NULL               | 0/64         | 1      | 6           | 1               |
+| -1 | -1 | configDatasource      | 1    | 1      | 10.10.0.121 | 3306 | hotdb_config | 1      | 11   | 12   | NULL               | N/A          | -1     | 0           | 1               |
++----+----+-----------------------+------+--------+-------------+------+--------------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
 13 rows in set (0.00 sec)
+```
 
 注：listener_status为1，代表Listener可用；listener_status为0，代表Listener不可用
 
@@ -6787,75 +6861,61 @@ MySQL [(none)]> show @@datasource;
 
 **参数设置**
 
-enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中。参数默认值false，如下配置：
+enableOracleFunction属隐藏参数，若要开启，需添加到server.xml中。参数默认值false，如下配置：
 
-> <property name=[enableOracleFunction](#enableOracleFunction)>false</property><!-- 是否优先解析oracle
->
-> 函数(support oracle function or not) -->
+```xml
+<property name="enableOracleFunction">false</property><!-- 是否优先解析oracle函数(support oracle function or not) -->
+```
 
 **参数作用：**
 
-当Oracle数据迁移至MySQL时，替换部分函数使其能执行成功，降低迁移成本。同时支持Oracle的sequence对象及其相关功能。当该参数开启时优先按Oracle模式进行解析处理，不开启则按MySQL模式解析处理
-
-- Oracle支持而MySQL不支持的函数，部分支持改写。若需要了解计算节点
-
-> 支持改写的函数，可参考《HotDB Server最新功能清单》。
+当Oracle数据迁移至MySQL时，替换部分函数使其能执行成功，降低迁移成本。同时支持Oracle的sequence对象及其相关功能。当该参数开启时优先按Oracle模式进行解析处理，不开启则按MySQL模式解析处理Oracle支持而MySQL不支持的函数，部分支持改写。若需要了解计算节点支持改写的函数，可参考《HotDB Server最新功能清单》。
 
 设置为true时，Oracle函数解析识别支持改写，执行成功。示例：
 
-> root@192.168.210.202:cc 5.7.23 05:09:07> select to_char(sysdate,'yyyy-MM-dd H
->
-> H24:mi:ss') from dual;
->
-> +------------------------------------------+
->
-> | to_char(sysdate,'yyyy-MM-dd HH24:mi:ss') |
->
-> +------------------------------------------+
->
-> | 2020-09-24 17:09:30 |
->
-> +------------------------------------------+
->
-> 1 row in set (0.01 sec)
+```
+mysql> select to_char(sysdate,'yyyy-MM-dd HH24:mi:ss') from dual;
+
++------------------------------------------+
+| to_char(sysdate,'yyyy-MM-dd HH24:mi:ss') |
++------------------------------------------+
+| 2020-09-24 17:09:30                      |
++------------------------------------------+
+1 row in set (0.01 sec)
+```
 
 设置为false时，对于MySQL不支持的函数报不支持或函数不存在
 
-> root@192.168.210.225:cc 5.7.23 05:09:11> select to_char(sysdate,'yyyy-MM-dd H
->
-> H24:mi:ss') from dual;
->
-> ERROR 1305 (42000): FUNCTION db256_01.TO_CHAR does not exist
+```
+mysql> select to_char(sysdate,'yyyy-MM-dd HH24:mi:ss') from dual;
 
-- Sequence相关功能亦可参考《HotDB Server最新功能清单》
+ERROR 1305 (42000): FUNCTION db256_01.TO_CHAR does not exist
+```
+
+Sequence相关功能亦可参考《HotDB Server最新功能清单》
 
 设置为true时，sequence相关能执行成功。示例：
 
-> root@192.168.210.202:cc 5.7.23 11:30:09> create sequence sequence_test
->
-> -> minvalue 1
->
-> -> maxvalue 1000
->
-> -> start with 1
->
-> -> increment by 10;
->
-> Query OK, 1 row affected (0.04 sec)
+```
+mysql> create sequence sequence_test
+    -> minvalue 1
+    -> maxvalue 1000
+    -> start with 1
+    -> increment by 10;
+```
+
+Query OK, 1 row affected (0.04 sec)
 
 设置为false时，当前是提示语法错误：
 
-> root@192.168.210.225:cc 5.7.23 11:43:11> create sequence sequence_256
->
-> -> minvalue 1
->
-> -> maxvalue 1000
->
-> -> start with 1
->
-> -> increment by 10;
->
-> ERROR 10010 (HY000): expect VIEW. lexer state: token=IDENTIFIER, sqlLeft=sequence_256
+```
+mysql> create sequence sequence_256
+    -> minvalue 1
+    -> maxvalue 1000
+    -> start with 1
+    -> increment by 10;
+ERROR 10010 (HY000): expect VIEW. lexer state: token=IDENTIFIER, sqlLeft=sequence_256
+```
 
 #### enableSleep
 
@@ -6872,7 +6932,9 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 
 **参数设置：**
 
-<property name=[enableSleep](#enableSleep)>false</property><!-- 是否允许SLEEP函数，是：true，否：false -->
+```xml
+<property name="enableSleep">false</property><!-- 是否允许SLEEP函数，是：true，否：false -->
+```
 
 **参数作用：**
 
@@ -6880,19 +6942,24 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 
 不允许sleep 函数：
 
+```
 mysql> select sleep(2);
 
 ERROR 1064 (HY000): forbidden function:SLEEP, go check your config file to enable it.
+```
 
 允许执行sleep 函数:
 
+```
 mysql> select sleep(2);
 
++----------+
 | sleep(2) |
-
-| 0 |
-
++----------+
+| 0        |
++----------+
 1 row in set (2.00 sec)
+```
 
 #### enableSSL
 
@@ -6909,7 +6976,9 @@ mysql> select sleep(2);
 
 **参数设置：**
 
-<property name=[enableSSL](#enableSSL)>false</property><!-- 是否开启SSL连接功能，是：true，否：false -->
+```xml
+<property name="enableSSL">false</property><!-- 是否开启SSL连接功能，是：true，否：false -->
+```
 
 **参数作用：**
 
@@ -6934,29 +7003,32 @@ mysql> select sleep(2);
 
 当设置为false时，即表示不允许子查询里面的表是分片表，会有如下提示：
 
+```
 mysql> select * from test3 where id in (select id from test31);
 
 ERROR 1064 (HY000): Unsupported table type in subquery.
+```
 
 当设置为true时，表示支持子查询里面的表是分片表。
 
+```
 mysql> select * from test3 where id in (select id from test31);
 
-| id | name |
-
-| 5 | dfff56f |
-
-| 7 | aa78bca |
-
++----+---------+
+| id | name    |
++----+---------+
+| 5  | dfff56f |
+| 7  | aa78bca |
 | 15 | dfff56f |
-
 ...省略更多...
+```
 
 #### enableWatchdog
 
 **参数说明：**
 
-| **Property**   | **Value**        |
+| Property   | Value        |
+|---|---|
 | 参数值         | enableWatchdog   |
 | 是否可见       | 是               |
 | 参数说明       | 是否开启Watchdog |
@@ -6966,7 +7038,9 @@ mysql> select * from test3 where id in (select id from test31);
 
 **参数设置：**
 
-<property name=[enableWatchdog](#enableWatchdog)>true</property><!-- 是否开启Watchdog -->
+```xml
+<property name="enableWatchdog">true</property><!-- 是否开启Watchdog -->
+```
 
 **参数作用：**
 
@@ -6974,23 +7048,25 @@ mysql> select * from test3 where id in (select id from test31);
 
 可以通过查看日志tail -f hotdb.log|grep "watchdog"是否已经开启：
 
+```
 root> cat hotdb.log|grep 'watchdog'
-
 2018-06-01 18:26:50.983 [WARN] [WATCHDOG] [$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TABLEB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
-
 2018-06-01 18:26:50.986 [WARN] [WATCHDOG] [$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TESTB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
-
 2018-06-01 18:26:50.988 [WARN] [WATCHDOG] [$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table JOIN_DN02 not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
-
 ...省略更多...
+```
 
 可以通过日志查看表结构与内存中不一致检测信息：
 
+```
 2018-10-3118:46:44.834 [WARN] [WATCHDOG] [$NIOREACTOR-0-RW] WatchdogTableCheckHandler(85) - Table CCC is inconsistent in watchdog table structure check between HotDB memory and MySQL: MySQLConnection [node=20, id=299, threadId=3748, state=running, closed=false, autocommit=true, host=192.168.210.41. port=3310, database=rmb0l, localPort=58808, isClose:false, toBeClose:false]. You may need to contact HOtDB administrator to get help.
+```
 
 可以通过日志查看配置库与内存中不一致检测信息：
 
+```
 2018-10-31 17:45:39.617 [INFO] [WATCHDOG] [Watchdog] WatchDog(500) -- HotDB user config is inconsistent between config database and HotDB memory, Logic tables are not the same in FUN_RMB. you may need to reload HotDB config to bring into effect.
+```
 
 可以通过日志查看超过24小时未提交的事务检测信息：
 
@@ -6998,27 +7074,19 @@ root> cat hotdb.log|grep 'watchdog'
 
 可以通过日志查看存储节点切换检测信息：
 
+```
 2018-10-26 19:29:01.146 [INFO] [MANAGER] [Labor-478] HotdbConfig(2164) - reload config successfully for connection:[thread=Labor-478,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440.schema=null]
-
 2018-10-26 19:30:24.384 [INFO] [FAILOVER] [$NlOExecutor-7-2] SwitchDataSource(111) - received switch datasource 24 command from Manager: [thread=$NIOExecutor-7-2,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440,schema=null]
-
 2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-484] InitSequenceHandler(270) - FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
-
 2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-474] InitSequenceHandler(270) - FUN_RMB.CBC's sequence in Backup datasource: 25 is greater than current sequence
-
 2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-484] InitSequenceHandler(270) • FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
-
 2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-474] InitSequenceHandler(270) - FUN_RMB.CBC's sequence in Backup datasource: 25 is greater than current sequence
-
 2018-10-26 19:30:24.407 [INFO] [FAILOVER] [Labor-464] CheckSlaveHandler(852) - DN:20(dn_rmb_01) switch datasource 24(192.168.210.41_3310_rmbol)->25(192.168.210.42_3310_rmb0l). current slave status:Slave_IO_State:Waiting for master to send event Master_Host:192.168.210.41 Master_User:hotdb_datasource Master_Port:3310 Connect_Retry:60 Master_Log_File:mysql-bin.000002 Read_Master_Log_Pos:3871570 Relay_Log_File:mysql-relay-bin.000006 Relay_Log_Pos:3871783 Relay_Master_Log_File:mysql-bin.000002 Slave_IO_Running:Yes Slave_SQL_Running:Yes Replicate_Do_DB: Replicate_Ignore_DB: Replicate_Do_Table: Replicate_Ignore_Table: Replicate_Wild_Do_Table: Replicate_Wild_Ignore_Table: Last_Errno:0 Last_Error: Skip_Counter:0 Exec_Master_Log_Pos:3871570 Relay_Log_Space:5058376 Until_Condition:None Until_Log_File: Until_Log_Pos:0 Master_SSL_Allowed:No Master_SSL_CA_File: Master_SSL_CA_Path: Master_SSL_Cert: Master_SSL_Cipher: Master_SSL_Key: Seconds_Behind_Master:0 Master_SSL_Verify_Server_Cert:No Last_IO_Errno:0 Last_IO_Error: Last_SQL_Errno:0 Last_SQL_Error: Replicate_Ignore_Server_Ids: Master_Server_Id:210413310 Master_UUID:919cbf03-9f2d-11e8-b8af-525400636cd2 Master_Info_File:mysql.slave_master_info SQL_Delay:0 SQL_Remaining_Delay:NULL Slave_SQL_Running_State:Slave has read all relay log; waiting for more updates Master_Retry_Count:86400 Master_Bind: Last_IO_Error_Timestamp: Last_SQL_Error_Timestamp: Master_SSL_Crl: Master_SSL_Crlpath: Retrieved_Gtid_Set:919cbf03-9f2d-11e8-b8af-525400636cd2:22735-1367727 Executed_Gtid_Set:1aef7172-9f2e-11e8-b62c-525400fcfb5b: 1-3281,919cbf03-9f2d-11e8-b8af-525400636cd2:1-1367727 Auto_Position:1 Replicate_Rewrite_DB: Channel_Name: Master_TLS_Version:
-
 2018-10-26 19:30:24.407 [WARN] [FAILOVER] [Labor-484] BackendDataNode(726) - datanode 20 switch datasource 24 to 25 in failover. due to: Manual Switch by User: root
-
 2018-10-26 19:30:24.408 [INFO] [FAILOVER] [Labor-484] BackendDataNode(762) - datasource:[id:24,nodeld:20 192.168.210.41:3310/rmb0l status:1,charset:utf8mb4] will be set to unavailable due to datanode switch datasource.
-
 2018-10-26 19:30:24.410 [INFO] [FAILOVER] [Thread-55] BackendDataNode(834) - starting updating datasource_status in failover of datanode:20
-
 2018-10-26 19:30:24.415 [INFO] [FAILOVER] [Labor-484] SwitchDataSource(94) - switch datasource:24 for datanode:20 successfully by Manager.
+```
 
 #### enableXA
 
@@ -7058,6 +7126,7 @@ XA模式指强一致模式。在分布式事务数据库系统中，数据被拆
 
 设置为False时，当MySQL返回错误时，会有如下提示：
 
+```
 mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
@@ -7081,9 +7150,11 @@ Query OK, 0 rows affected (0.00 sec)
 mysql> select * from autoi where id=1;
 
 Empty set (0.00 sec)
+```
 
 设置为true时，事务内出现错误，事务仍然可以提交成功。
 
+```
 mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
@@ -7098,10 +7169,11 @@ ERROR 1146 (HY000): Table 'db249.ss' doesn't exist
 
 mysql> select * from ss where id=1;
 
-| id | a |
-
-| 1 | aa |
-
++----+----+
+| id | a  |
++----+----+
+| 1  | aa |
++----+----+
 1 row in set (0.01 sec)
 
 mysql> commit;
@@ -7110,13 +7182,13 @@ Query OK, 0 rows affected (0.01 sec)
 
 mysql> select * from ss where id=1;
 
-| id | a |
-
-| 1 | aa |
-
++----+----+
+| id | a  |
++----+----+
+| 1  | aa |
++----+----+
 1 row in set (0.01 sec)
-
-[]{#_fail .anchor}
+```
 
 #### failoverAutoresetslave
 
@@ -7133,7 +7205,9 @@ mysql> select * from ss where id=1;
 
 **参数设置：**
 
-<property name=[failoverAutoresetslave](#failoverAutoresetslave)>false</property><!-- 故障切换时，是否自动重置主从复制关系 -->
+```xml
+<property name="failoverAutoresetslave">false</property><!-- 故障切换时，是否自动重置主从复制关系 -->
+```
 
 **参数作用：**
 
@@ -7154,7 +7228,9 @@ mysql> select * from ss where id=1;
 
 **参数设置：**
 
-<property name=[frontConnectionTrxIsoLevel](#frontConnectionTrxIsoLevel)>2</property>
+```xml
+<property name="frontConnectionTrxIsoLevel">2</property>
+```
 
 **参数作用：**
 
@@ -7166,7 +7242,8 @@ mysql> select * from ss where id=1;
 
 **参数说明：**
 
-| **Property**   | **Value**              |
+| Property   | Value              |
+|---|---|
 | 参数值         | frontWriteBlockTimeout |
 | 是否可见       | 是                     |
 | 参数说明       | 前端连接写阻塞超时时间 |
@@ -7182,7 +7259,9 @@ mysql> select * from ss where id=1;
 
 前端连接写阻塞超时时，会关闭前端连接，然后输出对应的日志提示" closed, due to write block timeout"，如下：
 
+```
 2018-06-14 13:46:48.355 [INFO] [] [TimerExecutor1] FrontendConnection(695) -- [thread=TimerExecutori,id=9,user=cara,host=192.168.200.82,port=8883,localport=61893,schema=TEST_LGG] closed, due to write block timeout, executing SQL: select * from customer_auto_1
+```
 
 #### generatePrefetchCostRatio
 
@@ -7201,7 +7280,9 @@ mysql> select * from ss where id=1;
 
 **参数设置：**
 
-<property name=[generatePrefetchCostRatio](#generatePrefetchCostRatio)>70</property>
+```xml
+<property name="generatePrefetchCostRatio">70</property>
+```
 
 **参数作用：**
 
@@ -7226,7 +7307,9 @@ mysql> select * from ss where id=1;
 
 server.xml中globalUniqueConstraint参数配置 如下配置：
 
-<property name=[globalUniqueConstraint](#globalUniqueConstraint)>false</property><!--新增表是否默认开启全局唯一约束-->
+```xml
+<property name="globalUniqueConstraint">false</property><!--新增表是否默认开启全局唯一约束-->
+```
 
 **参数作用：**
 
@@ -7251,7 +7334,9 @@ server.xml中globalUniqueConstraint参数配置 如下配置：
 
 server.xml中haMode参数配置 如下配置：
 
-<property name=[haMode](#haMode)>0</property><!-- 高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房 -->
+```xml
+<property name="haMode">0</property><!-- 高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房 -->
+```
 
 **参数作用：**
 
@@ -7295,21 +7380,28 @@ haNodeHost参数仅在高可用模式下对backup角色的计算节点生效，�
 
 高可用模式主节点示例：<property name="haState">master</property><!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
 
+```xml
 <property name="haNodeHost"/><!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）-->
+```
 
 高可用模式备节点示例：<property name="haState">backup</property><!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
 
+```xml
 <property name="haNodeHost"/>192.168.200.51:3325<!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）-->
+```
 
 集群模式实例：<property name="haState">backup</property><!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
 
+```xml
 <property name="haNodeHost"/>192.168.210.23:3326,192.168.310.24:3326<!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）-->
+```
 
 #### highCostSqlConcurrency
 
 **参数说明：**
 
-| **Property**   | **Value**              |
+| Property   | Value              |
+|---|---|
 | 参数值         | highCostSqlConcurrency |
 | 是否可见       | 否                     |
 | 参数说明       | 高消耗语句的并发数     |
@@ -7327,27 +7419,26 @@ Show processlist中的flow control为lock状态，等待下一批执行。
 
 可从管理端口中查看当前剩余可用的并发数。
 
-| Id | User | Host | db | Command | Time | State | Info |
-
-| 150 | _HotDB_Cluster_USER_ | 192.168.210.31:51428 | TEST_LGG | Query | 0 | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
-
-| 126 | _HotDB_Cluster_USER_ | 192.168.210.31:51412 | TEST_LGG | Query | 0 | **Flow control** | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
-
-| 222 | _HotDB_Cluster_USER_ | 192.168.210.32:16636 | TEST_LGG | Query | 0 | optimizing | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
-
-| 174 | _HotDB_Cluster_USER_ | 192.168.210.32:16604 | TEST_LGG | Query | 0 | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
-
-| 129 | _HotDB_Cluster_USER_ | 192.168.210.31:51414 | TEST_LGG | Query | 0 | **Flow control** | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
-
+```
++-----+----------------------+----------------------+----------+---------+------+--------------+-----------------------------------------------------------------------+
+| Id  | User                 | Host                 | db       | Command | Time | State        | Info                                                                  |
++-----+----------------------+----------------------+----------+---------+------+--------------+-----------------------------------------------------------------------+
+| 150 | _HotDB_Cluster_USER_ | 192.168.210.31:51428 | TEST_LGG | Query   | 0    | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
+| 126 | _HotDB_Cluster_USER_ | 192.168.210.31:51412 | TEST_LGG | Query   | 0    | Flow control | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
+| 222 | _HotDB_Cluster_USER_ | 192.168.210.32:16636 | TEST_LGG | Query   | 0    | optimizing   | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
+| 174 | _HotDB_Cluster_USER_ | 192.168.210.32:16604 | TEST_LGG | Query   | 0    | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
+| 129 | _HotDB_Cluster_USER_ | 192.168.210.31:51414 | TEST_LGG | Query   | 0    | Flow control | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
 ...省略更多...
 
 mysql> show @@debug;
 
++------------+------------+
 | join_limit | committing |
-
-| 32 | 0 |
-
++------------+------------+
+| 32         | 0          |
++------------+------------+
 1 row in set (0.00 sec)
+```
 
 #### idcId & idcNodeHost
 
@@ -7377,9 +7468,10 @@ mysql> show @@debug;
 
 例如，在中心机房server.xml中设置idcId为1，idcNodeHost填写灾备机房所有计算节点信息；在灾备机房server.xml中设置idcId为2，idcNodeHost填写中心机房所有计算节点信息。
 
+```xml
 <property name="idcId">2</property><!-- 机房ID, 1:中心机房，2:灾备机房 -->
-
 <property name="idcNodeHost">192.168.220.188:3325,192.168.220.189:3325</property><!-- 另一个机房的连接信息（Computer node info in the other IDC）-->
+```
 
 #### idleTimeout
 
@@ -7400,7 +7492,9 @@ mysql> show @@debug;
 
 server.xml中idleTimeout参数配置如下：
 
-<property name=[idleTimeout](#idleTimeout)>28800</property><!-- 前端空闲连接超时时间，单位：秒-->
+```xml
+<property name="idleTimeout">28800</property><!-- 前端空闲连接超时时间，单位：秒-->
+```
 
 **参数作用：**
 
@@ -7408,55 +7502,57 @@ server.xml中idleTimeout参数配置如下：
 
 为方便演示，测试中设定该值为60秒。
 
+```
 mysql > show processlist;
 
-| Id | User | Host | db | Command | Time | State | Info |
-
-| 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |
-
-| 7 | ztm | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep | 59 | | NULL |
++----+------+-----------------------+--------------------+---------+------+-----------+------------------+
+| Id | User | Host                  | db                 | Command | Time | State     | Info             |
++----+------+-----------------------+--------------------+---------+------+-----------+------------------+
+| 9  | root | 192.168.220.211:26568 | NULL               | Query   | 0    | executing | show processlist |
+| 7  | ztm  | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep   | 59   |           | NULL             |
++----+------+-----------------------+--------------------+---------+------+-----------+------------------+
 
 2 rows in set (0.00 sec)
 
 mysql > show processlist;
 
-| Id | User | Host | db | Command | Time | State | Info |
-
-| 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |
-
-| 7 | ztm | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep | 60 | | NULL |
-
++----+------+-----------------------+--------------------+---------+------+-----------+------------------+
+| Id | User | Host                  | db                 | Command | Time | State     | Info             |
++----+------+-----------------------+--------------------+---------+------+-----------+------------------+
+| 9  | root | 192.168.220.211:26568 | NULL               | Query   | 0    | executing | show processlist |
+| 7  | ztm  | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep   | 60   |           | NULL             |
++----+------+-----------------------+--------------------+---------+------+-----------+------------------+
 2 rows in set (0.00 sec)
 
 mysql > show processlist;
 
-| Id | User | Host | db | Command | Time | State | Info |
-
-| 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |
-
++----+------+-----------------------+------+---------+------+-----------+------------------+
+| Id | User | Host                  | db   | Command | Time | State     | Info             |
++----+------+-----------------------+------+---------+------+-----------+------------------+
+| 9  | root | 192.168.220.211:26568 | NULL | Query   | 0    | executing | show processlist |
++----+------+-----------------------+------+---------+------+-----------+------------------+
 1 row in set (0.00 sec)
+```
 
 此时前端连接会话超时输入SQL会提示已断开连接，并尝试重连，最终重连成功：
 
+```
 msyql> show databases;
 
-| DATABASE |
-
++--------------------+
+| DATABASE           |
++--------------------+
 | INFORMATION_SCHEMA |
-
++--------------------+
 1 row in set (0.00 sec)
 
 mysql> show databases;
-
 ERROR 2013 (HY000): Lost connection to MySQL server during query
-
 ERROR 2006 (HY000): MySQL server has gone away
-
 No connection. Trying to reconnect...
-
 Connection id: 10
-
 Current database: INFORMATION_SCHEMA
+```
 
 如果设置成0，则前端空闲连接永不超时，sleep状态的连接Time时间会一直增加。
 
@@ -7479,6 +7575,7 @@ Current database: INFORMATION_SCHEMA
 
 将joinable设置为false，在该环境下执行语句，报错ERROR 1064 (HY000): joinable is not configured.
 
+```
 mysql> select * from join_cross_a_jwy a inner join join_cross_b_jwy b on a.adnid between 108 and 110;
 
 ERROR 1064 (HY000): joinable is not configured.
@@ -7486,20 +7583,22 @@ ERROR 1064 (HY000): joinable is not configured.
 mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept limit 5;
 
 ERROR 1064 (HY000): joinable is not configured.
+```
 
 将joinable设置为true，在该环境下执行语句:
 
+```
 mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept limit 5;
 
++-------+
 | adept |
-
-| aa |
-
-| bb |
-
-| cc |
-
++-------+
+| aa    |
+| bb    |
+| cc    |
++-------+
 3 rows in set (0.03 sec)
+```
 
 #### joinBatchSize
 
@@ -7520,19 +7619,23 @@ mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept lim
 
 跨库有交叉结果集的JOIN等值查询，批量转成IN查询的每批次的最大值，需查询的行数超过设置的值会分多次转成IN。该参数属于JOIN查询优化参数，可以提升JOIN查询速度。例如：
 
-<property name=[joinBatchSize](#joinBatchSize)>3</property><!---JOIN等值查询时每批量转成IN查询的记录数 -->
+```xml
+<property name="joinBatchSize">3</property><!---JOIN等值查询时每批量转成IN查询的记录数 -->
+```
 
 此时执行：
 
+```
 mysql> select b.* from customer_auto_1 a join customer_auto_3 b on a.id=b.id where a.postcode=123456;
+```
 
 查看general_log实际执行效果如下：
 
+```
 1993 Query SELECT B.`ID`, B.`name`, B.`telephone`, B.`provinceid`, B.`province`, B.`city`, B.`address`, B.`postcode`, B.`birthday`, b.id AS `hotdb_tmp_col_alias_1` FROM customer_auto_3 AS b WHERE B.ID IN **(4064622, 4068449, 4071461)**
-
 1993 Query SELECT B.`ID`, B.`name`, B.`telephone`, B.`provinceid`, B.`province`, B.`city`, B.`address`, B.`postcode`, B.`birthday`, b.id AS `hotdb_tmp_col_alia s_1` FROM customer_auto_3 AS b WHERE B.ID IN **(4043006, 4053408, 4056542)**
-
 ...省略更多...
+```
 
 注意：参数值仅作举例说明，不做实际参考。
 
@@ -7557,19 +7660,18 @@ JOIN操作可使用的直接内存大小，可影响大中间结果集的JOIN的
 
 当JOIN使用的直接内存超过设置值时，将会被临时存放到本地磁盘, JOIN语句执行完后临时文件自动删除。
 
+```
 root> pwd
 
 /usr/local/hotdb-2.4.9/hotdb-server/HotDB-TEMP
-
 You have mail in /var/spool/mail/root
 
 root> ll
 
 -rw-r--r-- 1 root root 8778410 May 9 17:28 positions_5302007528422328273.tmp
-
 -rw-r--r-- 1 root root 141868981 May 9 17:28 row_411809270296834018.tmp
-
 -rw-r--r-- 1 root root 26113612 May 9 18:01 row_4342139033645193593.tmp
+```
 
 #### joinLoopSize
 
@@ -7590,19 +7692,23 @@ root> ll
 
 使用BNL算法执行JOIN时各节点每批次下发查询的数量。该参数属于JOIN查询优化参数，可提升JOIN查询速度。
 
-<property name=[joinLoopSize](#joinLoopSize)>1000</property><!-- 使用BNL算法做JOIN时各节点每批次查询数量 -->
+```xml
+<property name="joinLoopSize">1000</property><!-- 使用BNL算法做JOIN时各节点每批次查询数量 -->
+```
 
 例如： joinLoopSize设置为1000。bn_a_jwy为auto分片表，分片字段为id，bn_b_jwy为match分片表，分片字段为a，bn_c_jwy为auto分片表，分片字段为a，三张表的数据量都为2w。
 
+```
 mysql> select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 9000;
+```
 
 查看实际general_log执行效果：
 
+```
 1187022 Query SELECT A.id, A.a, A.bchar, A.cdeci, A.dtime FROM bn_a_jwy AS a ORDER BY A.ID LIMIT 1001
-
 1187022 Query SELECT C.id, C.a, C.bchar, C.cdeci, C.dtime FROM bn_c_jwy AS c WHERE C.id IN (0) ORDER BY C.ID LIMIT 0 , 1001
-
 1187022 Query SELECT B.id, B.a, B.bchar, B.cdeci, B.dtime FROM bn_b_jwy AS b WHERE B.a COLLATE utf8_general_ci IN ('d') ORDER BY B.ID LIMIT 0 , 1001 ...省略更多...
+```
 
 #### keyStore
 
@@ -7619,7 +7725,9 @@ mysql> select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 900
 
 **参数设置：**
 
-<property name=[keyStore](#keyStore)>/server.jks</property><!-- 指定用于TLS连接的数据证书.jks文件的路径 -->
+```xml
+<property name="keyStore">/server.jks</property><!-- 指定用于TLS连接的数据证书.jks文件的路径 -->
+```
 
 **参数作用：**
 
@@ -7640,7 +7748,9 @@ mysql> select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 900
 
 **参数设置：**
 
-<property name=[keyStorePass](#keyStorePass)>BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- 指定用于TLS连接的数据证书.jks文件的密码 -->
+```xml
+<property name="keyStorePass">BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- 指定用于TLS连接的数据证书.jks文件的密码 -->
+```
 
 **参数作用：**
 
@@ -7665,7 +7775,9 @@ mysql> select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 900
 
 lockWaitTimeout此参数指获取元数据锁的超时时间(s)，允许值1-31536000s，默认值31536000s，即365天，代表发生元数据锁超时超过365天，则客户端提示锁超时。
 
-<property name=[lockWaitTimeout](#lockWaitTimeout)>31536000</property> <!-- 元数据锁超时时间 -->
+```xml
+<property name="lockWaitTimeout">31536000</property> <!-- 元数据锁超时时间 -->
+```
 
 session A执行：
 
@@ -7694,11 +7806,11 @@ session B执行：等待超过lockWaitTimeout设置参数值，则给出如下�
 
 启动时，主存储节点在首次初始化失败后，会一直重连；若存在备存储节点且超过主存储节点初始化超时时间，则会切换到可用的备存储节点，若该节点所有存储节点都初始化失败，则整个节点不可用。如果数据节点初始化失败且无可用逻辑库，或数据节点下无存储节点，则计算节点无法启动。
 
+```
 2018-05-28 18:07:29.719 [WARN] [INIT] [main] r(-1) -- failed in connecting datasource:[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8], exception:...省略...
-
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the sever.
-
 2018-05-28 18:07:31.719 [INFO] [INIT] [main] b(-1) -- try reinit datasource:[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8]
+```
 
 引起存储节点超时的原因有：超出系统或者数据库连接限制、存储节点用户密码认证失败、网络延迟过大等。
 
@@ -7721,15 +7833,21 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 
 控制前端连接发送的包大小。默认64M，当发送SQL语句的大小超过默认值64M时，计算节点会给出提示（Get a packet bigger than 'max_allowed_packet'）。
 
+```
 ERROR 1153 (HY000): Get a packet bigger than 'max allowed packet'
+```
 
 同时，show variables能够显示配置的值。
 
+```
 mysql> show variables like '%allowed%;
 
-| variable_name | value |
-
++--------------------+----------+
+| variable_name      | value    |
++--------------------+----------+
 | max_allowed_packet | 16777216 |
++--------------------+----------+
+```
 
 #### maxConnections & maxUserConnections
 
@@ -7767,23 +7885,27 @@ maxUserConnections是同一个账号能够同时连接到计算节点的最大�
 
 当连接数大于所设置的值时，创建前端连接会有如下提示:
 
+```
 root> mysql -uzy -pzy -h127.0.0.1 -P9993
 
 Warning: Using a password on the command line interface can be insecure.
-
 ERROR 1040 (HY000): too many connections
+```
 
 可以通过在服务端口set修改maxConnections和maxUserConnections的值，参数为GLOBAL级别：
 
+```
 mysql> set global max_connections = 5000;
 
 Query OK, 0 rows affected (0.00 sec)
 
 mysql> show variables like '%max_connections%;
 
-| variable_name | value |
-
-| max_connections | 5000 |
++-----------------+-------+
+| variable_name   | value |
++-----------------+-------+
+| max_connections | 5000  |
++-----------------+-------+
 
 mysql> set global max_user_connections = 1000;
 
@@ -7791,9 +7913,12 @@ Query OK, 0 rows affected (0.00 sec)
 
 mysql> show variables like '%max_user_connections%;
 
-| variable_name | value |
-
-| max_user_connections | 1000 |
++----------------------+-------+
+| variable_name        | value |
++----------------------+-------+
+| max_user_connections | 1000  |
++----------------------+-------+
+```
 
 #### maxIdleTransactionTimeout
 
@@ -7812,7 +7937,9 @@ mysql> show variables like '%max_user_connections%;
 
 **参数设置：**
 
-<property name=[maxIdleTransactionTimeout](#maxIdleTransactionTimeout)>864000000</property>
+```xml
+<property name="maxIdleTransactionTimeout">864000000</property>
+```
 
 maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示事务内最后一次SQL完成后超过24小时未提交事务，则判定为超时事务，HotDB在hotdb.log中以[INFO] [WATCHDOG] WatchDogLongTransactionCheckHandler标签记录连接IP、端口、用户名、逻辑库、lastsql、是否autocommit、后端连接的innodb_trx等信息，并关闭连接，自动回滚事务。
 
@@ -7820,7 +7947,9 @@ maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示
 
 例如，事务空闲时间超出设定的阈值，将关闭连接，此时查看日志：
 
+```
 2019-07-01 18:09:24.528 [INFO] [WATCHDOG] [$NIOREACTOR-20-RW] cn.hotpu.hotdb.mysql.nio.handler.WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-13,id=1,user=ztm,host=127.0.0.1,port=3323,localport=46138,schema=PM] has not been queryed for 593s. executed IUDs:[UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. binded connection:[MySQLConnection [node=2, id=59, threadId=14921, state=borrowed, closed=false, autocommit=false, host=10.10.0.202, port=3307, database=db_test251, localPort=52736, isClose:false, toBeClose:false] lastSQL:SET autocommit=0;UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. innodb_trx:[(ds:2 trx_id:3435056156 trx_state:RUNNING trx_started:2019-07-01 17:59:33 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:3 trx_mysql_thread_id:14921 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:2 trx_lock_memory_bytes:1136 trx_rows_locked:1 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now.
+```
 
 参数设置为0时，代表永不超时，即对事务提交时间不做限制。
 
@@ -7845,33 +7974,39 @@ JOIN中间结果集允许执行的最大行数。中间结果集的计算方法�
 
 当JOIN中间结果集大于设置的行数时，会提示如下信息：
 
+```
 mysql> select * from customer_auto_1 a join customer_auto_3 b on a.postcode=b.postcode;
 
 ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml
+```
 
 可通过set session max_join_size修改当前会话参数值，使JOIN中间结果集在1\~ 2124000000之间：
 
+```
 mysql> show variables like '%max_join_size%;
 
++---------------+-------+
 | variable_name | value |
++---------------+-------+
+| max_join_size | 5000  |
++---------------+-------+
 
-| max_join_size | 5000 |
-
-mysql> set session max_join_size=1;
-
-//为方便测试，此处将参数设置为1，生产环境推荐最小值为1000
+mysql> set session max_join_size=1; # 为方便测试，此处将参数设置为1，生产环境推荐最小值为1000
 
 Query OK, 0 rows affected (0.00 sec)
 
 mysql> show variables like '%max_user_connections%;
 
-| variable_name | value |
-
-| max_user_connections | 1 |
++----------------------+-------+
+| variable_name        | value |
++----------------------+-------+
+| max_user_connections | 1     |
++----------------------+-------+
 
 mysql> select * from bn_a_jwy a join bn_c_jwy b on a.a=b.a where a.a='d';
 
 ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml
+```
 
 #### maxLatencyForRWSplit
 
@@ -7892,39 +8027,37 @@ ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check
 
 开启读写分离后，主从延迟小于设置的延迟时间时，读从库:
 
+```
 mysql> select * from cd;
 
-| id | name |
-
-| 1 | slave |
-
-| 2 | slave |
-
-| 3 | slave |
-
-| 4 | slave |
-
-| 5 | slave |
-
++----+-------+
+| id | name  |
++----+-------+
+| 1  | slave |
+| 2  | slave |
+| 3  | slave |
+| 4  | slave |
+| 5  | slave |
++----+-------+
 5 rows in set (0.00 sec)
+```
 
 开启读写分离后，当可读从库的延迟超过设置的时间后，会读主库:
 
+```
 mysql> select * from cd;
 
-| id | name |
-
-| 1 | master |
-
-| 2 | master |
-
-| 3 | master |
-
-| 4 | master |
-
-| 5 | master |
-
++----+--------+
+| id | name   |
++----+--------+
+| 1  | master |
+| 2  | master |
+| 3  | master |
+| 4  | master |
+| 5  | master |
++----+--------+
 5 rows in set (0.00 sec)
+```
 
 #### maxNotInSubquery
 
@@ -7943,49 +8076,55 @@ mysql> select * from cd;
 
 server.xml中maxNotInSubquery参数配置 如下配置：
 
-<property name=[maxNotInSubquery](#maxNotInSubquery)>20000</property><!--子查询中最大not in个数 -->
+```xml
+<property name="maxNotInSubquery">20000</property><!--子查询中最大not in个数 -->
+```
 
 **参数作用：**
 
 控制子查询中最大NOT IN个数，默认20000，当执行的SQL语句中NOT IN子查询为分片表且带有聚合函数，此时去重后的NOT IN个数超过默认值20000时，HotDB会限制该SQL执行，并给出ERROR提示
 
+```
 (ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml）。
+```
 
-例如：
+例如：（为方便测试，设置maxNotInSubquery 为10）
 
-（为方便测试，设置maxNotInSubquery 为10）
-
+```
 mysql> use pm
 
 Database changed
 
 mysql> show tables;
 
-| Tables_in_PM |
-
-| customer_quan_2 |
-
++------------------+
+| Tables_in_PM     |
++------------------+
+| customer_quan_2  |
 | customer_route_1 |
-
 | customer_route_2 |
-
++------------------+
 3 rows in set (0.00 sec)
 
 mysql> select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20);
 
 ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml
+```
 
-日志中会以[INFO] [SQL]标签记录对应信息
+日志中会以`[INFO] [SQL]`标签记录对应信息
 
+```
 2019-10-08 14:33:41.725 [INFO] [SQL] [$NIOExecutor-3-2] cn.hotpu.hotdb.j.h(2626) - unsupported subquery:[thread=$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM] AutoCommitTransactionSession in [thread=$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM], sql:select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20), error code:1104, error msg:The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml
+```
 
-同时，在日志和3325端口show @@systemconfig能够查看配置的值，该参数在修改后可reload生效。
+同时，在日志和3325端口`show @@systemconfig`能够查看配置的值，该参数在修改后可reload生效。
 
+```
 mysql> show @@systemconfig;
 
 config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql):"false",[defaultMaxLimit](#defaultMaxLimit):"10000","bakPassword":"hotdb_config","bakUrl":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha","managerPort":"3325","heartbeatPeriod":"2",[cryptMandatory](#cryptMandatory):"false","password":"hotdb_config",[enableCursor](#enableCursor):"false","username":"hotdb_config",[enableXA](#enableXA):"false",[errorsPermittedInTransaction](#errorsPermittedInTransaction):"true",[strategyForRWSplit](#strategyForRWSplit):"0",[enableWatchdog](#enableWatchdog):"false","haNodeHost":"192.168.220.139:3325",[maxJoinSize](#maxJoinSize):"9148M",[maxNotInSubquery](#maxNotInSubquery):"10",[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit):"0",[clientFoundRows](#clientFoundRows):"false",[joinCacheSize](#joinCacheSize):"236","enableHeartbeat":"true","url":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha",[parkPeriod](#parkPeriod):"100000",[maxSqlRecordLength](#maxSqlRecordLength):"4000",[joinBatchSize](#joinBatchSize):"46000",[enableSubquery](#enableSubquery):"true","heartbeatTimeoutMs":"500",[pingPeriod](#pingPeriod):"300",[joinLoopSize](#joinLoopSize):"18500","VIP":"192.168.220.171",[joinable](#joinable):"true","maxUserConnections":"4900",[pingLogCleanPeriod](#pingLogCleanPeriod):"1",[dataNodeIdleCheckPeriod](#dataNodeIdleCheckPeriod):"120",[deadlockCheckPeriod](#deadlockCheckPeriod):"3000",[sqlTimeout](#sqlTimeout):"3600","bakUsername":"hotdb_config","enableLatencyCheck":"true",[waitSyncFinishAtStartup](#waitSyncFinishAtStartup):"true","checkVIPPeriod":"500",[statisticsUpdatePeriod](#statisticsUpdatePeriod):"0",[usingAIO](#usingAIO):"0",[showAllAffectedRowsInGlobalTable](#showAllAffectedRowsInGlobalTable):"false",[maxLatencyForRWSplit](#maxLatencyForRWSplit):"1000","maxConnections":"5000",[enableSleep](#enableSleep):"false",[waitForSlaveInFailover](#waitForSlaveInFailover):"true",[autoIncrement](#autoIncrement):"true",[processorExecutor](#processorExecutor):"4",[highCostSqlConcurrency](#highCostSqlConcurrency):"400","latencyCheckPeriod":"500","processors":"16",[weightForSlaveRWSplit](#weightForSlaveRWSplit):"50","haState":"master",[readOnly](#readOnly):"false",[timerExecutor](#timerExecutor):"4","serverPort":"3323",[frontWriteBlockTimeout](#frontWriteBlockTimeout):"10000",[switchoverTimeoutForTrans](#switchoverTimeoutForTrans):"3000"}
-
 1 row in set (0.01 sec)
+```
 
 #### maxReconnectConfigDBTimes
 
@@ -8006,7 +8145,9 @@ config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql)
 
 server.xml中maxReconnectConfigDBTimes参数如下配置：
 
+```xml
 <property name=" maxReconnectConfigDBTimes ">3</property><!-- 最大重试连接配置库次数 -->
+```
 
 **参数作用：**
 
@@ -8070,11 +8211,11 @@ server.xml中maxReconnectConfigDBTimes参数如下配置：
 
 ndbSqlAddr，ndbSqlUser，ndbSqlPass是配套参数，ndbSqlAddr是NDB SQL节点的物理地址，ndbSqlUser和ndbSqlPass属于连接NDB SQL节点的用户名和密码。
 
+```xml
 <property name="ndbSqlAddr">localhost:3329</property>
-
 <property name="ndbSqlUser">root</property>
-
 <property name="ndbSqlPass">root</property>
+```
 
 #### ndbSqlDataAddr
 
@@ -8093,7 +8234,9 @@ ndbSqlAddr，ndbSqlUser，ndbSqlPass是配套参数，ndbSqlAddr是NDB SQL节点
 
 NDB SQL到计算节点的连接，即计算节点所在服务器IP及NDB SQL到计算节点的通信端口，默认值为127.0.0.1:3327。
 
-property name=[ndbSqlDataAddr](#ndbSqlDataAddr)>127.0.0.1:3327</property>
+```xml
+<property name="ndbSqlDataAddr">127.0.0.1:3327</property>
+```
 
 #### ndbSqlMode
 
@@ -8112,7 +8255,9 @@ property name=[ndbSqlDataAddr](#ndbSqlDataAddr)>127.0.0.1:3327</property>
 
 none：为默认值，代表禁用NDB功能；local：NDB服务与计算节点在同一IP地址上，满足相关条件的SQL，通过NDB逻辑执行。
 
-<property name=[ndbSqlMode](#ndbSqlMode)>none</property>
+```xml
+<property name="ndbSqlMode">none</property>
+```
 
 #### ndbSqlVersion & ndbVersion
 
@@ -8140,9 +8285,10 @@ none：为默认值，代表禁用NDB功能；local：NDB服务与计算节点�
 
 ndbSqlVersion与ndbVersion是相对应的关系，具体对应关系可参考MySQL官方文档。ndbSqlVersion默认的版本为5.7.24，ndbVersion默认的版本为7.5.12。当前计算节点支持的NDB引擎版本为7.5.4及以上，使用NDB版本要求存储节点版本为5.7.16及以上。
 
+```xml
 <property name="ndbSqlVersion">5.7.24</property>
-
 <property name="ndbVersion">7.5.12</property>
+```
 
 #### operateMode
 
@@ -8161,47 +8307,34 @@ ndbSqlVersion与ndbVersion是相对应的关系，具体对应关系可参考MyS
 
 server.xml中operateMode参数配置如下：
 
-<property name=[operateMode](#operateMode)>0</property><!--计算节点工作模式，0：正常模式，1：性能模式，2：调试模式(Operating mode, 0: normal mode, 1: performance mode, 2: debug mode)-->
+```xml
+<property name="operateMode">0</property><!--计算节点工作模式，0：正常模式，1：性能模式，2：调试模式(Operating mode, 0: normal mode, 1: performance mode, 2: debug mode)-->
+```
 
 **参数作用：**
 
 控制计算节点的工作模式，0为正常模式，1为性能最大化模式，2为调试模式。正常模式下不对其他参数或功能做任何改变，性能最大化模式下会将下列参数涉及的功能强制关闭，调试模式下会将下列参数涉及的功能强制开启：
 
+```
 recordSql
-
 recordSQLSyntaxError
-
 recordCrossDNJoin
-
 recordUNION
-
 recordSubQuery
-
 recordDeadLockSQL
-
 recordLimitOffsetWithoutOrderby
-
 recordSQLKeyConflict
-
 recordSQLUnsupported
-
 recordMySQLWarnings
-
 recordMySQLErrors
-
 recordHotDBWarnings
-
 recordHotDBErrors
-
 recordDDL
-
 recordSQLIntercepted
-
 recordAuditlog
-
 recordSQLForward
-
 recordSqlAuditlog
+```
 
 计算节点工作模式为隐藏参数，默认为正常模式，即operateMode=0，在启动计算节点时会在hotdb.log内输出相应的日志信息，如下所示：
 
@@ -8215,7 +8348,9 @@ recordSqlAuditlog
 
 在性能最大化模式下，计算节点会主动将影响计算节点性能的参数强制关闭，例如：
 
+```
 recordSql=false,recordSQLSyntaxError=false,recordCrossDNJoin=false,recordUNION=false,recordSubQuery=false,recordDeadLockSQL=false,recordLimitOffsetWithoutOrderby=false,recordSQLKeyConflict=false,recordSQLUnsupported=false,recordMySQLWarnings=false,recordMySQLErrors=false,recordHotDBWarnings=false,recordHotDBErrors=false,recordDDL=false,recordSQLIntercepted=false,recordAuditlog=false,recordSQLForward=false,recordSqlAuditlog=false，即使server.xml文件中配置这些参数为true。
+```
 
 当计算节点工作模式为调试模式时，计算节点会在hotdb.log中输出相应的信息，如下所示：
 
@@ -8223,13 +8358,16 @@ recordSql=false,recordSQLSyntaxError=false,recordCrossDNJoin=false,recordUNION=f
 
 在调试模式下，计算节点会将与调试功能相关的参数强制开启，例如：
 
+```
 recordSql=true,recordSQLSyntaxError=true,recordCrossDNJoin=true,recordUNION=true,recordSubQuery=true,recordDeadLockSQL=true,recordLimitOffsetWithoutOrderby=true,recordSQLKeyConflict=true,recordSQLUnsupported=true,recordMySQLWarnings=true,recordMySQLErrors=true,recordHotDBWarnings=true,recordHotDBErrors=true,recordDDL=true,recordSQLIntercepted=true,recordAuditlog=true,recordSQLForward=true,recordSqlAuditlog=true，即使server.xml文件中配置这些参数为false。需要注意的是，调试模式下计算节点会产生较多日志文件，需要留意磁盘剩余可用空间，防止日志文件占满磁盘导致计算节点服务宕机。
+```
 
 #### parkPeriod
 
 **参数说明：**
 
-| **Property**   | **Value**                        |
+| Property   | Value                        |
+|---|---|
 | 参数值         | parkPeriod                       |
 | 是否可见       | 是                               |
 | 参数说明       | 消息系统空闲时线程休眠周期（ns） |
@@ -8243,7 +8381,9 @@ recordSql=true,recordSQLSyntaxError=true,recordCrossDNJoin=true,recordUNION=true
 
 server.xml的parkPeriod参数设置 如下图:
 
-<property name=[parkPeriod](#parkPeriod)>100000</property>
+```xml
+<property name="parkPeriod">100000</property>
+```
 
 **参数作用：**
 
@@ -8266,7 +8406,9 @@ server.xml的parkPeriod参数设置 如下图:
 
 server.xml中pingLogCleanPeriod参数配置 如下配置：
 
-<property name=[pingLogCleanPeriod](#pingLogCleanPeriod)>3</property><!--ping日志清理周期，默认3 -->
+```xml
+<property name="pingLogCleanPeriod">3</property><!--ping日志清理周期，默认3 -->
+```
 
 **参数作用：**
 
@@ -8289,7 +8431,9 @@ pingLogCleanPeriod参数默认为3，单位可选项为小时、天、月，由�
 
 server.xml中pingLogCleanPeriodUnit参数配置 如下配置：
 
-<property name=[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit)>2</property><!--ping日志清理周期单位，默认2， 0:小时，1:天，2:月 -->
+```xml
+<property name="pingLogCleanPeriodUnit">2</property><!--ping日志清理周期单位，默认2， 0:小时，1:天，2:月 -->
+```
 
 **参数作用：**
 
@@ -8312,7 +8456,9 @@ pingLogCleanPeriodUnit参数默认为2，代表ping日志清理周期的单位�
 
 server.xml中pingPeriod参数配置 如下配置：
 
-<property name=[pingPeriod](#pingPeriod)>3600</property><!--ping服务器周期，单位秒,默认3600秒,最小300秒 -->
+```xml
+<property name="pingPeriod">3600</property><!--ping服务器周期，单位秒,默认3600秒,最小300秒 -->
+```
 
 **参数作用：**
 
@@ -8321,7 +8467,6 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 在检测过程中，对于一个IP地址，程序会自动使用10个64字节的包，10个65000字节的包，这20个包，每1秒一个进行ping处理。当检测发现网络质量存在故障时，则ping的检查间隔缩短至每分钟检测一次，故障判断的标准为：
 
 - 如果同机房内：64字节的包不是全部都丢，则如果平均延迟大于1毫秒或最大延迟大于2毫秒，或者有丢包，会记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log。如果65000字节的包不是全部都丢，则如果平均延迟大于3毫秒，或最大延迟大于5毫秒，或者有丢包， 记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log表。
-
 - 如果跨机房：64字节的包不是全部都丢，则如果平均延迟大于10毫秒或最大延迟大于20毫秒，或者有丢包，会记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log。如果65000字节的包不是全部都丢，则如果平均延迟大于15毫秒，或最大延迟大于30毫秒，或者有丢包， 记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log表。
 
 #### prefetchBatchInit
@@ -8339,7 +8484,9 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-<property name=[prefetchBatchInit](#prefetchBatchInit)>100</property>
+```xml
+<property name="prefetchBatchInit">100</property>
+```
 
 **参数作用：**
 
@@ -8364,7 +8511,9 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-<property name=[prefetchBatchMax](#prefetchBatchMax)>10000</property>
+```xml
+<property name="prefetchBatchMax">10000</property>
+```
 
 **参数作用：**
 
@@ -8387,7 +8536,9 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-<property name=[prefetchBatchMin](#prefetchBatchMin)>10</property>
+```xml
+<property name="prefetchBatchMin">10</property>
+```
 
 **参数作用：**
 
@@ -8410,7 +8561,9 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-<property name=[prefetchValidTimeout](#prefetchValidTimeout)>30</property>
+```xml
+<property name="prefetchValidTimeout">30</property>
+```
 
 **参数作用：**
 
@@ -8433,7 +8586,9 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-<property name=[processorExecutor](#processorExecutor)>4</property><!-- 各处理器线程数 -->
+```xml
+<property name="processorExecutor">4</property><!-- 各处理器线程数 -->
+```
 
 **参数作用：**
 
@@ -8458,7 +8613,9 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
+```xml
 <property name="processors">8</property><!-- 处理器数 -->
+```
 
 **参数作用：**
 
@@ -8481,7 +8638,9 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数设置：**
 
-<property name=[readOnly](#readOnly)>false</property><!-- 是否为只读模式 -->
+```xml
+<property name="readOnly">false</property><!-- 是否为只读模式 -->
+```
 
 **参数作用：**
 
@@ -8512,7 +8671,9 @@ ERROR 1289 (HY000): Command not allowed in Read-Only mode.
 
 server.xml中recordAuditlog参数如下配置：
 
-<property name=[recordAuditlog](#recordAuditlog)>true</property><!-- 记录审计日志 -->
+```xml
+<property name="recordAuditlog">true</property><!-- 记录审计日志 -->
+```
 
 **参数作用：**
 
@@ -8537,7 +8698,9 @@ recordAuditlog参数用于控制是否记录管理端操作信息，开启的情
 
 server.xml中recordCrossDNJoin参数如下配置：
 
-<property name=[recordCrossDNJoin](#recordCrossDNJoin)>true</property>
+```xml
+<property name="recordCrossDNJoin">true</property>
+```
 
 **参数作用：**
 
@@ -8551,11 +8714,15 @@ borrower表auto_mod分片，分片字段id，节点2
 
 执行如下：
 
+```
 mysql> SELECT * FROM account a JOIN borrower b;
+```
 
 查看计算节点安装目录的/logs/sql.log日志。
 
+```
 2018-05-22 16:17:11.607 [INFO] [CROSSDNJOIN] [$NIOExecutor-6-2] JoinVisitor(4947) -- SELECT * FROM account a JOIN borrower b
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8576,19 +8743,24 @@ mysql> SELECT * FROM account a JOIN borrower b;
 
 server.xml中recordDDL参数如下配置：
 
-<property name=[recordDDL](#recordDDL)>true</property>
+```xml
+<property name="recordDDL">true</property>
+```
 
 **参数作用：**
 
 recordDDL日志中记录DDL语句，执行如下语句：
 
+```
 mysql> create table abc(id int);
+```
 
 查看计算节点安装目录的/logs/sql.log日志：
 
+```
 2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique}
-
 2018-05-23 14:23:52.698 [INFO] [DDL] [$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int)
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8609,17 +8781,20 @@ mysql> create table abc(id int);
 
 server.xml中recordDeadLockSQL参数如下配置：
 
-<property name=[recordDeadLockSQL](#recordDeadLockSQL)>true</property>
+```xml
+<property name="recordDeadLockSQL">true</property>
+```
 
 **参数作用：**
 
 recordDeadLockSQL日志中记录引发死锁的语句：
 
 1. 制造死锁场景
-
 2. 查看计算节点安装目录的/logs/hotdb.log日志：
 
+```
 2018-05-23 14:54:30.865 [INFO] [DEADLOCK] [$NIOREACTOR-1-RW] am(-1) -- sql: INSERT INTO table2000 VALUES (3); error response from MySQLConnection [node=4, id=277, threadId=133815, state=borrowed, close=false, autocommit=false, host=192.168.220.102, port=3309, database=db249, localPort=15332, isClose:false, toBeClose:false], err: Lock wait timeout exceeded; try restarting transaction, code: 1205
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8640,7 +8815,9 @@ recordDeadLockSQL日志中记录引发死锁的语句：
 
 server.xml中recordHotDBErrors参数如下配置：
 
-<property name=[recordHotDBErrors](#recordHotDBErrors)>true</property>
+```xml
+<property name="recordHotDBErrors">true</property>
+```
 
 **参数作用：**
 
@@ -8648,7 +8825,9 @@ recordHotDBErrors日志中记录计算节点返回的错误信息。
 
 例：使用没有create权限的用户执行create语句，提示如下：
 
+```
 2018-06-04 10:43:07.316 [INFO] [HOTDBERROR] [$NIOExecutor-3-0] ServerConnection(155) -- sql: create table a001(id int), err: [CREATE] command denied to user 'jzl' to logic database 'TEST_JZL'
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8669,7 +8848,9 @@ recordHotDBErrors日志中记录计算节点返回的错误信息。
 
 server.xml中recordHotDBWarnings参数如下配置：
 
-<property name=[recordHotDBWarnings](#recordHotDBWarnings)>true</property>
+```xml
+<property name="recordHotDBWarnings">true</property>
+```
 
 **参数作用：**
 
@@ -8679,9 +8860,10 @@ create table abc(id int);
 
 查看计算节点安装目录的/logs/sql.log日志：
 
+```
 2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique}
-
 2018-05-23 14:23:52.698 [INFO] [DDL] [$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int)
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8702,7 +8884,9 @@ create table abc(id int);
 
 server.xml中recordLimitOffsetWithoutOrderby参数如下配置：
 
-<property name=[recordLimitOffsetWithoutOrderby](#recordLimitOffsetWithoutOrderby)>true</property>
+```xml
+<property name="recordLimitOffsetWithoutOrderby">true</property>
+```
 
 **参数作用：**
 
@@ -8710,15 +8894,16 @@ recordLimitOffsetWithoutOrderby记录无orderby的limit语句。
 
 举例如下：
 
+```
 mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ) limit 1,3;
+```
 
 查看计算节点安装目录的/logs/sql.log日志
 
+```
 2018-05-23 14:05:14.915 [INFO] [LIMITOFFSETWITHOUTORDERBY] [$NIOExecutor-6-l] SubqueryExecutor(97) - sql: select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3
-
-2018-05-23 14:05:14.922 [INFO] [LIMITOFFSETWITHOUTORDERBY] [$NIOExecutor-2-3] BaseSession(97) - sql: SELECT A.`Balance`, A.`Branch_name`, A.`Account_number`, A.`account_date` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776
-
-F6f64'), NULL) LIMIT 1 , 3
+2018-05-23 14:05:14.922 [INFO] [LIMITOFFSETWITHOUTORDERBY] [$NIOExecutor-2-3] BaseSession(97) - sql: SELECT A.`Balance`, A.`Branch_name`, A.`Account_number`, A.`account_date` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776F6f64'), NULL) LIMIT 1 , 3
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8739,7 +8924,9 @@ F6f64'), NULL) LIMIT 1 , 3
 
 server.xml中recordMySQLErrors参数如下配置：
 
-<property name=[recordMySQLErrors](#recordMySQLErrors)>true</property>
+```xml
+<property name="recordMySQLErrors">true</property>
+```
 
 **参数作用：**
 
@@ -8747,11 +8934,15 @@ recordMySQLErrors记录MySQL返回的错误信息。
 
 举例如下：
 
-msyql> select form;
+```
+mysql> select form;
+```
 
 查看计算节点安装目录的/logs/hotdb.log日志：
 
+```
 2018-05-23 14:38:55.843 [INFO] [MYSQLERROR] [$NIOREACTOR-7-RW] MySQLConnection(56) -- sql: select form, error response from MySQLConnection [node=4, id=223, threadId=118551, state=borrowed, close=false, autocommit=true, host=192.168.220.103, port=3309, database=db249, localPort=27007, isClose:false, toBeClose:false], err: Unknown column 'form' in 'field list', code: 1054
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8772,7 +8963,9 @@ msyql> select form;
 
 server.xml中recordMySQLWarnings参数如下配置：
 
-<property name=[recordMySQLWarnings](#recordMySQLWarnings)>true</property>
+```xml
+<property name="recordMySQLWarnings">true</property>
+```
 
 **参数作用：**
 
@@ -8780,18 +8973,18 @@ recordMySQLWarnings记录MySQL返回的警告信息。
 
 举例如下：
 
+```
 mysql> update account set Account_number="$!\''##";
+```
 
 查看计算节点安装目录的/logs/sql.log日志：
 
+```
 2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!\\''##', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
-
 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!\\''##', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
-
 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!\\''##', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
-
 2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!\\''##', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
-
+```
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordSql
@@ -8809,7 +9002,9 @@ mysql> update account set Account_number="$!\''##";
 
 **参数设置：**
 
-<property name=[recordSql](#recordSql)>false</property><!---是否统计SQL执行情况，是：true，否：false
+```xml
+<property name="recordSql">false</property><!---是否统计SQL执行情况，是：true，否：false
+```
 
 **参数作用：**
 
@@ -8827,81 +9022,48 @@ mysql> update account set Account_number="$!\''##";
 
 2.通过server配置库查看SQL执行统计情况
 
+```
 mysql> select * from hotdb_query_records order by db_id limit 1\G
 
 ******************************1. row***************************
 
 id: 2
-
 db_id: 1
-
 type: SELECT
-
 query: SELECT COUNT(*) FROM union b
-
 total_hotdb_time: 67934
-
 total_mysql_time: 52105
-
 hms1: 0
-
 hms10: 1
-
 hms300: 1
-
 hs1: 0
-
 hs3: 0
-
 hs10: 0
-
 hs60: 0
-
 hs600: 0
-
 hs600p: 0
-
 mmsl: 0
-
 mms10: 1
-
 mms300: 1
-
 ms1: 0
-
 ms3: 0
-
 ms10: 0
-
 ms60: 0
-
 ms600: 0
-
 ms600p: 0
-
 htime24: 67934
-
 htime48: 67934
-
 mtime24: 52105
-
 mtime48: 52105
-
 hcount24: 2
-
 hcount48: 2
-
 mcount24: 2
-
 mcount48: 2
-
 return_rows: 2
-
 last update time: 2018-05-29 11:04:31.000000
-
 crc: 321944166562
-
 1 row in set (0.00 sec)
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8922,7 +9084,9 @@ crc: 321944166562
 
 server.xml的recordSqlAuditlog参数默认false：
 
-<property name=[recordSqlAuditlog](#recordSqlAuditlog)>false</property>
+```xml
+<property name="recordSqlAuditlog">false</property>
+```
 
 **参数作用：**
 
@@ -8930,39 +9094,27 @@ server.xml的recordSqlAuditlog参数默认false：
 
 如：计算节点服务端执行DDL，查看日志输出
 
+```
 {"affected_rows":"0","command":"CREATE TABLE `t_sharding_01` (\n`id` int(10) NOT NULL AUTO_INCREMENT,\n`name` varchar(50) NOT NULL,\n`age` int(3),\nPRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4","connection_id":"44","end_time":"2020-04-27 14:58:34.769","failed_reason":"","host":"127.0.0.1","ip":"127.0.0.1","log_id":"9524067900080128","logic_db":"CXD_DB","matched_rows":"0","port":"3323","query_rows":"0","sql_subtype":"CREATE","sql_type":"DDL","status":"1","time":"2020-04-27 14:58:34.736","user":"cxd@%"}
+```
 
 注：日志输出为json格式，特殊字符如双引号采用\进行转义，json中部分key代表的含义如下：
 
-sql_type：当前执行SQL的类型，包括：DDL/DML/DQL/OTHER。
-
-sql_subtype：当前执行SQL类型的子类,其中 DDL包括CREARE/ALTER/DROP/TUNCATE/RENAME；DQL包括SELECT；DML包括UPDATE/DELETE/INSERT/REPLACE/LOAD；OTHER包括SET/PREPARE/TRANSACTION/SHOW。
-
-ip：执行SQL的客户端IP地址。
-
-time：执行SQL的时间。
-
-user：连接计算节点执行SQL的用户（包括主机名）。
-
-host：连接计算节点所指定的host值。
-
-logic_db：连接计算节点执行SQL所use 的逻辑库。
-
-connection_id：执行SQL所使用的前端连接ID。
-
-command：具体执行SQL的语句（SQL原语句）。
-
-query_rows：返回的数据行数（主要体现在SELECT操作上）。
-
-affected_rows：SQL执行受影响的行数。
-
-matched_rows：SQL执行匹配的行数。
-
-status:SQL执行结果是成功还是失败，失败为0 ，成功为1。
-
-failed_reason：SQL执行失败的原因。
-
-end_time：SQL执行结束时间。
+- `sql_type` - 当前执行SQL的类型，包括：DDL/DML/DQL/OTHER。
+- `sql_subtype` - 当前执行SQL类型的子类,其中 DDL包括CREARE/ALTER/DROP/TUNCATE/RENAME；DQL包括SELECT；DML包括UPDATE/DELETE/INSERT/REPLACE/LOAD；OTHER包括SET/PREPARE/TRANSACTION/SHOW。
+- `ip` - 执行SQL的客户端IP地址。
+- `time` - 执行SQL的时间。
+- `user` - 连接计算节点执行SQL的用户（包括主机名）。
+- `host` - 连接计算节点所指定的host值。
+- `logic_db` - 连接计算节点执行SQL所use 的逻辑库。
+- `connection_id` - 执行SQL所使用的前端连接ID。
+- `command` - 具体执行SQL的语句（SQL原语句）。
+- `query_rows` - 返回的数据行数（主要体现在SELECT操作上）。
+- `affected_rows` - SQL执行受影响的行数。
+- `matched_rows` - SQL执行匹配的行数。
+- `status` - SQL执行结果是成功还是失败，失败为0 ，成功为1。
+- `failed_reason` - SQL执行失败的原因。
+- `end_time` - SQL执行结束时间。
 
 #### recordSQLIntercepted
 
@@ -8981,7 +9133,9 @@ end_time：SQL执行结束时间。
 
 server.xml中recordSQLIntercepted参数如下配置：
 
-<property name=[recordSQLIntercepted](#recordSQLIntercepted)>true</property>
+```xml
+<property name="recordSQLIntercepted">true</property>
+```
 
 **参数作用：**
 
@@ -8989,7 +9143,9 @@ recordSQLIntercepted记录被拦截的SQL语句，拦截的语句配置在中间
 
 查看计算节点安装目录的/logs/sql.log日志：
 
+```
 2018-06-01 14:17:45.669 [INFO] [SQLINTERCEPTED] [$NIOExecutor-1-2] g(-1) -- sql: DELETE FROM sql_intercept_tab, user:zy, ip: 192.168.200.45, db: TEST_JZL, intercepted by filewall: not allowed to execute delete without where expression
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9010,7 +9166,9 @@ recordSQLIntercepted记录被拦截的SQL语句，拦截的语句配置在中间
 
 server.xml中recordSQLKeyConflict参数如下配置：
 
-<property name=[recordSQLKeyConflict](#recordSQLKeyConflict)>true</property>
+```xml
+<property name="recordSQLKeyConflict">true</property>
+```
 
 **参数作用：**
 
@@ -9020,19 +9178,27 @@ recordSQLKeyConflict记录主键冲突、违反外键约束的语句。
 
 建表：
 
+```
 mysql> CREATE TABLE `vtab001` (`id` int(11) NOT NULL,`name` varchar(255) DEFAULT NULL,PRIMARY KEY (`id`));
+```
 
 执行一次插入语句：
 
+```
 mysql> insert into vtab001 values(1,'aaa');
+```
 
 再次执行使之违反主键约束：
 
+```
 mysql> insert into vtab001 values(1,'aaa');
+```
 
 查看计算节点安装目录的/logs/sql.log日志：
 
+```
 2018-06-01 14:09:47.139 [INFO] [SQLKEYCONFLICT] [$NIOREACTOR-1-RW] MySQLConnection(65) -- sql: insert into vtab001 values(1,'aaa'), error response from MySQLConnection [node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false], err: Duplicate entry '1' for key 'PRIMARY', CODE: 1062
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9053,7 +9219,9 @@ mysql> insert into vtab001 values(1,'aaa');
 
 server.xml中recordSQLSyntaxError参数如下配置：
 
-<property name=[recordSQLSyntaxError](#recordSQLSyntaxError)>true</property>
+```xml
+<property name="recordSQLSyntaxError">true</property>
+```
 
 **参数作用：**
 
@@ -9065,7 +9233,9 @@ mysql> SELECT * FROM;
 
 查看计算节点安装目录的/logs/sql.log日志：
 
+```
 2018-05-22 16:12:42.686 [INFO] [SQLSYNTAXERROR] [$NIOExecutor-6-3] ServerConnection(671) - SELECT * FROM
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9086,7 +9256,9 @@ mysql> SELECT * FROM;
 
 server.xml中recordSQLUnsupported参数如下配置：
 
-<property name=[recordSQLUnsupported](#recordSQLUnsupported)>true</property>
+```xml
+<property name="recordSQLUnsupported">true</property>
+```
 
 **参数作用：**
 
@@ -9094,13 +9266,23 @@ recordSQLUnsupported记录不支持的语句。
 
 例如：
 
-建表：mysql> CREATE TABLE `vtab001` (`id` int(11) NOT NULL,`name` varchar(255) DEFAULT NULL,PRIMARY KEY (`id`));
+建表：
 
-执行HotDB暂不支持的语句: mysql> select * into vtab001_bak from vtab001;
+```
+mysql> CREATE TABLE `vtab001` (`id` int(11) NOT NULL,`name` varchar(255) DEFAULT NULL,PRIMARY KEY (`id`));
+```
 
-查看计算节点安装目录的/logs/sql.log日志：
+执行HotDB暂不支持的语句：
 
+```
+mysql> select * into vtab001_bak from vtab001;
+```
+
+查看计算节点安装目录的`/logs/sql.log`日志：
+
+```
 2018-05-22 14:19:54.395 [INFO] [SQLUNSUPPORTED] [$NIOExecutor-6-2] ServerConnection(110) -- sql: select * into vtab001_bak from vtab001
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9121,7 +9303,9 @@ recordSQLUnsupported记录不支持的语句。
 
 server.xml中recordSubQuery参数如下配置：
 
-<property name=[recordSubQuery](#recordSubQuery)>true</property>
+```xml
+<property name="recordSubQuery">true</property>
+```
 
 **参数作用：**
 
@@ -9129,11 +9313,15 @@ recordSubQuery记录子查询。
 
 例如：
 
+```
 mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b );
+```
 
 查看计算节点安装目录的/logs/sql.log日志：
 
+```
 2018-05-23 13:56:11.714 [INFO] [SUBQUERY] [$NIOExecutor-6-0] SubqueryExecutor(169) -- select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b )
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9154,7 +9342,9 @@ mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM 
 
 server.xml中recordUNION参数如下配置：
 
-<property name=[recordUNION](#recordUNION)>true</property>
+```xml
+<property name="recordUNION">true</property>
+```
 
 **参数作用：**
 
@@ -9162,11 +9352,15 @@ recordUNION记录UNION语句。
 
 例如：
 
+```
 mysql> SELECT * FROM trends UNION SELECT * from trends_uint;
+```
 
 查看计算节点安装目录的/logs/sql.log日志：
 
+```
 2018-05-23 13:30:27.156 [INFO] [UNION] [$NIOREACTOR-5-RW] UnionExecutor(162) - SELECT * FROM trends UNION SELECT * from trends_uint
+```
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9187,7 +9381,9 @@ mysql> SELECT * FROM trends UNION SELECT * from trends_uint;
 
 server.xml中routeByRelativeCol参数如下配置：
 
-<property name=[routeByRelativeCol](#routeByRelativeCol)>false</property><!--不包含分片字段时通过辅助索引字段路由-->
+```xml
+<property name="routeByRelativeCol">false</property><!--不包含分片字段时通过辅助索引字段路由-->
+```
 
 **参数作用：**
 
@@ -9210,7 +9406,9 @@ server.xml中routeByRelativeCol参数如下配置：
 
 server.xml中serverId参数如下配置：
 
-<property name=[serverId](#serverId)>1</property><!-- 集群节点编号1-N（节点数)，集群内唯一 -->
+```xml
+<property name="serverId">1</property><!-- 集群节点编号1-N（节点数)，集群内唯一 -->
+```
 
 **参数作用：**
 
@@ -9263,6 +9461,7 @@ showAllAffectedRowsInGlobalTable参数设置为true后，全局表执行insert,d
 
 例如：全局表join_c06_ct关联8个节点，执行该条SQL语句实际数据更新1条，将该参数设置为true时，结果将显示影响到的行数为8（即：更新行数*影响节点数）。
 
+```
 mysql> delete from join_us06_ct where id = 8;
 
 Query OK, 8 rows affected (0.01 sec)
@@ -9270,13 +9469,11 @@ Query OK, 8 rows affected (0.01 sec)
 mysql> update join_us06_ct set e = 'y' where id =7;
 
 Query OK, 8 rows affected (0.04 sec)
-
 Rows matched: 8 Changed: 8 Warnings: 0
 
 mysql> insert into join_us06_ct values (8,6,1.3,1.4,'y','u',now(),now(),2017);
 
 Query OK, 8 rows affected (0.01 sec)
-
 Records: 8 Duplicates: 0 Warnings: 0
 
 将该参数设置为false时，只显示影响的行数，有如下提示:
@@ -9284,14 +9481,15 @@ Records: 8 Duplicates: 0 Warnings: 0
 mysql> update join_us06_ct set e = 'm' where id =4;
 
 Query OK, 1 rows affected (0.10 sec)
-
 Rows matched: 1 Changed: 1 Warnings: 0
+```
 
 #### skipDatatypeCheck
 
 **参数说明：**
 
-| **Property**   | **Value**                              |
+| Property   | Value                              |
+|---|---|
 | 参数值         | skipDatatypeCheck                      |
 | 是否可见       | 否                                     |
 | 参数说明       | 控制是否跳过表结构中对列数据类型的校验 |
@@ -9303,7 +9501,9 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 server.xml中skipDatatypeCheck参数
 
-<property name=[skipDatatypeCheck](#skipDatatypeCheck)>true</property>
+```xml
+<property name="skipDatatypeCheck">true</property>
+```
 
 **参数作用：**
 
@@ -9311,19 +9511,25 @@ server.xml中skipDatatypeCheck参数
 
 例如：
 
+```
 mysql> alter table skipDatatypeCheck add(phone double(10,3));
+```
 
 skipDatatypeCheck=false:
 
+```
 mysql> alter table skipDatatypeCheck add(phone double(10,3));
 
 ERROR 1064 (HY000): Column type:'DOUBLE' is forbidden, you could change column:'PHONE' to type 'DECIMAL'
+```
 
 skipDatatypeCheck=true:
 
+```
 mysql> alter table skipDatatypeCheck add(phone double(10,3));
 
 Query OK, 0 rows affected (0.23 sec)
+```
 
 #### socketBacklog
 
@@ -9342,7 +9548,9 @@ Query OK, 0 rows affected (0.23 sec)
 
 **参数设置：**
 
-<property name=[socketBacklog](#socketBacklog)>1000</property><!-- 服务端Socket backlog（单位个） -->
+```xml
+<property name="socketBacklog">1000</property><!-- 服务端Socket backlog（单位个） -->
+```
 
 **参数作用：**
 
@@ -9352,7 +9560,8 @@ Query OK, 0 rows affected (0.23 sec)
 
 **参数说明：**
 
-| **Property**   | **Value**             |
+| Property   | Value             |
+|---|---|
 | 参数值         | sqlTimeout            |
 | 是否可见       | 是                    |
 | 参数说明       | sql执行超时时间（秒） |
@@ -9368,9 +9577,11 @@ Query OK, 0 rows affected (0.23 sec)
 
 SQL执行时间超过设置时间时，会有如下提示：
 
+```
 mysql> select a.*,b.*,c.* from customer_auto_3 a join customer_auto_1 b on a.postcode=b.postcode join customer_auto_2 c on a.provinceid=c.provinceid where c.provinceid in (12,15) and b.province !='anhui' group by a.postcode order by a.birthday,a.provinceid,b.birthday,c.postcode limit 1000;
 
 ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a new transaction started automatically
+```
 
 | Property | Value |
 | --- | --- |
@@ -9398,7 +9609,9 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 >
 > server.xml中sslUseSM4参数如下配置：
 
-<property name=[sslUseSM4](#sslUseSM4)>true</property><!--是否支持国密算法 -->
+```xml
+<property name="sslUseSM4">true</property><!--是否支持国密算法 -->
+```
 
 > **参数作用：**
 
@@ -9413,7 +9626,8 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 **参数说明：**
 
-| **Property**   | **Value**                      |
+| Property   | Value                      |
+|---|---|
 | 参数值         | statisticsUpdatePeriod         |
 | 是否可见       | 是                             |
 | 参数说明       | 命令统计持久化周期，单位：毫秒 |
@@ -9431,6 +9645,7 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 在客户端执行SQL语句，会把相关命令统计在配置库中。当设置为0时，则不统计到配置库。
 
+```
 mysql> use test_ct
 
 Database changed
@@ -9438,6 +9653,7 @@ Database changed
 mysql> select * from tid;
 
 Empty set (0.03 sec)
+```
 
 ![](assets/standard/image155.png)
 
@@ -9458,104 +9674,95 @@ Empty set (0.03 sec)
 
 参数设置为0时，代表不开启读写分离，全部读主机。
 
+```
 mysql> select * from ss order by id;
 
-| id | a |
-
-| 1 | master |
-
-| 2 | master |
-
-| 3 | master |
-
-| 4 | master |
-
-| 5 | master |
-
++----+--------+
+| id | a      |
++----+--------+
+| 1  | master |
+| 2  | master |
+| 3  | master |
+| 4  | master |
+| 5  | master |
++----+--------+
 5 rows in set (0.00 sec)
+```
 
 参数设置为1时，代表可分离的读请求发往所有可用存储节点，根据设置的从机读比例，读取从机或主机。
 
+```
 mysql> select * from ss;
 
-| id | a |
-
-| 1 | master |
-
-| 2 | master |
-
-| 3 | master |
-
-| 4 | slave |
-
-| 5 | slave |
-
++----+--------+
+| id | a      |
++----+--------+
+| 1  | master |
+| 2  | master |
+| 3  | master |
+| 4  | slave  |
+| 5  | slave  |
++----+--------+
 5 rows in set (0.00 sec)
+```
 
 参数设置为2时，代表可分离的读请求发往可用备存储节点，事务外的读请求全部发往备存储节点，事务内的读请求发往主存储节点。
 
 - 事务外：
 
+```
 mysql> select * from ss;
 
-| id | a |
-
-| 1 | slave |
-
-| 2 | slave |
-
-| 3 | slave |
-
-| 4 | slave |
-
-| 5 | slave |
-
++----+-------+
+| id | a     |
++----+-------+
+| 1  | slave |
+| 2  | slave |
+| 3  | slave |
+| 4  | slave |
+| 5  | slave |
++----+-------+
 5 rows in set (0.00 sec)
+```
 
 - 事务内：
 
+```
 mysql> select * from ss order by id;
 
-| id | a |
-
-| 1 | master |
-
-| 2 | master |
-
-| 3 | master |
-
-| 4 | master |
-
-| 5 | master |
-
++----+—-------+
+| id | a      |
++----+—-------+
+| 1  | master |
+| 2  | master |
+| 3  | master |
+| 4  | master |
+| 5  | master |
++----+—-------+
 5 rows in set (0.00 sec)
+```
 
 参数设置为3时，代表事务中发生写前的读请求发往可用备存储节点。事务外的读请求发往可用备存储节点。
 
+```
 mysql> begin
 
 Query OK, 0 row affected (0.00 sec)
 
 mysql> select * from ss;
 
-| id | a |
-
-| 4 | slave |
-
-| 5 | slave |
-
++--------+-------+
+| id     | a     |
++--------+-------+
+| 4      | slave |
+| 5      | slave |
 | 600004 | write |
-
 | 600007 | write |
-
 | 600013 | write |
-
-| 1 | slave |
-
-| 2 | slave |
-
-| 3 | slave |
-
+| 1      | slave |
+| 2      | slave |
+| 3      | slave |
++--------+-------+
 8 rows in set (0.00 sec)
 
 mysql> insert into ss values(null,'write');
@@ -9564,27 +9771,21 @@ Query OK, 0 row affected (0.01 sec)
 
 mysql> select * from ss;
 
-| id | a |
-
-| 1 | master |
-
-| 2 | master |
-
-| 3 | master |
-
-| 600014 | write |
-
-| 4 | master |
-
-| 5 | master |
-
-| 600004 | write |
-
-| 600007 | write |
-
-| 600013 | write |
-
++--------+--------+
+| id     | a      |
++--------+--------+
+| 1      | master |
+| 2      | master |
+| 3      | master |
+| 600014 | write  |
+| 4      | master |
+| 5      | master |
+| 600004 | write  |
+| 600007 | write  |
+| 600013 | write  |
++--------+--------+
 9 rows in set (0.00 sec)
+```
 
 详细使用方法请参考[读写分离](#高可用服务-1)。
 
@@ -9603,13 +9804,14 @@ mysql> select * from ss;
 
 **参数设置：**
 
-<property name=[switchByLogInFailover](#switchByLogInFailover)>false</property><!-- 故障切换时根据Read_Master_Log_Pos选择切换优先级 -->
+```xml
+<property name="switchByLogInFailover">false</property><!-- 故障切换时根据Read_Master_Log_Pos选择切换优先级 -->
+```
 
 **参数作用：**
 
-True状态：故障切换优先通过从库同步速度来确定切换的优先级，具体由Master_Log_File和Read_Master_Log_Pos位置决定，优先取同步速度最快的切换，若所有从机Read_Master_Log_Pos位置相同，则再根据设置的优先级匹配。
-
-False状态：根据用户的故障切换规则进行切换。
+- True状态：故障切换优先通过从库同步速度来确定切换的优先级，具体由Master_Log_File和Read_Master_Log_Pos位置决定，优先取同步速度最快的切换，若所有从机Read_Master_Log_Pos位置相同，则再根据设置的优先级匹配。
+- False状态：根据用户的故障切换规则进行切换。
 
 注：手动切换操作不受该参数控制。
 
@@ -9632,7 +9834,9 @@ False状态：根据用户的故障切换规则进行切换。
 
 server.xml的switchoverTimeoutForTrans参数设置 如下图:
 
-<property name=[switchoverTimeoutForTrans](#switchoverTimeoutForTrans)>3000</property>
+```xml
+<property name="switchoverTimeoutForTrans">3000</property>
+```
 
 **参数作用：**
 
@@ -9646,6 +9850,7 @@ server.xml的switchoverTimeoutForTrans参数设置 如下图:
 
 2.开启事务执行插入操作，手动执行主备切换，在36000ms内提交事务。提交成功如下：
 
+```
 mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
@@ -9660,16 +9865,19 @@ Query OK, 0 rows affected (0.00 sec)
 
 mysql> select * from TEST_001;
 
++----+
 | id |
-
-| 1 |
-
++----+
+| 1  |
++----+
 1 row in set (0.01 sec)
+```
 
 提交事务后查询到id=1
 
 3.开启事务执行插入操作，手动执行主备切换，超过36000 ms事务未提交，由于提交超时，事务回滚如下：
 
+```
 mysql> begin;
 
 Query OK, 0 rows affected (0.00 sec)
@@ -9677,30 +9885,32 @@ Query OK, 0 rows affected (0.00 sec)
 mysql> insert into TEST_001 values(2);
 
 Query OK, 0 rows affected (0.00 sec)
+```
 
 一分钟后执行查询语句：
 
+```
 mysql> select * from TEST_001;
 
 ERROR 2013 (HY000): Lost connection to MySQL server during query
-
 ERROR 2016 (HY000): MySQL server has gone away
-
 No connection. Trying to reconnect...
-
 Connection id: 40672
-
 Current database: test_jzl
+```
 
 重新登录后查询，发现事务没有提交：
 
+```
 mysql> select * from TEST_001;
 
++----+
 | id |
-
-| 1 |
-
++----+
+| 1  |
++----+
 1 row in set (0.01 sec)
+```
 
 #### timerExecutor
 
@@ -9719,7 +9929,9 @@ mysql> select * from TEST_001;
 
 **参数设置：**
 
-<property name=[timerExecutor](#timerExecutor)>4</property><!-- 定时器线程数 -->
+```xml
+<property name="timerExecutor">4</property><!-- 定时器线程数 -->
+```
 
 **参数作用：**
 
@@ -9742,15 +9954,21 @@ mysql> select * from TEST_001;
 
 timestampProxy参数为0时，代表自动模式，当计算节点检测到存储节点时间差异大于0.5秒时，自动全局代理时间函数。小于0.5秒时，只代理全局表、高精度时间戳和跨节点语句的时间函数。
 
-<property name=[timestampProxy](#timestampProxy)>0</property>
+```xml
+<property name="timestampProxy">0</property>
+```
 
 参数设置为1时，代表global_table_only，仅全局表模式，计算节点仅代理全局表的时间函数。
 
-<property name=[timestampProxy](#timestampProxy)>1</property>
+```xml
+<property name="timestampProxy">1</property>
+```
 
 参数设置为2时，代表all，全局模式，计算节点全局代理时间函数。
 
-<property name=[timestampProxy](#timestampProxy)>2</property>
+```xml
+<property name="timestampProxy">2</property>
+```
 
 **参数作用：**
 
@@ -9791,16 +10009,15 @@ timestampProxy参数为0时，代表自动模式，当计算节点检测到存�
 
 url,username,password属于配套参数，url是存储计算节点配置信息的配置库路径，username,password属于连接该物理库的用户名密码，该配置库用于存储配置信息。
 
+```xml
 <property name="url">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- 主配置库地址 -->
-
 <property name="username">hotdb_config</property><!-- 主配置库用户名 -->
-
 <property name="password">hotdb_config</property><!-- 主配置库密码 -->
-
-<property
+```
 
 该用户名和密码需要在MySQL实例中创建，并赋予权限方可登录该配置库。用户名和密码均可自定义。
 
+```
 mysql> grant select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload,lock tables,replication slave,replication client on *.* to 'hotdb_config'@'%';
 
 Query OK, 0 row affected (0.00 sec)
@@ -9808,28 +10025,22 @@ Query OK, 0 row affected (0.00 sec)
 root> mysql -uhotdb_config_9 -photdb_config_9 -h127.0.0.1 -P3306
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-
 Welcome to the MySQL monitor. Commands end with ; or \g.
-
 Your MySQL connection id is 16323
-
 Server version: 5.7.19-HotDB-2.5.2 HotDB Server by Hotpu Tech
-
 Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
-
 Oracle is a registered trademark of Oracle Corporation and/or its
-
 affiliates. Other names may be trademarks of their respective
-
 owners.
-
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+```
 
 当启动计算节点，没有配置库高可用且配置库无法连接时，计算节点会间隔3秒重连，直到最终重试超过30分钟仍无法连接，则中断启动：
 
+```
 The last packet set successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-
 2018-06-12 15:25:56.789 [ERROR] [INIT] [main] HotdbConfig(275) -- no available config datasources. retry in 3 seconds.
+```
 
 #### usingAIO
 
@@ -9846,7 +10057,9 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 
 **参数设置：**
 
-<property name=[usingAIO](#usingAIO)>0</property><!-- 是否使用AIO，是：1，否：0 -->
+```xml
+<property name="usingAIO">0</property><!-- 是否使用AIO，是：1，否：0 -->
+```
 
 当参数为0时，计算节点使用的是NIO，标记AIO与NIO互斥。
 
@@ -9856,11 +10069,12 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 
 AIO：异步非阻塞，服务器实现模式为一个有效请求创建一个线程，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处理，IO方式适用于连接数目多且连接比较长（重操作）的架构。由于目前Linux上AIO的实现尚未完成，计算节点对AIO的优化也远远不如NIO，建议不要开启这个参数**。**
 
+```
 root> tail -n 300 hotdb.log | grep 'aio'
 
 2018-06-01 13:51:18.961 [INFO] [INIT] [main] j(-1) -- using aio network handler
-
 2018-06-01 13:52:19.644 [INFO] [INIT] [main] j(-1) -- using aio network handler
+```
 
 #### version
 
@@ -9879,37 +10093,34 @@ root> tail -n 300 hotdb.log | grep 'aio'
 
 计算节点对外显示的版本号，可自定义修改，能指定低版本的相关连接协议。
 
-<property name=[version](#version)>**5.6.1**</property><!-- 版本号 -->
+```xml
+<property name="version">**5.6.1**</property><!-- 版本号 -->
+```
 
 登陆MySQL 实例时可查看相应版本号：
 
+```
 root> mysql -uct -pct -h127.0.0.1 -P2473
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-
 Welcome to the MySQL monitor. Commands end with ; or \g.
-
 Your MySQL connection id is 30
-
 Server version: **5.6.1**-HotDB-2.4.7 HotDB Server by Hotpu Tech
-
 Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.
-
 Oracle is a registered trademark of Oracle Corporation and/or its
-
 affiliates. Other names may be trademarks of their respective
-
 owners.
-
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
-| VERSION() |
-
-| **5.6.1**-HotDB-2.4.7 |
-
++-----------------------+
+| VERSION()             |
++-----------------------+
+| 5.6.1-HotDB-2.4.7     |
++-----------------------+
 1 row in set (0.03 sec)
+```
 
 注：当没有配置此参数时：所有存储节点的最低版本号低于或等于计算节点支持的最高版本号时，对外显示所有存储节点中最低的版本号；存储节点的版本号超过计算节点支持的最高版本号时，对外显示计算节点最高支持的协议版本的一个完整版本号，当前最高支持到8.0.15。当配置了此参数时，这个参数会改变对外显示的版本号。
 
@@ -9932,79 +10143,60 @@ root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
 例如：
 
-配置为空：<property name=[versionComment](#versionComment)></property>，连接计算节点：
+配置为空：`<property name="versionComment"></property>`，连接计算节点：
 
+```
 [root@hotdb]## mysql -uroot -proot -P3323 -h192.168.210.49
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-
 Welcome to the MySQL monitor. Commands end with ; or \g.
-
 Your MySQL connection id is 235
-
-**Server version: 5.7.23 HotDB-2.5.3 HotDB Server by Hotpu Tech**
-
+Server version: 5.7.23 HotDB-2.5.3 HotDB Server by Hotpu Tech
 ......
+```
 
-配置为空格： <property name=[versionComment](#versionComment)> </property>，连接计算节点：
+配置为空格：`<property name="versionComment"> </property>`，连接计算节点：
 
+```
 [root@hotdb]## mysql -uroot -proot -P3323 -h192.168.210.49
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-
 Welcome to the MySQL monitor. Commands end with ; or \g.
-
 Your MySQL connection id is 235
-
-**Server version: 5.7.23**
-
+Server version: 5.7.23
 ......
+```
 
-配置为自定义字符串： <property name=[versionComment](#versionComment)>hotpu</property>，连接计算节点：
+配置为自定义字符串：`<property name="versionComment">hotpu</property>`，连接计算节点：
 
+```
 [root@hotdb]## mysql -uroot -proot -P3323 -h192.168.210.49
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-
 Welcome to the MySQL monitor. Commands end with ; or \g.
-
 Your MySQL connection id is 235
-
-**Server version: 5.7.23 hotpu**
-
+Server version: 5.7.23 hotpu
 ......
+```
 
 注：连接后的status结果及客户端连接计算节点时的提示信息均会同步按照版本备注信息显示。例如：
 
-......
-
+```
 root@192.168.210.49:(none) 5.7.23 08:41:42> status;
-
 --------------
-
 mysql Ver 14.14 Distrib 5.7.21, for linux-glibc2.12 (x86_64) using EditLine wrapper
-
 Connection id: 444
-
 Current database:
-
 Current user: root@192.168.210.49
-
 SSL: Not in use
-
 Current pager: stdout
-
 Using outfile: ''
-
 Using delimiter: ;
-
-**Server version: 5.7.23 hotpu**
-
+Server version: 5.7.23 hotpu
 Protocol version: 10
-
 Connection: 192.168.210.49 via TCP/IP
-
 ......
+```
 
 #### VIP & checkVIPPeriod
 
@@ -10036,21 +10228,24 @@ VIP与checkVIPPeriod属于配套参数，VIP设置为Keepalived虚拟IP，checkV
 
 server.xml的VIP参数设置为Keepalived的虚拟IP，CheckVIPPeriod为检测周期，单位ms
 
+```xml
 <property name="VIP">192.168.220.106</property><!-- 虚拟IP(不填或格式不为IPv4表示此选项为空) -->
-
 <property name="checkVIPPeriod">500</property><!-- 虚拟IP检测周期(如VIP有效，检测VIP周期，单位ms) -->
+```
 
 查看Keepalived的配置脚本：
 
+```bash
 cat /etc/keepalived/keepalived.conf
+```
 
 确定对应IP：
 
+```
 virtual_ipaddress {
-
-**192.168.220.106/24** dev bond0 label bond0:1
-
+  192.168.220.106/24 dev bond0 label bond0:1
 }
+```
 
 **参数作用：**
 
@@ -10058,47 +10253,34 @@ virtual_ipaddress {
 
 主计算节点：
 
+```
 2019-12-19 15:08:49.595 [INFO] [EXIT[ FLOW]] [ShutdownHook] cn.hotpu.hotdb.c(691) - begin to exit...
-
 2019-12-19 15:08:49.596 [WARN] [CONNECTION] [ShutdownHook] cn.hotpu.hotdb.net.t(175) - HotDB SocketChannel close due to:System exit
-
 2019-12-19 15:08:49.597 [WARN] [CONNECTION] [ShutdownHook] cn.hotpu.hotdb.net.t(175) - HotDB SocketChannel close due to:System exit
-
 2019-12-19 15:08:49.598 [WARN] [CONNECTION] [ShutdownHook] cn.hotpu.hotdb.net.q(349) - processor close due to:System exit
-
 2019-12-19 15:08:49.598 [WARN] [CONNECTION] [ShutdownHook] cn.hotpu.hotdb.net.q(349) - processor close due to:System exit
-
 2019-12-19 15:08:49.599 [WARN] [CONNECTION] [ShutdownHook] cn.hotpu.hotdb.net.q(349) - processor close due to:System exit
+```
 
 备计算节点：
 
+```
 2019-12-19 15:09:02.911 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.c(2165) - MANAGER online end
-
 2019-12-19 15:09:02.911 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.c(2134) - VIP online start
-
 2019-12-19 15:09:02.911 [INFO] [TIMER] [Labor-2] cn.hotpu.hotdb.c(2148) - CheckVIP timer execute online...
-
 2019-12-19 15:09:03.142 [INFO] [INIT] [$I-NIOREACTOR-1-RW] cn.hotpu.hotdb.c(3594) - persist sequence at abnormal starting server.
-
 2019-12-19 15:09:03.143 [INFO] [INIT] [Labor-7] cn.hotpu.hotdb.c(1300) - start xa recover in starter
-
 2019-12-19 15:09:03.150 [INFO] [INIT] [$I-NIOREACTOR-1-RW] cn.hotpu.hotdb.g.c.a.a.g(205) - wait datanodes synchronizing to recover XA transactions.
-
 2019-12-19 15:09:03.207 [INFO] [INIT] [$NIOREACTOR-6-RW] cn.hotpu.hotdb.g.c.a.a.k(130) - no xa recover result
-
 2019-12-19 15:09:03.249 [INFO] [INIT] [$NIOREACTOR-1-RW] cn.hotpu.hotdb.c(1442) - persist XID at abnormal starting server.
-
 2019-12-19 15:09:03.257 [INFO] [MANAGER] [Labor-7] cn.hotpu.hotdb.a(5360) - Some sharding table have unique key, and the unique key don't contain rule column, you can turn on global unique key according to the actual.
-
 2019-12-19 15:09:03.340 [INFO] [INIT] [Labor-7] cn.hotpu.hotdb.c(1808) - HotDB-Server listening on 3323
-
 2019-12-19 15:09:03.340 [INFO] [INIT] [Labor-7] cn.hotpu.hotdb.c(1809) - ===============================================
-
 2019-12-19 15:09:03.350 [INFO] [WATCHDOG] [Labor-7] cn.hotpu.hotdb.f(197) - Watchdog started.
-
-2019-12-19 15:09:03.712 [INFO] [TIMER] [Labor-2] cn.hotpu.hotdb.c(2150) - CheckVIP timer finish online.
+209-12-19 15:09:03.712 [INFO] [TIMER] [Labor-2] cn.hotpu.hotdb.c(2150) - CheckVIP timer finish online.
 
 2019-12-19 15:09:03.713 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.c(2165) - VIP online end
+```
 
 #### waitConfigSyncFinish
 
@@ -10115,7 +10297,9 @@ virtual_ipaddress {
 
 **参数设置：**
 
-<property name=[waitConfigSyncFinish](#waitConfigSyncFinish)>true</property><!-- 启动时是否等待配置库同步追上 -->
+```xml
+<property name="waitConfigSyncFinish">true</property><!-- 启动时是否等待配置库同步追上 -->
+```
 
 **参数作用：**
 
@@ -10125,27 +10309,24 @@ virtual_ipaddress {
 
 关闭状态：启动时若连上主配置库，则若当前配置库存在延迟的情况下也直接继续启动：
 
+```
 2018-06-01 16:21:14.958 [INFO] [INIT] [main] j(-1) - reading config...
-
-2018-06-01 16:21:15.170 [info] [INIT] [main] a(-1) - using config datasource in start up:[id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8]
-
-2018-06-01 16:21:15.518 [info] [INIT] [main] a(-1) - master config datasource [id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8] connect success.
-
-2018-06-01 16:21:16.892 [info] [INIT] [main] j(-1) - ===============================================
-
-2018-06-01 16:21:16.893 [info] [INIT] [main] j(-1) - HotDB-2.4.9 is ready to startup ...
-
-2018-06-01 16:21:16.894 [info] [INIT] [main] j(-1) - Sysconfig params:SystemConfig [ frontwriteQueueSize=2048, serverPort=9993, managerPort=999S, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferchunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://l27.0.0.l:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://l27.0.0.l:3306/botdb_config_249, usingAIO=0, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=1, heartbeatTimeoutMs=100, joinable=true, joincachesize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,viP=nul1,checkVIPPeriod=l600]
-
-2018-06-01 16:21:17.210 [info] [INIT] [main] BufferPool(-1) - total buffer:163840000,every chunk bytes:16384,chunk number:10000,every threadLocalMaxNumber:10000
-
+2018-06-01 16:21:15.170 [INFO] [INIT] [main] a(-1) - using config datasource in start up:[id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8]
+2018-06-01 16:21:15.518 [INFO] [INIT] [main] a(-1) - master config datasource [id:-1,nodeId:-1 l27.0.0.l:3306/hotdb_config_249 status:l,charset:utf8] connect success.
+2018-06-01 16:21:16.892 [INFO] [INIT] [main] j(-1) - ===============================================
+2018-06-01 16:21:16.893 [INFO] [INIT] [main] j(-1) - HotDB-2.4.9 is ready to startup ...
+2018-06-01 16:21:16.894 [INFO] [INIT] [main] j(-1) - Sysconfig params:SystemConfig [ frontwriteQueueSize=2048, serverPort=9993, managerPort=999S, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferchunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://l27.0.0.l:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://l27.0.0.l:3306/botdb_config_249, usingAIO=0, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=1, heartbeatTimeoutMs=100, joinable=true, joincachesize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,viP=nul1,checkVIPPeriod=l600]
+2018-06-01 16:21:17.210 [INFO] [INIT] [main] BufferPool(-1) - total buffer:163840000,every chunk bytes:16384,chunk number:10000,every threadLocalMaxNumber:10000
 2018-06-01 16:21:17.216 [INFO] [INIT] [main] j(-1) - usinq aio network handler
+```
 
 开启的状态下：
 
 需要等到复制同步后才继续启动：
 
+```
 2018-07-12 14:28:52.019 [INFO] [INIT] [$NIOREACTOR-9-RW] XAInitRecoverHandler(125) -- wait for config datasource synchronizing...
+```
 
 #### waitForSlaveInFailover
 
@@ -10162,7 +10343,9 @@ virtual_ipaddress {
 
 **参数设置：**
 
-<property name=[waitForSlaveInFailover](#waitForSlaveInFailover)>true</property><!---高可用切换是否等待从机追上复制
+```xml
+<property name="waitForSlaveInFailover">true</property><!---高可用切换是否等待从机追上复制
+```
 
 **参数作用：**
 
@@ -10172,31 +10355,34 @@ virtual_ipaddress {
 
 当从机存在复制延迟时，无法切换到从机上, 计算节点会一直检测，等到复制追平才能进行切换：
 
+```
 mysql> show @@latency;
 
-| dn | info | | latency |
-
-| 4 | 192.168.200.51:3310/phy248 | 192.168.200.51:3310/phy248 | 0 ms |
-
-| 5 | 192.168.200.51:3311/phy248 | 192.168.200.51:3311/phy248 | 0 ms |
-
-| 6 | 192.168.200.51:3312/phy248 | 192.168.200.51:3312/phy248 | 19582 ms |
-
-| 7 | 192.168.200.51:3313/phy248 | 192.168.200.51:3313/phy248 | 0 ms |
-
++----+----------------------------+----------------------------+----------+
+| dn | info                       |                            | latency  |
++----+----------------------------+----------------------------+----------+
+| 4  | 192.168.200.51:3310/phy248 | 192.168.200.51:3310/phy248 | 0 ms     |
+| 5  | 192.168.200.51:3311/phy248 | 192.168.200.51:3311/phy248 | 0 ms     |
+| 6  | 192.168.200.51:3312/phy248 | 192.168.200.51:3312/phy248 | 19582 ms |
+| 7  | 192.168.200.51:3313/phy248 | 192.168.200.51:3313/phy248 | 0 ms     |
++----+----------------------------+----------------------------+----------+
 4 rows in set (0.02 sec)
+```
 
 日志能够看到提示不再用故障的主存储节点，并且不会启用没有复制同步追上的存储节点：
 
+```
 2018-06-08 10:36:47.921 [INFO] [FAILOVER] [Labor-1552] j(-1) - slave_sql_running is Yes in :[id:178,nodeId:6 192.168.200.52:3312/phy248 status:1,charset:utf8] during failover of datanode 6
-
 2018-06-0810:36:48.982 [INFO] [FAILOVER] [Labor-1552] j(-1) - masterLogFile:mysql-bin.000518,readMasterLogFile:mysql-bin.000518,readMasterLogPos:384545127,execMaster LogPos:384512435,relayLogFiTe:mysql-relay-bin.000002,relayLogPos; 248414,secondBehindMaster:19,execLogchanged:true in slave：MySQLConnection [node=6, id=140, threadId=3 15945, state=borrowed, closed=false, autocommit=true, host=192.168.200.52, port=3312, database=phy248, localPort=64694, isClose:false, toBeclose:false]
+```
 
 关闭状态：
 
 当主从存储节点存在复制延迟时，可以直接切换到从机，不再等待复制追上：
 
+```
 2018-06-08 16:19:22.864 [INFO] [FAILOVER] [Labor-1852] bh(-1) -- switch datasource:6 for datanode:6 successfully by Manager.
+```
 
 特殊说明： 在计算节点版本高于2.5.6 （包含）调整了master_delay对切换的影响，waitForSlaveInFailover参数（高可用切换是否等待从机追上复制）开启，当切换时检测到有master_delay的延时设置，会自动在追复制前取消，切换成功后恢复延时复制的设置。若取消master_delay后的复制延迟仍大于10s，则不允许切换，master_delay也会恢复之前设置的值。
 
@@ -10215,7 +10401,9 @@ mysql> show @@latency;
 
 **参数设置：**
 
-<property name=[waitSyncFinishAtStartup](#waitSyncFinishAtStartup)>true</property><!-- 启动时是否等待主存储节点同步追上 -->
+```xml
+<property name="waitSyncFinishAtStartup">true</property><!-- 启动时是否等待主存储节点同步追上 -->
+```
 
 **参数作用：**
 
@@ -10227,11 +10415,11 @@ mysql> show @@latency;
 
 开启开关：启动计算节点时，等待存储节点主从复制追平，从而保证存储节点数据一致且为最新：
 
+```
 2018-06-01 17:15:12.990 [info] [INIT] [$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos:4668659,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false]
-
 2018-06-01 17:15:12.990 [info] [INIT] [$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4669275,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=50, threadId=l7084, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=20329, isClose:false, toBeClose:false]
-
 2018-06-01 17:15:12.990 [info] [INIT] [$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4670199,execMasterLogPos: 4557471,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2122521,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false]
+```
 
 关闭开关：无其他异常，可以直接初始化存储节点
 
@@ -10254,7 +10442,9 @@ mysql> show @@latency;
 
 server.xml的weightForSlaveRWSplit参数设置为50：
 
-<property name=[weightForSlaveRWSplit](#weightForSlaveRWSplit)>50</property>
+```xml
+<property name="weightForSlaveRWSplit">50</property>
+```
 
 **参数作用：**
 
@@ -10264,33 +10454,37 @@ weightForSlaveRWSplit和strategyForRWSplit参数属于配套参数，读写分�
 
 一主多从情况下，例如一主双从，主的读取比例50%，从机A读取比例25%，从机B读取比例25%。
 
-例如：主库标识：name= Master
+例如：
 
+主库标识：name=Master
+
+```
 mysql> select * from vrab001;
 
-| id | name |
++----+--------+
+| id | name   |
++----+--------+
+| 1  | Master |
+| 2  | Master |
+| 3  | Master |
+| 4  | Master |
++----+--------+
+```
 
-| 1 | Master |
+备库标识：name=Slave
 
-| 2 | Master |
-
-| 3 | Master |
-
-| 4 | Master |
-
-备库标识：name= Slave
-
+```
 mysql> select * from vrab001;
 
-| id | name |
-
-| 1 | slave |
-
-| 2 | slave |
-
-| 3 | slave |
-
-| 4 | slave |
++----+-------+
+| id | name  |
++----+-------+
+| 1  | slave |
+| 2  | slave |
+| 3  | slave |
+| 4  | slave |
++----+-------+
+```
 
 多次执行select查询操作，主从各读50%。
 
@@ -10310,25 +10504,23 @@ mysql> select * from vrab001;
 
 若开启了日志记录相关参数仍无法找到该日志类型的记录，例如，开启参数recordDDL却无法查看DDL相关的记录，可检查HotDB Server安装目录/conf目录下的log4j2.xml下，与"特殊SQL记录在另外一个文件"的相关代码中是否有对应日志类型。
 
+```xml
 <!-- 特殊SQL记录在另外一个文件 -->
-
 <filters>
-
 <MarkerFilter marker="DDL" onMatch="**ACCEPT**" onMismatch="NEUTRAL"></MarkerFilter>
-
 </filters>
+```
 
 以及"不在hotdb.log中记录特殊SQL"的相关代码中不存在对应日志类型：
 
+```xml
 <!-- 不在hotdb.log中记录特殊SQL -->
-
 <filters>
-
 <MarkerFilter marker="DDL" onMatch="**DENY**" onMismatch="NEUTRAL"></MarkerFilter>
-
 </filters>
+```
 
-Marker所有类型(All Markers):AUTHORITY, BUFFER, CONNECTION, DEADLOCK, EXIT, FAILOVER, HEARTBEAT, HOLD, INIT, INNER, JOIN, MANAGER, ONLINEDDL, RELATIVE, RESPONSE, ROUTE, SQL, SQLSYNTAXERROR, CROSSDNJOIN, UNION, SUBQUERY, MYSQLWARNING, MYSQLERROR, HOTDBWARNING, HOTDBERROR, LIMITOFFSETWITHOUTORDERBY, SQLKEYCONFLICT, SQLUNSUPPORTED, DDL, SQLINTERCEPTED, TIMER, TRANSFER, WATCHDOG。
+Marker所有类型(All Markers)：AUTHORITY, BUFFER, CONNECTION, DEADLOCK, EXIT, FAILOVER, HEARTBEAT, HOLD, INIT, INNER, JOIN, MANAGER, ONLINEDDL, RELATIVE, RESPONSE, ROUTE, SQL, SQLSYNTAXERROR, CROSSDNJOIN, UNION, SUBQUERY, MYSQLWARNING, MYSQLERROR, HOTDBWARNING, HOTDBERROR, LIMITOFFSETWITHOUTORDERBY, SQLKEYCONFLICT, SQLUNSUPPORTED, DDL, SQLINTERCEPTED, TIMER, TRANSFER, WATCHDOG。
 
 #### 数据库设计的保留字段
 
