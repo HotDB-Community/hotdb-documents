@@ -49,7 +49,7 @@ customer info: hotdb.com
 
 * `file` - 授权文件名
 * `serial number` - 授权文件序列号
-* type - 授权类型，示例：OFFICIAL（正式版）、TRAIL（试用版）
+* `type` - 授权类型，示例：OFFICIAL（正式版）、TRAIL（试用版）
 * `num of available compute node cluster groups` - 可用计算节点集群组数，为0表示不做任何限制
 * `num of compute nodes available in each cluster` - 每组集群可用的计算节点个数，为0表示不做任何限制
 * `module limit` - 模块限制，默认为0

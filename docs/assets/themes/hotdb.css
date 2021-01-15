@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono|Source+Sans+Pro:300,400,600");
-:root{
+:root {
   --theme-color: #3390FF;
   --code-color: #00c1de;
 }
@@ -623,26 +623,26 @@ section.cover blockquote > p > a:hover {
   font-weight: 600
 }
 .markdown-section h1 {
-  font-size: 2rem;
+  font-size: 2rem !important; /*标题大小强制一致*/
   margin: 0 0 1rem
 }
 .markdown-section h2 {
-  font-size: 1.75rem;
+  font-size: 1.75rem !important; /*标题大小强制一致*/
   margin: 45px 0 .8rem
 }
 .markdown-section h3 {
-  font-size: 1.5rem;
+  font-size: 1.5rem !important; /*标题大小强制一致*/
   margin: 40px 0 .6rem
 }
 .markdown-section h4 {
-  font-size: 1.25rem
+  font-size: 1.25rem !important; /*标题大小强制一致*/
 }
 .markdown-section h5 {
-  font-size: 1rem
+  font-size: 1rem !important; /*标题大小强制一致*/
 }
 .markdown-section h6 {
+  font-size: 1rem !important; /*标题大小强制一致*/
   color: #777;
-  font-size: 1rem
 }
 .markdown-section figure, .markdown-section p {
   margin: 1.2em 0
