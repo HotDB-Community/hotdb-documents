@@ -46,7 +46,7 @@
   * [X] `docs/zh/latest/hardware-config-recommendation.md`
 * `hotdb-server`
   * [ ] `docs/zh/latest/standard.md` D
-  * [ ] `docs/zh/latest/management-port-command.md` D
+  * [X] `docs/zh/latest/management-port-command.md` D
 * `hotdb-management`
   * [X] `docs/zh/latest/hotdm-management.md`
   * [X] `docs/zh/latest/intelligent-inspection.md` L C
