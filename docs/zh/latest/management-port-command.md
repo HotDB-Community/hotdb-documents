@@ -1967,8 +1967,11 @@ Empty set (0.01 sec)
 ```
 mysql> check @@history_unique;
 
-| db_name | tb_name | messege |
-| DB1 | test1 | duplicate data in unique constraint: ID1:[2] |
++---------+---------+----------------------------------------------+
+| db_name | tb_name | messege                                      |
++---------+---------+----------------------------------------------+
+| DB1     | test1   | duplicate data in unique constraint: ID1:[2] |
++---------+---------+----------------------------------------------+
 ```
 
 若存在大量不一致，长度超过2048个字符，则会提示下载文件查看：
@@ -1976,7 +1979,9 @@ mysql> check @@history_unique;
 ```
 mysql> check @@history_unique;
 
++---------+-------+-------------------------------------------------------------------------------------------------------------------+
 | ZJJ_DB1 | UCON1 | duplicate data in unique constraint, for more information,please download: ZJJ_DB1_UCON1_duplicates_1561353006576 |
++---------+-------+-------------------------------------------------------------------------------------------------------------------+
 ```
 
 2. 指定表名：检测指定表的唯一约束键历史数据是否唯一，例如：
@@ -1998,10 +2003,13 @@ unique @@create [db_name.tb_name];
 ```
 mysql> unique @@create;
 
-| db_name | tb_name | result | messege |
-| HOTDB_SERVER_253 | ORDERFORM | fail | global_unique is turned off |
-| HOTDB_SERVER_253 | CLIENT | success | |
-| HOTDB_SERVER_253 | KEEVEY01 | success | |
++------------------+-----------+---------+-----------------------------+
+| db_name          | tb_name   | result  | messege                     |
++------------------+-----------+---------+-----------------------------+
+| HOTDB_SERVER_253 | ORDERFORM | fail    | global_unique is turned off |
+| HOTDB_SERVER_253 | CLIENT    | success |                             |
+| HOTDB_SERVER_253 | KEEVEY01  | success |                             |
++------------------+-----------+---------+-----------------------------+
 ```
 
 - 若辅助索引创建成功，则result结果为success；
@@ -2030,12 +2038,39 @@ unique @@drop [db_name.tb_name];
 ```
 mysql> unique @@drop HOTDB_SERVER_253.beyond1,HOTDB_SERVER_253.test1,HOTDB_SERVER_253.keevey01;
 
-| db_name | tb_name | result | messege |
-| HOTDB_SERVER_253 | BEYOND1 | success | |
-| HOTDB_SERVER_253 | KEEVEY01 | success | |
-| HOTDB_SERVER_253 | TEST1 | success | |
++------------------+----------+---------+---------+
+| db_name          | tb_name  | result  | messege |
++------------------+----------+---------+---------+
+| HOTDB_SERVER_253 | BEYOND1  | success |         |
+| HOTDB_SERVER_253 | KEEVEY01 | success |         |
+| HOTDB_SERVER_253 | TEST1    | success |         |
++------------------+----------+-------------------+
 ```
 
 - 若辅助索引删除成功，则result结果为success；
 - 若辅助索引删除失败，则result结果为fail，并显示error信息。
 
+#### `unique @@valid` - 检测全局唯一表索引表是否创建
+
+该命令用于检测全局唯一表索引表是否创建，语法：
+
+```sql
+unique @@valid [db_name.tb_name];
+```
+
+例如：
+
+```
+mysql> unique @@valid zjj_db1.ll1,zjj_db1.kk1;
+
++---------+---------+--------+
+| db_name | tb_name | result |
++---------+---------+--------+
+| ZJJ_DB1 | LL1     | 0      |
+| ZJJ_DB1 | KK1     | 1      |
++---------+---------+--------+                    
+```
+
+若全局唯一表索引表已创建，则result结果为1；
+
+若全局唯一表索引表未创建，则result结果为0。此时建议手动执行`unique @@create db.tb`来单独为这个表创建索引表，否则再次执行`unique @@create`语句时，会删除所有唯一约束索引表并重新初始化，此过程可能会耗费较长时间。

@@ -1,11 +1,11 @@
 <!--* README--><!--Content from: https://www.hotdb.com/server-->
 * **About**
   * [Introduce](introduce.md)<!--Content from: https://www.hotdb.com/server-->
-  * [Product White Paper](white-paper.md)<!--Content from: Distributed Transactional Database HotDB Server - V2.5.6 Product White Paper.docx-->
-  * [What's New](whats-new.md)
+  * [Product White Paper](white-paper.md)
+  <!--* [What's New](whats-new.md)-->
 * **Quick Start**
   * [Quick Start Guide](quick-start-guide.md)
-  * [Basic Operations](basic-operations.md)
+  <!--* [Basic Operations](basic-operations.md)-->
 * **Install, Deploy and Update**
   * [Install and Deploy](install-and-deploy.md)
   * [Service License](service-license.md)
