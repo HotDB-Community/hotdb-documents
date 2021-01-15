@@ -1,3 +1,5 @@
+<!--复制自：zh/latest/_sidebar.md-->
+
 <!--* README--><!--内容来自：https://www.hotdb.com/server-->
 * **开始**
   * [简介](introduce.md)<!--内容来自：https://www.hotdb.com/server-->
