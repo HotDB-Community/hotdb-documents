@@ -62,38 +62,31 @@ HotDB Server提供数据库服务自动切换功能，可有效地解决数据�
 
 计算节点是数据服务提供端，默认服务端口为3323，登录命令如下：
 
-\#mysql -uroot -proot -h127.0.0.1 -P3323
+```bash
+#mysql -uroot -proot -h127.0.0.1 -P3323
+```
 
 登陆后使用方法与使用MySQL数据库一致，例如：
 
+```
 root> mysql -uroot -proot -h127.0.0.1 -P3323
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-
-Welcome to the MySQL monitor. Commands end with ; or \\g.
-
+Welcome to the MySQL monitor. Commands end with ; or \g.
 Your MySQL connection id is 515
-
 Server version: 5.1.27-HotDB-2.5.0 HotDB Server by Hotpu Tech
-
 Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
-
-Oracle is a registered trademark of Oracle Corporation and/or its
-
-affiliates. Other names may be trademarks of their respective
-
-owners.
-
-Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql> show databases;
 
-| DATABASE |
-
++-----------------+
+| DATABASE        |
++-----------------+
 | CLASSIC_LOGICDB |
-
-| HotDB |
-
+| HotDB           |
++-----------------+
 2 rows in set (0.01 sec)
 
 mysql> use CLASSIC_LOGICDB
@@ -102,39 +95,30 @@ Database changed
 
 mysql> show tables;
 
++---------------------------+
 | Tables_in_CLASSIC_LOGICDB |
-
-| customer |
-
++---------------------------+
+| customer                  |
++---------------------------+
 1 row in set (0.03 sec)
+```
 
 应用程序连接计算节点与连接MySQL一致，只需修改应用中数据库配置文件的host、port、database、user、password信息即可。HotDB Server支持不同开发平台下的MySQL数据库驱动、连接池，比如JAVA开发平台的JDBC，c3p0、DHCP、DRUID连接池。下面是c3p0连接池的配置举例：
 
+```
 <!-- 数据库映射 -->
-
 <!-- com.mchange.v2.c3p0.ComboPooledDataSource, org.apache.commons.dbcp.BasicDataSource -->
-
-<bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-
-destroy-method="close">
-
+<bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 <property name="driverClass" value="com.mysql.jdbc.Driver" />
-
 <property name="jdbcUrl" value="jdbc:mysql://192.168.137.101:**3323**/cloth?useLocalSessionState=true" /> 其中3323端口位置要修改为计算节点服务端口
-
 <property name="user" value="root" />
-
 <property name="password" value="\$root" />
-
 <property name="initialPoolSize" value="10" />
-
 <property name="maxPoolSize" value="256" />
-
 <property name="minPoolSize" value="10" />
-
 <property name="maxIdleTime" value="1800" />
-
 <property name="maxStatements" value="1000" />
+```
 
 同时，计算节点默认管理端口为3325，在管理端口中可使用命令对当前服务进行监控与管理。若需要了解更多信息，请参考[管理端信息监控](#管理端信息监控)。
 
@@ -144,57 +128,45 @@ destroy-method="close">
 
 ![](assets/standard/image5.png)
 
-管理员用户名与密码都默认为：admin，其他用户账号由管理员创建，初始密码为service_hotdb@hotdb.com。
+管理员用户名与密码都默认为：admin，其他用户账号由管理员创建，初始密码为`service_hotdb@hotdb.com`。
 
-如果需要了解管理平台详细使用方法，请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》。
+如果需要了解管理平台详细使用方法，请参考[管理平台](hotdb-management.md)文档。
 
 ### 版本2.5.6新功能与新特性
 
 本章节将简单介绍在HotDB Server -- V2.5.6中新增、禁止或删除的功能概要，详细功能使用方法可点击超链接查看详情：
 
--   支持[计算节点服务数量在线水平扩容/缩容](#计算节点水平弹性伸缩)功能，即在线扩展计算节点实例个数；
-
--   基于MySQL复制的跨机房灾备功能支持多计算节点集群模式，详情可查看《分布式事务数据库HotDB Server【跨机房灾备】功能使用手册》。
-
--   支持直接解析识别部分[Oracle函数以及Sequence语法](#enableoraclefunction)，以减少Oracle迁移至HotDB Server时的业务代码修改量；
-
--   支持客户端连接使用SSL+[SM4国密](#sslusesm4)认证安全通道；
-
--   优化根据默认分片节点创建[全局表](#_全局表_1)的功能；
-
--   新增[operateMode](#operatemode)参数，满足一键配置不同需求场景下的参数组合，如性能最大化、调试模式等；
-
--   支持直接通过SQL语句[修改分片字段](#在线修改分片字段)（alter table ... change shard column ...）；
-
--   优化[死锁检测](#死锁检测)逻辑：发生死锁根据MySQL版本号控制是否回滚事务并新开事务；
-
--   优化[XA模式](#使用xa事务)下连接断开的日志记录，可通过日志分析是否需要重做事务；
-
--   优化[存储节点](#数据节点高可用)/[配置库](#配置库高可用)故障或手动切换后，其角色进行互换的逻辑及动态加载不改变原有主库服务的逻辑；
-
--   优化[存储节点](#数据节点高可用)/[配置库](#配置库高可用)故障或手动切换逻辑，兼容[master_delay](#waitforslaveinfailover)参数设置，防止因master_delay参数设置导致切换一直不成功的情况；
-
--   优化根据已有[分片规则建表](#已有分片规则建表)，其分片属性可以写在表定义之后；
-
--   支持使用SQL语句[创建/删除用户且为用户赋权/解权](#用户管理语句)；
-
--   支持直接使用SQL语句[创建逻辑库](#create语句)；
-
--   支持使用SQL语句创建/删除/修改 VIEW (视图)。
+- 支持[计算节点服务数量在线水平扩容/缩容](#计算节点水平弹性伸缩)功能，即在线扩展计算节点实例个数；
+- 基于MySQL复制的跨机房灾备功能支持多计算节点集群模式，详情可查看《分布式事务数据库HotDB Server【跨机房灾备】功能使用手册》。
+- 支持直接解析识别部分[Oracle函数以及Sequence语法](#enableoraclefunction)，以减少Oracle迁移至HotDB Server时的业务代码修改量；
+- 支持客户端连接使用SSL+[SM4国密](#sslusesm4)认证安全通道；
+- 优化根据默认分片节点创建[全局表](#_全局表_1)的功能；
+- 新增[operateMode](#operatemode)参数，满足一键配置不同需求场景下的参数组合，如性能最大化、调试模式等；
+- 支持直接通过SQL语句[修改分片字段](#在线修改分片字段)（alter table ... change shard column ...）；
+- 优化[死锁检测](#死锁检测)逻辑：发生死锁根据MySQL版本号控制是否回滚事务并新开事务；
+- 优化[XA模式](#使用xa事务)下连接断开的日志记录，可通过日志分析是否需要重做事务；
+- 优化[存储节点](#数据节点高可用)/[配置库](#配置库高可用)故障或手动切换后，其角色进行互换的逻辑及动态加载不改变原有主库服务的逻辑；
+- 优化[存储节点](#数据节点高可用)/[配置库](#配置库高可用)故障或手动切换逻辑，兼容[master_delay](#waitforslaveinfailover)参数设置，防止因master_delay参数设置导致切换一直不成功的情况；
+- 优化根据已有[分片规则建表](#已有分片规则建表)，其分片属性可以写在表定义之后；
+- 支持使用SQL语句[创建/删除用户且为用户赋权/解权](#用户管理语句)；
+- 支持直接使用SQL语句[创建逻辑库](#create语句)；
+- 支持使用SQL语句创建/删除/修改 VIEW (视图)。
 
 ### 版本2.5.6新计算节点参数
 
 此小节将介绍在计算节点-- V2.5.6中优化与新增的计算节点参数，列举如下：
 
 ---------------------------------------------------------------- ---------------------------------------------------- ------------ ---------------------- -----------------
-  **计算节点参数名**                                               **计算节点参数说明**                                 **默认值**   **动态加载是否生效**   **支持版本**
-  [enableOracleFunction](#enableoraclefunction)                    是否优先解析oracle函数                               false        N                      2.5.6
-  [lockWaitTimeout](#lockwaittimeout)                       获取元数据锁的超时时间（s）                          31536000     Y                      向下同步至2.5.3
-  [operateMode](#operatemode)                               计算节点工作模式                                     0            Y                      2.5.6新增
-  [maxReconnectConfigDBTimes](#maxreconnectconfigdbtimes)   最大重试连接配置库次数                               3            Y                      2.5.6
-  [sslUseSM4](#sslusesm4)                                   是否支持国密算法                                     False        Y                      向下同步至2.5.5
-  [haMode](#hamode)                                         新增了状态：4：集群模式中心机房5：集群模式灾备机房   0            N                      2.5.6
-  [crossDbXa](#crossdbxa)                                          跨逻辑库是否采用XA事务                               false        N                      2.5.5
+
+**计算节点参数名**                                               **计算节点参数说明**                                 **默认值**   **动态加载是否生效**   **支持版本**
+[enableOracleFunction](#enableoraclefunction)                    是否优先解析oracle函数                               false        N                      2.5.6
+[lockWaitTimeout](#lockwaittimeout)                       获取元数据锁的超时时间（s）                          31536000     Y                      向下同步至2.5.3
+[operateMode](#operatemode)                               计算节点工作模式                                     0            Y                      2.5.6新增
+[maxReconnectConfigDBTimes](#maxreconnectconfigdbtimes)   最大重试连接配置库次数                               3            Y                      2.5.6
+[sslUseSM4](#sslusesm4)                                   是否支持国密算法                                     False        Y                      向下同步至2.5.5
+[haMode](#hamode)                                         新增了状态：4：集群模式中心机房5：集群模式灾备机房   0            N                      2.5.6
+[crossDbXa](#crossdbxa)                                          跨逻辑库是否采用XA事务                               false        N                      2.5.5
+
 ---------------------------------------------------------------- ---------------------------------------------------- ------------ ---------------------- -----------------
 
 ## HotDB Server安装部署与升级
@@ -313,29 +285,29 @@ show databases;
 
 参数包括：
 
--   组名：输入存储节点组命名；
+- 组名：输入存储节点组命名；
 
--   连接用户：有权限访问该物理库的用户名（上节添加的[用户名](#创建mysql数据库与存储节点用户)）；
+- 连接用户：有权限访问该物理库的用户名（上节添加的[用户名](#创建mysql数据库与存储节点用户)）；
 
--   连接用户密码：有权限访问该物理库的用户密码；
+- 连接用户密码：有权限访问该物理库的用户密码；
 
--   物理库名：存储节点中可引用的数据库名称，例如"db01"（3.4节添加的物理库）；
+- 物理库名：存储节点中可引用的数据库名称，例如"db01"（3.4节添加的物理库）；
 
--   备份用户：（选填）用于备份该物理库的用户名；
+- 备份用户：（选填）用于备份该物理库的用户名；
 
--   备份用户密码：（选填）用于备份该物理库的用户密码；
+- 备份用户密码：（选填）用于备份该物理库的用户密码；
 
--   字符集：被连接的物理库字符集，默认utf8mb4；
+- 字符集：被连接的物理库字符集，默认utf8mb4；
 
--   最大连接数：MySQL物理库[最大连接数](#后端连接池管理)，默认4200；
+- 最大连接数：MySQL物理库[最大连接数](#后端连接池管理)，默认4200；
 
--   初始连接数：MySQL物理库[初始连接数](#后端连接池管理)，默认32；
+- 初始连接数：MySQL物理库[初始连接数](#后端连接池管理)，默认32；
 
--   最大空闲连接数：MySQL物理库[最大空闲连接数](#后端连接池管理)，默认512；
+- 最大空闲连接数：MySQL物理库[最大空闲连接数](#后端连接池管理)，默认512；
 
--   最小空闲连接数：MySQL物理库[最小空闲连接数](#后端连接池管理)，默认32；
+- 最小空闲连接数：MySQL物理库[最小空闲连接数](#后端连接池管理)，默认32；
 
--   空闲检查周期（秒）：MySQL物理库空闲检查周期，默认600。当连接长时间没有向服务器发请求的时候，定时断开这个连接，避免对数据库连接的浪费；
+- 空闲检查周期（秒）：MySQL物理库空闲检查周期，默认600。当连接长时间没有向服务器发请求的时候，定时断开这个连接，避免对数据库连接的浪费；
 
 根据业务场景选择相同参数值设置为一个存储节点组，例如在本例中，下图中勾并输入的参数值组成一个存储节点组。
 
@@ -363,37 +335,37 @@ show databases;
 
 参数包括：
 
--   数据节点：默认根据之前填写的参数生成，可修改
+- 数据节点：默认根据之前填写的参数生成，可修改
 
--   存储节点类型：默认根据之前填写的参数生成，可修改
+- 存储节点类型：默认根据之前填写的参数生成，可修改
 
--   存储节点组：默认根据之前填写的参数生成，可修改
+- 存储节点组：默认根据之前填写的参数生成，可修改
 
--   存储节点名称：默认勾选自动生成，也可以取消勾选后在文本框中输入存储节点命名，例如"ds_01"；
+- 存储节点名称：默认勾选自动生成，也可以取消勾选后在文本框中输入存储节点命名，例如"ds_01"；
 
--   主机名：输入MySQL数据库的主机IP。
+- 主机名：输入MySQL数据库的主机IP。
 
--   端口号：输入MySQL数据库端口。
+- 端口号：输入MySQL数据库端口。
 
--   连接用户：有权限访问该物理库的用户名（3.4节添加的[用户名](#创建mysql数据库与存储节点用户)）；
+- 连接用户：有权限访问该物理库的用户名（3.4节添加的[用户名](#创建mysql数据库与存储节点用户)）；
 
--   连接用户密码：有权限访问该物理库的用户密码；
+- 连接用户密码：有权限访问该物理库的用户密码；
 
--   物理库名：存储节点中可引用的数据库名称，例如"db01" （3.4节添加的物理库）；
+- 物理库名：存储节点中可引用的数据库名称，例如"db01" （3.4节添加的物理库）；
 
--   备份用户：（选填）用于备份该物理库的用户名；
+- 备份用户：（选填）用于备份该物理库的用户名；
 
--   备份用户密码：（选填）用于备份该物理库的用户密码；
+- 备份用户密码：（选填）用于备份该物理库的用户密码；
 
--   监听程序主机名：（选填）即HotDB Listener。安装监听程序可用于解决计算节点集群模式的性能线性扩展问题。默认存储节点所在服务器的主机名；
+- 监听程序主机名：（选填）即HotDB Listener。安装监听程序可用于解决计算节点集群模式的性能线性扩展问题。默认存储节点所在服务器的主机名；
 
--   监听端口：（选填）用于设置监听程序启动端口；
+- 监听端口：（选填）用于设置监听程序启动端口；
 
--   监听程序服务端口：（选填）监听程序服务端口是计算节点通过监听程序连接存储节点的端口，若一个监听程序需要监听多个存储节点，则需要为其分别填写不同的服务端口；
+- 监听程序服务端口：（选填）监听程序服务端口是计算节点通过监听程序连接存储节点的端口，若一个监听程序需要监听多个存储节点，则需要为其分别填写不同的服务端口；
 
--   自动主从搭建：选择后，管理平台会自动根据配置信息为相应的存储节点搭建复制关系。
+- 自动主从搭建：选择后，管理平台会自动根据配置信息为相应的存储节点搭建复制关系。
 
--   主存储节点：仅在需要搭建双主带从或多级从的复制关系时才需要填写此参数。可将当前存储节点需要搭建复制关系的主存储节点名称复制后粘贴于此。默认时为系统根据配置自动判断。
+- 主存储节点：仅在需要搭建双主带从或多级从的复制关系时才需要填写此参数。可将当前存储节点需要搭建复制关系的主存储节点名称复制后粘贴于此。默认时为系统根据配置自动判断。
 
 点击【...】展开更多参数，包括：
 
@@ -413,15 +385,15 @@ show databases;
 
 根据业务场景，输入配置参数，包括：
 
--   分片规则名称：默认生成，取消勾选后可修改
+- 分片规则名称：默认生成，取消勾选后可修改
 
--   分片类型：包括ROUTE，RANGE，MATCH，SIMPLE_MOD，CRC32_MOD。以RANGE为例，若要了解更多分片规则可以查看更详细的功能说明文档，请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》。
+- 分片类型：包括ROUTE，RANGE，MATCH，SIMPLE_MOD，CRC32_MOD。以RANGE为例，若要了解更多分片规则可以查看更详细的功能说明文档，请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》。
 
--   设置方式：包括自动设置和手动设置，以自动设置为例。选择自动设置，管理平台根据配置参数自动计算值范围并自动划分数据节点；选择手动设置可以手动输入数据节点对应落入的值范围。
+- 设置方式：包括自动设置和手动设置，以自动设置为例。选择自动设置，管理平台根据配置参数自动计算值范围并自动划分数据节点；选择手动设置可以手动输入数据节点对应落入的值范围。
 
--   数据节点：选择分片的数据节点
+- 数据节点：选择分片的数据节点
 
--   值范围：输入分片字段的全部值范围，管理平台结合选择的节点数自动计算步长
+- 值范围：输入分片字段的全部值范围，管理平台结合选择的节点数自动计算步长
 
 ![](assets/standard/image18.png)
 
@@ -439,15 +411,15 @@ show databases;
 
 根据业务场景，选择表类型后输入配置参数，在此例子中，在水平分片表页面下，添加参数配置如下：
 
--   逻辑库：下拉菜单中选择上节添加的[逻辑库](#添加逻辑库)test。
+- 逻辑库：下拉菜单中选择上节添加的[逻辑库](#添加逻辑库)test。
 
--   默认分片字段：在填写表名称时，表名称与其对应的分片字段应使用英文冒号间隔，若未填写分片字段，则取默认分片字段。所以此处填写"provinceid"
+- 默认分片字段：在填写表名称时，表名称与其对应的分片字段应使用英文冒号间隔，若未填写分片字段，则取默认分片字段。所以此处填写"provinceid"
 
--   分片方式：在此例子中，选择自动分片，也可以选择上节添加的[分片规则](#添加分片规则)应用于此
+- 分片方式：在此例子中，选择自动分片，也可以选择上节添加的[分片规则](#添加分片规则)应用于此
 
--   数据节点：选择分片的数据节点，此例子中，选择3.8节添加的[数据节点](#添加数据节点与存储节点)
+- 数据节点：选择分片的数据节点，此例子中，选择3.8节添加的[数据节点](#添加数据节点与存储节点)
 
--   请填写表名称：输入"customer"，添加多表但不同分片字段时，可以输入"customer:provinceid"表示。
+- 请填写表名称：输入"customer"，添加多表但不同分片字段时，可以输入"customer:provinceid"表示。
 
 ![](assets/standard/image21.png)
 
@@ -477,7 +449,7 @@ root> mysql -h127.0.0.1 -uroot -proot -P3323 -Dtest
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
 
-Welcome to the MySQL monitor. Commands end with ; or \\g.
+Welcome to the MySQL monitor. Commands end with ; or \g.
 
 Your MySQL connection id is 100728
 
@@ -491,31 +463,31 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql>
 
 执行customer的建表语句：
 
-CREATE TABLE \`customer\`(
+CREATE TABLE `customer`(
 
-\`id\` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
 
-\`name\` VARCHAR(32) NOT NULL,
+`name` VARCHAR(32) NOT NULL,
 
-\`telephone\` VARCHAR(16) NOT NULL,
+`telephone` VARCHAR(16) NOT NULL,
 
-\`provinceid\` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+`provinceid` TINYINT UNSIGNED NOT NULL DEFAULT 0,
 
-\`province\` ENUM ('Anhui','Aomen','Beijing','Chongqing','Fujian','Gansu','Guangdong','Guangxi','Guizhou','Hainan','Hebei','Heilongjiang','Henan','Hubei','Hunan','Jiangsu','Jiangxi','Jilin','Liaoning','Neimenggu','Ningxia','Qinghai','Shaanxi','Shandong','Shanghai','Shanxi','Sichuan','Taiwan','Tianjin','Xianggang','Xinjiang','Xizang','Yunnan','Zhejiang') NULL,
+`province` ENUM ('Anhui','Aomen','Beijing','Chongqing','Fujian','Gansu','Guangdong','Guangxi','Guizhou','Hainan','Hebei','Heilongjiang','Henan','Hubei','Hunan','Jiangsu','Jiangxi','Jilin','Liaoning','Neimenggu','Ningxia','Qinghai','Shaanxi','Shandong','Shanghai','Shanxi','Sichuan','Taiwan','Tianjin','Xianggang','Xinjiang','Xizang','Yunnan','Zhejiang') NULL,
 
-\`city\` VARCHAR(16) NULL default '',
+`city` VARCHAR(16) NULL default '',
 
-\`address\` VARCHAR(64) NULL,
+`address` VARCHAR(64) NULL,
 
-PRIMARY KEY(\`id\`),
+PRIMARY KEY(`id`),
 
-UNIQUE KEY(\`telephone\`)
+UNIQUE KEY(`telephone`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -573,45 +545,45 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 ### 计算节点启动说明
 
--   启动计算节点，可以切换到/usr/local/hotdb/hotdb-server/bin目录下，再运行启动脚本，或者直接加上路径:sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start；
+- 启动计算节点，可以切换到/usr/local/hotdb/hotdb-server/bin目录下，再运行启动脚本，或者直接加上路径:sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start；
 
--   配置库复制同步状态会影响计算节点启动，计算节点启动或者发生高可用切换Online时配置库必须保证复制追上；
+- 配置库复制同步状态会影响计算节点启动，计算节点启动或者发生高可用切换Online时配置库必须保证复制追上；
 
--   存储节点复制同步状态会影响计算节点启动，通过在server.xml中配置参数[waitSyncFinishAtStartup](#waitsyncfinishatstartup) 的true/false属性控制计算节点启动时是否等待存储节点复制追上，默认需等待；
+- 存储节点复制同步状态会影响计算节点启动，通过在server.xml中配置参数[waitSyncFinishAtStartup](#waitsyncfinishatstartup) 的true/false属性控制计算节点启动时是否等待存储节点复制追上，默认需等待；
 
--   启动计算节点时,若存储节点连接状态异常，可通过修改server.xml中的配置参数[masterSourceInitWaitTimeout](#lockwaittimeout)，控制数据节点中主存储节点是否重新初始化及初始化超时时间，具体控制逻辑参考[计算节点启动时对逻辑库可用的判断](#计算节点启动时对逻辑库可用的判断)。
+- 启动计算节点时,若存储节点连接状态异常，可通过修改server.xml中的配置参数[masterSourceInitWaitTimeout](#lockwaittimeout)，控制数据节点中主存储节点是否重新初始化及初始化超时时间，具体控制逻辑参考[计算节点启动时对逻辑库可用的判断](#计算节点启动时对逻辑库可用的判断)。
 
--   影响计算节点启动失败的原因可能是多种多样的，包括但不限于：
+- 影响计算节点启动失败的原因可能是多种多样的，包括但不限于：
 
--   软硬件环境异常：例如脚本校验无法通过，磁盘空间不足，可用内存不足，Java版本不匹配等
+- 软硬件环境异常：例如脚本校验无法通过，磁盘空间不足，可用内存不足，Java版本不匹配等
 
--   配置库异常：例如配置库无法连接，配置错误等
+- 配置库异常：例如配置库无法连接，配置错误等
 
--   节点异常：例如数据节点无法正常连接或无法正常初始化等
+- 节点异常：例如数据节点无法正常连接或无法正常初始化等
 
--   授权异常：例如USB-Key服务异常，授权节点超出限制，授权过期等
+- 授权异常：例如USB-Key服务异常，授权节点超出限制，授权过期等
 
--   XA异常：例如XA RECOVER失败等
+- XA异常：例如XA RECOVER失败等
 
--   端口被占用：例如端口已被其他程序占用，或者启动了多个HotDB服务等
+- 端口被占用：例如端口已被其他程序占用，或者启动了多个HotDB服务等
 
--   复制异常：例如配置了启动时等待复制追上，实际数据节点的复制一直存在延迟，无法追上等
+- 复制异常：例如配置了启动时等待复制追上，实际数据节点的复制一直存在延迟，无法追上等
 
--   集群异常：例如集群无法达成共识，启动时存在网络分区，各节点时间不同步等
+- 集群异常：例如集群无法达成共识，启动时存在网络分区，各节点时间不同步等
 
 #### 计算节点启动时对逻辑库可用的判断
 
 为保证垂直拆分场景下，出现数据节点不可用状态时，与之不相关的不同逻辑库之间的业务场景不受影响，计算节点在启动时，对所有逻辑库的可用状态做了特殊判断处理，说明如下：
 
--   若配置的主存储节点为可用状态，实际该存储节点无法连接，则计算节点启动时，会等待[masterSourceInitWaitTimeout](#lockwaittimeout)配置的时间（默认：300s）,判断该存储节点是否真实不可连接，若在此期间，该存储节点重连无异常，则该节点初始化成功；
+- 若配置的主存储节点为可用状态，实际该存储节点无法连接，则计算节点启动时，会等待[masterSourceInitWaitTimeout](#lockwaittimeout)配置的时间（默认：300s）,判断该存储节点是否真实不可连接，若在此期间，该存储节点重连无异常，则该节点初始化成功；
 
--   如果数据节点初始化失败且无可用逻辑库，或数据节点下无存储节点，则计算节点无法启动，日志提示：04/13 10:50:54.644 ERROR [main] (HotdbServer.java:436) -datanodes:[3] init failed. System exit.
+- 如果数据节点初始化失败且无可用逻辑库，或数据节点下无存储节点，则计算节点无法启动，日志提示：04/13 10:50:54.644 ERROR [main] (HotdbServer.java:436) -datanodes:[3] init failed. System exit.
 
--   只要存在某个逻辑库对应的数据节点均可用，则可以启动计算节点，对应逻辑下的表可以正常操作。如果其他逻辑库下有不可用的节点，则该逻辑库下的表不能正常读写，客户端提示：ERROR 1003 (HY000): DATABASE is unavailable when datanodes:[datanode_id ] unavailable.
+- 只要存在某个逻辑库对应的数据节点均可用，则可以启动计算节点，对应逻辑下的表可以正常操作。如果其他逻辑库下有不可用的节点，则该逻辑库下的表不能正常读写，客户端提示：ERROR 1003 (HY000): DATABASE is unavailable when datanodes:[datanode_id] unavailable.
 
 > 例如：A逻辑库包含1,2两个节点，B逻辑库包含3,4两个节点。如果1、2节点不可用，3、4节点可用，则计算节点可以启动，B逻辑库下的表可以正常操作，A逻辑库下的表无法进行读写；如果1、3节点不可用，则计算节点无法启动。
 
--   判断某个节点是否可用，跟存储节点在配置库的状态以及存储节点实际可用状态有关，要求配置状态与存储节点状态要一致，否则会影响计算节点的启动。计算节点启动时连接配置库配置的可用存储节点，如果均能连接，则视为可用。如果某个配置为可用的存储节点无法连接，且该数据节点下所有其他存储节点都配置为不可用或配置为可用但实则无法连接，则视为该数据节点不可用。每个节点至少应配置一个可用存储节点，否则无法启动计算节点。具体情况如下：
+- 判断某个节点是否可用，跟存储节点在配置库的状态以及存储节点实际可用状态有关，要求配置状态与存储节点状态要一致，否则会影响计算节点的启动。计算节点启动时连接配置库配置的可用存储节点，如果均能连接，则视为可用。如果某个配置为可用的存储节点无法连接，且该数据节点下所有其他存储节点都配置为不可用或配置为可用但实则无法连接，则视为该数据节点不可用。每个节点至少应配置一个可用存储节点，否则无法启动计算节点。具体情况如下：
 
 > 1.主从存储节点均配置为可用
 >
@@ -637,13 +609,13 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 2. **innodb_rollback_on_timeout 需要为ON，**且任何时候SHOW [GLOBAL|SESSION] VARIABLES显示出来的innodb_rollback_on_timeout参数都为on，说明如下：
 
--   如果innodb_rollback_on_timeout参数全为off， 则计算节点允许加载成功，但计算节点的行为将等同于innodb_rollback_on_timeout参数为on时的事务回滚方式，且配置校验时给出如下提示：
+- 如果innodb_rollback_on_timeout参数全为off， 则计算节点允许加载成功，但计算节点的行为将等同于innodb_rollback_on_timeout参数为on时的事务回滚方式，且配置校验时给出如下提示：
 
 ![](assets/standard/image25.jpeg)
 
 且动态加载时日志输出：innodb_rollback_on_timeout=off is not supported, HotDB behavior will be equivalent to innodb_rollback_on_timeout = on.
 
--   如果innodb_rollback_on_timeout参数存储节点间不一致，动态加载失败，且配置校验时提示如下:
+- 如果innodb_rollback_on_timeout参数存储节点间不一致，动态加载失败，且配置校验时提示如下:
 
 > ![](assets/standard/image26.jpeg)
 
@@ -651,21 +623,21 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 3. **read_only**，参数说明如下：
 
--   如果主存储节点的参数read_only=1，计算节点将拒绝启动，动态加载失败。
+- 如果主存储节点的参数read_only=1，计算节点将拒绝启动，动态加载失败。
 
--   如果从机的参数read_only=1且配置了切换到该从机的配置规则，计算节点可以启动，RELOAD失败。
+- 如果从机的参数read_only=1且配置了切换到该从机的配置规则，计算节点可以启动，RELOAD失败。
 
--   如果从机的参数read_only=1且没有配置切换到该从机的配置规则，计算节点可以启动，reload如果无其它错误则成功。
+- 如果从机的参数read_only=1且没有配置切换到该从机的配置规则，计算节点可以启动，reload如果无其它错误则成功。
 
 #### 要求所有节点配置一致的参数
 
 对于下列MySQL存储节点实例的参数，计算节点要求存储节点间的参数值设置为一致：
 
--   autocommit
+- autocommit
 
--   transaction_isolation
+- transaction_isolation
 
--   div_precision_increment
+- div_precision_increment
 
 若以上参数在存储节点间配置不一致，计算节点将给出警告信息。对于transaction_isolation参数，计算节点以设置的最高隔离级别为准，若最高配置的值高于REPEATABLE-READ，将使用SERIALIZABLE；若最低配置的值低于REPEATABLE-READ，计算节点将使用REPEATABLE-READ模式。
 
@@ -687,7 +659,7 @@ root> mysql -uroot -proot -P3325 -h192.168.200.201
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
 
-Welcome to the MySQL monitor. Commands end with ; or \\g.
+Welcome to the MySQL monitor. Commands end with ; or \g.
 
 Your MySQL connection id is 992081
 
@@ -701,7 +673,7 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql> show @@help;
 
@@ -805,13 +777,13 @@ maxUserConnections为前端最大用户连接数，默认0为不限制；
 
 计算节点启动及运行过程中会与存储节点之间建立连接，在[添加存储节点](#添加存储节点组)时，可通过四个配置控制连接数：
 
--   最大连接数：计算节点与存储节点（即MySQL物理库）之间可建立的最大连接数，超过即SQL无法正常执行；
+- 最大连接数：计算节点与存储节点（即MySQL物理库）之间可建立的最大连接数，超过即SQL无法正常执行；
 
--   初始连接数：计算节点与存储节点之间建立的初始连接数；
+- 初始连接数：计算节点与存储节点之间建立的初始连接数；
 
--   最小空闲连接数：计算节点与存储节点之间建立的最小空闲连接数；
+- 最小空闲连接数：计算节点与存储节点之间建立的最小空闲连接数；
 
--   最大空闲连接数：计算节点与存储节点之间建立的最大空闲连接数。
+- 最大空闲连接数：计算节点与存储节点之间建立的最大空闲连接数。
 
 当定时检测线程发现连接池里面空闲连接小于最小空闲，创建连接；大于最大空闲，关闭连接。即：最小空闲≤连接池的空闲连接个数≤最大空闲，最大、最小空闲连接数主要控制连接池内的空闲连接数在一定范围内。
 
@@ -878,13 +850,15 @@ maxUserConnections为前端最大用户连接数，默认0为不限制；
 下面表格中的操作，描述了在分布式系统中，两个数据节点产生死锁的过程。会话一与会话二分别在两个数据节点上执行DELETE操作：
 
 ------------------------------------------------------------------------------------------------------------------------------ ---------------------------------------------- ----------------------------------------------
-  　                                                                                                                             **会话一**                                     **会话二**
-  会话一开启事务                                                                                                                 start transaction;                             
-  会话二开启事务                                                                                                                 　                                             start transaction;
-  会话一在DNID为15的数据节点上执行DELETE语句                                                                                     delete from customer where dnid=15 and id=1;   
-  会话二在DNID为13的数据节点上执行DELETE 语句                                                                                    　                                             delete from customer where dnid=13 and id=4;
-  会话一在DNID为13的数据节点上执行DELETE语句；DELETE操作将被会话二阻塞                                                           delete from customer where dnid=13 and id=4;   
-  会话二在DNID为15的数据节点上执行DELETE语句；此操作将被会话一阻塞；因会话一被会话二阻塞，会话二也被会话一阻塞，此时将产生死锁   　                                             delete from customer where dnid=15 and id=1;
+
+　                                                                                                                             **会话一**                                     **会话二**
+会话一开启事务                                                                                                                 start transaction;                             
+会话二开启事务                                                                                                                 　                                             start transaction;
+会话一在DNID为15的数据节点上执行DELETE语句                                                                                     delete from customer where dnid=15 and id=1;   
+会话二在DNID为13的数据节点上执行DELETE 语句                                                                                    　                                             delete from customer where dnid=13 and id=4;
+会话一在DNID为13的数据节点上执行DELETE语句；DELETE操作将被会话二阻塞                                                           delete from customer where dnid=13 and id=4;   
+会话二在DNID为15的数据节点上执行DELETE语句；此操作将被会话一阻塞；因会话一被会话二阻塞，会话二也被会话一阻塞，此时将产生死锁   　                                             delete from customer where dnid=15 and id=1;
+
 ------------------------------------------------------------------------------------------------------------------------------ ---------------------------------------------- ----------------------------------------------
 
 上述情况中，会话一与会话二互相被阻塞，将产生死锁。因是在两个数据节点下的存储节点间，MySQL无法检测到死锁的存在。
@@ -945,51 +919,51 @@ ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting trans
 
 若执行SQL时返回以下情况的报错信息，计算节点会将其记录到计算节点日志（hotdb-unusualsql.log）中：
 
--   主键\\唯一键冲突或外键约束不满足导致的ERROR信息（即MySQL错误码1062、1216、1217、1451、1452、1557、1761、1762、3008）
+- 主键\唯一键冲突或外键约束不满足导致的ERROR信息（即MySQL错误码1062、1216、1217、1451、1452、1557、1761、1762、3008）
 
--   数据溢出（即MySQL错误码1264、1690、3155、3669）和数据类型转换或隐式转换导致数据截断（即MySQL错误码1265、1292、1366）的情况
+- 数据溢出（即MySQL错误码1264、1690、3155、3669）和数据类型转换或隐式转换导致数据截断（即MySQL错误码1265、1292、1366）的情况
 
--   涉及binlog不安全语句（即MySQL错误码1418、1592、1663、1668、1669、1671、1673、1674、1675、1693、1714、1715、1716、1719、1722、1724、1727、1785、3006、3199、3570、3571、MY-010908、MY-013098）
+- 涉及binlog不安全语句（即MySQL错误码1418、1592、1663、1668、1669、1671、1673、1674、1675、1693、1714、1715、1716、1719、1722、1724、1727、1785、3006、3199、3570、3571、MY-010908、MY-013098）
 
--   对分片字段不是自增字段的分片表做INSERT操作时，由外部指定自增值的INSERT的情况
+- 对分片字段不是自增字段的分片表做INSERT操作时，由外部指定自增值的INSERT的情况
 
--   UPDATE语句中出现MATCH和AFFECT不相符的情况
+- UPDATE语句中出现MATCH和AFFECT不相符的情况
 
--   DELETE出现删除0行的情况
+- DELETE出现删除0行的情况
 
--   UPDATE或DELETE AFFECT超过10000行的情况
+- UPDATE或DELETE AFFECT超过10000行的情况
 
--   在HINT语句中使用了INSERT、UPDATE、DELETE和DDL语句的情况
+- 在HINT语句中使用了INSERT、UPDATE、DELETE和DDL语句的情况
 
--   DDL语句执行出现报错信息的情况；除此之外，在以下两种情况下会有额外日志记录：1. CREATE TABLE或ALTER TABLE时指定的表的字符集或字段的字符集，与存储节点的字符集或连接使用的字符集不一致时；2. CREATE TABLE或ALTER TABLE分片表，主键或唯一键不包含分片字段，且没有使用全局唯一约束来保证字段唯一性时
+- DDL语句执行出现报错信息的情况；除此之外，在以下两种情况下会有额外日志记录：1. CREATE TABLE或ALTER TABLE时指定的表的字符集或字段的字符集，与存储节点的字符集或连接使用的字符集不一致时；2. CREATE TABLE或ALTER TABLE分片表，主键或唯一键不包含分片字段，且没有使用全局唯一约束来保证字段唯一性时
 
--   发生部分提交的情况，即部分节点已经发出COMMIT后，其余节点没有发出COMMIT但连接断开的情况，或其余部分后端连接发出COMMIT后无响应且连接断开的情况，会记录整个事务到计算节点日志
+- 发生部分提交的情况，即部分节点已经发出COMMIT后，其余节点没有发出COMMIT但连接断开的情况，或其余部分后端连接发出COMMIT后无响应且连接断开的情况，会记录整个事务到计算节点日志
 
--   发生语法错误的情况
+- 发生语法错误的情况
 
--   执行因缺少路由规则无法路由的SQL的情况，例如INSERT不存在的ROUTE规则
+- 执行因缺少路由规则无法路由的SQL的情况，例如INSERT不存在的ROUTE规则
 
--   执行被SQL防火墙拦截的SQL的情况
+- 执行被SQL防火墙拦截的SQL的情况
 
--   执行超时的SQL的情况
+- 执行超时的SQL的情况
 
--   发生死锁被杀的事务的情况
+- 发生死锁被杀的事务的情况
 
--   发生因存储节点切换等原因被杀掉的事务的情况
+- 发生因存储节点切换等原因被杀掉的事务的情况
 
--   执行锁超时回滚的SQL的情况
+- 执行锁超时回滚的SQL的情况
 
--   执行KILL命令后KILL掉的SQL的情况
+- 执行KILL命令后KILL掉的SQL的情况
 
--   发生被ROLLBACK的SQL的情况
+- 发生被ROLLBACK的SQL的情况
 
--   前端连接异常断开回滚的SQL的情况
+- 前端连接异常断开回滚的SQL的情况
 
--   后端连接异常断开或其它异常导致回滚的情况
+- 后端连接异常断开或其它异常导致回滚的情况
 
--   计算节点意外抛异常的情况
+- 计算节点意外抛异常的情况
 
--   如果上述记录的SQL过长导致SQL语句被截取，还会额外记录WARNING信息
+- 如果上述记录的SQL过长导致SQL语句被截取，还会额外记录WARNING信息
 
 例如，执行一条出现主键冲突的SQL如下：
 
@@ -1066,16 +1040,18 @@ HotDB Server有两类用户，一类是计算节点数据库用户，用于操�
 计算节点数据库用户必须被赋予逻辑库的权限，才能访问逻辑库。计算节点提供了类似于MySQL的操作权限，如下：
 
 -------------- ---------------------------------------------------
-  **权限类型**   **可执行的SQL语句**
-  CREATE         CREATE TABLE,CREATE INDEX
-  DROP           DROP TABLE,DROP INDEX,TRUNCATE TABLE,RENAME TABLE
-  ALTER          ALTER TABLE,RENAME TABLE
-  SELECT         SELECT,INSERT...SELECT
-  UPDATE         UPDATE
-  DELETE         DELETE,REPLACE
-  INSERT         INSERT,REPLACE,INSERT...SELECT
-  SUPER          管理端的语句, /*!HotDB:dnid=?*/
-  FILE           SELECT...INTO OUTFILE,LOAD DATA
+
+**权限类型**   **可执行的SQL语句**
+CREATE         CREATE TABLE,CREATE INDEX
+DROP           DROP TABLE,DROP INDEX,TRUNCATE TABLE,RENAME TABLE
+ALTER          ALTER TABLE,RENAME TABLE
+SELECT         SELECT,INSERT...SELECT
+UPDATE         UPDATE
+DELETE         DELETE,REPLACE
+INSERT         INSERT,REPLACE,INSERT...SELECT
+SUPER          管理端的语句, /*!HotDB:dnid=?*/
+FILE           SELECT...INTO OUTFILE,LOAD DATA
+
 -------------- ---------------------------------------------------
 
 **SUPER权限说明：**
@@ -1090,15 +1066,15 @@ HotDB Server有两类用户，一类是计算节点数据库用户，用于操�
 
 为计算节点数据库用户赋予权限时，除SUPER权限外，可指定user对逻辑库或表的操作权限。权限范围分为全局权限、逻辑库权限及表权限：
 
--   全局权限：拥有全局权限的user对所有逻辑库下的所有对象都拥有指定的权限。例如：勾选全局权限：SELECT，UPDATE，INSERT，CREATE，点击保存则当前用户可对所有逻辑库及表进行S/U/I/C操作。
+- 全局权限：拥有全局权限的user对所有逻辑库下的所有对象都拥有指定的权限。例如：勾选全局权限：SELECT，UPDATE，INSERT，CREATE，点击保存则当前用户可对所有逻辑库及表进行S/U/I/C操作。
 
 ![](assets/standard/image33.png)
 
--   逻辑库权限：拥有逻辑库权限的user对该逻辑库下的所有对象拥有指定权限。
+- 逻辑库权限：拥有逻辑库权限的user对该逻辑库下的所有对象拥有指定权限。
 
 ![](assets/standard/image34.png)
 
--   表权限：表权限又分为表允许权限和表拒绝权限。拥有表允许权限的用户对该表拥有勾选的权限；拥有表拒绝权限的用户将拒绝勾选的权限，对于没有勾选的权限，需要在表允许权限下勾选后方能拥有。拥有表拒绝权限的用户对该表拥有除了勾选的权限以外的其他所有权限；例如：勾选表拒绝权限：SELECT，UPDATE，INSERT，CREATE，点击保存则当前用户不可对该表进行S/U/I/C操作，若该用户勾选了表允许权限：DELETE,DROP，则当前用户拥有DELETE和DROP权限。
+- 表权限：表权限又分为表允许权限和表拒绝权限。拥有表允许权限的用户对该表拥有勾选的权限；拥有表拒绝权限的用户将拒绝勾选的权限，对于没有勾选的权限，需要在表允许权限下勾选后方能拥有。拥有表拒绝权限的用户对该表拥有除了勾选的权限以外的其他所有权限；例如：勾选表拒绝权限：SELECT，UPDATE，INSERT，CREATE，点击保存则当前用户不可对该表进行S/U/I/C操作，若该用户勾选了表允许权限：DELETE,DROP，则当前用户拥有DELETE和DROP权限。
 
 ![](assets/standard/image35.png)
 
@@ -1187,21 +1163,21 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 
 配置好的参数如下图：
 
-![}]2__08H0B\`61[421T9YIBK](media/image40.png)
+![}]2__08H0B`61[421T9YIBK](media/image40.png)
 
 参数的修改无需重启计算节点服务， 动态加载时会重新读取server.jks文件。若SSL相关逻辑初始化失败，动态加载不会失败，但后续的SSL连接无法正常建立，非SSL连接不受影响。
 
 **注意事项：**
 
--   若计算节点找不到任何可用的server.jks文件，则启动或同步加载时会输出以下报错信息
+- 若计算节点找不到任何可用的server.jks文件，则启动或同步加载时会输出以下报错信息
 
 ![](assets/standard/image41.png)
 
--   若keyStorePass配置错误，则启动或者同步加载时输出以下报错信息
+- 若keyStorePass配置错误，则启动或者同步加载时输出以下报错信息
 
 ![](assets/standard/image42.png)
 
--   若证书配置错误，登录时会输出以下报错信息
+- 若证书配置错误，登录时会输出以下报错信息
 
 ![](assets/standard/image43.png)
 
@@ -1248,7 +1224,7 @@ jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/u
 
 ![](assets/standard/image48.png)
 
-注：对于某些版本的Navicat可能在勾选验证CA证书名后无法连接，比如提示错误："2026 SSL connection error: ASN: bad other signature confirmation"，这可能是该版本的动态链接库不兼容，需要将其目录下的\`libmysql.dll\`替换为MySQL Workbench中的同名文件，或者更新到更高的版本，参考[链接](https://www.heidisql.com/forum.php?t=19494)。
+注：对于某些版本的Navicat可能在勾选验证CA证书名后无法连接，比如提示错误："2026 SSL connection error: ASN: bad other signature confirmation"，这可能是该版本的动态链接库不兼容，需要将其目录下的`libmysql.dll`替换为MySQL Workbench中的同名文件，或者更新到更高的版本，参考[链接](https://www.heidisql.com/forum.php?t=19494)。
 
 ## 数据迁移、备份与恢复
 
@@ -1354,7 +1330,7 @@ set @mytablename='xxx'; //表名
 
 set @mydbname=database();
 
-select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ','NULL'),ifnull('),','NULL')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
+select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ','NULL'),ifnull('),','NULL')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \G
 
 若执行结果一致，则表数据大概率一致。
 
@@ -1376,7 +1352,7 @@ mysql> set @mydbname=database();
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ','NULL'),ifnull('),','NULL')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
+mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ','NULL'),ifnull('),','NULL')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \G
 
 *************************** 1. row ***************************
 
@@ -1418,26 +1394,27 @@ mysql> show @@masterslaveconsistency;
 
 结果中显示逻辑库DB_T中的JOIN_Z表，在所有节点的主备存储节点之间，数据是一致的。表结构如下：
 
--   db：逻辑库名称。
+- db：逻辑库名称。
 
--   table：表名称。
+- table：表名称。
 
--   dn：数据节点名称；当表在主备存储节点不一致时，此列会显示数据节点名称；
+- dn：数据节点名称；当表在主备存储节点不一致时，此列会显示数据节点名称；
 
--   result：校验结果为YES，表示该表在主备存储节点之间是一致的；为NO，表示该表在主备存储节点之间不一致，同时会在info输出不一致的信息；UNKNOWN，表示未知错误，可能存在表结构不一致的情况，主从复制中断都可能出现UNKNOWN。
+- result：校验结果为YES，表示该表在主备存储节点之间是一致的；为NO，表示该表在主备存储节点之间不一致，同时会在info输出不一致的信息；UNKNOWN，表示未知错误，可能存在表结构不一致的情况，主从复制中断都可能出现UNKNOWN。
 
--   info：当主从数据一致时，无信息输出；当主从数据不一致时，会有以下几种信息：
+- info：当主从数据一致时，无信息输出；当主从数据不一致时，会有以下几种信息：
 
 --------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------
-  表的大量数据不一致                                  Table: ... in datanode: ... exist a large amount of data inconsistency
-  表的部分数据不一致                                  Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows' primary key (...)：
-  从库表不存在                                        exist data inconsistency, because DS: ... Table '...' doesn't exist
-  表索引不存在                                        DN: ... not exsit index of table:...
-  主从故障检测（例如从机Slave_SQL_Running: NO状态）   DN: ... ERROR! Check your replication.
-  主从延迟超过10S                                     DN：... delay too much,can't check master-slave data consistency
-  延迟超过2S                                          Replication latency is more than 2s, Master-Slave consistency detection result may be incorrect or cannot be detected in datanode:
-  
-  --------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------
+
+表的大量数据不一致                                  Table: ... in datanode: ... exist a large amount of data inconsistency
+表的部分数据不一致                                  Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows' primary key (...)：
+从库表不存在                                        exist data inconsistency, because DS: ... Table '...' doesn't exist
+表索引不存在                                        DN: ... not exsit index of table:...
+主从故障检测（例如从机Slave_SQL_Running: NO状态）   DN: ... ERROR! Check your replication.
+主从延迟超过10S                                     DN：... delay too much,can't check master-slave data consistency
+延迟超过2S                                          Replication latency is more than 2s, Master-Slave consistency detection result may be incorrect or cannot be detected in datanode:
+
+--------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------
 
 ### 全局AUTO_INCREMENT
 
@@ -1671,19 +1648,19 @@ Can't reset XA in reloading, please restart the hotdb to enable XA
 
 在系统中使用计算节点的XA事务，为保证事务的强一致性，需注意以下几点：
 
--   MySQL版本必须为5.7.17及以上。因为5.7.17之前的版本，MySQL在处理XA事务时，存在缺陷。因此在开启XA模式下，若计算节点启动时检测到存在任意存储节点MySQL版本低于5.7.17则计算节点启动失败；若启动计算节点后添加低于5.7.17的存储节点，动态加载将失败；若启动计算节点前低于5.7.17的存储节点无法连接，即使启动后重新连接成功，该存储节点仍然为不可用且动态加载将失败。以上情况都将输出ERROR级别的日志提示：Currently in XA mode, MySQL version is not allowed to be lower than 5.7.17.
+- MySQL版本必须为5.7.17及以上。因为5.7.17之前的版本，MySQL在处理XA事务时，存在缺陷。因此在开启XA模式下，若计算节点启动时检测到存在任意存储节点MySQL版本低于5.7.17则计算节点启动失败；若启动计算节点后添加低于5.7.17的存储节点，动态加载将失败；若启动计算节点前低于5.7.17的存储节点无法连接，即使启动后重新连接成功，该存储节点仍然为不可用且动态加载将失败。以上情况都将输出ERROR级别的日志提示：Currently in XA mode, MySQL version is not allowed to be lower than 5.7.17.
 
--   存储节点及配置库需开启半同步复制（额外注意：开启XA模式时，不允许使用MySQL Group Replication复制模式），当开启半同步复制时，不建议开双1（innodb_flush_log_at_trx_commit = 1,sync_binlog = 1）模式，两者同时开启也会影响性能；
+- 存储节点及配置库需开启半同步复制（额外注意：开启XA模式时，不允许使用MySQL Group Replication复制模式），当开启半同步复制时，不建议开双1（innodb_flush_log_at_trx_commit = 1,sync_binlog = 1）模式，两者同时开启也会影响性能；
 
--   部署和使用XA强一致模式，需配置数据节点的高可用，并注意在主机故障切换从机后，原主机不可重用，不可直接在计算节点中标记其为可用，后续必须重新部署原主机，才可标记为可用。
+- 部署和使用XA强一致模式，需配置数据节点的高可用，并注意在主机故障切换从机后，原主机不可重用，不可直接在计算节点中标记其为可用，后续必须重新部署原主机，才可标记为可用。
 
--   XA事务的完整支持serializable、repeatable read、read committed，暂不支持read uncommitted，但当前端隔离级别设置为read committed时，需参考参数[allowRCWithoutReadConsistentInXA](#allowrcwithoutreadconsistentinxa)说明， 注意避免读写强一致性的问题。
+- XA事务的完整支持serializable、repeatable read、read committed，暂不支持read uncommitted，但当前端隔离级别设置为read committed时，需参考参数[allowRCWithoutReadConsistentInXA](#allowrcwithoutreadconsistentinxa)说明， 注意避免读写强一致性的问题。
 
--   开启XA模式，使用HINT后，因计算节点无法控制HINT语句修改的内容，后续跟这个连接相关的任何操作计算节点都不再控制隔离级别的正确性。
+- 开启XA模式，使用HINT后，因计算节点无法控制HINT语句修改的内容，后续跟这个连接相关的任何操作计算节点都不再控制隔离级别的正确性。
 
 特殊说明：
 
-XA模式下：参照SQL99标准，begin\\start transaction会立即开启一个事务。也即在XA模式打开的情况下，begin\\start transaction将等同于start transaction with consistent snapshot。
+XA模式下：参照SQL99标准，begin\start transaction会立即开启一个事务。也即在XA模式打开的情况下，begin\start transaction将等同于start transaction with consistent snapshot。
 
 在计算节点版本高于2.5.6 （包含）时，XA模式下前端连接断开时会将事务的状态记录到日志及配置库中，也可以直接通过服务端口执行SHOW ABNORMAL_XA_TRX查看是否需要重做事务。
 
@@ -1717,25 +1694,25 @@ XA模式下，当开启读写分离时：无法保证隔离级别正确性，但
 
 非确定性函数在使用中，会带来一系列问题，尤其是全局表的数据一致性问题，为此HotDB Server提供非确定性函数代理的功能。非确定性函数大致分为两类，一类是已知值的时间类函数，如CURDATE()、CURRENT_TIMESTAMP()等，一类是未知值的随机值函数、唯一值函数，如RAND()、UUID()等。
 
-1.  对于时间类函数，计算节点进行统一代理。
+1. 对于时间类函数，计算节点进行统一代理。
 
--   当表的字段类型有DATETIME（或者TIMESTAMP）且无默认值时，由参数[timestampProxy](#timestampproxy)控制计算节点的代理范围（默认为自动模式，可选全局处理/自动检测），将此类函数代理为具体值插入到表中；
+- 当表的字段类型有DATETIME（或者TIMESTAMP）且无默认值时，由参数[timestampProxy](#timestampproxy)控制计算节点的代理范围（默认为自动模式，可选全局处理/自动检测），将此类函数代理为具体值插入到表中；
 
--   当SELECT/INSERT/UPDATE/DELETE语句中出现curdate()、curtime()等函数时，计算节点将函数代理为具体值插入到表中；
+- 当SELECT/INSERT/UPDATE/DELETE语句中出现curdate()、curtime()等函数时，计算节点将函数代理为具体值插入到表中；
 
-2.  对于随机值函数，计算节点针对不同的SQL语句进行不同的代理办法。
+2. 对于随机值函数，计算节点针对不同的SQL语句进行不同的代理办法。
 
-3.  对于唯一值函数，计算节点进行统一代理。
+3. 对于唯一值函数，计算节点进行统一代理。
 
--   当SELECT/INSERT/UPDATE/DELETE语句中出现uuid()或uuid_short()时，计算节点按照标准的UUIDv1算法代理唯一值；
+- 当SELECT/INSERT/UPDATE/DELETE语句中出现uuid()或uuid_short()时，计算节点按照标准的UUIDv1算法代理唯一值；
 
--   当存储节点和配置库的server_id冲突时，计算节点自动禁用uuid_short()并告知用户手动调整server_id。可参考MySQL官网说明：<https://dev.mysql.com/doc/refman/5.7/en/replication-options.html>。
+- 当存储节点和配置库的server_id冲突时，计算节点自动禁用uuid_short()并告知用户手动调整server_id。可参考MySQL官网说明：<https://dev.mysql.com/doc/refman/5.7/en/replication-options.html>。
 
 ### 全局时区支持
 
 为保证数据的正确性，针对不同存储节点服务器存在设置不同时区，导致数据库中时间类型的数据错误的问题，HotDB Server 提供对全局时区的支持，包括：
 
--   当time_zone参数为具体的相同值或者全为SYSTEM并且system_time_zone全为相同的具体值时，HotDB Server不做特殊处理，否则HotDB Server会统一将time_zone设置为固定值："+8:00"且会记录警告级别的日志（The datasources' time_zones are not consistent）；
+- 当time_zone参数为具体的相同值或者全为SYSTEM并且system_time_zone全为相同的具体值时，HotDB Server不做特殊处理，否则HotDB Server会统一将time_zone设置为固定值："+8:00"且会记录警告级别的日志（The datasources' time_zones are not consistent）；
 
 > 如登入服务端口后输入命令：
 
@@ -1757,15 +1734,15 @@ mysql> show variables like '%time_zone';
 
 2 rows in set (0.09 sec)
 
--   备份与恢复时，HotDB Server能保证恢复后时间类型的数据与备份前一致。
+- 备份与恢复时，HotDB Server能保证恢复后时间类型的数据与备份前一致。
 
 ### 全局唯一约束
 
 若开启全局唯一约束功能，HotDB Server可以保证拥有唯一约束（UNIQUE、PRIMARY KEY）的列在所有节点都是唯一的，包括但不限于以下场景：
 
--   唯一约束键不是分片字段或不包含分片字段
+- 唯一约束键不是分片字段或不包含分片字段
 
--   父子表下，子表与父表的关联字段与子表的唯一约束键不是同一列
+- 父子表下，子表与父表的关联字段与子表的唯一约束键不是同一列
 
 HotDB Server 2.5.3将全局唯一约束优化精确到表级别，默认为所有未来添加的表关闭全局唯一约束，也可以手动在添加表时为某些表单独关闭／开启全局唯一约束。
 
@@ -1795,15 +1772,15 @@ mysql> create table test03(id int primary key,id1 int) **GLOBAL_UNIQUE =1**;
 
 若不使用GLOBAL_UNIQUE [=] {0 | 1}，则默认根据计算节点参数配置的默认值或在管理平台上添加的表配置设置开启或关闭；若GLOBAL_UNIQUE=1则判断为开启；若GLOBAL_UNIQUE=0则判断为关闭。
 
--   若GLOBAL_UNIQUE设置与默认值不同，则以GLOBAL_UNIQUE为准；
+- 若GLOBAL_UNIQUE设置与默认值不同，则以GLOBAL_UNIQUE为准；
 
--   若GLOBAL_UNIQUE设置与管理平台中此表的全局唯一约束配置不同，则会建表失败，并给出error提醒，例如管理平台添加test01时关闭了全局唯一约束：
+- 若GLOBAL_UNIQUE设置与管理平台中此表的全局唯一约束配置不同，则会建表失败，并给出error提醒，例如管理平台添加test01时关闭了全局唯一约束：
 
 mysql> create table test01(id int)global_unique=1;
 
 ERROR 10172 (HY000): CREATE TABLE FAILED due to generated table config already in HotDB config datasource. You may need to check config datasource or reload HotDB config.
 
--   若在垂直分片表或全局表的建表语句中使用GLOBAL_UNIQUE，则会建表成功，但会给出warning信息，因为不需要对其唯一约束做额外处理，例如test03是一张垂直分片表：
+- 若在垂直分片表或全局表的建表语句中使用GLOBAL_UNIQUE，则会建表成功，但会给出warning信息，因为不需要对其唯一约束做额外处理，例如test03是一张垂直分片表：
 
 mysql> create table test03(id int)**global_unique=1**;
 
@@ -1821,9 +1798,9 @@ mysql> show create table test02
 
 | Table | Create Table |
 
-| test3 | CREATE TABLE \`test3\` (
+| test3 | CREATE TABLE `test3` (
 
-\`id\` int(11) DEFAULT NULL
+`id` int(11) DEFAULT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4**/*hotdb:020503 global_unique=1*/** |
 
@@ -1897,11 +1874,11 @@ SELECT * FROM table01 WHERE unique_col = 100; //unique_col是唯一约束列
 
 **注意：**
 
--   检测是否有未接收的事务的前提是主从库都需要开启GTID，否则此参数开启时，故障切换完成会自动重置主从复制关系。
+- 检测是否有未接收的事务的前提是主从库都需要开启GTID，否则此参数开启时，故障切换完成会自动重置主从复制关系。
 
--   若原主库在心跳检测时重试超过10080次，仍然为不可用状态，此时，参数为开启状态，也会自动重置主从复制关系。
+- 若原主库在心跳检测时重试超过10080次，仍然为不可用状态，此时，参数为开启状态，也会自动重置主从复制关系。
 
--   若发生自动重置复制关系后，计算节点记录warning级别的报警日志如下：
+- 若发生自动重置复制关系后，计算节点记录warning级别的报警日志如下：
 
 you should decide whether to manually execute the unexecuted part of binlog or rebuild the replication according to the actual situation.
 
@@ -1909,7 +1886,7 @@ you should decide whether to manually execute the unexecuted part of binlog or r
 
 ![](assets/standard/image58.png)
 
--   若故障切换完成后，主从库未开启GTID或存在未接收的事务，但此参数为关闭状态，计算节点也会记录warning级别的报警日志如下：
+- 若故障切换完成后，主从库未开启GTID或存在未接收的事务，但此参数为关闭状态，计算节点也会记录warning级别的报警日志如下：
 
 DBA is required to deal with the new master, which is the original slave before switching and decide whether to stop replication or continue replication regardless. In addition, there is risk of data error caused by automatic reconnection of replication after manual or unexpected restart of the new master.
 
@@ -1917,7 +1894,7 @@ DBA is required to deal with the new master, which is the original slave before 
 
 以下场景中，可能会出现数据不一致的情况，包括主从存储节点的数据不一致，和数据节点之间的数据不一致：
 
--   **人为操作**
+- **人为操作**
 
 1. 人为或应用程序直接操作存储节点，可能导致任意类型的不一致；
 
@@ -1931,7 +1908,7 @@ DBA is required to deal with the new master, which is the original slave before 
 
 6. 未use逻辑库的情况下，执行了连接绑定语句（包括HINT、set [session] foreign_key_checks=0、START TRANSACTION /*!40100 WITH CONSISTENT SNAPSHOT */、set [session] UNIQUE_CHECKS=0等），导致其SQL语句均直接下发至存储节点执行，进而可能导致任意类型的不一致；
 
--   **环境配置**
+- **环境配置**
 
 1. 存储节点所在服务器时间不一致，在低于2.5.1版本时，会存在导致全局表timestamp类型数据不一致的问题、事务内时间不一致问题；在大于等于2.5.1版本，则参考[timestampProxy](#timestampproxy)设置的模式与场景；
 
@@ -1943,7 +1920,7 @@ DBA is required to deal with the new master, which is the original slave before 
 
 5. 在没有开启全局唯一约束的情况下，不含分片字段的唯一键无法保证全局唯一；
 
--   **异常情况**
+- **异常情况**
 
 1. 在做DDL操作时存储节点故障、后端连接异常中断导致存储节点间表结构不一致，表结构不一致在部分时候可能带来更多不一致的数据；
 
@@ -1959,7 +1936,7 @@ DBA is required to deal with the new master, which is the original slave before 
 
 7. 备份恢复数据时出现异常，例如部分节点backup服务关闭，存储节点出现故障等 ，可能导致数据出现不一致；
 
--   **其他**
+- **其他**
 
 1. MySQL自身BUG，可能导致任意类型的数据不一致。应尽量使用稳定的MySQL版本与功能，不能盲目追求MySQL新功能；
 
@@ -1977,11 +1954,11 @@ HotDB Server提供数据节点内的MySQL高可用，当主存储节点不可用
 
 若要使用数据节点高可用，需满足以下前提：
 
--   在数据节点内配置主从存储节点与故障切换优先级规则；
+- 在数据节点内配置主从存储节点与故障切换优先级规则；
 
--   主从存储节点之间必须已配置主从或双主的复制关系；
+- 主从存储节点之间必须已配置主从或双主的复制关系；
 
--   在计算节点配置文件中开启心跳功能。
+- 在计算节点配置文件中开启心跳功能。
 
 #### 数据节点高可用
 
@@ -2027,15 +2004,15 @@ MySQL数据库主从的配置方式，请参考MySQL的官方网站（注意对�
 
 说明：
 
--   如果是主从，选择优先级最高的进行切换，切换后计算节点会将原主机和原主机的其他从机置为不可用，不能再进行切换。
+- 如果是主从，选择优先级最高的进行切换，切换后计算节点会将原主机和原主机的其他从机置为不可用，不能再进行切换。
 
--   如果是双主，切换后不会将原主库置为不可用，可以继续手动来回切换。
+- 如果是双主，切换后不会将原主库置为不可用，可以继续手动来回切换。
 
--   如果优先级最高从库不可用或延迟超过10s，依次选择剩余从库中优先级较高的进行切换，如果均不可用或存在延迟超过10s，则不切换，提示错误（切换失败日志提示 switch datasource datasourceid failed due to:no available backup found）
+- 如果优先级最高从库不可用或延迟超过10s，依次选择剩余从库中优先级较高的进行切换，如果均不可用或存在延迟超过10s，则不切换，提示错误（切换失败日志提示 switch datasource datasourceid failed due to:no available backup found）
 
--   在计算节点版本高于2.5.6 （包含）手动切换时，会先检查当前的hotdb_datanode/hotdb_datasource/hotdb_failover表是否与running 表中一致，若不一致会提示："当前存储节点的配置信息与内存中的配置信息不一致，无法进行切换，请动态加载后重试"；若校验通过，在新备存储节点接管前，会将被接管的存储节点更新为主库，原主库更新为双主备库或从库（注：若为主从关系，原主库及其相关的从节点均被级联置为不可用，且切换时会同步清理原复制关系，将原主库与原从库的故障切换规则进行互换，待人工进行线下的复制关系重建）
+- 在计算节点版本高于2.5.6 （包含）手动切换时，会先检查当前的hotdb_datanode/hotdb_datasource/hotdb_failover表是否与running 表中一致，若不一致会提示："当前存储节点的配置信息与内存中的配置信息不一致，无法进行切换，请动态加载后重试"；若校验通过，在新备存储节点接管前，会将被接管的存储节点更新为主库，原主库更新为双主备库或从库（注：若为主从关系，原主库及其相关的从节点均被级联置为不可用，且切换时会同步清理原复制关系，将原主库与原从库的故障切换规则进行互换，待人工进行线下的复制关系重建）
 
--   切换成功时，计算节点记录切换过程日志：
+- 切换成功时，计算节点记录切换过程日志：
 
 INFO [pool-1-thread-1064] (SwitchDataSource.java:78) -received switch datasourceid command from Manager : [连接信息]
 
@@ -2043,29 +2020,29 @@ WARN [pool-1-thread-1339] (BackendDataNode.java:263) -datanode id switch datasou
 
 INFO [pool-1-thread-1339] (SwitchDataSource.java:68) -switch datasource:id for datanode:id successfully by Manager.
 
--   在没有配置切换规则时，不会进行切换，提示错误: switch datasource id failed due to:found no backup information）
+- 在没有配置切换规则时，不会进行切换，提示错误: switch datasource id failed due to:found no backup information）
 
 ##### 故障切换
 
 故障切换一般是因存储节点发生故障后自动产生的切换，说明如下：
 
--   不论是双主还是主从，主库发生故障并切换后，都会将主库置为不可用，不能再进行切换。需要人工去恢复主库，主库正常后，手动将主库置为可用，动态加载后会将主库恢复为可用状态。
+- 不论是双主还是主从，主库发生故障并切换后，都会将主库置为不可用，不能再进行切换。需要人工去恢复主库，主库正常后，手动将主库置为可用，动态加载后会将主库恢复为可用状态。
 
--   如果从库状态为不可用，则不切换，计算节点记录日志
+- 如果从库状态为不可用，则不切换，计算节点记录日志
 
 WARN [pool-1-thread-2614] datanode id failover failed due to found no available backup
 
--   在server.xml可以配置参数waitForSlaveInFailover控制切换是否等待从库追上复制，该参数默认为true等待，在切换过程中，会等待从库追上复制，如果设置为false不等待，则会立即切换。（立即切换存在数据丢失的风险，不建议设置）。
+- 在server.xml可以配置参数waitForSlaveInFailover控制切换是否等待从库追上复制，该参数默认为true等待，在切换过程中，会等待从库追上复制，如果设置为false不等待，则会立即切换。（立即切换存在数据丢失的风险，不建议设置）。
 
--   一主多从的情况下，计算节点选择优先级最高的从库进行切换，如果优先级最高从库不可用，依次选择剩余从库中优先级较高的进行切换，如果均不可用，则不切换，计算节点记录日志WARN [pool-1-thread-2614] -datanode id failover failed due to found no available backup；
+- 一主多从的情况下，计算节点选择优先级最高的从库进行切换，如果优先级最高从库不可用，依次选择剩余从库中优先级较高的进行切换，如果均不可用，则不切换，计算节点记录日志WARN [pool-1-thread-2614] -datanode id failover failed due to found no available backup；
 
--   在HotDB Server 版本高于2.5.6 （包含）故障切换时，在新备存储节点接管前会将被接管的存储节点更新为主库，原主库更新为双主备库或从库，并置为不可用，原主库相关的从节点均被级联置为不可用（注：若为主从关系，切换时会同步清理原复制关系，且将原主库与原从库的故障切换规则进行互换，待人工进行线下的复制关系重建）
+- 在HotDB Server 版本高于2.5.6 （包含）故障切换时，在新备存储节点接管前会将被接管的存储节点更新为主库，原主库更新为双主备库或从库，并置为不可用，原主库相关的从节点均被级联置为不可用（注：若为主从关系，切换时会同步清理原复制关系，且将原主库与原从库的故障切换规则进行互换，待人工进行线下的复制关系重建）
 
--   故障切换过程中，主库心跳不停，如果连续两次成功，则放弃切换，计算节点记录日志
+- 故障切换过程中，主库心跳不停，如果连续两次成功，则放弃切换，计算节点记录日志
 
 INFO [\$NIOREACTOR-6-RW] (Heartbeat.java:502) -heartbeat continue success twice for datasource 5 192.168.200.52:3310/phy243_05, give up failover.
 
--   切换成功时，计算节点记录日志，并记录切换原因：
+- 切换成功时，计算节点记录日志，并记录切换原因：
 
 如果是网络故障、服务器宕机，掉电等，则记录Network is unreachable
 
@@ -2087,11 +2064,11 @@ INFO [\$NIOREACTOR-6-RW] (Heartbeat.java:502) -heartbeat continue success twice 
 
 02/21 15:57:29.429 WARN [pool-1-thread-1066] (Heartbeat.java:416) -datasource 5 192.168.200.52:331001_3310_ms heartbeat failed and will be no longer used.
 
--   在没有配置切换规则时，不会进行切换，计算节点记录日志
+- 在没有配置切换规则时，不会进行切换，计算节点记录日志
 
 WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no backup information
 
--   在存储节点发生故障切换后，不论主从还是双主，我们统一要求，手动将存储节点置为可用的前提是操作人员必须清楚当前主从服务无异常，数据同步无异常，特别是主从模式，要保证期间备提供服务时的数据同步到了主存储节点。存储节点启用时，我们要养成习惯，不要跳过主备一致性检测。
+- 在存储节点发生故障切换后，不论主从还是双主，我们统一要求，手动将存储节点置为可用的前提是操作人员必须清楚当前主从服务无异常，数据同步无异常，特别是主从模式，要保证期间备提供服务时的数据同步到了主存储节点。存储节点启用时，我们要养成习惯，不要跳过主备一致性检测。
 
 #### 配置库高可用
 
@@ -2111,9 +2088,9 @@ WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no back
 
 <property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
 
--   当主配置库发生故障时会自动切换到从配置库。切换过程中若存在延迟会等待从配置库复制延迟追上后切换成功并提供服务。
+- 当主配置库发生故障时会自动切换到从配置库。切换过程中若存在延迟会等待从配置库复制延迟追上后切换成功并提供服务。
 
--   在计算节点版本高于2.5.6 （包含）时主配置库发生故障，在从配置库接管前会将被接管的从配置库更新为主库，原主配置库更新为从库，且会同步调整server.xml配置文件，如下图：
+- 在计算节点版本高于2.5.6 （包含）时主配置库发生故障，在从配置库接管前会将被接管的从配置库更新为主库，原主配置库更新为从库，且会同步调整server.xml配置文件，如下图：
 
 > <property name="url">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- 主配置库地址 -->
 >
@@ -2127,7 +2104,7 @@ WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no back
 >
 > <property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
 
--   若计算节点高可用服务涉及配置库的主从关系，需保证server.xml中一组计算节点高可用的主从配置库的配置完全相同，不能交错配置。
+- 若计算节点高可用服务涉及配置库的主从关系，需保证server.xml中一组计算节点高可用的主从配置库的配置完全相同，不能交错配置。
 
 2. 配置库同时支持MGR配置库(MySQL必须是5.7以上，配置库MGR暂时只支持三个节点)，在server.xml中配置具有MGR关系的配置库信息，并且保证MGR关系正常。MGR关系不正确的情况下，配置库可能会无法正常提供服务，以及可能造成启动不成功。
 
@@ -2355,23 +2332,23 @@ Secondary节点：
 
 多计算节点集群注意事项：
 
-1.  计算节点集群启动时Primary具有随机性，但主配置库所在的服务器上的计算节点不会成为Primary；
+1. 计算节点集群启动时Primary具有随机性，但主配置库所在的服务器上的计算节点不会成为Primary；
 
-2.  故障的计算节点经过一段时间，会自行关闭服务端口变为Started状态；
+2. 故障的计算节点经过一段时间，会自行关闭服务端口变为Started状态；
 
-3.  Secondary发现Primary失去响应且自己不在主配置库服务器上，会发起新选举，收到多数投票变为新Primary；
+3. Secondary发现Primary失去响应且自己不在主配置库服务器上，会发起新选举，收到多数投票变为新Primary；
 
-4.  新节点加入，Primary发现新Started的节点加入，会添加新发现的节点；Primary发现Secondary失去响应，则会剔除该节点；
+4. 新节点加入，Primary发现新Started的节点加入，会添加新发现的节点；Primary发现Secondary失去响应，则会剔除该节点；
 
-5.  集群环境升级版本，如果不影响业务，建议关闭集群升级后再启动；
+5. 集群环境升级版本，如果不影响业务，建议关闭集群升级后再启动；
 
-6.  集群中各节点的server.xml配置，除集群相关的参数都必须一致；
+6. 集群中各节点的server.xml配置，除集群相关的参数都必须一致；
 
-7.  各计算节点服务器时间差异需小于1s；
+7. 各计算节点服务器时间差异需小于1s；
 
-8.  计算节点服务器之间要求任何时候网络延迟均小于1s；建议计算节点间\\计算节点与存储节点间\\存储节点间的延迟均低于1ms，以便使用时获得良好的响应时间性能；
+8. 计算节点服务器之间要求任何时候网络延迟均小于1s；建议计算节点间\计算节点与存储节点间\存储节点间的延迟均低于1ms，以便使用时获得良好的响应时间性能；
 
-9.  建议一个局域网网段内，只部署一套多计算节点集群（只是建议，不是强制要求，建议的理由是为以后扩容预留较大空间）；
+9. 建议一个局域网网段内，只部署一套多计算节点集群（只是建议，不是强制要求，建议的理由是为以后扩容预留较大空间）；
 
 10. 配置库IP需配置实际IP。
 
@@ -2389,13 +2366,13 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 使用Listener需要计算节点满足必要条件：
 
--   计算节点版本为2.5.5及以上
+- 计算节点版本为2.5.5及以上
 
--   计算节点为多计算节点集群模式
+- 计算节点为多计算节点集群模式
 
--   开启XA模式
+- 开启XA模式
 
--   将server.xml中[enableListener](#enablelistener)参数设置为true。
+- 将server.xml中[enableListener](#enablelistener)参数设置为true。
 
 ####### 添加节点配置Listener
 
@@ -2411,11 +2388,11 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 填写规则如下：
 
--   监听程序主机名：默认填写"默认"，无需修改
+- 监听程序主机名：默认填写"默认"，无需修改
 
--   监听端口：即Listener的启动端口，默认3330
+- 监听端口：即Listener的启动端口，默认3330
 
--   监听程序服务端口：即Listener向HotDB Server提供服务的端口，默认4001。若同一台存储节点服务器上有多个MySQL实例需要绑定Listener，服务端口需要保持唯一。
+- 监听程序服务端口：即Listener向HotDB Server提供服务的端口，默认4001。若同一台存储节点服务器上有多个MySQL实例需要绑定Listener，服务端口需要保持唯一。
 
 填写完毕后，点击测试连接，测试通过后点击保存并返回。
 
@@ -2443,11 +2420,11 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 填写规则如下：
 
--   监听程序主机名：填写该存储节点的主机名
+- 监听程序主机名：填写该存储节点的主机名
 
--   监听端口：即Listener的启动端口，默认3330
+- 监听端口：即Listener的启动端口，默认3330
 
--   监听程序服务端口：即Listener向HotDB Server提供服务的端口，默认4001。若同一台存储节点服务器上有多个MySQL实例需要绑定Listener，服务端口需要保持唯一
+- 监听程序服务端口：即Listener向HotDB Server提供服务的端口，默认4001。若同一台存储节点服务器上有多个MySQL实例需要绑定Listener，服务端口需要保持唯一
 
 填写完毕后，点击测试连接，测试通过后点击保存并返回。
 
@@ -2457,9 +2434,9 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 ###### 注意事项
 
-1.  Listener只需部署完成并正确识别即可，日常计算节点操作过程中可无需关注。
+1. Listener只需部署完成并正确识别即可，日常计算节点操作过程中可无需关注。
 
-2.  Listener组件尽可能和存储节点安装在同一台服务器上；
+2. Listener组件尽可能和存储节点安装在同一台服务器上；
 
 3.若一个监听程序需要监听多个存储节点，则需要为其分别填写不同的服务端口；
 
@@ -2484,14 +2461,16 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 涉及的参数如下:
 
 ---------------- -------------------------------------------------------- --------------------------------------- ----------------------
-  **参数值**       **参数说明**                                             **参考值**                              **动态加载是否生效**
-  haMode           高可用模式：0：主备；1：集群                             集群环境下参数值为1                     是
-  serverId         集群节点编号1-N（节点数)，集群内唯一且N<=集群节点总数   serverID要从1开始，且集群内连续不重复   是
-  clusterName      集群组名称                                               HotDB-Cluster                           是
-  clusterSize      集群节点总数                                             默认值3，根据实际节点数配置             是
-  clusterNetwork   集群所在网段                                             192.168.200.0/24，跟集群IP同网段        是
-  clusterHost      本节点所在IP                                             192.168.200.1，根据具体IP匹配           是
-  clusterPort      集群通信端口                                             默认3326                                是
+
+**参数值**       **参数说明**                                             **参考值**                              **动态加载是否生效**
+haMode           高可用模式：0：主备；1：集群                             集群环境下参数值为1                     是
+serverId         集群节点编号1-N（节点数)，集群内唯一且N<=集群节点总数   serverID要从1开始，且集群内连续不重复   是
+clusterName      集群组名称                                               HotDB-Cluster                           是
+clusterSize      集群节点总数                                             默认值3，根据实际节点数配置             是
+clusterNetwork   集群所在网段                                             192.168.200.0/24，跟集群IP同网段        是
+clusterHost      本节点所在IP                                             192.168.200.1，根据具体IP匹配           是
+clusterPort      集群通信端口                                             默认3326                                是
+
 ---------------- -------------------------------------------------------- --------------------------------------- ----------------------
 
 ###### HA模式扩展集群多节点
@@ -2499,11 +2478,13 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 HA模式扩展到集群多节点，主要在于如何将keepalived切换到LVS，此小节将主要描述HA到集群的扩容操作，涉及的组件信息如下:
 
 ------------ -------------------------- ---------------------
-  **角色**     **连接信息**               **名称**
-  主计算节点   192.168.210.67_3323_3325   HotDB_01
-  备计算节点   192.168.210.68_3325        HotDB_02
-  LVS服务      192.168.210.136            VIP:192.168.210.218
-  新计算节点   192.168.210.134            HotDB_03
+
+**角色**     **连接信息**               **名称**
+主计算节点   192.168.210.67_3323_3325   HotDB_01
+备计算节点   192.168.210.68_3325        HotDB_02
+LVS服务      192.168.210.136            VIP:192.168.210.218
+新计算节点   192.168.210.134            HotDB_03
+
 ------------ -------------------------- ---------------------
 
 ![](assets/standard/image84.png)
@@ -2579,12 +2560,14 @@ service keepalived stop
 此小节将描述集群模式下进行计算节点扩容相关操作，涉及的组件信息如下:
 
 ------------ --------------------------- ---------------------
-  **角色**     **连接信息**                **名称**
-  主计算节点   192.168.210.157_3323_3325   HotDB_01
-  备计算节点   192.168.210.156_3323_3325   HotDB_02
-  备计算节点   192.168.210.155_3323_3325   HotDB_03
-  主/备LVS     192.168.210.135/137         VIP:192.168.210.216
-  新计算节点   192.168.210.134             HotDB_04
+
+**角色**     **连接信息**                **名称**
+主计算节点   192.168.210.157_3323_3325   HotDB_01
+备计算节点   192.168.210.156_3323_3325   HotDB_02
+备计算节点   192.168.210.155_3323_3325   HotDB_03
+主/备LVS     192.168.210.135/137         VIP:192.168.210.216
+新计算节点   192.168.210.134             HotDB_04
+
 ------------ --------------------------- ---------------------
 
 **第一步：LVS服务器添加新计算节点**
@@ -2631,11 +2614,11 @@ sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-
 
 **注意事项：**
 
--   若集群继续引入新计算节点，按第一步开始重复操作；
+- 若集群继续引入新计算节点，按第一步开始重复操作；
 
--   若计算节点的clusterSize、haMode值与实际配置的集群不匹配，第四步reload @@config会失败，需保证配置与实际情况吻合；
+- 若计算节点的clusterSize、haMode值与实际配置的集群不匹配，第四步reload @@config会失败，需保证配置与实际情况吻合；
 
--   新计算节点的参数serverId需保证编号唯一不重复且跟原集群连续不间断，否则会导致启动异常；
+- 新计算节点的参数serverId需保证编号唯一不重复且跟原集群连续不间断，否则会导致启动异常；
 
 ##### 计算节点缩容
 
@@ -2648,8 +2631,9 @@ sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-
 | **参数值** | **参数说明**                                     | **参考值**                                     | **动态加载是否生效** |
 | haMode     | 高可用模式：0：主备；1：集群                     | 集群环境下参数值为1                            | 是                   |
 | HaState    | 计算节点HA模式下的主备角色配置                   | 主计算节点配置：master，备计算节点配置：backup | 是                   |
+
 | haNodeHost | 计算节点高可用模式下对应的当前主计算节点连接信息 | 配置格式为IP:PORT                              | 是
-|            |                                                  | 192.168.200.1:3325                             |                      |
+| |                                                  | 192.168.200.1:3325                             |                      |
 
 ###### 集群模式缩容为HA模式
 
@@ -2775,17 +2759,17 @@ HotDB Server读写分离对应用研发者和数据库管理员完全透明，�
 
 说明：
 
--   读写分离策略strategyForRWSplit参数为0时读写操作都在主存储节点，也即关闭读写分离。
+- 读写分离策略strategyForRWSplit参数为0时读写操作都在主存储节点，也即关闭读写分离。
 
--   读写分离策略strategyForRWSplit参数设置为1时，代表可分离的读请求发往所有可用存储节点（包含主存储节点），写操作与不可分离的读请求在主存储节点上进行。
+- 读写分离策略strategyForRWSplit参数设置为1时，代表可分离的读请求发往所有可用存储节点（包含主存储节点），写操作与不可分离的读请求在主存储节点上进行。
 
 > strategyForRWSplit参数为1时可设置主备存储节点的读比例，设置备存储节点读比例后数据节点下的所有备存储节点均分该比例的读任务。例如：设置weightForSlaveRWSplit值为60%，假设节点为一主两从架构，则可分离的读中，主机读40%，剩余两从机各读30%；
 
--   读写分离策略strategyForRWSplit参数为2时，代表可分离的读请求发往可用的备存储节点，写操作与不可分离的读请求在主存储节点上进行。
+- 读写分离策略strategyForRWSplit参数为2时，代表可分离的读请求发往可用的备存储节点，写操作与不可分离的读请求在主存储节点上进行。
 
 > strategyForRWSplit参数为2时数据节点上的所有可分离的读任务会自动均分至该数据节点下的所有备存储节点上，若无备存储节点则由主存储节点全部承担。
 
--   读写分离策略strategyForRWSplit参数为3时，代表事务（非XA模式）中发生写前的读请求与自动提交的读请求发往可用的备存储节点。其余请求在主存储节点上进行。
+- 读写分离策略strategyForRWSplit参数为3时，代表事务（非XA模式）中发生写前的读请求与自动提交的读请求发往可用的备存储节点。其余请求在主存储节点上进行。
 
 注：在未使用HINT做读写分离的情况下， "可分离的读请求"主要指：自动提交的读请求与显式只读事务中的读请求。其余读请求均为"不可分离的读请求"。例如非自动提交事务中的读请求。
 
@@ -2799,7 +2783,7 @@ DNID是数据节点DATANODE_ID的缩写
 
 在计算节点上可以使用DNID作为WHERE子句中的过滤条件，以及在SELECT语句中作为查询项；也可以在结果集中显示每行结果的DNID（数据节点）。
 
--   **在SELECT、UPDATE、DELETE子句中，使用DNID字段**
+- **在SELECT、UPDATE、DELETE子句中，使用DNID字段**
 
 SELECT * FROM customer WHERE dnid=1;
 
@@ -2813,13 +2797,13 @@ UPDATE customer SET id=4 WHERE dnid=1 AND name='a';
 
 执行该DELETE语句，计算节点将会修改分片表customer在数据节点ID为1，字段name等于'a'的数据。
 
--   **执行SELECT语句使用DNID作为查询项**
+- **执行SELECT语句使用DNID作为查询项**
 
 SELECT *,dnid FROM tab_name;
 
 执行该SELECT语句，计算节点将会在结果集里显示所有结果的dnid值／
 
--   **在结果集中显示DNID**
+- **在结果集中显示DNID**
 
 登录到计算节点以后，执行SET SHOW_DNID=1语句，计算节点将会在SELECT语句中返回每一行结果的DNID（数据节点ID）。
 
@@ -2879,7 +2863,7 @@ mysql> select * from customer where id in (77,67,52,20);
 
 4 rows in set (0.00 sec)
 
--   **DNID的限制**
+- **DNID的限制**
 
 DNID字段为计算节点的保留字段，禁止在业务表中使用DNID字段，在SQL语句中使用DNID作为别名。
 
@@ -2891,7 +2875,7 @@ DNID只适用于SELECT，UPDATE，DELETE的简单单表语句；并且，DNID只
 
 在计算节点使用HINT语法，可绕过HotDB Server解析器，直接在指定数据节点上执行MySQL的任意SQL语句。计算节点支持两种方式的HINT语法：
 
--   **在HINT中使用DNID(数据节点ID)：**
+- **在HINT中使用DNID(数据节点ID)：**
 
 语法：
 
@@ -2905,7 +2889,7 @@ DNID只适用于SELECT，UPDATE，DELETE的简单单表语句；并且，DNID只
 
 该语句将在数据库节点1上执行。用户可以通过分布式事务数据库平台中的"数据节点"页面，找到数据节点ID为1的存储节点名称，并在"存储节点"页面中搜索指定的存储节点名称，即可定位到实际的MySQL数据库。
 
--   **在HINT中使用DSID(存储节点ID)：**
+- **在HINT中使用DSID(存储节点ID)：**
 
 HINT语句支持指定datasource_id跳过计算节点直接向存储节点发送语句。可利用[服务端口命令](#使用已有分片规则建表相关命令)查看存储节点datasource_id：
 
@@ -2923,7 +2907,7 @@ hotdb> show hotdb datasources where datasource_id like '22';
 
 | 23 | 22 | 192.168.210.41_3308_hotdb157 | 1 | 1 | 192.168.210.41 | 3308 | hotdb157 | 1 |
 
--   指定具体datasource_id且不写binlog：
+- 指定具体datasource_id且不写binlog：
 
 /*!hotdb:dsid=nobinlog:datasource_id*/要执行的SQL
 
@@ -2951,7 +2935,7 @@ hotdb> /*!hotdb:dsid=nobinlog:22*/show variables like 'wait_timeout';
 
 1 row in set (0.01 sec)
 
--   指定所有datasource_id且不写binlog：
+- 指定所有datasource_id且不写binlog：
 
 /*!hotdb:dsid=nobinlog:all*/要执行的SQL
 
@@ -2991,13 +2975,13 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 
 8 rows in set (0.00 sec)
 
--   指定具体datasource_id且写binlog的语法：
+- 指定具体datasource_id且写binlog的语法：
 
 /*!hotdb:dsid=datasource_id*/要执行的SQL
 
 注：此语法会将执行的语句记入对应存储节点的二进制日志文件binlog中。同时操作具有复制关系的存储节点时需要谨慎处理，以免导致主从复制同步异常。
 
--   指定所有datasource_id且写binlog的语法：
+- 指定所有datasource_id且写binlog的语法：
 
 /*!hotdb:dsid=all*/要执行的SQL
 
@@ -3005,7 +2989,7 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 
 注：若多个存储节点分布在同实例上，使用HINT中datasource_id也需单独指定存储节点执行。
 
--   **在HINT中使用分片字段：**
+- **在HINT中使用分片字段：**
 
 语法：
 
@@ -3019,7 +3003,7 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 
 使用方法：
 
-连接计算节点(参考[登录计算节点并开始使用](#登录计算节点并开始使用))，选择设置的逻辑库（这里使用\`test\`逻辑库），然后使用上述方式执行指定的语句(这里举例说明,使用时可以按需编写SQL)。
+连接计算节点(参考[登录计算节点并开始使用](#登录计算节点并开始使用))，选择设置的逻辑库（这里使用`test`逻辑库），然后使用上述方式执行指定的语句(这里举例说明,使用时可以按需编写SQL)。
 
 在dn_id=2的分片节点上查找cutomer表
 
@@ -3097,7 +3081,6 @@ mysql> show warnings;
 
 | Level | Code | Message
 
-|
 
 | Note | 10042 | The connection in current LogicDB was a binded connection, operations under current LogicDB may cause connect abort. |
 
@@ -3205,9 +3188,9 @@ EXPLAIN语句只适用于INSERT，SELECT，UPDATE，DELETE的简单单表语句�
 
 计算节点[管理端（3325）](#管理端信息监控)支持OnlineDDL功能，保证了在进行表变更时，不会阻塞线上业务读写，库依然能正常对外提供访问，具体使用方法如下：
 
--   登录3325端管理端口，使用onlineddl "[DDLSTATEMENT]"语法可以执行onlineddl语句，例如：onlineddl "alter table customer add column testddl varchar(20) default '测试onlineddl'";
+- 登录3325端管理端口，使用onlineddl "[DDLSTATEMENT]"语法可以执行onlineddl语句，例如：onlineddl "alter table customer add column testddl varchar(20) default '测试onlineddl'";
 
--   执行show @@onlineddl语句，即可显示当前正在运行的OnlineDDL语句及语句执行速度，progress显示当前DDL执行进度（单位：%），speed显示为当前DDL运行速度（单位：行/ms），例如：
+- 执行show @@onlineddl语句，即可显示当前正在运行的OnlineDDL语句及语句执行速度，progress显示当前DDL执行进度（单位：%），speed显示为当前DDL运行速度（单位：行/ms），例如：
 
 mysql> show @@onlineddl;
 
@@ -3227,50 +3210,52 @@ mysql> show @@onlineddl;
 
 在NDB SQL模式开启时，需要同时满足以下条件才会走NDB SQL逻辑：
 
--   全局唯一不开启的情况下，必须有主键或者唯一键，主键和唯一键必须为分片字段或自增；
+- 全局唯一不开启的情况下，必须有主键或者唯一键，主键和唯一键必须为分片字段或自增；
 
--   全局唯一开启的情况下，必须有主键或者唯一键；
+- 全局唯一开启的情况下，必须有主键或者唯一键；
 
--   上述两条中的主键，唯一键必须是单字段数值类型；
+- 上述两条中的主键，唯一键必须是单字段数值类型；
 
--   执行计算节点原不支持的查询语句。
+- 执行计算节点原不支持的查询语句。
 
 如下SQL类型的语句计算节点本身是不支持的，当开启NDB SQL后支持查询
 
 ------------------- ---------------------------------- -------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **MySQL语句类型**   **子句类型**                       **功能**                                     **说明**
+
+**MySQL语句类型**   **子句类型**                       **功能**                                     **说明**
 
 SELECT              INNER/LEFT JOIN/RIGHT JOIN WHERE   运算表达式                                   column1+column2、column1-column2、column1*column2、column1/column2
 
-<=>或<>                                  
-    
+<=>或<>
+
                                                          \% 或 MOD                                    仅支持column%常量；不支持column1%column2
-    
+
                                                          RAND()                                       2.3不支持rand()相关的所有语法，包括GROUP BY rand() ,ORDER BY rand()
-    
+
                                                          / 或 DIV                                     仅支持column DIV 常量；不支持column1 DIV column2
-    
+
                       INNER/LEFT JOIN/RIGHT JOIN ON      IN/IS NOT NULL/IS NULL/BETWEEN...AND/LIKE   
-    
+
                                                          <=>或<>                                  
-    
+
                                                          XOR                                          
-    
+
                                                          CAST()                                       
-    
+
                                                          CONCAT()                                     不支持CONCAT()在运算表达式中做JOIN条件（ON子句条件），或WHERE子句中的关联条件
-    
+
                                                          CASE...WHEN...END                          仅支持CASE WHEN判断的是单个表的字段；不支持多表字段的条件判断如：CASE WHEN column_name1=xx THEN column_name2 END ；CASE WHEN必须使用表别名
-    
+
                       函数                               MIN(MIN(column_name))\                       函数嵌套不支持
                                                          ABS(MAX())                                   
-    
+
                       多表(三表及以上)查询               混合的LEFT/INNER/NATURAL JOIN\               计算节点自身支持多表查询中的单种LEFT、单种JOIN INNER、混合JOIN LEFT/INNER/RIGHT JOIN以及TABLE a ... JOIN(TABLE b,TABLE c)...语法。开启NDB后可额外支持混合LEFT/INNER/NATURAL JOIN以及单种NATURAL JOIN。
                                                          单种NATURAL JOIN                             
-    
+
                       子查询                             查询运算条件（ANY,ALL）                      
-    
+
                                                          嵌套多层关联子查询                           
+
 ------------------- ---------------------------------- -------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 表结构中若有非geometry类型的空间类型字段、json类型的字段，原不支持的查询SQL依旧无法支持；
@@ -3295,25 +3280,25 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 
 #### 使用限制
 
--   源表必须具有主键或者唯一键，且表名长度不能超过45个字符；
+- 源表必须具有主键或者唯一键，且表名长度不能超过45个字符；
 
--   源表上不能有触发器，或源表不能被其他触发器关联；
+- 源表上不能有触发器，或源表不能被其他触发器关联；
 
--   源表不能有外键约束；
+- 源表不能有外键约束；
 
--   新的分片字段必须是表结构包含的字段，且不能是表当前正在使用的分片字段；
+- 新的分片字段必须是表结构包含的字段，且不能是表当前正在使用的分片字段；
 
--   新的分片字段数据类型不能是BIT、TINYTEXT、TEXT、MEDIUMTEXT、LONGTEXT、TINYBLOB、BLOB、MEDIUMBLOB、LONGBLOB、GEOMETRY、POINT、LINESTRING、POLYGON、MULTIPOINT、MULTILINESTRING、MULTIPOLYGON、GEOMETRYCOLLECTION、JSON；
+- 新的分片字段数据类型不能是BIT、TINYTEXT、TEXT、MEDIUMTEXT、LONGTEXT、TINYBLOB、BLOB、MEDIUMBLOB、LONGBLOB、GEOMETRY、POINT、LINESTRING、POLYGON、MULTIPOINT、MULTILINESTRING、MULTIPOLYGON、GEOMETRYCOLLECTION、JSON；
 
--   不支持全局表、垂直分片表、父表、子表，仅支持对水平分片表使用alter修改分片字段；
+- 不支持全局表、垂直分片表、父表、子表，仅支持对水平分片表使用alter修改分片字段；
 
--   水平分片表中，不支持RANGE、MATCH、ROUTE分片规则的源表进行alter修改分片字段；
+- 水平分片表中，不支持RANGE、MATCH、ROUTE分片规则的源表进行alter修改分片字段；
 
--   进行alter修改分片字段时，源表不能有正在进行的分片方案变更任务；
+- 进行alter修改分片字段时，源表不能有正在进行的分片方案变更任务；
 
--   若源表出现主备数据不一致情况，使用alter修改分片字段时会直接跳过检测依旧执行（建议执行前人工通过管理平台进行主备数据一致性检测）；
+- 若源表出现主备数据不一致情况，使用alter修改分片字段时会直接跳过检测依旧执行（建议执行前人工通过管理平台进行主备数据一致性检测）；
 
--   源表开启全局唯一约束后，使用alter修改分片字段时要求源表唯一约束字段的历史数据必须唯一；
+- 源表开启全局唯一约束后，使用alter修改分片字段时要求源表唯一约束字段的历史数据必须唯一；
 
 ## 数据类型与字符集支持
 
@@ -3322,54 +3307,60 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 #### 数值类型
 
 ---------------------- -------------- ------------------------------------------------------------------
-  **MySQL数据类型**      **支持状态**   **说明**
-  BIT                    限制支持       DDL语句中可支持BIT类型，不支持在跨库的DML语句中对BIT类型的操作。
-  TINYINT                支持           　
-  SMALLINT               支持           　
-  MEDIUMINT              支持           　
-  INT                    支持           　
-  INTEGER                支持           　
-  BIGINT                 支持           　
-  SERIAL                 支持           与BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE 同义
-  SERIAL DEFAULT VALUE   支持           与NOT NULL AUTO_INCREMENT UNIQUE同义
-  REAL                   不支持         禁止设置为分片字段与父子表关联字段类型
-  DOUBLE                 不支持         禁止设置为分片字段与父子表关联字段类型
-  FLOAT                  不支持         禁止设置为分片字段与父子表关联字段类型
-  DECIMAL                支持           　
-  NUMERIC                支持           　
+
+**MySQL数据类型**      **支持状态**   **说明**
+BIT                    限制支持       DDL语句中可支持BIT类型，不支持在跨库的DML语句中对BIT类型的操作。
+TINYINT                支持           　
+SMALLINT               支持           　
+MEDIUMINT              支持           　
+INT                    支持           　
+INTEGER                支持           　
+BIGINT                 支持           　
+SERIAL                 支持           与BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE 同义
+SERIAL DEFAULT VALUE   支持           与NOT NULL AUTO_INCREMENT UNIQUE同义
+REAL                   不支持         禁止设置为分片字段与父子表关联字段类型
+DOUBLE                 不支持         禁止设置为分片字段与父子表关联字段类型
+FLOAT                  不支持         禁止设置为分片字段与父子表关联字段类型
+DECIMAL                支持           　
+NUMERIC                支持           　
+
 ---------------------- -------------- ------------------------------------------------------------------
 
 #### 日期与时间类型
 
 ------------------- -------------- ----------
-  **MySQL数据类型**   **支持状态**   **说明**
-  DATE                支持           　
-  TIME                支持           　
-  TIMESTAMP           支持           　
-                      支持           　
-  DATETIME            支持           　
-                      支持           　
-  YEAR                支持           　
+
+**MySQL数据类型**   **支持状态**   **说明**
+DATE                支持           　
+TIME                支持           　
+TIMESTAMP           支持           　
+支持           　
+DATETIME            支持           　
+支持           　
+YEAR                支持           　
+
 ------------------- -------------- ----------
 
 #### 字符串类型
 
 ------------------- -------------- ----------------------------------------
-  **MySQL数据类型**   **支持状态**   **说明**
-  CHAR                支持           　
-  VARCHAR             支持           　
-  BINARY              支持           　
-  VARBINARY           支持           　
-  TINYBLOB            支持           禁止设置为分片字段与父子表关联字段类型
-  BLOB                支持           禁止设置为分片字段与父子表关联字段类型
-  MEDIUMBLOB          支持           禁止设置为分片字段与父子表关联字段类型
-  LONGBLOB            支持           禁止设置为分片字段与父子表关联字段类型
-  TINYTEXT            支持           禁止设置为分片字段与父子表关联字段类型
-  TEXT                支持           禁止设置为分片字段与父子表关联字段类型
-  MEDIUMTEXT          支持           禁止设置为分片字段与父子表关联字段类型
-  LONGTEXT            支持           禁止设置为分片字段与父子表关联字段类型
-  ENUM                支持           
-  SET                 支持           　
+
+**MySQL数据类型**   **支持状态**   **说明**
+CHAR                支持           　
+VARCHAR             支持           　
+BINARY              支持           　
+VARBINARY           支持           　
+TINYBLOB            支持           禁止设置为分片字段与父子表关联字段类型
+BLOB                支持           禁止设置为分片字段与父子表关联字段类型
+MEDIUMBLOB          支持           禁止设置为分片字段与父子表关联字段类型
+LONGBLOB            支持           禁止设置为分片字段与父子表关联字段类型
+TINYTEXT            支持           禁止设置为分片字段与父子表关联字段类型
+TEXT                支持           禁止设置为分片字段与父子表关联字段类型
+MEDIUMTEXT          支持           禁止设置为分片字段与父子表关联字段类型
+LONGTEXT            支持           禁止设置为分片字段与父子表关联字段类型
+ENUM                支持           
+SET                 支持           　
+
 ------------------- -------------- ----------------------------------------
 
 #### 空间类型
@@ -3379,8 +3370,10 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 #### 其他类型
 
 ------------------- -------------- ------------------------------------------------------------------
-  **MySQL数据类型**   **支持状态**   **说明**
-  JSON                支持           　禁止使用其作为分片字段、父子表关联字段，禁止使用其作为JOIN字段
+
+**MySQL数据类型**   **支持状态**   **说明**
+JSON                支持           　禁止使用其作为分片字段、父子表关联字段，禁止使用其作为JOIN字段
+
 ------------------- -------------- ------------------------------------------------------------------
 
 ### 计算节点对字符集的支持
@@ -3430,351 +3423,353 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 此文档仅列出部分经特殊处理的函数，若需要了解所有计算节点支持的函数，请向官方获取《HotDB Server最新功能清单》。
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------- -------------- -------------- -----------------------------------------------------------------------------------------------------------
-  **函数名称**                                                                                                                                                    **支持状态**   **是否拦截**   **说明**
-  [ABS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
-  [ACOS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
-  [ADDDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
-  [ADDTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
-  [AES_DECRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                               支持           否             　
-  [AES_ENCRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                               支持           否             　
-  [AND, &&](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                        支持           否             　
-  [Area()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                            支持           否             　
-  [AsBinary(), AsWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                              支持           否             　
-  [ASCII()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [ASIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
-  [=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html)                                                                                           支持           否             　
-  [:=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html)                                                                                          不支持         是             　
-  [AsText(), AsWKT()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                                支持           否             　
-  [ATAN2(), ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                           支持           否             　
-  [ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
-  [AVG()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                         支持           否             　
-  [BENCHMARK()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                不支持         是             　
-  [BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                       支持           否             　
-  [BIN()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
-  [BINARY](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                            支持           否             　
-  [BIT_AND()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                     不支持         是             　
-  [BIT_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                        支持           否             　
-  [BIT_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    支持           否             　
-  [BIT_OR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                      不支持         是             　
-  [BIT_XOR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                     不支持         是             　
-  [&](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                  支持           否             　
-  [\~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                 支持           否             　
-  [|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                 支持           否             　
-  [\^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                 支持           否             　
-  [Buffer()](http://dev.mysql.com/doc/refman/5.6/en/spatial-operator-functions.html)                                                                              支持           否             　
-  [CASE](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                      支持           否             　
-  [CAST()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                            支持           否             　
-  [CEIL()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
-  [CEILING()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 支持           否             　
-  [Centroid()](http://dev.mysql.com/doc/refman/5.6/en/gis-multipolygon-property-functions.html)                                                                   支持           否             　
-  [CHAR_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   支持           否             　
-  [CHAR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                          支持           否             　
-  [CHARACTER_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                              支持           否             　
-  [CHARSET()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                  支持           否             　
-  [COALESCE()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  支持           否             　
-  [COERCIBILITY()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                             支持           否             　
-  [COLLATION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                支持           否             　
-  [COMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                  支持           否             　
-  [CONCAT_WS()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     支持           否             　
-  [CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
-  [CONNECTION_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                            支持           否             前端session连接计算节点的connection_id
-  [Contains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                        支持           否             　
-  [CONV()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
-  [CONVERT_TZ()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
-  [CONVERT()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                         支持           否             计算节点不论分片表或全局表，都不支持CONVERT(value, type)写法，只支持CONVERT(value using 字符集);
-  [COS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
-  [COT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
-  [COUNT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                       支持           否             　
-  COUNT(DISTINCT)                                                                                                                                                 支持           否             　
-  [CRC32()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   支持           否             　
-  [Crosses()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html)                                                               支持           否             　
-  CURDATE()                                                                                                                                                       支持           否             　
-  [CURDATE(), CURRENT_DATE](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                  支持           否             　
-  [CURRENT_ROLE()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html)                                                                            不支持         是             计算节点不支持MySQL8.0新增角色功能
-  [CURRENT_TIME(), CURRENT_TIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                             支持           否             　
-  [CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                    支持           否             　
-  [CURRENT_USER(), CURRENT_USER](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                               支持           否             返回当前计算节点数据库用户
-  [CURTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
-  [DATABASE()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                 支持           否             返回当前逻辑库名称
-  [DATE_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
-  [DATE_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
-  [DATE_SUB()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
-  [DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                   支持           否             　
-  [DATEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
-  [DAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                    支持           否             　
-  [DAYNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
-  [DAYOFMONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
-  [DAYOFWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              支持           否             　
-  [DAYOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              支持           否             　
-  [DECODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                    支持           否             　
-  [DEFAULT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                支持           否             　
-  [DEGREES()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 支持           否             　
-  [DES_DECRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                            支持           否             　
-  [DES_ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                            支持           否             　
-  [Dimension()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                       支持           否             　
-  [Disjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                        支持           否             　
-  [DIV](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                         支持           否             　
-  [/](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                           支持           否             　
-  [ELT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
-  [ENCODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                    支持           否             　
-  [ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                支持           否             　
-  [EndPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                     支持           否             　
-  [Envelope()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                        支持           否             　
-  [<=>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                       限制支持       是             　
-  [=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                           支持           否             　
-  [Equals()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                          支持           否             　
-  [EXP()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
-  [EXPORT_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    支持           否             　
-  [ExteriorRing()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                    支持           否             　
-  [EXTRACT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
-  [ExtractValue()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html)                                                                                     支持           否             　
-  [FIELD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [FIND_IN_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   支持           否             　
-  [FLOOR()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   支持           否             　
-  [FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
-  [FOUND_ROWS()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                               不支持         是             　
-  [FROM_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   支持           否             　
-  [FROM_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              支持           否             　
-  [FROM_UNIXTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          支持           否             　
-  [GeomCollFromText(),GeometryCollectionFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                支持           否             　
-  [GeomCollFromWKB(),GeometryCollectionFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                  支持           否             　
-  [GeometryCollection()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                支持           否             　
-  [GeometryN()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html)                                                            支持           否             　
-  [GeometryType()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                    支持           否             　
-  [GeomFromText(), GeometryFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                             支持           否             　
-  [GeomFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                                                  支持           否             　
-  [GET_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
-  [GET_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                               不支持         是             　
-  [GLength()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                      支持           否             　
-  [>=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                         支持           否             　
-  [>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                          支持           否             　
-  [GREATEST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  支持           否             　
-  [GROUP_CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                支持           否             　
-  [GROUPING()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html)                                                                              不支持         是             MySQL8.0新增功能
-  [GTID_SUBSET()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                                                     支持           否             　
-  [GTID_SUBTRACT()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                                                   支持           否             　
-  [HEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
-  [HOUR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                   支持           否             　
-  [IF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                      支持           否             　
-  [IFNULL()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                  支持           否             　
-  [IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                        支持           否             　
-  [INET_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                              支持           否             　
-  [INET_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                              支持           否             　
-  [INET6_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                             支持           否             　
-  [INET6_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                             支持           否             　
-  [INSERT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
-  [INSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [InteriorRingN()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                   支持           否             　
-  [Intersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                      支持           否             　
-  [INTERVAL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  支持           否             　
-  [IS_FREE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           不支持         是             　
-  [IS_IPV4_COMPAT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                         支持           否             　
-  [IS_IPV4_MAPPED()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                         支持           否             　
-  [IS_IPV4()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                支持           否             　
-  [IS_IPV6()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                支持           否             　
-  [IS NOT NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                 支持           否             　
-  [IS NOT](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                      支持           否             　
-  [IS NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                     支持           否             　
-  [IS_USED_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           不支持         是             　
-  [IS](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                          支持           否             　
-  [IsClosed()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                     支持           否             　
-  [IsEmpty()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                         支持           否             　
-  [ISNULL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    支持           否             　
-  [IsSimple()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                        支持           否             　
-  [JSON_ARRAYAGG(col_or_expr) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                            不支持         是             MySQL8.0与5.7新增功能
-  [JSON_OBJECTAGG(key, value) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                            不支持         是             MySQL8.0与5.7新增功能
-  [JSON_PRETTY(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-pretty)                                               不支持         是             MySQL8.0与5.7新增功能
-  [JSON_STORAGE_FREE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                                   不支持         是             MySQL8.0新增功能
-  [JSON_STORAGE_SIZE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                                   不支持         是             MySQL8.0与5.7新增功能
-  [JSON_MERGE_PATCH(json_doc, json_doc[, json_doc] ...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch)   不支持         是             MySQL8.0与5.7新增功能
-  [JSON_TABLE(expr, path COLUMNS (column_list) [AS] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html#function_json-table)              不支持         是             MySQL8.0新增功能
-  [LAST_DAY](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 支持           否             　
-  [LAST_INSERT_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                           支持           否             　
-  [LCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [LEAST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                     支持           否             　
-  [<<](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               支持           否             　
-  [LEFT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                          支持           否             　
-  [LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
-  [<=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                         支持           否             　
-  [<](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                          支持           否             　
-  [LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                                 支持           否             　
-  [LineFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                                                 支持           否             　
-  [LineFromWKB(), LineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                             支持           否             　
-  [LineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                        支持           否             　
-  [LN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                      支持           否             　
-  [LOAD_FILE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     不支持         是             　
-  [LOCALTIME(), LOCALTIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                   支持           否             　
-  [LOCALTIMESTAMP, LOCALTIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                         支持           否             　
-  [LOCATE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
-  [LOG10()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   支持           否             　
-  [LOG2()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
-  [LOG()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
-  [LOWER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [LPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                          支持           否             　
-  [LTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [MAKE_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      支持           否             　
-  [MAKEDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
-  [MAKETIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
-  [MASTER_POS_WAIT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                        不支持         是             　
-  [MATCH](http://dev.mysql.com/doc/refman/5.6/en/fulltext-search.html)                                                                                            支持           否             　
-  [MAX()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                         支持           否             　
-  [MBRContains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                          支持           否             　
-  [MBRDisjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                          支持           否             　
-  [MBREqual() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                          支持           否             　
-  [MBRIntersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                        支持           否             　
-  [MBROverlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                          支持           否             　
-  [MBRTouches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                           支持           否             　
-  [MBRWithin()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                            支持           否             　
-  [MD5()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                       支持           否             　
-  [MICROSECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
-  [MID()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
-  [-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                           支持           否             　
-  [MIN()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                         支持           否             　
-  [MINUTE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 支持           否             　
-  [MLineFromText(),MultiLineStringFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                      支持           否             　
-  [MLineFromWKB(),MultiLineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                        支持           否             　
-  [MOD()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
-  [% or MOD](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                    支持           否             　
-  [MONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                  支持           否             　
-  [MONTHNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              支持           否             　
-  [MPointFromText(),MultiPointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                          支持           否             　
-  [MPointFromWKB(), MultiPointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                           支持           否             　
-  [MPolyFromText(),MultiPolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                         支持           否             　
-  [MPolyFromWKB(),MultiPolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                           支持           否             　
-  [MultiLineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                   支持           否             　
-  [MultiPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                        支持           否             　
-  [MultiPolygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                      支持           否             　
-  [NAME_CONST()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                             支持           否             　
-  [NOT BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                   支持           否             　
-  [!=, <>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    支持           否             　
-  [NOT IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    支持           否             　
-  [NOT LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                             支持           否             　
-  [NOT REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                                支持           否             　
-  [NOT, !](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                         支持           否             　
-  [NOW()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                    支持           否             　
-  [NULLIF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                  支持           否             　
-  [NumGeometries()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html)                                                        支持           否             　
-  [NumInteriorRings()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                支持           否             　
-  [NumPoints()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                    支持           否             　
-  [OCT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
-  [OCTET_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                  支持           否             　
-  [OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                           支持           否             　
-  [||, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                       支持           否             　
-  [ORD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
-  [Overlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                        支持           否             　
-  [PASSWORD()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                  支持           否             　
-  [PERIOD_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
-  [PERIOD_DIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
-  [PI()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                      支持           否             　
-  [+](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                           支持           否             　
-  [Point()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                             支持           否             　
-  [PointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                                                支持           否             　
-  [PointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                                                 支持           否             　
-  [PointN()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                       支持           否             　
-  [PolyFromText(), PolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                              支持           否             　
-  [PolyFromWKB(), PolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                                支持           否             　
-  [Polygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                           支持           否             　
-  [POSITION()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      支持           否             　
-  [POW()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
-  [POWER()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   支持           否             　
-  [PROCEDURE ANALYSE()](http://dev.mysql.com/doc/refman/5.6/en/procedure-analyse.html)                                                                            不支持         是             　
-  [PS_CURRENT_THREAD_ID()](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html)                                                             不支持         是             MySQL8.0新增功能
-  [PS_THREAD_ID(connection_id)](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html)                                                        不支持         是             MySQL8.0新增功能
-  [QUARTER()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
-  [QUOTE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [RADIANS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 支持           否             　
-  [RAND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             JOIN查询中分片表不支持RAND任何语法
-  [RANDOM_BYTES()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                              支持           否             　
-  [REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                                    支持           否             　
-  [RELEASE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           不支持         是             　
-  [REPEAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
-  [REPLACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       支持           否             　
-  [REVERSE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       支持           否             　
-  [>>](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               支持           否             　
-  [RIGHT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [RLIKE](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                                     支持           否             　
-  [ROLES_GRAPHML()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html)                                                                           不支持         是             MySQL8.0新增功能
-  [ROUND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   支持           否             　
-  [ROW_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                不支持         是             　
-  [RPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                          支持           否             　
-  [RTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [SCHEMA()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                   支持           否             1、select schema()返回逻辑库名称；
-  [SEC_TO_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
-  [SECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 支持           否             　
-  [SESSION_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                             支持           否             select session_user();显示为当前登录的计算节点数据库用户信息
-  [SHA1(), SHA()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                               支持           否             　
-  [SHA2()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                      支持           否             　
-  [SIGN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
-  [SIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
-  [SLEEP()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                  不支持         是             可配置参数[是否允许SLEEP函数](#enablesleep)，默认不允许
-  [SOUNDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       支持           否             　
-  [SOUNDS LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     支持           否             　
-  [SPACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [SQL_THREAD_WAIT_AFTER_GTIDS()(deprecated 5.6.9)](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                   不支持         是             　
-  [SQRT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
-  [SRID()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                            支持           否             　
-  [StartPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                   支持           否             　
-  [STD()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                         不支持         是             　
-  [STDDEV_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                  不支持         是             　
-  [STDDEV_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                 不支持         是             　
-  [STDDEV()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                      不支持         是             　
-  [STR_TO_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
-  [STRCMP()](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                             支持           否             　
-  [SUBDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
-  [SUBSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
-  [SUBSTRING_INDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                               支持           否             　
-  [SUBSTRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     支持           否             　
-  [SUBTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
-  [SUM()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                         支持           否             　
-  [SYSDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             （注意：测试服务器的SYSDATE加了参数，使其等于NOW() 所以不会有延迟的区别，为了规避主从库数据不一致等风险）
-  [SYSTEM_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                              支持           否             显示为当前登录的计算节点数据库用户信息
-  [TAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
-  [TIME_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
-  [TIME_TO_SEC()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
-  [TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                   支持           否             　
-  [TIMEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
-  [*](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                          支持           否             　
-  [TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              支持           否             　
-  [TIMESTAMPADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           支持           否             　
-  [TIMESTAMPDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          支持           否             　
-  [TO_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     支持           否             　
-  [TO_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
-  [TO_SECONDS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
-  [Touches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html)                                                               支持           否             　
-  [TRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                          支持           否             　
-  [TRUNCATE()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                支持           否             　
-  [UCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                           支持           否             　
-  [UNCOMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                支持           否             　
-  [UNCOMPRESSED_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                       支持           否             　
-  [UNHEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [UNIX_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                         支持           否             　
-  [UpdateXML()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html)                                                                                        支持           否             　
-  [UPPER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
-  [USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                     支持           否             SELECT user();查询出来的是当前登录的计算节点数据库用户
-  [UTC_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
-  [UTC_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
-  [UTC_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          支持           否             　
-  [UUID_SHORT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                             支持           否             　
-  [UUID()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                   支持           否             　
-  [VALIDATE_PASSWORD_STRENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                支持           否             　
-  [VALUES()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                 支持           否             　
-  [VAR_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                     不支持         是             　
-  [VAR_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                    不支持         是             　
-  [VARIANCE()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                    不支持         是             　
-  [VERSION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                  支持           否             查询结果显示计算节点的version
-  [WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                               不支持         是             　
-  [WEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                   支持           否             　
-  [WEEKDAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
-  [WEEKOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
-  [WEIGHT_STRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                 支持           否             　
-  [窗口函数](https://dev.mysql.com/doc/refman/8.0/en/window-functions.html)                                                                                       不支持         是             MySQL8.0新增功能
-  [Within()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                          支持           否             　
-  [X()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html)                                                                                 支持           否             　
-  [XOR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                            支持           否             　
-  [Y()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html)                                                                                 支持           否             　
-  [YEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                   支持           否             　
-  [YEARWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
+
+**函数名称**                                                                                                                                                    **支持状态**   **是否拦截**   **说明**
+[ABS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
+[ACOS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
+[ADDDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
+[ADDTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
+[AES_DECRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                               支持           否             　
+[AES_ENCRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                               支持           否             　
+[AND, &&](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                        支持           否             　
+[Area()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                            支持           否             　
+[AsBinary(), AsWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                              支持           否             　
+[ASCII()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[ASIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
+[=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html)                                                                                           支持           否             　
+[:=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html)                                                                                          不支持         是             　
+[AsText(), AsWKT()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                                支持           否             　
+[ATAN2(), ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                           支持           否             　
+[ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
+[AVG()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                         支持           否             　
+[BENCHMARK()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                不支持         是             　
+[BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                       支持           否             　
+[BIN()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
+[BINARY](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                            支持           否             　
+[BIT_AND()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                     不支持         是             　
+[BIT_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                        支持           否             　
+[BIT_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    支持           否             　
+[BIT_OR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                      不支持         是             　
+[BIT_XOR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                     不支持         是             　
+[&](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                  支持           否             　
+[\~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                 支持           否             　
+[|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                 支持           否             　
+[\^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                 支持           否             　
+[Buffer()](http://dev.mysql.com/doc/refman/5.6/en/spatial-operator-functions.html)                                                                              支持           否             　
+[CASE](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                      支持           否             　
+[CAST()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                            支持           否             　
+[CEIL()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
+[CEILING()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 支持           否             　
+[Centroid()](http://dev.mysql.com/doc/refman/5.6/en/gis-multipolygon-property-functions.html)                                                                   支持           否             　
+[CHAR_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   支持           否             　
+[CHAR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                          支持           否             　
+[CHARACTER_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                              支持           否             　
+[CHARSET()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                  支持           否             　
+[COALESCE()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  支持           否             　
+[COERCIBILITY()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                             支持           否             　
+[COLLATION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                支持           否             　
+[COMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                  支持           否             　
+[CONCAT_WS()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     支持           否             　
+[CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
+[CONNECTION_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                            支持           否             前端session连接计算节点的connection_id
+[Contains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                        支持           否             　
+[CONV()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
+[CONVERT_TZ()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
+[CONVERT()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                         支持           否             计算节点不论分片表或全局表，都不支持CONVERT(value, type)写法，只支持CONVERT(value using 字符集);
+[COS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
+[COT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
+[COUNT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                       支持           否             　
+COUNT(DISTINCT)                                                                                                                                                 支持           否             　
+[CRC32()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   支持           否             　
+[Crosses()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html)                                                               支持           否             　
+CURDATE()                                                                                                                                                       支持           否             　
+[CURDATE(), CURRENT_DATE](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                  支持           否             　
+[CURRENT_ROLE()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html)                                                                            不支持         是             计算节点不支持MySQL8.0新增角色功能
+[CURRENT_TIME(), CURRENT_TIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                             支持           否             　
+[CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                    支持           否             　
+[CURRENT_USER(), CURRENT_USER](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                               支持           否             返回当前计算节点数据库用户
+[CURTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
+[DATABASE()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                 支持           否             返回当前逻辑库名称
+[DATE_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
+[DATE_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
+[DATE_SUB()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
+[DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                   支持           否             　
+[DATEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
+[DAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                    支持           否             　
+[DAYNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
+[DAYOFMONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
+[DAYOFWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              支持           否             　
+[DAYOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              支持           否             　
+[DECODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                    支持           否             　
+[DEFAULT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                支持           否             　
+[DEGREES()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 支持           否             　
+[DES_DECRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                            支持           否             　
+[DES_ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                            支持           否             　
+[Dimension()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                       支持           否             　
+[Disjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                        支持           否             　
+[DIV](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                         支持           否             　
+[/](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                           支持           否             　
+[ELT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
+[ENCODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                    支持           否             　
+[ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                支持           否             　
+[EndPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                     支持           否             　
+[Envelope()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                        支持           否             　
+[<=>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                       限制支持       是             　
+[=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                           支持           否             　
+[Equals()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                          支持           否             　
+[EXP()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
+[EXPORT_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    支持           否             　
+[ExteriorRing()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                    支持           否             　
+[EXTRACT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
+[ExtractValue()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html)                                                                                     支持           否             　
+[FIELD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[FIND_IN_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   支持           否             　
+[FLOOR()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   支持           否             　
+[FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
+[FOUND_ROWS()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                               不支持         是             　
+[FROM_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   支持           否             　
+[FROM_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              支持           否             　
+[FROM_UNIXTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          支持           否             　
+[GeomCollFromText(),GeometryCollectionFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                支持           否             　
+[GeomCollFromWKB(),GeometryCollectionFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                  支持           否             　
+[GeometryCollection()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                支持           否             　
+[GeometryN()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html)                                                            支持           否             　
+[GeometryType()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                    支持           否             　
+[GeomFromText(), GeometryFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                             支持           否             　
+[GeomFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                                                  支持           否             　
+[GET_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
+[GET_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                               不支持         是             　
+[GLength()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                      支持           否             　
+[>=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                         支持           否             　
+[>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                          支持           否             　
+[GREATEST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  支持           否             　
+[GROUP_CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                支持           否             　
+[GROUPING()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html)                                                                              不支持         是             MySQL8.0新增功能
+[GTID_SUBSET()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                                                     支持           否             　
+[GTID_SUBTRACT()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                                                   支持           否             　
+[HEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
+[HOUR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                   支持           否             　
+[IF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                      支持           否             　
+[IFNULL()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                  支持           否             　
+[IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                        支持           否             　
+[INET_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                              支持           否             　
+[INET_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                              支持           否             　
+[INET6_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                             支持           否             　
+[INET6_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                             支持           否             　
+[INSERT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
+[INSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[InteriorRingN()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                   支持           否             　
+[Intersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                      支持           否             　
+[INTERVAL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  支持           否             　
+[IS_FREE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           不支持         是             　
+[IS_IPV4_COMPAT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                         支持           否             　
+[IS_IPV4_MAPPED()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                         支持           否             　
+[IS_IPV4()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                支持           否             　
+[IS_IPV6()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                支持           否             　
+[IS NOT NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                 支持           否             　
+[IS NOT](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                      支持           否             　
+[IS NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                     支持           否             　
+[IS_USED_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           不支持         是             　
+[IS](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                          支持           否             　
+[IsClosed()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                     支持           否             　
+[IsEmpty()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                         支持           否             　
+[ISNULL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    支持           否             　
+[IsSimple()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                        支持           否             　
+[JSON_ARRAYAGG(col_or_expr) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                            不支持         是             MySQL8.0与5.7新增功能
+[JSON_OBJECTAGG(key, value) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                            不支持         是             MySQL8.0与5.7新增功能
+[JSON_PRETTY(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-pretty)                                               不支持         是             MySQL8.0与5.7新增功能
+[JSON_STORAGE_FREE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                                   不支持         是             MySQL8.0新增功能
+[JSON_STORAGE_SIZE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                                   不支持         是             MySQL8.0与5.7新增功能
+[JSON_MERGE_PATCH(json_doc, json_doc[, json_doc] ...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch)   不支持         是             MySQL8.0与5.7新增功能
+[JSON_TABLE(expr, path COLUMNS (column_list) [AS] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html#function_json-table)              不支持         是             MySQL8.0新增功能
+[LAST_DAY](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 支持           否             　
+[LAST_INSERT_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                           支持           否             　
+[LCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[LEAST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                     支持           否             　
+[<<](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               支持           否             　
+[LEFT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                          支持           否             　
+[LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
+[<=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                         支持           否             　
+[<](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                          支持           否             　
+[LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                                 支持           否             　
+[LineFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                                                 支持           否             　
+[LineFromWKB(), LineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                             支持           否             　
+[LineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                        支持           否             　
+[LN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                      支持           否             　
+[LOAD_FILE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     不支持         是             　
+[LOCALTIME(), LOCALTIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                   支持           否             　
+[LOCALTIMESTAMP, LOCALTIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                         支持           否             　
+[LOCATE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
+[LOG10()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   支持           否             　
+[LOG2()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
+[LOG()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
+[LOWER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[LPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                          支持           否             　
+[LTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[MAKE_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      支持           否             　
+[MAKEDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
+[MAKETIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
+[MASTER_POS_WAIT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                        不支持         是             　
+[MATCH](http://dev.mysql.com/doc/refman/5.6/en/fulltext-search.html)                                                                                            支持           否             　
+[MAX()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                         支持           否             　
+[MBRContains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                          支持           否             　
+[MBRDisjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                          支持           否             　
+[MBREqual() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                          支持           否             　
+[MBRIntersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                        支持           否             　
+[MBROverlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                          支持           否             　
+[MBRTouches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                           支持           否             　
+[MBRWithin()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                            支持           否             　
+[MD5()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                       支持           否             　
+[MICROSECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
+[MID()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
+[-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                           支持           否             　
+[MIN()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                         支持           否             　
+[MINUTE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 支持           否             　
+[MLineFromText(),MultiLineStringFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                      支持           否             　
+[MLineFromWKB(),MultiLineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                        支持           否             　
+[MOD()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
+[% or MOD](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                    支持           否             　
+[MONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                  支持           否             　
+[MONTHNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              支持           否             　
+[MPointFromText(),MultiPointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                          支持           否             　
+[MPointFromWKB(), MultiPointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                           支持           否             　
+[MPolyFromText(),MultiPolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                         支持           否             　
+[MPolyFromWKB(),MultiPolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                           支持           否             　
+[MultiLineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                   支持           否             　
+[MultiPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                        支持           否             　
+[MultiPolygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                      支持           否             　
+[NAME_CONST()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                             支持           否             　
+[NOT BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                   支持           否             　
+[!=, <>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    支持           否             　
+[NOT IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    支持           否             　
+[NOT LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                             支持           否             　
+[NOT REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                                支持           否             　
+[NOT, !](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                         支持           否             　
+[NOW()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                    支持           否             　
+[NULLIF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                  支持           否             　
+[NumGeometries()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html)                                                        支持           否             　
+[NumInteriorRings()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                支持           否             　
+[NumPoints()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                    支持           否             　
+[OCT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
+[OCTET_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                  支持           否             　
+[OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                           支持           否             　
+[||, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                       支持           否             　
+[ORD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                           支持           否             　
+[Overlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                        支持           否             　
+[PASSWORD()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                  支持           否             　
+[PERIOD_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
+[PERIOD_DIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
+[PI()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                      支持           否             　
+[+](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                           支持           否             　
+[Point()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                             支持           否             　
+[PointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                                                支持           否             　
+[PointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                                                 支持           否             　
+[PointN()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                       支持           否             　
+[PolyFromText(), PolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                              支持           否             　
+[PolyFromWKB(), PolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                                支持           否             　
+[Polygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                           支持           否             　
+[POSITION()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      支持           否             　
+[POW()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
+[POWER()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   支持           否             　
+[PROCEDURE ANALYSE()](http://dev.mysql.com/doc/refman/5.6/en/procedure-analyse.html)                                                                            不支持         是             　
+[PS_CURRENT_THREAD_ID()](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html)                                                             不支持         是             MySQL8.0新增功能
+[PS_THREAD_ID(connection_id)](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html)                                                        不支持         是             MySQL8.0新增功能
+[QUARTER()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
+[QUOTE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[RADIANS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 支持           否             　
+[RAND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             JOIN查询中分片表不支持RAND任何语法
+[RANDOM_BYTES()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                              支持           否             　
+[REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                                    支持           否             　
+[RELEASE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           不支持         是             　
+[REPEAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
+[REPLACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       支持           否             　
+[REVERSE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       支持           否             　
+[>>](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               支持           否             　
+[RIGHT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[RLIKE](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                                     支持           否             　
+[ROLES_GRAPHML()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html)                                                                           不支持         是             MySQL8.0新增功能
+[ROUND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   支持           否             　
+[ROW_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                不支持         是             　
+[RPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                          支持           否             　
+[RTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[SCHEMA()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                   支持           否             1、select schema()返回逻辑库名称；
+[SEC_TO_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
+[SECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 支持           否             　
+[SESSION_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                             支持           否             select session_user();显示为当前登录的计算节点数据库用户信息
+[SHA1(), SHA()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                               支持           否             　
+[SHA2()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                      支持           否             　
+[SIGN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
+[SIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
+[SLEEP()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                  不支持         是             可配置参数[是否允许SLEEP函数](#enablesleep)，默认不允许
+[SOUNDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       支持           否             　
+[SOUNDS LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     支持           否             　
+[SPACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[SQL_THREAD_WAIT_AFTER_GTIDS()(deprecated 5.6.9)](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                   不支持         是             　
+[SQRT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    支持           否             　
+[SRID()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                            支持           否             　
+[StartPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                   支持           否             　
+[STD()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                         不支持         是             　
+[STDDEV_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                  不支持         是             　
+[STDDEV_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                 不支持         是             　
+[STDDEV()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                      不支持         是             　
+[STR_TO_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
+[STRCMP()](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                             支持           否             　
+[SUBDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
+[SUBSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        支持           否             　
+[SUBSTRING_INDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                               支持           否             　
+[SUBSTRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     支持           否             　
+[SUBTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
+[SUM()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                         支持           否             　
+[SYSDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             （注意：测试服务器的SYSDATE加了参数，使其等于NOW() 所以不会有延迟的区别，为了规避主从库数据不一致等风险）
+[SYSTEM_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                              支持           否             显示为当前登录的计算节点数据库用户信息
+[TAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                     支持           否             　
+[TIME_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
+[TIME_TO_SEC()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            支持           否             　
+[TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                   支持           否             　
+[TIMEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
+[*](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                          支持           否             　
+[TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              支持           否             　
+[TIMESTAMPADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           支持           否             　
+[TIMESTAMPDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          支持           否             　
+[TO_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     支持           否             　
+[TO_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
+[TO_SECONDS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
+[Touches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html)                                                               支持           否             　
+[TRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                          支持           否             　
+[TRUNCATE()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                支持           否             　
+[UCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                           支持           否             　
+[UNCOMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                支持           否             　
+[UNCOMPRESSED_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                       支持           否             　
+[UNHEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[UNIX_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                         支持           否             　
+[UpdateXML()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html)                                                                                        支持           否             　
+[UPPER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         支持           否             　
+[USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                     支持           否             SELECT user();查询出来的是当前登录的计算节点数据库用户
+[UTC_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
+[UTC_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
+[UTC_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          支持           否             　
+[UUID_SHORT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                             支持           否             　
+[UUID()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                   支持           否             　
+[VALIDATE_PASSWORD_STRENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                支持           否             　
+[VALUES()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                 支持           否             　
+[VAR_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                     不支持         是             　
+[VAR_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                    不支持         是             　
+[VARIANCE()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                    不支持         是             　
+[VERSION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                  支持           否             查询结果显示计算节点的version
+[WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                               不支持         是             　
+[WEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                   支持           否             　
+[WEEKDAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                支持           否             　
+[WEEKOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             支持           否             　
+[WEIGHT_STRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                 支持           否             　
+[窗口函数](https://dev.mysql.com/doc/refman/8.0/en/window-functions.html)                                                                                       不支持         是             MySQL8.0新增功能
+[Within()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                          支持           否             　
+[X()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html)                                                                                 支持           否             　
+[XOR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                            支持           否             　
+[Y()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html)                                                                                 支持           否             　
+[YEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                   支持           否             　
+[YEARWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               支持           否             　
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------- -------------- -------------- -----------------------------------------------------------------------------------------------------------
 
 ### 聚合结果集合并（MERGE_RESULT）
@@ -3866,26 +3861,30 @@ DELETE FROM t PARTITION(p0);
 ##### 单库的DELETE语句
 
 ------------------- -------------- ---------- -------------- ---------------------------
-  **MySQL语句类型**   **子句类型**   **功能**   **支持状态**   **说明**
-  DELETE              PARTITION      　         支持           　
-                      ORDER BY       　         支持           　
-                      LIMIT          　         支持           　
-                      WHERE          dnid       支持           在where条件中指定分片节点
-                                     函数       支持           　
-                      多表DELETE     　         支持           
+
+**MySQL语句类型**   **子句类型**   **功能**   **支持状态**   **说明**
+DELETE              PARTITION      　         支持           　
+ORDER BY       　         支持           　
+LIMIT          　         支持           　
+WHERE          dnid       支持           在where条件中指定分片节点
+函数       支持           　
+多表DELETE     　         支持
+
 ------------------- -------------- ---------- -------------- ---------------------------
 
 ##### 跨库的DELETE语句
 
 ------------------- -------------------------- --------------- -------------- --------------------
-  **MySQL语句类型**   **子句类型**               **功能**        **支持状态**   **说明**
-  DELETE              PARTITION                  　              支持           　
-                      ORDER BY DESC|ASC         　              支持           　
-                      LIMIT                      　              支持           　
-                      ORDER BY ... LIMIT ...     　              支持           父子表不支持
-                      ORDER BY字段值大小写敏感   　              支持           　
-                      WHERE                      WHERE中的函数   支持           　
-                      JOIN                       　              支持           含临时表场景不支持
+
+**MySQL语句类型**   **子句类型**               **功能**        **支持状态**   **说明**
+DELETE              PARTITION                  　              支持           　
+ORDER BY DESC|ASC         　              支持           　
+LIMIT                      　              支持           　
+ORDER BY ... LIMIT ...     　              支持           父子表不支持
+ORDER BY字段值大小写敏感   　              支持           　
+WHERE                      WHERE中的函数   支持           　
+JOIN                       　              支持           含临时表场景不支持
+
 ------------------- -------------------------- --------------- -------------- --------------------
 
 在跨库的DELETE中语句，下面的多表语句不被支持：
@@ -3903,28 +3902,30 @@ USING table_references
 ##### 单库INSERT语句
 
 ------------------- ------------------------------------------------------- ---------- -------------- --------------------------------------
-  **MySQL语句类型**   **子句类型**                                            **功能**   **支持状态**   **说明**
-  INSERT              INSERT ... SELECT ...                                              支持           
-                      IGNORE                                                  　         支持           　
-                      PARTITION                                               　         支持           　
-                      ON DUPLICATE KEY UPDATE                                 　         支持           　
-                      INSERT INTO table_name(columns... ) VALUES(values...)   　         支持           　
-                      INSERT INTO ... VALUES()                                　         支持           　
-                      INSERT INTO ... SET                                     　         支持           　
-                      分片表无拆分字段值                                      　         不支持         　
-                      分片表拆分字段值为NULL                                  　         支持           需要在分片函数参数中配置NULL值参数
-                      子表无关联字段值                                        　         不支持         子表数据的INSERT操作必须满足外键条件
-                      子表关联字段值为NULL                                    　         不支持         子表数据的INSERT操作必须满足外键条件
-                      INSERT BATCH                                            分片表     支持           　
-                                                                              全局表     支持           　
-                                                                              子表       条件限制       父表的关联字段不是分片字段时不支持。
+
+**MySQL语句类型**   **子句类型**                                            **功能**   **支持状态**   **说明**
+INSERT              INSERT ... SELECT ...                                              支持           
+IGNORE                                                  　         支持           　
+PARTITION                                               　         支持           　
+ON DUPLICATE KEY UPDATE                                 　         支持           　
+INSERT INTO table_name(columns... ) VALUES(values...)   　         支持           　
+INSERT INTO ... VALUES()                                　         支持           　
+INSERT INTO ... SET                                     　         支持           　
+分片表无拆分字段值                                      　         不支持         　
+分片表拆分字段值为NULL                                  　         支持           需要在分片函数参数中配置NULL值参数
+子表无关联字段值                                        　         不支持         子表数据的INSERT操作必须满足外键条件
+子表关联字段值为NULL                                    　         不支持         子表数据的INSERT操作必须满足外键条件
+INSERT BATCH                                            分片表     支持           　
+全局表     支持           　
+子表       条件限制       父表的关联字段不是分片字段时不支持。
+
 ------------------- ------------------------------------------------------- ---------- -------------- --------------------------------------
 
--   INSERT INTO...SELECT...
+- INSERT INTO...SELECT...
 
 对于INSERT INTO...SELECT...语句，若SELECT子句为不支持的语句，则INSERT INTO... SELECT...亦无法支持，其他情况均可执行。
 
--   INSERT IGNORE
+- INSERT IGNORE
 
 在计算节点上，INSERT IGNORE保留了MySQL原有的特性。当出现主键/唯一键冲突时，将忽略数据与冲突信息。
 
@@ -3952,15 +3953,15 @@ Query OK, 0 rows affected (0.00 sec)
 
 例如 test 表为分片表，id 为分片字段
 
-mysql> CREATE TABLE \`test2\` (
+mysql> CREATE TABLE `test2` (
 
-\`id\` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 
-\`name\` varchar(20) DEFAULT NULL,
+`name` varchar(20) DEFAULT NULL,
 
-UNIQUE KEY \`id\` (\`id\`),
+UNIQUE KEY `id` (`id`),
 
-UNIQUE KEY \`name\` (\`name\`)
+UNIQUE KEY `name` (`name`)
 
 ) ENGINE=InnoDB;
 
@@ -3972,13 +3973,13 @@ mysql> insert ignore into test2(name) values ('e')
 
 当开启表全局唯一约束时，插入第2条时，如果id 列1、2 值路由到同一个节点，则第2条SQL 会忽略，若不是同一节点，则第2条SQL也会忽略。
 
--   INSERT 无分片字段
+- INSERT 无分片字段
 
 若INSERT 从句中没有指定分片字段的值时：
 
 若分片字段有default 默认值，默认按照default值路由；
 
-若分片字段没有default 默认值，会填充null , 若null值配置了路由规则即可插入；未配置路由规则则不允许插入（例如range \\match 这类需要单独配置null 分片规则；auto_crc32 这类，根据null自动路由）。
+若分片字段没有default 默认值，会填充null , 若null值配置了路由规则即可插入；未配置路由规则则不允许插入（例如range \match 这类需要单独配置null 分片规则；auto_crc32 这类，根据null自动路由）。
 
 ##### 跨库INSERT语句
 
@@ -3989,14 +3990,16 @@ INSERT BATCH指的是单条INSERT语句，写入多行记录的方式：
 INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 
 ------------------- ----------------------- ---------- -------------- --------------------------------------------------------------------
-  **MySQL语句类型**   **子句类型**            **功能**   **支持状态**   **说明**
-  INSERT              INSERT ... SELECT ...              支持           　SELECT 子句中若存在不支持的语句，亦无法进行INSERT ... SELECT ...
-                      INSERT BATCH            子表       支持           父表的JOIN字段不是分片字段时不支持。
-                                              全局表     支持           　
-                                              分片表     支持           　
+
+**MySQL语句类型**   **子句类型**            **功能**   **支持状态**   **说明**
+INSERT              INSERT ... SELECT ...              支持           　SELECT 子句中若存在不支持的语句，亦无法进行INSERT ... SELECT ...
+INSERT BATCH            子表       支持           父表的JOIN字段不是分片字段时不支持。
+全局表     支持           　
+分片表     支持           　
+
 ------------------- ----------------------- ---------- -------------- --------------------------------------------------------------------
 
--   批量INSERT (INSERT BATCH）的情况特殊说明
+- 批量INSERT (INSERT BATCH）的情况特殊说明
 
 事务中的批量INSERT，部分成功部分失败，会自动回滚至上一个SAVEPOINT。
 
@@ -4023,23 +4026,25 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 ##### 单库REPLACE语句
 
 ------------------- -------------------------------------------------------- --------------------- -------------- --------------------------------------
-  **MySQL语句类型**   **子句类型**                                             **功能**              **支持状态**   **说明**
-  REPALCE             REPLACE ... SELECT ...                                   单库简单单表查询      支持           
-                                                                               单库JOIN              支持           　
-                                                                               单库子查询            支持           　
-                                                                               单库UNION/UNION ALL   支持           　
-                      PARTITION                                                　                    支持           　
-                      ON DUPLICATE KEY UPDATE                                  　                    支持           　
-                      REPLACE INTO table_name(columns... ) VALUES(values...)   　                    支持           　
-                      REPALCE INTO ... VALUES()                                　                    支持           　
-                      REPLACE INTO ... SET                                     　                    支持           　
-                      分片表无拆分字段值                                       　                    不支持         　
-                      分片表拆分字段值为NULL                                   　                    支持           需要在分片函数参数中配置NULL值参数
-                      子表无关联字段值                                         　                    不支持         子表数据的INSERT操作必须满足外键条件
-                      子表关联字段值为NULL                                     　                    不支持         子表数据的INSERT操作必须满足外键条件
-                      REPLACE BATCH                                            分片表                支持           　
-                                                                               全局表                支持           　
-                                                                               子表                  条件限制       父表的关联字段不是分片字段时不支持。
+
+**MySQL语句类型**   **子句类型**                                             **功能**              **支持状态**   **说明**
+REPALCE             REPLACE ... SELECT ...                                   单库简单单表查询      支持           
+单库JOIN              支持           　
+单库子查询            支持           　
+单库UNION/UNION ALL   支持           　
+PARTITION                                                　                    支持           　
+ON DUPLICATE KEY UPDATE                                  　                    支持           　
+REPLACE INTO table_name(columns... ) VALUES(values...)   　                    支持           　
+REPALCE INTO ... VALUES()                                　                    支持           　
+REPLACE INTO ... SET                                     　                    支持           　
+分片表无拆分字段值                                       　                    不支持         　
+分片表拆分字段值为NULL                                   　                    支持           需要在分片函数参数中配置NULL值参数
+子表无关联字段值                                         　                    不支持         子表数据的INSERT操作必须满足外键条件
+子表关联字段值为NULL                                     　                    不支持         子表数据的INSERT操作必须满足外键条件
+REPLACE BATCH                                            分片表                支持           　
+全局表                支持           　
+子表                  条件限制       父表的关联字段不是分片字段时不支持。
+
 ------------------- -------------------------------------------------------- --------------------- -------------- --------------------------------------
 
 ##### 跨库REPLACE语句
@@ -4051,13 +4056,15 @@ REPLACE BATCH指的是单条REPLACE语句，写入多行记录的方式：
 REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 ------------------- ------------------------ ------------------ -------------- --------------------------------------
-  **MySQL语句类型**   **子句类型**             **功能**           **支持状态**   **说明**
-  REPLACE             REPLACE ... SELECT ...   跨库简单单表查询   支持           　
-                                               跨库JOIN           不支持         　
-                                               跨库UNION          不支持         　
-                      REPLACE BATCH            子表               支持           父表的JOIN字段不是分片字段时不支持。
-                                               全局表             支持           　
-                                               分片表             支持           　
+
+**MySQL语句类型**   **子句类型**             **功能**           **支持状态**   **说明**
+REPLACE             REPLACE ... SELECT ...   跨库简单单表查询   支持           　
+跨库JOIN           不支持         　
+跨库UNION          不支持         　
+REPLACE BATCH            子表               支持           父表的JOIN字段不是分片字段时不支持。
+全局表             支持           　
+分片表             支持           　
+
 ------------------- ------------------------ ------------------ -------------- --------------------------------------
 
 #### SELECT语句
@@ -4299,29 +4306,31 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | **MySQL语句类型** | **子句类型**                                                                | **支持状态** | **说明**                                                                                                                                                                                                                                            |
 | ALTER TABLE       | ADD COLUMN                                                                  | 支持         | 　                                                                                                                                                                                                                                                  |
 |                   | ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY                       | 支持         | 支持 ADD UNIQUE [index_name][index_type]index_col_name                                                                                                                                                                                          |
-|                   | 父子表的ADD FOREIGN KEY                                                     | 限制支持     | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
-|                   |                                                                             |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式环境中，当非分片字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
-|                   |                                                                             |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
-|                   | ADD SPATIAL [INDEX|KEY]                                                  | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | ADD CONSTRAINT [CONSTRAINT [symbol]] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | 父子表的ADD CONSTRAINT [CONSTRAINT [symbol]] FOREIGN KEY                | 限制支持     | 非字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
-|                   |                                                                             |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
-|                   |                                                                             |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
-|                   | ALGORITHM                                                                   | 支持         | MySQL8.0新增INSTANT，且默认使用INSTANT                                                                                                                                                                                                              |
-|                   | ALTER COLUMN                                                                | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | LOCK                                                                        | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | MODIFY/CHANGE [COLUMN]                                                    | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | DROP COLUMN                                                                 | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | DROP PRIMARY KEY/KEY/INDEX/FOREIGN KEY                                      | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | DISABLE KEYS                                                                | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | ENABLE KEYS                                                                 | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | DISCARD TABLESPACE                                                          | 不支持       | 　                                                                                                                                                                                                                                                  |
-|                   | IMPORT TABLESPACE                                                           | 不支持       | 　                                                                                                                                                                                                                                                  |
-|                   | ADD/DROP/TRUNCATE PARTITION                                                 | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | GENERATED COLUMNS                                                           | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
-|                   | SECONDARY INDEXES                                                           | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
-|                   | CHECK                                                                       | 支持         | MySQL8.0新增功能                                                                                                                                                                                                                                    |
-| ALTER             | VIEW                                                                        | 支持         | 计算节点版本高于（包含）2.5.6时支持                                                                                                                                                                                                                 |
+
+|         | 父子表的ADD FOREIGN KEY                                                     | 限制支持     | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
+|         |                                                                             |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式环境中，当非分片字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
+|         |                                                                             |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
+|         | ADD SPATIAL [INDEX|KEY]                                                  | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | ADD CONSTRAINT [CONSTRAINT [symbol]] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | 父子表的ADD CONSTRAINT [CONSTRAINT [symbol]] FOREIGN KEY                | 限制支持     | 非字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
+|         |                                                                             |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
+|         |                                                                             |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
+|         | ALGORITHM                                                                   | 支持         | MySQL8.0新增INSTANT，且默认使用INSTANT                                                                                                                                                                                                              |
+|         | ALTER COLUMN                                                                | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | LOCK                                                                        | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | MODIFY/CHANGE [COLUMN]                                                    | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | DROP COLUMN                                                                 | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | DROP PRIMARY KEY/KEY/INDEX/FOREIGN KEY                                      | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | DISABLE KEYS                                                                | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | ENABLE KEYS                                                                 | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | DISCARD TABLESPACE                                                          | 不支持       | 　                                                                                                                                                                                                                                                  |
+|         | IMPORT TABLESPACE                                                           | 不支持       | 　                                                                                                                                                                                                                                                  |
+|         | ADD/DROP/TRUNCATE PARTITION                                                 | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | GENERATED COLUMNS                                                           | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
+|         | SECONDARY INDEXES                                                           | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
+|         | CHECK                                                                       | 支持         | MySQL8.0新增功能                                                                                                                                                                                                                                    |
+|
+|     ALTER             | VIEW                                                                        | 支持         | 计算节点版本高于（包含）2.5.6时支持                                                                                                                                                                                                                 |
 
 #### CREATE语句
 
@@ -4332,27 +4341,29 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | 　                |                                |              |                                                                                                                                                                                                                                                     |
 | CREATE INDEX      | FOREIGN KEY                    | 支持         | 　                                                                                                                                                                                                                                                  |
 |                   | UNIQUE                         | 支持         |                                                                                                                                                                                                                                                     |
-|                   | 父子表的FOREIGN KEY            | 限制支持     | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
-|                   |                                |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
-|                   |                                |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
-|                   | FULLTEXT                       | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | SPATIAL                        | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | ALGORITHM                      | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | LOCK                           | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | FUNCTIONAL KEYS                | 支持         | MySQL8.0新增功能                                                                                                                                                                                                                                    |
-| 　                |                                |              |                                                                                                                                                                                                                                                     |
-| CREATE TABLE      | CREATE TEMPORARY TABLE         | 禁用         |                                                                                                                                                                                                                                                     |
-|                   | CREATE TABLE [IF NOT EXISTS] | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | CREATE TABLE LIKE              | 支持         | 　                                                                                                                                                                                                                                                  |
-|                   | CREATE TABLE AS SELECT ...     | 支持         | 1.要求存储节点用户拥有CREATE TEMPORARY TABLE权限。
-|                   |                                |              | 2. 要求CREATE的表和SELECT的表关联至少一个相同的数据节点，否则执行不成功：ERROR 10215 (HY000): [LOADTEST1] no overlapping datanode
-|                   |                                |              | 3. 不支持CREATE TABLE ... IGNORE SELECT 和 CREATE TABLE ... REPLACE SELECT                                                                                                                                                                       |
-|                   | GENERATED COLUMNS              | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
-|                   | SECONDARY INDEXES              | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
-|                   | CHECK                          | 支持         | MySQL8.0新增功能                                                                                                                                                                                                                                    |
-| 　                |                                |              |                                                                                                                                                                                                                                                     |
-| CREATE TRIGGER    | 　                             | 支持         | 　目前仅支持单库，且需要赋予CREATE权限，内部语句不验证权限，DEFINER相关目前不支持，show trrigers时相关字段显示当前用户                                                                                                                              |
-| CREATE VIEW       | 　                             | 支持         | 　计算节点版本高于（包含）2.5.6时支持                                                                                                                                                                                                               |
+
+|         | 父子表的FOREIGN KEY            | 限制支持     | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。
+|         |                                |              | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：
+|         |                                |              | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails                                                                                                                                                                |
+|         | FULLTEXT                       | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | SPATIAL                        | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | ALGORITHM                      | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | LOCK                           | 支持         | 　                                                                                                                                                                                                                                                  |
+|         | FUNCTIONAL KEYS                | 支持         | MySQL8.0新增功能                                                                                                                                                                                                                                    |
+|
+|     　                |                                |              |                                                                                                                                                                                                                                                     |
+|     CREATE TABLE      | CREATE TEMPORARY TABLE         | 禁用         |                                                                                                                                                                                                                                                     |
+|     | CREATE TABLE [IF NOT EXISTS] | 支持         | 　                                                                                                                                                                                                                                                  |
+|     | CREATE TABLE LIKE              | 支持         | 　                                                                                                                                                                                                                                                  |
+|     | CREATE TABLE AS SELECT ...     | 支持         | 1.要求存储节点用户拥有CREATE TEMPORARY TABLE权限。
+|     |                                |              | 2. 要求CREATE的表和SELECT的表关联至少一个相同的数据节点，否则执行不成功：ERROR 10215 (HY000): [LOADTEST1] no overlapping datanode
+|     |                                |              | 3. 不支持CREATE TABLE ... IGNORE SELECT 和 CREATE TABLE ... REPLACE SELECT                                                                                                                                                                       |
+|     | GENERATED COLUMNS              | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
+|     | SECONDARY INDEXES              | 支持         | MySQL8.0与5.7新增功能                                                                                                                                                                                                                               |
+|     | CHECK                          | 支持         | MySQL8.0新增功能                                                                                                                                                                                                                                    |
+|     　                |                                |              |                                                                                                                                                                                                                                                     |
+|     CREATE TRIGGER    | 　                             | 支持         | 　目前仅支持单库，且需要赋予CREATE权限，内部语句不验证权限，DEFINER相关目前不支持，show trrigers时相关字段显示当前用户                                                                                                                              |
+|     CREATE VIEW       | 　                             | 支持         | 　计算节点版本高于（包含）2.5.6时支持                                                                                                                                                                                                               |
 
 CREATE DATABASE 在计算节点使用时对应为创建逻辑库的功能，语法使用说明如下：
 
@@ -4368,11 +4379,11 @@ create_option: [DEFAULT] { CHARACTER SET [=] charset_name | COLLATE [=] collatio
 
 create database if not exists zjj_d3 default datanode '1,4';
 
--   关联不存在的数据节点
+- 关联不存在的数据节点
 
 ![](assets/standard/image109.png)
 
--   指定字符集时，给出warning提醒如下
+- 指定字符集时，给出warning提醒如下
 
 ![](assets/standard/image110.png)
 
@@ -4381,32 +4392,35 @@ create database if not exists zjj_d3 default datanode '1,4';
 #### DROP语句
 
 ------------------- ----------------------------------------------- -------------- ------------------------
-  **MySQL语句类型**   **子句类型**                                    **支持状态**   **说明**
-  DROP DATABASE       　                                              禁用           　
-  DROP EVENT          　                                              禁用           　
-  DROP FUNCTION       　                                              禁用           　
-  DROP INDEX          UNIQUE                                          支持           　
-                      普通索引KEY                                     支持           　
-                      FOREIGN KEY                                     支持           　
-                                                                      支持           　
-                      FULLTEXT                                        支持           　
-                      SPATIAL                                         支持           　
-                      ALGORITHM                                       支持           　
-                      LOCK                                            支持           　
-  DROP TABLE          DROP [TEMPORARY] TABLE [IF EXISTS]          禁用           　
-                      DROP TABLE                                      支持           　
-                      DROP TABLE 多表                                 支持           必须保证多表在相同节点
-                      DROP TABLE table_name [RESTRICT | CASCADE]   支持           　
-  DROP TRIGGER        　                                              支持           需要赋予DROP权限
-  DROP VIEW           　                                              支持           　
+
+**MySQL语句类型**   **子句类型**                                    **支持状态**   **说明**
+DROP DATABASE       　                                              禁用           　
+DROP EVENT          　                                              禁用           　
+DROP FUNCTION       　                                              禁用           　
+DROP INDEX          UNIQUE                                          支持           　
+普通索引KEY                                     支持           　
+FOREIGN KEY                                     支持           　
+支持           　
+FULLTEXT                                        支持           　
+SPATIAL                                         支持           　
+ALGORITHM                                       支持           　
+LOCK                                            支持           　
+DROP TABLE          DROP [TEMPORARY] TABLE [IF EXISTS]          禁用           　
+DROP TABLE                                      支持           　
+DROP TABLE 多表                                 支持           必须保证多表在相同节点
+DROP TABLE table_name [RESTRICT | CASCADE]   支持           　
+DROP TRIGGER        　                                              支持           需要赋予DROP权限
+DROP VIEW           　                                              支持           　
+
 ------------------- ----------------------------------------------- -------------- ------------------------
 
 #### TRUNCATE与RENAME语句
 
 | **MySQL语句类型** | **子句类型** | **支持状态** | **说明**                                                                                                                                              |
+
 | RENAME TABLE      | 　           | 支持         | 1. 支持RENAME多张表，但要求这些表都在相同节点，否则将执行失败并报错：ERROR 10042 (HY000): unsupported to rename multi table with different datanodes
-|                   |              |              | 2. RENAME中的目标表不需要提前添加表配置，若添加新表的表配置，需要保证新表表配置与原表一致，否则RENAME将不成功
-|                   |              |              | 注意：计算节点数据库用户需要对旧表拥有ALTER和DROP权限，以及对新表拥有CREATE和INSERT权限                                                               |
+| |              |              | 2. RENAME中的目标表不需要提前添加表配置，若添加新表的表配置，需要保证新表表配置与原表一致，否则RENAME将不成功
+| |              |              | 注意：计算节点数据库用户需要对旧表拥有ALTER和DROP权限，以及对新表拥有CREATE和INSERT权限                                                               |
 | TRUNCATE TABLE    | 　           | 支持         | 　                                                                                                                                                    |
 
 ### 事务管理与锁语句
@@ -4482,10 +4496,12 @@ HotDB Server当前仅支持垂直库（即逻辑库仅关联一个数据节点�
 #### Prepare SQL Statement
 
 ----------------------- ------------------------------ -------------- ----------
-  **语句类型**            **SQL语句**                    **支持状态**   **说明**
-  Prepare SQL Statement   PREPARE ... FROM ...           支持           
-                          EXECUTE ...                    支持           　
-                          {DEALLOCATE | DROP} PREPARE   支持           
+
+**语句类型**            **SQL语句**                    **支持状态**   **说明**
+Prepare SQL Statement   PREPARE ... FROM ...           支持           
+EXECUTE ...                    支持           　
+{DEALLOCATE | DROP} PREPARE   支持
+
 ----------------------- ------------------------------ -------------- ----------
 
 #### 用户管理语句
@@ -4493,14 +4509,16 @@ HotDB Server当前仅支持垂直库（即逻辑库仅关联一个数据节点�
 HotDB Server实现了一套自己的用户名与权限管理的系统，可以优先在分布式事务数据库平台页面上操作即可。若使用同MySQL数据库用户管理类同的SQL语句，部分可以支持。
 
 -------------- --------------------------- -------------- --------------------------------
-  **语句类型**   **SQL语句**                 **支持状态**   **说明**
-  用户管理语句   ALTER USER                  禁用           通过平台操作可支持
-                 [CREATE USER](#创建用户)    支持           使用说明详见表格下方详细描述
-                 [DROP USER](#删除用户)      支持           使用说明详见表格下方详细描述　
-                 [GRANT](#grant赋权)         支持           使用说明详见表格下方详细描述　
-                 RENAME USER                 禁用           通过平台操作可支持　
-                 [REVOKE](#revoke删除权限)   支持           使用说明详见表格下方详细描述　
-                 SET PASSWORD                禁用           通过平台操作可支持　
+
+**语句类型**   **SQL语句**                 **支持状态**   **说明**
+用户管理语句   ALTER USER                  禁用           通过平台操作可支持
+[CREATE USER](#创建用户)    支持           使用说明详见表格下方详细描述
+[DROP USER](#删除用户)      支持           使用说明详见表格下方详细描述　
+[GRANT](#grant赋权)         支持           使用说明详见表格下方详细描述　
+RENAME USER                 禁用           通过平台操作可支持　
+[REVOKE](#revoke删除权限)   支持           使用说明详见表格下方详细描述　
+SET PASSWORD                禁用           通过平台操作可支持　
+
 -------------- --------------------------- -------------- --------------------------------
 
 计算节点版本高于2.5.6版本时，支持使用SQL语句创建/删除用户，并给用户赋权/解权。
@@ -4517,19 +4535,19 @@ create user 'jingjingjing'@'%' identified by 'jing' with max_user_connections 3;
 
 创建用户时执行用户必须具有super权限且不支持空密码创建，用户名最大长度限制64字符，密码暂未限制。
 
--   执行用户不具有super权限创建用户，提示如下：
+- 执行用户不具有super权限创建用户，提示如下：
 
 ![](assets/standard/image111.png)
 
--   空密码创建时，提示如下：
+- 空密码创建时，提示如下：
 
 ![](assets/standard/image112.png)
 
--   用户名超过限制，提示如下：
+- 用户名超过限制，提示如下：
 
 ![](assets/standard/image113.png)
 
--   重复创建用户，提示如下：
+- 重复创建用户，提示如下：
 
 ![](assets/standard/image114.png)
 
@@ -4545,11 +4563,11 @@ drop user 'jingjingjing'@'%';
 
 删除用户时执行用户必须具有super权限。
 
--   执行用户不具有super权限删除用户，提示如下：
+- 执行用户不具有super权限删除用户，提示如下：
 
 ![](assets/standard/image115.png)
 
--   删除不存在的用户时，提示如下：
+- 删除不存在的用户时，提示如下：
 
 ![](assets/standard/image116.png)
 
@@ -4559,11 +4577,11 @@ GRANT赋权语法：
 
 GRANT
 
-priv_type[, priv_type ] ...
+priv_type[, priv_type] ...
 
 ON  priv_level TO 'user_name'@'host_name'[,'user_name'@'host_name'] ...
 
-[WITH MAX_USER_CONNECTIONS con_num ]
+[WITH MAX_USER_CONNECTIONS con_num]
 
 **说明：**
 
@@ -4591,37 +4609,37 @@ grant update on test_ct.test_aa to 'test_ct'@'localhost' identified by 'test_ct'
 
 赋权注意事项：
 
-1.  执行赋权操作的用户本身必须有super权限。
+1. 执行赋权操作的用户本身必须有super权限。
 
-2.  可在赋权时同步创建用户但需带上密码。
+2. 可在赋权时同步创建用户但需带上密码。
 
-3.  super和file必须赋全局管理权限，不支持库和表级别授权。
+3. super和file必须赋全局管理权限，不支持库和表级别授权。
 
-4.  all权限不能与其他权限同时使用只能单独赋权，同MySQL。
+4. all权限不能与其他权限同时使用只能单独赋权，同MySQL。
 
-5.  权限修改后只对新连接生效，不会改变已创建的连接权限。
+5. 权限修改后只对新连接生效，不会改变已创建的连接权限。
 
--   执行赋权操作的用户不具有super权限，提示如下：
+- 执行赋权操作的用户不具有super权限，提示如下：
 
 ![](assets/standard/image117.png)
 
--   赋权时同步创建用户
+- 赋权时同步创建用户
 
 ![](assets/standard/image118.png)
 
--   赋权时同步创建用户不带密码，提示如下：
+- 赋权时同步创建用户不带密码，提示如下：
 
 ![](assets/standard/image119.png)
 
--   super只能赋全局权限，不支持库和表级别授权，如下图：
+- super只能赋全局权限，不支持库和表级别授权，如下图：
 
 ![](assets/standard/image120.png)
 
--   file权限只能赋全局权限，不支持库和表级别授权
+- file权限只能赋全局权限，不支持库和表级别授权
 
 ![](assets/standard/image121.png)
 
--   all权限只能单独授权，不能和其他权限项同时授权
+- all权限只能单独授权，不能和其他权限项同时授权
 
 ![](assets/standard/image122.png)
 
@@ -4629,7 +4647,7 @@ grant update on test_ct.test_aa to 'test_ct'@'localhost' identified by 'test_ct'
 
 REVOKE删除权限语法：
 
-REVOKE priv_type [, priv_type ] ...ON priv_level FROM 'user_name'@'host_name' [, 'user_name'@'host_name'] ...
+REVOKE priv_type [, priv_type] ...ON priv_level FROM 'user_name'@'host_name' [, 'user_name'@'host_name'] ...
 
 服务端REVOKE语法示例：
 
@@ -4637,35 +4655,35 @@ revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jing
 
 解权注意事项：
 
-1.  执行删除权限操作的用户本身必须有super权限。
+1. 执行删除权限操作的用户本身必须有super权限。
 
-2.  可以移除部分权限和所有权限，可以移除对应库、表级别的权限。
+2. 可以移除部分权限和所有权限，可以移除对应库、表级别的权限。
 
-3.  权限项可重复移除，但移除不存在的类型会报语法错误。
+3. 权限项可重复移除，但移除不存在的类型会报语法错误。
 
-4.  权限修改后只对新连接生效，不会改变已创建的连接权限。
+4. 权限修改后只对新连接生效，不会改变已创建的连接权限。
 
--   执行用户没有super权限时删除权限，提示如下：
+- 执行用户没有super权限时删除权限，提示如下：
 
 ![](assets/standard/image123.png)
 
--   支持移除部分权限
+- 支持移除部分权限
 
 ![](assets/standard/image124.png)
 
--   支持移除所有权限
+- 支持移除所有权限
 
 ![](assets/standard/image125.png)
 
--   支持移除库级别权限
+- 支持移除库级别权限
 
 ![](assets/standard/image126.png)
 
--   支持移除表级别权限
+- 支持移除表级别权限
 
 ![](assets/standard/image127.png)
 
--   移除权限后再次使用该权限，报错提示如下
+- 移除权限后再次使用该权限，报错提示如下
 
 ![](assets/standard/image128.png)
 
@@ -4674,12 +4692,14 @@ revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jing
 #### 表维护语句
 
 -------------- ---------------- -------------- ----------
-  **语句类型**   **SQL语句**      **支持状态**   **说明**
-  表维护语句     ANALYZE TABLE    禁用           
-                 CHECK TABLE      禁用           
-                 CHECKSUM TABLE   禁用           
-                 OPTIMIZE TABLE   禁用           
-                 REPAIR TABLE     禁用           
+
+**语句类型**   **SQL语句**      **支持状态**   **说明**
+表维护语句     ANALYZE TABLE    禁用           
+CHECK TABLE      禁用           
+CHECKSUM TABLE   禁用           
+OPTIMIZE TABLE   禁用           
+REPAIR TABLE     禁用
+
 -------------- ---------------- -------------- ----------
 
 #### SET语句
@@ -4692,12 +4712,13 @@ revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jing
 |              | SET @@                          | 不支持       | 　                                                                                                   |
 |              | SET ROLE                        | 禁用         | 计算节点不支持MySQL8.0新增角色功能                                                                   |
 |              | 用户自定义变量                  | 支持         | 仅支持单库下调用                                                                                     |
-|              | SET CHARACTER SET               | 支持         | 仅支持：CHARACTER_SET_CLIENT
-|              |                                 |              | CHARACTER_SET_CONNECTION
-|              |                                 |              | CHARACTER_SET_RESULTS                                                                                |
-|              | SET NAMES                       | 支持         | 　                                                                                                   |
-|              | SET TRANSACTION ISOLATION LEVEL | 支持         | 普通模式下支持的级别为REPEATABLE READ，READ COMMITTED，SERIALIZABLE
-|              |                                 |              | XA 模式只支持 REPEATABLE READ、SERIALIZABLE                                                          |
+
+|         | SET CHARACTER SET               | 支持         | 仅支持：CHARACTER_SET_CLIENT
+|         |                                 |              | CHARACTER_SET_CONNECTION
+|         |                                 |              | CHARACTER_SET_RESULTS                                                                                |
+|         | SET NAMES                       | 支持         | 　                                                                                                   |
+|         | SET TRANSACTION ISOLATION LEVEL | 支持         | 普通模式下支持的级别为REPEATABLE READ，READ COMMITTED，SERIALIZABLE
+|         |                                 |              | XA 模式只支持 REPEATABLE READ、SERIALIZABLE                                                          |
 
 #### SHOW语句
 
@@ -4745,16 +4766,19 @@ revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jing
 |              | SHOW TRIGGERS                                                                         | 支持         | 返回空集　                                                            |
 |              | SHOW GLOBAL|SESSION VARIABLES                                                        | 支持         | 　                                                                    |
 |              | SHOW WARNINGS                                                                         | 支持         |                                                                       |
-|              | SHOW HOTDB TABLES                                                                     | 支持         | 支持[{FROM | IN} *db_name*] [LIKE '*pattern*' | WHERE *expr*]
-|              |                                                                                       |              | 显示计算节点的分片信息                                                |
+
+|         | SHOW HOTDB TABLES                                                                     | 支持         | 支持[{FROM | IN} *db_name*] [LIKE '*pattern*' | WHERE *expr*]
+|         |                                                                                       |              | 显示计算节点的分片信息                                                |
 
 #### HotDB PROFILE
 
 -------------- ------------------------------------------------------------- -------------- --------------------------------------
-  **语句类型**   **SQL语句**                                                   **支持状态**   **说明**
-  SET语句        SET hotdb_profiling={0|1|on|off}                           支持           支持 set [session] hotdb_profiling
-  SHOW语句       SHOW HOTDB_PROFILES                                           支持           　
-                 SHOW HOTDB_PROFILE FOR QUERY N [relative time|real time]   支持           N代表执行的SQL id
+
+**语句类型**   **SQL语句**                                                   **支持状态**   **说明**
+SET语句        SET hotdb_profiling={0|1|on|off}                           支持           支持 set [session] hotdb_profiling
+SHOW语句       SHOW HOTDB_PROFILES                                           支持           　
+SHOW HOTDB_PROFILE FOR QUERY N [relative time|real time]   支持           N代表执行的SQL id
+
 -------------- ------------------------------------------------------------- -------------- --------------------------------------
 
 **功能说明**：该功能仅限session级别
@@ -4860,19 +4884,21 @@ result send end time：计算节点完成向前端写出最后一个结果集的
 #### 其他MySQL管理语句
 
 -------------------------- ------------------------------ -------------- ----------------------------------
-  **语句类型**               **SQL语句**                    **支持状态**   **说明**
-  其他管理语句               BINLOG 'str'                 禁用           　
-                             CACHE INDEX                    禁用           　
-                             KILL [CONNECTION | QUERY]   支持           
-                             LOAD INDEX INTO CACHE          禁用           　
-                             RESET MASTER                   禁用           　
-                             RESET QUERY CACHE              禁用           　
-                             RESET SLAVE                    禁用           　
-  MySQL Utility Statements   DESCRIBE|DESC                 支持           
-                             EXPLAIN                        支持           请参考[EXPLAIN](#explain)
-                             EXPLAIN EXTENDED               不支持         
-                             HELP                           不支持         　
-                             USE                            支持           　
+
+**语句类型**               **SQL语句**                    **支持状态**   **说明**
+其他管理语句               BINLOG 'str'                 禁用           　
+CACHE INDEX                    禁用           　
+KILL [CONNECTION | QUERY]   支持           
+LOAD INDEX INTO CACHE          禁用           　
+RESET MASTER                   禁用           　
+RESET QUERY CACHE              禁用           　
+RESET SLAVE                    禁用           　
+MySQL Utility Statements   DESCRIBE|DESC                 支持           
+EXPLAIN                        支持           请参考[EXPLAIN](#explain)
+EXPLAIN EXTENDED               不支持         
+HELP                           不支持         　
+USE                            支持           　
+
 -------------------------- ------------------------------ -------------- ----------------------------------
 
 KILL语句与MySQL KILL语句用法一样。KILL会同时关闭计算节点前端连接与存储节点的MySQL数据库的连接。
@@ -4923,53 +4949,55 @@ HotDB Server对MySQL部分variables及status的显示结果做了支持，可通
 | INNODB_BUFFER_POOL_SIZE  | 逻辑库下所有节点总和，主备节点按主节点算                                                                                                                  |
 
 ------------------------------------------------------- ----------------------------------------------------------------
-  **Status Name**                                         **显示说明**
-  Compression                                             一律为OFF（计算节点暂不支持压缩协议）
-  Innodb_buffer_pool_dump_status                          第一个不以not started结尾的状态，否则取逻辑库的第一个节点的值
-  Innodb_buffer_pool_load_status                          第一个不以not started结尾的状态，否则取逻辑库的第一个节点的值
-  Innodb_have_atomic_builtins                             如果逻辑库有一个节点为OFF则为OFF，全为ON则为ON
-  Innodb_page_size                                        取逻辑库的第一个节点的值
-  Innodb_row_lock_time_avg                                逻辑库的所有节点取简单平均
-  Innodb_row_lock_time_max                                逻辑库的所有节点取最大值
-  Last_query_cost                                         始终0.000000
-  Last_query_partial_plans                                始终0
-  Max_used_connections                                    逻辑库的所有节点取最大值
-  Slave_heartbeat_period                                  逻辑库的所有节点取最大值
-  Slave_last_heartbeat                                    日期型，逻辑库的所有节点取最小值，如果全为空字符串则为空字符串
-  Slave_running                                           如果逻辑库有一个节点为OFF则为OFF，全为ON则为ON
-  Ssl_cipher                                              始终返回空字符串
-  Ssl_cipher_list                                         始终返回空字符串
-  Ssl_ctx_verify_depth                                    取逻辑库的第一个节点的值
-  Ssl_ctx_verify_mode                                     取逻辑库的第一个节点的值
-  Ssl_default_timeout                                     取逻辑库的第一个节点的值
-  Ssl_server_not_after                                    始终返回空字符串
-  Ssl_server_not_before                                   始终返回空字符串
-  Ssl_session_cache_mode                                  取逻辑库的第一个节点的值
-  Ssl_verify_depth                                        取逻辑库的第一个节点的值
-  Ssl_verify_mode                                         取逻辑库的第一个节点的值
-  Ssl_version                                             取逻辑库的第一个节点的值
-  Tc_log_page_size                                        取逻辑库的第一个节点的值
-  Uptime                                                  逻辑库的所有节点取最大值
-  Uptime_since_flush_status                               逻辑库的所有节点取最大值
-  Caching_sha2_password_rsa_public_key                    始终显示空字符串，MySQL8.0新增
-  Current_tls_ca                                          始终显示空字符串，MySQL8.0新增
-  Current_tls_capath                                      始终显示空字符串，MySQL8.0新增
-  Current_tls_cert                                        始终显示空字符串，MySQL8.0新增
-  Current_tls_cipher                                      始终显示空字符串，MySQL8.0新增
-  Current_tls_ciphersuites                                始终显示空字符串，MySQL8.0新增
-  Current_tls_crl                                         始终显示空字符串，MySQL8.0新增
-  Current_tls_crlpath                                     始终显示空字符串，MySQL8.0新增
-  Current_tls_key                                         始终显示空字符串，MySQL8.0新增
-  Current_tls_version                                     始终显示空字符串，MySQL8.0新增
-  group_replication_primary_member                        始终显示空字符串，MySQL8.0新增
-  mecab_charset                                           逻辑库第一个，MySQL8.0新增
-  Performance_schema_session_connect_attrs_longest_seen   逻辑库取最大，MySQL8.0新增
-  Rpl_semi_sync_master_clients                            始终显示0，MySQL8.0新增
-  Rpl_semi_sync_master_net_avg_wait_time                  逻辑库求平均，MySQL8.0新增
-  Rpl_semi_sync_master_status                             始终显示ON，MySQL8.0新增
-  Rpl_semi_sync_master_tx_avg_wait_time                   逻辑库求平均，MySQL8.0新增
-  Rpl_semi_sync_slave_status                              始终显示ON，MySQL8.0新增
-  Rsa_public_key                                          始终显示空字符串，MySQL8.0新增
+
+**Status Name**                                         **显示说明**
+Compression                                             一律为OFF（计算节点暂不支持压缩协议）
+Innodb_buffer_pool_dump_status                          第一个不以not started结尾的状态，否则取逻辑库的第一个节点的值
+Innodb_buffer_pool_load_status                          第一个不以not started结尾的状态，否则取逻辑库的第一个节点的值
+Innodb_have_atomic_builtins                             如果逻辑库有一个节点为OFF则为OFF，全为ON则为ON
+Innodb_page_size                                        取逻辑库的第一个节点的值
+Innodb_row_lock_time_avg                                逻辑库的所有节点取简单平均
+Innodb_row_lock_time_max                                逻辑库的所有节点取最大值
+Last_query_cost                                         始终0.000000
+Last_query_partial_plans                                始终0
+Max_used_connections                                    逻辑库的所有节点取最大值
+Slave_heartbeat_period                                  逻辑库的所有节点取最大值
+Slave_last_heartbeat                                    日期型，逻辑库的所有节点取最小值，如果全为空字符串则为空字符串
+Slave_running                                           如果逻辑库有一个节点为OFF则为OFF，全为ON则为ON
+Ssl_cipher                                              始终返回空字符串
+Ssl_cipher_list                                         始终返回空字符串
+Ssl_ctx_verify_depth                                    取逻辑库的第一个节点的值
+Ssl_ctx_verify_mode                                     取逻辑库的第一个节点的值
+Ssl_default_timeout                                     取逻辑库的第一个节点的值
+Ssl_server_not_after                                    始终返回空字符串
+Ssl_server_not_before                                   始终返回空字符串
+Ssl_session_cache_mode                                  取逻辑库的第一个节点的值
+Ssl_verify_depth                                        取逻辑库的第一个节点的值
+Ssl_verify_mode                                         取逻辑库的第一个节点的值
+Ssl_version                                             取逻辑库的第一个节点的值
+Tc_log_page_size                                        取逻辑库的第一个节点的值
+Uptime                                                  逻辑库的所有节点取最大值
+Uptime_since_flush_status                               逻辑库的所有节点取最大值
+Caching_sha2_password_rsa_public_key                    始终显示空字符串，MySQL8.0新增
+Current_tls_ca                                          始终显示空字符串，MySQL8.0新增
+Current_tls_capath                                      始终显示空字符串，MySQL8.0新增
+Current_tls_cert                                        始终显示空字符串，MySQL8.0新增
+Current_tls_cipher                                      始终显示空字符串，MySQL8.0新增
+Current_tls_ciphersuites                                始终显示空字符串，MySQL8.0新增
+Current_tls_crl                                         始终显示空字符串，MySQL8.0新增
+Current_tls_crlpath                                     始终显示空字符串，MySQL8.0新增
+Current_tls_key                                         始终显示空字符串，MySQL8.0新增
+Current_tls_version                                     始终显示空字符串，MySQL8.0新增
+group_replication_primary_member                        始终显示空字符串，MySQL8.0新增
+mecab_charset                                           逻辑库第一个，MySQL8.0新增
+Performance_schema_session_connect_attrs_longest_seen   逻辑库取最大，MySQL8.0新增
+Rpl_semi_sync_master_clients                            始终显示0，MySQL8.0新增
+Rpl_semi_sync_master_net_avg_wait_time                  逻辑库求平均，MySQL8.0新增
+Rpl_semi_sync_master_status                             始终显示ON，MySQL8.0新增
+Rpl_semi_sync_master_tx_avg_wait_time                   逻辑库求平均，MySQL8.0新增
+Rpl_semi_sync_slave_status                              始终显示ON，MySQL8.0新增
+Rsa_public_key                                          始终显示空字符串，MySQL8.0新增
+
 ------------------------------------------------------- ----------------------------------------------------------------
 
 ### 计算节点语法特殊功能
@@ -5116,11 +5144,11 @@ Query OK, 0 rows affected (0.09 sec)
 
 对于此语法规则建表，需要注意以下几点:
 
--   'functionid | functionname | functiontype'为具体指定的分片函数ID、分片函数名称、分片函数类型
+- 'functionid | functionname | functiontype'为具体指定的分片函数ID、分片函数名称、分片函数类型
 
--   'shardcolumnname' 为指定的分片字段
+- 'shardcolumnname' 为指定的分片字段
 
--   'datanodeid'为节点ID，可以逗号间隔，且支持区间形式指定，如:'1,3,4,5-10,12-40'，节点ID可登录分布式事务数据库平台页面，选择"配置"->"节点管理"查看，也可以登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)show hotdb datanodes;查看：
+- 'datanodeid'为节点ID，可以逗号间隔，且支持区间形式指定，如:'1,3,4,5-10,12-40'，节点ID可登录分布式事务数据库平台页面，选择"配置"->"节点管理"查看，也可以登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)show hotdb datanodes;查看：
 
 mysql> show hotdb datanodes;
 
@@ -5140,13 +5168,13 @@ mysql> show hotdb datanodes;
 
 6 rows in set (0.00 sec)
 
--   functiontype 只支持 auto_crc32/auto_mod, 若使用了其他类型会提示：ERROR:The fucntiontype can only be auto_crc32/auto_mod.
+- functiontype 只支持 auto_crc32/auto_mod, 若使用了其他类型会提示：ERROR:The fucntiontype can only be auto_crc32/auto_mod.
 
 mysql> create table ft_match shard by functiontype 'match' using column 'id' on datanode '11,13'(id int(10) primary key, a char(20) not null);
 
 ERROR 10070 (HY000): The functiontype can only by auto_crc32/auto_mode.
 
--   使用functionid | functionname建表时，当指定的function信息关联的function_type 是auto_crc32/auto_mod 时，需要指定on datanode 'datanodes' ，否则会提示：The function must be specified datanodes。 如果是其他类型，则无需指定。
+- 使用functionid | functionname建表时，当指定的function信息关联的function_type 是auto_crc32/auto_mod 时，需要指定on datanode 'datanodes' ，否则会提示：The function must be specified datanodes。 如果是其他类型，则无需指定。
 
 mysql> create table mod_ft shard by functionid '15' using column 'id'(id int(10) primary key, a char(20) not null);
 
@@ -5162,7 +5190,7 @@ ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
 
 表结构类似的表可以使用相同的分片规则，使用如下语法可直接引用分片规则创建水平分片表：
 
-CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleid\\rulename' [on datanode 'datanodes'] (......
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleid\rulename' [on datanode 'datanodes'] (......
 
 登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)，show hotdb rules;和show hotdb functions;可以看到与之分片函数关联的分片规则：
 
@@ -5276,7 +5304,7 @@ Query OK, 0 rows affected (0.07 sec)
 
 语法规则里的global是创建全局表的标志，'datanodeid'为节点ID，可以逗号间隔，且支持区间形式指定，如:'1,3,4,5-10,12-40'，使用该语法创建分片规则的全局表，该表的节点应该包括逻辑库下所有节点。
 
--   如果逻辑库下没有默认分片节点也没有已经定义的表，则使用特殊语法进行全局表的创建时，需要指定全局表分布的节点：
+- 如果逻辑库下没有默认分片节点也没有已经定义的表，则使用特殊语法进行全局表的创建时，需要指定全局表分布的节点：
 
 mysql> CREATE TABLE tb2_quan shard by global(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) null,j varchar(30),k blob,l text, m enum('','null','1','2','3'),n set('','null','1','2','3'));
 
@@ -5301,18 +5329,22 @@ mysql> show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 **命令包含参数及其说明：**
 
 ---------- --------------------------------------------- ----------
-  **参数**   **说明**                                      **类型**
-  pattern    可选，模糊查询表达式，匹配datanode_name字段   STRING
-  expr       可选，where条件表达式                         STRING
+
+**参数**   **说明**                                      **类型**
+pattern    可选，模糊查询表达式，匹配datanode_name字段   STRING
+expr       可选，where条件表达式                         STRING
+
 ---------- --------------------------------------------- ----------
 
 **结果包含字段及其说明：**
 
 --------------- ----------------- -----------------
-  **列名**        **说明**          **值类型/范围**
-  datanode_id     节点ID            INTEGER
-  datanode_name   节点名称          STRING
-  datanode_type   0：主备；1：MGR   INTEGER
+
+**列名**        **说明**          **值类型/范围**
+datanode_id     节点ID            INTEGER
+datanode_name   节点名称          STRING
+datanode_type   0：主备；1：MGR   INTEGER
+
 --------------- ----------------- -----------------
 
 例子：
@@ -5358,19 +5390,23 @@ mysql> show hotdb functions;
 **命令包含参数及其说明：**
 
 ---------- --------------------------------------------- ----------
-  **参数**   **说明**                                      **类型**
-  pattern    可选，模糊查询表达式，匹配function_name字段   STRING
-  expr       可选，where条件表达式                         STRING
+
+**参数**   **说明**                                      **类型**
+pattern    可选，模糊查询表达式，匹配function_name字段   STRING
+expr       可选，where条件表达式                         STRING
+
 ---------- --------------------------------------------- ----------
 
 **结果包含字段及其说明：**
 
 ---------------- --------------------------------------------------------- -----------------
-  **列名**         **说明**                                                  **值类型/范围**
-  function_id      分片函数ID                                                INTEGER
-  function_name    分片函数名称                                              STRING
-  function_type    分片类型                                                  STRING
-  auto_generated   是否为HotDB自动生成的配置(1:自动生成，其他：非自动生成)   INTEGER
+
+**列名**         **说明**                                                  **值类型/范围**
+function_id      分片函数ID                                                INTEGER
+function_name    分片函数名称                                              STRING
+function_type    分片类型                                                  STRING
+auto_generated   是否为HotDB自动生成的配置(1:自动生成，其他：非自动生成)   INTEGER
+
 ---------------- --------------------------------------------------------- -----------------
 
 例子：
@@ -5432,17 +5468,21 @@ mysql> show hotdb function infos [WHERE expr];
 **命令包含参数及其说明：**
 
 ---------- ----------------------- ----------
-  **参数**   **说明**                **类型**
-  expr       可选，where条件表达式   STRING
+
+**参数**   **说明**                **类型**
+expr       可选，where条件表达式   STRING
+
 ---------- ----------------------- ----------
 
 **结果包含字段及其说明：**
 
 -------------- -------------- -----------------
-  **列名**       **说明**       **值类型/范围**
-  function_id    分片函数ID     INTEGER
-  column_value   分片字段的值   STRING
-  datanode_id    数据节点id     INTEGER
+
+**列名**       **说明**       **值类型/范围**
+function_id    分片函数ID     INTEGER
+column_value   分片字段的值   STRING
+datanode_id    数据节点id     INTEGER
+
 -------------- -------------- -----------------
 
 例子：
@@ -5502,20 +5542,24 @@ mysql> show hotdb rules [LIKE 'pattern' | WHERE expr];
 **命令包含参数及其说明：**
 
 ---------- ----------------------------------------- ----------
-  **参数**   **说明**                                  **类型**
-  pattern    可选，模糊查询表达式，匹配rule_name字段   STRING
-  expr       可选，where条件表达式                     STRING
+
+**参数**   **说明**                                  **类型**
+pattern    可选，模糊查询表达式，匹配rule_name字段   STRING
+expr       可选，where条件表达式                     STRING
+
 ---------- ----------------------------------------- ----------
 
 **结果包含字段及其说明：**
 
 ---------------- --------------------------------------------------------- -----------------
-  **列名**         **说明**                                                  **值类型/范围**
-  rule_id          分片规则ID                                                INTEGER
-  rule_name        分片规则名称                                              STRING
-  rule_column      分片字段名称                                              STRING
-  function_id      分片类型ID                                                INTEGER
-  auto_generated   是否为HotDB自动生成的配置(1:自动生成，其他：非自动生成)   INTEGER
+
+**列名**         **说明**                                                  **值类型/范围**
+rule_id          分片规则ID                                                INTEGER
+rule_name        分片规则名称                                              STRING
+rule_column      分片字段名称                                              STRING
+function_id      分片类型ID                                                INTEGER
+auto_generated   是否为HotDB自动生成的配置(1:自动生成，其他：非自动生成)   INTEGER
+
 ---------------- --------------------------------------------------------- -----------------
 
 例子：
@@ -5600,15 +5644,15 @@ RENAME TABLE tbl_name TO new_tbl_name
 
 还原时需要注意以下要点：
 
--   通过管理平台配置后创建的表，可以直接RENAME成原表名。通过自动建表功能创建的表，DROP TABLE时不保留表配置，因此不能直接RENAME成原表名。
+- 通过管理平台配置后创建的表，可以直接RENAME成原表名。通过自动建表功能创建的表，DROP TABLE时不保留表配置，因此不能直接RENAME成原表名。
 
--   还原自动建表创建的表可以通过在管理平台上添加配置后RENAME成该表表名。也就是说，还原操作允许通过RENAME表名，将被删除的表还原成任何在管理平台上已配置但未定义的表。
+- 还原自动建表创建的表可以通过在管理平台上添加配置后RENAME成该表表名。也就是说，还原操作允许通过RENAME表名，将被删除的表还原成任何在管理平台上已配置但未定义的表。
 
--   若被删除的表引用的分片规则发生修改，或配置了不同的分片规则，还原后，数据不会按照新的分片规则自动迁移，即实际数据路由将与配置的路由不匹配。建议按照原来的分片规则配置还原，以防出现数据丢失或不一致的问题。
+- 若被删除的表引用的分片规则发生修改，或配置了不同的分片规则，还原后，数据不会按照新的分片规则自动迁移，即实际数据路由将与配置的路由不匹配。建议按照原来的分片规则配置还原，以防出现数据丢失或不一致的问题。
 
--   若被删除的表上存在外键或触发器，DROP TABLE时将会在临时表中删除外键与触发器。有外键约束的表因外键被删除，还原后没有相关约束，以及有可能表内数据已经不再满足相关约束。
+- 若被删除的表上存在外键或触发器，DROP TABLE时将会在临时表中删除外键与触发器。有外键约束的表因外键被删除，还原后没有相关约束，以及有可能表内数据已经不再满足相关约束。
 
--   RENAME临时表的还原操作需要动态加载（reload）后才会生效。当前计算节点的动态加载功能在配置库有变更的情况下才生效，所以若除RENAME操作，配置库无其他变更，需要进行一些变更后，执行动态加载才会生效，生效后可查看到还原的表。
+- RENAME临时表的还原操作需要动态加载（reload）后才会生效。当前计算节点的动态加载功能在配置库有变更的情况下才生效，所以若除RENAME操作，配置库无其他变更，需要进行一些变更后，执行动态加载才会生效，生效后可查看到还原的表。
 
 ## INFORMATION_SCHEMA
 
@@ -5617,81 +5661,85 @@ INFORMATION_SCHEMA库提供当前计算节点的信息与数据，例如数据�
 此章节列出计算节点支持的INFORMATION_SCHEMA中的表与其特殊处理内容如下：
 
 --------------------------------------- ------------------------------------------------------------
-  **表名称**                              **特殊处理**
-  character_sets                          仅返回计算节点支持的字符集与校对集数据
-  collations                              仅返回计算节点支持的字符集与校对集数据
-  collation_character_set_applicability   仅返回计算节点支持的字符集与校对集数据
-  columns                                 返回逻辑库中表的列信息
-  column_privileges                       返回空集
-  engines                                 仅返回innodb
-  events                                  返回空集
-  files                                   返回空集
-  global_status                           与SHOW GLOBAL STATUS结果相同
-  global_variables                        与SHOW GLOBAL VARIABLES结果相同
-  innodb_buffer_page                      返回空集
-  innodb_buffer_page_lru                  返回空集
-  innodb_buffer_pool_stats                返回空集
-  innodb_cmp                              返回空集
-  innodb_cmpmem                           返回空集
-  innodb_cmpmem_reset                     返回空集
-  innodb_cmp_per_index                    返回空集
-  innodb_cmp_per_index_reset              返回空集
-  innodb_cmp_reset                        返回空集
-  innodb_ft_being_deleted                 返回空集
-  innodb_ft_config                        返回空集
-  innodb_ft_default_stopword              返回空集
-  innodb_ft_deleted                       返回空集
-  innodb_ft_index_cache                   返回空集
-  innodb_ft_index_table                   返回空集
-  innodb_locks                            返回空集
-  innodb_lock_waits                       返回空集
-  innodb_metrics                          返回空集
-  innodb_sys_columns                      返回空集
-  innodb_sys_datafiles                    返回空集
-  innodb_sys_fields                       返回空集
-  innodb_sys_foreign                      返回空集
-  innodb_sys_foreign_cols                 返回空集
-  innodb_sys_indexes                      返回空集
-  innodb_sys_tables                       返回空集
-  innodb_sys_tablespaces                  返回空集
-  innodb_sys_tablestats                   返回空集
-  innodb_trx                              返回空集
-  key_column_usage                        返回索引的约束信息。
-  optimizer_trace                         返回空集
-  parameters                              返回空集
-  partitions                              返回逻辑库中表的分区信息，可支持对该表进行排序、分组查询。
-  plugins                                 返回空集
-  processlist                             返回的结果与服务端命令show processlist一致
-  profiling                               返回空集
-  referential_constraints                 返回逻辑库中表的外键信息
-  routines                                返回空集
-  schemata                                返回逻辑库相关信息
-  schema_privileges                       返回空集
-  session_status                          与SHOW SESSION STATUS结果相同
-  session_variables                       与SHOW SESSION VARIABLES结果相同
-  statistics                              返回逻辑库中表的索引统计信息
-  tables                                  返回逻辑库中表信息
-  tablespaces                             返回空集
-  table_constraints                       返回逻辑库中表的约束信息
-  table_privileges                        返回空集
-  triggers                                返回空集
-  user_privileges                         返回空集
-  views                                   返回空集
+
+**表名称**                              **特殊处理**
+character_sets                          仅返回计算节点支持的字符集与校对集数据
+collations                              仅返回计算节点支持的字符集与校对集数据
+collation_character_set_applicability   仅返回计算节点支持的字符集与校对集数据
+columns                                 返回逻辑库中表的列信息
+column_privileges                       返回空集
+engines                                 仅返回innodb
+events                                  返回空集
+files                                   返回空集
+global_status                           与SHOW GLOBAL STATUS结果相同
+global_variables                        与SHOW GLOBAL VARIABLES结果相同
+innodb_buffer_page                      返回空集
+innodb_buffer_page_lru                  返回空集
+innodb_buffer_pool_stats                返回空集
+innodb_cmp                              返回空集
+innodb_cmpmem                           返回空集
+innodb_cmpmem_reset                     返回空集
+innodb_cmp_per_index                    返回空集
+innodb_cmp_per_index_reset              返回空集
+innodb_cmp_reset                        返回空集
+innodb_ft_being_deleted                 返回空集
+innodb_ft_config                        返回空集
+innodb_ft_default_stopword              返回空集
+innodb_ft_deleted                       返回空集
+innodb_ft_index_cache                   返回空集
+innodb_ft_index_table                   返回空集
+innodb_locks                            返回空集
+innodb_lock_waits                       返回空集
+innodb_metrics                          返回空集
+innodb_sys_columns                      返回空集
+innodb_sys_datafiles                    返回空集
+innodb_sys_fields                       返回空集
+innodb_sys_foreign                      返回空集
+innodb_sys_foreign_cols                 返回空集
+innodb_sys_indexes                      返回空集
+innodb_sys_tables                       返回空集
+innodb_sys_tablespaces                  返回空集
+innodb_sys_tablestats                   返回空集
+innodb_trx                              返回空集
+key_column_usage                        返回索引的约束信息。
+optimizer_trace                         返回空集
+parameters                              返回空集
+partitions                              返回逻辑库中表的分区信息，可支持对该表进行排序、分组查询。
+plugins                                 返回空集
+processlist                             返回的结果与服务端命令show processlist一致
+profiling                               返回空集
+referential_constraints                 返回逻辑库中表的外键信息
+routines                                返回空集
+schemata                                返回逻辑库相关信息
+schema_privileges                       返回空集
+session_status                          与SHOW SESSION STATUS结果相同
+session_variables                       与SHOW SESSION VARIABLES结果相同
+statistics                              返回逻辑库中表的索引统计信息
+tables                                  返回逻辑库中表信息
+tablespaces                             返回空集
+table_constraints                       返回逻辑库中表的约束信息
+table_privileges                        返回空集
+triggers                                返回空集
+user_privileges                         返回空集
+views                                   返回空集
+
 --------------------------------------- ------------------------------------------------------------
 
 为兼容MySQL版本高于8.0的存储节点，对于MySQL8.0新增的表做如下特殊处理：
 
 ------------------------------ ----------------------------
-  **表名称**                     **特殊处理**
-  check_constraints              返回CHECK约束信息
-  column_statistics              返回索引的直方图统计信息
-  keywords                       返回空集
-  resource_groups                返回空集
-  st_geometry_columns            返回逻辑库中表的空间列信息
-  st_spatial_reference_systems   不做特殊处理
-  st_units_of_measure            不做特殊处理
-  view_table_usage               返回空集
-  view_routine_usage             返回空集
+
+**表名称**                     **特殊处理**
+check_constraints              返回CHECK约束信息
+column_statistics              返回索引的直方图统计信息
+keywords                       返回空集
+resource_groups                返回空集
+st_geometry_columns            返回逻辑库中表的空间列信息
+st_spatial_reference_systems   不做特殊处理
+st_units_of_measure            不做特殊处理
+view_table_usage               返回空集
+view_routine_usage             返回空集
+
 ------------------------------ ----------------------------
 
 ## 计算节点参数使用说明
@@ -5703,13 +5751,15 @@ INFORMATION_SCHEMA库提供当前计算节点的信息与数据，例如数据�
 **参数说明：**
 
 ---------------- ----------------------------
-  **Property**     **Value**
-  参数值           adaptiveProcessor
-  是否可见         隐藏不显示
-  参数说明         控制启动服务时是否自动适配
-  默认值           true
-  Reload是否生效   否
-  最低兼容版本     2.4.5
+
+**Property**     **Value**
+参数值           adaptiveProcessor
+是否可见         隐藏不显示
+参数说明         控制启动服务时是否自动适配
+默认值           true
+Reload是否生效   否
+最低兼容版本     2.4.5
+
 ---------------- ----------------------------
 
 **参数设置：**
@@ -5793,13 +5843,15 @@ mysql> show @@threadpool;
 **参数说明：**
 
 ---------------- ------------------------------------------------
-  **Property**     **Value**
-  参数值           allowRCWithoutReadConsistentInXA
-  是否可见         否
-  参数说明         允许XA模式下使用不保证读写强一致性的RC隔离级别
-  默认值           0
-  Reload是否生效   是
-  最低兼容版本     2.4.9
+
+**Property**     **Value**
+参数值           allowRCWithoutReadConsistentInXA
+是否可见         否
+参数说明         允许XA模式下使用不保证读写强一致性的RC隔离级别
+默认值           0
+Reload是否生效   是
+最低兼容版本     2.4.9
+
 ---------------- ------------------------------------------------
 
 **参数设置：**
@@ -5841,13 +5893,15 @@ Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 **参数说明：**
 
 ---------------- -------------------------
-  **Property**     **Value**
-  参数值           badConnAfterContinueGet
-  是否可见         否
-  参数说明         是否继续获取连接
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           badConnAfterContinueGet
+是否可见         否
+参数说明         是否继续获取连接
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- -------------------------
 
 **参数设置：**
@@ -5863,13 +5917,15 @@ Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 **参数说明：**
 
 ---------------- ------------------------------------------------
-  **Property**     **Value**
-  参数值           badConnAfterFastCheckAllIdle
-  是否可见         否
-  参数说明         当获取坏的后端连接时，是否快速检测所有空闲连接
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           badConnAfterFastCheckAllIdle
+是否可见         否
+参数说明         当获取坏的后端连接时，是否快速检测所有空闲连接
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ------------------------------------------------
 
 **参数设置：**
@@ -5885,33 +5941,39 @@ Server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 **参数说明：**
 
 ---------------- ------------------------------------------
-  **Property**     **Value**
-  参数值           bakUrl
-  是否可见         是
-  参数说明         从配置库地址
-  默认值           jdbc:mysql://127.0.0.1:3306/hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.4.4
+
+**Property**     **Value**
+参数值           bakUrl
+是否可见         是
+参数说明         从配置库地址
+默认值           jdbc:mysql://127.0.0.1:3306/hotdb_config
+Reload是否生效   是
+最低兼容版本     2.4.4
+
 ---------------- ------------------------------------------
 
 ---------------- ----------------
-  **Property**     **Value**
-  参数值           bakUsername
-  是否可见         是
-  参数说明         从配置库用户名
-  默认值           hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.4.4
+
+**Property**     **Value**
+参数值           bakUsername
+是否可见         是
+参数说明         从配置库用户名
+默认值           hotdb_config
+Reload是否生效   是
+最低兼容版本     2.4.4
+
 ---------------- ----------------
 
 ---------------- --------------
-  **Property**     **Value**
-  参数值           bakPassword
-  是否可见         是
-  参数说明         从配置库密码
-  默认值           hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.4.4
+
+**Property**     **Value**
+参数值           bakPassword
+是否可见         是
+参数说明         从配置库密码
+默认值           hotdb_config
+Reload是否生效   是
+最低兼容版本     2.4.4
+
 ---------------- --------------
 
 **参数作用：**
@@ -5930,7 +5992,7 @@ bakUrl和bakUsername以及bakPassword属于配套参数，用于配置库高可�
 
 当配置库因主库故障发生切换后，主库恢复正常且检测过数据主从一致，此时可恢复主备配置库重新到可切换状态，需要将配置库里的houdb_config_info表里k字段为hotdb_master_config_status这一行的v值从0更新为1，并在管理端执行reload @@config，才会重新使用主配置库（使用管理平台启用主配置库的操作方法请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》）。
 
-mysql> select * from hotdb_config_info\\G
+mysql> select * from hotdb_config_info\G
 
 ***************************1.row**************************
 
@@ -5945,15 +6007,17 @@ description: NULL
 **参数说明：**
 
 ---------------- ---------------------------------------------------------------------------
-  **Property**     **Value**
-  参数值           checkConnLastUsedTime
-  是否可见         否
-  参数说明         后端连接最后一次使用最大允许间隔时间，超过将校验该连接是否有效 单位：毫秒
-  默认值           3000
-  最小值           0
-  最大值           600000
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           checkConnLastUsedTime
+是否可见         否
+参数说明         后端连接最后一次使用最大允许间隔时间，超过将校验该连接是否有效 单位：毫秒
+默认值           3000
+最小值           0
+最大值           600000
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ---------------------------------------------------------------------------
 
 **参数设置：**
@@ -5977,13 +6041,15 @@ mysql> show @@session;
 **参数说明：**
 
 ---------------- ----------------------
-  **Property**     **Value**
-  参数值           CheckConnValid
-  是否可见         否
-  参数说明         是否检查后端连接有效
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           CheckConnValid
+是否可见         否
+参数说明         是否检查后端连接有效
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ----------------------
 
 **参数设置：**
@@ -6001,13 +6067,15 @@ server.xml中手动添加一条CheckConnValid的配置
 **参数说明：**
 
 ---------------- ---------------------------------------------
-  **Property**     **Value**
-  参数值           checkConnValidTimeout
-  是否可见         否
-  参数说明         后端连接有效校验时，最大超时时间 单位：毫秒
-  默认值           500
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           checkConnValidTimeout
+是否可见         否
+参数说明         后端连接有效校验时，最大超时时间 单位：毫秒
+默认值           500
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ---------------------------------------------
 
 **参数设置：**
@@ -6045,13 +6113,15 @@ server.xml中手动添加一条CheckConnValid的配置
 **参数说明：**
 
 ---------------- ------------------------------
-  **Property**     **Value**
-  参数值           checkUpdate
-  是否可见         否
-  参数说明         是否拦截对分片字段的更新操作
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           checkUpdate
+是否可见         否
+参数说明         是否拦截对分片字段的更新操作
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ------------------------------
 
 **参数作用：**
@@ -6115,13 +6185,15 @@ jdbc传入useAffectedRows=true，返回影响行数
 **参数说明：**
 
 ---------------- --------------------------
-  **Property**     **Value**
-  参数值           clusterElectionTimeoutMs
-  是否可见         否
-  参数说明         集群选举超时时间(ms)
-  默认值           2000
-  Reload是否生效   是
-  最低兼容版本     2.5.3
+
+**Property**     **Value**
+参数值           clusterElectionTimeoutMs
+是否可见         否
+参数说明         集群选举超时时间(ms)
+默认值           2000
+Reload是否生效   是
+最低兼容版本     2.5.3
+
 ---------------- --------------------------
 
 **参数设置：**
@@ -6139,13 +6211,15 @@ server.xml中clusterElectionTimeoutMs参数配置 如下配置：
 **参数说明：**
 
 ---------------- ---------------------------
-  **Property**     **Value**
-  参数值           clusterHeartbeatTimeoutMs
-  是否可见         否
-  参数说明         集群心跳超时时间(ms)
-  默认值           5000
-  Reload是否生效   是
-  最低兼容版本     2.5.3
+
+**Property**     **Value**
+参数值           clusterHeartbeatTimeoutMs
+是否可见         否
+参数说明         集群心跳超时时间(ms)
+默认值           5000
+Reload是否生效   是
+最低兼容版本     2.5.3
+
 ---------------- ---------------------------
 
 **参数设置：**
@@ -6163,13 +6237,15 @@ server.xml中clusterHeartbeatTimeoutMs参数配置 如下配置：
 **参数说明：**
 
 ---------------- ---------------
-  **Property**     **Value**
-  参数值           clusterHost
-  是否可见         是
-  参数说明         本节点所在IP
-  默认值           192.168.200.1
-  Reload是否生效   否
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           clusterHost
+是否可见         是
+参数说明         本节点所在IP
+默认值           192.168.200.1
+Reload是否生效   否
+最低兼容版本     2.5.0
+
 ---------------- ---------------
 
 **参数设置：**
@@ -6187,13 +6263,15 @@ Server.xml中clusterHost参数配置 如下配置：
 **参数说明：**
 
 ---------------- ---------------
-  **Property**     **Value**
-  参数值           clusterName
-  是否可见         是
-  参数说明         集群组名称
-  默认值           HotDB-Cluster
-  Reload是否生效   否
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           clusterName
+是否可见         是
+参数说明         集群组名称
+默认值           HotDB-Cluster
+Reload是否生效   否
+最低兼容版本     2.5.0
+
 ---------------- ---------------
 
 **参数设置：**
@@ -6211,13 +6289,15 @@ Server.xml中clusterName参数配置 如下配置：
 **参数说明：**
 
 ---------------- ------------------
-  **Property**     **Value**
-  参数值           clusterNetwork
-  是否可见         是
-  参数说明         集群所在网段
-  默认值           192.168.200.0/24
-  Reload是否生效   否
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           clusterNetwork
+是否可见         是
+参数说明         集群所在网段
+默认值           192.168.200.0/24
+Reload是否生效   否
+最低兼容版本     2.5.0
+
 ---------------- ------------------
 
 **参数设置：**
@@ -6235,13 +6315,15 @@ Server.xml中clusterNetwork参数配置 如下配置：
 **参数说明：**
 
 ---------------- --------------------------
-  **Property**     **Value**
-  参数值           clusterPacketTimeoutMs
-  是否可见         否
-  参数说明         集群间通讯包失效时间(ms)
-  默认值           5000
-  Reload是否生效   是
-  最低兼容版本     2.5.3
+
+**Property**     **Value**
+参数值           clusterPacketTimeoutMs
+是否可见         否
+参数说明         集群间通讯包失效时间(ms)
+默认值           5000
+Reload是否生效   是
+最低兼容版本     2.5.3
+
 ---------------- --------------------------
 
 **参数设置：**
@@ -6259,13 +6341,15 @@ Server.xml中clusterPacketTimeoutMs参数配置 如下配置：
 **参数说明：**
 
 ---------------- --------------
-  **Property**     **Value**
-  参数值           clusterPort
-  是否可见         是
-  参数说明         集群通信端口
-  默认值           3326
-  Reload是否生效   否
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           clusterPort
+是否可见         是
+参数说明         集群通信端口
+默认值           3326
+Reload是否生效   否
+最低兼容版本     2.5.0
+
 ---------------- --------------
 
 **参数设置：**
@@ -6283,13 +6367,15 @@ Server.xml中clusterPort参数配置 如下配置：
 **参数说明：**
 
 ---------------- ----------------
-  **Property**     **Value**
-  参数值           clusterSize
-  是否可见         是
-  参数说明         集群中节点总数
-  默认值           3
-  Reload是否生效   否
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           clusterSize
+是否可见         是
+参数说明         集群中节点总数
+默认值           3
+Reload是否生效   否
+最低兼容版本     2.5.0
+
 ---------------- ----------------
 
 **参数设置：**
@@ -6307,13 +6393,15 @@ Server.xml中clusterSize参数配置 如下配置：
 **参数说明：**
 
 ---------------- -------------------------------
-  **Property**     **Value**
-  参数值           clusterStartedPacketTimeoutMs
-  是否可见         否
-  参数说明         集群Started广播包失效时间(ms)
-  默认值           5000
-  Reload是否生效   是
-  最低兼容版本     2.5.3
+
+**Property**     **Value**
+参数值           clusterStartedPacketTimeoutMs
+是否可见         否
+参数说明         集群Started广播包失效时间(ms)
+默认值           5000
+Reload是否生效   是
+最低兼容版本     2.5.3
+
 ---------------- -------------------------------
 
 **参数设置：**
@@ -6331,43 +6419,51 @@ Server.xml中clusterStartedPacketTimeoutMs参数配置 如下配置：
 **参数说明：**
 
 ---------------- -------------------
-  **Property**     **Value**
-  参数值           configMGR
-  是否可见         是
-  参数说明         配置库是否使用MGR
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           configMGR
+是否可见         是
+参数说明         配置库是否使用MGR
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.5.0
+
 ---------------- -------------------
 
 ---------------- ---------------
-  **Property**     **Value**
-  参数值           bak1Url
-  是否可见         是
-  参数说明         MGR配置库地址
-  默认值           空
-  Reload是否生效   是
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           bak1Url
+是否可见         是
+参数说明         MGR配置库地址
+默认值           空
+Reload是否生效   是
+最低兼容版本     2.5.0
+
 ---------------- ---------------
 
 ---------------- -----------------
-  **Property**     **Value**
-  参数值           bak1Username
-  是否可见         是
-  参数说明         MGR配置库用户名
-  默认值           空
-  Reload是否生效   是
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           bak1Username
+是否可见         是
+参数说明         MGR配置库用户名
+默认值           空
+Reload是否生效   是
+最低兼容版本     2.5.0
+
 ---------------- -----------------
 
 ---------------- ---------------
-  **Property**     **Value**
-  参数值           bak1Password
-  是否可见         是
-  参数说明         MGR配置库密码
-  默认值           空
-  Reload是否生效   是
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           bak1Password
+是否可见         是
+参数说明         MGR配置库密码
+默认值           空
+Reload是否生效   是
+最低兼容版本     2.5.0
+
 ---------------- ---------------
 
 **参数作用：**
@@ -6387,13 +6483,15 @@ configMGR和bak1Url和bak1Username以及bak1Password属于配套参数，用于M
 **参数说明：**
 
 ---------------- ------------------------
-  **Property**     **Value**
-  参数值           crossDbXa
-  是否可见         否
-  参数说明         跨逻辑库是否采用XA事务
-  默认值           false
-  Reload是否生效   否
-  最低兼容版本     2.5.5
+
+**Property**     **Value**
+参数值           crossDbXa
+是否可见         否
+参数说明         跨逻辑库是否采用XA事务
+默认值           false
+Reload是否生效   否
+最低兼容版本     2.5.5
+
 ---------------- ------------------------
 
 **参数设置：**
@@ -6479,13 +6577,15 @@ begin;select * from A.a;select * from B.b;
 **参数说明：**
 
 ---------------- ------------------
-  **Property**     **Value**
-  参数值           cryptMandatory
-  是否可见         是
-  参数说明         是否强制加密密码
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           cryptMandatory
+是否可见         是
+参数说明         是否强制加密密码
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ------------------
 
 **参数设置：**
@@ -6496,17 +6596,17 @@ begin;select * from A.a;select * from B.b;
 
 用于设置计算节点是否可以读取加密后的存储节点密码。
 
--   True状态：
+- True状态：
 
--   存储节点密码为明文的时候，计算节点会无法连接该存储节点
+- 存储节点密码为明文的时候，计算节点会无法连接该存储节点
 
--   存储节点密码为密文的时候，计算节点能够连接该存储节点
+- 存储节点密码为密文的时候，计算节点能够连接该存储节点
 
--   False状态：
+- False状态：
 
--   存储节点密码为明文的时候，计算节点能够连接该存储节点
+- 存储节点密码为明文的时候，计算节点能够连接该存储节点
 
--   存储节点密码为密文的时候，计算节点能够连接该存储节点
+- 存储节点密码为密文的时候，计算节点能够连接该存储节点
 
 #### dataNodeIdleCheckPeriod
 
@@ -6565,15 +6665,17 @@ ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 **参数说明：**
 
 ---------------- ------------------
-  **Property**     **Value**
-  参数值           defaultMaxLimit
-  是否可见         否
-  参数说明         默认最大有序数量
-  默认值           10000
-  最小值           1
-  最大值           10000000
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           defaultMaxLimit
+是否可见         否
+参数说明         默认最大有序数量
+默认值           10000
+最小值           1
+最大值           10000000
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ------------------
 
 server.xml中defaultMaxLimit参数配置 如下配置：
@@ -6639,15 +6741,17 @@ ztm@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45> show processlist;
 **参数说明：**
 
 ---------------- ---------------------------------
-  **Property**     **Value**
-  参数值           dropTableRetentionTime
-  是否可见         是
-  参数说明         被删除表保留时长,默认为0,不保留
-  默认值           0（小时）
-  最小值           0
-  最大值           87600
-  Reload是否生效   是
-  最低兼容版本     2.5.2
+
+**Property**     **Value**
+参数值           dropTableRetentionTime
+是否可见         是
+参数说明         被删除表保留时长,默认为0,不保留
+默认值           0（小时）
+最小值           0
+最大值           87600
+Reload是否生效   是
+最低兼容版本     2.5.2
+
 ---------------- ---------------------------------
 
 **参数设置：**
@@ -6665,33 +6769,39 @@ server.xml中dropTableRetentionTime参数配置：
 **参数说明：**
 
 ---------------- ------------------------------------------
-  **Property**     **Value**
-  参数值           drBakUrl
-  是否可见         是
-  参数说明         灾备机房从配置库地址
-  默认值           jdbc:mysql://127.0.0.1:3306/hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.5.3.1
+
+**Property**     **Value**
+参数值           drBakUrl
+是否可见         是
+参数说明         灾备机房从配置库地址
+默认值           jdbc:mysql://127.0.0.1:3306/hotdb_config
+Reload是否生效   是
+最低兼容版本     2.5.3.1
+
 ---------------- ------------------------------------------
 
 ---------------- ------------------------
-  **Property**     **Value**
-  参数值           drBakUsername
-  是否可见         是
-  参数说明         灾备机房从配置库用户名
-  默认值           hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.5.3.1
+
+**Property**     **Value**
+参数值           drBakUsername
+是否可见         是
+参数说明         灾备机房从配置库用户名
+默认值           hotdb_config
+Reload是否生效   是
+最低兼容版本     2.5.3.1
+
 ---------------- ------------------------
 
 ---------------- ----------------------
-  **Property**     **Value**
-  参数值           drBakPassword
-  是否可见         是
-  参数说明         灾备机房从配置库密码
-  默认值           hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.5.3.1
+
+**Property**     **Value**
+参数值           drBakPassword
+是否可见         是
+参数说明         灾备机房从配置库密码
+默认值           hotdb_config
+Reload是否生效   是
+最低兼容版本     2.5.3.1
+
 ---------------- ----------------------
 
 **参数作用：**
@@ -6709,33 +6819,39 @@ drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机�
 **参数说明：**
 
 ---------------- ------------------------------------------
-  **Property**     **Value**
-  参数值           drUrl
-  是否可见         是
-  参数说明         灾备机房配置库地址
-  默认值           jdbc:mysql://127.0.0.1:3306/hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.5.3.1
+
+**Property**     **Value**
+参数值           drUrl
+是否可见         是
+参数说明         灾备机房配置库地址
+默认值           jdbc:mysql://127.0.0.1:3306/hotdb_config
+Reload是否生效   是
+最低兼容版本     2.5.3.1
+
 ---------------- ------------------------------------------
 
 ---------------- ----------------------
-  **Property**     **Value**
-  参数值           drUsername
-  是否可见         是
-  参数说明         灾备机房配置库用户名
-  默认值           hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.5.3.1
+
+**Property**     **Value**
+参数值           drUsername
+是否可见         是
+参数说明         灾备机房配置库用户名
+默认值           hotdb_config
+Reload是否生效   是
+最低兼容版本     2.5.3.1
+
 ---------------- ----------------------
 
 ---------------- --------------------
-  **Property**     **Value**
-  参数值           drPassword
-  是否可见         是
-  参数说明         灾备机房配置库密码
-  默认值           hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.5.3.1
+
+**Property**     **Value**
+参数值           drPassword
+是否可见         是
+参数说明         灾备机房配置库密码
+默认值           hotdb_config
+Reload是否生效   是
+最低兼容版本     2.5.3.1
+
 ---------------- --------------------
 
 **参数作用：**
@@ -6753,13 +6869,15 @@ drUrl,drUsername,drPassword属于配套参数，,drUrl是指灾备机房计算�
 **参数说明：**
 
 ---------------- ---------------------------------------
-  **Property**     **Value**
-  参数值           enableCursor
-  是否可见         是
-  参数说明         是否允许PREPARE语句通过CURSOR获取数据
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.4.6
+
+**Property**     **Value**
+参数值           enableCursor
+是否可见         是
+参数说明         是否允许PREPARE语句通过CURSOR获取数据
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.4.6
+
 ---------------- ---------------------------------------
 
 **参数设置：**
@@ -6919,13 +7037,15 @@ mysql> show @@latency;
 **参数说明：**
 
 ---------------- ------------------
-  **Property**     **Value**
-  参数值           enableListener
-  是否可见         是
-  参数说明         启用Listener模式
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.5.5
+
+**Property**     **Value**
+参数值           enableListener
+是否可见         是
+参数说明         启用Listener模式
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.5.5
+
 ---------------- ------------------
 
 **参数设置：**
@@ -6977,15 +7097,17 @@ MySQL [(none)]> show @@datasource;
 **参数说明：**
 
 ---------------- ------------------------
-  **Property**     **Value**
-  参数值           enableOracleFunction
-  是否可见         否
-  参数说明         是否优先解析oracle函数
-  默认值           false
-  最大值           /
-  最小值           /
-  Reload是否生效   是
-  最低兼容版本     2.5.6
+
+**Property**     **Value**
+参数值           enableOracleFunction
+是否可见         否
+参数说明         是否优先解析oracle函数
+默认值           false
+最大值           /
+最小值           /
+Reload是否生效   是
+最低兼容版本     2.5.6
+
 ---------------- ------------------------
 
 **参数设置**
@@ -7000,7 +7122,7 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 
 当Oracle数据迁移至MySQL时，替换部分函数使其能执行成功，降低迁移成本。同时支持Oracle的sequence对象及其相关功能。当该参数开启时优先按Oracle模式进行解析处理，不开启则按MySQL模式解析处理
 
--   Oracle支持而MySQL不支持的函数，部分支持改写。若需要了解计算节点
+- Oracle支持而MySQL不支持的函数，部分支持改写。若需要了解计算节点
 
 > 支持改写的函数，可参考《HotDB Server最新功能清单》。
 
@@ -7030,7 +7152,7 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 >
 > ERROR 1305 (42000): FUNCTION db256_01.TO_CHAR does not exist
 
--   Sequence相关功能亦可参考《HotDB Server最新功能清单》
+- Sequence相关功能亦可参考《HotDB Server最新功能清单》
 
 设置为true时，sequence相关能执行成功。示例：
 
@@ -7065,13 +7187,15 @@ enableOracleFunction属隐藏参数，若要开启，需添加到Server.xml中�
 **参数说明：**
 
 ---------------- -------------------
-  **Property**     **Value**
-  参数值           enableSleep
-  是否可见         是
-  参数说明         是否允许SLEEP函数
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           enableSleep
+是否可见         是
+参数说明         是否允许SLEEP函数
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- -------------------
 
 **参数设置：**
@@ -7103,13 +7227,15 @@ mysql> select sleep(2);
 **参数说明：**
 
 ---------------- ---------------------
-  **Property**     **Value**
-  参数值           enableSSL
-  是否可见         是
-  参数说明         是否开启SSL连接功能
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.5.5
+
+**Property**     **Value**
+参数值           enableSSL
+是否可见         是
+参数说明         是否开启SSL连接功能
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.5.5
+
 ---------------- ---------------------
 
 **参数设置：**
@@ -7125,13 +7251,15 @@ mysql> select sleep(2);
 **参数说明：**
 
 ---------------- --------------------------------
-  **Property**     **Value**
-  参数值           enableSubquery
-  是否可见         否
-  参数说明         是否允许特殊场景下的子查询通过
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           enableSubquery
+是否可见         否
+参数说明         是否允许特殊场景下的子查询通过
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- --------------------------------
 
 **参数作用：**
@@ -7231,13 +7359,15 @@ root> cat hotdb.log|grep 'watchdog'
 **参数说明：**
 
 ---------------- ----------------
-  **Property**     **Value**
-  参数值           enableXA
-  是否可见         是
-  参数说明         是否采用XA事务
-  默认值           False
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           enableXA
+是否可见         是
+参数说明         是否采用XA事务
+默认值           False
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- ----------------
 
 **参数作用：**
@@ -7251,13 +7381,15 @@ XA模式指强一致模式。在分布式事务数据库系统中，数据被拆
 **参数说明：**
 
 ---------------- ------------------------------
-  **Property**     **Value**
-  参数值           errorsPermittedInTransaction
-  是否可见         是
-  参数说明         事务中是否允许出现错误
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           errorsPermittedInTransaction
+是否可见         是
+参数说明         事务中是否允许出现错误
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ------------------------------
 
 **参数作用：**
@@ -7331,13 +7463,15 @@ mysql> select * from ss where id=1;
 **参数说明：**
 
 ---------------- --------------------------------------
-  **Property**     **Value**
-  参数值           failoverAutoresetslave
-  是否可见         是
-  参数说明         故障切换时，是否自动重置主从复制关系
-  默认值           false
-  Reload是否生效   否
-  最低兼容版本     2.5.3
+
+**Property**     **Value**
+参数值           failoverAutoresetslave
+是否可见         是
+参数说明         故障切换时，是否自动重置主从复制关系
+默认值           false
+Reload是否生效   否
+最低兼容版本     2.5.3
+
 ---------------- --------------------------------------
 
 **参数设置：**
@@ -7353,13 +7487,15 @@ mysql> select * from ss where id=1;
 **参数说明：**
 
 ---------------- ----------------------------
-  **Property**     **Value**
-  参数值           frontConnectionTrxIsoLevel
-  是否可见         否
-  参数说明         前端连接默认隔离级别
-  默认值           2
-  Reload是否生效   是
-  最低兼容版本     2.4.5
+
+**Property**     **Value**
+参数值           frontConnectionTrxIsoLevel
+是否可见         否
+参数说明         前端连接默认隔离级别
+默认值           2
+Reload是否生效   是
+最低兼容版本     2.4.5
+
 ---------------- ----------------------------
 
 **参数设置：**
@@ -7399,15 +7535,17 @@ mysql> select * from ss where id=1;
 **参数说明：**
 
 ---------------- ---------------------------
-  **Property**     **Value**
-  参数值           generatePrefetchCostRatio
-  是否可见         否
-  参数说明         触发提前预取的已消耗比例
-  默认值           90
-  最小值           50
-  最大值           100
-  Reload是否生效   是
-  最低兼容版本     2.5.4
+
+**Property**     **Value**
+参数值           generatePrefetchCostRatio
+是否可见         否
+参数说明         触发提前预取的已消耗比例
+默认值           90
+最小值           50
+最大值           100
+Reload是否生效   是
+最低兼容版本     2.5.4
+
 ---------------- ---------------------------
 
 **参数设置：**
@@ -7425,13 +7563,15 @@ mysql> select * from ss where id=1;
 **参数说明：**
 
 ---------------- --------------------------------
-  **Property**     **Value**
-  参数值           globalUniqueConstraint
-  是否可见         否
-  参数说明         新增表是否默认开启全局唯一约束
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.5.2
+
+**Property**     **Value**
+参数值           globalUniqueConstraint
+是否可见         否
+参数说明         新增表是否默认开启全局唯一约束
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.5.2
+
 ---------------- --------------------------------
 
 **参数设置：**
@@ -7451,13 +7591,15 @@ server.xml中globalUniqueConstraint参数配置 如下配置：
 **参数说明：**
 
 ---------------- ---------------------------------------------------------------------------------------------------------
-  **Property**     **Value**
-  参数值           haMode
-  是否可见         是
-  参数说明         高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房
-  默认值           0
-  Reload是否生效   是
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           haMode
+是否可见         是
+参数说明         高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房
+默认值           0
+Reload是否生效   是
+最低兼容版本     2.5.0
+
 ---------------- ---------------------------------------------------------------------------------------------------------
 
 **参数设置：**
@@ -7479,23 +7621,27 @@ server.xml中haMode参数配置 如下配置：
 **参数说明：**
 
 ---------------- ----------------------------------------------------------------------------------------------------------------
-  **Property**     **Value**
-  参数值           haState
-  是否可见         是
-  参数说明         计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效）
-  默认值           master
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           haState
+是否可见         是
+参数说明         计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效）
+默认值           master
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- ----------------------------------------------------------------------------------------------------------------
 
 ---------------- ---------------------------------------------------------------------------------------------------------------------
-  **Property**     **Value**
-  参数值           haNodeHost
-  是否可见         是
-  参数说明         计算节点高可用模式下对应的当前主计算节点连接信息，配置格式为IP:PORT，例：192.168.200.1:3325（集群模式下，此项无效）
-  默认值           (空)
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           haNodeHost
+是否可见         是
+参数说明         计算节点高可用模式下对应的当前主计算节点连接信息，配置格式为IP:PORT，例：192.168.200.1:3325（集群模式下，此项无效）
+默认值           (空)
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- ---------------------------------------------------------------------------------------------------------------------
 
 haState与haNodeHost属于配套参数，当haState为主节点，haNodeHost为空；当haState为备节点，haNodeHost可配置为对端节点管理端连接信息，即IP:PORT，该组参数适用于计算节点高可用环境，单计算节点服务可忽略该参数。详细使用方法请参考《分布式事务数据库HotDB Server【安装部署】功能使用手册》。若开启了集群模式haMode为1，则该参数需设置其他节点IP:PORT，PORT为通信端口 ，多节点间用逗号分隔（见参考值设置）。
@@ -7569,23 +7715,27 @@ mysql> show @@debug;
 **参数说明：**
 
 ---------------- --------------------------------
-  **Property**     **Value**
-  参数值           idcId
-  是否可见         是
-  参数说明         机房ID, 1:中心机房，2:灾备机房
-  默认值           0
-  Reload是否生效   是
-  最低兼容版本     2.5.3.1
+
+**Property**     **Value**
+参数值           idcId
+是否可见         是
+参数说明         机房ID, 1:中心机房，2:灾备机房
+默认值           0
+Reload是否生效   是
+最低兼容版本     2.5.3.1
+
 ---------------- --------------------------------
 
 ---------------- ---------------------------------------
-  **Property**     **Value**
-  参数值           idcNodeHost
-  是否可见         是
-  参数说明         另一个机房的连接信息
-  默认值           192.168.200.1:3325,192.168.200.1:3325
-  Reload是否生效   是
-  最低兼容版本     2.5.3.1
+
+**Property**     **Value**
+参数值           idcNodeHost
+是否可见         是
+参数说明         另一个机房的连接信息
+默认值           192.168.200.1:3325,192.168.200.1:3325
+Reload是否生效   是
+最低兼容版本     2.5.3.1
+
 ---------------- ---------------------------------------
 
 **参数作用：**
@@ -7603,15 +7753,17 @@ mysql> show @@debug;
 **参数说明：**
 
 ---------------- ----------------------
-  **Property**     **Value**
-  参数值           idleTimeout
-  是否可见         否
-  参数说明         前端空闲连接超时时间
-  默认值           28800（s）
-  最小值           0
-  最大值           31536000
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           idleTimeout
+是否可见         否
+参数说明         前端空闲连接超时时间
+默认值           28800（s）
+最小值           0
+最大值           31536000
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- ----------------------
 
 **参数设置：**
@@ -7683,13 +7835,15 @@ Current database: INFORMATION_SCHEMA
 **参数说明：**
 
 ---------------- ---------------------------------------
-  **Property**     **Value**
-  参数值           joinable
-  是否可见         是
-  参数说明         是否允许JOIN查询，是：true，否：false
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           joinable
+是否可见         是
+参数说明         是否允许JOIN查询，是：true，否：false
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ---------------------------------------
 
 **参数作用：**
@@ -7725,15 +7879,17 @@ mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept lim
 **参数说明：**
 
 ---------------- ----------------------------------------
-  **Property**     **Value**
-  参数值           joinBatchSize
-  是否可见         是
-  参数说明         JOIN等值查询时每批量转成IN查询的记录数
-  默认值           1000
-  最小值           100
-  最大值           100000
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           joinBatchSize
+是否可见         是
+参数说明         JOIN等值查询时每批量转成IN查询的记录数
+默认值           1000
+最小值           100
+最大值           100000
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ----------------------------------------
 
 **参数作用：**
@@ -7748,9 +7904,9 @@ mysql> select b.* from customer_auto_1 a join customer_auto_3 b on a.id=b.id whe
 
 查看general_log实际执行效果如下：
 
-1993 Query SELECT B.\`ID\`, B.\`name\`, B.\`telephone\`, B.\`provinceid\`, B.\`province\`, B.\`city\`, B.\`address\`, B.\`postcode\`, B.\`birthday\`, b.id AS \`hotdb_tmp_col_alias_1\` FROM customer_auto_3 AS b WHERE B.ID IN **(4064622, 4068449, 4071461)**
+1993 Query SELECT B.`ID`, B.`name`, B.`telephone`, B.`provinceid`, B.`province`, B.`city`, B.`address`, B.`postcode`, B.`birthday`, b.id AS `hotdb_tmp_col_alias_1` FROM customer_auto_3 AS b WHERE B.ID IN **(4064622, 4068449, 4071461)**
 
-1993 Query SELECT B.\`ID\`, B.\`name\`, B.\`telephone\`, B.\`provinceid\`, B.\`province\`, B.\`city\`, B.\`address\`, B.\`postcode\`, B.\`birthday\`, b.id AS \`hotdb_tmp_col_alia s_1\` FROM customer_auto_3 AS b WHERE B.ID IN **(4043006, 4053408, 4056542)**
+1993 Query SELECT B.`ID`, B.`name`, B.`telephone`, B.`provinceid`, B.`province`, B.`city`, B.`address`, B.`postcode`, B.`birthday`, b.id AS `hotdb_tmp_col_alia s_1` FROM customer_auto_3 AS b WHERE B.ID IN **(4043006, 4053408, 4056542)**
 
 ...省略更多...
 
@@ -7761,15 +7917,17 @@ mysql> select b.* from customer_auto_1 a join customer_auto_3 b on a.id=b.id whe
 **参数说明：**
 
 ---------------- ---------------------------------
-  **Property**     **Value**
-  参数值           joinCacheSize
-  是否可见         否
-  参数说明         JOIN缓存的堆外内存占用大小（M）
-  默认值           32
-  最小值           0
-  最大值           128
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           joinCacheSize
+是否可见         否
+参数说明         JOIN缓存的堆外内存占用大小（M）
+默认值           32
+最小值           0
+最大值           128
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ---------------------------------
 
 **参数作用：**
@@ -7797,15 +7955,17 @@ root> ll
 **参数说明：**
 
 ---------------- -----------------------------------------
-  **Property**     **Value**
-  参数值           joinLoopSize
-  是否可见         是
-  参数说明         使用BNL算法做JOIN时各节点每批次查询数量
-  默认值           1000
-  最小值           100
-  最大值           10000
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           joinLoopSize
+是否可见         是
+参数说明         使用BNL算法做JOIN时各节点每批次查询数量
+默认值           1000
+最小值           100
+最大值           10000
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- -----------------------------------------
 
 **参数作用：**
@@ -7831,13 +7991,15 @@ mysql> select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 900
 **参数说明：**
 
 ---------------- -------------------------------------
-  **Property**     **Value**
-  参数值           keyStore
-  是否可见         是
-  参数说明         用于TLS连接的数据证书.jks文件的路径
-  默认值           /server.jks
-  Reload是否生效   是
-  最低兼容版本     2.5.5
+
+**Property**     **Value**
+参数值           keyStore
+是否可见         是
+参数说明         用于TLS连接的数据证书.jks文件的路径
+默认值           /server.jks
+Reload是否生效   是
+最低兼容版本     2.5.5
+
 ---------------- -------------------------------------
 
 **参数设置：**
@@ -7853,13 +8015,15 @@ mysql> select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 900
 **参数说明：**
 
 ---------------- -----------------------------------------
-  **Property**     **Value**
-  参数值           keyStorePass
-  是否可见         是
-  参数说明         指定用于TLS连接的数据证书.jks文件的密码
-  默认值           BB5A70F75DD5FEB214A5623DD171CEEB
-  Reload是否生效   是
-  最低兼容版本     2.5.5
+
+**Property**     **Value**
+参数值           keyStorePass
+是否可见         是
+参数说明         指定用于TLS连接的数据证书.jks文件的密码
+默认值           BB5A70F75DD5FEB214A5623DD171CEEB
+Reload是否生效   是
+最低兼容版本     2.5.5
+
 ---------------- -----------------------------------------
 
 **参数设置：**
@@ -7875,15 +8039,17 @@ mysql> select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 900
 **参数说明：**
 
 ---------------- -----------------------------
-  **Property**     **Value**
-  参数值           lockWaitTimeout
-  是否可见         是
-  参数说明         获取元数据锁的超时时间（s）
-  默认值           31536000
-  Reload是否生效   是
-  最低兼容版本     2.5.3
-  最大值           31536000
-  最小值           1
+
+**Property**     **Value**
+参数值           lockWaitTimeout
+是否可见         是
+参数说明         获取元数据锁的超时时间（s）
+默认值           31536000
+Reload是否生效   是
+最低兼容版本     2.5.3
+最大值           31536000
+最小值           1
+
 ---------------- -----------------------------
 
 **参数设置：**
@@ -7905,15 +8071,17 @@ session B执行：等待超过lockWaitTimeout设置参数值，则给出如下�
 **参数说明：**
 
 ---------------- ------------------------------------------
-  **Property**     **Value**
-  参数值           masterSourceInitWaitTimeout
-  是否可见         否
-  参数说明         启动时数据节点中主存储节点初始化超时时间
-  默认值           300
-  最小值           0
-  最大值           600
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           masterSourceInitWaitTimeout
+是否可见         否
+参数说明         启动时数据节点中主存储节点初始化超时时间
+默认值           300
+最小值           0
+最大值           600
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ------------------------------------------
 
 **参数作用：**
@@ -7933,15 +8101,17 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 **参数说明：**
 
 ---------------- --------------------
-  **Property**     **Value**
-  参数值           maxAllowedPacket
-  是否可见         否
-  参数说明         接收最大数据包限制
-  默认值           65536（KB）
-  最小值           1
-  最大值           1048576
-  Reload是否生效   是
-  最低兼容版本     2.4.5
+
+**Property**     **Value**
+参数值           maxAllowedPacket
+是否可见         否
+参数说明         接收最大数据包限制
+默认值           65536（KB）
+最小值           1
+最大值           1048576
+Reload是否生效   是
+最低兼容版本     2.4.5
+
 ---------------- --------------------
 
 **参数作用：**
@@ -7963,27 +8133,31 @@ mysql> show variables like '%allowed%;
 **参数说明：**
 
 ---------------- ----------------
-  **Property**     **Value**
-  参数值           maxConnections
-  是否可见         是
-  参数说明         前端最大连接数
-  默认值           5000
-  最大值           300000
-  最小值           1
-  Reload是否生效   是
-  最低兼容版本     2.4.4
+
+**Property**     **Value**
+参数值           maxConnections
+是否可见         是
+参数说明         前端最大连接数
+默认值           5000
+最大值           300000
+最小值           1
+Reload是否生效   是
+最低兼容版本     2.4.4
+
 ---------------- ----------------
 
 ---------------- -------------------------------
-  **Property**     **Value**
-  参数值           maxUserConnections
-  是否可见         是
-  参数说明         用户前端最大连接数, 0为不限制
-  默认值           0
-  最大值           300000
-  最小值           0
-  Reload是否生效   是
-  最低兼容版本     2.4.4
+
+**Property**     **Value**
+参数值           maxUserConnections
+是否可见         是
+参数说明         用户前端最大连接数, 0为不限制
+默认值           0
+最大值           300000
+最小值           0
+Reload是否生效   是
+最低兼容版本     2.4.4
+
 ---------------- -------------------------------
 
 **参数作用：**
@@ -8029,15 +8203,17 @@ mysql> show variables like '%max_user_connections%;
 **参数说明：**
 
 ---------------- ------------------------------
-  **Property**     **Value**
-  参数值           maxIdleTransactionTimeout
-  是否可见         是
-  参数说明         未提交的空闲事务超时时间(ms)
-  默认值           86400000
-  最小值           0
-  最大值           172800000
-  Reload是否生效   是
-  最低兼容版本     2.5.1
+
+**Property**     **Value**
+参数值           maxIdleTransactionTimeout
+是否可见         是
+参数说明         未提交的空闲事务超时时间(ms)
+默认值           86400000
+最小值           0
+最大值           172800000
+Reload是否生效   是
+最低兼容版本     2.5.1
+
 ---------------- ------------------------------
 
 **参数设置：**
@@ -8059,15 +8235,17 @@ maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示
 **参数说明：**
 
 ---------------- -----------------------------------------
-  **Property**     **Value**
-  参数值           maxJoinSize
-  是否可见         是
-  参数说明         JOIN中间结果集行数限制（M:百万，K：千）
-  默认值           10M
-  最小值           1K
-  最大值           1000M
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           maxJoinSize
+是否可见         是
+参数说明         JOIN中间结果集行数限制（M:百万，K：千）
+默认值           10M
+最小值           1K
+最大值           1000M
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- -----------------------------------------
 
 **参数作用：**
@@ -8109,15 +8287,17 @@ ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check
 **参数说明：**
 
 ---------------- ----------------------------
-  **Property**     **Value**
-  参数值           maxLatencyForRWSplit
-  是否可见         是
-  参数说明         读写分离中可读从库最大延迟
-  默认值           1000ms
-  最小值           200
-  最大值           10000
-  Reload是否生效   是
-  最低兼容版本     2.4.5
+
+**Property**     **Value**
+参数值           maxLatencyForRWSplit
+是否可见         是
+参数说明         读写分离中可读从库最大延迟
+默认值           1000ms
+最小值           200
+最大值           10000
+Reload是否生效   是
+最低兼容版本     2.4.5
+
 ---------------- ----------------------------
 
 **参数作用：**
@@ -8163,13 +8343,15 @@ mysql> select * from cd;
 **参数说明：**
 
 ---------------- ------------------------
-  **Property**     **Value**
-  参数值           maxNotInSubquery
-  是否可见         隐藏不显示
-  参数说明         子查询中最大not in个数
-  默认值           20000
-  Reload是否生效   是
-  最低兼容版本     2.4.9
+
+**Property**     **Value**
+参数值           maxNotInSubquery
+是否可见         隐藏不显示
+参数说明         子查询中最大not in个数
+默认值           20000
+Reload是否生效   是
+最低兼容版本     2.4.9
+
 ---------------- ------------------------
 
 **参数设置：**
@@ -8225,15 +8407,17 @@ config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql)
 **参数说明：**
 
 ---------------- ---------------------------
-  **Property**     **Value**
-  参数值           maxReconnectConfigDBTimes
-  是否可见         否
-  参数说明         最大重试连接配置库次数
-  默认值           3
-  最大值           1000
-  最小值           0
-  Reload是否生效   是
-  最低兼容版本     2.5.4
+
+**Property**     **Value**
+参数值           maxReconnectConfigDBTimes
+是否可见         否
+参数说明         最大重试连接配置库次数
+默认值           3
+最大值           1000
+最小值           0
+Reload是否生效   是
+最低兼容版本     2.5.4
+
 ---------------- ---------------------------
 
 **参数设置：**
@@ -8251,15 +8435,17 @@ server.xml中maxReconnectConfigDBTimes参数如下配置：
 **参数说明：**
 
 ---------------- ------------------------------------
-  **Property**     **Value**
-  参数值           maxSqlRecordLength
-  是否可见         是
-  参数说明         SQL执行统计中SQL语句记录的最大长度
-  默认值           1000
-  最小值           1000
-  最大值           16000
-  Reload是否生效   是
-  最低兼容版本     2.4.5
+
+**Property**     **Value**
+参数值           maxSqlRecordLength
+是否可见         是
+参数说明         SQL执行统计中SQL语句记录的最大长度
+默认值           1000
+最小值           1000
+最大值           16000
+Reload是否生效   是
+最低兼容版本     2.4.5
+
 ---------------- ------------------------------------
 
 **参数作用：**
@@ -8275,33 +8461,39 @@ server.xml中maxReconnectConfigDBTimes参数如下配置：
 **参数说明：**
 
 ---------------- -----------------
-  **Property**     **Value**
-  参数值           ndbSqlAddr
-  是否可见         是
-  参数说明         NDB SQL端IP地址
-  默认值           localhost:3329
-  Reload是否生效   否
-  最低兼容版本     2.5.2
+
+**Property**     **Value**
+参数值           ndbSqlAddr
+是否可见         是
+参数说明         NDB SQL端IP地址
+默认值           localhost:3329
+Reload是否生效   否
+最低兼容版本     2.5.2
+
 ---------------- -----------------
 
 ---------------- -------------------
-  **Property**     **Value**
-  参数值           ndbSqlUser
-  是否可见         是
-  参数说明         NDB SQL前端用户名
-  默认值           root
-  Reload是否生效   否
-  最低兼容版本     2.5.2
+
+**Property**     **Value**
+参数值           ndbSqlUser
+是否可见         是
+参数说明         NDB SQL前端用户名
+默认值           root
+Reload是否生效   否
+最低兼容版本     2.5.2
+
 ---------------- -------------------
 
 ---------------- -----------------
-  **Property**     **Value**
-  参数值           ndbSqlPass
-  是否可见         是
-  参数说明         NDB SQL前端密码
-  默认值           root
-  Reload是否生效   否
-  最低兼容版本     2.5.2
+
+**Property**     **Value**
+参数值           ndbSqlPass
+是否可见         是
+参数说明         NDB SQL前端密码
+默认值           root
+Reload是否生效   否
+最低兼容版本     2.5.2
+
 ---------------- -----------------
 
 **参数设置：**
@@ -8319,13 +8511,15 @@ ndbSqlAddr，ndbSqlUser，ndbSqlPass是配套参数，ndbSqlAddr是NDB SQL节点
 **参数说明：**
 
 ---------------- -------------------------------
-  **Property**     **Value**
-  参数值           ndbSqlDataAddr
-  是否可见         是
-  参数说明         接收NDB SQL连接的IP地址和端口
-  默认值           127.0.0.1:3327
-  Reload是否生效   否
-  最低兼容版本     2.5.2
+
+**Property**     **Value**
+参数值           ndbSqlDataAddr
+是否可见         是
+参数说明         接收NDB SQL连接的IP地址和端口
+默认值           127.0.0.1:3327
+Reload是否生效   否
+最低兼容版本     2.5.2
+
 ---------------- -------------------------------
 
 **参数设置：**
@@ -8339,13 +8533,15 @@ property name=[ndbSqlDataAddr](#ndbSqlDataAddr)>127.0.0.1:3327</property>
 **参数说明：**
 
 ---------------- ---------------------------------------------------------------------------------------------------------
-  **Property**     **Value**
-  参数值           ndbSqlMode
-  是否可见         是
-  参数说明         NDB SQL节点的使用模式（NDB执行模式：none：禁用NDB功能，为默认值；local：NDB服务与计算节点在同一IP地址）
-  默认值           none
-  Reload是否生效   否
-  最低兼容版本     2.5.2
+
+**Property**     **Value**
+参数值           ndbSqlMode
+是否可见         是
+参数说明         NDB SQL节点的使用模式（NDB执行模式：none：禁用NDB功能，为默认值；local：NDB服务与计算节点在同一IP地址）
+默认值           none
+Reload是否生效   否
+最低兼容版本     2.5.2
+
 ---------------- ---------------------------------------------------------------------------------------------------------
 
 **参数设置：**
@@ -8359,23 +8555,27 @@ none：为默认值，代表禁用NDB功能；local：NDB服务与计算节点�
 **参数说明：**
 
 ---------------- ---------------
-  **Property**     **Value**
-  参数值           ndbSqlVersion
-  是否可见         是
-  参数说明         NDB SQL版本号
-  默认值           5.7.24
-  Reload是否生效   否
-  最低兼容版本     2.5.2
+
+**Property**     **Value**
+参数值           ndbSqlVersion
+是否可见         是
+参数说明         NDB SQL版本号
+默认值           5.7.24
+Reload是否生效   否
+最低兼容版本     2.5.2
+
 ---------------- ---------------
 
 ---------------- ---------------
-  **Property**     **Value**
-  参数值           ndbVersion
-  是否可见         是
-  参数说明         NDB引擎版本号
-  默认值           7.5.12
-  Reload是否生效   否
-  最低兼容版本     2.5.2
+
+**Property**     **Value**
+参数值           ndbVersion
+是否可见         是
+参数说明         NDB引擎版本号
+默认值           7.5.12
+Reload是否生效   否
+最低兼容版本     2.5.2
+
 ---------------- ---------------
 
 **参数设置：**
@@ -8391,13 +8591,15 @@ ndbSqlVersion与ndbVersion是相对应的关系，具体对应关系可参考MyS
 **参数说明：**
 
 ---------------- ------------------
-  **Property**     **Value**
-  参数值           operateMode
-  是否可见         否
-  参数说明         计算节点工作模式
-  默认值           0
-  Reload是否生效   是
-  最低兼容版本     2.5.6
+
+**Property**     **Value**
+参数值           operateMode
+是否可见         否
+参数说明         计算节点工作模式
+默认值           0
+Reload是否生效   是
+最低兼容版本     2.5.6
+
 ---------------- ------------------
 
 **参数设置：**
@@ -8497,13 +8699,15 @@ server.xml的parkPeriod参数设置 如下图:
 **参数说明：**
 
 ---------------- -------------------------
-  **Property**     **Value**
-  参数值           pingLogCleanPeriod
-  是否可见         隐藏不显示
-  参数说明         ping日志清理周期，默认3
-  默认值           3
-  Reload是否生效   是
-  最低兼容版本     2.4.9
+
+**Property**     **Value**
+参数值           pingLogCleanPeriod
+是否可见         隐藏不显示
+参数说明         ping日志清理周期，默认3
+默认值           3
+Reload是否生效   是
+最低兼容版本     2.4.9
+
 ---------------- -------------------------
 
 **参数设置：**
@@ -8521,13 +8725,15 @@ pingLogCleanPeriod参数默认为3，单位可选项为小时、天、月，由�
 **参数说明：**
 
 ---------------- --------------------------------------------------
-  **Property**     **Value**
-  参数值           pingLogCleanPeriodUnit
-  是否可见         隐藏不显示
-  参数说明         ping日志清理周期单位，默认2， 0:小时，1:天，2:月
-  默认值           2
-  Reload是否生效   是
-  最低兼容版本     2.4.9
+
+**Property**     **Value**
+参数值           pingLogCleanPeriodUnit
+是否可见         隐藏不显示
+参数说明         ping日志清理周期单位，默认2， 0:小时，1:天，2:月
+默认值           2
+Reload是否生效   是
+最低兼容版本     2.4.9
+
 ---------------- --------------------------------------------------
 
 **参数设置：**
@@ -8545,13 +8751,15 @@ pingLogCleanPeriodUnit参数默认为2，代表ping日志清理周期的单位�
 **参数说明：**
 
 ---------------- ---------------------------------------------
-  **Property**     **Value**
-  参数值           pingPeriod
-  是否可见         隐藏不显示
-  参数说明         ping服务器周期，单位秒,默认3600秒,最小300秒
-  默认值           3600
-  Reload是否生效   是
-  最低兼容版本     2.4.9
+
+**Property**     **Value**
+参数值           pingPeriod
+是否可见         隐藏不显示
+参数说明         ping服务器周期，单位秒,默认3600秒,最小300秒
+默认值           3600
+Reload是否生效   是
+最低兼容版本     2.4.9
+
 ---------------- ---------------------------------------------
 
 **参数设置：**
@@ -8566,22 +8774,24 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 在检测过程中，对于一个IP地址，程序会自动使用10个64字节的包，10个65000字节的包，这20个包，每1秒一个进行ping处理。当检测发现网络质量存在故障时，则ping的检查间隔缩短至每分钟检测一次，故障判断的标准为：
 
--   如果同机房内：64字节的包不是全部都丢，则如果平均延迟大于1毫秒或最大延迟大于2毫秒，或者有丢包，会记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log。如果65000字节的包不是全部都丢，则如果平均延迟大于3毫秒，或最大延迟大于5毫秒，或者有丢包， 记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log表。
+- 如果同机房内：64字节的包不是全部都丢，则如果平均延迟大于1毫秒或最大延迟大于2毫秒，或者有丢包，会记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log。如果65000字节的包不是全部都丢，则如果平均延迟大于3毫秒，或最大延迟大于5毫秒，或者有丢包， 记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log表。
 
--   如果跨机房：64字节的包不是全部都丢，则如果平均延迟大于10毫秒或最大延迟大于20毫秒，或者有丢包，会记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log。如果65000字节的包不是全部都丢，则如果平均延迟大于15毫秒，或最大延迟大于30毫秒，或者有丢包， 记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log表。
+- 如果跨机房：64字节的包不是全部都丢，则如果平均延迟大于10毫秒或最大延迟大于20毫秒，或者有丢包，会记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log。如果65000字节的包不是全部都丢，则如果平均延迟大于15毫秒，或最大延迟大于30毫秒，或者有丢包， 记录时间，ping类型，平均延迟，最大延迟，丢包率进入配置库hotdb_ping_log表。
 
 #### prefetchBatchInit
 
 **参数说明：**
 
 ---------------- ------------------------
-  **Property**     **Value**
-  参数值           prefetchBatchInit
-  是否可见         是
-  参数说明         自增长批次大小的初始值
-  默认值           100
-  Reload是否生效   是
-  最低兼容版本     2.5.4
+
+**Property**     **Value**
+参数值           prefetchBatchInit
+是否可见         是
+参数说明         自增长批次大小的初始值
+默认值           100
+Reload是否生效   是
+最低兼容版本     2.5.4
+
 ---------------- ------------------------
 
 **参数设置：**
@@ -8599,15 +8809,17 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 **参数说明：**
 
 ---------------- ----------------------
-  **Property**     **Value**
-  参数值           prefetchBatchMax
-  是否可见         是
-  参数说明         自增长批次大小的上限
-  默认值           10000
-  最小值           10
-  最大值           100000
-  Reload是否生效   是
-  最低兼容版本     2.5.4
+
+**Property**     **Value**
+参数值           prefetchBatchMax
+是否可见         是
+参数说明         自增长批次大小的上限
+默认值           10000
+最小值           10
+最大值           100000
+Reload是否生效   是
+最低兼容版本     2.5.4
+
 ---------------- ----------------------
 
 **参数设置：**
@@ -8623,15 +8835,17 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 **参数说明：**
 
 ---------------- ----------------------
-  **Property**     **Value**
-  参数值           prefetchBatchMin
-  是否可见         是
-  参数说明         自增长批次大小的下限
-  默认值           10
-  最小值           2
-  最大值           1000
-  Reload是否生效   是
-  最低兼容版本     2.5.4
+
+**Property**     **Value**
+参数值           prefetchBatchMin
+是否可见         是
+参数说明         自增长批次大小的下限
+默认值           10
+最小值           2
+最大值           1000
+Reload是否生效   是
+最低兼容版本     2.5.4
+
 ---------------- ----------------------
 
 **参数设置：**
@@ -8647,15 +8861,17 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 **参数说明：**
 
 ---------------- ------------------------------
-  **Property**     **Value**
-  参数值           prefetchValidTimeout
-  是否可见         是
-  参数说明         自增批次的超时废弃时间（秒）
-  默认值           10
-  最小值           3
-  最大值           86400
-  Reload是否生效   是
-  最低兼容版本     2.5.4
+
+**Property**     **Value**
+参数值           prefetchValidTimeout
+是否可见         是
+参数说明         自增批次的超时废弃时间（秒）
+默认值           10
+最小值           3
+最大值           86400
+Reload是否生效   是
+最低兼容版本     2.5.4
+
 ---------------- ------------------------------
 
 **参数设置：**
@@ -8671,15 +8887,17 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 **参数说明：**
 
 ---------------- -------------------
-  **Property**     **Value**
-  参数值           processorExecutor
-  是否可见         是
-  参数说明         各处理器线程数
-  默认值           4
-  最小值           2
-  最大值           8
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           processorExecutor
+是否可见         是
+参数说明         各处理器线程数
+默认值           4
+最小值           2
+最大值           8
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- -------------------
 
 **参数设置：**
@@ -8697,15 +8915,17 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 **参数说明：**
 
 ---------------- ------------
-  **Property**     **Value**
-  参数值           processors
-  是否可见         是
-  参数说明         处理器数
-  默认值           16
-  最小值           4
-  最大值           128
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           processors
+是否可见         是
+参数说明         处理器数
+默认值           16
+最小值           4
+最大值           128
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- ------------
 
 **参数设置：**
@@ -8723,13 +8943,15 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 **参数说明：**
 
 ---------------- ----------------
-  **Property**     **Value**
-  参数值           readOnly
-  是否可见         否
-  参数说明         是否为只读模式
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.4.8
+
+**Property**     **Value**
+参数值           readOnly
+是否可见         否
+参数说明         是否为只读模式
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.4.8
+
 ---------------- ----------------
 
 **参数设置：**
@@ -8753,13 +8975,15 @@ ERROR 1289 (HY000): Command not allowed in Read-Only mode.
 **参数说明：**
 
 ---------------- ----------------
-  **Property**     **Value**
-  参数值           recordAuditlog
-  是否可见         否
-  参数说明         记录审计日志
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           recordAuditlog
+是否可见         否
+参数说明         记录审计日志
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.5.0
+
 ---------------- ----------------
 
 **参数设置：**
@@ -8779,13 +9003,15 @@ recordAuditlog参数用于控制是否记录管理端操作信息，开启的情
 **参数说明：**
 
 ---------------- --------------------
-  **Property**     **Value**
-  参数值           recordCrossDNJoin
-  是否可见         否
-  参数说明         日志中记录跨库JOIN
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordCrossDNJoin
+是否可见         否
+参数说明         日志中记录跨库JOIN
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- --------------------
 
 **参数设置：**
@@ -8819,13 +9045,15 @@ mysql> SELECT * FROM account a JOIN borrower b;
 **参数说明：**
 
 ---------------- -------------------
-  **Property**     **Value**
-  参数值           recordDDL
-  是否可见         否
-  参数说明         日志中记录DDL语句
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordDDL
+是否可见         否
+参数说明         日志中记录DDL语句
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- -------------------
 
 **参数设置：**
@@ -8842,7 +9070,7 @@ mysql> create table abc(id int);
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [\$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique key}
+2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [\$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique}
 
 2018-05-23 14:23:52.698 [INFO] [DDL] [\$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int)
 
@@ -8853,13 +9081,15 @@ mysql> create table abc(id int);
 **参数说明：**
 
 ---------------- --------------------------
-  **Property**     **Value**
-  参数值           recordDeadLockSQL
-  是否可见         否
-  参数说明         日志中记录引发死锁的语句
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordDeadLockSQL
+是否可见         否
+参数说明         日志中记录引发死锁的语句
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- --------------------------
 
 **参数设置：**
@@ -8885,13 +9115,15 @@ recordDeadLockSQL日志中记录引发死锁的语句：
 **参数说明：**
 
 ---------------- -------------------------------
-  **Property**     **Value**
-  参数值           recordHotDBErrors
-  是否可见         否
-  参数说明         日志中记录HotDB返回的错误信息
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.4.8
+
+**Property**     **Value**
+参数值           recordHotDBErrors
+是否可见         否
+参数说明         日志中记录HotDB返回的错误信息
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.4.8
+
 ---------------- -------------------------------
 
 **参数设置：**
@@ -8915,13 +9147,15 @@ recordHotDBErrors日志中记录计算节点返回的错误信息。
 **参数说明：**
 
 ---------------- ----------------------------------
-  **Property**     **Value**
-  参数值           recordHotDBWarnings
-  是否可见         否
-  参数说明         日志中记录计算节点返回的警告信息
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordHotDBWarnings
+是否可见         否
+参数说明         日志中记录计算节点返回的警告信息
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- ----------------------------------
 
 **参数设置：**
@@ -8938,7 +9172,7 @@ create table abc(id int);
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [\$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique key}
+2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [\$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique}
 
 2018-05-23 14:23:52.698 [INFO] [DDL] [\$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int)
 
@@ -8949,13 +9183,15 @@ create table abc(id int);
 **参数说明：**
 
 ---------------- ---------------------------------
-  **Property**     **Value**
-  参数值           recordLimitOffsetWithoutOrderby
-  是否可见         否
-  参数说明         日志中记录无orderby的limit语句
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordLimitOffsetWithoutOrderby
+是否可见         否
+参数说明         日志中记录无orderby的limit语句
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- ---------------------------------
 
 **参数设置：**
@@ -8976,7 +9212,7 @@ mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM 
 
 2018-05-23 14:05:14.915 [INFO] [LIMITOFFSETWITHOUTORDERBY] [\$NIOExecutor-6-l] SubqueryExecutor(97) - sql: select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3
 
-2018-05-23 14:05:14.922 [INFO] [LIMITOFFSETWITHOUTORDERBY] [\$NIOExecutor-2-3] BaseSession(97) - sql: SELECT A.\`Balance\`, A.\`Branch_name\`, A.\`Account_number\`, A.\`account_date\` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776
+2018-05-23 14:05:14.922 [INFO] [LIMITOFFSETWITHOUTORDERBY] [\$NIOExecutor-2-3] BaseSession(97) - sql: SELECT A.`Balance`, A.`Branch_name`, A.`Account_number`, A.`account_date` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776
 
 F6f64'), NULL) LIMIT 1 , 3
 
@@ -8987,13 +9223,15 @@ F6f64'), NULL) LIMIT 1 , 3
 **参数说明：**
 
 ---------------- -------------------------------
-  **Property**     **Value**
-  参数值           recordMySQLErrors
-  是否可见         否
-  参数说明         日志中记录MySQL返回的错误信息
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordMySQLErrors
+是否可见         否
+参数说明         日志中记录MySQL返回的错误信息
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- -------------------------------
 
 **参数设置：**
@@ -9021,13 +9259,15 @@ msyql> select form;
 **参数说明：**
 
 ---------------- -------------------------------
-  **Property**     **Value**
-  参数值           recordMySQLWarnings
-  是否可见         隐藏
-  参数说明         日志中记录MySQL返回的警告信息
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordMySQLWarnings
+是否可见         隐藏
+参数说明         日志中记录MySQL返回的警告信息
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- -------------------------------
 
 **参数设置：**
@@ -9042,17 +9282,17 @@ recordMySQLWarnings记录MySQL返回的警告信息。
 
 举例如下：
 
-mysql> update account set Account_number="\$!\\''\#\#";
+mysql> update account set Account_number="\$!\''\#\#";
 
 查看计算节点安装目录的/logs/sql.log日志：
 
-2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\''\#\#', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
+2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\''\#\#', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
 
-2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\''\#\#', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
+2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\''\#\#', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
 
-2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\''\#\#', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
+2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\''\#\#', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
 
-2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\\\''\#\#', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
+2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*\$!\\''\#\#', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
 
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9061,13 +9301,15 @@ mysql> update account set Account_number="\$!\\''\#\#";
 **参数说明：**
 
 ---------------- ---------------------
-  **Property**     **Value**
-  参数值           recordSql
-  是否可见         是
-  参数说明         是否统计SQL执行情况
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           recordSql
+是否可见         是
+参数说明         是否统计SQL执行情况
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ---------------------
 
 **参数设置：**
@@ -9080,17 +9322,17 @@ mysql> update account set Account_number="\$!\\''\#\#";
 
 1.通过管理平台操作日志智能分析页面查看：
 
--   关闭状态
+- 关闭状态
 
 ![](assets/standard/image150.png)
 
--   开启并允许一段时间后
+- 开启并允许一段时间后
 
 ![](assets/standard/image151.png)
 
 2.通过server配置库查看SQL执行统计情况
 
-mysql> select * from hotdb_query_records order by db_id limit 1\\G
+mysql> select * from hotdb_query_records order by db_id limit 1\G
 
 ******************************1. row***************************
 
@@ -9173,13 +9415,15 @@ crc: 321944166562
 **参数说明：**
 
 ---------------- -------------------
-  **Property**     **Value**
-  参数值           recordSqlAuditlog
-  是否可见         否
-  参数说明         SQL审计日志记录
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.5.5
+
+**Property**     **Value**
+参数值           recordSqlAuditlog
+是否可见         否
+参数说明         SQL审计日志记录
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.5.5
+
 ---------------- -------------------
 
 **参数设置：**
@@ -9194,9 +9438,9 @@ server.xml的recordSqlAuditlog参数默认false：
 
 如：计算节点服务端执行DDL，查看日志输出
 
-{"affected_rows":"0","command":"CREATE TABLE \`t_sharding_01\` (\\n\`id\` int(10) NOT NULL AUTO_INCREMENT,\\n\`name\` varchar(50) NOT NULL,\\n\`age\` int(3),\\nPRIMARY KEY (\`id\`)\\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4","connection_id":"44","end_time":"2020-04-27 14:58:34.769","failed_reason":"","host":"127.0.0.1","ip":"127.0.0.1","log_id":"9524067900080128","logic_db":"CXD_DB","matched_rows":"0","port":"3323","query_rows":"0","sql_subtype":"CREATE","sql_type":"DDL","status":"1","time":"2020-04-27 14:58:34.736","user":"cxd@%"}
+{"affected_rows":"0","command":"CREATE TABLE `t_sharding_01` (\n`id` int(10) NOT NULL AUTO_INCREMENT,\n`name` varchar(50) NOT NULL,\n`age` int(3),\nPRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4","connection_id":"44","end_time":"2020-04-27 14:58:34.769","failed_reason":"","host":"127.0.0.1","ip":"127.0.0.1","log_id":"9524067900080128","logic_db":"CXD_DB","matched_rows":"0","port":"3323","query_rows":"0","sql_subtype":"CREATE","sql_type":"DDL","status":"1","time":"2020-04-27 14:58:34.736","user":"cxd@%"}
 
-注：日志输出为json格式，特殊字符如双引号采用\\进行转义，json中部分key代表的含义如下：
+注：日志输出为json格式，特殊字符如双引号采用\进行转义，json中部分key代表的含义如下：
 
 sql_type：当前执行SQL的类型，包括：DDL/DML/DQL/OTHER。
 
@@ -9233,13 +9477,15 @@ end_time：SQL执行结束时间。
 **参数说明：**
 
 ---------------- ------------------------
-  **Property**     **Value**
-  参数值           recordSQLIntercepted
-  是否可见         否
-  参数说明         日志中记录被拦截的语句
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordSQLIntercepted
+是否可见         否
+参数说明         日志中记录被拦截的语句
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- ------------------------
 
 **参数设置：**
@@ -9263,13 +9509,15 @@ recordSQLIntercepted记录被拦截的SQL语句，拦截的语句配置在中间
 **参数说明：**
 
 ---------------- ----------------------------------------
-  **Property**     **Value**
-  参数值           recordSQLKeyConflict
-  是否可见         否
-  参数说明         日志中记录主键冲突、违反外键约束的语句
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordSQLKeyConflict
+是否可见         否
+参数说明         日志中记录主键冲突、违反外键约束的语句
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- ----------------------------------------
 
 **参数设置：**
@@ -9286,7 +9534,7 @@ recordSQLKeyConflict记录主键冲突、违反外键约束的语句。
 
 建表：
 
-mysql> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`));
+mysql> CREATE TABLE `vtab001` (`id` int(11) NOT NULL,`name` varchar(255) DEFAULT NULL,PRIMARY KEY (`id`));
 
 执行一次插入语句：
 
@@ -9307,13 +9555,15 @@ mysql> insert into vtab001 values(1,'aaa');
 **参数说明：**
 
 ---------------- ----------------------------------
-  **Property**     **Value**
-  参数值           recordSQLSyntaxError
-  是否可见         否
-  参数说明         是否允许日志中记录语法错误的语句
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordSQLSyntaxError
+是否可见         否
+参数说明         是否允许日志中记录语法错误的语句
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- ----------------------------------
 
 **参数设置：**
@@ -9341,13 +9591,15 @@ mysql> SELECT * FROM;
 **参数说明：**
 
 ---------------- ------------------------
-  **Property**     **Value**
-  参数值           recordSQLUnsupported
-  是否可见         否
-  参数说明         日志中记录不支持的语句
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordSQLUnsupported
+是否可见         否
+参数说明         日志中记录不支持的语句
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- ------------------------
 
 **参数设置：**
@@ -9362,7 +9614,7 @@ recordSQLUnsupported记录不支持的语句。
 
 例如：
 
-建表：mysql> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`));
+建表：mysql> CREATE TABLE `vtab001` (`id` int(11) NOT NULL,`name` varchar(255) DEFAULT NULL,PRIMARY KEY (`id`));
 
 执行HotDB暂不支持的语句: mysql> select * into vtab001_bak from vtab001;
 
@@ -9377,13 +9629,15 @@ recordSQLUnsupported记录不支持的语句。
 **参数说明：**
 
 ---------------- ------------------
-  **Property**     **Value**
-  参数值           recordSubQuery
-  是否可见         否
-  参数说明         日志中记录子查询
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordSubQuery
+是否可见         否
+参数说明         日志中记录子查询
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- ------------------
 
 **参数设置：**
@@ -9411,13 +9665,15 @@ mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM 
 **参数说明：**
 
 ---------------- -----------------
-  **Property**     **Value**
-  参数值           recordUNION
-  是否可见         否
-  参数说明         日志中记录UNION
-  默认值           False
-  Reload是否生效   是
-  最低兼容版本     2.4.7
+
+**Property**     **Value**
+参数值           recordUNION
+是否可见         否
+参数说明         日志中记录UNION
+默认值           False
+Reload是否生效   是
+最低兼容版本     2.4.7
+
 ---------------- -----------------
 
 **参数设置：**
@@ -9445,13 +9701,15 @@ mysql> SELECT * FROM trends UNION SELECT * from trends_uint;
 **参数说明：**
 
 ---------------- --------------------------------------
-  **Property**     **Value**
-  参数值           routeByRelativeCol
-  是否可见         否
-  参数说明         不包含分片字段时通过辅助索引字段路由
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.5.2
+
+**Property**     **Value**
+参数值           routeByRelativeCol
+是否可见         否
+参数说明         不包含分片字段时通过辅助索引字段路由
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.5.2
+
 ---------------- --------------------------------------
 
 **参数设置：**
@@ -9469,13 +9727,15 @@ server.xml中routeByRelativeCol参数如下配置：
 **参数说明：**
 
 ---------------- --------------------------------------
-  **Property**     **Value**
-  参数值           serverId
-  是否可见         是
-  参数说明         集群节点编号1-N（节点数)，集群内唯一
-  默认值           1
-  Reload是否生效   否
-  最低兼容版本     2.5.0
+
+**Property**     **Value**
+参数值           serverId
+是否可见         是
+参数说明         集群节点编号1-N（节点数)，集群内唯一
+默认值           1
+Reload是否生效   否
+最低兼容版本     2.5.0
+
 ---------------- --------------------------------------
 
 **参数设置：**
@@ -9493,23 +9753,27 @@ server.xml中serverId参数如下配置：
 **参数说明：**
 
 ---------------- ------------
-  **Property**     **Value**
-  参数值           serverPort
-  是否可见         是
-  参数说明         服务端口
-  默认值           3323
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           serverPort
+是否可见         是
+参数说明         服务端口
+默认值           3323
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- ------------
 
 ---------------- -------------
-  **Property**     **Value**
-  参数值           managerPort
-  是否可见         是
-  参数说明         管理端口
-  默认值           3325
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           managerPort
+是否可见         是
+参数说明         管理端口
+默认值           3325
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- -------------
 
 **参数作用：**
@@ -9523,13 +9787,15 @@ server.xml中serverId参数如下配置：
 **参数说明：**
 
 ---------------- ---------------------------------------------------
-  **Property**     **Value**
-  参数值           showAllAffectedRowsInGlobalTable
-  是否可见         是
-  参数说明         全局表IDU语句是否显示所有节点中AffectedRows的总和
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           showAllAffectedRowsInGlobalTable
+是否可见         是
+参数说明         全局表IDU语句是否显示所有节点中AffectedRows的总和
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ---------------------------------------------------
 
 **参数作用：**
@@ -9605,15 +9871,17 @@ Query OK, 0 rows affected (0.23 sec)
 **参数说明：**
 
 ---------------- ----------------------
-  **Property**     **Value**
-  参数值           socketBacklog
-  是否可见         否
-  参数说明         服务端Socket backlog
-  默认值           1000
-  最小值           1000
-  最大值           4000
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           socketBacklog
+是否可见         否
+参数说明         服务端Socket backlog
+默认值           1000
+最小值           1000
+最大值           4000
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- ----------------------
 
 **参数设置：**
@@ -9649,13 +9917,15 @@ mysql> select a.*,b.*,c.* from customer_auto_3 a join customer_auto_1 b on a.pos
 ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a new transaction started automatically
 
 ---------------- ------------------
-  **Property**     **Value**
-  参数值           sslUseSM4
-  是否可见         否
-  参数说明         是否支持国密算法
-  默认值           否
-  Reload是否生效   是
-  最低兼容版本     2.5.5
+
+**Property**     **Value**
+参数值           sslUseSM4
+是否可见         否
+参数说明         是否支持国密算法
+默认值           否
+Reload是否生效   是
+最低兼容版本     2.5.5
+
 ---------------- ------------------
 
 #### sslUseSM4
@@ -9663,13 +9933,15 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 > **参数说明：**
 
 ---------------- ------------------
-  **Property**     **Value**
-  参数值           sslUseSM4
-  是否可见         否
-  参数说明         是否支持国密算法
-  默认值           false
-  Reload是否生效   true
-  最低兼容版本     2.5.5
+
+**Property**     **Value**
+参数值           sslUseSM4
+是否可见         否
+参数说明         是否支持国密算法
+默认值           false
+Reload是否生效   true
+最低兼容版本     2.5.5
+
 ---------------- ------------------
 
 > **参数设置：**
@@ -9724,13 +9996,15 @@ Empty set (0.03 sec)
 **参数说明：**
 
 ---------------- --------------------
-  **Property**     **Value**
-  参数值           strategyForRWSplit
-  是否可见         是
-  参数说明         是否开启读写分离
-  默认值           0
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           strategyForRWSplit
+是否可见         是
+参数说明         是否开启读写分离
+默认值           0
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- --------------------
 
 **参数作用：**
@@ -9773,7 +10047,7 @@ mysql> select * from ss;
 
 参数设置为2时，代表可分离的读请求发往可用备存储节点，事务外的读请求全部发往备存储节点，事务内的读请求发往主存储节点。
 
--   事务外：
+- 事务外：
 
 mysql> select * from ss;
 
@@ -9791,7 +10065,7 @@ mysql> select * from ss;
 
 5 rows in set (0.00 sec)
 
--   事务内：
+- 事务内：
 
 mysql> select * from ss order by id;
 
@@ -9872,13 +10146,15 @@ mysql> select * from ss;
 **参数说明：**
 
 ---------------- -----------------------------------------------------------------------
-  **Property**     **Value**
-  参数值           switchByLogInFailover
-  是否可见         否
-  参数说明         控制故障切换时是否由节点下各存储节点Master_Log_File位置决定切换优先级
-  默认值           false
-  Reload是否生效   是
-  最低兼容版本     2.4.5
+
+**Property**     **Value**
+参数值           switchByLogInFailover
+是否可见         否
+参数说明         控制故障切换时是否由节点下各存储节点Master_Log_File位置决定切换优先级
+默认值           false
+Reload是否生效   是
+最低兼容版本     2.4.5
+
 ---------------- -----------------------------------------------------------------------
 
 **参数设置：**
@@ -9898,15 +10174,17 @@ False状态：根据用户的故障切换规则进行切换。
 **参数说明：**
 
 ---------------- ------------------------------------------
-  **Property**     **Value**
-  参数值           switchoverTimeoutForTrans
-  是否可见         是
-  参数说明         手动切换时旧有事务等待提交超时时间（ms）
-  默认值           3000
-  最大值           1800000
-  最小值           0
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           switchoverTimeoutForTrans
+是否可见         是
+参数说明         手动切换时旧有事务等待提交超时时间（ms）
+默认值           3000
+最大值           1800000
+最小值           0
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ------------------------------------------
 
 **参数设置：**
@@ -9988,15 +10266,17 @@ mysql> select * from TEST_001;
 **参数说明：**
 
 ---------------- ---------------
-  **Property**     **Value**
-  参数值           timerExecutor
-  是否可见         是
-  参数说明         定时器线程数
-  默认值           4
-  最小值           2
-  最大值           8
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           timerExecutor
+是否可见         是
+参数说明         定时器线程数
+默认值           4
+最小值           2
+最大值           8
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- ---------------
 
 **参数设置：**
@@ -10012,13 +10292,15 @@ mysql> select * from TEST_001;
 **参数说明：**
 
 ---------------- ----------------
-  **Property**     **Value**
-  参数值           timestampProxy
-  是否可见         是
-  参数说明         时间代理模式
-  默认值           0
-  Reload是否生效   是
-  最低兼容版本     2.5.1
+
+**Property**     **Value**
+参数值           timestampProxy
+是否可见         是
+参数说明         时间代理模式
+默认值           0
+Reload是否生效   是
+最低兼容版本     2.5.1
+
 ---------------- ----------------
 
 **参数设置：**
@@ -10044,33 +10326,39 @@ timestampProxy参数为0时，代表自动模式，当计算节点检测到存�
 **参数说明：**
 
 ---------------- ------------------------------------------
-  **Property**     **Value**
-  参数值           url
-  是否可见         是
-  参数说明         配置库地址
-  默认值           jdbc:mysql://127.0.0.1:3306/hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           url
+是否可见         是
+参数说明         配置库地址
+默认值           jdbc:mysql://127.0.0.1:3306/hotdb_config
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ------------------------------------------
 
 ---------------- --------------
-  **Property**     **Value**
-  参数值           username
-  是否可见         是
-  参数说明         配置库用户名
-  默认值           hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           username
+是否可见         是
+参数说明         配置库用户名
+默认值           hotdb_config
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- --------------
 
 ---------------- --------------
-  **Property**     **Value**
-  参数值           password
-  是否可见         是
-  参数说明         配置库密码
-  默认值           hotdb_config
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           password
+是否可见         是
+参数说明         配置库密码
+默认值           hotdb_config
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- --------------
 
 **参数作用：**
@@ -10095,7 +10383,7 @@ root> mysql -uhotdb_config_9 -photdb_config_9 -h127.0.0.1 -P3306
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
 
-Welcome to the MySQL monitor. Commands end with ; or \\g.
+Welcome to the MySQL monitor. Commands end with ; or \g.
 
 Your MySQL connection id is 16323
 
@@ -10109,7 +10397,7 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 当启动计算节点，没有配置库高可用且配置库无法连接时，计算节点会间隔3秒重连，直到最终重试超过30分钟仍无法连接，则中断启动：
 
@@ -10122,13 +10410,15 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 **参数说明：**
 
 ---------------- -------------
-  **Property**     **Value**
-  参数值           usingAIO
-  是否可见         否
-  参数说明         是否使用AIO
-  默认值           0
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           usingAIO
+是否可见         否
+参数说明         是否使用AIO
+默认值           0
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- -------------
 
 **参数设置：**
@@ -10154,13 +10444,15 @@ root> tail -n 300 hotdb.log | grep 'aio'
 **参数说明：**
 
 ---------------- ------------------------------------------------------------------
-  **Property**     **Value**
-  参数值           version
-  是否可见         隐藏
-  参数说明         计算节点对外显示的版本号
-  默认值           与计算节点show @@version 的结果同步，例如：5.6.29-HotDB-2.5.1。
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           version
+是否可见         隐藏
+参数说明         计算节点对外显示的版本号
+默认值           与计算节点show @@version 的结果同步，例如：5.6.29-HotDB-2.5.1。
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- ------------------------------------------------------------------
 
 **参数作用：**
@@ -10175,7 +10467,7 @@ root> mysql -uct -pct -h127.0.0.1 -P2473
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
 
-Welcome to the MySQL monitor. Commands end with ; or \\g.
+Welcome to the MySQL monitor. Commands end with ; or \g.
 
 Your MySQL connection id is 30
 
@@ -10189,7 +10481,7 @@ affiliates. Other names may be trademarks of their respective
 
 owners.
 
-Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
@@ -10206,13 +10498,15 @@ root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 **参数说明：**
 
 ---------------- ------------------------
-  **Property**     **Value**
-  参数值           versionComment
-  是否可见         隐藏
-  参数说明         计算节点的版本备注信息
-  默认值           （空）
-  Reload是否生效   是
-  最低兼容版本     2.5.3
+
+**Property**     **Value**
+参数值           versionComment
+是否可见         隐藏
+参数说明         计算节点的版本备注信息
+默认值           （空）
+Reload是否生效   是
+最低兼容版本     2.5.3
+
 ---------------- ------------------------
 
 **参数作用：**
@@ -10227,7 +10521,7 @@ root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
 
-Welcome to the MySQL monitor. Commands end with ; or \\g.
+Welcome to the MySQL monitor. Commands end with ; or \g.
 
 Your MySQL connection id is 235
 
@@ -10241,7 +10535,7 @@ Your MySQL connection id is 235
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
 
-Welcome to the MySQL monitor. Commands end with ; or \\g.
+Welcome to the MySQL monitor. Commands end with ; or \g.
 
 Your MySQL connection id is 235
 
@@ -10255,7 +10549,7 @@ Your MySQL connection id is 235
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
 
-Welcome to the MySQL monitor. Commands end with ; or \\g.
+Welcome to the MySQL monitor. Commands end with ; or \g.
 
 Your MySQL connection id is 235
 
@@ -10300,25 +10594,29 @@ Connection: 192.168.210.49 via TCP/IP
 **参数说明：**
 
 ---------------- ---------------------------------------------------------------------------------------------
-  **Property**     **Value**
-  参数值           [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_back_log)
-  是否可见         是
-  参数说明         虚拟IP地址
-  默认值           空
-  Reload是否生效   是
-  最低兼容版本     2.4.8
+
+**Property**     **Value**
+参数值           [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_back_log)
+是否可见         是
+参数说明         虚拟IP地址
+默认值           空
+Reload是否生效   是
+最低兼容版本     2.4.8
+
 ---------------- ---------------------------------------------------------------------------------------------
 
 ---------------- ----------------
-  **Property**     **Value**
-  参数值           CheckVIPPeriod
-  是否可见         是
-  参数说明         检测VIP周期
-  默认值           500ms
-  最小值           10ms
-  最大值           1000ms
-  Reload是否生效   是
-  最低兼容版本     2.4.8
+
+**Property**     **Value**
+参数值           CheckVIPPeriod
+是否可见         是
+参数说明         检测VIP周期
+默认值           500ms
+最小值           10ms
+最大值           1000ms
+Reload是否生效   是
+最低兼容版本     2.4.8
+
 ---------------- ----------------
 
 VIP与checkVIPPeriod属于配套参数，VIP设置为Keepalived虚拟IP，checkVIPPeriod用于控制虚拟IP的检测频率。当计算节点开启了VIP检测时，如果备状态的计算节点发现VIP存在则自动执行online，如果主状态的计算节点发现VIP不存在则自动offline。该组参数适用于计算节点高可用环境，建议在计算节点主备节点的环境下配置，且需要设置为当前Keepalived的实际虚拟IP，若不设置或者设置错误将不做处理，单计算节点可忽略该参数。
@@ -10349,7 +10647,7 @@ virtual_ipaddress {
 
 主计算节点：
 
-2019-12-19 15:08:49.595 [INFO] [EXIT[ FLOW ]] [ShutdownHook] cn.hotpu.hotdb.c(691) - begin to exit...
+2019-12-19 15:08:49.595 [INFO] [EXIT[ FLOW]] [ShutdownHook] cn.hotpu.hotdb.c(691) - begin to exit...
 
 2019-12-19 15:08:49.596 [WARN] [CONNECTION] [ShutdownHook] cn.hotpu.hotdb.net.t(175) - HotDB SocketChannel close due to:System exit
 
@@ -10396,13 +10694,15 @@ virtual_ipaddress {
 **参数说明：**
 
 ---------------- ------------------------------
-  **Property**     **Value**
-  参数值           waitConfigSyncFinish
-  是否可见         否
-  参数说明         启动时是否等待配置库同步追上
-  默认值           false
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           waitConfigSyncFinish
+是否可见         否
+参数说明         启动时是否等待配置库同步追上
+默认值           false
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- ------------------------------
 
 **参数设置：**
@@ -10444,13 +10744,15 @@ virtual_ipaddress {
 **参数说明：**
 
 ---------------- --------------------------------
-  **Property**     **Value**
-  参数值           waitForSlaveInFailover
-  是否可见         是
-  参数说明         高可用切换是否等待从机追上复制
-  默认值           true
-  Reload是否生效   是
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           waitForSlaveInFailover
+是否可见         是
+参数说明         高可用切换是否等待从机追上复制
+默认值           true
+Reload是否生效   是
+最低兼容版本     2.4.3
+
 ---------------- --------------------------------
 
 **参数设置：**
@@ -10498,13 +10800,15 @@ mysql> show @@latency;
 **参数说明：**
 
 ---------------- ----------------------------------
-  **Property**     **Value**
-  参数值           waitSyncFinishAtStartup
-  是否可见         是
-  参数说明         启动时是否等待主存储节点同步追上
-  默认值           true
-  Reload是否生效   否
-  最低兼容版本     2.4.3
+
+**Property**     **Value**
+参数值           waitSyncFinishAtStartup
+是否可见         是
+参数说明         启动时是否等待主存储节点同步追上
+默认值           true
+Reload是否生效   否
+最低兼容版本     2.4.3
+
 ---------------- ----------------------------------
 
 **参数设置：**
@@ -10534,15 +10838,17 @@ mysql> show @@latency;
 **参数说明：**
 
 ---------------- ------------------------------
-  **Property**     **Value**
-  参数值           weightForSlaveRWSplit
-  是否可见         是
-  参数说明         从机读比例，默认50（百分比）
-  默认值           50（%）
-  最小值           0
-  最大值           100
-  Reload是否生效   是
-  最低兼容版本     2.4.4
+
+**Property**     **Value**
+参数值           weightForSlaveRWSplit
+是否可见         是
+参数说明         从机读比例，默认50（百分比）
+默认值           50（%）
+最小值           0
+最大值           100
+Reload是否生效   是
+最低兼容版本     2.4.4
+
 ---------------- ------------------------------
 
 **参数设置：**
@@ -10630,3 +10936,4 @@ Marker所有类型(All Markers):AUTHORITY, BUFFER, CONNECTION, DEADLOCK, EXIT, F
 计算节点可根据DNID来显示数据来源的数据节点，故DNID为数据库的保留字段（表结构中请勿使用该字段名称）。
 
 计算节点判断存储节点是否可用，是通过对存储节点hotdb_heartbeat表的操作来判断的，故hotdb_heartbeat作为表名称的保留字。
+
