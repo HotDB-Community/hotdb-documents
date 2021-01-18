@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="assets/lib/font-awesome/css/font-awesome.min.css"/>
   <!-- bootstrap-->
   <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" >-->
-  <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.min.css" >
+  <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.min.css">
   <!--侧边栏可折叠插件：https://github.com/iPeng6/docsify-sidebar-collapse -->
   <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />-->
   <!--<link rel="stylesheet" href="assets/lib/plugins/sidebar.min.css" />-->
@@ -88,26 +88,26 @@
       /*font-size: 12px !important;*/
       line-height: 24px !important;
     }
-    
-    .readme-toc{
+
+    .readme-toc {
       line-height: 1.75 !important;
     }
-    .readme-toc-col{
+    .readme-toc-col {
       line-height: 1.75 !important;
       padding: 0.75rem !important;
     }
-    .readme-toc-col-title{
+    .readme-toc-col-title {
       line-height: 1.75 !important;
       margin-top: 0.5rem !important;
       margin-bottom: 0.5rem !important;
       font-size: 1rem !important;
       font-weight: 800 !important;
     }
-    .readme-toc ul{
+    .readme-toc ul {
       line-height: 1.75 !important;
-      list-style: none!important;
-      padding: 0 0!important;
-      margin: 0 0!important;
+      list-style: none !important;
+      padding: 0 0 !important;
+      margin: 0 0 !important;
     }
   </style>
 </head>
@@ -204,40 +204,113 @@
           "/en/": "Report Issues on Github"
         }
       },
-      fileName: "",
 
       plugins: [
         function(hook, vm) {
+          //console.log(vm)
+
           hook.beforeEach(function(html) {
-            redirectLocation()
+            //console.log(html)
+
             //绑定window.$docsify.fileName，以斜线开始
             window.$docsify.fileName = `/${vm.route.file}`
-            //添加导航栏图标
-            $(document).ready(function() {
-              $(".app-nav").prepend(createNavIcon())
-            })
-            //解析markdown锚点
-            return resolveAnchor(html)
+            //绑定windows.$docsify.fileUrl，以#开始，没有文件后缀名
+            window.$docsify.fileUrl = `#/${vm.route.path}`
+
+            redirectLocation()
+
+            //预处理markdown
+            return handleMarkdown(html)
           })
           hook.afterEach(function(html) {
+            //console.log(html)
+
+            $(document).ready(function() {
+              if($(".app-nav .navicon").length === 0) $(".app-nav").prepend(createNavIcon())
+              //绑定footNote和footNoteReference
+              bindFootNote()
+            })
+
             //添加topbar
-            const topbar = createTopBar()
-            return topbar + html
+            return createTopBar() + html
           })
         }
-      ]
+      ],
+
+      fileName: "",
+      fileUrl: "",
+      footNoteIds: []
     }
-    
-    const anchorRegex = /{#([\w-]+)}/g
-    
-    function resolveAnchor(html){
-      return html.replaceAll(anchorRegex,":id=$1")
+
+    window.onload = function() {
+      redirectLocation()
+      $(document).ready(function() {
+        if($(".app-nav .navicon").length === 0) $(".app-nav").prepend(createNavIcon())
+      })
     }
-    
+
+    //地址重定向
+    function redirectLocation() {
+      let url = window.location.href
+      if(url.charAt(url.length - 1) === "/") url = url.substring(0, url.length - 1)
+      if(url.indexOf("/#") === -1) {
+        window.location.href = `${url}/#/zh/latest/`
+      } else if(url.endsWith("/#")) {
+        window.location.href = `${url}/zh/latest/`
+      } else if(url.endsWith("/#/zh")) {
+        window.location.href = `${url}/latest/`
+      } else if(url.endsWith("/#/en")) {
+        window.location.href = `${url}/latest/`
+      } else {
+        const matchGroup = url.match(/(.*?\/#\/)((latest)|(v[\w-]+?))/)
+        if(matchGroup != null) {
+          window.location.href = matchGroup[1] + "zh/" + matchGroup[2] + "/"
+        }
+      }
+    }
+
+    //添加导航栏图标
     function createNavIcon() {
       return `<a href="https://hotdb.com">
         <img class="navicon" src="assets/navicon-colorful.png" alt="hotdb.com"/>
       </a>`
+    }
+
+    //处理markdown
+    function handleMarkdown(html) {
+      return resolveFootNote(resolveAnchor(html))
+    }
+
+    const footNoteRegex = /\[\^(\d+)](?!: )/g
+
+    const footNoteReferenceRegex = /^\[\^(\d+)]:\s*(.*)$/gm
+
+    //解析markdown尾注
+    function resolveFootNote(html) {
+      return html.replaceAll(footNoteRegex, (s, p1) => {
+        const footNoteId = `foot-note-${p1}`
+        return `<a id="${footNoteId}" class="md-foot-note" href="#" aria-describedby="tooltip">[${p1}]</a>`
+      }).replaceAll(footNoteReferenceRegex, (s, p1, p2) => {
+        window.$docsify.footNoteIds.push(p1)
+        const footNoteReferenceId = `foot-note-reference-${p1}`
+        return `<div id="${footNoteReferenceId}" role="tooltip">${p2}</div>`
+      })
+    }
+
+    //绑定footNote和footNoteReference
+    function bindFootNote() {
+      window.$docsify.footNoteIds.forEach(e => {
+        new Popper($(`#foot-note-${e}`), $(`#foot-note-reference-${e}`), {
+          placement: "top"
+        })
+      })
+    }
+
+    const anchorRegex = /{#([\w-]+)}/g
+
+    //解析markdown锚点
+    function resolveAnchor(html) {
+      return html.replaceAll(anchorRegex, ":id=$1")
     }
 
     function createTopBar() {
@@ -272,30 +345,6 @@
         }
       }
     }
-
-    //地址重定向
-    function redirectLocation() {
-      let url = window.location.href
-      if(url.charAt(url.length - 1) === "/") url = url.substring(0, url.length - 1)
-      if(url.indexOf("/#") === -1) {
-        window.location.href = `${url}/#/zh/latest/`
-      } else if(url.endsWith("/#")) {
-        window.location.href = `${url}/zh/latest/`
-      } else if(url.endsWith("/#/zh")) {
-        window.location.href = `${url}/latest/`
-      } else if(url.endsWith("/#/en")) {
-        window.location.href = `${url}/latest/`
-      } else {
-        const matchGroup = url.match(/(.*?\/#\/)((latest)|(v[\w-]+?))/)
-        if(matchGroup != null) {
-          window.location.href = matchGroup[1] + "zh/" + matchGroup[2] + "/"
-        }
-      }
-    }
-
-    window.onload = function() {
-      redirectLocation()
-    }
   </script>
 
   <!--jquery-->
@@ -304,13 +353,16 @@
   <!--bootstrap-->
   <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
   <script src="assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!--popper-->
+  <!--<script src="https://cdn.jsdelivr.net/gh/FezVrasta/popper.js/dist/umd/popper.min.js"></script>-->
+  <script src="assets/lib/popper.min.js"></script>
   <!--vue-->
   <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
   <script src="assets/lib/vue.min.js"></script>
   <!--docsify-->
   <!--<script src="https://cdn.jsdelivr.net/npm/docsify"></script>-->
   <script src="assets/lib/docsify.min.js"></script>
-  
+
   <!--font awesome图标：https://github.com/erickjx/docsify-fontawesome -->
   <!--<script src="https://unpkg.com/docsify-fontawesome/dist/docsify-fontawesome.min.js"></script>-->
   <script src="assets/lib/plugins/docsify-fontawesome.min.js"></script>
@@ -349,10 +401,10 @@
   <!--嵌入式pdf插件：https://github.com/lazypanda10117/docsify-pdf-embed -->
   <!--<script src="https://unpkg.com/docsify-pdf-embed-plugin/src/docsify-pdf-embed.js"></script>-->
   <script src="assets/lib/plugins/docsify-pdf-embed.js"></script>
-  
+
   <!--PDF转化插件：https://github.com/meff34/docsify-to-pdf-converter -->
   <!--TOC插件：https://github.com/mrpotatoes/docsify-toc -->
-  
+
   <!--代码高亮支持-->
   <!--<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-markdown.min.js"></script>-->
   <script src="assets/lib/prismjs/components/prism-markdown.min.js"></script>
