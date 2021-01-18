@@ -946,7 +946,7 @@ show hotdb rules [LIKE 'pattern' | WHERE expr];
 | `function_id`    | 分片类型ID                           | `INTEGER` |
 | `auto_generated` | 是否为HotDB自动生成的配置(1:自动生成，其他：非自动生成) | `INTEGER` |
 
-#### `show backupmasterdelay [DNID]` - 显示指定数据节点中主备复制延迟大小 {#show-backupmasterelay}
+#### `show backupmasterdelay [DNID]` - 显示指定数据节点中主备复制延迟大小{#show-backupmasterelay}
 
 此命令用于查看指定数据节点`[DNID]`主备的复制延迟大小，语法：
 
@@ -1454,7 +1454,7 @@ onlinemodifyrulecancle db.tablename;
 
 ## 管理控制语句
 
-### `check @@datasource_config` - 检查MySQL参数配置信息 {#check-datasource_config}
+### `check @@datasource_config` - 检查MySQL参数配置信息{#check-datasource_config}
 
 该命令用于检查服务MySQL存储节点特定参数配置信息是否一致，若有参数与HotDB Server要求不同，执行命令后系统会有提示信息输出，例如：
 
@@ -1488,7 +1488,7 @@ MAX_ALLOWED_PACKET
 
 详细使用方法及要求请参考[标准](standard.md)文档的MySQL服务端参数校验章节。
 
-### `check @@datasource_config_new` - 检查MySQL参数配置信息 {#check-datasource_config_new}
+### `check @@datasource_config_new` - 检查MySQL参数配置信息{#check-datasource_config_new}
 
 该命令功能与`check @@datasource_config`相似，区别是`check @@datasource_config_new`是从非running表中读取数据节点信息并进行检查，并且不记录历史检查状态。
 
@@ -1739,7 +1739,7 @@ Query OK, 1 row affected (0.00 sec)
 
 该章节下描述的命令，用户只需知晓即可，主要用于管理平台进行切换机房过程中与计算节点服务做交互判断时所用。日常使用过程中，禁止人工调用。
 
-### `disable_election` - 不允许集群选举 {#disable-election}
+### `disable_election` - 不允许集群选举{#disable-election}
 
 ```sql
 disable_election;
@@ -1747,13 +1747,13 @@ disable_election;
 
 一般在灾备模式下切换机房时会用到，用于控制正在提供服务的机房内部计算节点集群不做选举，以免发生计算节点切换，影响机房切换最终结果。
 
-### `enable_election` - 允许集群选举 {#enable_election}
+### `enable_election` - 允许集群选举{#enable_election}
 
 ```sql
 enable_election;
 ```
 
-### `disable_non_query_command` - 仅允许查询命令 {#disable_non_query_command}
+### `disable_non_query_command` - 仅允许查询命令{#disable_non_query_command}
 
 ```
 disable_non_query_command;
@@ -1761,37 +1761,37 @@ disable_non_query_command;
 
 此命令为灾备模式下机房切换时的内部调用命令，一旦调用，则计算节点实例仅允许查询，切换成功后再释放非查询命令。
 
-### `enable_non_query_command` - 允许非查询命令 {#enable_non_query_command}
+### `enable_non_query_command` - 允许非查询命令{#enable_non_query_command}
 
 ```sql
 enable_non_query_command;
 ```
 
-### `offline_to_dr` - 执行offline并且不允许online {#offline_to_dr}
+### `offline_to_dr` - 执行offline并且不允许online{#offline_to_dr}
 
 ```sql
 offline_to_dr;
 ```
 
-### `exchangeconfig` - 交换机房配置 {#exchangeconfig}
+### `exchangeconfig` - 交换机房配置{#exchangeconfig}
 
 ```sql
 exchangeconfig;
 ```
 
-### `exchangememoryconfig` - 交换内存中的机房配置 {#exchangememoryconfig}
+### `exchangememoryconfig` - 交换内存中的机房配置{#exchangememoryconfig}
 
 ```sql
 exchangememoryconfig;
 ```
 
-### `online_dr_check` - 机房切换检查 {#online_dr_check}
+### `online_dr_check` - 机房切换检查{#online_dr_check}
 
 ```sql
 online_dr_check;
 ```
 
-### `online_dr_process` - 机房切换进度 {#online_dr_process}
+### `online_dr_process` - 机房切换进度{#online_dr_process}
 
 该命令用于查看灾备模式中在切换中的机房的切换进度，例如：
 
@@ -1806,7 +1806,7 @@ online_dr_check;
 | `error_code` | 错误码 status 状态，1表示完成，0表示未完成                                                                                                                                           | `INTEGER` |
 | `status`     | 状态，1代表完成，0表示未完成                                                                                                                                                      | `INTEGER` |
 
-### `reset @@dberrorcount` - 将所有逻辑库报错信息清空 {#reset-dberrorcount}
+### `reset @@dberrorcount` - 将所有逻辑库报错信息清空{#reset-dberrorcount}
 
 ```sql
 reset @@dberrorcount;
@@ -1814,7 +1814,7 @@ reset @@dberrorcount;
 
 ## 功能处理语句
 
-### `dbremapping @@add@` - 增加数据库映射关系 {#dbremapping-add}
+### `dbremapping @@add@` - 增加数据库映射关系{#dbremapping-add}
 
 此命令用于增加数据库映射关系，语法：
 
@@ -1902,7 +1902,7 @@ file @@list;
 |--------|----------------|---------------------------------------------------|
 | `DATA` | conf目录下相关文件的信息 | `STRING/[number:file "time":yyyy-MM-dd hh:mm:ss]` |
 
-### `hold commit` - 将所有客户端的连接状态置为HOLD_ALL_COMMIT {#hold-commit}
+### `hold commit` - 将所有客户端的连接状态置为HOLD_ALL_COMMIT{#hold-commit}
 
 在HotDB Server的命令行监控窗口执行hold commit，服务端口事务的提交会被HOLD住（含事务提交及普通的自动提交）。例如自动提交事务类型时：
 
@@ -1912,7 +1912,7 @@ hold commit;
 
 ![](assets/management-port-command/image88.png)
 
-### `hold ddl` - 将所有客户端的连接状态置为HOLD_DDL {#hold-ddl}
+### `hold ddl` - 将所有客户端的连接状态置为HOLD_DDL{#hold-ddl}
 
 在HotDB Server的命令行监控窗口执行hold ddl，服务端口执行相关的ddl语句将暂时被HOLD住，例如：
 
@@ -1946,7 +1946,7 @@ releasehold ddl;
 
 若要了解关于全局唯一约束相关内容，请参考《分布式事务数据库HotDB Server【标准】功能使用手册》
 
-#### `check @@history_unique` - 检查唯一键的历史数据唯一性 {#check-history_unique}
+#### `check @@history_unique` - 检查唯一键的历史数据唯一性{#check-history_unique}
 
 该命令用于检测指定表的唯一约束键的历史数据是否唯一，语法：
 
