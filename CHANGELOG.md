@@ -4,6 +4,8 @@
 * [X] 补充和压缩图片，基于脚本修正markdown文件格式
 * [X] 将库放到本地（避免莫名其妙访问不了某些库）
 * [X] 编写代码将奇怪的表格转化为正确的markdown表格
+* [ ] 修改产品介绍文档，去掉目标
+* [ ] README文档下方放上管理平台首页大图/多栏文档目录
 * [ ] 检查markdown文档的格式
 * [ ] 检查markdown文档中的文档和标题链接
 * [ ] 为markdown文档中的代码块统一注明语言
@@ -17,7 +19,6 @@
 * [X] 自定义页面，edit-on-github按钮左侧添加编辑图标
 * [ ] 自定义页面，侧边栏导航右侧添加菜单图标
 * [ ] 修改docsify-glossary插件，允许不同语言的术语表（自行实现）
-
 * [ ] 编写脚本合并所有文档并生成pdf
 * [ ] 编写脚本从markdown生成toc
 * [ ] 编写脚本为markdown的每个标题添加正确的序号
@@ -47,7 +48,7 @@
   * [X] `docs/zh/latest/cluster-environment-requirement.md`
   * [X] `docs/zh/latest/hardware-config-recommendation.md`
 * `hotdb-server`
-  * [ ] `docs/zh/latest/standard.md` D
+  * [X] `docs/zh/latest/standard.md` D
   * [X] `docs/zh/latest/management-port-command.md` L C M
 * `hotdb-management`
   * [X] `docs/zh/latest/hotdm-management.md`
@@ -55,6 +56,35 @@
 * `idc`
   * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` C
   * [X] `docs/zh/latest/visual-idc.md` L C
+* `appendix`
+  * [X] `docs/zh/latest/glossary.md`
+  * [X] `docs/zh/latest/parameters.md`
+  * [X] `docs/zh/latest/error-codes.md`
+
+英文文档（截止时间：2021-01-14 15:00:21）
+
+* `introduce`
+  * [X] `docs/zh/latest/introduce.md`
+  * [X] `docs/zh/latest/white-paper.md` 
+  * [ ] `docs/zh/latest/whats-new.md`
+* `quick-start`
+  * [X] `docs/zh/latest/quick-start-guide.md`
+  * [ ] `docs/zh/latest/basic-operations.md`
+* `install-deploy-update`
+  * [X] `docs/zh/latest/install-and-deploy.md`
+  * [X] `docs/zh/latest/service-license.md`
+  * [X] `docs/zh/latest/manual-update.md`
+  * [X] `docs/zh/latest/cluster-environment-requirement.md`
+  * [X] `docs/zh/latest/hardware-config-recommendation.md`
+* `hotdb-server`
+  * [X] `docs/zh/latest/standard.md` D
+  * [X] `docs/zh/latest/management-port-command.md` D
+* `hotdb-management`
+  * [X] `docs/zh/latest/hotdm-management.md`
+  * [X] `docs/zh/latest/intelligent-inspection.md`
+* `idc`
+  * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` D
+  * [X] `docs/zh/latest/visual-idc.md`
 * `appendix`
   * [X] `docs/zh/latest/glossary.md`
   * [X] `docs/zh/latest/parameters.md`
