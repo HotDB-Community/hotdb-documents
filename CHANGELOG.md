@@ -28,7 +28,7 @@
 
 > * D - 原文档已过时
 > * T - 待编写
-> * L - 优化列表，将
+> * L - 优化列表
 > * C - 标注代码块语言
 > * M - 必要的单词/命令标注为代码（`code`）
 
@@ -48,7 +48,7 @@
   * [X] `docs/zh/latest/cluster-environment-requirement.md`
   * [X] `docs/zh/latest/hardware-config-recommendation.md`
 * `hotdb-server`
-  * [X] `docs/zh/latest/standard.md` D
+  * [X] `docs/zh/latest/standard.md`
   * [X] `docs/zh/latest/management-port-command.md` L C M
 * `hotdb-management`
   * [X] `docs/zh/latest/hotdm-management.md`
