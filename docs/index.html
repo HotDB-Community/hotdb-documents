@@ -109,6 +109,13 @@
       padding: 0 0 !important;
       margin: 0 0 !important;
     }
+    
+    .md-foot-note{
+      
+    }
+    .tooltip{
+      
+    }
   </style>
 </head>
 <body>
@@ -216,37 +223,30 @@
             window.$docsify.fileName = `/${vm.route.file}`
             //绑定windows.$docsify.fileUrl，以#开始，没有文件后缀名
             window.$docsify.fileUrl = `#/${vm.route.path}`
-
-            redirectLocation()
-
+            
             //预处理markdown
             return handleMarkdown(html)
           })
           hook.afterEach(function(html) {
             //console.log(html)
-
-            $(document).ready(function() {
-              if($(".app-nav .navicon").length === 0) $(".app-nav").prepend(createNavIcon())
-              //绑定footNote和footNoteReference
-              bindFootNote()
-            })
-
+            
             //添加topbar
             return createTopBar() + html
+          })
+          hook.doneEach(function(){
+            $(document).ready(function() {
+              bindFootNote()
+            })
           })
         }
       ],
 
       fileName: "",
-      fileUrl: "",
-      footNoteIds: []
+      fileUrl: ""
     }
-
+    
     window.onload = function() {
       redirectLocation()
-      $(document).ready(function() {
-        if($(".app-nav .navicon").length === 0) $(".app-nav").prepend(createNavIcon())
-      })
     }
 
     //地址重定向
@@ -261,21 +261,9 @@
         window.location.href = `${url}/latest/`
       } else if(url.endsWith("/#/en")) {
         window.location.href = `${url}/latest/`
-      } else {
-        const matchGroup = url.match(/(.*?\/#\/)((latest)|(v[\w-]+?))/)
-        if(matchGroup != null) {
-          window.location.href = matchGroup[1] + "zh/" + matchGroup[2] + "/"
-        }
       }
     }
-
-    //添加导航栏图标
-    function createNavIcon() {
-      return `<a href="https://hotdb.com">
-        <img class="navicon" src="assets/navicon-colorful.png" alt="hotdb.com"/>
-      </a>`
-    }
-
+    
     //处理markdown
     function handleMarkdown(html) {
       return resolveFootNote(resolveAnchor(html))
@@ -285,30 +273,20 @@
 
     const footNoteReferenceRegex = /^\[\^(\d+)]:\s*(.*)$/gm
 
-    //解析markdown尾注
+    //解析markdown尾注，生成bootstrap4 tooltip
     function resolveFootNote(html) {
-      return html.replaceAll(footNoteRegex, (s, p1) => {
-        const footNoteId = `foot-note-${p1}`
-        return `<a id="${footNoteId}" class="md-foot-note" href="#" aria-describedby="tooltip">[${p1}]</a>`
-      }).replaceAll(footNoteReferenceRegex, (s, p1, p2) => {
-        window.$docsify.footNoteIds.push(p1)
-        const footNoteReferenceId = `foot-note-reference-${p1}`
-        return `<div id="${footNoteReferenceId}" role="tooltip">${p2}</div>`
+      const footNotes = {}
+      return html.replaceAll(footNoteReferenceRegex,(s,p1,p2)=>{
+        footNotes[p1] = p2
+        return ""
+      }).replaceAll(footNoteRegex,(s,p1)=>{
+        return `<a href="javascript:void(0);" data-toggle="tooltip" title="${footNotes[p1]}">[${p1}]</a>`
       })
     }
-
-    //绑定footNote和footNoteReference
-    function bindFootNote() {
-      window.$docsify.footNoteIds.forEach(e => {
-        new Popper($(`#foot-note-${e}`), $(`#foot-note-reference-${e}`), {
-          placement: "top"
-        })
-      })
-    }
-
+    
     const anchorRegex = /{#([\w-]+)}/g
 
-    //解析markdown锚点
+    //解析markdown锚点，绑定heading的id
     function resolveAnchor(html) {
       return html.replaceAll(anchorRegex, ":id=$1")
     }
@@ -331,6 +309,12 @@
         </p>
       </div>`
     }
+    
+    //绑定footNote对应的tooltip
+    function bindFootNote() {
+      $('[data-toggle="tooltip"]').tooltip()
+    }
+
 
     //得到基于语言的文本
     function getText(text) {

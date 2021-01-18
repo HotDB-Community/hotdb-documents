@@ -1,3 +1,7 @@
+<a href="https://hotdb.com">
+<img class="navicon" src="/assets/navicon-colorful.png" alt="hotdb.com"/>
+</a>
+
 * [官方网站](https://www.hotdb.com)
 * [联系我们](mailto:service@hotdb.com)
 * 版本

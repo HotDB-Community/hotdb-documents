@@ -9,7 +9,7 @@
 * [ ] 检查markdown文档的格式
 * [ ] 检查markdown文档中的文档和标题链接
 * [ ] 为markdown文档中的代码块统一注明语言
-* [ ] 寻找或者自定义插件实现markdown尾注语法（`text[^1]`）
+* [X] 寻找或者自定义插件实现markdown尾注语法（`text[^1]`）
 * [X] 自定义实现markdown锚点语法（`# Title {#id}`）
 
 # TODO
