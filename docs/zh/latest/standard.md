@@ -72,12 +72,12 @@ mysql -uroot -proot -h127.0.0.1 -P3323
 root> mysql -uroot -proot -h127.0.0.1 -P3323
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor. Commands end with ; or \g.
+Welcome to the MySQL monitor. Commands end with ; or g.
 Your MySQL connection id is 515
 Server version: 5.1.27-HotDB-2.5.0 HotDB Server by Hotpu Tech
 Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
 Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners.
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+Type 'help;' or 'h' for help. Type 'c' to clear the current input statement.
 
 mysql> show databases;
 
@@ -426,14 +426,14 @@ mysql -uroot -proot -h127.0.0.1 -P3323 -Dtest
 root> mysql -h127.0.0.1 -uroot -proot -P3323 -Dtest
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor. Commands end with ; or \g.
+Welcome to the MySQL monitor. Commands end with ; or g.
 Your MySQL connection id is 100728
 Server version: 5.7.19-HotDB-2.5.2 HotDB Server by Hotpu Tech
 Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
 Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
 owners.
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+Type 'help;' or 'h' for help. Type 'c' to clear the current input statement.
 ```
 
 执行customer的建表语句：
@@ -590,14 +590,14 @@ HotDB Server为客户提供了一套功能完善、操作便捷的信息监控�
 root> mysql -uroot -proot -P3325 -h192.168.200.201
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor. Commands end with ; or \g.
+Welcome to the MySQL monitor. Commands end with ; or g.
 Your MySQL connection id is 992081
 Server version: 5.1.27-HotDB-2.5.0 HotDB Manager by Hotpu Tech
 Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
 Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
 owners.
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+Type 'help;' or 'h' for help. Type 'c' to clear the current input statement.
 mysql> show @@help;
 |-------------------------------------------+------------------------------+
 | statement                                 | description                  |
@@ -842,7 +842,7 @@ ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting trans
 
 若执行SQL时返回以下情况的报错信息，计算节点会将其记录到计算节点日志（hotdb-unusualsql.log）中：
 
-- 主键\唯一键冲突或外键约束不满足导致的ERROR信息（即MySQL错误码1062、1216、1217、1451、1452、1557、1761、1762、3008）
+- 主键唯一键冲突或外键约束不满足导致的ERROR信息（即MySQL错误码1062、1216、1217、1451、1452、1557、1761、1762、3008）
 - 数据溢出（即MySQL错误码1264、1690、3155、3669）和数据类型转换或隐式转换导致数据截断（即MySQL错误码1265、1292、1366）的情况
 - 涉及binlog不安全语句（即MySQL错误码1418、1592、1663、1668、1669、1671、1673、1674、1675、1693、1714、1715、1716、1719、1722、1724、1727、1785、3006、3199、3570、3571、MY-010908、MY-013098）
 - 对分片字段不是自增字段的分片表做INSERT操作时，由外部指定自增值的INSERT的情况
@@ -1093,7 +1093,7 @@ mysql -ujing01 -p123456 -h192.168.240.117 -P3323 --ssl-ca=/usr/local/crt/ca.pem 
 
 ##### JDBC方式
 
-对于JDBC来说，也需要相应的秘钥文件。操作方式可参考[MySQL官方手册](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-using-ssl.html)，这里可通过两种方式：\
+对于JDBC来说，也需要相应的秘钥文件。操作方式可参考[MySQL官方手册](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-using-ssl.html)，这里可通过两种方式：
 1）可通过将CA导入Java信任库的方式：
 
 ```bash
@@ -1115,7 +1115,7 @@ openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name "mysqlcli
 keytool -importkeystore -srckeystore client-keystore.p12 -srcstoretype pkcs12 -destkeystore keystore -deststoretype JKS
 ```
 
-![](assets/standard/image47.png)\
+![](assets/standard/image47.png)
 则JDBC连接时使用keystore文件， 例如：
 
 ```properties
@@ -1256,7 +1256,7 @@ use xxx # 逻辑库名
 set session group_concat_max_len=1048576;
 set @mytablename='xxx'; # 表名
 set @mydbname=database();
-select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ','NULL'),ifnull('),','NULL')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \G
+select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ','NULL'),ifnull('),','NULL')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename G
 ```
 
 若执行结果一致，则表数据大概率一致。
@@ -1280,7 +1280,7 @@ mysql> set @mydbname=database();
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ','NULL'),ifnull('),','NULL')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \G
+mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ','NULL'),ifnull('),','NULL')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename G
 
 *************************** 1. row ***************************
 sqltext: select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
@@ -1575,7 +1575,7 @@ Can't reset XA in reloading, please restart the hotdb to enable XA
 
 特殊说明：
 
-XA模式下：参照SQL99标准，begin\start transaction会立即开启一个事务。也即在XA模式打开的情况下，begin\start transaction将等同于start transaction with consistent snapshot。
+XA模式下：参照SQL99标准，beginstart transaction会立即开启一个事务。也即在XA模式打开的情况下，beginstart transaction将等同于start transaction with consistent snapshot。
 
 在计算节点版本高于2.5.6 （包含）时，XA模式下前端连接断开时会将事务的状态记录到日志及配置库中，也可以直接通过服务端口执行SHOW ABNORMAL_XA_TRX查看是否需要重做事务。
 
@@ -2210,7 +2210,7 @@ sh hotdb_server start
 5. 集群环境升级版本，如果不影响业务，建议关闭集群升级后再启动；
 6. 集群中各节点的server.xml配置，除集群相关的参数都必须一致；
 7. 各计算节点服务器时间差异需小于1s；
-8. 计算节点服务器之间要求任何时候网络延迟均小于1s；建议计算节点间\计算节点与存储节点间\存储节点间的延迟均低于1ms，以便使用时获得良好的响应时间性能；
+8. 计算节点服务器之间要求任何时候网络延迟均小于1s；建议计算节点间计算节点与存储节点间存储节点间的延迟均低于1ms，以便使用时获得良好的响应时间性能；
 9. 建议一个局域网网段内，只部署一套多计算节点集群（只是建议，不是强制要求，建议的理由是为以后扩容预留较大空间）；
 10. 配置库IP需配置实际IP。
 
@@ -2241,7 +2241,7 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 ![](assets/standard/image77.png)
 
-步骤1\~4按照以往规则填写存储节点的主机名和端口号，连接用户和密码，物理库等。若该组存储节点需要绑定Listener，在步骤5中，填写好监听程序相关信息（Listener中文为监听程序）。
+步骤1~4按照以往规则填写存储节点的主机名和端口号，连接用户和密码，物理库等。若该组存储节点需要绑定Listener，在步骤5中，填写好监听程序相关信息（Listener中文为监听程序）。
 
 ![](assets/standard/image78.png)
 
@@ -3115,7 +3115,7 @@ mysql> show @@onlineddl;
 | --- | --- | --- | --- |
 | SELECT | INNER/LEFT JOIN/RIGHT JOIN WHERE | 运算表达式 | column1+column2、column1-column2、column1*column2、column1/column2 |
 |     |     |     | <=>或<> |
-|     |     | \% 或 MOD | 仅支持column%常量；不支持column1%column2 |
+|     |     | % 或 MOD | 仅支持column%常量；不支持column1%column2 |
 |     |     | RAND() | 2.3不支持rand()相关的所有语法，包括GROUP BY rand() ,ORDER BY rand() |
 |     |     | / 或 DIV | 仅支持column DIV 常量；不支持column1 DIV column2 |
 |     |     | INNER/LEFT JOIN/RIGHT JOIN ON | IN/IS NOT NULL/IS NULL/BETWEEN...AND/LIKE |
@@ -3124,9 +3124,9 @@ mysql> show @@onlineddl;
 |     |     |     | CAST() |
 |     |     | CONCAT() | 不支持CONCAT()在运算表达式中做JOIN条件（ON子句条件），或WHERE子句中的关联条件 |
 |     |     | CASE...WHEN...END | 仅支持CASE WHEN判断的是单个表的字段；不支持多表字段的条件判断如：CASE WHEN column_name1=xx THEN column_name2 END ；CASE WHEN必须使用表别名 |
-|     | 函数 | MIN(MIN(column_name))\ | 函数嵌套不支持 |
+|     | 函数 | MIN(MIN(column_name)) | 函数嵌套不支持 |
 |     |     |     | ABS(MAX()) |
-|     | 多表(三表及以上)查询 | 混合的LEFT/INNER/NATURAL JOIN\ | 计算节点自身支持多表查询中的单种LEFT、单种JOIN INNER、混合JOIN LEFT/INNER/RIGHT JOIN以及TABLE a ... JOIN(TABLE b,TABLE c)...语法。开启NDB后可额外支持混合LEFT/INNER/NATURAL JOIN以及单种NATURAL JOIN。 |
+|     | 多表(三表及以上)查询 | 混合的LEFT/INNER/NATURAL JOIN | 计算节点自身支持多表查询中的单种LEFT、单种JOIN INNER、混合JOIN LEFT/INNER/RIGHT JOIN以及TABLE a ... JOIN(TABLE b,TABLE c)...语法。开启NDB后可额外支持混合LEFT/INNER/NATURAL JOIN以及单种NATURAL JOIN。 |
 |     |     |     | 单种NATURAL JOIN |
 |     |     | 子查询 | 查询运算条件（ANY,ALL） |
 |     |     |     | 嵌套多层关联子查询 |
@@ -3301,9 +3301,9 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 |     | [BIT_OR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | 不支持 | 是 |
 |     | [BIT_XOR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | 不支持 | 是 |
 |     | [&](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | 支持 | 否 |
-|     | [\~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | 支持 | 否 |
+|     | [~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | 支持 | 否 |
 |     | [|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | 支持 | 否 |
-|     | [\^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | 支持 | 否 |
+|     | [^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | 支持 | 否 |
 |     | [Buffer()](http://dev.mysql.com/doc/refman/5.6/en/spatial-operator-functions.html) | 支持 | 否 |
 |     | [CASE](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html) | 支持 | 否 |
 |     | [CAST()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html) | 支持 | 否 |
@@ -3818,7 +3818,7 @@ mysql> insert ignore into test2(name) values ('e');
 
 若分片字段有default 默认值，默认按照default值路由；
 
-若分片字段没有default 默认值，会填充null , 若null值配置了路由规则即可插入；未配置路由规则则不允许插入（例如range \match 这类需要单独配置null 分片规则；auto_crc32 这类，根据null自动路由）。
+若分片字段没有default 默认值，会填充null , 若null值配置了路由规则即可插入；未配置路由规则则不允许插入（例如range match 这类需要单独配置null 分片规则；auto_crc32 这类，根据null自动路由）。
 
 ##### 跨库INSERT语句
 
@@ -4116,7 +4116,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 |              |                      | UCASE()                                | 支持         | 　                                                                                                                                                                                |
 |              |                      | UPPER()                                | 支持         | 　                                                                                                                                                                                |
 |              |                      | FLOOR()                                | 支持         | 　                                                                                                                                                                                |
-|              |                      | \% 或 MOD                              | 支持         | 仅支持column%常量；不支持column1%column2                                                                                                                                          |
+|              |                      | % 或 MOD                              | 支持         | 仅支持column%常量；不支持column1%column2                                                                                                                                          |
 |              |                      | RAND()                                 | 特殊支持     | 使用NDB且满足NDB限制的支持                                                                                                                                                        |
 |              |                      | TRUNCATE()                             | 支持         | 　                                                                                                                                                                                |
 |              |                      | / 或 DIV                               | 支持         | 仅支持column DIV 常量；不支持column1 DIV column2                                                                                                                                  |
@@ -5002,7 +5002,7 @@ ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
 表结构类似的表可以使用相同的分片规则，使用如下语法可直接引用分片规则创建水平分片表：
 
 ```sql
-CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleid\rulename' [on datanode 'datanodes'] (......
+CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleidrulename' [on datanode 'datanodes'] (......
 ```
 
 登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)，show hotdb rules;和show hotdb functions;可以看到与之分片函数关联的分片规则：
@@ -5779,7 +5779,7 @@ bakUrl和bakUsername以及bakPassword属于配套参数，用于配置库高可�
 当配置库因主库故障发生切换后，主库恢复正常且检测过数据主从一致，此时可恢复主备配置库重新到可切换状态，需要将配置库里的houdb_config_info表里k字段为hotdb_master_config_status这一行的v值从0更新为1，并在管理端执行reload @@config，才会重新使用主配置库（使用管理平台启用主配置库的操作方法请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》）。
 
 ```
-mysql> select * from hotdb_config_info\G
+mysql> select * from hotdb_config_infoG
 
 ***************************1.row**************************
 k: hotdb_master_config_status
@@ -7354,37 +7354,52 @@ server.xml中haMode参数配置 如下配置：
 | --- | --- |
 | 参数值 | haNodeHost |
 | 是否可见 | 是 |
-| 参数说明 | 计算节点高可用模式下对应的当前主计算节点连接信息，配置格式为IP:PORT，例：192.168.200.1:3325（集群模式下，此项无效） |
+| 参数说明       | 2.5.6以下版本：计算节点高可用模式下对应的当前主计算节点连接信息                                                                                                                   |
+|                | 2.5.6及以上版本：计算节点高可用模式下需配置当前主计算节点管理端口连接信息；集群模式下，需配置所有成员的集群通信端口连接信息（集群在同一网段且集群端口相同时，可以不配置该参数）。 |
 | 默认值 | (空) |
 | Reload是否生效 | 否 |
 | 最低兼容版本 | 2.4.3 |
 
-haState与haNodeHost属于配套参数，当haState为主节点，haNodeHost为空；当haState为备节点，haNodeHost可配置为对端节点管理端连接信息，即IP:PORT，该组参数适用于计算节点高可用环境，单计算节点服务可忽略该参数。详细使用方法请参考《分布式事务数据库HotDB Server【安装部署】功能使用手册》。若开启了集群模式haMode为1，则该参数需设置其他节点IP:PORT，PORT为通信端口 ，多节点间用逗号分隔（见参考值设置）。
+**参数设置：**
+
+`server.xml`中`haMode`参数配置，如下配置：
+
+```xml
+<property name="haState">master</property>!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
+<property name="haNodeHost"></property><!-- 计算节点高可用模式下需配置当前主计算节点管理端口连接信息；集群模式下，需配置所有成员的集群通信端口连接信息，且集群模式下，只有当集群内所有计算节点在同一网段且集群端口相同时，可以不配置该参数，否则必须配置所有成员的集群通信信息。例：192.168.220.1:3326,192.168.200.1:3327,192.168.200.1:3328 -->
+```
 
 **参数作用：**
 
-haNodeHost参数仅在高可用模式下对backup角色的计算节点生效，当backup的计算节点被keepalived触发启动（online）时，会主动往haNodeHost上的原master服务发送offline命令以尽可能减少多活场景的出现。
+haState与haNodeHost属于配套参数。
 
-例如192.168.200.51:3325与192.168.200.52:3325属于计算节点高可用的环境，该组参数是用户使用计算节点高可用关系的关键配置，主计算节点角色为master, 备计算节点角色为backup , 并且需要指定配置与之关联的主服务的IP和管理端口。
+当计算节点为高可用模式时，haState为主节点(master)角色，haNodeHost配置为空；haState为备节点（backup）角色，haNodeHost可配置为对端当前主计算节点管理端连接信息，即IP:PORT，此处PORT为管理端口；当backup角色的计算节点被keepalived触发启动（online）时，会主动往haNodeHost上的原master服务发送offline命令以尽可能减少多活场景的出现。例如192.168.200.51:3325与192.168.200.52:3325属于计算节点高可用的环境，该组参数是用户使用计算节点高可用关系的关键配置，主计算节点haState角色为master, 备计算节点haState角色为backup , 并且haNodeHost需要指定配置与之关联的主服务的IP和管理端口。
 
-例如192.168.210.22:3326,192.168.210.23:3326与192.168.210.24:3326属于多计算节点，需要指定配置与之关联的主服务的IP和通信端口。
+当计算节点为多节点集群模式时，haState无实际意义，但haNodeHost需要注意：只有当集群内所有计算节点在同一网段且集群端口相同时，可以不配置该参数（此时需要正确配置clusterNetwork参数），否则必须配置所有成员的集群通信信息。例如：192.168.220.1:3326,192.168.200.1:3327,192.168.200.1:3328属于多计算节点，需要指定配置该集群的所有计算节点的IP和通信端口。
 
-高可用模式主节点示例：<property name="haState">master</property><!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
+单计算节点服务可忽略该参数。
+
+详细使用方法可参考[安装部署](install-and-deploy.md)文档。
+
+高可用模式主节点示例：
 
 ```xml
-<property name="haNodeHost"/><!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）-->
+<property name="haState">master</property><!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
+<property name="haNodeHost"/><!-- 当前主计算节点节点连接信息，IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）-->
 ```
 
-高可用模式备节点示例：<property name="haState">backup</property><!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
+高可用模式备节点示例：
 
 ```xml
+<property name="haState">backup</property><!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
 <property name="haNodeHost"/>192.168.200.51:3325<!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）-->
 ```
 
-集群模式实例：<property name="haState">backup</property><!-- 计算节点高可用模式下的主备角色配置，主计算节点配置为：master，备计算节点配置为：backup（集群模式下，此项无效） -->
+集群模式实例：
 
 ```xml
-<property name="haNodeHost"/>192.168.210.23:3326,192.168.310.24:3326<!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325）-->
+<property name="haState">backup</property><!-- 集群模式下，此项无实际意义-->
+<property name="haNodeHost"/>192.168.220.1:3326,192.168.220.1:3327,192.168.200.1:3328<! 集群模式下，若集群所有成员在同一网段且集群端口相同时，可以不配置该参数，否则必须配置所有成员的连接信息，IP:PORT 逗号间隔，此处PORT为监听端口-->
 ```
 
 #### highCostSqlConcurrency
@@ -7971,7 +7986,7 @@ mysql> select * from customer_auto_1 a join customer_auto_3 b on a.postcode=b.po
 ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml
 ```
 
-可通过set session max_join_size修改当前会话参数值，使JOIN中间结果集在1\~ 2124000000之间：
+可通过set session max_join_size修改当前会话参数值，使JOIN中间结果集在1~ 2124000000之间：
 
 ```
 mysql> show variables like '%max_join_size%;
@@ -8965,16 +8980,16 @@ recordMySQLWarnings记录MySQL返回的警告信息。
 举例如下：
 
 ```
-mysql> update account set Account_number="$!\''##";
+mysql> update account set Account_number="$!''##";
 ```
 
 查看计算节点安装目录的/logs/sql.log日志：
 
 ```
-2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!\\''##', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
-2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!\\''##', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
-2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!\\''##', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
-2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!\\''##', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
+2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!''##', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
+2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!''##', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
+2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!''##', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
+2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!''##', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
 ```
 注：若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9014,7 +9029,7 @@ mysql> update account set Account_number="$!\''##";
 2.通过server配置库查看SQL执行统计情况
 
 ```
-mysql> select * from hotdb_query_records order by db_id limit 1\G
+mysql> select * from hotdb_query_records order by db_id limit 1G
 
 ******************************1. row***************************
 
@@ -9086,10 +9101,10 @@ server.xml的recordSqlAuditlog参数默认false：
 如：计算节点服务端执行DDL，查看日志输出
 
 ```
-{"affected_rows":"0","command":"CREATE TABLE `t_sharding_01` (\n`id` int(10) NOT NULL AUTO_INCREMENT,\n`name` varchar(50) NOT NULL,\n`age` int(3),\nPRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4","connection_id":"44","end_time":"2020-04-27 14:58:34.769","failed_reason":"","host":"127.0.0.1","ip":"127.0.0.1","log_id":"9524067900080128","logic_db":"CXD_DB","matched_rows":"0","port":"3323","query_rows":"0","sql_subtype":"CREATE","sql_type":"DDL","status":"1","time":"2020-04-27 14:58:34.736","user":"cxd@%"}
+{"affected_rows":"0","command":"CREATE TABLE `t_sharding_01` (n`id` int(10) NOT NULL AUTO_INCREMENT,n`name` varchar(50) NOT NULL,n`age` int(3),nPRIMARY KEY (`id`)n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4","connection_id":"44","end_time":"2020-04-27 14:58:34.769","failed_reason":"","host":"127.0.0.1","ip":"127.0.0.1","log_id":"9524067900080128","logic_db":"CXD_DB","matched_rows":"0","port":"3323","query_rows":"0","sql_subtype":"CREATE","sql_type":"DDL","status":"1","time":"2020-04-27 14:58:34.736","user":"cxd@%"}
 ```
 
-注：日志输出为json格式，特殊字符如双引号采用\进行转义，json中部分key代表的含义如下：
+注：日志输出为json格式，特殊字符如双引号采用进行转义，json中部分key代表的含义如下：
 
 - `sql_type` - 当前执行SQL的类型，包括：DDL/DML/DQL/OTHER。
 - `sql_subtype` - 当前执行SQL类型的子类,其中 DDL包括CREARE/ALTER/DROP/TUNCATE/RENAME；DQL包括SELECT；DML包括UPDATE/DELETE/INSERT/REPLACE/LOAD；OTHER包括SET/PREPARE/TRANSACTION/SHOW。
@@ -9606,11 +9621,11 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 > **参数作用：**
 
-在server.xml中打开enableSSL和sslUseSM4开关，可以使客户端访问计算节点的过程处于国密验证的加密状态。\
+在server.xml中打开enableSSL和sslUseSM4开关，可以使客户端访问计算节点的过程处于国密验证的加密状态。
 ![](assets/standard/image152.png)
 
-该功能对于用户来说只能通过抓包查看，示例：抓包可见TLS握手包中存在HotDB Server国密SM4定义的加密套件编号：0xff01，说明SM4加解密套件已生效。\
-![](assets/standard/image153.png "fig:")\
+该功能对于用户来说只能通过抓包查看，示例：抓包可见TLS握手包中存在HotDB Server国密SM4定义的加密套件编号：0xff01，说明SM4加解密套件已生效。
+![](assets/standard/image153.png "fig:")
 ![](assets/standard/image154.png "fig:")
 
 #### statisticsUpdatePeriod
@@ -9965,6 +9980,134 @@ timestampProxy参数为0时，代表自动模式，当计算节点检测到存�
 
 该参数用于表上有on update current_timestamp属性或SQL里用时间函数的代理，解决对应场景，insert或update操作可能会导致结果异常以及节点间时间数据存在差值的问题。如果timestampProxy设置为0且时间差异过大或者设置为2时，会大幅影响所有UPDATE语句的执行速度与效率。
 
+### unusualSQLMode
+
+**参数说明：**
+
+|  Property|     Value|
+|---|---|
+|  参数值           |unusualSQLMode|
+|  是否可见         |隐藏不显示|
+|  参数说明         |控制unusualSQL输出日志的频率|
+|  默认值           |1|
+|  最小值           |0|
+|  最大值           |/|
+|  Reload是否生效   |是|
+|  最低兼容版本     |2.5.5|
+
+**参数设置：**
+
+unusualSQLMode属隐藏参数，若要开启，需通过管理平台"更多参数"添加并执行reload操作或者手动添加到`server.xml`中。参数默认值为1，配置如下：
+
+```
+<property name="unusualSQLMode">1</property><!-- 控制unusualSQL输出日志的频率, 0:记录所有计数器，第一次出现时输出日志；1:记录所有SQL；>1:记录所有计数器，计数器每满N时输出日志; -->
+```
+
+**参数作用：**
+
+1. 设置为1时：记录所有unusualSQL类型的日志与计数信息,每触发一次都输出对应日志信息且计数器加1。
+
+日志同时记录计数器和SQL的场景：
+
+1) 第一次触发时日志：
+
+```
+2021-01-13 14:26:46.564 [INFO] [UNUSUALSQL] [$I-NIOExecutor-7-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-7-0,id=169,user=root,host=192.168.240.142,port=3323,localport=26672,schema=CC]; backend:MySQLConnection [node=2, id=247, threadId=27213, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=58336, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"lili"); backend_sql:null] [CC.SUCCESS.count]=1
+```
+
+2) 第二次触发时日志：
+
+```
+2021-01-13 14:27:38.159 [INFO] [UNUSUALSQL] [$I-NIOExecutor-0-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-0-0,id=169,user=root,host=192.168.240.142,port=3323,localport=26672,schema=CC]; backend:MySQLConnection [node=2, id=298, threadId=27230, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=58370, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"haha"); backend_sql:null] [CC.SUCCESS.count]=2
+
+```
+
+后续每一次触发该类计数器，对应日志都正常输出。
+
+**无日志输出、只在接口统计计数器的场景：**
+
+每一次触发，计数器都正常统计。
+
+```
+mysql> show @@unusualsqlcount;
+
++--------------+-------------+-------+
+| unusual_type | unusual_key | count |
++--------------+-------------+-------+
+| TABLE        | CsC.TEST    | 2     |
+| SCHEMA       | CC          | 1     |
++--------------+-------------+-------+
+```
+
+2. 设置为0时：记录所有unusualSQL类型的日志与计数信息，但其日志信息只在第一次出现时输出，后续若再次出现，则只进行个数记录统计并展示在show @@unusualsqlcount结果中。
+
+日志同时记录计数器和SQL的场景：
+
+1) 第一次触发时日志：
+
+```
+2021-01-13 14:48:55.314 [INFO] [UNUSUALSQL] [$I-NIOExecutor-6-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-6-0,id=106,user=root,host=192.168.240.142,port=3323,localport=27698,schema=CC]; backend:MySQLConnection [node=2, id=262, threadId=27511, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=59424, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"zhang"); backend_sql:null] [CC.SUCCESS.count]=1
+```
+
+2) 第二次触发时：无对应日志输出
+
+3) 第三次触发时：无对应日志输出
+
+后续该类计数器每一次触发，都不再有对应日志输出。
+
+无日志输出、只在接口统计计数器的场景：
+
+每一次触发，计数器都正常统计。
+
+```
+mysql> show @@unusualsqlcount;
+
++--------------+-------------+-------+
+| unusual_type | unusual_key | count |
++--------------+-------------+-------+
+| TABLE        | CC.TEST     | 3     |
+| SCHEMA       | CC          | 1     |
++--------------+-------------+-------+
+```
+
+3. 当该参数设置为N（N>1）时：记录所有unusualSQL类型的日志与计数信息，但其日志信息只在每统计满N时输出一次日志，总出现次数依旧可以通过show @@unusualsqlcount结果查看 （此处以N为3进行测试）
+
+日志里面同时记录计数器和SQL的场景：
+
+1) 第一次触发：无对应日志输出
+
+2) 第二次触发：无对应日志输出
+
+3) 第三次触发时日志
+
+```
+2021-01-13 15:10:47.953 [INFO] [UNUSUALSQL] [$I-NIOExecutor-4-2] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-4-2,id=100,user=root,host=192.168.240.142,port=3323,localport=28882,schema=CC]; backend:MySQLConnection [node=2, id=253, threadId=27759, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=60634, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"log"); backend_sql:null] [CC.SUCCESS.count]=3
+```
+
+4) 第四次触发：无对应日志输出
+
+后续每当该类计数器统计满3时都会输出对应日志一次。
+
+无日志输出、只在接口统计计数器的场景：
+
+每一次触发，计数器都正常统计。
+
+```
+mysql> show @@unusualsqlcount;
+
++--------------+-------------+-------+
+| unusual_type | unusual_key | count |
++--------------+-------------+-------+
+| TABLE        | CC.TEST     | 4     |
+| SCHEMA       | CC          | 1     |
++--------------+-------------+-------+
+```
+
+**备注：**
+
+1. 计数器细化到表级别，针对表级别的每个错误号都有个计数器进行统计
+2. 日志路径：`/usr/local/hotdb/hotdb-server/logs/extra/unusualsql/hotdb-unusualsql.log`
+
 #### url & username & password{#url-username-password}
 
 **参数说明：**
@@ -10016,14 +10159,14 @@ Query OK, 0 row affected (0.00 sec)
 root> mysql -uhotdb_config_9 -photdb_config_9 -h127.0.0.1 -P3306
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor. Commands end with ; or \g.
+Welcome to the MySQL monitor. Commands end with ; or g.
 Your MySQL connection id is 16323
 Server version: 5.7.19-HotDB-2.5.2 HotDB Server by Hotpu Tech
 Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
 Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
 owners.
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+Type 'help;' or 'h' for help. Type 'c' to clear the current input statement.
 ```
 
 当启动计算节点，没有配置库高可用且配置库无法连接时，计算节点会间隔3秒重连，直到最终重试超过30分钟仍无法连接，则中断启动：
@@ -10094,14 +10237,14 @@ root> tail -n 300 hotdb.log | grep 'aio'
 root> mysql -uct -pct -h127.0.0.1 -P2473
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor. Commands end with ; or \g.
+Welcome to the MySQL monitor. Commands end with ; or g.
 Your MySQL connection id is 30
 Server version: **5.6.1**-HotDB-2.4.7 HotDB Server by Hotpu Tech
 Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.
 Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
 owners.
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+Type 'help;' or 'h' for help. Type 'c' to clear the current input statement.
 
 root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
@@ -10140,7 +10283,7 @@ root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 [root@hotdb]## mysql -uroot -proot -P3323 -h192.168.210.49
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor. Commands end with ; or \g.
+Welcome to the MySQL monitor. Commands end with ; or g.
 Your MySQL connection id is 235
 Server version: 5.7.23 HotDB-2.5.3 HotDB Server by Hotpu Tech
 ......
@@ -10152,7 +10295,7 @@ Server version: 5.7.23 HotDB-2.5.3 HotDB Server by Hotpu Tech
 [root@hotdb]## mysql -uroot -proot -P3323 -h192.168.210.49
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor. Commands end with ; or \g.
+Welcome to the MySQL monitor. Commands end with ; or g.
 Your MySQL connection id is 235
 Server version: 5.7.23
 ......
@@ -10164,7 +10307,7 @@ Server version: 5.7.23
 [root@hotdb]## mysql -uroot -proot -P3323 -h192.168.210.49
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor. Commands end with ; or \g.
+Welcome to the MySQL monitor. Commands end with ; or g.
 Your MySQL connection id is 235
 Server version: 5.7.23 hotpu
 ......
