@@ -1,3 +1,7 @@
+<a href="https://hotdb.com">
+<img class="navicon" src="/assets/navicon-colorful.png" alt="hotdb.com"/>
+</a>
+
 * [Official Website](https://www.hotdb.com)
 * [Contract Us](mailto:service@hotdb.com)
 * Version
