@@ -1,5 +1,3 @@
-<!--复制自：zh/latest/_coverpage.md-->
-
 ![logo](/assets/navicon-colorful.png)
 
 # HotDB Server参考手册

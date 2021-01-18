@@ -1,5 +1,3 @@
-<!--复制自：zh/latest/_navbar.md-->
-
 * [官方网站](https://www.hotdb.com)
 * [联系我们](mailto:service@hotdb.com)
 * 版本

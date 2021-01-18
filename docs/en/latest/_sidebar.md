@@ -1,6 +1,6 @@
-<!--* README--><!--Content from: https://www.hotdb.com/server-->
+<!--* README-->
 * **About**
-  * [Introduce](introduce.md)<!--Content from: https://www.hotdb.com/server-->
+  * [Introduce](introduce.md)
   * [Product White Paper](white-paper.md)
   <!--* [What's New](whats-new.md)-->
 * **Quick Start**

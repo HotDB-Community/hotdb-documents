@@ -1,12 +1,12 @@
-<!--* README--><!--内容来自：https://www.hotdb.com/server-->
-* **开始**
-  * [简介](introduce.md)<!--内容来自：https://www.hotdb.com/server-->
+<!--* README-->
+* **关于**
+  * [简介](introduce.md)
   * [产品白皮书](white-paper.md)
   <!--* [What's New](whats-new.md)-->
 * **快速上手**
   * [快速上手指南](quick-start-guide.md)
   <!--* [基本操作](basic-operations.md)-->
-* **安装部署及升级**
+* **安装、部署和升级**
   * [安装部署](install-and-deploy.md)
   * [服务授权](service-license.md)
   * [手动升级](manual-update.md)
@@ -15,7 +15,7 @@
 * **计算节点操作手册**
   * [标准](standard.md)
   * [管理端命令](management-port-command.md)
-* **管理平台日常运维手册**
+* **管理平台运维手册**
   * [管理平台](hotdb-management.md)
   * [智能巡检](intelligent-inspection.md)
 * **容灾功能使用手册**

@@ -13,7 +13,10 @@
   <!--自定义主题-->
   <link rel="stylesheet" href="assets/themes/hotdb.css">
   <!--font awesome图标：https://github.com/erickjx/docsify-fontawesome -->
-  <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="assets/lib/font-awesome/css/font-awesome.min.css"/>
+  <!-- bootstrap-->
+  <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" >-->
+  <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.min.css" >
   <!--侧边栏可折叠插件：https://github.com/iPeng6/docsify-sidebar-collapse -->
   <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />-->
   <!--<link rel="stylesheet" href="assets/lib/plugins/sidebar.min.css" />-->
@@ -84,6 +87,27 @@
     .app-sub-sidebar > li > a {
       /*font-size: 12px !important;*/
       line-height: 24px !important;
+    }
+    
+    .readme-toc{
+      line-height: 1.75 !important;
+    }
+    .readme-toc-col{
+      line-height: 1.75 !important;
+      padding: 0.75rem !important;
+    }
+    .readme-toc-col-title{
+      line-height: 1.75 !important;
+      margin-top: 0.5rem !important;
+      margin-bottom: 0.5rem !important;
+      font-size: 1rem !important;
+      font-weight: 800 !important;
+    }
+    .readme-toc ul{
+      line-height: 1.75 !important;
+      list-style: none!important;
+      padding: 0 0!important;
+      margin: 0 0!important;
     }
   </style>
 </head>
@@ -185,6 +209,7 @@
       plugins: [
         function(hook, vm) {
           hook.beforeEach(function(html) {
+            redirectLocation()
             //绑定window.$docsify.fileName，以斜线开始
             window.$docsify.fileName = `/${vm.route.file}`
             //添加导航栏图标
@@ -276,14 +301,16 @@
   <!--jquery-->
   <!--<script src="https://cdn.jsdelivr.net/npm/jquery"></script>-->
   <script src="assets/lib/jquery.min.js"></script>
+  <!--bootstrap-->
+  <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
+  <script src="assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!--vue-->
   <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
   <script src="assets/lib/vue.min.js"></script>
   <!--docsify-->
   <!--<script src="https://cdn.jsdelivr.net/npm/docsify"></script>-->
   <script src="assets/lib/docsify.min.js"></script>
-
-
+  
   <!--font awesome图标：https://github.com/erickjx/docsify-fontawesome -->
   <!--<script src="https://unpkg.com/docsify-fontawesome/dist/docsify-fontawesome.min.js"></script>-->
   <script src="assets/lib/plugins/docsify-fontawesome.min.js"></script>
@@ -302,20 +329,20 @@
   <!--<script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>-->
   <script src="assets/lib/plugins/zoom-image.min.js"></script>
   <!--复制代码到剪切板插件-->
-  <!--<script src="https://unpkg.com/docsify-copy-code/dist/docsify-copy-code.min.js"></script>-->
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>-->
   <script src="assets/lib/plugins/docsify-copy-code.min.js"></script>
   <!--选项卡插件：https://github.com/jhildenbiddle/docsify-tabs -->
-  <!--<script src="https://unpkg.com/docsify-tabs/dist/docsify-tabs.min.js"></script>-->
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify-tabs/dist/docsify-tabs.min.js"></script>-->
   <script src="assets/lib/plugins/docsify-tabs.min.js"></script>
   <!--选择框插件：https://github.com/jhildenbiddle/docsify-select -->
-  <!--<script src="https://cdn.jsdelivr.net/npm/docsify-select"></script>-->
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify-select/dist/docsify-select.min.js"></script>-->
   <script src="assets/lib/plugins/docsify-select.min.js"></script>
-  <!--分页插件：https://github.com/imyelo/docsify-pagination -->
-  <!--<script src="https://cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>-->
-  <!--<script src="assets/lib/plugins/docsify-pagination.min.js"></script>-->
   <!--警告框插件：https://github.com/fzankl/docsify-plugin-flexible-alerts -->
   <!--<script src="https://unpkg.com/docsify-plugin-flexible-alerts/dist/docsify-plugin-flexible-alerts.min.js"></script>-->
   <script src="assets/lib/plugins/docsify-plugin-flexible-alerts.min.js"></script>
+  <!--分页插件：https://github.com/imyelo/docsify-pagination -->
+  <!--<script src="https://cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>-->
+  <!--<script src="assets/lib/plugins/docsify-pagination.min.js"></script>-->
   <!--侧边栏可折叠插件：https://github.com/iPeng6/docsify-sidebar-collapse -->
   <!--<script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>-->
   <!--<script src="assets/lib/plugins/docsify-sidebar-collapse.min.js"></script>-->
@@ -328,10 +355,10 @@
   
   <!--代码高亮支持-->
   <!--<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-markdown.min.js"></script>-->
-  <script src="assets/prismjs/components/prism-markdown.min.js"></script>
+  <script src="assets/lib/prismjs/components/prism-markdown.min.js"></script>
   <!--<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>-->
-  <script src="assets/prismjs/components/prism-bash.min.js"></script>
+  <script src="assets/lib/prismjs/components/prism-bash.min.js"></script>
   <!--<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-sql.min.js"></script>-->
-  <script src="assets/prismjs/components/prism-sql.min.js"></script>
+  <script src="assets/lib/prismjs/components/prism-sql.min.js"></script>
 </body>
 </html>
