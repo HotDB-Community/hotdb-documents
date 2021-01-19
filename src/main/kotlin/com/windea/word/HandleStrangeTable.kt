@@ -35,9 +35,6 @@ fun main() {
 
 private val tableStartLineRegex = """^-{3,}( -{3,})+$""".toRegex()
 private val blankRegex = """ [ ]+""".toRegex()
-private var tableStart = false
-private var tableHeader = false
-private var tableHeaderSize = 1
 
 private fun handleFile(file: File) {
 	val text = file.readText()
@@ -46,6 +43,10 @@ private fun handleFile(file: File) {
 }
 
 private fun handleText(text: String): String {
+	var tableStart = false
+	var tableHeader = false
+	var tableHeaderSize = 1
+	
 	//遍历每一行
 	return text.lineSequence().mapNotNull { line ->
 		when {
