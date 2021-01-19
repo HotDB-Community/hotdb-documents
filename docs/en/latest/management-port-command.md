@@ -96,7 +96,7 @@ mysql> show @@bufferpool;
 
 | Column Name | Description | Value Type/Range |
 | --- | --- | --- |
-| thread | thread name | STRING/ ["\$NIOREACTOR-"[number]"-RW", "\$NIOExecutor-"[number]"-" [number]] |
+| thread | thread name | STRING/ ["$NIOREACTOR-"[number]"-RW", "$NIOExecutor-"[number]"-" [number]] |
 | pool_size | bufferpool size | INT/[number] |
 | local_allocate_opts | The count of buffer requests of local cache thread | LONG /[number] |
 | queue_recycle_opts | The count of buffer recycles of local cache thread | LONG/[number] |
@@ -467,7 +467,7 @@ mysql> insert into tid values(1677870),(233333333);
 
 The query result shows the current execution of backend for data source table:
 
-mysql> select * from operation where \`TABLE\` like '%tid%';
+mysql> select * from operation where `TABLE` like '%tid%';
 
 ![](assets/management-port-command/image23.png)
 
@@ -807,7 +807,7 @@ mysql> show @@threadpool;
 +-----------------+----------------------------+--------------------------------------------+
 | **Column Name** | **Description**            | **Value Type/Range**                       |
 +-----------------+----------------------------+--------------------------------------------+
-| name            | name of threadpool         | STRING/"TimeExecutor","\$NIOExecutor-" |
+| name            | name of threadpool         | STRING/"TimeExecutor","$NIOExecutor-" |
 |                 |                            |                                            |
 |                 |                            | +number+"-"                              |
 +-----------------+----------------------------+--------------------------------------------+
@@ -1639,7 +1639,7 @@ Query OK, 1 row affected (0.24 sec)
 
 ### reload @@config -- Reread configuration information
 
-This command is used to upgrade configuration, such as upgrading the configuration of the file server.xml and memory. Enter this command in the command window, the configuration parameter can be upgraded without restarting HotDB Server. This command is the same as the dynamic loading of management platform. The result is as following: \# this command is not suitable for all parameters
+This command is used to upgrade configuration, such as upgrading the configuration of the file server.xml and memory. Enter this command in the command window, the configuration parameter can be upgraded without restarting HotDB Server. This command is the same as the dynamic loading of management platform. The result is as following:# this command is not suitable for all parameters
 
 mysql> reload @@config;
 
@@ -1673,7 +1673,7 @@ ERROR 1003 (HY000): Reload config failure, Reloading was set to false manually.
 
 And the compute node log record is as follow:
 
-2019-07-19 17:49:57.626 [WARN] [MANAGER] [\$NIOExecutor-3-0] ResetHandler(27) - received reset @@reloading from [thread=\$NIOExecutor-3-0,id=780,user=re,host=127.0.0.1,port=2475,localport=28613,schema=null], reloading will be set to false.
+2019-07-19 17:49:57.626 [WARN] [MANAGER] [$NIOExecutor-3-0] ResetHandler(27) - received reset @@reloading from [thread=$NIOExecutor-3-0,id=780,user=re,host=127.0.0.1,port=2475,localport=28613,schema=null], reloading will be set to false.
 
 2019-07-19 17:50:04.336 [WARN] [MANAGER] [Labor-181] HotdbConfig(1331) - Reload config failure, Reloading was set to false manually.
 
@@ -1693,7 +1693,7 @@ For example:
 
 mysql> restart @@heartbeat 1;
 
-\# Restart the heartbeat detection function of node 1
+# Restart the heartbeat detection function of node 1
 
 Query OK, 2 rows affected (0.00 sec)
 
@@ -1714,7 +1714,7 @@ For example:
 
 mysql> stop @@heartbeat 1:60;
 
-\# Stop node 1 for 60s
+# Stop node 1 for 60s
 
 Query OK, 1 row affected (0.01 sec)
 
@@ -1732,7 +1732,7 @@ For example:
 
 mysql> stop @@heartbeat 1:60;
 
-\# Stop node 1 for 60s
+# Stop node 1 for 60s
 
 Query OK, 1 row affected (0.01 sec)
 
@@ -1829,7 +1829,7 @@ For example:
 
 mysql> dbremapping @@add@db01:logic_db01,db02:logic_db02;
 
-\# Add multiple mapping relations
+# Add multiple mapping relations
 
 Query OK, 0 rows affected (0.00 sec)
 
@@ -1861,7 +1861,7 @@ For example:
 
 mysql> dbremapping @@remove@db01:logic_db01,db02:logic_db02;
 
-\# remove multiple mapping relations
+# remove multiple mapping relations
 
 Query OK, 0 rows affected (0.00 sec)
 

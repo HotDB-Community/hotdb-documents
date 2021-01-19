@@ -12,9 +12,9 @@ When there are both trial license and official license on the server, the licens
 
 If the one-click deployment is used to install management platform, a cluster of available 1 group of compute nodes is attached by default under the hotdb-management/keys directory, and each cluster can use the trial license of 3 compute nodes. The file name is management-license, as shown below:
 
-[root@hotdb_171_221 keys]\# cd /usr/local/hotdb/hotdb-management/keys
+[root@hotdb_171_221 keys]# cd /usr/local/hotdb/hotdb-management/keys
 
-[root@hotdb_171_221 keys]\# ll
+[root@hotdb_171_221 keys]# ll
 
 total 4
 
@@ -28,7 +28,7 @@ The trial license requires no additional activation steps. Put the license file 
 
 If you want to view the details, you can execute the following command under the /directory hotdb- management/keys:
 
-[root@hotdb_171_221 keys]\# **java -jar ../utils/hotdb_management_license.jar -l management-license**
+[root@hotdb_171_221 keys]# **java -jar ../utils/hotdb_management_license.jar -l management-license**
 
 License info of file management-license:
 
@@ -68,21 +68,21 @@ To apply for the official license, the server's fingerprint is required. One uni
 
 Execute the following command under the /directory hotdb-management/utils to generate the fingerprint:
 
-[root@hotdb_171_221 utils]\# cd /usr/local/hotdb/hotdb-management/utils
+[root@hotdb_171_221 utils]# cd /usr/local/hotdb/hotdb-management/utils
 
-[root@hotdb_171_221 utils]\# ll
+[root@hotdb_171_221 utils]# ll
 
 total 144
 
 -rw-r--r--. 1 hotdb hotdb 145748 Nov 25 10:43 hotdb_management_license.jar
 
-[root@hotdb_171_221 utils]\# **java -jar hotdb_management_license.jar -f**
+[root@hotdb_171_221 utils]# **java -jar hotdb_management_license.jar -f**
 
 trying to generate fingerprint on Linux amd64
 
 The fingerprint file was successfully generated in ./management-fingerprint-2020-12-28-10-17-08
 
-[root@hotdb_171_221 utils]\# ll
+[root@hotdb_171_221 utils]# ll
 
 total 148
 
@@ -108,7 +108,7 @@ Start the management platform, the official license will be activated automatica
 
 If you want to view the details, you can execute the following command under the /directory hotdb-management/keys:
 
-[root@hotdb_171_221 keys]\# **java -jar ../utils/hotdb_management_license.jar -l management-license-official-2020-12-23-15-40-55**
+[root@hotdb_171_221 keys]# **java -jar ../utils/hotdb_management_license.jar -l management-license-official-2020-12-23-15-40-55**
 
 License info of file management-license-official-2020-12-23-15-40-55:
 
@@ -140,7 +140,7 @@ Or after the management platform is started, log in to the management platform, 
 
 If there are multiple licenses under the /directory hotdb-management/keys, you can execute the following command to view the currently used license:
 
-[root@hotdb_171_221 keys]\# **java -jar ../utils/hotdb_management_license.jar -i**
+[root@hotdb_171_221 keys]# **java -jar ../utils/hotdb_management_license.jar -i**
 
 The License currently in use is:
 
@@ -268,9 +268,9 @@ When there are both trial license and official license on the server, the licens
 
 If one-click deployment is used to install the compute node, a 64-node trial license with an authorized validity period of 90 days will be attached by default under the /directory hotdb-server/keys. The file name is license-trail, as shown below:
 
-[root@localhost keys]\# cd /usr/local/hotdb/hotdb-server/keys
+[root@localhost keys]# cd /usr/local/hotdb/hotdb-server/keys
 
-[root@localhost keys]\# ll
+[root@localhost keys]# ll
 
 total 4
 
@@ -284,7 +284,7 @@ The new self-developed encrypted license requires no additional activation steps
 
 If you want to view the details, you can execute the following command under the /directory hotdb-server/keys:
 
-[root@localhost keys]\# **java -jar ../utils/hotdb_license.jar -l license-trail**
+[root@localhost keys]# **java -jar ../utils/hotdb_license.jar -l license-trail**
 
 License info of file license-trail:
 
@@ -358,13 +358,13 @@ To update to the official license, the server's fingerprint is required. One uni
 
 Execute the following command under the /directory hotdb-server/utils to generate the fingerprint:
 
-[root@localhost utils]\# **java -jar hotdb_license.jar -f**
+[root@localhost utils]# **java -jar hotdb_license.jar -f**
 
 trying to generate fingerprint on Linux amd64
 
 The fingerprint file was successfully generated in ./fingerprint-2020-09-15-14-41-53
 
-[root@localhost utils]\# ll
+[root@localhost utils]# ll
 
 total 136
 
@@ -390,7 +390,7 @@ Start the compute node, the official license will be activated automatically. If
 
 If you want to view the details, you can execute the following command under the /directory hotdb-server/keys:
 
-[root@localhost keys]\# **java -jar ../utils/hotdb_license.jar -l license-expiration-2020-09-15-14-53-39**
+[root@localhost keys]# **java -jar ../utils/hotdb_license.jar -l license-expiration-2020-09-15-14-53-39**
 
 License info of file license-expiration-2020-09-15-14-53-39:
 
@@ -458,7 +458,7 @@ comment: NULL
 
 If there are multiple licenses under the /directory hotdb-server/keys, you can execute the following command to view the currently used license:
 
-[root@localhost keys]\# **java -jar ../utils/hotdb_license.jar -i**
+[root@localhost keys]# **java -jar ../utils/hotdb_license.jar -i**
 
 The License currently in use is:
 

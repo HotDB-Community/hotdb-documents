@@ -4,7 +4,7 @@
 
 Based on the Distributed Transactional Database Product HotDB Server - v2.5.6, this manual masterly describes the basic function usage and operation process of the cross-IDC disaster recovery scheme of HotDB Server based on the MySQL native replication function, for the user's reference and learning.
 
-This document focuses more on the functions related to compute nodes and the management platform. If you need to know how to use the compute nodes and the management platform, please refer to the [Distributed Transactional Database HotDB Server - V2.5.3 \[Management Platform\] Function Manual](file://localhost/Users/anita/Downloads/英文翻译审核完成/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3%20%5bManagement%20Platform%5d%20Function%20Manual.doc) and the [Distributed Transactional Database HotDB Server -- V2.5.3 \[Standard\]Function Manual](file:///Users/anita/Desktop/Distributed%20Transactional%20Database%20HotDB%20Server%20Disaster%20Recovery%20Function%20Specification%20(修复的).docx).
+This document focuses more on the functions related to compute nodes and the management platform. If you need to know how to use the compute nodes and the management platform, please refer to the [Distributed Transactional Database HotDB Server - V2.5.3 [Management Platform] Function Manual](file://localhost/Users/anita/Downloads/英文翻译审核完成/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.3%20%5bManagement%20Platform%5d%20Function%20Manual.doc) and the [Distributed Transactional Database HotDB Server -- V2.5.3 [Standard]Function Manual](file:///Users/anita/Desktop/Distributed%20Transactional%20Database%20HotDB%20Server%20Disaster%20Recovery%20Function%20Specification%20(修复的).docx).
 
 ### Background
 
@@ -94,7 +94,7 @@ With the data source instances under the data nodes as the unit, the DR mode wil
 
 For the hardware environment configuration recommendation, please refer to the [Distributed Transactional Database HotDB Server - Hardware Configuration Recommendation](Distributed%20Transactional%20Database%20HotDB%20Server%20Disaster%20Recovery%20Function%20Specification.doc).
 
-For configuration requirements and recommendations of cluster operation environment, refer to the [Distributed Transactional Database HotDB Server - \[Cluster Configuration Reference\]](file:///Users/anita/Desktop/Distributed%20Transactional%20Database%20HotDB%20Server%20Disaster%20Recovery%20Function%20Specification%20(修复的).docx).
+For configuration requirements and recommendations of cluster operation environment, refer to the [Distributed Transactional Database HotDB Server - [Cluster Configuration Reference]](file:///Users/anita/Desktop/Distributed%20Transactional%20Database%20HotDB%20Server%20Disaster%20Recovery%20Function%20Specification%20(修复的).docx).
 
 ### Function premise
 
@@ -638,7 +638,7 @@ Note: for more requirements and more detailed master-slave replication setup ste
 
 Execute the code on Server 192.168.220.186：
 
-root> mysqldump --no-defaults -uroot --port=3306 --no-tablespaces --default-character-set=utf8mb4 --all-databases --set-gtid-purged --single-transaction --events --routines --triggers --hex-blob >/usr/local/config_data.sql ;echo \$?
+root> mysqldump --no-defaults -uroot --port=3306 --no-tablespaces --default-character-set=utf8mb4 --all-databases --set-gtid-purged --single-transaction --events --routines --triggers --hex-blob >/usr/local/config_data.sql ;echo $?
 
 0 //If the returned result is 0, the data is imported successfully:
 
@@ -648,7 +648,7 @@ root> scp /usr/local/config_data.sql <root@192.168.220.188:/usr/local/>
 
 Execute the code on Server 192.168.220.188:
 
-root> mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=192.168.220.188 --port=3306 --uroot -proot < config_data.sql;echo \$?
+root> mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=192.168.220.188 --port=3306 --uroot -proot < config_data.sql;echo $?
 
 0 //If the returned result is 0, the data has been successfully imported:
 
@@ -688,7 +688,7 @@ mysql> start slave;
 
 Execute the code on Server 192.168.220.188：
 
-root> mysqldump --no-defaults -uroot --port=3306 --no-tablespaces --default-character-set=utf8mb4 --all-databases --set-gtid-purged --single-transaction --events --routines --triggers --hex-blob >/usr/local/config_data.sql ;echo \$?
+root> mysqldump --no-defaults -uroot --port=3306 --no-tablespaces --default-character-set=utf8mb4 --all-databases --set-gtid-purged --single-transaction --events --routines --triggers --hex-blob >/usr/local/config_data.sql ;echo $?
 
 0 //If the returned result is 0, the data is imported successfully:
 
@@ -698,7 +698,7 @@ root> scp /usr/local/config_data.sql <root@192.168.220.189:/usr/local/>
 
 Execute the code on Server 192.168.220.189:
 
-root> mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=192.168.220.189 --port=3306 --uroot -proot < config_data.sql;echo \$?
+root> mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=192.168.220.189 --port=3306 --uroot -proot < config_data.sql;echo $?
 
 0 //If the returned result is 0, the data has been successfully imported:
 
@@ -1412,7 +1412,7 @@ Query OK, 1 row affected (5 min 4.35 sec)
 
 Once the master compute node of DR center executes the online_dr command, an IDC-level switching of the compute node services will occur, and the master compute node of DR center will provide services. For other situations, please refer to the detailed description of the [IDC failure](#idc-failure) in related chapters. At the same time, the compute node logs output of DR center are as follows, which means that the service of the DR center is successfully enabled:
 
-2019-12-12 19:50:47.257 [INFO] [MANAGER] [\$NIOExecutor-1-0] cn.hotpu.hotdb.manager.ManagerQueryHandler(178) - online_dr by [thread=\$NIOExecutor-1-0,id=8514,user=root,host=192.168.220.183,port=3325,localport=13838,schema=null]
+2019-12-12 19:50:47.257 [INFO] [MANAGER] [$NIOExecutor-1-0] cn.hotpu.hotdb.manager.ManagerQueryHandler(178) - online_dr by [thread=$NIOExecutor-1-0,id=8514,user=root,host=192.168.220.183,port=3325,localport=13838,schema=null]
 
 2019-12-12 19:50:47.258 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.HotdbServer(2111) - DR online start
 
@@ -1967,15 +1967,15 @@ Step 11: Check whether the topologic graph and various monitoring indicators are
 
 Example 1: Log output of replication position of ConfigDB
 
-2019-12-14 19:07:58.317 [INFO] [INNER] [\$I-NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:-4,nodeId:-1 192.168.220.183:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2) change master to master_standby([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2).
+2019-12-14 19:07:58.317 [INFO] [INNER] [$I-NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:-4,nodeId:-1 192.168.220.183:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2) change master to master_standby([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2).
 
 Example 2: Log output of replication position of data source
 
-2019-12-14 19:08:00.546 [INFO] [INNER] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:192,nodeId:46 192.168.220.183:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3) change master to master_standby([id:193,nodeId:46 192.168.220.184:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3).
+2019-12-14 19:08:00.546 [INFO] [INNER] [$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:192,nodeId:46 192.168.220.183:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3) change master to master_standby([id:193,nodeId:46 192.168.220.184:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3).
 
 Example 3: Slave data source has more GTID than the master
 
-2019-12-14 19:08:00.546 [WARN] [INNER] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(329) - Slave([id:189,nodeId:45 192.168.220.184:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1,7afdc35d-0b87-11ea-91a3-52540073fb81:1) is **greater than** master([id:188,nodeId:45 192.168.220.183:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1).
+2019-12-14 19:08:00.546 [WARN] [INNER] [$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(329) - Slave([id:189,nodeId:45 192.168.220.184:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1,7afdc35d-0b87-11ea-91a3-52540073fb81:1) is **greater than** master([id:188,nodeId:45 192.168.220.183:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1).
 
 Example 4: Semi-synchronous replication status monitoring
 
@@ -2067,7 +2067,7 @@ After the DR mode is enabled, you must pay attention to some abnormal log alerts
 
 - Degraded semi-synchronous replication status of the slave data source (possibly cause that RPO is not 0):
 
-2019-12-10 12:17:00.630 [WARN] [TIMER] [\$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - DR_IDC's datasource: -5([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8])'s RPL_SEMI_SYNC_SLAVE_STATUS is OFF
+2019-12-10 12:17:00.630 [WARN] [TIMER] [$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - DR_IDC's datasource: -5([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8])'s RPL_SEMI_SYNC_SLAVE_STATUS is OFF
 
 - The number of acks returned by the slave that is set for the semi-synchronous replication of slave data source is inconsistent with the actual number (possibly cause that RPO is not 0):
 
@@ -2075,15 +2075,15 @@ After the DR mode is enabled, you must pay attention to some abnormal log alerts
 
 ![](assets/cross-idc-disaster-recovery/image122.png)
 
-2019-12-10 12:16:00.634 [WARN] [TIMER] [\$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - datasource: 169([id:169,nodeId:43 192.168.220.181:3307/db2531 status:1,charset:utf8mb4])'s RPL_SEMI_SYNC_MASTER_WAIT_FOR_SLAVE_COUNT=2, real slave count=1
+2019-12-10 12:16:00.634 [WARN] [TIMER] [$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - datasource: 169([id:169,nodeId:43 192.168.220.181:3307/db2531 status:1,charset:utf8mb4])'s RPL_SEMI_SYNC_MASTER_WAIT_FOR_SLAVE_COUNT=2, real slave count=1
 
 - The actual replication relation between the data source or ConfigDB is inconsistent with the configuration in ConfigDB.
 
-2019-12-14 19:08:00.426 [WARN] [INNER] [\$NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.InitSlaveStatusHandler(99) - Datasource: 188's master datasource: 192.168.220.183:3307 not in datanode: 45
+2019-12-14 19:08:00.426 [WARN] [INNER] [$NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.InitSlaveStatusHandler(99) - Datasource: 188's master datasource: 192.168.220.183:3307 not in datanode: 45
 
 - When IDC is switched or the compute node that is providing services is offline, the current back-end connection related to it will also be closed. For related log information, please refer to:
 
-2019-12-14 19:08:00.978 [WARN] [CONNECTION] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.net.NIOSocketWR(181) - exception(stream closed) in reading backend connection: [id:196,nodeId:47 192.168.220.181:3309/db2531 status:1,charset:utf8mb4] id=931
+2019-12-14 19:08:00.978 [WARN] [CONNECTION] [$NIOREACTOR-2-RW] cn.hotpu.hotdb.net.NIOSocketWR(181) - exception(stream closed) in reading backend connection: [id:196,nodeId:47 192.168.220.181:3309/db2531 status:1,charset:utf8mb4] id=931
 
 threadId=5801 isAuthenticated=true responseHandler=null isNetFull=false bufferInFullNet=false lastUsedTime=1576321520613 tookTime=1576321520605 sendingData=false inFlowControl=false maybeSlow=false heavyRowEof=false inFieldPacket=false
 
@@ -2097,7 +2097,7 @@ readData=1576321520613 lastWritten=184 inner=false toBeClosed=false isClosed=fal
 
 - Log records when service port is closed:
 
-2019-12-14 19:07:56.610 [INFO] [MANAGER] [\$NIOExecutor-0-2] cn.hotpu.hotdb.manager.response.Offline(66) - received offline command from:[thread=\$NIOExecutor-0-2,id=1056,user=root,host=192.168.220.181,port=3325,localport=16928,schema=nul
+2019-12-14 19:07:56.610 [INFO] [MANAGER] [$NIOExecutor-0-2] cn.hotpu.hotdb.manager.response.Offline(66) - received offline command from:[thread=$NIOExecutor-0-2,id=1056,user=root,host=192.168.220.181,port=3325,localport=16928,schema=nul
 
 l]
 
@@ -2131,9 +2131,9 @@ Step 1: Check whether the remaining free disk space of the directory used for ex
 
 Step 2: Use the following parameters to export the old master instance data:
 
-mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > *file name* ;echo \$?
+mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > *file name* ;echo $?
 
-Example：mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup > backup_data.sql ;echo \$?
+Example：mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup > backup_data.sql ;echo $?
 
 mysqldump: [Warning] Using a password on the command line interface can be insecure.
 
@@ -2149,9 +2149,9 @@ Step 4: After the file transfer is successful, you can choose to delete the expo
 
 Step 5: Use the following command to import the file:
 
-mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < *file name* ;echo \$?
+mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < *file name* ;echo $?
 
-Example：[root@hotdb-220-182 \~]\## mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup < /data/mysql/mysqldata3306/backup_data.sql ;echo \$?
+Example：[root@hotdb-220-182 \~]## mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup < /data/mysql/mysqldata3306/backup_data.sql ;echo $?
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
 
@@ -2181,11 +2181,11 @@ If the GTID function of the new instance and the old master instance for the rep
 
 Step 2: export data command refers to:
 
-mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --loose-set-gtid-purged=off --master-data=2 --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > *file name* ;echo \$?
+mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --loose-set-gtid-purged=off --master-data=2 --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > *file name* ;echo $?
 
 Step 5: import data command refers to:
 
-mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < *file name* ;echo \$?
+mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < *file name* ;echo $?
 
 Step 9: set up replication refers to:
 
