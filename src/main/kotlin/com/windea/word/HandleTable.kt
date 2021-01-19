@@ -11,15 +11,24 @@ fun main(){
 			println("Input file path:")
 			val filePath = scanner.nextLine().trim()
 			val file = File(filePath)
-			val text = file.readText()
-			val handledText = handleText(text)
-			file.writeText(handledText)
+			if(file.isDirectory){
+				file.listFiles()?.forEach{ handleFile(it) }
+			}else{
+				handleFile(file)
+			}
 			println("OK.")
 			println()
 		} catch(e: Exception) {
 			e.printStackTrace()
 		}
 	}
+}
+
+
+private fun handleFile(file:File){
+	val text = file.readText()
+	val handledText = handleText(text)
+	file.writeText(handledText)
 }
 
 private fun handleText(text:String):String{

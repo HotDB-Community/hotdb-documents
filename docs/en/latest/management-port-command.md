@@ -52,40 +52,37 @@ mysql> /*!hotdb:dnid=all*/select * from information_schema.processlist where inf
 
 **Fields and their description are contained in the result:**
 
------------------ ----------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-**Column Name**   **Description**                     **Value Type/Range**
-  processor         The processor                       STRING/["Processor"number]
-  id                Backend connection id               LONG/[number]
-  mysqlid           Corresponding MySQL connection id   LONG/[number]
-  dnid              Data node id                        INT/[number]
-  host              Host information                    STRING/[host:port]
-  schema            Database name                       STRING/[database]
-  lport             Local port                          INT/[number]
-  net_in            Bytes received                      LONG/[number]
-  net_out           Bytes sent                          LONG/[number]
-  up_time           Uptime (s)                          LONG/[number]
-  state             Connection status                   connecting: the process of actively connecting to the server. A socket setup request is initiated, but not successful yet
-                                                        authenticating: handshake authentication process
-                                                        idle: idle available status
-                                                        borrowed: borrowed status: in the presence of a transaction scenario, even if the backend does not execute sql, the connection will still be held until commit and rollback are committed.
-                                                        running: a request is sent, and in the status of waiting for response or processing the response
-                                                        closed: connection is closed
-  send_queue        size of send queue                  INT/[number]
-  iso_level         transaction isolation level         0: read uncommitted
-                                                        1: read committed
-                                                        2: repeatable read
-                                                        3: serializable
-  autocommit        autocommit or not                   BOOLEAN/[true/false]
-  closed            closed or not                       BOOLEAN/[true/false]
-  version           connection pool version number      INT/[number]
-  charset           result charset                      STRING/[charset]
-  comment           comment                             heartbeat: connection used by heartbeat
-                                                        latency check: connection used by latency detection
-                                                        idle: connection for idle status
-                                                        querying: connection for executing query
-
------------------ ----------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| processor | The processor | STRING/["Processor"number] |
+| id | Backend connection id | LONG/[number] |
+| mysqlid | Corresponding MySQL connection id | LONG/[number] |
+| dnid | Data node id | INT/[number] |
+| host | Host information | STRING/[host:port] |
+| schema | Database name | STRING/[database] |
+| lport | Local port | INT/[number] |
+| net_in | Bytes received | LONG/[number] |
+| net_out | Bytes sent | LONG/[number] |
+| up_time | Uptime (s) | LONG/[number] |
+| state | Connection status | connecting: the process of actively connecting to the server. A socket setup request is initiated, but not successful yet |
+|     |     | authenticating: handshake authentication process |
+|     |     | idle: idle available status |
+|     |     | borrowed: borrowed status: in the presence of a transaction scenario, even if the backend does not execute sql, the connection will still be held until commit and rollback are committed. |
+|     |     | running: a request is sent, and in the status of waiting for response or processing the response |
+|     |     | closed: connection is closed |
+| send_queue | size of send queue | INT/[number] |
+| iso_level | transaction isolation level | 0: read uncommitted |
+|     |     | 1: read committed |
+|     |     | 2: repeatable read |
+|     |     | 3: serializable |
+| autocommit | autocommit or not | BOOLEAN/[true/false] |
+| closed | closed or not | BOOLEAN/[true/false] |
+| version | connection pool version number | INT/[number] |
+| charset | result charset | STRING/[charset] |
+| comment | comment | heartbeat: connection used by heartbeat |
+|     |     | latency check: connection used by latency detection |
+|     |     | idle: connection for idle status |
+|     |     | querying: connection for executing query |
 
 #### show @@bufferpool - Show the status of bufferpool
 
@@ -97,17 +94,14 @@ mysql> show @@bufferpool;
 
 **Fields and their description are contained in the result:**
 
---------------------- ---------------------------------------------------- --------------------------------------------------------------------------------------
-
-**Column Name**       **Description**                                      **Value Type/Range**
-  thread                thread name                                          STRING/ ["\$NIOREACTOR-"[number]"-RW", "\$NIOExecutor-"[number]"-" [number]]
-  pool_size             bufferpool size                                      INT/[number]
-  local_allocate_opts   The count of buffer requests of local cache thread   LONG /[number]
-  queue_recycle_opts    The count of buffer recycles of local cache thread   LONG/[number]
-  other_allocate_opts   The count of buffer requests of other threads        INT/[number]
-  other_recycle_opts    The count of buffer recycles of other threads        INT/[number]
-
---------------------- ---------------------------------------------------- --------------------------------------------------------------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| thread | thread name | STRING/ ["\$NIOREACTOR-"[number]"-RW", "\$NIOExecutor-"[number]"-" [number]] |
+| pool_size | bufferpool size | INT/[number] |
+| local_allocate_opts | The count of buffer requests of local cache thread | LONG /[number] |
+| queue_recycle_opts | The count of buffer recycles of local cache thread | LONG/[number] |
+| other_allocate_opts | The count of buffer requests of other threads | INT/[number] |
+| other_recycle_opts | The count of buffer recycles of other threads | INT/[number] |
 
 #### show @@clientquery - statistics of current client query
 
@@ -119,19 +113,16 @@ mysql> show @@clientquery;
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------------- ----------------------
-
-**Column Name**   **Description**                 **Value Type/Range**
-  client            client information              STRING/[host]
-  db                LogicDB name                    STRING/[database]
-  select            The count of query              LONG /[number]
-  insert            The count of insert             LONG /[number]
-  update            The count of update             LONG /[number]
-  delete            The count of delete             LONG /[number]
-  other             The count of other operations   LONG /[number]
-  all               all                             LONG/[number]
-
------------------ ------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| client | client information | STRING/[host] |
+| db | LogicDB name | STRING/[database] |
+| select | The count of query | LONG /[number] |
+| insert | The count of insert | LONG /[number] |
+| update | The count of update | LONG /[number] |
+| delete | The count of delete | LONG /[number] |
+| other | The count of other operations | LONG /[number] |
+| all | all | LONG/[number] |
 
 Note: other counts the DDL statements executed by current client
 
@@ -145,16 +136,13 @@ mysql> show @@cluster;
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------------ ----------------------
-
-**Column Name**   **Description**                **Value Type/Range**
-  status            member status                  STRING
-  host              member host                    STRING/[host]
-  port              cluster communication port     INTEGER/[port]
-  server_port       cluster node server port       INTEGER/[port]
-  manager_port      cluster node Management Port   INTEGER/[port]
-
------------------ ------------------------------ ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| status | member status | STRING |
+| host | member host | STRING/[host] |
+| port | cluster communication port | INTEGER/[port] |
+| server_port | cluster node server port | INTEGER/[port] |
+| manager_port | cluster node Management Port | INTEGER/[port] |
 
 #### show @@connection -- show frontend connection
 
@@ -166,27 +154,24 @@ mysql> show @@connection;
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------------ ------------------------------
-
-**Column Name**   **Description**                **Value Type/Range**
-  processor         processor name                 STRING/["Processor"number]
-  id                frontend connection id         LONG/[number]
-  host              client information             STRING/[host:port]
-  dstport           target port number             INT/[number]
-  schema            target database name           STRING/[database]
-  charset           charset                        STRING/[charset]
-  net_in            bytes received                 LONG/[number]
-  net_out           bytes sent                     LONG/[number]
-  up_time           uptime (s)                     INT/[number]
-  recv_buffer       size of receive queue (byte)   LONG/[number]
-  send_queue        size of send queue (byte)      LONG/[number]
-  iso_level         transaction isolation level    0: read uncommitted
-                                                   1: read committed
-                                                   2: repeatable read
-                                                   3: serializable
-  autocommit        autocommit or not              BOOLEAN/[true/false]
-
------------------ ------------------------------ ------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| processor | processor name | STRING/["Processor"number] |
+| id | frontend connection id | LONG/[number] |
+| host | client information | STRING/[host:port] |
+| dstport | target port number | INT/[number] |
+| schema | target database name | STRING/[database] |
+| charset | charset | STRING/[charset] |
+| net_in | bytes received | LONG/[number] |
+| net_out | bytes sent | LONG/[number] |
+| up_time | uptime (s) | INT/[number] |
+| recv_buffer | size of receive queue (byte) | LONG/[number] |
+| send_queue | size of send queue (byte) | LONG/[number] |
+| iso_level | transaction isolation level | 0: read uncommitted |
+|     |     | 1: read committed |
+|     |     | 2: repeatable read |
+|     |     | 3: serializable |
+| autocommit | autocommit or not | BOOLEAN/[true/false] |
 
 #### show @@connection_statistics -- Show current live frontend connection statistics
 
@@ -198,20 +183,17 @@ mysql> show @@connection_statistics;
 
 **Fields and their description are contained in the result:**
 
------------------ -------------------------------------------- ----------------------
-
-**Column Name**   **Description**                              **Value Type/Range**
-  id                connection id                                INTEGER/[number]
-  client_addr       client ip address                            STRING/[host]
-  port              client connection port                       INTEGER/[number]
-  logicdb           LogicDB used                                 STRING/[database]
-  username          username                                     STRING
-  host              host matched with client                     STRING
-  connect_time      connection establishment time                STRING/[date]
-  close_time        current connection time                      STRING/[date]
-  operation_count   The count of operations of this connection   INTEGER/[number]
-
------------------ -------------------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| id | connection id | INTEGER/[number] |
+| client_addr | client ip address | STRING/[host] |
+| port | client connection port | INTEGER/[number] |
+| logicdb | LogicDB used | STRING/[database] |
+| username | username | STRING |
+| host | host matched with client | STRING |
+| connect_time | connection establishment time | STRING/[date] |
+| close_time | current connection time | STRING/[date] |
+| operation_count | The count of operations of this connection | INTEGER/[number] |
 
 #### show @@database -- show current available LogicDB information
 
@@ -223,12 +205,9 @@ mysql> show @@database;
 
 **Fields and their description are contained in the result:**
 
------------------ ----------------- ----------------------
-
-**Column Name**   **Description**   **Value Type/Range**
-  database          LogicDB           STRING/[database]
-
------------------ ----------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| database | LogicDB | STRING/[database] |
 
 #### show @@datanode - show data node information
 
@@ -300,28 +279,25 @@ mysql> show @@datasource;
 
 **Fields and their description are contained in the result:**
 
--------------------- ------------------------------------------------------------------------------------------------ -------------------------------
-
-**Column Name**      **Description**                                                                                  **Value Type/Range**
-  dn                   data node number (the command restart @@heartbeat can be used to restore heartbeat detection)   INT/[number]
-  ds                   current data source information                                                                  STRING/[host:port/database]
-  type                 current data source type                                                                         1: Active Master
-                                                                                                                        2: Master/Slave
-                                                                                                                        3: Standby Slave
-                                                                                                                        4：MGR
-  status               data source status                                                                               0: unavailable
-                                                                                                                        1: available
-                                                                                                                        2: last data source abnormal
-  host                 host address                                                                                     STRING/[IP]
-  port                 host port                                                                                        STRING /[port]
-  schema               database name                                                                                    STRING/[database]
-  active               active connections                                                                               INT/[number]
-  idle                 idle connections                                                                                 INT/[number]
-  size                 all connections                                                                                  INT/[number]
-  unavailable_reason   reasons for unavailable data source                                                              STRING
-  flow_control         The count of remaining available                                                                 INT/[number]
-
--------------------- ------------------------------------------------------------------------------------------------ -------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| dn | data node number (the command restart @@heartbeat can be used to restore heartbeat detection) | INT/[number] |
+| ds | current data source information | STRING/[host:port/database] |
+| type | current data source type | 1: Active Master |
+|     |     | 2: Master/Slave |
+|     |     | 3: Standby Slave |
+|     |     | 4：MGR |
+| status | data source status | 0: unavailable |
+|     |     | 1: available |
+|     |     | 2: last data source abnormal |
+| host | host address | STRING/[IP] |
+| port | host port | STRING /[port] |
+| schema | database name | STRING/[database] |
+| active | active connections | INT/[number] |
+| idle | idle connections | INT/[number] |
+| size | all connections | INT/[number] |
+| unavailable_reason | reasons for unavailable data source | STRING |
+| flow_control | The count of remaining available | INT/[number] |
 
 #### show @@globaltableconsistency --global table consistency detection
 
@@ -389,27 +365,24 @@ mysql> show @@heartbeat;
 
 **Fields and their description are contained in the result:**
 
------------------- ------------------------------------------------------------------- ------------------------------------------------------
-
-**Column Name**    **Description**                                                     **Value Type/Range**
-  dn                 data node id                                                        INT/[number]
-  ds_id              data source id                                                      INT/[number]
-  ds_type            data source type                                                    STRING/[master/slave]
-  host               host address                                                        STRING/[ip]
-  port               host port                                                           INT/[port]
-  db                 database name                                                       STRING/[database]
-  retry              number of retries                                                   INT/[number]
-  status             heartbeat status                                                    checking: checking
-                                                                                         idle: heartbeat detection is normally started
-                                                                                         stopped: stopped
-                                                                                         paused: heartbeat detection is paused
-                                                                                         unknown: heartbeat detection function is not started
-  period             heartbeat period                                                    INT/[number]
-  execute_time       average heartbeat response time of recent 10s, 1min and 5min (ms)   STRING/[number],[number],[number]
-  last_active_time   lastest heartbeat success time                                      DATETIME/[yyyy-MM-dd HH:mm:ss]
-  stop               heartbeat stops or not                                              BOOLEAN/[true/false]
-
------------------- ------------------------------------------------------------------- ------------------------------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| dn | data node id | INT/[number] |
+| ds_id | data source id | INT/[number] |
+| ds_type | data source type | STRING/[master/slave] |
+| host | host address | STRING/[ip] |
+| port | host port | INT/[port] |
+| db | database name | STRING/[database] |
+| retry | number of retries | INT/[number] |
+| status | heartbeat status | checking: checking |
+|     |     | idle: heartbeat detection is normally started |
+|     |     | stopped: stopped |
+|     |     | paused: heartbeat detection is paused |
+|     |     | unknown: heartbeat detection function is not started |
+| period | heartbeat period | INT/[number] |
+| execute_time | average heartbeat response time of recent 10s, 1min and 5min (ms) | STRING/[number],[number],[number] |
+| last_active_time | lastest heartbeat success time | DATETIME/[yyyy-MM-dd HH:mm:ss] |
+| stop | heartbeat stops or not | BOOLEAN/[true/false] |
 
 Note: dn=-1 means configdb
 
@@ -429,15 +402,12 @@ If there is no latency, it shows:
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ---------------------------------------------------------------------------------------------------------------------------------------
-
-**Column Name**   **Description**                                                                                                                                                                                                                                                                                                                                  **Value Type/Range**
-  dn                data node id                                                                                                                                                                                                                                                                                                                                     INT/[number]
-  info              current data source path                                                                                                                                                                                                                                                                                                                         STRING/[ip]:[port]/[database]
-  backup_info       slave data source path                                                                                                                                                                                                                                                                                                                           STRING/[ip]:[port]/[database]
-  latency           If it is available, it shows synchronization latency (ms); if it is unavailable or the data source is stopped, it shows "STOPPED"; if there is not synchronization latency, it shows "ERROR! Check your replication."; if the synchronization latency is invalid, it shows "ERROR! Check your replication.(datasource may have just switched)"   STRING/[number] ms,"STOPPED", "ERROR! Check your replication.", "ERROR! Check your replication.(datasource may have just switched)"
-
------------------ ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ---------------------------------------------------------------------------------------------------------------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| dn | data node id | INT/[number] |
+| info | current data source path | STRING/[ip]:[port]/[database] |
+| backup_info | slave data source path | STRING/[ip]:[port]/[database] |
+| latency | If it is available, it shows synchronization latency (ms); if it is unavailable or the data source is stopped, it shows "STOPPED"; if there is not synchronization latency, it shows "ERROR! Check your replication."; if the synchronization latency is invalid, it shows "ERROR! Check your replication.(datasource may have just switched)" | STRING/[number] ms,"STOPPED", "ERROR! Check your replication.", "ERROR! Check your replication.(datasource may have just switched)" |
 
 #### show @@longtransaction -- show long transaction information
 
@@ -453,14 +423,11 @@ select trx_id, trx_started from information_schema.innodb_trx where trx_started<
 
 **Fields and their description are contained in the result:**
 
------------------ ----------------- ----------------------
-
-**Column Name**   **Description**   **Value Type/Range**
-  host              host address      STRING/[IP]
-  port              host port         INT/[PORT]
-  trx_id            transaction id    STRING/[number]
-
------------------ ----------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| host | host address | STRING/[IP] |
+| port | host port | INT/[PORT] |
+| trx_id | transaction id | STRING/[number] |
 
 #### show @@masterslaveconsistency -- master/slave data consistency detection
 
@@ -480,16 +447,13 @@ The above result shows that the CC table in the LogicDB LGG has no index defined
 
 **Fields and their description are contained in the result:**
 
------------------ -------------------- ----------------------------------
-
-**Column Name**   **Description**      **Value Type/Range**
-  db                LogicDB name         STRING/[database]
-  table             table name           STRING/[table]
-  dn                data node name       STRING
-  result            consistent or not    STRING/["YES","NO" ,"UNKNOWN"]
-  info              consistency result   STRING
-
------------------ -------------------- ----------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| db | LogicDB name | STRING/[database] |
+| table | table name | STRING/[table] |
+| dn | data node name | STRING |
+| result | consistent or not | STRING/["YES","NO" ,"UNKNOWN"] |
+| info | consistency result | STRING |
 
 #### show @@operation -- show detailed command execution statistics
 
@@ -509,25 +473,22 @@ mysql> select * from operation where \`TABLE\` like '%tid%';
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------------------------------------------------------------------- ----------------------
-
-**Column Name**   **Description**                                                                       **Value Type/Range**
-  schema            LogicDB name                                                                          STRING/[database]
-  dn                data node id                                                                          INT/[number]
-  ds                data source id                                                                        INT/[number]
-  host              data source host ip                                                                   STRING/[IP]
-  port              data source port                                                                      INT/[number]
-  db                database                                                                              STRING/[database]
-  table             table name                                                                            STRING/[table]
-  select            The count of SELECT the [table]                                                     LONG/[number]
-  insert            The count of INSERT the [table]                                                     LONG /[number]
-  update            The count of INSERT the [table]                                                     LONG /[number]
-  delete            The count of DELETE the [table]                                                     LONG /[number]
-  replace           The count of REPLACE the [table]                                                    LONG /[number]
-  other             The count of other operations for [table] (The count of executing DDL statements)   LONG /[number]
-  all               Statistics of the above operations                                                    LONG /[number]
-
------------------ ------------------------------------------------------------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| schema | LogicDB name | STRING/[database] |
+| dn | data node id | INT/[number] |
+| ds | data source id | INT/[number] |
+| host | data source host ip | STRING/[IP] |
+| port | data source port | INT/[number] |
+| db | database | STRING/[database] |
+| table | table name | STRING/[table] |
+| select | The count of SELECT the [table] | LONG/[number] |
+| insert | The count of INSERT the [table] | LONG /[number] |
+| update | The count of INSERT the [table] | LONG /[number] |
+| delete | The count of DELETE the [table] | LONG /[number] |
+| replace | The count of REPLACE the [table] | LONG /[number] |
+| other | The count of other operations for [table] (The count of executing DDL statements) | LONG /[number] |
+| all | Statistics of the above operations | LONG /[number] |
 
 #### show @@operation_db -- show command execution with LogicDB as unit
 
@@ -539,19 +500,16 @@ mysql> show @@operation_db;
 
 **Fields and their description are contained in the result:**
 
------------------ ----------------------------------------------------------------------------------------------- ----------------------
-
-**Column Name**   **Description**                                                                                 **Value Type/Range**
-  db                LogicDB name                                                                                    STRING/[database]
-  select            The count of SELECT the [table]                                                               LONG /[number]
-  insert            The count of INSERT the [table]                                                               LONG /[number]
-  update            The count of INSERT the [table]                                                               LONG /[number]
-  delete            The count of DELETE the [table]                                                               LONG /[number]
-  replace           The count of REPLACE the [table]                                                              LONG /[number]
-  other             The count of other operations for the table [table] (The count of executing DDL statements)   LONG /[number]
-  all               Statistics of the above operations                                                              LONG /[number]
-
------------------ ----------------------------------------------------------------------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| db | LogicDB name | STRING/[database] |
+| select | The count of SELECT the [table] | LONG /[number] |
+| insert | The count of INSERT the [table] | LONG /[number] |
+| update | The count of INSERT the [table] | LONG /[number] |
+| delete | The count of DELETE the [table] | LONG /[number] |
+| replace | The count of REPLACE the [table] | LONG /[number] |
+| other | The count of other operations for the table [table] (The count of executing DDL statements) | LONG /[number] |
+| all | Statistics of the above operations | LONG /[number] |
 
 #### show @@operation_dn -- show the command execution with data node as unit
 
@@ -563,19 +521,16 @@ mysql> show @@operation_dn;
 
 **Fields and their description are contained in the result:**
 
------------------ ---------------------------------------------------------------------------------------------- ----------------------
-
-**Column Name**   **Description**                                                                                **Value Type/Range**
-  dn                database node id                                                                               INT/[number]
-  select            The count of SELECT the [table]                                                              LONG/[number]
-  insert            The count of INSERT the [table]                                                              LONG/[number]
-  update            The count of INSERT the [table]                                                              LONG/[number]
-  delete            The count of DELETE the [table]                                                              LONG /[number]
-  replace           The count of REPLACE the [table]                                                             LONG /[number]
-  other             The count of other operations for the table [table] (The count of executing DDL statement)   LONG /[number]
-  all               Statistics of the above operations                                                             LONG/[number]
-
------------------ ---------------------------------------------------------------------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| dn | database node id | INT/[number] |
+| select | The count of SELECT the [table] | LONG/[number] |
+| insert | The count of INSERT the [table] | LONG/[number] |
+| update | The count of INSERT the [table] | LONG/[number] |
+| delete | The count of DELETE the [table] | LONG /[number] |
+| replace | The count of REPLACE the [table] | LONG /[number] |
+| other | The count of other operations for the table [table] (The count of executing DDL statement) | LONG /[number] |
+| all | Statistics of the above operations | LONG/[number] |
 
 Note: the operations related to global table are separately counted according to operation types: only one node is counted for SELECT, all nodes are counted for INSERT, UPDATE and DELETE
 
@@ -627,19 +582,16 @@ mysql> show @@operation_table;
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------------------------------------------------------------------- ----------------------
-
-**Column Name**   **Description**                                                                       **Value Type/Range**
-  table             table name                                                                            STRING/[table]
-  select            The count of SELECT the [table]                                                     LONG /[number]
-  insert            The count of INSERT the [table]                                                     LONG /[number]
-  update            The count of INSERT the [table]                                                     LONG /[number]
-  delete            The count of DELETE the [table]                                                     LONG /[number]
-  replace           The count of REPLACE the [table]                                                    LONG /[number]
-  other             The count of other operations for [table] (The count of executing DDL statements)   LONG /[number]
-  all               Statistics of the above operations                                                    LONG /[number]
-
------------------ ------------------------------------------------------------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| table | table name | STRING/[table] |
+| select | The count of SELECT the [table] | LONG /[number] |
+| insert | The count of INSERT the [table] | LONG /[number] |
+| update | The count of INSERT the [table] | LONG /[number] |
+| delete | The count of DELETE the [table] | LONG /[number] |
+| replace | The count of REPLACE the [table] | LONG /[number] |
+| other | The count of other operations for [table] (The count of executing DDL statements) | LONG /[number] |
+| all | Statistics of the above operations | LONG /[number] |
 
 #### show @@processor-- show thread processing information
 
@@ -651,19 +603,16 @@ mysql> show @@processor;
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------ ----------------------------
-
-**Column Name**   **Description**          **Value Type/Range**
-  name              processor name           STRING/[Processornumber]
-  front_net_in      fronend received bytes   LONG/[number]
-  front_net_out     frontend sent bytes      LONG/[number]
-  backend_net_in    backend received bytes   LONG/[number]
-  backend_net_out   backend sent bytes       LONG/[number]
-  frontends         frontend connections     LONG /[number]
-  backends          backend connections      LONG /[number]
-  w_queue           write queue size         LONG /[number]
-
------------------ ------------------------ ----------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| name | processor name | STRING/[Processornumber] |
+| front_net_in | fronend received bytes | LONG/[number] |
+| front_net_out | frontend sent bytes | LONG/[number] |
+| backend_net_in | backend received bytes | LONG/[number] |
+| backend_net_out | backend sent bytes | LONG/[number] |
+| frontends | frontend connections | LONG /[number] |
+| backends | backend connections | LONG /[number] |
+| w_queue | write queue size | LONG /[number] |
 
 #### show @@query -- show frontend query statistics
 
@@ -675,17 +624,14 @@ mysql> show @@query;
 
 **Fields and their description are contained in the result:**
 
------------------ ---------------------------------------------------------------------------------------------- ----------------------
-
-**Column Name**   **Description**                                                                                **Value Type/Range**
-  select            The count of calling SELECT of this service                                                    LONG /[number]
-  insert            The count of calling INSERT of this service                                                    LONG /[number]
-  update            The count of calling UPDATE of this service                                                    LONG /[number]
-  delete            The count of calling DELETE of this service                                                    LONG /[number]
-  other             The count of calling other operations of this service (The count of executing DDL statement)   LONG /[number]
-  all               Statistics of the above operations                                                             LONG /[number]
-
------------------ ---------------------------------------------------------------------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| select | The count of calling SELECT of this service | LONG /[number] |
+| insert | The count of calling INSERT of this service | LONG /[number] |
+| update | The count of calling UPDATE of this service | LONG /[number] |
+| delete | The count of calling DELETE of this service | LONG /[number] |
+| other | The count of calling other operations of this service (The count of executing DDL statement) | LONG /[number] |
+| all | Statistics of the above operations | LONG /[number] |
 
 #### show @@query_db -- show LogicDB frontend query statistics
 
@@ -697,18 +643,15 @@ mysql> show @@query_db;
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------------------------------------------------------------------------------- ----------------------
-
-**Column Name**   **Description**                                                                                   **Value Type/Range**
-  schema            LogicDB                                                                                           STRING/[database]
-  select            The count of SELECT the LogicDB [schema]                                                        LONG /[number]
-  insert            The count of INSERT the LogicDB [schema]                                                        LONG /[number]
-  update            The count of UPDATE the LogicDB [schema]                                                        LONG /[number]
-  delete            The count of DELETE the LogicDB [schema]                                                        LONG /[number]
-  other             The count of other operations for the LogicDB [schema] (The count of executing DDL statement)   LONG /[number]
-  all               Statistics of the above operations                                                                LONG /[number]
-
------------------ ------------------------------------------------------------------------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| schema | LogicDB | STRING/[database] |
+| select | The count of SELECT the LogicDB [schema] | LONG /[number] |
+| insert | The count of INSERT the LogicDB [schema] | LONG /[number] |
+| update | The count of UPDATE the LogicDB [schema] | LONG /[number] |
+| delete | The count of DELETE the LogicDB [schema] | LONG /[number] |
+| other | The count of other operations for the LogicDB [schema] (The count of executing DDL statement) | LONG /[number] |
+| all | Statistics of the above operations | LONG /[number] |
 
 #### show @@query_tb -- show table-level frontend query statistics
 
@@ -720,19 +663,16 @@ mysql> show @@query_tb;
 
 **Fields and their description are contained in the result:**
 
------------------ --------------------------------------------------------------------------------------------------------------------- ----------------------
-
-**Column Name**   **Description**                                                                                                       **Value Type/Range**
-  schema            LogicDB                                                                                                               STRING/[database]
-  table             table name                                                                                                            STRING/[table]
-  select            The count of SELECT the [table] under the LogicDB [schema]                                                        LONG /[number]
-  insert            The count of INSERT the [table] under the LogicDB [schema]                                                        LONG /[number]
-  update            The count of UPDATE the [table] under the LogicDB [schema]                                                        LONG /[number]
-  delete            The count of DELETE the [table] under the LogicDB [schema]                                                        LONG /[number]
-  other             The count of other operations for the [table] under the LogicDB [schema] (The count of executing DDL statement)   LONG /[number]
-  all               Statistics of the above operations                                                                                    LONG /[number]
-
------------------ --------------------------------------------------------------------------------------------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| schema | LogicDB | STRING/[database] |
+| table | table name | STRING/[table] |
+| select | The count of SELECT the [table] under the LogicDB [schema] | LONG /[number] |
+| insert | The count of INSERT the [table] under the LogicDB [schema] | LONG /[number] |
+| update | The count of UPDATE the [table] under the LogicDB [schema] | LONG /[number] |
+| delete | The count of DELETE the [table] under the LogicDB [schema] | LONG /[number] |
+| other | The count of other operations for the [table] under the LogicDB [schema] (The count of executing DDL statement) | LONG /[number] |
+| all | Statistics of the above operations | LONG /[number] |
 
 #### show @@session -- show current session information
 
@@ -744,30 +684,27 @@ mysql> show @@session;
 
 **Fields and their description are contained in the result:**
 
--------------------- --------------------------------------------- ------------------------------------
-
-**Column Name**      **Description**                               **Value Type/Range**
-  id                   current session id                            INT/[number]
-  running              SQL is in progress or not                     BOOLEAN/[TRUE/FALSE]
-  trx_started          transaction start time                        STRING/[yyyy-MM-dd HH:mm:ss.SSS]
-  trx_time             transaction duration (s)                      INT/[number]
-  trx_query            last executed SQL                             STRING/[SQL]
-  bk_count             total backend connections                     INT/[number]
-  bk_dnid              backend connection node id                    INT/[number]
-  bk_dsid              backend connection data source id             INT/[number]
-  bk_id                backend connection id                         INT/[number]
-  bk_mysqlid           backend connection MySQL ID                   INT/[number]
-  bk_state             backend connection status                     STRING
-  bk_closed            backend connection is closed or not           BOOLEAN/[TRUE/FALSE]
-  bk_autocommit        backend connection is autocommitted or not    BOOLEAN/[TRUE/FALSE]
-  bk_host              backend connection Host                       STRING/[host]
-  bk_port              backend connection port                       INT/[port]
-  bk_db                backend connection database name              STRING/[DATABASE]
-  bk_query             the last executed SQL of backend connection   STRING/[SQL]
-  bk_last_read_time    the last read time of backend connection      STRING/[yyyy-MM-dd HH:mm:ss.SSS]
-  bk_last_write_time   the last write time of backend connection     STRING/[yyyy-MM-dd HH:mm:ss.SSS]
-
--------------------- --------------------------------------------- ------------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| id | current session id | INT/[number] |
+| running | SQL is in progress or not | BOOLEAN/[TRUE/FALSE] |
+| trx_started | transaction start time | STRING/[yyyy-MM-dd HH:mm:ss.SSS] |
+| trx_time | transaction duration (s) | INT/[number] |
+| trx_query | last executed SQL | STRING/[SQL] |
+| bk_count | total backend connections | INT/[number] |
+| bk_dnid | backend connection node id | INT/[number] |
+| bk_dsid | backend connection data source id | INT/[number] |
+| bk_id | backend connection id | INT/[number] |
+| bk_mysqlid | backend connection MySQL ID | INT/[number] |
+| bk_state | backend connection status | STRING |
+| bk_closed | backend connection is closed or not | BOOLEAN/[TRUE/FALSE] |
+| bk_autocommit | backend connection is autocommitted or not | BOOLEAN/[TRUE/FALSE] |
+| bk_host | backend connection Host | STRING/[host] |
+| bk_port | backend connection port | INT/[port] |
+| bk_db | backend connection database name | STRING/[DATABASE] |
+| bk_query | the last executed SQL of backend connection | STRING/[SQL] |
+| bk_last_read_time | the last read time of backend connection | STRING/[yyyy-MM-dd HH:mm:ss.SSS] |
+| bk_last_write_time | the last write time of backend connection | STRING/[yyyy-MM-dd HH:mm:ss.SSS] |
 
 #### show @@tableinfo -- show table data information
 
@@ -779,22 +716,19 @@ mysql> show @@tableinfo;
 
 **Fields and their description are contained in the result:**
 
------------------ --------------------- ----------------------
-
-**Column Name**   **Description**       **Value Type/Range**
-  schema            LogicDB               STRING/[database]
-  dn                data node id          INT/[number]
-  ds                data source id        INT/[number]
-  host              data source host ip   STRING/[IP]
-  port              data source port      INT/[PORT]
-  db                database              STRING/[database]
-  table             database name         STRING/[number]
-  table_type        table type            0: Global table
-                                          1: Sharding table
-  table_rows        database rows         INT/[number]
-  data_length       data length (byte)    LONG/[number]
-
------------------ --------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| schema | LogicDB | STRING/[database] |
+| dn | data node id | INT/[number] |
+| ds | data source id | INT/[number] |
+| host | data source host ip | STRING/[IP] |
+| port | data source port | INT/[PORT] |
+| db | database | STRING/[database] |
+| table | database name | STRING/[number] |
+| table_type | table type | 0: Global table |
+|     |     | 1: Sharding table |
+| table_rows | database rows | INT/[number] |
+| data_length | data length (byte) | LONG/[number] |
 
 #### show @@tableinfo_db -- show data information of table with LogicDB as unit
 
@@ -806,14 +740,11 @@ mysql> show @@tableinfo_db;
 
 **Fields and their description are contained in the result:**
 
------------------ -------------------- ----------------------
-
-**Column Name**   **Description**      **Value Type/Range**
-  db                LogicDB name         STRING/[database]
-  table_rows        database rows        INT/[number]
-  data_length       data length (byte)   LONG /[number]
-
------------------ -------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| db | LogicDB name | STRING/[database] |
+| table_rows | database rows | INT/[number] |
+| data_length | data length (byte) | LONG /[number] |
 
 #### show @@tableinfo_dn -- show data information of table with data node as unit
 
@@ -825,14 +756,11 @@ mysql> show @@tableinfo_dn
 
 **Fields and their description are contained in the result:**
 
------------------ -------------------- ----------------------
-
-**Column Name**   **Description**      **Value Type/Range**
-  dn                data node id         INT/[number]
-  table_rows        database rows        INT/[number]
-  data_length       data length (byte)   LONG /[number]
-
------------------ -------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| dn | data node id | INT/[number] |
+| table_rows | database rows | INT/[number] |
+| data_length | data length (byte) | LONG /[number] |
 
 #### show @@tableinfo_ds -- show data information of table with data source as unit
 
@@ -844,14 +772,11 @@ mysql> show @@tableinfo_ds
 
 **Fields and their description are contained in the result:**
 
------------------ -------------------- ----------------------
-
-**Column Name**   **Description**      **Value Type/Range**
-  ds                data source id       INT/[number]
-  table_rows        database rows        INT/[number]
-  data_length       data length (byte)   LONG /[number]
-
------------------ -------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| ds | data source id | INT/[number] |
+| table_rows | database rows | INT/[number] |
+| data_length | data length (byte) | LONG /[number] |
 
 #### show @@tableinfo_table -- show table data information with table level
 
@@ -863,14 +788,11 @@ mysql> show @@tableinfo_table;
 
 **Fields and their description are contained in the result:**
 
------------------ -------------------- ----------------------
-
-**Column Name**   **Description**      **Value Type/Range**
-  table             table name           STRING/[table]
-  table_rows        database rows        INT/[number]
-  data_length       data length (byte)   LONG /[number]
-
------------------ -------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| table | table name | STRING/[table] |
+| table_rows | database rows | INT/[number] |
+| data_length | data length (byte) | LONG /[number] |
 
 #### show @@threadpool -- show status of threadpool
 
@@ -910,13 +832,10 @@ mysql> show @@transaction;
 
 **Fields and their description are contained in the result:**
 
------------------ ---------------------------- ----------------------
-
-**Column Name**   **Description**              **Value Type/Range**
-  schema            LogicDB                      STRING/[database]
-  transaction       the number of transactions   LONG/[number]
-
------------------ ---------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| schema | LogicDB | STRING/[database] |
+| transaction | the number of transactions | LONG/[number] |
 
 #### show hotdb datanodes -- show current available nodes
 
@@ -926,13 +845,10 @@ mysql> show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 
 **Parameter description:**
 
---------------- ----------------------------------------------------------- ----------
-
-**Parameter**   **Description**                                             **Type**
-  pattern         optional, fuzzy query expression, match the key rule_name   STRING
-  expr            optional, fuzzy query expression, match the specified key   STRING
-
---------------- ----------------------------------------------------------- ----------
+| Parameter | Description | Type |
+| --- | --- | --- |
+| pattern | optional, fuzzy query expression, match the key rule_name | STRING |
+| expr | optional, fuzzy query expression, match the specified key | STRING |
 
 For example:
 
@@ -944,14 +860,11 @@ For another example:
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------- ----------------------
-
-**Column Name**   **Description**           **Value Type/Range**
-  datanode_id       node id                   INTEGER
-  datanode_name     node name                 STRING
-  datanode_type     0: master/slave; 1: MGR   INTEGER
-
------------------ ------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| datanode_id | node id | INTEGER |
+| datanode_name | node name | STRING |
+| datanode_type | 0: master/slave; 1: MGR | INTEGER |
 
 #### show hotdb functions -- show current available sharding function
 
@@ -961,13 +874,10 @@ mysql> show hotdb functions;
 
 **Parameter description:**
 
---------------- --------------------------------------------------------------- ----------
-
-**Parameter**   **Description**                                                 **Type**
-  pattern         optional, fuzzy query expression, match the key function_name   STRING
-  expr            optional, fuzzy query expression, match the key function_name   STRING
-
---------------- --------------------------------------------------------------- ----------
+| Parameter | Description | Type |
+| --- | --- | --- |
+| pattern | optional, fuzzy query expression, match the key function_name | STRING |
+| expr | optional, fuzzy query expression, match the key function_name | STRING |
 
 For example:
 
@@ -981,15 +891,12 @@ For another example:
 
 **Fields and their description are contained in the result:**
 
------------------ --------------------------------------------------------------------------------------------------------------- ----------------------
-
-**Column Name**   **Description**                                                                                                 **Value Type/Range**
-  function_id       sharding function id                                                                                            INTEGER
-  function_name     sharding function name                                                                                          STRING
-  function_type     sharding type                                                                                                   STRING
-  auto_generated    whether it is the configuration auto-generated in HotDB or not (1: auto-generated, other: non-auto-generated)   INTEGER
-
------------------ --------------------------------------------------------------------------------------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| function_id | sharding function id | INTEGER |
+| function_name | sharding function name | STRING |
+| function_type | sharding type | STRING |
+| auto_generated | whether it is the configuration auto-generated in HotDB or not (1: auto-generated, other: non-auto-generated) | INTEGER |
 
 #### show hotdb function infos -- show current available sharding function information
 
@@ -999,12 +906,9 @@ mysql> show hotdb function infos [WHERE expr];
 
 **Parameter description:**
 
---------------- ----------------------------------------------------------- ----------
-
-**Parameter**   **Description**                                             **Type**
-  expr            optional: fuzzy query expression, match the specified key   STRING
-
---------------- ----------------------------------------------------------- ----------
+| Parameter | Description | Type |
+| --- | --- | --- |
+| expr | optional: fuzzy query expression, match the specified key | STRING |
 
 For example:
 
@@ -1016,14 +920,11 @@ For another example:
 
 **Fields and their description are contained in the result:**
 
------------------ ---------------------- ----------------------
-
-**Column Name**   **Description**        **Value Type/Range**
-  function_id       sharding function id   INTEGER
-  column_value      sharding key value     STRING
-  datanode_id       data node id           INTEGER
-
------------------ ---------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| function_id | sharding function id | INTEGER |
+| column_value | sharding key value | STRING |
+| datanode_id | data node id | INTEGER |
 
 #### show hotdb rules -- show current available sharding function
 
@@ -1033,13 +934,10 @@ mysql> show hotdb rules [LIKE 'pattern' | WHERE expr];
 
 **Parameter description:**
 
---------------- ----------------------------------------------------------- ----------
-
-**Parameter**   **Description**                                             **Type**
-  pattern         optional: fuzzy query expression, match the key rule_name   STRING
-  expr            optional: fuzzy query expression, match the key rule_name   STRING
-
---------------- ----------------------------------------------------------- ----------
+| Parameter | Description | Type |
+| --- | --- | --- |
+| pattern | optional: fuzzy query expression, match the key rule_name | STRING |
+| expr | optional: fuzzy query expression, match the key rule_name | STRING |
 
 For example:
 
@@ -1053,16 +951,13 @@ For another example:
 
 **Fields and their description are contained in the result:**
 
------------------ --------------------------------------------------------------------------------------------------------------- ----------------------
-
-**Column Name**   **Description**                                                                                                 **Value Type/Range**
-  rule_id           sharding function id                                                                                            INTEGER
-  rule_name         sharding function name                                                                                          STRING
-  rule_column       sharding key name                                                                                               STRING
-  function_id       sharding type ID                                                                                                INTEGER
-  auto_generated    whether it is the configuration auto-generated in HotDB or not (1: auto-generated, other: non-auto-generated)   INTEGER
-
------------------ --------------------------------------------------------------------------------------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| rule_id | sharding function id | INTEGER |
+| rule_name | sharding function name | STRING |
+| rule_column | sharding key name | STRING |
+| function_id | sharding type ID | INTEGER |
+| auto_generated | whether it is the configuration auto-generated in HotDB or not (1: auto-generated, other: non-auto-generated) | INTEGER |
 
 #### show backupmasterdelay [DNID]-- show master/slave replication delay of specified data node
 
@@ -1072,12 +967,9 @@ mysql> show backupmasterdelay [DNID];
 
 **Parameter description:**
 
---------------- ----------------- ----------
-
-**Parameter**   **Description**   **Type**
-  DNID            Data node id      INTEGER
-
---------------- ----------------- ----------
+| Parameter | Description | Type |
+| --- | --- | --- |
+| DNID | Data node id | INTEGER |
 
 For example:
 
@@ -1085,15 +977,12 @@ For example:
 
 **Fields and their description are contained in the result:**
 
-------------------- ----------------------------------- ----------------------
-
-**Column Name**     **Description**                     **Value Type/Range**
-  datasource_id       Data source id                      INTEGER
-  sql_delay           Replication delay (s)               LONG
-  slave_io_running    Slave io_thread status (Yes/No)     STRING
-  slave_sql_running   Slave sql_thread status（Yes/No）   STRING
-
-------------------- ----------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| datasource_id | Data source id | INTEGER |
+| sql_delay | Replication delay (s) | LONG |
+| slave_io_running | Slave io_thread status (Yes/No) | STRING |
+| slave_sql_running | Slave sql_thread status（Yes/No） | STRING |
 
 ### HotDB services
 
@@ -1109,16 +998,13 @@ mysql> show @@config_master_status
 
 **Fields and their description are contained in the result:**
 
-------------------- ----------------------------------- ----------------------
-
-**Column Name**     **Description**                     **Value Type/Range**
-  file                Binlog file                         STRING
-  position            Binlog position                     INTEGER
-  binlog_do_db        Database to be recorded by Binlog   STRING
-  binlog_ignore_db    Database to be ignorded by Binlog   STRING
-  executed_gtid_set   Executed GTID                       STRING
-
-------------------- ----------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| file | Binlog file | STRING |
+| position | Binlog position | INTEGER |
+| binlog_do_db | Database to be recorded by Binlog | STRING |
+| binlog_ignore_db | Database to be ignorded by Binlog | STRING |
+| executed_gtid_set | Executed GTID | STRING |
 
 #### show @@server -- show the status of HotDB server
 
@@ -1182,20 +1068,17 @@ mysql> show @@serversourceusage;
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------------ --------------------------------
-
-**Column Name**   **Description**                **Value Type/Range**
-  used_memory       used memory (MB)               STRING/[number]
-  total_memory      total memory (MB)              STRING /[number]
-  disk              usage of disk                  STRING/[path number,...]
-  cpu_load          CPU load                       FLOAT/[float]
-  cpu_usage         CPU usage rate                 STRING/[number,number,...]
-  net_in            network flow rate (bytes/s)    LONG/[number]
-  net_out           network flow rate (bytes/s)    LONG/[number]
-  cores             total cores of CPU             INT[number]
-  io                disk read-write speed (kB/s)   STRING/["sda" number number]
-
------------------ ------------------------------ --------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| used_memory | used memory (MB) | STRING/[number] |
+| total_memory | total memory (MB) | STRING /[number] |
+| disk | usage of disk | STRING/[path number,...] |
+| cpu_load | CPU load | FLOAT/[float] |
+| cpu_usage | CPU usage rate | STRING/[number,number,...] |
+| net_in | network flow rate (bytes/s) | LONG/[number] |
+| net_out | network flow rate (bytes/s) | LONG/[number] |
+| cores | total cores of CPU | INT[number] |
+| io | disk read-write speed (kB/s) | STRING/["sda" number number] |
 
 #### show @@systemconfig_memory - memory parameters of current compute node
 
@@ -1209,12 +1092,9 @@ mysql> show @@systemconfig_memory;
 
 **Fields and their description are contained in the result:**
 
------------------ ----------------- ----------------------
-
-**Column Name**   **Description**   **Value Type/Range**
-  config            configuration     STRING/[number]
-
------------------ ----------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| config | configuration | STRING/[number] |
 
 #### show @@time_current -- show the current time
 
@@ -1226,12 +1106,9 @@ mysql> show @@time_current;
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------------ ---------------------------------
-
-**Column Name**   **Description**                **Value Type/Range**
-  timestamp         current time of HotDB Server   STRING/[ yyyy-MM-dd HH:mm:ss]
-
------------------ ------------------------------ ---------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| timestamp | current time of HotDB Server | STRING/[ yyyy-MM-dd HH:mm:ss] |
 
 #### show @@time_startup -- show the startup time of HotDB
 
@@ -1243,12 +1120,9 @@ mysql> show @@time_startup;
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------------ ---------------------------------
-
-**Column Name**   **Description**                **Value Type/Range**
-  timestamp         current time of HotDB Server   STRING/[ yyyy-MM-dd HH:mm:ss]
-
------------------ ------------------------------ ---------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| timestamp | current time of HotDB Server | STRING/[ yyyy-MM-dd HH:mm:ss] |
 
 #### show @@usbkey -- show USB-KEY status
 
@@ -1314,12 +1188,9 @@ mysql> show @@version;
 
 **Fields and their description are contained in the result:**
 
------------------ ----------------- ----------------------
-
-**Column Name**   **Description**   **Value Type/Range**
-  version           HotDB version     STRING
-
------------------ ----------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| version | HotDB version | STRING |
 
 ### MySQL Services
 
@@ -1333,17 +1204,14 @@ mysql> show @@ddl;
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------ ----------------------
-
-**Column Name**   **Description**          **Value Type/Range**
-  schema            LogicDB                  STRING/[database]
-  dn                data node id             INT/[number]
-  ds                data source id           INT/[number]
-  db                database                 STRING/[database]
-  table             table name               STRING/[table]
-  ddl               DDL statement of table   STRING/[sql]
-
------------------ ------------------------ ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| schema | LogicDB | STRING/[database] |
+| dn | data node id | INT/[number] |
+| ds | data source id | INT/[number] |
+| db | database | STRING/[database] |
+| table | table name | STRING/[table] |
+| ddl | DDL statement of table | STRING/[sql] |
 
 #### show @@lastsql -- the last executed sql of connection in borrowed status
 
@@ -1355,16 +1223,13 @@ mysql> show @@lastsql;
 
 **Fields and their description are contained in the result:**
 
-------------------- --------------------------------------------------------------- -----------------------------
-
-**Column Name**     **Description**                                                 **Value Type/Range**
-  id                  backend id                                                      LONG/[number]
-  mysqlid             data node id                                                    LONG/[number]
-  dn_ds               data node id -- data source id                                  STRING/[number_number]
-  host                data source                                                     STRING/[ip:port/database]
-  last_executed_sql   the last MySQL statement executed on the data source [host]   STRING/[sql]
-
-------------------- --------------------------------------------------------------- -----------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| id | backend id | LONG/[number] |
+| mysqlid | data node id | LONG/[number] |
+| dn_ds | data node id -- data source id | STRING/[number_number] |
+| host | data source | STRING/[ip:port/database] |
+| last_executed_sql | the last MySQL statement executed on the data source [host] | STRING/[sql] |
 
 #### show @@onlineddl -- show the active onlineddl statement
 
@@ -1376,17 +1241,14 @@ mysql> show @@onlineddl;
 
 **Fields and their description are contained in the result:**
 
------------------ ----------------- ----------------------
-
-**Column Name**   **Description**   **Value Type/Range**
-  schema            LogicDB           STRING/[database]
-  onlineddl         statement         STRING/[SQL]
-  progress          progress          LONG/[number]
-  speed             speed (row/ms)    LONG/[number]
-  table             table mane        STRING/[table]
-  type              change type       LONG/[number]
-
------------------ ----------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| schema | LogicDB | STRING/[database] |
+| onlineddl | statement | STRING/[SQL] |
+| progress | progress | LONG/[number] |
+| speed | speed (row/ms) | LONG/[number] |
+| table | table mane | STRING/[table] |
+| type | change type | LONG/[number] |
 
 #### show @@tableindex -- show index structure of tables
 
@@ -1398,17 +1260,14 @@ mysql> show @@tableindex;
 
 **Fields and their description are contained in the result:**
 
------------------ ----------------------- ----------------------
-
-**Column Name**   **Description**         **Value Type/Range**
-  schema            LogicDB                 STRING/[database]
-  dn                data node id            INT/[number]
-  ds                data source id          INT/[number]
-  db                database                STRING/[database]
-  table             database name           STRING/[number]
-  index             table index structure   STRING
-
------------------ ----------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| schema | LogicDB | STRING/[database] |
+| dn | data node id | INT/[number] |
+| ds | data source id | INT/[number] |
+| db | database | STRING/[database] |
+| table | database name | STRING/[number] |
+| index | table index structure | STRING |
 
 ### Sharding plan online modification
 
@@ -1432,38 +1291,32 @@ onlinemodificationrulecheck db.tablename[=functionid,rulecol:datanodes:checkcons
 
 **The command contains the following fields and their description:**
 
------------------- -----------------------------------------------------------------------------------------
-
-**Parameter**      **Description**
-  db                 LogicDB
-  tablename          table name
-  functionid         refer to the table hotdb_function in the configdb hotdb_config for the sharding rule id
-  rulecol            sharding key
-  datanodes          refer to the table hotdb_datanode in the configdb hotdb_config for the data node
-  checkconsistency   whether to check the master/slave consistency 1|0
-
------------------- -----------------------------------------------------------------------------------------
+| Parameter | Description |
+| --- | --- |
+| db | LogicDB |
+| tablename | table name |
+| functionid | refer to the table hotdb_function in the configdb hotdb_config for the sharding rule id |
+| rulecol | sharding key |
+| datanodes | refer to the table hotdb_datanode in the configdb hotdb_config for the data node |
+| checkconsistency | whether to check the master/slave consistency 1|0 |
 
 It is used in two ways:
 
 1. It can be used to check whether sharding rule modification related items pass. The check item id and corresponding check items are as follows:
 
---------------- ------------------- ---------------------------------------------------------------------------------------------------------
-
-Check Item ID   Corresponding Key   Description of Check Item
-  1               tbNameLess45        The source table name is not longer than 45 characters
-  2               running             No sharding plan modification task is being executed in source table
-  3               validCol            Sharding key is the key contained in table structure
-  4               diffrule            The sharding function and sharding key in modification plan are inconsistent with those in source table
-  5               existUniqueKey      The source table has the master key or unique key
-  6               recommendColType    The sharding key is a type of key recommended by the current sharding function
-  7               lostData            The new sharding plan will not result in data loss
-  8               trigger             The source table has no trigger
-  9               refByTrigger        The source table is not associated with other triggers
-  10              foreignConstraint   The source table has no foreign key constraint
-  11              consistency         The master/slave data consistency check result of the source table is consistent
-
---------------- ------------------- ---------------------------------------------------------------------------------------------------------
+| Check Item ID | Corresponding Key | Description of Check Item |
+| --- | --- | --- |
+| 1 | tbNameLess45 | The source table name is not longer than 45 characters |
+| 2 | running | No sharding plan modification task is being executed in source table |
+| 3 | validCol | Sharding key is the key contained in table structure |
+| 4 | diffrule | The sharding function and sharding key in modification plan are inconsistent with those in source table |
+| 5 | existUniqueKey | The source table has the master key or unique key |
+| 6 | recommendColType | The sharding key is a type of key recommended by the current sharding function |
+| 7 | lostData | The new sharding plan will not result in data loss |
+| 8 | trigger | The source table has no trigger |
+| 9 | refByTrigger | The source table is not associated with other triggers |
+| 10 | foreignConstraint | The source table has no foreign key constraint |
+| 11 | consistency | The master/slave data consistency check result of the source table is consistent |
 
 If the check result (result value) is 1, it means that the check of this item fails, and the modification result may be incorrect.
 
@@ -1485,16 +1338,13 @@ onlinemodificationrulecheck db.tablename [db.tablename...]
 
 **Fields and their description are contained in the result:**
 
------------------ --------------------------------------
-
-**Column Name**   **Description**
-  db                LogicDB
-  tablename         table name
-  id                check item id
-  result            result (0 pass, 1 fail, -1 checking)
-  warning           error warning message
-
------------------ --------------------------------------
+| Column Name | Description |
+| --- | --- |
+| db | LogicDB |
+| tablename | table name |
+| id | check item id |
+| result | result (0 pass, 1 fail, -1 checking) |
+| warning | error warning message |
 
 View whether the check is finished (if the result value is -1, it means that the check is not finished), or whether there is any item that fails to pass the check (if the result value is 1, it means that items fail to pass the check), if all the result values are 0, it means that the sharding plan can be modified.
 
@@ -1576,13 +1426,10 @@ onlinemodificationruleprogress db.tablename[,db1.tablename1,..]
 
 **Fields and their description are contained in the command:**
 
---------------- -----------------
-
-**Parameter**   **Description**
-  db              LogicDB
-  tablename       table name
-
---------------- -----------------
+| Parameter | Description |
+| --- | --- |
+| db | LogicDB |
+| tablename | table name |
 
 As shown below: cpd_test is LogicDB, cv_live_courseware and cv_live_study are table names.
 
@@ -1590,21 +1437,18 @@ As shown below: cpd_test is LogicDB, cv_live_courseware and cv_live_study are ta
 
 **Fields and their description are contained in the result:**
 
-------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-Key Name      Description
-  db            LogicDB
-  tablename     table name
-  progress      0-100, integer
-  cost          execution duration (ms)
-  state         stopping (non-execution window), running (is being executing), waiting (inconsisitent, waiting for the user to confirm whether to continue), finish (completed), error (fail)
-  detail        other errors
-  lost          data lost
-  over          data over
-  inconsitent   data inconsistent
-  autorepair    autorepair (1/0): 1 means repaired, o means unrepaired
-
-------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Key Name | Description |
+| --- | --- |
+| db | LogicDB |
+| tablename | table name |
+| progress | 0-100, integer |
+| cost | execution duration (ms) |
+| state | stopping (non-execution window), running (is being executing), waiting (inconsisitent, waiting for the user to confirm whether to continue), finish (completed), error (fail) |
+| detail | other errors |
+| lost | data lost |
+| over | data over |
+| inconsitent | data inconsistent |
+| autorepair | autorepair (1/0): 1 means repaired, o means unrepaired |
 
 If the state returns to waitting, the user needs to confirm whether to continue it, ignore the inconsistent data or cancel the modification.
 
@@ -1618,13 +1462,10 @@ onlinemodificationrulecontinue db.tablename;
 
 **fields and their description are contained in the command:**
 
---------------- -----------------
-
-**Parameter**   **Description**
-  db              LogicDB
-  tablename       table name
-
---------------- -----------------
+| Parameter | Description |
+| --- | --- |
+| db | LogicDB |
+| tablename | table name |
 
 As shown below: in the process of modifying sharding plan, when the state is waitting, and inconsistent data exits, this command is used to continue the modification, and then view the progress again, the progress is 100 and the state is finish.
 
@@ -1656,15 +1497,12 @@ mysql> check @@datasource_config;
 
 **Fields and their description are contained in the result:**
 
------------------ ---------------------------------------------- -------------------------------
-
-**Column Name**   **Description**                                **Value Type/Range**
-  Level             exception information level (Warning, Error)   STRING/[ "Error","Warning"]
-  Code              exception code                                 INT/[number]
-  Message           error message                                  STRING
-  Value             error or warning related value                 STRING
-
------------------ ---------------------------------------------- -------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| Level | exception information level (Warning, Error) | STRING/[ "Error","Warning"] |
+| Code | exception code | INT/[number] |
+| Message | error message | STRING |
+| Value | error or warning related value | STRING |
 
 The parameters or configuration below require that all data sources shall be consistent and conform to the parameter configuration standard:
 
@@ -1710,13 +1548,10 @@ mysql> check @@route [db_name.tb_name | tb_name];
 
 Parameter description:
 
---------------- ----------------- ----------
-
-**Parameter**   **Description**   **Type**
-  db_name         database name     STRING
-   tb_name        table name        STRING
-
---------------- ----------------- ----------
+| Parameter | Description | Type |
+| --- | --- | --- |
+| db_name | database name | STRING |
+| tb_name | table name | STRING |
 
 When the data routing is consistent, the result is:
 
@@ -1728,14 +1563,11 @@ When the data routing is inconsistent, the result is:
 
 **Fields and their description are contained in the result:**
 
------------------ -------------------------- ----------------------
-
-**Column Name**   **Description**            **Value Type/Range**
-  shard_key_value   the routing key value      STRING
-  route_dn          the routing node           INT/[number]
-  actual_dn         the actually stored node   INT/[number]
-
------------------ -------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| shard_key_value | the routing key value | STRING |
+| route_dn | the routing node | INT/[number] |
+| actual_dn | the actually stored node | INT/[number] |
 
 ### kill @@connection -- Close a specified connection
 
@@ -1745,12 +1577,9 @@ mysql> kill @@connection [id1,id2,id3...idn];
 
 Parameter description:
 
---------------- ------------------ ------------------------------------------------------------
-
-**Parameter**   **Description**    **Type**
-  connection_id   the connected id   INTEGER/obtained through the command [show @connection]
-
---------------- ------------------ ------------------------------------------------------------
+| Parameter | Description | Type |
+| --- | --- | --- |
+| connection_id | the connected id | INTEGER/obtained through the command [show @connection] |
 
 For example:
 
@@ -1856,12 +1685,9 @@ mysql> restart @@heartbeat [datanode_id];
 
 Parameter description:
 
---------------- ----------------- ----------
-
-**Parameter**   **Description**   **Type**
-  datanode_id     data node id      INT
-
---------------- ----------------- ----------
+| Parameter | Description | Type |
+| --- | --- | --- |
+| datanode_id | data node id | INT |
 
 For example:
 
@@ -1879,13 +1705,10 @@ mysql> stop @@heartbeat [datanode_id:time(s)]
 
 Parameter description:
 
---------------- ----------------- ----------
-
-**Parameter**   **Description**   **Type**
-  datanode_id     data node id      INT
-  time            stop time (s)     INT
-
---------------- ----------------- ----------
+| Parameter | Description | Type |
+| --- | --- | --- |
+| datanode_id | data node id | INT |
+| time | stop time (s) | INT |
 
 For example:
 
@@ -1981,15 +1804,12 @@ This command is used to view the progress of IDC switching in the DR mode, for e
 
 **Fields and their description are contained in the result:**
 
------------------ -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------
-
-**Column Name**   **Description**                                                                                                                                                                                                                                                **Value Type/Range**
-  process           Handling process, 0-8                                                                                                                                                                                                                                          INTEGER
-  error             Error message (error format：srcDs1:dstDs1,srcDs2:dstDs2,...;errormsg or ds,ds:ds,...;errormsg, data source format (datanodeID_datasourceID_datasourceIP_port_dbname)，if included：then src is the original master center，dst is the original DR center)   STRING
-  error_code        Error code status, 1 is finished, 0 is unfinished                                                                                                                                                                                                              INTEGER
-  status            Status, 1 is finished, 0 is unfinished                                                                                                                                                                                                                         INTEGER
-
------------------ -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ----------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| process | Handling process, 0-8 | INTEGER |
+| error | Error message (error format：srcDs1:dstDs1,srcDs2:dstDs2,...;errormsg or ds,ds:ds,...;errormsg, data source format (datanodeID_datasourceID_datasourceIP_port_dbname)，if included：then src is the original master center，dst is the original DR center) | STRING |
+| error_code | Error code status, 1 is finished, 0 is unfinished | INTEGER |
+| status | Status, 1 is finished, 0 is unfinished | INTEGER |
 
 ### reset dberrorcount -- Clear all the error messages of LogicDBs
 
@@ -2067,12 +1887,9 @@ mysql> file @@list;
 
 **Fields and their description are contained in the result:**
 
------------------ ------------------------------------------------------- -----------------------------------------------------
-
-**Column Name**   **Description**                                         **Value Type/Range**
-  DATA              information of related files under the conf directory   STRING/[number : file "time":yyyy-MM-dd hh:mm:ss]
-
------------------ ------------------------------------------------------- -----------------------------------------------------
+| Column Name | Description | Value Type/Range |
+| --- | --- | --- |
+| DATA | information of related files under the conf directory | STRING/[number : file "time":yyyy-MM-dd hh:mm:ss] |
 
 ### hold commit -- Set connection status of all clients as HOLD_ALL_COMMIT
 

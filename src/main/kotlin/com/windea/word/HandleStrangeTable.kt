@@ -14,15 +14,17 @@ import java.util.*
 
 private val scanner = Scanner(System.`in`)
 
-fun main(){
+fun main() {
 	while(true) {
 		try {
 			println("Input file path:")
 			val filePath = scanner.nextLine().trim()
 			val file = File(filePath)
-			val text = file.readText()
-			val handledText = handleText(text)
-			file.writeText(handledText)
+			if(file.isDirectory) {
+				file.listFiles()?.forEach { if(it.isFile) handleFile(it) }
+			} else {
+				handleFile(file)
+			}
 			println("OK.")
 			println()
 		} catch(e: Exception) {
@@ -37,9 +39,15 @@ private var tableStart = false
 private var tableHeader = false
 private var tableHeaderSize = 1
 
-private fun handleText(text:String):String{
+private fun handleFile(file: File) {
+	val text = file.readText()
+	val handledText = handleText(text)
+	file.writeText(handledText)
+}
+
+private fun handleText(text: String): String {
 	//遍历每一行
-	return text.lineSequence().mapNotNull { line->
+	return text.lineSequence().mapNotNull { line ->
 		when {
 			//开始
 			!tableStart && line.matches(tableStartLineRegex) -> {
@@ -59,15 +67,15 @@ private fun handleText(text:String):String{
 				tableHeader = false
 				val cols = line.trim().split(blankRegex)
 				tableHeaderSize = cols.size
-				cols.joinToString(" | ","| "," |"){ it.trim('*') } + "\n" + (1..tableHeaderSize).joinToString(" | ","| "," |"){ "---" }
+				cols.joinToString(" | ", "| ", " |") { it.trim('*') } + "\n" + (1..tableHeaderSize).joinToString(" | ", "| ", " |") { "---" }
 			}
 			tableStart && !tableHeader -> {
 				val cols = line.trim().split(blankRegex).toMutableList()
 				//在左侧补充缺失的行
-				while(cols.size < tableHeaderSize){
-					cols.add(0,"   ")
+				while(cols.size < tableHeaderSize) {
+					cols.add(0, "   ")
 				}
-				cols.joinToString(" | ","| "," |")
+				cols.joinToString(" | ", "| ", " |")
 			}
 			else -> line
 		}
