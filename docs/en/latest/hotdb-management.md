@@ -5,48 +5,26 @@
 This chapter will briefly introduce the newly added or optimized functions in HotDB Management V2.5.6. Please go to the specific function menu for details.
 
 - Add new functions including [visualized switching, repair, removal of IDC and IDC switching drill](#switching-removal-and-repair-of-idc) to improve the reliability and ease of use of IDC operation and reduce the operation and maintenance cost of cross-IDC operation;
-
 - Add the function of [Intelligent Inspection](#intelligent-inspection), which helps with the cluster inspection in database;
-
 - Add the function of [Platform Configuration Ddata Management](#platform-configuration-data-management). The management platform ConfigDB is able to support high availability switching and backup and restore of ConfigDB;
-
 - Add functions such as "Disable", "Comment", "Online time" in [User Management](#user-management);
-
 - Optimize the configuration function of some sharding functions, so that the [MATCH](#match) and [ROUTE](#route) type are able to support prefix/infix/suffix matching, and the [RANGE](#range) type to support the maximum and minimum boundary value matching;
-
 - Optimize the function of [Upgrade Center](#upgrade-center) to match the new JDK version in v.2.5.6 and the self-developed license;
-
 - Optimize the function of [Add New Table Configuration](#add-new-table-configuration): when adding new table configuration, all data nodes under the LogicDB will be associated by default;
-
 - Optimize the function of [Alert Type](#alert-type-description) in History Events, and add cluster election or switching reminders;
-
 - Optimize the function of [Update License](#upgrade-center) to adapt to the new self-developed encrypted authorization plan;
-
 - Optimize the [master/slave consistency detection](#masterslave-data-consistency-detection), and give a prompt to the tables that are not configured with switching functions or whose data sources are unavailable;
-
 - Optimize the function of [Config Checking](#config-checking), add checking item of whether to configure switching functions, and give warnings for the data nodes with replication relations that are not configured with switching functions;
-
 - Add the identification of whether the data of data sources are consistent on the data nodes in the [Logic Topological Graph](#logic-topological-graph);
-
 - Optimize the [high availability switching](#masterslave-switch) function of data source, and do compatibility processing for master_delay replication latency. Add "switching" button, you can cancel the switching task halfway via the button;
-
-- The [Topological Graph Alert Setting](#periodical-plan) is compatible with master_ delay configuration to make it within the aletrt range. Besides, add "Reset" button to the Topological Graph Alert Setting and Monitoring Panel Setting to restore the default configuration;
-
+- The [Topological Graph Alert Setting](#periodical-plan) is compatible with master_ delay configuration to make it within the alert range. Besides, add "Reset" button to the Topological Graph Alert Setting and Monitoring Panel Setting to restore the default configuration;
 - Optimize the page of [Compute Node Cluster Management](#compute-node-cluster) to unfold/hide more deployment info and improve the page access rate;
-
 - Optimize the function of [data unique constraint detection](#data-unique-constraint-detection) to make it compatible with prefix unique index;
-
 - Set the entrance for data sharding route periodical detection plan, data unique constraint periodical detection plan in the [Periodical Plan](#periodical-detection-setting) of the management platform;
-
 - Optimize the [user privilege](#database-user-management) table page, so that the privilege info of LogicDB can be directly seen on the page;
-
 - Optimize the function of [OEM Management](#_OEM_management_1), remove the original menu, and access it by hyperlink (also applicable to v.2.5.5);
-
 - Enhance the password strength of [database users](#database-user-management) (the password of database users shall be no less than 8 digits and must be composed of numbers and letters).
-
 - 增加管理[平台服务授权管理](#_管理平台许可证)功能，可限制可用计算节点集群组数和每组计算节点可用计算节点个数。
-
--
 
 ## Preface
 
@@ -95,7 +73,6 @@ The admin index page mainly provides the manager user with a global perspective 
 ![](assets/hotdb-management/image5.jpeg)
 
 - The manager user can view the basic data of all compute node clusters with "monitoring enabled" on the index page
-
 - You can switch to the corresponding page of cluster by clicking the tabs of different cluster names. When there are more than 3 clusters displayed, you can click the left and right buttons to turn pages of the remaining clusters.
 
 ### Basic data
@@ -103,27 +80,19 @@ The admin index page mainly provides the manager user with a global perspective 
 ![](assets/hotdb-management/image6.png)
 
 - The basic data includes the cluster configuration and license information, etc.
-
 - Note:
-
-- The table quantity is the total quantity of all created and not created tables in the current cluster.
-
-- If the license information type is permanent, the remaining available time is not displayed. If it is a beta version and the remaining time is less than 7 days, an alert will be given in red.
-
-- Authorizations include the number of available data nodes and the number of available LogicDBs, among which the limit of number of ConfigDBs is added in v.2.5.6 and above.
+  - The table quantity is the total quantity of all created and not created tables in the current cluster.
+  - If the license information type is permanent, the remaining available time is not displayed. If it is a beta version and the remaining time is less than 7 days, an alert will be given in red.
+  - Authorizations include the number of available data nodes and the number of available LogicDBs, among which the limit of number of ConfigDBs is added in v.2.5.6 and above.
 
 ### Statistics
 
 ![](assets/hotdb-management/image7.png)
 
 - Statistics includes total data amount, client throughput, back-end throughput and client connection. For the data acquisition of the total data amount, client throughput and back-end throughput, please refer to the corresponding content on [the home page of general users](#overview-of-data-amount-and-throughput).
-
 - Total data volume: the value is the total data volume of the current cluster, and the pie chart on the left is the proportion of data volume of TOP10 LogicDB.
-
 - Client throughput: the data displayed is the throughput of compute nodes since midnight of the day. The pie chart on the left calculates the proportions according to the operation type（SELECT/UPDATE/DELETE/INSERT/OHTHER）.
-
 - Back-end throughput: the data displayed is the throughput of data nodes since midnight of the day. The pie chart on the left calculates the proportions according to the operation type（SELECT/UPDATE/DELETE/INSERT/OHTHER）.
-
 - Client connection: it displays the number of front-end connections of the current compute node. The pie chart on the left shows the connection proportion of TOP10 applications (differentiated by client IP address) with the longest connection durations in a week.
 
 ### Peak data
@@ -131,13 +100,9 @@ The admin index page mainly provides the manager user with a global perspective 
 ![](assets/hotdb-management/image8.png)
 
 - On the index page, you can view the cluster peak data within 24 hours and within 30 minutes, mainly with two objects: compute node and data source, and three dimensions: connections, QPS and TPS.
-
 - Peak data includes the highest peak data and the time point within the selected time range. If there are multiple peak data, the latest peak data will be taken.
-
 - The management platform collects the peak data on the compute node and data source once a minute for a scheduled task. The data is saved for 24 hours by default, and is automatically cleaned when it expires.
-
 - When the compute node cluster is a single node or a master/slave node, the peak data of the compute node only takes data of the current active node; if it is a multi-node cluster, the peak data is the sum of all the compute nodes.
-
 - By default, the peak data of the data source is the sum of the data of all data sources (excluding the slave) in the cluster. The data source has no TPS data, and the dimension is empty.
 
 ### Running data
@@ -145,11 +110,8 @@ The admin index page mainly provides the manager user with a global perspective 
 ![](assets/hotdb-management/image9.png)
 
 - Under the running data, cluster starting time, cluster running time, failover times (cumulative), failure recovery time (cumulative), cluster availability, slow SQL are consistent with [the home page of general users](#home).
-
 - The compute node status shows the number of compute nodes running normally (the connection of the management port is normal) and abnormally in the current cluster. Green is for the normal compute nodes; red and blue are for the abnormal compute nodes, among which red will be displayed when the number of exceptions is greater than 0, and blue when there is no exception.
-
 - The data source status shows the number of data sources running normally (data sources which can be connected normally and whose status is not set as unavailable) and abnormally in the current cluster. The color depends on the status. For details, please refer to the relevant descriptions in the compute node status part.
-
 - ConfigDB status shows the number of ConfigDBs running normally or abnormally in the current cluster compute nodes.
 
 ### Configuration data
@@ -157,15 +119,10 @@ The admin index page mainly provides the manager user with a global perspective 
 ![](assets/hotdb-management/image10.png)
 
 - Configuration data mainly shows the configuration of some key parameters including management platform, compute node and data source.
-
 - For the parameter configuration display of the management platform, please refer to the corresponding parameter explanation on [the home page of general users](#cluster-security). When the management platform parameters are not enabled, the page will alert with red font, and if not all of them are enabled, the page will alert with orange font.
-
 - The parameters of the compute node mainly come from the settings of the function page "[Parameter Configuration](#parameter-configuration)". Different clusters may display different parameters due to different versions of compute nodes
-
 - The parameters of the data source display the settings of all data source instance parameters in the cluster. If some data source instance settings are inconsistent, the page will alert with red font and display the inconsistent settings (at this time, it is recommended that the user timely modify the data source instance parameters with inconsistent settings)
-
 - If some data source instances cannot be connected normally in the cluster, the parameter settings displayed do not include the data source instances that cannot be connected.
-
 - The parameters of the management platform and the compute node are obtained in real time from the ConfigDB and the server.xml file when refreshing the page; the parameters of the data source are detected every hour by the regular task of the management platform, and the detected data is stored in the management flat memory. When the admin index page is refreshed, the configuration of data source parameters is obtained from the latest detection results of memory.
 
 ## User management
@@ -179,17 +136,11 @@ The user management table is the platform user record that has been added by the
 **List field description**
 
 - Username: Username for login to the HotDB Management account
-
 - Role: User-assigned roles include manager users and general users
-
 - Compute Node Cluster Privilege: The user-assigned compute node cluster privilege. Possession of privilege means that the compute node cluster can be accessed or controlled.
-
 - Status: including Online, Offline and Disabled (Note: when logging in two different users using the same browser successively, the info of the second user will cover the first one, that is, the first user status will become offline).
-
 - Last login time: records the last login time of the user. If there is no login record, it will be blank. Click "last login time", it will switch to the user login page.
-
 - Comment: displays the comments entered by users when adding or editing.
-
 - Operation: "Disable", "Enable", "Reset password", "Edit" and "Delete" operations of users can be performed. The admin user cannot perform "Disable" and "Delete".
 
 ![](assets/hotdb-management/image11.png)
@@ -201,9 +152,7 @@ Adding a platform user needs to fill in two parts of content information: User B
 **User Basic Information**: including user account name, user role, compute node cluster privilege, etc.
 
 - At present, there are no specific restrictions on user names, except that they cannot be duplicated with existing names.
-
 - The default password of newly added user is [service_hotdb@hotdb.com](http://service_hotdb@hotdb.com). When first logging into the management platform through the new account, the user will be required to change the password.
-
 - Added users need to be assigned with specific roles, which are general users by default. The difference between the two types of roles is as follows:
 
 **General user**: can only manage compute node clusters with existing privileges in the general user interface.
@@ -211,9 +160,7 @@ Adding a platform user needs to fill in two parts of content information: User B
 **Manage user**: can enter the management interface and manage compute node clusters with existing privileges in the general user interface. The interface views can be switched back and forth in the personal information drop-down box in the upper right corner.
 
 - Assigning compute node cluster privileges to users means that the users can see the cluster and enter the cluster for management after logging into the general user interface.
-
 - There are two kinds of compute node cluster privileges: **access** and **control**. Users assigned with "access privileges" can only query after entering the cluster. All operations that affect the data will trigger a prompt of "insufficient privileges". Users assigned with "control privileges" automatically have "access privileges" and can perform all operations on the cluster.
-
 - you can enter "comments" on the adding and editing page. It is not required.
 
 ![](assets/hotdb-management/image12.png)
@@ -323,15 +270,10 @@ Click [Add Cluster] on the cluster management page to enter the "Add Compute Nod
 **(I) Cluster information**
 
 - Select the cluster mode of the deployed cluster, and the input parameters of different modes are different.
-
 - The cluster name cannot be duplicated with the current existing compute node cluster name.
-
 - The cluster network segment appears as the network segment to which the compute node belongs when the "Cluster Mode" is "Multi-Node". The format is: IP/subnet mask length, for example, 192.168.200.0/24. This parameter can be viewed or modified in server.xml.
-
 - The communication port appears as the port used for communication between multiple compute nodes in the deployed cluster only when the "Cluster Mode" is "Multi-Node". This parameter can be viewed or modified in server.xml.
-
 - "Set ConfigDB Manually" is not checked by default and is not required to be filled in. Only when the added compute node cannot connect to the management port (usually 3325), the user needs to manually specify the configDB address.
-
 - Set ConfigDB Manually specifies that configDB needs to select the configDB replication mode and the configDB address needs to be filled in according to the given example. The configDB username and configDB password refer to the account and password connecting configDB instance.
 
 **Note**: Any configDB in the replication mode strongly requires that the configDB connection address in server.xml shall be consistent with the IP address of the server where the actual configDB is located. It cannot be configured as 127.0.0.1 or localhost, so as mainly to prevent the risk of misjudging the actual address when the management platform obtains multiple configDB addresses in case that the management platform and the compute node service are not on the same service..
@@ -339,11 +281,8 @@ Click [Add Cluster] on the cluster management page to enter the "Add Compute Nod
 **(II) Compute node**
 
 1. Different "Cluster Mode" displays different compute node records need to be configured. The "Single Node" mode only needs to configure one record. The "Master/Slave Node" mode needs to configure one master record and one slave record. The "Multi-Node" mode needs to configure at least three records, up to nine records.
-
-2. The fields with red * must be filled in, including: compute node name, hostname, username, password, service port and management port.
-
+2. The fields with red * must be filled in, including: compute node name, hostname, username, password, service port and management port
 3. The fields without red * may not be filled in, but when **the compute node cluster is in the master/slave mode**, users are recommended to fill in these parameter values because they may be used for high availability rebuilding and high availability switch later.
-
 4. After filling in the compute node name, test whether the compute node can be connected via the [Test] button. The connection exception and successful connection are shown in the following figure:
 
 ![](assets/hotdb-management/image18.png)
@@ -367,19 +306,12 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 ![](assets/hotdb-management/image21.png)
 
 - This step mainly confirms whether the SSH connection information and configuration file (server. XML and keepalived. conf) storage address of master/slave compute node configuration is filled in correctly.
-
 - SSH login mode may choose Login with User Password or Sign in without Password, the information will be saved after successful connection, and the information will not be saved if one-time login is chosen.
-
 - The current logged-in user must have the read-write access privilege of master/slave configuration files.
-
 - If the SSH Sign in without Password mode is chosen, the server where HotDB Management is located must set the public key of the account started and copy it to the server to be accessed. (Note: The user who can sign in without password must be consistent with the server user who starts the management platform currently).
-
 - If the current connection account has the Sign in without Password privilege, even if Login with User Password is selected and wrong password is entered, the login will be successful and priority will be given to the judgement of whether there is Sign in without Password privilege. The check of password will be filtered directly if there is Sign in without Password privilege.
-
 - The configuration file directory shall be consistent with the real service directory, otherwise the connection test will fail.
-
 - If the SSH information and the configuration file address of compute node are configured in "Add Cluster", the page information will be displayed automatically. It only needs to click [Connection Test] to verify the information correctness.
-
 - Only when SSH information and configuration file address pass the test, the [Next Step] button can be clicked normally to proceed to the next step.
 
 (II) **Pre-inspection of switching**
@@ -387,7 +319,6 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 ![](assets/hotdb-management/image22.png)
 
 - Click [Start Detection] to check whether the current cluster high availability environment meets the requirements before high availability switch.
-
 - This step requires all detection items to pass the test before proceeding to the next step. Otherwise, it is necessary to manually intervene to solve the abnormal problem of the failed item.
 
 (III) **High-availability switch**
@@ -395,11 +326,8 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 ![](assets/hotdb-management/image23.png)
 
 - This step is a high availability switch execution step. The high availability switch is successful only when all execution items are completed normally.
-
 - The slave compute node randomly will be set before switch (no setting for below V2.4.8). After the switch is successful, the setting will be canceled automatically.
-
 - The "Automatically rebuild high available environment after switch" on the page will be automatically ticked, that is, the program automatically rebuilds the environment after the switch is completed to satisfy the next high availability switch operation without manual rebuilding.
-
 - If the execution fails, manual intervention is needed to check and solve the problem.
 
 (IV) **Switch complete**
@@ -427,17 +355,11 @@ Click the [Rebuilding] button to enter the high availability reconstruction proc
 Before configuration test, attention shall be paid to the following points:
 
 - If the SSH login information or configuration file information has been configured in Add Cluster, the high availability environment reconstruction page will fill in the relevant information by default.
-
 - SSH login mode may choose Login with User Password or Sign in without Password; the information will be saved after successful connection, and the information will not be saved if one-time login is chosen.
-
 - The current logged-in user must have the read-write access privilege of master/slave configuration files.
-
 - If the SSH Sign in without Password mode is chosen, the server where the distributed transactional database platform is located must set the public key of the account started and copy it to the server to be accessed. (Note: The user who can sign in without password must be consistent with the server user who starts the management platform currently).
-
 - If the current connection account has the Sign in without Password privilege, even if Login with User Password is selected and wrong password is entered, the login will be successful and priority will be given to the judgement of whether there is Sign in without Password privilege. The check of password will be filtered directly if there is Sign in without Password privilege.
-
 - The configuration file directory shall be consistent with the real service directory, otherwise the connection test will fail.
-
 - Enter the correct configuration information, the connection test will be successful and the corresponding configuration will be saved to the compute node cluster synchronously. Click [Next Step] to enter the environment reconstruction detection page. If the current page information does not pass the test, the operation button for the next step cannot be triggered.
 
 (II) **Environment rebuild inspection**
@@ -498,47 +420,44 @@ Deployment grade Examination is a set of operation environment examination grade
 
 **Examination dimension:**
 
------------------------------ ------------------------------------------
-
-**Examination dimension**     **Examination item**
-Hardware resource             Server attribute
-Disk space
-Disk IO response time
-Memory
-CPU
-Network quality
-Operation system              periodical scheduling
-sysctl.conf
-Time synchronization
-Can be connected to the external network
-Firewall and selinux
-yum
-Time zone
-tune
-limits.cnf
-Character set
-SSH connection
-Software deployment           Backup program
-MySQL client
-MySQL server
-Java environment
-Software configuration        MySQL connection
-MySQL high availability
-Compute node startup script
-ConfigDB
-MySQL disk space
-MySQL parameter configuration
-MySQL user privilege
-server.xml
-Compute node high availability
-Monitoring port
-Basic function verification   Data source high availability switch
-Compute node high availability switch
-LogicDB privilege
-Backup program
-10 s performance test
-
------------------------------ ------------------------------------------
+| Examination dimension | Examination item |
+| --- | --- |
+| Hardware resource | Server attribute |
+|     | Disk space |
+|     | Disk IO response time |
+|     | Memory |
+|     | CPU |
+|     | Network quality |
+| Operation system | periodical scheduling |
+|     | sysctl.conf |
+|     | Time synchronization |
+|     | Can be connected to the external network |
+|     | Firewall and selinux |
+|     | yum |
+|     | Time zone |
+|     | tune |
+|     | limits.cnf |
+|     | Character set |
+|     | SSH connection |
+| Software deployment | Backup program |
+|     | MySQL client |
+|     | MySQL server |
+|     | Java environment |
+| Software configuration | MySQL connection |
+|     | MySQL high availability |
+|     | Compute node startup script |
+|     | ConfigDB |
+|     | MySQL disk space |
+|     | MySQL parameter configuration |
+|     | MySQL user privilege |
+|     | server.xml |
+|     | Compute node high availability |
+|     | Monitoring port |
+| Basic function verification | Data source high availability switch |
+|     | Compute node high availability switch |
+|     | LogicDB privilege |
+|     | Backup program |
+|     | 10 s performance test |
 
 **Examination panel:**
 
@@ -665,19 +584,12 @@ The operations of all general users on the management platform can be viewed. Th
 **List information description:**
 
 - Group Name: The name of the compute node group queried.
-
 - Username: The user used to login to the management platform.
-
 - Access IP: The local IP used to login to the management platform. It supports fuzzy query.
-
 - Operation Type: All supported types are displayed in the drop-down box. After checking the checkbox, only logs of the selected operation type are displayed.
-
 - Operation Content: Record the user's real operation and important parameters, and support fuzzy query.
-
 - Input Parameter: More detailed user operation logs for easy analysis of user operations.
-
 - Operation Time: Record the actual operation time, and support the selection of time range to display log records. The time range of record here is determined by the default retention days in the settings.
-
 - Operation Result: Record the actual operation results. Log records can be filtered by the operation results.
 
 #### Security protection
@@ -689,17 +601,11 @@ The operation logs related to security protection performed by all general users
 **List information description:**
 
 - Group Name: The name of the compute node group queried.
-
 - Username: The user used to execute the operation.
-
 - Access IP: The local IP used to perform the operation. It supports fuzzy query.
-
 - Intercept Type: All supported types are displayed in the drop-down box. After checking the checkbox, only logs of the selected operation type are displayed.
-
 - Intercept Details: Record the commands executed. It supports fuzzy query.
-
 - Operation Time: Record the actual operation time, and support the selection of time range to display log records. The time range of record here is determined by the default retention days in the settings.
-
 - Operation Result: Record the actual operation results. Log records can be filtered by the operation results.
 
 **Note**: If the compute node version is below V2.5.0, the page does not display the security audit log record.
@@ -713,17 +619,11 @@ The operation records of all general users on the management port can be viewed.
 **List information description:**
 
 - Group Name: The name of the compute node group queried.
-
 - Username: The user used to login to the management port.
-
 - Access IP: The IP used to login to the management port.
-
 - Operation Type: All supported types are displayed in the drop-down box. After checking the checkbox, only logs of the selected operation type are displayed.
-
 - Operation Command: The command actually executed on the management port.
-
 - Operation Time: Record the actual operation time, and support the selection of time range to display log records. The time range of record here is determined by the default retention days in the settings.
-
 - Operation Result: Record the actual operation results. Log records can be filtered by the operation results.
 
 **Note**: If the compute node version is below V2.5.0, the page does not display the management port operation audit log record.
@@ -780,29 +680,22 @@ Provide users with operations such as platform license, compute node license, up
 
 ##### Obtain existing license information
 
-- Enter the license management page, select [Obtain the existing license information] for operation type, select [Platform license] for license type, and click [Acquire] to obtain the existing license information.
+Enter the license management page, select [Obtain the existing license information] for operation type, select [Platform license] for license type, and click [Acquire] to obtain the existing license information.
 
 ![](assets/hotdb-management/image50.png)
 
 The license information is as follows:
 
-file: license file name
+- file: license file name
+- serial number: serial number of license file
+- type: license type, example: OFFICIAL, TRIAL
+- Num of available compute node cluster groups: number of available compute node cluster groups. 0 means that there are no restrictions
+- Num of compute nodes available in each cluster: number of compute nodes available in each cluster. 0 means that there are no restrictions
+- module limit: module limit (can be ignored temporarily)
+- create time: create time
+- customer info: customer info
 
-serial number: serial number of license file
-
-type: license type, example: OFFICIAL, TRIAL
-
-Num of available compute node cluster groups: number of available compute node cluster groups. 0 means that there are no restrictions
-
-Num of compute nodes available in each cluster: number of compute nodes available in each cluster. 0 means that there are no restrictions
-
-module limit: module limit (can be ignored temporarily)
-
-create time: create time
-
-customer info: customer info
-
-- When there are multiple license files in the management platform, the license marked in blue is the license currently being used.
+When there are multiple license files in the management platform, the license marked in blue is the license currently being used.
 
 ![](assets/hotdb-management/image51.png)
 
@@ -823,17 +716,11 @@ update \`hotdb_setting\` set \`value\` ='new_email@xx.cn' where \`key\`='emailAd
 **(2) Notes on updating platform license**
 
 - Manual tampering with the license file will invalidate the license.
-
 - Manual tampering with the license dependency package will result in failure to update the license.
-
 - If the the user has no privilege for management/keys directory, the license update will fail.
-
 - Uploading unauthorized file updates will result in failed license update.
-
 - If the number of available cluster groups of the new license is less than the number of existing cluster groups, the update will fail.
-
 - If the number of available compute nodes in each cluster of the new license is less than the number of existing compute nodes, the update will fail.
-
 - After the new license is updated, the old license will not be deleted, but transferred to the management/databak/keys directory of the management platform.
 
 **(3) Restrictions of platform license on single-IDC deployment**
@@ -849,9 +736,7 @@ update \`hotdb_setting\` set \`value\` ='new_email@xx.cn' where \`key\`='emailAd
 ![](assets/hotdb-management/image54.png)
 
 - The deployment of the master center in the DR mode is the same as that in the ordinary mode. That is, when the number of the current compute node cluster groups has reached the license limit, the deployment of the master center will not be allowed.
-
 - Because the deployment of the DR center in the DR mode is in the same cluster group with the master center, the deployment of the DR center is not limited by the number of compute node cluster groups, but limited only by the number of available compute nodes in each group.
-
 - The deployment of DR center is limited by the number of available compute nodes in each cluster. When the number of remaining available compute nodes is less than the number of compute nodes in the DR center to be deployed, deployment is not allowed.
 
 ![](assets/hotdb-management/image55.png)
@@ -965,13 +850,9 @@ update \`hotdb_setting\` set \`value\` ='new_email@xx.cn' where \`key\`='emailAd
 ![](assets/hotdb-management/image69.png)
 
 - The update record is primarily the user's update and authorization operation records of the compute node license and the platform license.
-
 - In update failure records, move the mouse cursor cursor into the failure mark to see the specific reason for failure.
-
 - The record can view the status information of the compute node license and the platform license before and after the update.
-
 - When the license update type is platform license, the column of compute node cluster displays "--";
-
 - The admin user can view all the update records, while the general user can only view the update records of the compute node cluster that he has visited.
 
 ### Platform configuration data management
@@ -988,17 +869,14 @@ If the slave ConfigDB is not added through platform cluster deployment or stand-
 
 **Configure master-master or master-slave type:**
 
+```
 spring.datasource.url=jdbc:mysql://192.168.210.134:3308/hotdb_cloud_config134?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&connectTimeout=3000&socketTimeout=3600000&useSSL=false
-
 spring.datasource.username=hotdb_cloud
-
 spring.datasource.password=hotdb_cloud
-
 spring.datasource.bakurl=jdbc:mysql://192.168.210.135:3308/hotdb_cloud_config134?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&connectTimeout=3000&socketTimeout=3600000&useSSL=false
-
 spring.datasource.bakusername=hotdb_cloud
-
 spring.datasource.bakpassword=hotdb_cloud
+```
 
 When starting the management platform service program, if the master ConfigDB is not available, it will fail after reconnection for 30 minutes (reconnection every 10 seconds, timeout for 5 seconds will be judged as failure). If the master ConfigDB is available and the slave ConfigDB is not available, the slave ConfigDB can be reconnected for 10 minutes at most. If it is unable to connect eventually, the slave ConfigDB will be set to "not available" and the master ConfigDB will be started in "available" status.
 
@@ -2326,66 +2204,63 @@ DR mode explanation: when the DR mode is enabled, please refer to the chapter [C
 
 **Config Checking Items**:
 
-------------------------------------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-**Type**                                          **Checking Content**
-Data source table configuration                   Data Node reference is normal
-Data Source database does not repeat
-Data Source cannot be connected
-A Data Node must contain available data source
-Data Node must contain Data Source
-One data node has only one Active Master
-One Data Node must contain a Data Source of Active Master type
-The character set of data source must be consistent
-Non-MGR Data Node cannot cite MGR type Data Source
-Data node cannot cite common master-slave data source
-ConfigDB cannot be added as data source
-Data source user and configDB user cannot share
-The logical architecture of compute nodes in the master center and the DR center is the same.
-Node switching rule table configuration           Data Source reference is normal
-Data Source and Data Node high availability source cannot be the same
-Data Source and Data Node high availability source must belong to the same data node
-LogicDB table configuration                       Data Node reference is normal
-Sharding function parameter table configuration   Sharding function reference is normal
-Data Node reference is normal
-The column_value of RANGE or HASH route method must be in the form of an interval, such as: a:b, and a and b shall be numbers, a<=b
-The sharding parameter value range of HASH route method cannot contain negative numbers
-The sharding parameter value of automatic Sharding Route method shall be a positive integer
-The sharding parameter value of ROUTE route method shall be an integer
-Sharding function parameter is normal
-Sharding interval of RANGE or HASH shall have no overlap
-The column_value of SIMPLE_MOD or CRC32_MOD route method can be a number greater than or equal to 0 or an interval, such as: a:b, and a and b shall be numbers, a>=0, b>=0, a< =b
-The module value of SIMPLE_MOD or CRC32_MOD must be within 2-2147483647
-SIMPLE_MOD or CRC32_MOD must be configured with module values
-The sharding parameter value interval of SIMPLE_MOD or CRC32_MOD shall have no overlap
-Sharding function table configuration             Sharding function reference is normal
-Table Configuration                               Global table is normal
-Sharding function reference is normal
-Data Node reference is normal
-LogicDB reference is normal
-Table name conflict detection is normal
-Global table node must contain all nodes of the logicDB it belongs to
-Association between table and data node is normal
-Sharding table sharding function association is normal
-Vertical sharding table belongs to only one node
-After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table.
-Child table configuration                         Parent table reference is normal
-Parent table sharding type is normal
-Association between one parent table and multiple child tables is normal
-Relation between child table and parent table is normal
-Child table has no conflict with parent table name
-License management                                Node number limitation checking passed
-LogicDB number limitation checking passed
-Data source configuration                         Data source configuration is correct
-Reload requirement: the replication latency between available master Data Source and original master Data Source cannot exceed 10s
-Reload requires that the replication status between available master data source and original master data source shall be normal
-ConfigDB status                                   ConfigDB connection is normal
-ConfigDB replication status is normal
-user privilege configuration                      The data source connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,process,references,super,reload (only when the node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client,trigger,display view,create view,create routine,xa_recover_admin (only for data source instances of version 8.0 and above), alter routine,execute,event)
-The configDB connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload (only when the compute node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client)
-Compute node configuration                        Whether the currently configured compute node mode matches the real compute node mode.
-
-------------------------------------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Type | Checking Content |
+| --- | --- |
+| Data source table configuration | Data Node reference is normal |
+|     | Data Source database does not repeat |
+|     | Data Source cannot be connected |
+|     | A Data Node must contain available data source |
+|     | Data Node must contain Data Source |
+|     | One data node has only one Active Master |
+|     | One Data Node must contain a Data Source of Active Master type |
+|     | The character set of data source must be consistent |
+|     | Non-MGR Data Node cannot cite MGR type Data Source |
+|     | Data node cannot cite common master-slave data source |
+|     | ConfigDB cannot be added as data source |
+|     | Data source user and configDB user cannot share |
+|     | The logical architecture of compute nodes in the master center and the DR center is the same. |
+| Node switching rule table configuration | Data Source reference is normal |
+|     | Data Source and Data Node high availability source cannot be the same |
+|     | Data Source and Data Node high availability source must belong to the same data node |
+| LogicDB table configuration | Data Node reference is normal |
+| Sharding function parameter table configuration | Sharding function reference is normal |
+|     | Data Node reference is normal |
+|     | The column_value of RANGE or HASH route method must be in the form of an interval, such as: a:b, and a and b shall be numbers, a<=b |
+|     | The sharding parameter value range of HASH route method cannot contain negative numbers |
+|     | The sharding parameter value of automatic Sharding Route method shall be a positive integer |
+|     | The sharding parameter value of ROUTE route method shall be an integer |
+|     | Sharding function parameter is normal |
+|     | Sharding interval of RANGE or HASH shall have no overlap |
+|     | The column_value of SIMPLE_MOD or CRC32_MOD route method can be a number greater than or equal to 0 or an interval, such as: a:b, and a and b shall be numbers, a>=0, b>=0, a< =b |
+|     | The module value of SIMPLE_MOD or CRC32_MOD must be within 2-2147483647 |
+|     | SIMPLE_MOD or CRC32_MOD must be configured with module values |
+|     | The sharding parameter value interval of SIMPLE_MOD or CRC32_MOD shall have no overlap |
+| Sharding function table configuration | Sharding function reference is normal |
+| Table Configuration | Global table is normal |
+|     | Sharding function reference is normal |
+|     | Data Node reference is normal |
+|     | LogicDB reference is normal |
+|     | Table name conflict detection is normal |
+|     | Global table node must contain all nodes of the logicDB it belongs to |
+|     | Association between table and data node is normal |
+|     | Sharding table sharding function association is normal |
+|     | Vertical sharding table belongs to only one node |
+|     | After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table. |
+| Child table configuration | Parent table reference is normal |
+|     | Parent table sharding type is normal |
+|     | Association between one parent table and multiple child tables is normal |
+|     | Relation between child table and parent table is normal |
+|     | Child table has no conflict with parent table name |
+| License management | Node number limitation checking passed |
+|     | LogicDB number limitation checking passed |
+| Data source configuration | Data source configuration is correct |
+|     | Reload requirement: the replication latency between available master Data Source and original master Data Source cannot exceed 10s |
+|     | Reload requires that the replication status between available master data source and original master data source shall be normal |
+| ConfigDB status | ConfigDB connection is normal |
+|     | ConfigDB replication status is normal |
+| user privilege configuration | The data source connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,process,references,super,reload (only when the node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client,trigger,display view,create view,create routine,xa_recover_admin (only for data source instances of version 8.0 and above), alter routine,execute,event) |
+|     | The configDB connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload (only when the compute node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client) |
+| Compute node configuration | Whether the currently configured compute node mode matches the real compute node mode. |
 
 Notes:
 

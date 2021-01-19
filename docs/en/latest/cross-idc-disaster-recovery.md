@@ -772,18 +772,15 @@ The deployment environment examination not only supports the current active cent
 
 - Several examination items for the current standby center are skipped due to the inability to connect to the service port. The skipped items are listed as follows:
 
------------------------------ --------------------------------------- ------------------------------------------------------------------------------
-
-Examination Dimensions        Examination Items                       Examination Details
-  Software Configuration        High Availability of Compute Node       The compute node service port and management port can be normally connected.
-  Connection to the compute node service port via VIP is normal.
-  Compute Node Mode
-  Basic function verification   Data Source High Availability Switch    
-  Compute Node High Availability Switch   
-  Backup Program                          
-  10s Performance Test
-
------------------------------ --------------------------------------- ------------------------------------------------------------------------------
+| Examination Dimensions | Examination Items | Examination Details |
+| --- | --- | --- |
+| Software Configuration | High Availability of Compute Node | The compute node service port and management port can be normally connected. |
+|     |     | Connection to the compute node service port via VIP is normal. |
+|     |     | Compute Node Mode |
+|     | Basic function verification | Data Source High Availability Switch |
+|     |     | Compute Node High Availability Switch |
+|     |     | Backup Program |
+|     |     | 10s Performance Test |
 
 ### Configuration
 
@@ -1473,23 +1470,20 @@ All MySQL instance versions are 5.7.25, GTID enabled, and semi-synchronous repli
 
 The actual connection information corresponding to each component is listed as follows:
 
---------------- ---------------- --------------- ----------- ---------------------------
-
-IDC Type        Component Type   Role            Code Name   Connection Information
-Master Center   Compute Node     Master          HotDB-01    192.168.220.181_3323_3325
-Slave           HotDB-02    192.168.220.182_3323_3325
-Data Source      Master          ds01        192.168.220.181_3307
-Master-master   ds02        192.168.220.182_3307
-ConfigDB         Master          hc01        192.168.220.181_3306
-Master-master   hc02        192.168.220.182_3306
-DR Center       Compute Node     Master          HotDB-03    192.168.220.183_3323_3325
-Master-master   HotDB-04    192.168.220.184_3323_3325
-Data Source      Master          ds03        192.168.220.183_3307
-Master-master   ds04        192.168.220.184_3307
-ConfigDB         Master          hc03        192.168.220.183_3306
-Master-master   hc04        192.168.220.184_3306
-
---------------- ---------------- --------------- ----------- ---------------------------
+| IDC Type | Component Type | Role | Code Name | Connection Information |
+| --- | --- | --- | --- | --- |
+| Master Center | Compute Node | Master | HotDB-01 | 192.168.220.181_3323_3325 |
+|     |     | Slave | HotDB-02 | 192.168.220.182_3323_3325 |
+|     | Data Source | Master | ds01 | 192.168.220.181_3307 |
+|     |     | Master-master | ds02 | 192.168.220.182_3307 |
+|     | ConfigDB | Master | hc01 | 192.168.220.181_3306 |
+|     |     | Master-master | hc02 | 192.168.220.182_3306 |
+| DR Center | Compute Node | Master | HotDB-03 | 192.168.220.183_3323_3325 |
+|     |     | Master-master | HotDB-04 | 192.168.220.184_3323_3325 |
+|     | Data Source | Master | ds03 | 192.168.220.183_3307 |
+|     |     | Master-master | ds04 | 192.168.220.184_3307 |
+|     | ConfigDB | Master | hc03 | 192.168.220.183_3306 |
+|     |     | Master-master | hc04 | 192.168.220.184_3306 |
 
 Note:
 
