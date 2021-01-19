@@ -18,7 +18,7 @@ No ConfigDB SQL changes when some versions are upgraded (For example: update of 
 
 Log in to the management platform server and execute the command Stop Service:
 
-\# sh /usr/local/hotdb/hotdb-management/bin/hotdb_management stop
+# sh /usr/local/hotdb/hotdb-management/bin/hotdb_management stop
 
 #### Back Up ConfigDB Data
 
@@ -26,7 +26,7 @@ ConfigDB data must be backed up before ConfigDB is upgraded to prevent abnormal 
 
 **mysqldump is used to back up configDB data**
 
-\# mysqldump -S /data/mysql/mysqldata3316/sock/mysql.sock --set-gtid-purged=off ---single-transaction --master-data=1 --databases hotdb_cloud_config --default-character-set=utf8 -uroot > /usr/local/hotdb/hotdb_cloud_config_2.5.3_20190815.sql
+# mysqldump -S /data/mysql/mysqldata3316/sock/mysql.sock --set-gtid-purged=off ---single-transaction --master-data=1 --databases hotdb_cloud_config --default-character-set=utf8 -uroot > /usr/local/hotdb/hotdb_cloud_config_2.5.3_20190815.sql
 
 #### Execute ConfigDB Upgrade Script
 
@@ -36,7 +36,7 @@ Special instruction: if the target version of the management platform upgrade is
 
 1. Log in to the management platform ConfigDB
 
-\# mysql -uhotdb_cloud -p -P3306 -Dhotdb_cloud_config -h127.0.0.1
+# mysql -uhotdb_cloud -p -P3306 -Dhotdb_cloud_config -h127.0.0.1
 
 2. Copy the upgrade content to ConfigDB for execution
 
@@ -76,9 +76,9 @@ Special instructions:
 
 #### Back Up Management Platform Directory
 
-\# cd /usr/local/hotdb/
+# cd /usr/local/hotdb/
 
-\# mv hotdb-management hotdb_management_249
+# mv hotdb-management hotdb_management_249
 
 #### Upload and Unzip New Version Package
 
@@ -88,15 +88,15 @@ rz command or ftp file transfer tool can be used to upload new version package
 
 **Unzip new version package**
 
-\# tar -xvf hotdb-management-2.4.9-ga-20190417.tar.gz -C /usr/local/hotdb
+# tar -xvf hotdb-management-2.4.9-ga-20190417.tar.gz -C /usr/local/hotdb
 
 **Folder authority is given to hotdb users**
 
-\# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-management
+# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-management
 
 **Restore directory default context**
 
-\# restorecon -R /usr/local/hotdb/hotdb-management
+# restorecon -R /usr/local/hotdb/hotdb-management
 
 ### Update Configuration File
 
@@ -104,21 +104,21 @@ rz command or ftp file transfer tool can be used to upload new version package
 
 It is suggested to open the application.properties configuration file under the old management platform directory, and synchronize the changed parameter values to the configuration file under the new version directory.
 
-\# cd /usr/local/hotdb/hotdb-management/conf/
+# cd /usr/local/hotdb/hotdb-management/conf/
 
-\# vi application.properties
+# vi application.properties
 
 -----------------------------------Configuration Content-----------------------------------------
 
-\# http port
+# http port
 
 server.port=3324
 
-\# ssl socket port
+# ssl socket port
 
 server.backup.port=3322
 
-\# hotdb management database settings
+# hotdb management database settings
 
 spring.datasource.url=jdbc:mysql://192.168.210.30:3307/hotdb_cloud_config_253?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&connectTimeout=3000&socketTimeout=3600000
 
@@ -130,7 +130,7 @@ spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 
 ......(some parameters are omitted here, subject to the actual application.properties)
 
-\# tomcat connection pool specific settingshotdb.config.sqlFirewall.interceptType=0:\\u8BEF\\u64CD\\u4F5C,1:SQL\\u6CE8\\u5165,2:\\u4E0D\\u826F\\u64CD\\u4F5C,3:\\u8BEF\\u8BBE\\u7F6Ehotdb.server.log.days=14
+# tomcat connection pool specific settingshotdb.config.sqlFirewall.interceptType=0:\\u8BEF\\u64CD\\u4F5C,1:SQL\\u6CE8\\u5165,2:\\u4E0D\\u826F\\u64CD\\u4F5C,3:\\u8BEF\\u8BBE\\u7F6Ehotdb.server.log.days=14
 
 ### Upgrade JDK version
 
@@ -146,9 +146,9 @@ You can upload OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz installation pack
 
 Unzip the installation package
 
-\# mkdir -p /usr/local/jdk8
+# mkdir -p /usr/local/jdk8
 
-\# tar -xvf OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz -C /usr/local/jdk8
+# tar -xvf OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz -C /usr/local/jdk8
 
 #### Modify startup script
 
@@ -156,7 +156,7 @@ Only two adjustments are required for bin/hotdb_management:
 
 ----------------------------------Original configuration----------------------------------------
 
-JAVA_BIN=\$shellPath/../../jdk/bin/java
+JAVA_BIN=$shellPath/../../jdk/bin/java
 
 JAVA_VERSION="1.7.0_80"
 
@@ -170,9 +170,9 @@ JAVA_VERSION="1.8.0_252"
 
 #### Start Management Platform Services
 
-\# cd /usr/local/hotdb/hotdb-management/bin/
+# cd /usr/local/hotdb/hotdb-management/bin/
 
-\# sh hotdb_management start
+# sh hotdb_management start
 
 #### Start Exception Handling
 
@@ -212,9 +212,9 @@ If the compute node is upgraded from the lower version to v2.5.6 or above, the l
 
 **Log in to the compute node server to execute the command Stop Service:**
 
-\# cd /usr/local/hotdb/hotdb-server/bin
+# cd /usr/local/hotdb/hotdb-server/bin
 
-\# sh hotdb_server stop
+# sh hotdb_server stop
 
 #### ConfigDB Upgrade
 
@@ -228,9 +228,9 @@ The steps of Compute Node ConfigDB upgrade are the same as those of management p
 
 ##### Back up compute node directory
 
-\# cd /usr/local/hotdb/
+# cd /usr/local/hotdb/
 
-\# mv hotdb-server hotdb_server_253
+# mv hotdb-server hotdb_server_253
 
 ##### Upload and Unzip New Version Package
 
@@ -240,15 +240,15 @@ rz command or ftp file transfer tool can be used to upload new version package
 
 **Unzip new version package**
 
-\# tar -xvf hotdb-server-2.5.4-ga-20190812.tar.gz -C /usr/local/hotdb
+# tar -xvf hotdb-server-2.5.4-ga-20190812.tar.gz -C /usr/local/hotdb
 
 **Folder authority is given to hotdb users**
 
-\# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-server
+# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-server
 
 **Restore directory default context**
 
-\# restorecon -R /usr/local/hotdb/hotdb-server
+# restorecon -R /usr/local/hotdb/hotdb-server
 
 ##### NDB SQL Service
 
@@ -256,11 +256,11 @@ If compute node version is V2.5.3 and above before upgrade, please check whether
 
 **Enter the compute node directory previously backed up**
 
-\# cd /usr/local/hotdb/hotdb_server_253
+# cd /usr/local/hotdb/hotdb_server_253
 
 **Check the content under the compute node directory**
 
-\# ll
+# ll
 
 drwxr-xr-x. 2 hotdb hotdb 4096 Aug 26 17:49 bin
 
@@ -280,7 +280,7 @@ drwxr-xr-x. 2 hotdb hotdb 4096 Aug 19 10:35 utils
 
 **Copy the NDB SQL from backup directory to the upgraded compute node directory.**
 
-\# cp -rp /usr/local/hotdb/hotdb_server_253/ndbsql* /usr/local/hotdb/hotdb-server/
+# cp -rp /usr/local/hotdb/hotdb_server_253/ndbsql* /usr/local/hotdb/hotdb-server/
 
 #### Update Configuration File
 
@@ -288,9 +288,9 @@ drwxr-xr-x. 2 hotdb hotdb 4096 Aug 19 10:35 utils
 
 It is suggested to open the server.xml configuration file under the compute node directory backed up, and synchronize the changed parameter values to the configuration file under the new version directory.
 
-\# cd /usr/local/hotdb/hotdb-server/conf/
+# cd /usr/local/hotdb/hotdb-server/conf/
 
-\# vi server.xml
+# vi server.xml
 
 -----------------------------------Configuration Content-----------------------------------------
 
@@ -408,39 +408,39 @@ Number of Processors
 
 It is suggested to open the hotdb_server script under the compute node bin/directory backed up, and synchronize the changed parameter values to the script file under the new version directory.
 
-\# !/bin/sh
+# !/bin/sh
 
-PID_DIR="\$HOTDB_HOME"/run
+PID_DIR="$HOTDB_HOME"/run
 
-PID_FILE="\$PID_DIR"/hotdb-server.pid
+PID_FILE="$PID_DIR"/hotdb-server.pid
 
-HA_STARTUP="\$HOTDB_HOME"/bin/keepalived
+HA_STARTUP="$HOTDB_HOME"/bin/keepalived
 
-DRIVER_DIR="\$HOTDB_HOME"/utils
+DRIVER_DIR="$HOTDB_HOME"/utils
 
-HOTDB_LOGS="\$HOTDB_HOME"/logs/hotdb.log
+HOTDB_LOGS="$HOTDB_HOME"/logs/hotdb.log
 
-HOTDB_CONSOLE_LOG="\$HOTDB_HOME"/logs/console.log
+HOTDB_CONSOLE_LOG="$HOTDB_HOME"/logs/console.log
 
-DRIVER_PACKAGE="\$DRIVER_DIR"/aksusbd-7*.tar.gz
+DRIVER_PACKAGE="$DRIVER_DIR"/aksusbd-7*.tar.gz
 
-TMPFILE_DIR="\$HOTDB_HOME"/HotDB-TEMP
+TMPFILE_DIR="$HOTDB_HOME"/HotDB-TEMP
 
-JAVA_BIN="\$HOTDB_HOME"/../jdk/bin/java
+JAVA_BIN="$HOTDB_HOME"/../jdk/bin/java
 
 JAVA_VERSION="1.7.0_80"
 
-\# with CMS Garbage Collection
+# with CMS Garbage Collection
 
 JAVA_OPTS="-server -Xms4G -Xmx4G -XX:MaxDirectMemorySize=24G"
 
-\# with G1 Garbage Collection
+# with G1 Garbage Collection
 
-\# JAVA_OPTS="-server -Xms16G -Xmx16G -XX:MaxDirectMemorySize=24G"
+# JAVA_OPTS="-server -Xms16G -Xmx16G -XX:MaxDirectMemorySize=24G"
 
 ......(some parameters are omitted here, subject to the actual hotdb_server script)
 
-HOTDB_CLASSPATH="\$HOTDB_HOME/conf:\$HOTDB_HOME/lib/classes"
+HOTDB_CLASSPATH="$HOTDB_HOME/conf:$HOTDB_HOME/lib/classes"
 
 ##### Other Configuration Files
 
@@ -450,9 +450,9 @@ In addition to the values of compute node configuration in old version needing t
 
 ##### Start compute node service
 
-\# cd /usr/local/hotdb/hotdb-server/bin
+# cd /usr/local/hotdb/hotdb-server/bin
 
-\# sh hotdb_server start
+# sh hotdb_server start
 
 ##### Enable exception handling
 
@@ -480,19 +480,19 @@ The steps of Compute Node ConfigDB upgrade are the same as those of management p
 
 **Stop slave keepalived service**
 
-\# service keepalived stop
+# service keepalived stop
 
 **Stop slave compute node service**
 
-\# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 **Stop master keepalived service**
 
-\# service keepalived stop
+# service keepalived stop
 
 **Stop master compute node service**
 
-\# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 #### Upgrade master/slave compute node version
 
@@ -510,25 +510,25 @@ Start master compute node service first; after the compute node service is compl
 
 **Start master computer node service**
 
-**\# cd** /usr/local/hotdb/hotdb-server/bin
+**# cd** /usr/local/hotdb/hotdb-server/bin
 
-\# sh hotdb_server start
+# sh hotdb_server start
 
 **Start master keepalived service**
 
-\# service keepalived start
+# service keepalived start
 
 **After VIP address of master keepalived is connected through ping,** start slave compute node service. After slave compute node service is completely started (server port is closed, and manager port can be connected normally), start slave keepalived service.
 
 **Start slave computer node service**
 
-**\# cd** /usr/local/hotdb/hotdb-server/bin
+**# cd** /usr/local/hotdb/hotdb-server/bin
 
-\# sh hotdb_server start
+# sh hotdb_server start
 
 **Start slave keepalived service**
 
-\# service keepalived start
+# service keepalived start
 
 ### Master/slave node cluster upgrade without service stopped
 
@@ -648,7 +648,7 @@ High availability switch is required when compute node is upgraded. To ensure th
 >
 > }
 >
-> \# be careful in red hat
+># be careful in red hat
 >
 > track_interface {
 >
@@ -750,7 +750,7 @@ High availability switch is required when compute node is upgraded. To ensure th
 >
 > }
 >
-> \# be careful in red hat
+># be careful in red hat
 >
 > track_interface {
 >
@@ -800,13 +800,13 @@ The steps of Compute Node ConfigDB upgrade are the same as those of management p
 
 Log in to slave compute node server and execute the command Stop Service:
 
-\# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 ##### Back Up Slave Compute Node Directory
 
-\# cd /usr/local/hotdb/
+# cd /usr/local/hotdb/
 
-\# mv hotdb-server hotdb_server_249
+# mv hotdb-server hotdb_server_249
 
 ##### Upload and Unzip New Version Package
 
@@ -816,15 +816,15 @@ rz command or ftp file transfer tool can be used to upload new version package
 
 **Unzip new version package**
 
-\# tar -xvf hotdb-server-2.4.9-ga-20190812.tar.gz -C /usr/local/hotdb
+# tar -xvf hotdb-server-2.4.9-ga-20190812.tar.gz -C /usr/local/hotdb
 
 **Folder authority is given to hotdb users**
 
-\# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-server
+# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-server
 
 **Restore directory default context**
 
-\# restorecon -R /usr/local/hotdb/hotdb-server
+# restorecon -R /usr/local/hotdb/hotdb-server
 
 ##### NDB SQL Service
 
@@ -836,9 +836,9 @@ Please refer to Single Node Cluster Compute Node Upgrade NDB SQL Service for spe
 
 It is suggested to open the server.xml configuration file under the old compute node directory, and synchronize the changed parameter values to the configuration file under the new version directory.
 
-\# cd /usr/local/hotdb/hotdb-server/conf/
+# cd /usr/local/hotdb/hotdb-server/conf/
 
-\# vi server.xml
+# vi server.xml
 
 -----------------------------------Configuration Content-----------------------------------------
 
@@ -848,9 +848,9 @@ Note: The reference modification is not repeated here, please view the Update se
 
 It is suggested to open the hotdb_server script under the compute node bin/directory backed up, and synchronize the changed parameter values to the script file under the new version directory.
 
-\# cd /usr/local/hotdb/hotdb-server/bin/
+# cd /usr/local/hotdb/hotdb-server/bin/
 
-\# vi hotdb_server
+# vi hotdb_server
 
 -----------------------------------Configuration Content-----------------------------------------
 
@@ -862,9 +862,9 @@ In addition to the values of compute node configuration in old version needing t
 
 ##### Start Slave Compute Node Service
 
-\# cd /usr/local/hotdb/hotdb-server/bin
+# cd /usr/local/hotdb/hotdb-server/bin
 
-\# sh hotdb_server start
+# sh hotdb_server start
 
 Note: When server port (3323 by default) is closed and manager port (3325 by default) is open after slave compute node service is started, it is normal.
 
@@ -874,9 +874,9 @@ Note: When server port (3323 by default) is closed and manager port (3325 by def
 
 **Log in to master compute node server and execute the command Stop Service:**
 
-\# cd /usr/local/hotdb/hotdb-server/bin
+# cd /usr/local/hotdb/hotdb-server/bin
 
-\# sh hotdb_server stop
+# sh hotdb_server stop
 
 ##### Check Whether High Availability Switch is Successful
 
@@ -888,9 +888,9 @@ Note: If any of the above requirement fails to be met, then the high availabilit
 
 ##### Back Up Master Compute Node Directory
 
-\# cd /usr/local/hotdb/
+# cd /usr/local/hotdb/
 
-\# mv hotdb-server hotdb-server_249
+# mv hotdb-server hotdb-server_249
 
 ##### Upload and Unzip New Version Package
 
@@ -900,15 +900,15 @@ rz command or ftp file transfer tool can be used to upload new version package
 
 **Unzip new version package**
 
-\# tar -xvf hotdb-server-2.4.9-ga-20190812.tar.gz -C /usr/local/hotdb
+# tar -xvf hotdb-server-2.4.9-ga-20190812.tar.gz -C /usr/local/hotdb
 
 **Folder authority is given to hotdb users**
 
-\# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-server
+# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-server
 
 **Restore directory default context**
 
-\# restorecon -R /usr/local/hotdb/hotdb-server
+# restorecon -R /usr/local/hotdb/hotdb-server
 
 ##### NDB SQL Service
 
@@ -920,9 +920,9 @@ Please refer to Single Node Cluster Compute Node Upgrade NDB SQL Service for spe
 
 It is suggested to open the server.xml configuration file under the old compute node directory, and synchronize the changed parameter values to the configuration file under the new version directory.
 
-\# cd /usr/local/hotdb/hotdb-server/conf/
+# cd /usr/local/hotdb/hotdb-server/conf/
 
-\# vi server.xml
+# vi server.xml
 
 -----------------------------------Configuration Content-----------------------------------------
 
@@ -932,9 +932,9 @@ Note: The reference modification is not repeated for details, please view the Up
 
 It is suggested to open the hotdb_server script under the compute node bin/directory backed up, and synchronize the changed parameter values to the script file under the new version directory.
 
-\# cd /usr/local/hotdb/hotdb-server/bin/
+# cd /usr/local/hotdb/hotdb-server/bin/
 
-\# vi hotdb_server
+# vi hotdb_server
 
 -----------------------------------Configuration Content-----------------------------------------
 
@@ -952,7 +952,7 @@ Note: "current slave" in the following operation instruction is the compute node
 
 **1. Stop current slave (without VIP) keepalived service**
 
-\# service keepalived stop
+# service keepalived stop
 
 **2. Current master (with VIP) compute node server.xml and keepalived.conf modification**
 
@@ -1038,7 +1038,7 @@ check_HotDB Server_connect_state
 
 }
 
-\# be careful in red hat
+# be careful in red hat
 
 track_interface {
 
@@ -1150,7 +1150,7 @@ check_HotDB Server_connect_state
 
 }
 
-\# be careful in red hat
+# be careful in red hat
 
 track_interface {
 
@@ -1178,19 +1178,19 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 **4. Current master (with VIP) keepalived service execute configuration reloading**
 
-\# service keepalived reload
+# service keepalived reload
 
 ##### Start current slave (without VIP) compute node service and keepalived
 
 **Start compute node service**
 
-\# cd /usr/local/hotdb/hotdb-server/bin
+# cd /usr/local/hotdb/hotdb-server/bin
 
-\# sh hotdb_server start
+# sh hotdb_server start
 
 **Start keepalived service after successfully starting compute node service**
 
-\# service keepalived start
+# service keepalived start
 
 ##### Special instructions
 
@@ -1208,15 +1208,15 @@ Upgrade of version of three compute nodes in multi-node cluster mode will be ins
 
 **Stop secondary1 compute node service**
 
-\# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 **Stop secondary2 compute node service**
 
-\# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 **Stop primary compute node service**
 
-\# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
+# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 ##### Upgrade ConfigDB
 
@@ -1270,9 +1270,9 @@ Please refer to Compute Node Version Upgrade operation instructions in single no
 
 ##### Stop Primary Compute Node Service
 
-\# cd /usr/local/hotdb/hotdb-server/bin
+# cd /usr/local/hotdb/hotdb-server/bin
 
-\# sh hotdb_server stop
+# sh hotdb_server stop
 
 Note: Stopping primary compute node service will cause switch of master node in cluster. Please ensure the normal operation of other secondary compute node services before the primary compute node is stopped.
 
@@ -1316,15 +1316,15 @@ HotDB Backup does not necessarily need to be frequently upgraded, only when the 
 
 Before stopping HotDB Backup service, please confirm that there is no uncompleted backup task on current management platform, or the backup task may be interrupted abnormally.
 
-\# cd /usr/local/hotdb/hotdb-backup/bin
+# cd /usr/local/hotdb/hotdb-backup/bin
 
-\# sh hotdb_backup stop
+# sh hotdb_backup stop
 
 ### Back Up Old HotDB Backup Directory
 
-\# cd /usr/local/hotdb/
+# cd /usr/local/hotdb/
 
-\# mv hotdb-backup/ hotdb-backup_1.0
+# mv hotdb-backup/ hotdb-backup_1.0
 
 ### Upload and Unzip New Version Package
 
@@ -1334,21 +1334,21 @@ rz command or ftp file transfer tool can be used to upload new version package
 
 **Unzip new version package**
 
-\# tar -xvf hotdb-backup-2.0-20190109.tar.gz -C /usr/local/hotdb
+# tar -xvf hotdb-backup-2.0-20190109.tar.gz -C /usr/local/hotdb
 
 **Folder authority is given to hotdb users**
 
-\# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-backup
+# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-backup
 
 **Restore directory default context**
 
-\# restorecon -R /usr/local/hotdb/hotdb-backup
+# restorecon -R /usr/local/hotdb/hotdb-backup
 
 ### Start Service
 
-\# cd /usr/local/hotdb/hotdb-backup/bin
+# cd /usr/local/hotdb/hotdb-backup/bin
 
-\# sh hotdb_backup start -h 192.168.220.104 -p 3322
+# sh hotdb_backup start -h 192.168.220.104 -p 3322
 
 Note: IP address is the address of management platform server associated with HotDB Backup, and the port number is the parameter value of server.backup.port in the management platform configuration file application.properties
 
@@ -1362,15 +1362,15 @@ HotDB Listener generally does not need to upgrade frequently. It can only be upd
 
 Before stopping the Listener service, please confirm whether the current compute node is under SQL operation, or there may be transaction loss.
 
-\# cd /usr/local/hotdb/hotdb-listener/bin
+# cd /usr/local/hotdb/hotdb-listener/bin
 
-\# sh hotdb_listener stop
+# sh hotdb_listener stop
 
 ### Back Up Old HotDB Backup Directory
 
-\# cd /usr/local/hotdb/
+# cd /usr/local/hotdb/
 
-\# mv hotdb-listener/ hotdb-listener_1.0
+# mv hotdb-listener/ hotdb-listener_1.0
 
 ### Upload and Unzip New Version Package
 
@@ -1380,23 +1380,23 @@ You can use the rz command or ftp to upload a new version package
 
 Unzip the new version package
 
-\# tar -zvxf hotdb-listener-0.0.1-linux.tar.gz -C /usr/local/hotdb
+# tar -zvxf hotdb-listener-0.0.1-linux.tar.gz -C /usr/local/hotdb
 
 Give hotdb users folder privilege
 
-\# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-listener
+# chown -R hotdb:hotdb /usr/local/hotdb/hotdb-listener
 
 Restore the default content
 
-\# restorecon -R /usr/local/hotdb/hotdb-listener
+# restorecon -R /usr/local/hotdb/hotdb-listener
 
 ### Modify Configuration File
 
 Modifying the management port configuration file is the same as that before the service is stopped. 3330 by default:
 
-\# cd /usr/local/hotdb/hotdb-listener/conf
+# cd /usr/local/hotdb/hotdb-listener/conf
 
-\# vi config.properties
+# vi config.properties
 
 host=0.0.0.0
 
@@ -1404,8 +1404,8 @@ port=3330
 
 ### Start Service
 
-\# cd /usr/local/hotdb/hotdb-listener/bin
+# cd /usr/local/hotdb/hotdb-listener/bin
 
-\# sh hotdb_listener start
+# sh hotdb_listener start
 
 **Special instruction:** Listener upgrade on other data source servers only needs to follow the above process.

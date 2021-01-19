@@ -74,23 +74,23 @@ For the installation of JDK V1.7, 64-bit JDK1.7_80 is recommended. Acquire RPM i
 
 -   Execute the following command, and install JDK to the directory: /usr/local/
 
-\## rpm -ivh jdk-7u80-linux-x64.rpm --prefix=/usr/java/
+## rpm -ivh jdk-7u80-linux-x64.rpm --prefix=/usr/java/
 
 -   Configure JDK environment variables
 
 **Open and edit the /etc/profile file:**
 
-\# vi /etc/profile
+# vi /etc/profile
 
 **Add the following information to the end of the file:**
 
 export JAVA_HOME=/usr/java/jdk1.7.0_80
 
-export PATH=\$JAVA_HOME/bin:\$PATH
+export PATH=$JAVA_HOME/bin:$PATH
 
 **Execute source command, and make the newly-added environment variables come into effect:**
 
-\# source /etc/profile
+# source /etc/profile
 
 For the installation of JDK V1.8, OpenJDK8 installation package is recommended, and its operating steps are recommended as follows:
 
@@ -100,9 +100,9 @@ You can upload OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz installation pack
 
 Unzip the installation package
 
-\# mkdir -p /usr/local/jdk8
+# mkdir -p /usr/local/jdk8
 
-\# tar -xvf OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz -C /usr/local/jdk8
+# tar -xvf OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz -C /usr/local/jdk8
 
 1.  **Check glibc**
 
@@ -110,7 +110,7 @@ The service authorization of compute node requires the installation of the drive
 
 Check the installation of glibc on the server: (it is normal to output glibc version info)
 
-\## rpm -q glibc |egrep 'glibc.*i.86.*'
+## rpm -q glibc |egrep 'glibc.*i.86.*'
 
 2.  **Install ConfigDB**
 
@@ -126,13 +126,13 @@ To install compute node, it needs to unzip the compute node installation package
 
 **Upload the binary package of hotdb-server-2.5.0-xxx.tar.gz to the server, create installation directory of HotDB Server, and unzip HotDB Server to the installation directory.**
 
-\# mkdir /usr/local/hotdb
+# mkdir /usr/local/hotdb
 
-\# tar -zxvf hotdb-server-2.5.0-xxx.tar.gz -C /usr/local/hotdb/
+# tar -zxvf hotdb-server-2.5.0-xxx.tar.gz -C /usr/local/hotdb/
 
 **ConfigDB table structure is under installation directory /conf of compute node, and table structure could be imported into configDB using the following commands. (Importing table structure will create configDBhotdb_config)**
 
-\# mysql -uroot --socket=/data/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-server/conf/hotdb_config.sql
+# mysql -uroot --socket=/data/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-server/conf/hotdb_config.sql
 
 5.  **Add configDB account**
 
@@ -150,7 +150,7 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,references,crea
 
 The configuration file server.xml to be modified is under installation directory /conf of compute node. Compute node connection to configDB and port number (the default port number could be directly used without special requirements) and other parameters shall be set.
 
-\# vi /usr/local/hotdb/hotdb-server/conf/server.xml
+# vi /usr/local/hotdb/hotdb-server/conf/server.xml
 
 <property name="url">jdbc:mysql://192.168.200.1:3306/hotdb_config</property><!-- configDB address -->
 
@@ -170,19 +170,19 @@ Compute node startup script "hotdb_server" is under installation directory /bin 
 
 **Start compute node service**
 
-\# cd /usr/local/hotdb/hotdb-server/bin
+# cd /usr/local/hotdb/hotdb-server/bin
 
-\# sh hotdb_server start
+# sh hotdb_server start
 
 **Check whether compute node is successfully started or not**
 
-\# jps | grep -i HotdbStartup
+# jps | grep -i HotdbStartup
 
 19833 HotdbStartup
 
 **Stop compute node service**
 
-\# kill 19833 or sh hotdb_server stop
+# kill 19833 or sh hotdb_server stop
 
 **Description:**
 
@@ -200,9 +200,9 @@ JDK needs to be installed synchronously on the management platform before deploy
 
 Upload the binary package of hotdb-management-2.x.x-xxx.tar.gz to the server installation directory, and execute the following command.
 
-\# cd /usr/local/hotdb
+# cd /usr/local/hotdb
 
-\# tar -zxvf hotdb-management-2.x.x-xxx.tar.gz
+# tar -zxvf hotdb-management-2.x.x-xxx.tar.gz
 
 2.  **Import management platform configDB table structure**
 
@@ -218,7 +218,7 @@ GRANT select,insert,update,delete,create,drop,index,alter,references ON *.* TO '
 
 **Import management platform into configDB**
 
-\# mysql -uroot --socket=/data/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-management/doc/hotdb_cloud_config.sql
+# mysql -uroot --socket=/data/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-management/doc/hotdb_cloud_config.sql
 
 3.  **Modify management platform configuration file**
 
@@ -226,31 +226,31 @@ The modified configuration file is "application.properties" under the management
 
 **Edit configuration file**
 
-\# vi /usr/local/hotdb/hotdb-management/conf/application.properties
+# vi /usr/local/hotdb/hotdb-management/conf/application.properties
 
 **Modify parameter information**
 
-\## management platform listening port
+## management platform listening port
 
 server.port=3324
 
-\# Hotdb Backup Listening Port
+# Hotdb Backup Listening Port
 
 server.backup.port=3322
 
-\# HotDB Management configDB address
+# HotDB Management configDB address
 
 spring.datasource.url=jdbc:mysql://192.168.200.1:3306/hotdb_cloud_config?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&connectTimeout=3000
 
-\# HotDB Management configDB username
+# HotDB Management configDB username
 
 spring.datasource.username=hotdb_cloud
 
-\# HotDB Management configDB password
+# HotDB Management configDB password
 
 spring.datasource.password=hotdb_cloud
 
-\# HotDB Management language setting, English by default, you can set it as Chinese if necessary
+# HotDB Management language setting, English by default, you can set it as Chinese if necessary
 
 language=English/Chinese
 
@@ -260,21 +260,21 @@ The management platform startup script "hotdb_management" is under its installat
 
 **Enter startup script directory**
 
-\# cd /usr/local/hotdb/hotdb-management/bin
+# cd /usr/local/hotdb/hotdb-management/bin
 
 **Start management platform service**
 
-\# sh hotdb_management start
+# sh hotdb_management start
 
 **View whether the service is successfully started or not (if yes, open and log in management platform via browser)**
 
-\# jps | grep -i hotdb-management
+# jps | grep -i hotdb-management
 
 6595 hotdb-management-xxx.jar
 
 Stop management platform service
 
-\# kill 6595 or sh hotdb_management stop
+# kill 6595 or sh hotdb_management stop
 
 ##### ConfigDB
 
@@ -302,23 +302,23 @@ If MariaDB has been installed, then MySQL could be installed only after uninstal
 
 **View whether the command is installed or not:**
 
-\## rpm -qa|grep mariadb
+## rpm -qa|grep mariadb
 
 mariadb-libs-5.5.44-2.el7.centos.x86_64
 
 **Uninstall MariaDB command:**
 
-\## yum remove mariadb-libs-5.5.44-2.el7.centos.x86_64
+## yum remove mariadb-libs-5.5.44-2.el7.centos.x86_64
 
 3.  **Install MySQL rpm package**
 
 **Upload MySQL rpm package to the server and execute rpm command to install MySQL**
 
-\# yum -y localinstall --nogpgcheck MySQL-server-5.6.32-1.el6.x86_64.rpm MySQL-shared-compat-5.6.32-1.el6.x86_64.rpm MySQL-devel-5.6.32-1.el6.x86_64.rpm MySQL-client-5.6.32-1.el6.x86_64.rpm MySQL-shared-5.6.32-1.el6.x86_64.rpm
+# yum -y localinstall --nogpgcheck MySQL-server-5.6.32-1.el6.x86_64.rpm MySQL-shared-compat-5.6.32-1.el6.x86_64.rpm MySQL-devel-5.6.32-1.el6.x86_64.rpm MySQL-client-5.6.32-1.el6.x86_64.rpm MySQL-shared-5.6.32-1.el6.x86_64.rpm
 
 **Or execute**
 
-\# yum -y localinstall MySQL-*.rpm
+# yum -y localinstall MySQL-*.rpm
 
 4.  **MySQL configuration file**
 
@@ -346,7 +346,7 @@ log = /data/multi.log
 
 [mysqld]
 
-\# ***********************************common parameters******************************
+# ***********************************common parameters******************************
 
 basedir=/usr
 
@@ -416,9 +416,9 @@ sort_buffer_size=8M
 
 max_length_for_sort_data=16k
 
-join_buffer_size=4M \# bka
+join_buffer_size=4M# bka
 
-read_rnd_buffer_size=8M \# mrr
+read_rnd_buffer_size=8M# mrr
 
 table_open_cache=1024
 
@@ -428,11 +428,11 @@ query_cache_type=0
 
 query_cache_size=0
 
-\# query_cache_limit=1M
+# query_cache_limit=1M
 
-\# ******************************* Logs related settings ***************************
+# ******************************* Logs related settings ***************************
 
-\# general_log
+# general_log
 
 general_log_file=/data/mysqldata3306/log/general.log
 
@@ -444,7 +444,7 @@ slow_query_log
 
 slow_query_log_file=/data/mysqldata3306/log/slow-query.log
 
-\# log_queries_not_using_indexes
+# log_queries_not_using_indexes
 
 log_warnings = 2
 
@@ -468,11 +468,11 @@ sync_binlog=0
 
 expire_logs_days=10
 
-\# ******************************* Replication related settings *********************
+# ******************************* Replication related settings *********************
 
 server-id= 3306
 
-\# skip-slave-start
+# skip-slave-start
 
 log_slave_updates=1
 
@@ -488,7 +488,7 @@ innodb_support_xa=1
 
 sysdate-is-now
 
-\# ******************************* MyISAM Specific options ***************************
+# ******************************* MyISAM Specific options ***************************
 
 key_buffer_size=8M
 
@@ -504,11 +504,11 @@ myisam-recover-options=default
 
 read_buffer_size=1M
 
-\# ***************************** INNODB Specific options ****************************
+# ***************************** INNODB Specific options ****************************
 
 innodb_use_sys_malloc=1
 
-\# innodb_additional_mem_pool_size=32M
+# innodb_additional_mem_pool_size=32M
 
 innodb_buffer_pool_size=4G
 
@@ -614,31 +614,31 @@ interactive-timeout
 
 According to directory parameters of my.cnf configuration file, create MySQL data directory, and set owner user of the data directory.
 
-\# mkdir -p /data/mysqldata3306
+# mkdir -p /data/mysqldata3306
 
-\# mkdir -p /data/mysqldata3306/mydata
+# mkdir -p /data/mysqldata3306/mydata
 
-\# mkdir -p /data/mysqldata3306/binlog
+# mkdir -p /data/mysqldata3306/binlog
 
-\# mkdir -p /data/mysqldata3306/innodb_ts
+# mkdir -p /data/mysqldata3306/innodb_ts
 
-\# mkdir -p /data/mysqldata3306/innodb_log
+# mkdir -p /data/mysqldata3306/innodb_log
 
-\# mkdir -p /data/mysqldata3306/relaylog
+# mkdir -p /data/mysqldata3306/relaylog
 
-\# mkdir -p /data/mysqldata3306/tmpdir
+# mkdir -p /data/mysqldata3306/tmpdir
 
-\# mkdir -p /data/mysqldata3306/log
+# mkdir -p /data/mysqldata3306/log
 
-\# mkdir -p /data/mysqldata3306/sock
+# mkdir -p /data/mysqldata3306/sock
 
-\# chown -R mysql:mysql /data/mysqldata3306
+# chown -R mysql:mysql /data/mysqldata3306
 
 6.  **Initialize database**
 
 Execute mysql_install_db to initialize the system database to specified directory.
 
-\# mysql_install_db --defaults-file=/etc/my.cnf --user=mysql
+# mysql_install_db --defaults-file=/etc/my.cnf --user=mysql
 
 --datadir=/data/mysqldata3306/mydata
 
@@ -648,11 +648,11 @@ Use startup script of mysql to start the database.
 
 **Start MySQL service**
 
-\# /etc/rc.d/init.d/mysql start
+# /etc/rc.d/init.d/mysql start
 
 **Use netsat command to detect whether MySQL is successfully started or not**
 
-\# netstat -npl |grep mysql
+# netstat -npl |grep mysql
 
 **The startup is successful if there is command output**
 
@@ -668,11 +668,11 @@ Data Source is a standard MySQL instance in nature, and it is used for storing u
 
 Create a database user
 
-\# create user 'hotdb_datasource'@'%' identified by 'hotdb_datasource';
+# create user 'hotdb_datasource'@'%' identified by 'hotdb_datasource';
 
 Grant user privilege
 
-\# GRANT select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,create temporary tables,alter routine,execute,event ON *.* TO 'hotdb_datasource'@'%';
+# GRANT select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,create temporary tables,alter routine,execute,event ON *.* TO 'hotdb_datasource'@'%';
 
 **Note:** when the MySQL version of data source is greater than or equal to 8.0, one more privilege"xa_recover_admin"is added.
 
@@ -680,11 +680,11 @@ Grant user privilege
 
 Create a database user
 
-\# create user 'dbbackup'@'%' identified by ' dbbackup';
+# create user 'dbbackup'@'%' identified by ' dbbackup';
 
 Grant user privilege
 
-\## GRANT select,insert,update,delete,create,drop,index,alter,reload,process,references,super,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,event ON *.* TO 'dbbackup'@'127.0.0.1';
+## GRANT select,insert,update,delete,create,drop,index,alter,reload,process,references,super,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,event ON *.* TO 'dbbackup'@'127.0.0.1';
 
 ##### HotDB Backup
 
@@ -702,17 +702,17 @@ HotDB Backup is a distributed transactional database backup tool independently d
 
 Upload binary package of "hotdb_backup-2.0-xxxxxxxx.tar.gz" to the server. Create installation directory of HotDB Backup, and unzip the HotDB Backup to the installation directory.
 
-\# mkdir /usr/local/hotdb/
+# mkdir /usr/local/hotdb/
 
-\# tar -zxvf hotdb_backup-2.0-20190109.tar.gz -C /usr/local/hotdb/
+# tar -zxvf hotdb_backup-2.0-20190109.tar.gz -C /usr/local/hotdb/
 
 2.  **Start and stop HotDB Backup**
 
 Start backup service program
 
-\# cd /usr/local/hotdb/hotdb_backup
+# cd /usr/local/hotdb/hotdb_backup
 
-\# sh bin/hotdb_backup start -h 192.168.220.104 -p 3322
+# sh bin/hotdb_backup start -h 192.168.220.104 -p 3322
 
 Add ip of the management platform server behind -h, and add management platform listening HotDB Backup port number behind -p (generally 3322, but please view parameter server.backup.port in management platform configuration file application.properties specifically).
 
@@ -724,7 +724,7 @@ INFO: HotDB-backup start successed.
 
 Stop the backup service program
 
-\# sh bin/hotdb_backup stop
+# sh bin/hotdb_backup stop
 
 Print the following log after stopping successfully
 
@@ -734,7 +734,7 @@ INFO: HotDB-backup stopped success.
 
 View running status of HotDB-Backup
 
-\# sh bin/hotdb_backup status
+# sh bin/hotdb_backup status
 
 **Prompt of already running:**
 
@@ -746,20 +746,20 @@ INFO: HotDB-backup service not running.
 
 View HotDB-Backup log
 
-\# cat logs/hotdb_backup.log
+# cat logs/hotdb_backup.log
 
 HotDB Backup common log
 
-Start backup \## 
+Start backup## 
 Start backup task
 
-Backup is stopped \## 
+Backup is stopped## 
 Stop backup task
 
-Connected to server successfully! \## 
+Connected to server successfully!## 
 HotDB Backup and HotDB Management are normally connected
 
-Got a quit signal from user, will quit after backup is finished \## 
+Got a quit signal from user, will quit after backup is finished## 
 HotDB Backup exits normally
 
 #### HA (master/standby) cluster deployment
@@ -846,15 +846,15 @@ keepalived could be installed either by means of yum, or by downloading installa
 
 **Install keepalived by means of yum (execute keepalived installation command on master/standby compute node service)**
 
-\# yum -y install keepalived
+# yum -y install keepalived
 
 **Start or stop keepalived**
 
-\# service keepalived start / server keepalived stop
+# service keepalived start / server keepalived stop
 
 **View running status of keepalived**
 
-\# service keepalived status
+# service keepalived status
 
 1.  **Modify keepalived configuration file**
 
@@ -938,7 +938,7 @@ check_HotDB Server_connect_state
 
 }
 
-\# be careful in red hat
+# be careful in red hat
 
 track_interface {
 
@@ -1040,7 +1040,7 @@ check_HotDB Server_connect_state
 
 }
 
-\# be careful in red hat
+# be careful in red hat
 
 track_interface {
 
@@ -1092,11 +1092,11 @@ Start the master (192.168.200.190) keepalived first, and then start the master c
 
 **Start master keepalived service**
 
-\# service keepalived start
+# service keepalived start
 
 **Then start the master compute node service after ping VIP successfully**
 
-\# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
+# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
 
 Command "ip a" could be used to could view whether the current master keepalived VIP has been successfully bound or not
 
@@ -1106,11 +1106,11 @@ After master compute node service starts, **wait 20s,** and then start the backu
 
 **Start the backup keepalived service**
 
-\# service keepalived start
+# service keepalived start
 
 **Start the standby compute node service**
 
-\# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
+# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
 
 ##### Description of high availability switch
 
@@ -1204,25 +1204,25 @@ HotDB Listener is compiled by JDK1.7.0_ 80, and the requirements for the operati
 
 Upload the installation package of one-click deployment auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz (2.5.5 is the version number, and different versions correspond to different numbers. Remember to replace the number synchronously.) to the data source server directory /usr/local/hotdb, and execute the following command:
 
-\# cd /usr/local/hotdb
+# cd /usr/local/hotdb
 
-\# tar -zxvf auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz
+# tar -zxvf auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz
 
 ##### Installation of Listener
 
 The installation package of one click deployment is built in Listener installation package. Install Listener in the directory /usr/local/hotdb by executing the following command:
 
-\# cd /usr/local/hotdb/Install_Package
+# cd /usr/local/hotdb/Install_Package
 
-\# tar -zxvf hotdb-listener-0.0.1-alpha-20200420-linux.tar.gz -C /usr/loca l/hotdb/
+# tar -zxvf hotdb-listener-0.0.1-alpha-20200420-linux.tar.gz -C /usr/loca l/hotdb/
 
 ##### Configuration of Listener
 
 Before starting, adjust the heap memory size of Listener according to the available memory space of the server.
 
-\# cd /usr/local/hotdb/hotdb-listener/bin
+# cd /usr/local/hotdb/hotdb-listener/bin
 
-\# vi hotdb_listener
+# vi hotdb_listener
 
 Set the heap memory size of row 24 to a reasonable range.
 
@@ -1230,9 +1230,9 @@ If the server memory is large, G1 algorithm and corresponding configuration can 
 
 Then configure the Listener start port (this step can be omitted if there is no special requirement)
 
-\# cd /usr/local/hotdb/hotdb-listener/conf
+# cd /usr/local/hotdb/hotdb-listener/conf
 
-\# vi config.properties
+# vi config.properties
 
 The default value of host is 0.0.0.0, which does not need to be modified; the default value of port is 3330, which is not recommended to be modified unless it is occupied.
 
@@ -1240,15 +1240,15 @@ The default value of host is 0.0.0.0, which does not need to be modified; the de
 
 Start the Listener by executing the following command:
 
-\# cd /usr/local/hotdb/hotdb-listener/bin
+# cd /usr/local/hotdb/hotdb-listener/bin
 
-\# sh hotdb_listener start
+# sh hotdb_listener start
 
 If Listener is started successfully, the window will prompt "HotDB-Listener start successed."
 
 In addition to start, other parameters can be used as follows:
 
-\# sh hotdb_listener
+# sh hotdb_listener
 
 Usage: sh hotdb_listener [start|stop|restart]
 
@@ -1262,7 +1262,7 @@ HotDB-Listener restart : sh hotdb_listener restart
 
 After startup, you can switch to the logs directory to view the log output, and view the related information of Listener.
 
-\# tailf listener.log
+# tailf listener.log
 
 2020-05-25 12:09:54.089 [INFO] [INIT] [main] cn.hotpu.hotdb.ListenerServer(158) - Listener-Manager start listening on host 0.0.0.0 port 3330
 
@@ -1316,19 +1316,19 @@ Please refer to *Distributed Transactional Database HotDB Server [Explanation of
 
 1.  **Upload deployment installation package and corresponding MD5 value file to the server, and unzip to specified directory**
 
-\# mkdir /usr/local/hotdb
+# mkdir /usr/local/hotdb
 
-\# tar -zxvf auto_hotdbinstall_HotDB2.*.tar.gz -C /usr/local/hotdb/
+# tar -zxvf auto_hotdbinstall_HotDB2.*.tar.gz -C /usr/local/hotdb/
 
 2.  **Execute the installation script to install management platform**
 
-\# cd /usr/local/hotdb/Install_Package/
+# cd /usr/local/hotdb/Install_Package/
 
-\# sh hotdbinstall_v*.sh --ntpdate-server-ip=182.92.12.11 --mysql-version=5.7 --hotdb-config-port=3316 --hotdb-version=2.5 --install-hotdb-server-management=yes
+# sh hotdbinstall_v*.sh --ntpdate-server-ip=182.92.12.11 --mysql-version=5.7 --hotdb-config-port=3316 --hotdb-version=2.5 --install-hotdb-server-management=yes
 
 3.  **View installation log to acquire the installation progress**
 
-\## tail -f /usr/local/hotdb/Install_Package/hotdbinstall.log
+## tail -f /usr/local/hotdb/Install_Package/hotdbinstall.log
 
 4.  **If the log prints the following mark, the installation is successful and of normal end**
 
@@ -1338,7 +1338,7 @@ ings
 
 5.  **Start management platform**
 
-\## sh /usr/local/hotdb/hotdb-management/bin/hotdb_management start
+## sh /usr/local/hotdb/hotdb-management/bin/hotdb_management start
 
 6.  **Open management platform via browser**
 

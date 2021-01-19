@@ -62,7 +62,7 @@ If to know relevant terms and relation of HotDB Server cluster system, please re
 
 Compute node is data service provider, and its default service port is 3323, and could be logged in using the following MySQL command:
 
-\# mysql -uroot -proot -h127.0.0.1 -P3323
+# mysql -uroot -proot -h127.0.0.1 -P3323
 
 After login, compute node could be used the same as MySQL database, for example:
 
@@ -140,11 +140,11 @@ destroy-method="close">
 
 <property name="user" value="root" />
 
-<property name="password" value="\$root" />
+<property name="password" value="$root" />
 
 <property name="initialPoolSize" value="10" />
 
-<property name="maxPoolSize" value="\$256" />
+<property name="maxPoolSize" value="$256" />
 
 <property name="minPoolSize" value="10" />
 
@@ -510,25 +510,25 @@ mysql>
 
 Execute customer Create Table statement:
 
-CREATE TABLE \`customer\`(
+CREATE TABLE `customer`(
 
-\`id\` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
 
-\`name\` VARCHAR(32) NOT NULL,
+`name` VARCHAR(32) NOT NULL,
 
-\`telephone\` VARCHAR(16) NOT NULL,
+`telephone` VARCHAR(16) NOT NULL,
 
-\`provinceid\` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+`provinceid` TINYINT UNSIGNED NOT NULL DEFAULT 0,
 
-\`province\` ENUM ('Anhui','Aomen','Beijing','Chongqing','Fujian','Gansu','Guangdong','Guangxi','Guizhou','Hainan','Hebei','Heilongjiang','Henan','Hubei','Hunan','Jiangsu','Jiangxi','Jilin','Liaoning','Neimenggu','Ningxia','Qinghai','Shaanxi','Shandong','Shanghai','Shanxi','Sichuan','Taiwan','Tianjin','Xianggang','Xinjiang','Xizang','Yunnan','Zhejiang') NULL,
+`province` ENUM ('Anhui','Aomen','Beijing','Chongqing','Fujian','Gansu','Guangdong','Guangxi','Guizhou','Hainan','Hebei','Heilongjiang','Henan','Hubei','Hunan','Jiangsu','Jiangxi','Jilin','Liaoning','Neimenggu','Ningxia','Qinghai','Shaanxi','Shandong','Shanghai','Shanxi','Sichuan','Taiwan','Tianjin','Xianggang','Xinjiang','Xizang','Yunnan','Zhejiang') NULL,
 
-\`city\` VARCHAR(16) NULL default '',
+`city` VARCHAR(16) NULL default '',
 
-\`address\` VARCHAR(64) NULL,
+`address` VARCHAR(64) NULL,
 
-PRIMARY KEY(\`id\`),
+PRIMARY KEY(`id`),
 
-UNIQUE KEY(\`telephone\`)
+UNIQUE KEY(`telephone`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1019,7 +1019,7 @@ ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'
 
 View the compute node log（hotdb-unusualsql.log）：
 
-2019-10-12 15:27:45.051 [INFO] **[UNUSUALSQL]** [\$NIOREACTOR-7-RW] cn.hotpu.hotdb.mysql.nio.MySQLConnection(415) - ERROR 1062:Duplicate entry '3' for key 'PRIMARY' [frontend:[thread=\$NIOREACTOR-7-RW,id=453,user=root,host=192.168.210.225,port=3323,localport=65442,schema=DBY]; backend:null; frontend_sql:insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');backend_sql:null]
+2019-10-12 15:27:45.051 [INFO] **[UNUSUALSQL]** [$NIOREACTOR-7-RW] cn.hotpu.hotdb.mysql.nio.MySQLConnection(415) - ERROR 1062:Duplicate entry '3' for key 'PRIMARY' [frontend:[thread=$NIOREACTOR-7-RW,id=453,user=root,host=192.168.210.225,port=3323,localport=65442,schema=DBY]; backend:null; frontend_sql:insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');backend_sql:null]
 
 For another example, execute a SQL intercepted by SQL firewall as follows:
 
@@ -1029,7 +1029,7 @@ ERROR 1064 (HY000): Intercepted by sql firewall, because: not allowed to execute
 
 View the compute node log（hotdb-unusualsql.log）：
 
-2019-10-14 15:41:42.246 [INFO] **[UNUSUALSQL]** [\$NIOExecutor-1-2] cn.hotpu.hotdb.route.RouteService(415) - ERROR 10029:not pass sql firewall [frontend:[thread=\$NIOExecutor-1-2,id=1433,user=root,host=192.168.210.225,port=3323,localport=64658,schema=DBY]; backend:null; frontend_sql:null; backend_sql:null] [DBY.count]=33
+2019-10-14 15:41:42.246 [INFO] **[UNUSUALSQL]** [$NIOExecutor-1-2] cn.hotpu.hotdb.route.RouteService(415) - ERROR 10029:not pass sql firewall [frontend:[thread=$NIOExecutor-1-2,id=1433,user=root,host=192.168.210.225,port=3323,localport=64658,schema=DBY]; backend:null; frontend_sql:null; backend_sql:null] [DBY.count]=33
 
 Note:
 
@@ -1043,9 +1043,9 @@ By default, this type of log information is saved in the file hotdb_unusualsql.l
 
 name="**Unusualsql**"
 
-filename="\${sys:HOTDB_HOME}**/logs/extra/unusualsql/hotdb-unusualsql.log**"
+filename="${sys:HOTDB_HOME}**/logs/extra/unusualsql/hotdb-unusualsql.log**"
 
-filepattern="\${sys:HOTDB_HOME}/logs/extra/unusualsql/hotdb-unusualsql-%d{yyyy-MM-dd-HH-mm-ss}.log">
+filepattern="${sys:HOTDB_HOME}/logs/extra/unusualsql/hotdb-unusualsql-%d{yyyy-MM-dd-HH-mm-ss}.log">
 
 <PatternLayout
 
@@ -1202,11 +1202,11 @@ Parameter description: a set of pem file related to server.jks and client is pro
 
 <property name=[keyStorePass](#keyStorePass)>BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- Password of the data certificate .jks file for TLS connection -->
 
-Parameter description: the password in the key file that comes with the program is hotdb.com, which can be encrypted by users through select hex(aes_encrypt('hotdb.com',unhex(md5('Hotpu@2013\# shanghai\#')))); to get the default value BB5A70F75DD5FEB214A5623DD171CEEB and fill the value in keyStorePass. If users use their own generated key file, the value be filled is based on the password which is actually entered. If SDcrtest is entered as password, users can get the value of keyStorePass through select hex(aes_encrypt('SDcrtest',unhex(md5('Hotpu@2013\# shanghai\#')))) and fill the value C43BD9DDE9C908FEE7683AED7A301E33 in keyStorePass.
+Parameter description: the password in the key file that comes with the program is hotdb.com, which can be encrypted by users through select hex(aes_encrypt('hotdb.com',unhex(md5('Hotpu@2013# shanghai#')))); to get the default value BB5A70F75DD5FEB214A5623DD171CEEB and fill the value in keyStorePass. If users use their own generated key file, the value be filled is based on the password which is actually entered. If SDcrtest is entered as password, users can get the value of keyStorePass through select hex(aes_encrypt('SDcrtest',unhex(md5('Hotpu@2013# shanghai#')))) and fill the value C43BD9DDE9C908FEE7683AED7A301E33 in keyStorePass.
 
 The configured parameters are as follows:
 
-![}]2__08H0B\`61[421T9YIBK](media/image40.png)
+![}]2__08H0B`61[421T9YIBK](media/image40.png)
 
 Users have no need to restart the compute node service for the parameter modification, for server.jks documents will be read again during dynamic loading. If SSL-related logic initialization fails, the dynamic loading will not fail, though the subsequent SSL connections cannot be established normally. Non-SSL connections will not be affected.
 
@@ -1374,7 +1374,7 @@ set @mytablename='xxx';
 
 set @mydbname=database();
 
-select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\\'NULL\\'),ifnull('),',\\'NULL\\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
+select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
 
 If consistent, then data increment synchronization completed, for example, execute the following in the source end (192.168.200.77) MySQL instance:
 
@@ -1394,7 +1394,7 @@ mysql> set @mydbname=database();
 
 Query OK, 0 rows affected (0.00 sec)
 
-mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\\'NULL\\'),ifnull('),',\\'NULL\\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
+mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
 
 *************************** 1. row ***************************
 
@@ -1763,11 +1763,11 @@ Under XA mode: refer to SQL99 Standard, begin\\start transaction will immediatel
 
 When the compute node version is 2.5.6 and above, if the front end is disconnected under XA mode, the transaction status will be recorded to the log and ConfigDB. You can check whether the transaction needs to be redone by executing SHOW ABNORMAL_XA_TRX directly at the service port.
 
-2020-10-30 15:42:29.857 [WARN] [MANAGER] [\$NIOExecutor-2-10] cn.hotpu.hotdb.manager.response.v(39) - [thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT]killed by manager
+2020-10-30 15:42:29.857 [WARN] [MANAGER] [$NIOExecutor-2-10] cn.hotpu.hotdb.manager.response.v(39) - [thread=$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT]killed by manager
 
-2020-10-30 15:42:29.857 [INFO] [INNER] [\$NIOExecutor-2-10] cn.hotpu.hotdb.server.d.c(1066) - XATransactionSession in [thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT]'s query will be killed due to a kill command, current sql:null
+2020-10-30 15:42:29.857 [INFO] [INNER] [$NIOExecutor-2-10] cn.hotpu.hotdb.server.d.c(1066) - XATransactionSession in [thread=$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT]'s query will be killed due to a kill command, current sql:null
 
-2020-10-30 15:42:29.859 [INFO] [CONNECTION] [\$NIOExecutor-2-10] cn.hotpu.hotdb.server.b(3599) - [thread=\$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT] will be closed because a kill command.
+2020-10-30 15:42:29.859 [INFO] [CONNECTION] [$NIOExecutor-2-10] cn.hotpu.hotdb.server.b(3599) - [thread=$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT] will be closed because a kill command.
 
 ![](assets/standard/image49.png)
 
@@ -1908,9 +1908,9 @@ mysql> show create table test02
 
 +-------+----------------------------------------+
 
-| test3 | CREATE TABLE \`test3\` (
+| test3 | CREATE TABLE `test3` (
 
-\`id\` int(11) DEFAULT NULL
+`id` int(11) DEFAULT NULL
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4**/*hotdb:020503 global_unique=1*/** |
 
@@ -2102,7 +2102,7 @@ WARN [pool-1-thread-2614] datanode id failover failed due to found no available 
 
 -   During Failover, Active Master Heartbeat is continuous. If Heartbeat succeed for two successive time, then give up Switch, and the compute node will record log
 
-INFO [\$NIOREACTOR-6-RW] (Heartbeat.java:502) -heartbeat continue success twice for datasource 5 192.168.200.52:3310/phy243_05, give up failover.
+INFO [$NIOREACTOR-6-RW] (Heartbeat.java:502) -heartbeat continue success twice for datasource 5 192.168.200.52:3310/phy243_05, give up failover.
 
 -   After Switch succeeded, the compute node will record log, and record the cause for Switch:
 
@@ -2118,7 +2118,7 @@ For example: when stopping the data source service, the whole Switch process is 
 
 02/21 15:57:29.344 INFO [HeartbeatTimer] (BackendDataNode.java:405) -found candidate backup for datanode 5 :[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1] in failover, start checking slave status.
 
-02/21 15:57:29.344 WARN [\$NIOREACTOR-0-RW] (HeartbeatInitHandler.java:44) -datasoruce 5 192.168.200.52:331001_3310_ms init heartbeat failed due to:MySQL Error Packet{length=36,id=1}
+02/21 15:57:29.344 WARN [$NIOREACTOR-0-RW] (HeartbeatInitHandler.java:44) -datasoruce 5 192.168.200.52:331001_3310_ms init heartbeat failed due to:MySQL Error Packet{length=36,id=1}
 
 02/21 15:57:29.344 INFO [pool-1-thread-1020] (CheckSlaveHandler.java:241) -slave_sql_running is Yes in :[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1] during failover of datanode 5
 
@@ -2282,7 +2282,7 @@ After the keepalived on the server where the slave compute node resides (take 19
 
 ERROR 2003 (HY000): Can't connect to MySQL server on '192.168.200.190' (111)
 
-2018-06-12 21:54:45.141 [INFO] [RESPONSE] [\$NIOREACTOR-8-RW] af(-1) -- connection killed for HotDB backup startup
+2018-06-12 21:54:45.141 [INFO] [RESPONSE] [$NIOREACTOR-8-RW] af(-1) -- connection killed for HotDB backup startup
 
 ...More are omitted...
 
@@ -2326,15 +2326,15 @@ HotDB Server supports node autonomy of multiple compute node cluster. Hereinafte
 
 HotDB Server supports load-balancing: you could select LVS and other means to distribute SQL request. The application client could have access to database service of HotDB Server via VIP of LVS, and at the same time, use transparency and service un-interruption are guaranteed. It could also use the remaining load-balancing plans for processing, for example F5 plus Custom Test; apply the mode of direct connection compute node, but replace node in case of abnormality, etc.
 
-![9R8QD\$VPCV%J\$4_]YYIOGHX](media/image64.png)
+![9R8QD$VPCV%J$4_]YYIOGHX](media/image64.png)
 
 ##### Startup description
 
 After environment deployment of compute node cluster succeeded, start the compute node:
 
-\# cd /usr/local/hotdb-2.5.0/hotdb-server/bin
+# cd /usr/local/hotdb-2.5.0/hotdb-server/bin
 
-\# sh hotdb_server start
+# sh hotdb_server start
 
 View start status of HotDB Server:
 
@@ -2358,9 +2358,9 @@ When Primary service is abnormal, one from the remaining Secondary will become t
 
 Original Primary:
 
-\# cd /usr/local/hotdb-2.5.0/hotdb-server/bin
+# cd /usr/local/hotdb-2.5.0/hotdb-server/bin
 
-\# sh hotdb_server stop
+# sh hotdb_server stop
 
 ![](assets/standard/image69.png)
 
@@ -2376,9 +2376,9 @@ If the original Primary service restarts (equivalent to Add of new node), for th
 
 Original Primary:
 
-\# cd /usr/local/hotdb-2.5.0/hotdb-server/bin
+# cd /usr/local/hotdb-2.5.0/hotdb-server/bin
 
-\# sh hotdb_server start
+# sh hotdb_server start
 
 ![](assets/standard/image72.png)
 
@@ -3087,7 +3087,7 @@ For example:
 
 Use method:
 
-Connect compute node (refer to [Log in compute node and start to use](#_登录HotDB Server并开始使用)), select the set LogicDB (\`test\`LogicDB is used here), and then execute specified statement by the above means (illustration is made here, and you could write SQL as needed in practical use).
+Connect compute node (refer to [Log in compute node and start to use](#_登录HotDB Server并开始使用)), select the set LogicDB (`test`LogicDB is used here), and then execute specified statement by the above means (illustration is made here, and you could write SQL as needed in practical use).
 
 Search customer table on sharding node with dn_id=2
 
@@ -3169,7 +3169,7 @@ Warning (Code 10041): The current session has been bound to the backend connecti
 
 Meanwhile, the following info information will be logged:
 
-2019-04-01 19:11:29.662 [INFO] [CONNECTION] [\$NIOEecutor-3-1] ServerConnection(1565) -- 31 has been bound to the backend connection:[2,1]
+2019-04-01 19:11:29.662 [INFO] [CONNECTION] [$NIOEecutor-3-1] ServerConnection(1565) -- 31 has been bound to the backend connection:[2,1]
 
 When operating new data node beyond bound back-end connection of the original LogicDB, SHOW WARNING will prompt as follow and the connection will be disconnected:
 
@@ -4467,15 +4467,15 @@ For operation of INSERT IGORE statement in Sharding Table, if in INSERT statemen
 
 For example, test is a sharding table, and id is a sharding key.
 
-mysql> CREATE TABLE \`test2\` (
+mysql> CREATE TABLE `test2` (
 
-\`id\` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 
-\`name\` varchar(20) DEFAULT NULL,
+`name` varchar(20) DEFAULT NULL,
 
-UNIQUE KEY \`id\` (\`id\`),
+UNIQUE KEY `id` (`id`),
 
-UNIQUE KEY \`name\` (\`name\`)
+UNIQUE KEY `name` (`name`)
 
 ) ENGINE=InnoDB;
 
@@ -6918,27 +6918,27 @@ mysql> show @@threadpool;
 
 | TimerExecutor | 4 | 0 | 15 | 50376807 | 50376822 |
 
-| \$NIOExecutor-0- | 4 | 0 | 0 | 99254 | 99254 |
+| $NIOExecutor-0- | 4 | 0 | 0 | 99254 | 99254 |
 
-| \$NIOExecutor-1- | 4 | 1 | 0 | 81195 | 81196 |
+| $NIOExecutor-1- | 4 | 1 | 0 | 81195 | 81196 |
 
-| \$NIOExecutor-2- | 4 | 2 | 0 | 140921 | 140923 |
+| $NIOExecutor-2- | 4 | 2 | 0 | 140921 | 140923 |
 
-| \$NIOExecutor-3- | 4 | 1 | 0 | 48218 | 48219 |
+| $NIOExecutor-3- | 4 | 1 | 0 | 48218 | 48219 |
 
-| \$NIOExecutor-4- | 4 | 0 | 0 | 39073 | 39073 |
+| $NIOExecutor-4- | 4 | 0 | 0 | 39073 | 39073 |
 
-| \$NIOExecutor-5- | 4 | 0 | 0 | 31656 | 31656 |
+| $NIOExecutor-5- | 4 | 0 | 0 | 31656 | 31656 |
 
-| \$NIOExecutor-6- | 4 | 0 | 0 | 167007 | 167007 |
+| $NIOExecutor-6- | 4 | 0 | 0 | 167007 | 167007 |
 
-| \$NIOExecutor-7- | 4 | 1 | 0 | 27221 | 27222 |
+| $NIOExecutor-7- | 4 | 1 | 0 | 27221 | 27222 |
 
 +-----------------+-----------+--------------+-----------------+----------------+------------+
 
 9 rows in set (0.00 sec)
 
-\$NIOExecutor has 0-7, meaning that the current processor=8, corresponding pool_size = 4, meaning that the processorExecutor=4, corresponding pool_size of TimerExecutor = 4, meaning that the timerExecutor=4.
+$NIOExecutor has 0-7, meaning that the current processor=8, corresponding pool_size = 4, meaning that the processorExecutor=4, corresponding pool_size of TimerExecutor = 4, meaning that the timerExecutor=4.
 
 The following command could be used to view the number of the current logic CPU
 
@@ -6956,21 +6956,21 @@ mysql> show @@threadpool;
 
 | TimerExecutor | 4 | 0 | 14 | 73720 | 73734 |
 
-| \$NIOExecutor-0- | 1 | 0 | 0 | 1 | 1 |
+| $NIOExecutor-0- | 1 | 0 | 0 | 1 | 1 |
 
-| \$NIOExecutor-1- | 1 | 0 | 0 | 1 | 1 |
+| $NIOExecutor-1- | 1 | 0 | 0 | 1 | 1 |
 
-| \$NIOExecutor-2- | 1 | 0 | 0 | 1 | 1 |
+| $NIOExecutor-2- | 1 | 0 | 0 | 1 | 1 |
 
-| \$NIOExecutor-3- | 1 | 0 | 0 | 1 | 1 |
+| $NIOExecutor-3- | 1 | 0 | 0 | 1 | 1 |
 
-| \$NIOExecutor-4- | 2 | 0 | 0 | 2 | 2 |
+| $NIOExecutor-4- | 2 | 0 | 0 | 2 | 2 |
 
-| \$NIOExecutor-5- | 5 | 0 | 0 | 5 | 5 |
+| $NIOExecutor-5- | 5 | 0 | 0 | 5 | 5 |
 
-| \$NIOExecutor-6- | 1 | 0 | 0 | 1 | 1 |
+| $NIOExecutor-6- | 1 | 0 | 0 | 1 | 1 |
 
-| \$NIOExecutor-7- | 1 | 1 | 0 | 1 | 1 |
+| $NIOExecutor-7- | 1 | 1 | 0 | 1 | 1 |
 
 +-----------------+-----------+--------------+-----------------+----------------+------------+
 
@@ -8519,17 +8519,17 @@ You could view log tail -f hotdb.log|grep to see whether "watchdog" has been ena
 
 root> cat hotdb.log|grep 'watchdog'
 
-2018-06-01 18:26:50.983 [WARN] [WATCHDOG] [\$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TABLEB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
+2018-06-01 18:26:50.983 [WARN] [WATCHDOG] [$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TABLEB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
 
-2018-06-01 18:26:50.986 [WARN] [WATCHDOG] [\$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TESTB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
+2018-06-01 18:26:50.986 [WARN] [WATCHDOG] [$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TESTB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
 
-2018-06-01 18:26:50.988 [WARN] [WATCHDOG] [\$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table JOIN_DN02 not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
+2018-06-01 18:26:50.988 [WARN] [WATCHDOG] [$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table JOIN_DN02 not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
 
 ...More are omitted...
 
 You could view inconsistency check information of the table structure and memory via log:
 
-2018-10-3118:46:44.834 [WARN] [WATCHDOG] [\$NIOREACTOR-0-RW] WatchdogTableCheckHandler(85) - Table CCC is inconsistent in watchdog table structure check between HotDB memory and MySQL: MySQLConnection [node=20, id=299, threadId=3748, state=running, closed=false, autocommit=true, host=192.168.210.41. port=3310, database=rmb0l, localPort=58808, isClose:false, toBeClose:false]. You may need to contact HOtDB administrator to get help.
+2018-10-3118:46:44.834 [WARN] [WATCHDOG] [$NIOREACTOR-0-RW] WatchdogTableCheckHandler(85) - Table CCC is inconsistent in watchdog table structure check between HotDB memory and MySQL: MySQLConnection [node=20, id=299, threadId=3748, state=running, closed=false, autocommit=true, host=192.168.210.41. port=3310, database=rmb0l, localPort=58808, isClose:false, toBeClose:false]. You may need to contact HOtDB administrator to get help.
 
 You could view inconsistency check information of configDB and memory via log:
 
@@ -8537,13 +8537,13 @@ You could view inconsistency check information of configDB and memory via log:
 
 You could view check information of the transactions not committed within 24h via log:
 
-2018-10-26 16:14:55.787 [INFO] [WATCHDOG] [\$NIOREACTOR-0-RW] WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-5,id=1720,user=rmb,host=192.168.200.3,port=3323,localport=54330,schema=FUNTEST_RMB] has not been queryed for 839s. executed IUD5:[INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. binded connection:[MySQLConnection [node=11, id=1330, threadld=18085, state=borrowed, closed=false, autocommit=false, host=192.168.210.42, port=3307, database=db251, localPort=15722, isCiose:false, toBeClose:false] lastSQL:INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. innodb_trx:[(ds:11 trx_id:25765462 trx_state:RUNNING trx_started:2018-10-26 16:00:56 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:2 trx_mysql._thread_id:18085 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:1 trx_lock_memory_bytes:1136 trx_rows_locked:0 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now.
+2018-10-26 16:14:55.787 [INFO] [WATCHDOG] [$NIOREACTOR-0-RW] WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-5,id=1720,user=rmb,host=192.168.200.3,port=3323,localport=54330,schema=FUNTEST_RMB] has not been queryed for 839s. executed IUD5:[INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. binded connection:[MySQLConnection [node=11, id=1330, threadld=18085, state=borrowed, closed=false, autocommit=false, host=192.168.210.42, port=3307, database=db251, localPort=15722, isCiose:false, toBeClose:false] lastSQL:INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. innodb_trx:[(ds:11 trx_id:25765462 trx_state:RUNNING trx_started:2018-10-26 16:00:56 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:2 trx_mysql._thread_id:18085 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:1 trx_lock_memory_bytes:1136 trx_rows_locked:0 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now.
 
 You could view check information of data source switch via log:
 
 2018-10-26 19:29:01.146 [INFO] [MANAGER] [Labor-478] HotdbConfig(2164) - reload config successfully for connection:[thread=Labor-478,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440.schema=null]
 
-2018-10-26 19:30:24.384 [INFO] [FAILOVER] [\$NlOExecutor-7-2] SwitchDataSource(111) - received switch datasource 24 command from Manager: [thread=\$NIOExecutor-7-2,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440,schema=null]
+2018-10-26 19:30:24.384 [INFO] [FAILOVER] [$NlOExecutor-7-2] SwitchDataSource(111) - received switch datasource 24 command from Manager: [thread=$NIOExecutor-7-2,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440,schema=null]
 
 2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-484] InitSequenceHandler(270) - FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
 
@@ -9052,7 +9052,7 @@ Property                         Value
 |     | Connection id: 10 |
 |     | Current database: INFORMATION_SCHEMA |
 |     | If it is set to 0, the front-end idle connection will never time out, and the connection time in sleep status will increase all the time. |
-|     | #### joinable |
+|     |#### joinable |
 |     | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9081,7 +9081,7 @@ Property                         Value
 | | cc | |
 | +---------+ |
 | 3 rows in set (0.03 sec) |
-| #### joinBatchSize |
+|#### joinBatchSize |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9101,11 +9101,11 @@ Property                         Value
 | At this time, execute: |
 | mysql> select b.* from customer_auto_1 a join customer_auto_3 b on a.id=b.id where a.postcode=123456; |
 | View actual execution result of general_log as follow: |
-| 1993 Query SELECT B.\`ID\`, B.\`name\`, B.\`telephone\`, B.\`provinceid\`, B.\`province\`, B.\`city\`, B.\`address\`, B.\`postcode\`, B.\`birthday\`, b.id AS \`hotdb_tmp_col_alias_1\` FROM customer_auto_3 AS b WHERE B.ID IN **(4064622, 4068449, 4071461)** |
-| 1993 Query SELECT B.\`ID\`, B.\`name\`, B.\`telephone\`, B.\`provinceid\`, B.\`province\`, B.\`city\`, B.\`address\`, B.\`postcode\`, B.\`birthday\`, b.id AS \`hotdb_tmp_col_alia s_1\` FROM customer_auto_3 AS b WHERE B.ID IN **(4043006, 4053408, 4056542)** |
+| 1993 Query SELECT B.`ID`, B.`name`, B.`telephone`, B.`provinceid`, B.`province`, B.`city`, B.`address`, B.`postcode`, B.`birthday`, b.id AS `hotdb_tmp_col_alias_1` FROM customer_auto_3 AS b WHERE B.ID IN **(4064622, 4068449, 4071461)** |
+| 1993 Query SELECT B.`ID`, B.`name`, B.`telephone`, B.`provinceid`, B.`province`, B.`city`, B.`address`, B.`postcode`, B.`birthday`, b.id AS `hotdb_tmp_col_alia s_1` FROM customer_auto_3 AS b WHERE B.ID IN **(4043006, 4053408, 4056542)** |
 | ...More are omitted... |
 | Notice: The parameter value is for illustration only, not for practical reference. |
-| #### joinCacheSize |
+|#### joinCacheSize |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9129,7 +9129,7 @@ Property                         Value
 | -rw-r--r-- 1 root root 8778410 May 9 17:28 positions_5302007528422328273.tmp |
 | -rw-r--r-- 1 root root 141868981 May 9 17:28 row_411809270296834018.tmp |
 | -rw-r--r-- 1 root root 26113612 May 9 18:01 row_4342139033645193593.tmp |
-| #### joinLoopSize |
+|#### joinLoopSize |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9153,7 +9153,7 @@ Property                         Value
 | 1187022 Query SELECT A.id, A.a, A.bchar, A.cdeci, A.dtime FROM bn_a_jwy AS a ORDER BY A.ID LIMIT 1001 |
 | 1187022 Query SELECT C.id, C.a, C.bchar, C.cdeci, C.dtime FROM bn_c_jwy AS c WHERE C.id IN (0) ORDER BY C.ID LIMIT 0 , 1001 |
 | 1187022 Query SELECT B.id, B.a, B.bchar, B.cdeci, B.dtime FROM bn_b_jwy AS b WHERE B.a COLLATE utf8_general_ci IN ('d') ORDER BY B.ID LIMIT 0 , 1001 ...More are omitted... |
-| #### keyStore |
+|#### keyStore |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9169,7 +9169,7 @@ Property                         Value
 | <property name=[keyStore](#keyStore)>/server.jks</property><!-- Path to the data certificate .jks file for TLS connection --> |
 | **Role of parameter:** |
 | This parameter is used to set the path to the data certificate .jks file for connection using SSL authentication. For details, please refer to the [TLS connection login](#tls-connection-login), and use it together with parameters [enableSSL](#enablessl) and [keyStorePass](#keystorepass). |
-| #### keyStorePass |
+|#### keyStorePass |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9185,7 +9185,7 @@ Property                         Value
 | <property name=[keyStore](#keyStore)>/server.jks</property><!-- Password of the data certificate .jks file for TLS connection --> |
 | **Role of parameter:** |
 | This parameter is used to set the password of the data certificate .jks file for connection using SSL authentication. For details, please refer to the [TLS connection login](#tls-connection-login), and use it together with parameters [enableSSL](#enablessl) and [keyStore](#keystore). |
-| #### lockWaitTimeout |
+|#### lockWaitTimeout |
 | **Description of parameter:** |
 
 Property                         Value
@@ -9205,7 +9205,7 @@ Property                         Value
 | session A execute: |
 | ![](assets/standard/image144.png) |
 | session B execute: if the set value of lockWaitTimeout is exceeded, the following prompt will be given:![](assets/standard/image145.png) |
-| #### masterSourceInitWaitTimeout |
+|#### masterSourceInitWaitTimeout |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9225,7 +9225,7 @@ Property                         Value
 | The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the sever. |
 | 2018-05-28 18:07:31.719 [INFO] [INIT] [main] b(-1) -- try reinit datasource:[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8] |
 | Causes for data source timeout are: beyond limit of the system or database connection, authentication failure of data source user password, great network latency, etc. |
-| #### maxAllowedPacket |
+|#### maxAllowedPacket |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9249,7 +9249,7 @@ Property                         Value
 | +--------------------------+---------------------+ |
 | | max_allowed_packet | 16777216 | |
 | +--------------------------+---------------------+ |
-| #### maxConnections & maxUserConnections |
+|#### maxConnections & maxUserConnections |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9261,7 +9261,6 @@ Property                         Value
   Max value                        1
   Whether Reload is valid or not   Yes
   Min Compatible Version           2.4.4
-
 
 **Property**                     **Value**
   Parameter value                  maxUserConnections
@@ -9299,7 +9298,7 @@ Property                         Value
 | +--------------------------+---------------------+ |
 | | max_user_connections | 1000 | |
 | +--------------------------+---------------------+ |
-| #### maxIdleTransactionTimeout |
+|#### maxIdleTransactionTimeout |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9316,9 +9315,9 @@ Property                         Value
 | maxIdleTransactionTimeout parameter has the default value of 86400000ms, that is 24h, which means that when the last SQL is completed in the transaction, the transaction fails to be submitted within 24h, it will be judged as timeout transaction, and HotDB records connection IP, port, username, LogicDB, lastsql, whether to autocommit or not, innodb_trx of back-end connection and other information with the mark [INFO] [WATCHDOG] WatchDogLongTransactionCheckHandler in hotdb.log, and disable the connection, and auto rollback the transaction. |
 | The parameter is only valid when enableWatchdog=true. In Watchdog, maxIdleTransactionTimeout is checked every 10 mins. Idle time of the transaction connected is judged in next check of Watchdog toward maxIdleTransactionTimeout; if exceeding the set threshold value, disable the connection, therefore, the practical transaction Idle time doesn't equal to the set threshold value. |
 | For example, if the transaction Idle time exceeds the set threshold value, then disable the connection, and at this time, view log: |
-| 2019-07-01 18:09:24.528 [INFO] [WATCHDOG] [\$NIOREACTOR-20-RW] cn.hotpu.hotdb.mysql.nio.handler.WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-13,id=1,user=ztm,host=127.0.0.1,port=3323,localport=46138,schema=PM] has not been queryed for 593s. executed IUDs:[UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. binded connection:[MySQLConnection [node=2, id=59, threadId=14921, state=borrowed, closed=false, autocommit=false, host=10.10.0.202, port=3307, database=db_test251, localPort=52736, isClose:false, toBeClose:false] lastSQL:SET autocommit=0;UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. innodb_trx:[(ds:2 trx_id:3435056156 trx_state:RUNNING trx_started:2019-07-01 17:59:33 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:3 trx_mysql_thread_id:14921 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:2 trx_lock_memory_bytes:1136 trx_rows_locked:1 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now. |
+| 2019-07-01 18:09:24.528 [INFO] [WATCHDOG] [$NIOREACTOR-20-RW] cn.hotpu.hotdb.mysql.nio.handler.WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-13,id=1,user=ztm,host=127.0.0.1,port=3323,localport=46138,schema=PM] has not been queryed for 593s. executed IUDs:[UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. binded connection:[MySQLConnection [node=2, id=59, threadId=14921, state=borrowed, closed=false, autocommit=false, host=10.10.0.202, port=3307, database=db_test251, localPort=52736, isClose:false, toBeClose:false] lastSQL:SET autocommit=0;UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. innodb_trx:[(ds:2 trx_id:3435056156 trx_state:RUNNING trx_started:2019-07-01 17:59:33 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:3 trx_mysql_thread_id:14921 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:2 trx_lock_memory_bytes:1136 trx_rows_locked:1 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now. |
 | When the parameter is set as 0, it means never timeout, that is, no limit for COMMIT time of the transaction. |
-| #### maxJoinSize |
+|#### maxJoinSize |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9362,7 +9361,7 @@ Property                         Value
 | +--------------------------+---------------------+ |
 | mysql> select * from bn_a_jwy a join bn_c_jwy b on a.a=b.a where a.a='d'; |
 | ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml |
-| #### maxLatencyForRWSplit |
+|#### maxLatencyForRWSplit |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9401,7 +9400,7 @@ Property                         Value
 | | 5 | master | |
 | +------+----------+ |
 | 5 rows in set (0.00 sec) |
-| #### maxNotInSubquery |
+|#### maxNotInSubquery |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9435,12 +9434,12 @@ Property                         Value
 | mysql> select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20); |
 | ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml |
 | The log will record corresponding information with [INFO] [SQL] mark |
-| 2019-10-08 14:33:41.725 [INFO] [SQL] [\$NIOExecutor-3-2] cn.hotpu.hotdb.j.h(2626) - unsupported subquery:[thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM] AutoCommitTransactionSession in [thread=\$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM], sql:select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20), error code:1104, error msg:The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml |
+| 2019-10-08 14:33:41.725 [INFO] [SQL] [$NIOExecutor-3-2] cn.hotpu.hotdb.j.h(2626) - unsupported subquery:[thread=$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM] AutoCommitTransactionSession in [thread=$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM], sql:select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20), error code:1104, error msg:The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml |
 | Meanwhile, you could view the configured value in log and 3325 port show @@systemconfig, and this parameter after modification could be valid upon reload. |
 | mysql> show @@systemconfig; |
 | config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql):"false",[defaultMaxLimit](#defaultMaxLimit):"10000","bakPassword":"hotdb_config","bakUrl":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha","management port":"3325","heartbeatPeriod":"2",[cryptMandatory](#cryptMandatory):"false","password":"hotdb_config",[enableCursor](#enableCursor):"false","username":"hotdb_config",[enableXA](#enableXA):"false",[errorsPermittedInTransaction](#errorsPermittedInTransaction):"true",[strategyForRWSplit](#strategyForRWSplit):"0",[enableWatchdog](#enableWatchdog):"false","haNodeHost":"192.168.220.139:3325",[maxJoinSize](#maxJoinSize):"9148M",[maxNotInSubquery](#maxNotInSubquery):"10",[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit):"0",[clientFoundRows](#clientFoundRows):"false",[joinCacheSize](#joinCacheSize):"236","enableHeartbeat":"true","url":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha",[parkPeriod](#parkPeriod):"100000",[maxSqlRecordLength](#maxSqlRecordLength):"4000",[joinBatchSize](#joinBatchSize):"46000",[enableSubquery](#enableSubquery):"true","heartbeatTimeoutMs":"500",[pingPeriod](#pingPeriod):"300",[joinLoopSize](#joinLoopSize):"18500","VIP":"192.168.220.171",[joinable](#joinable):"true","maxUserConnections":"4900",[pingLogCleanPeriod](#pingLogCleanPeriod):"1",[dataNodeIdleCheckPeriod](#dataNodeIdleCheckPeriod):"120",[deadlockCheckPeriod](#deadlockCheckPeriod):"3000",[sqlTimeout](#sqlTimeout):"3600","bakUsername":"hotdb_config","enableLatencyCheck":"true",[waitSyncFinishAtStartup](#waitSyncFinishAtStartup):"true","checkVIPPeriod":"500",[statisticsUpdatePeriod](#statisticsUpdatePeriod):"0",[usingAIO](#usingAIO):"0",[showAllAffectedRowsInGlobalTable](#showAllAffectedRowsInGlobalTable):"false",[maxLatencyForRWSplit](#maxLatencyForRWSplit):"1000","maxConnections":"5000",[enableSleep](#enableSleep):"false",[waitForSlaveInFailover](#waitForSlaveInFailover):"true",[autoIncrement](#autoIncrement):"true",[processorExecutor](#processorExecutor):"4",[highCostSqlConcurrency](#highCostSqlConcurrency):"400","latencyCheckPeriod":"500","processors":"16",[weightForSlaveRWSplit](#weightForSlaveRWSplit):"50","haState":"master",[readOnly](#readOnly):"false",[timerExecutor](#timerExecutor):"4","service port":"3323",[frontWriteBlockTimeout](#frontWriteBlockTimeout):"10000",[switchoverTimeoutForTrans](#switchoverTimeoutForTrans):"3000"} |
 | 1 row in set (0.01 sec) |
-| #### maxReconnectConfigDBTimes |
+|#### maxReconnectConfigDBTimes |
 | **Description of parameter:** |
 
 Property                         Value
@@ -9459,7 +9458,7 @@ Property                         Value
 | <property name=" maxReconnectConfigDBTimes ">3</property><!-- Max times of reconnecting ConfigDB --> |
 | **Role of parameter:** |
 | The parameter can prevent long time consumption for configDB connection during the compute node start, the HA switch, or reloading, and increase the reconnection times of configDB. If the max times of reconnections is exceeded (the default reconnection time is 3*2s), it will automatically switch to connecting from the ConfigDB. |
-| #### maxSqlRecordLength |
+|#### maxSqlRecordLength |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9477,7 +9476,7 @@ Property                         Value
 | This parameter refers to the max length of SQL statistics in Slow Query Log Analysis. |
 | When the length of the executed SQL statement exceeds the set length, it will be cut out automatically, and replaced with ellipsis..., as shown in the following figure: |
 | ![](assets/standard/image146.png) |
-| #### ndbSqlAddr & ndbSqlUser & ndb SqlPass |
+|#### ndbSqlAddr & ndbSqlUser & ndb SqlPass |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9488,7 +9487,6 @@ Property                         Value
   Whether Reload is valid or not   No
   Min Compatible Version           2.5.2
 
-
 **Property**                     **Value**
   Parameter value                  ndbSqlUser
   Visible or not                   Yes
@@ -9496,7 +9494,6 @@ Property                         Value
   Default value                    root
   Whether Reload is valid or not   No
   Min Compatible Version           2.5.2
-
 
 **Property**                     **Value**
   Parameter value                  ndbSqlPass
@@ -9512,7 +9509,7 @@ Property                         Value
 | <property name="ndbSqlAddr">localhost:3329</property> |
 | <property name="ndbSqlUser">root</property> |
 | <property name="ndbSqlPass">root</property> |
-| #### ndbSqlDataAddr |
+|#### ndbSqlDataAddr |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9527,7 +9524,7 @@ Property                         Value
 | --- |
 | The connection from NDB SQL to compute node, that is the communication port from the server IP and NDB SQL where the compute node resides to the compute node, the default value is 127.0.0.1:3327. |
 | property name=[ndbSqlDataAddr](#ndbSqlDataAddr)>127.0.0.1:3327</property> |
-| #### ndbSqlMode |
+|#### ndbSqlMode |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9542,7 +9539,7 @@ Property                         Value
 | --- |
 | none: the default value, representing Forbidden NDB function; local: NDB SQL server and compute node server are on the same computer, execute NDB logic if meeting NDB condition. |
 | <property name=[ndbSqlMode](#ndbSqlMode)>none</property> |
-| #### ndbSqlVersion & ndbVersion |
+|#### ndbSqlVersion & ndbVersion |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9552,7 +9549,6 @@ Property                         Value
   Default value                    5.7.24
   Whether Reload is valid or not   No
   Min Compatible Version           2.5.2
-
 
 **Property**                     **Value**
   Parameter value                  ndbVersion
@@ -9567,7 +9563,7 @@ Property                         Value
 | ndbSqlVersion and ndbVersion are of corresponding relation, and please refer to official MySQL document for the specific corresponding relation. ndbSqlVersion is 5.7.24 by default, and ndbVersion is 7.5.12 by default. The NDB Engine Version supported by the current compute node is 7.5.4 and above, and if to use NDB version, it's required that the data source version must be 5.7.16 and above. |
 | <property name="ndbSqlVersion">5.7.24</property> |
 | <property name="ndbVersion">7.5.12</property> |
-| #### operateMode |
+|#### operateMode |
 | **Description of parameter:** |
 
 Property                         Value
@@ -9613,7 +9609,7 @@ Property                         Value
 | ![](assets/standard/image149.png) |
 | In debug mode, the compute node will force to enable the parameters related to the debug function, for example: |
 | recordSql=true,recordSQLSyntaxError=true,recordCrossDNJoin=true,recordUNION=true,recordSubQuery=true,recordDeadLockSQL=true,recordLimitOffsetWithoutOrderby=true,recordSQLKeyConflict=true,recordSQLUnsupported=true,recordMySQLWarnings=true,recordMySQLErrors=true,recordHotDBWarnings=true,recordHotDBErrors=true,recordDDL=true,recordSQLIntercepted=true,recordAuditlog=true,recordSQLForward=true,recordSqlAuditlog=true， even if the parameters are configured to false in server.xml. It should be noted that in debug mode, the compute node will generate more log files, so it is necessary to pay attention to the remaining available disk space to prevent the log files from occupying the disk and causing the compute node service downtime. |
-| #### parkPeriod |
+|#### parkPeriod |
 | **Description of parameter:** |
 | +--------------------------------+----------------------------------------------------------------+ |
 | | **Property** | | **Value** | | |
@@ -9641,7 +9637,7 @@ Property                         Value
 | <property name=[parkPeriod](#parkPeriod)>100000</property> |
 | **Role of parameter:** |
 | This parameter is used for adjusting sleep time of cost message queue thread at the idle time of message queue of internal thread communication. |
-| #### pingLogCleanPeriod |
+|#### pingLogCleanPeriod |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9658,7 +9654,7 @@ Property                         Value
 | <property name=[pingLogCleanPeriod](#pingLogCleanPeriod)>3</property><!-- Ping Log Clean Period, 3 by default --> |
 | **Role of parameter:** |
 | pingLogCleanPeriod parameter is 3 by default, with the optional unit being Hour, Day and Month, which shall be decided by the other parameter pingLogCleanPeriodUnit. This parameter is mainly used to control the clean period of the data stored in configDB at the time of ping check, and delete the data before specified time periodically every day. |
-| #### pingLogCleanPeriodUnit |
+|#### pingLogCleanPeriodUnit |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9675,7 +9671,7 @@ Property                         Value
 | <property name=[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit)>2</property><!-- Unit of ping log clean period, 2 by default, 0: Hour, 1: Day, 2: Month --> |
 | **Role of parameter:** |
 | pingLogCleanPeriodUnit parameter is 2 by default, meaning that the unit of ping log clean period is Month, besides, the option 0 means Hour and 1 means Day. This parameter is mainly used to control the unit of ping log clean period, and is in support use with the pingLogCleanPeriod parameter. |
-| #### pingPeriod |
+|#### pingPeriod |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9695,7 +9691,7 @@ Property                         Value
 | In the detection process, for a certain IP address, the program will automatically use 10 packets (64 byte), 10 packets (65000 byte), which are pinged every 1 second. When the network quality is found to be failed, the interval of ping will be shortened to once per minute, and the criteria of failure judgment are as follows: |
 | - | If 64-byte packets in the same IDC are not all lost, when the average delay is greater than 1 ms or the max delay is greater than 2 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log。 If 65000-byte packets are not all lost, when the average delay is greater than 3 ms, or the max delay is greater than 5 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log table. |
 | - | If 64-byte packets across the IDCs are not all lost, when the average delay is greater than 10 ms or the max delay is greater than 20 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log。 If 65000-byte packets are not all lost, when the average delay is greater than 15 ms, or the max delay is greater than 30 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log table. |
-| #### prefetchBatchInit |
+|#### prefetchBatchInit |
 | **Description of parameter:** |
 
 Property                         Value
@@ -9712,7 +9708,7 @@ Property                         Value
 | **Role of parameter:** |
 | The initial value of the auto-incremental batch size. If the initial value is set as 100, the range difference of the prefetch interval is 100 by default. For example, if the prefetch starts from 123, the prefetch interval is [123, 223]. |
 | The initial value can be configured within the upper and lower limits of the auto-incremental batch size actually configured (prefetchBatchMax and prefetchBatchMin). The default range is [10, 10000]. |
-| #### prefetchBatchMax |
+|#### prefetchBatchMax |
 | **Description of parameter:** |
 
 Property                         Value
@@ -9730,7 +9726,7 @@ Property                         Value
 | <property name=[prefetchBatchMax](#prefetchBatchMax)>10000</property> |
 | **Role of parameter:** |
 | The upper limit of the auto-incremental batch size. If 1000 is set, the maximum value of the range difference of each prefetch interval is 1000. For example, if the prefetch starts from 123, the maximum value in the prefetch interval is not more than 1123, that is, the values are within [123,1123]. |
-| #### prefetchBatchMin |
+|#### prefetchBatchMin |
 | **Description of parameter:** |
 
 **Property**                     Value
@@ -9748,7 +9744,7 @@ Property                         Value
 | <property name=[prefetchBatchMin](#prefetchBatchMin)>10</property> |
 | **Role of parameter:** |
 | The lower limit of the auto-incremental prefetch batch size. If 100 is set, the minimum value of the range difference of each prefetch interval is 100. For example, if the prefetch starts from 123, the maximum value in the prefetch interval is not less than 223, that is, the next prefetch batch starts from 223 at least, and the next prefetch batch [>=223, 223+prefetch batch size]. |
-| #### prefetchValidTimeout |
+|#### prefetchValidTimeout |
 | **Description of parameter:** |
 
 Property                         Value
@@ -9766,7 +9762,7 @@ Property                         Value
 | <property name=[prefetchValidTimeout](#prefetchValidTimeout)>30</property> |
 | **Role of parameter:** |
 | The valid timeout time of prefetching the auto-incremental batch. When set as 0, it means that the auto-incremental batch is not abandoned due to the timeout. For example, if 30 seconds is set, the prefetch range is 1-100. If it is more than 30 seconds, the unused value is no longer used. |
-| #### processorExecutor |
+|#### processorExecutor |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9785,7 +9781,7 @@ Property                         Value
 | **Role of parameter:** |
 | This parameter is used for setting number of threads of processors in internal thread pool model of the compute node. The parameter [adaptiveProcessor](#adaptiveprocessor) is Enabled by default, and when enabled, the compute node will make Automatic Adaptation to Max processorExecutor. |
 | Log in to 3325 port, execute the show @@threadpool; command, and then you could view the current number of processorExecutor. |
-| #### Processors |
+|#### Processors |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9804,7 +9800,7 @@ Property                         Value
 | **Role of parameter:** |
 | This parameter is used for setting number of threads in internal thread pool model of the compute node. The parameter [adaptiveProcessor](#adaptiveprocessor) is Enable by default, and when enabled, the compute node will make Automatic Adaptation to the max number of processors. |
 | Log in to 3325 port, execute show @@threadpool; command, and then you could view the number of current processors. |
-| #### readOnly |
+|#### readOnly |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9824,7 +9820,7 @@ Property                         Value
 | Enable status: |
 | mysql> drop table customer; |
 | ERROR 1289 (HY000): Command not allowed in Read-Only mode. |
-| #### recordAuditlog |
+|#### recordAuditlog |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9841,7 +9837,7 @@ Property                         Value
 | <property name=[recordAuditlog](#recordAuditlog)>true</property><!---Record audit log --> |
 | **Role of parameter:** |
 | recordAuditlog enables audit log or not. This parameter is used for controlling whether to record the management port operation information or not. When the audit log is enabled, you could view management port operation record via Event->Audit log on the management platform. |
-| #### recordCrossDNJoin |
+|#### recordCrossDNJoin |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9864,8 +9860,8 @@ Property                         Value
 | Execute as follow: |
 | mysql> SELECT * FROM account a JOIN borrower b; |
 | View /logs/sql.log of compute node installation directory |
-| 2018-05-22 16:17:11.607 [INFO] [CROSSDNJOIN] [\$NIOExecutor-6-2] JoinVisitor(4947) -- SELECT * FROM account a JOIN borrower b |
-| #### recordDDL |
+| 2018-05-22 16:17:11.607 [INFO] [CROSSDNJOIN] [$NIOExecutor-6-2] JoinVisitor(4947) -- SELECT * FROM account a JOIN borrower b |
+|#### recordDDL |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9884,9 +9880,9 @@ Property                         Value
 | recordDDL log records DDL statement, execute the following statement: |
 | mysql> create table abc(id int); |
 | View /logs/sql.log of compute node installation directory |
-| 2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [\$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without Primary Key and unique key} |
-| 2018-05-23 14:23:52.698 [INFO] [DDL] [\$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int) |
-| #### recordDeadLockSQL |
+| 2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without Primary Key and unique key} |
+| 2018-05-23 14:23:52.698 [INFO] [DDL] [$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int) |
+|#### recordDeadLockSQL |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9905,8 +9901,8 @@ Property                         Value
 | recordDeadLockSQL log records the statement triggering deadlock: |
 | 1. Create deadlock scenario |
 | 2. View /logs/hotdb.log of compute node installation directory: |
-| 2018-05-23 14:54:30.865 [INFO] [DEADLOCK] [\$NIOREACTOR-1-RW] am(-1) -- sql: INSERT INTO table2000 VALUES (3); error response from MySQLConnection [node=4, id=277, threadId=133815, state=borrowed, close=false, autocommit=false, host=192.168.220.102, port=3309, database=db249, localPort=15332, isClose:false, toBeClose:false], err: Lock wait timeout exceeded; try restarting transaction, code: 1205 |
-| #### recordHotDBErrors |
+| 2018-05-23 14:54:30.865 [INFO] [DEADLOCK] [$NIOREACTOR-1-RW] am(-1) -- sql: INSERT INTO table2000 VALUES (3); error response from MySQLConnection [node=4, id=277, threadId=133815, state=borrowed, close=false, autocommit=false, host=192.168.220.102, port=3309, database=db249, localPort=15332, isClose:false, toBeClose:false], err: Lock wait timeout exceeded; try restarting transaction, code: 1205 |
+|#### recordHotDBErrors |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9924,8 +9920,8 @@ Property                         Value
 | **Role of parameter:** |
 | recordHotDBErrors log records error message returned by compute node |
 | For example: when executing Create statement by user without create privilege, the prompt is as follow: |
-| 2018-06-04 10:43:07.316 [INFO] [HOTDBERROR] [\$NIOExecutor-3-0] ServerConnection(155) -- sql: create table a001(id int), err: [CREATE] command denied to user 'jzl' to logic database 'TEST_JZL' |
-| #### recordHotDBWarnings |
+| 2018-06-04 10:43:07.316 [INFO] [HOTDBERROR] [$NIOExecutor-3-0] ServerConnection(155) -- sql: create table a001(id int), err: [CREATE] command denied to user 'jzl' to logic database 'TEST_JZL' |
+|#### recordHotDBWarnings |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9944,9 +9940,9 @@ Property                         Value
 | recordHotDBWarnings log records the warning message returned by the compute node, execute as follow: |
 | create table abc(id int); |
 | View /logs/sql.log of the compute node installation directory |
-| 2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [\$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without Primary Key and unique key} |
-| 2018-05-23 14:23:52.698 [INFO] [DDL] [\$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int) |
-| #### recordLimitOffsetWithoutOrderby |
+| 2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without Primary Key and unique key} |
+| 2018-05-23 14:23:52.698 [INFO] [DDL] [$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int) |
+|#### recordLimitOffsetWithoutOrderby |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9966,10 +9962,10 @@ Property                         Value
 | Execute as follow: |
 | mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ) limit 1,3; |
 | View /logs/sql.log of compute node installation directory |
-| 2018-05-23 14:05:14.915 [INFO] [LIMITOFFSETWITHOUTORDERBY] [\$NIOExecutor-6-l] SubqueryExecutor(97) - sql: select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3 |
-| 2018-05-23 14:05:14.922 [INFO] [LIMITOFFSETWITHOUTORDERBY] [\$NIOExecutor-2-3] BaseSession(97) - sql: SELECT A.\`Balance\`, A.\`Branch_name\`, A.\`Account_number\`, A.\`account_date\` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776 |
+| 2018-05-23 14:05:14.915 [INFO] [LIMITOFFSETWITHOUTORDERBY] [$NIOExecutor-6-l] SubqueryExecutor(97) - sql: select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3 |
+| 2018-05-23 14:05:14.922 [INFO] [LIMITOFFSETWITHOUTORDERBY] [$NIOExecutor-2-3] BaseSession(97) - sql: SELECT A.`Balance`, A.`Branch_name`, A.`Account_number`, A.`account_date` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776 |
 | F6f64'), NULL) LIMIT 1 , 3 |
-| #### recordMySQLErrors |
+|#### recordMySQLErrors |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -9989,8 +9985,8 @@ Property                         Value
 | Execute as follow: |
 | msyql> select form; |
 | View /logs/hotdb.log of compute node installation directory |
-| 2018-05-23 14:38:55.843 [INFO] [MYSQLERROR] [\$NIOREACTOR-7-RW] MySQLConnection(56) -- sql: select form, error response from MySQLConnection [node=4, id=223, threadId=118551, state=borrowed, close=false, autocommit=true, host=192.168.220.103, port=3309, database=db249, localPort=27007, isClose:false, toBeClose:false], err: Unknown column 'form' in 'field list', code: 1054 |
-| #### recordMySQLWarnings |
+| 2018-05-23 14:38:55.843 [INFO] [MYSQLERROR] [$NIOREACTOR-7-RW] MySQLConnection(56) -- sql: select form, error response from MySQLConnection [node=4, id=223, threadId=118551, state=borrowed, close=false, autocommit=true, host=192.168.220.103, port=3309, database=db249, localPort=27007, isClose:false, toBeClose:false], err: Unknown column 'form' in 'field list', code: 1054 |
+|#### recordMySQLWarnings |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10008,13 +10004,13 @@ Property                         Value
 | **Role of parameter:** |
 | recordMySQLWarnings log records the warning message returned by MySQL. |
 | Execute as follow: |
-| mysql> update account set Account_number="\$!\\\\''\# \# "; |
+| mysql> update account set Account_number="$!\\\''## "; |
 | View /logs/sql.log of compute node installation directory, |
-| 2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*\$!\\\\\\'\\'\# \# ', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265 |
-| 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*\$!\\\\\\'\\'\# \# ', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265 |
-| 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*\$!\\\\\\'\\'\# \# ', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265 |
-| 2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[\$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*\$!\\\\\\'\\'\# \# ', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265 |
-| #### recordSql |
+| 2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265 |
+| 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265 |
+| 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265 |
+| 2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265 |
+|#### recordSql |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10074,7 +10070,7 @@ Property                         Value
 | last update time: 2018-05-29 11:04:31.000000 |
 | crc: 321944166562 |
 | 1 row in set (0.00 sec) |
-| #### recordSqlAuditlog |
+|#### recordSqlAuditlog |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10092,8 +10088,8 @@ Property                         Value
 | **Role of parameter:** |
 | If the parameter is set as true，DDL、DML、DQL and other operations will be recorded in logs/extra/sqlaudit/ of the compute node installation directory. |
 | For example, execute DDL on the server of compute node and view the log output. |
-| {"affected_rows":"0","command":"CREATE TABLE \`t_sharding_01\` (\\n\`id\` int(10) NOT NULL AUTO_INCREMENT,\\n\`name\` varchar(50) NOT NULL,\\n\`age\` int(3),\\nPRIMARY KEY (\`id\`)\\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4","connection_id":"44","end_time":"2020-04-27 14:58:34.769","failed_reason":"","host":"127.0.0.1","ip":"127.0.0.1","log_id":"9524067900080128","logic_db":"CXD_DB","matched_rows":"0","port":"3323","query_rows":"0","sql_subtype":"CREATE","sql_type":"DDL","status":"1","time":"2020-04-27 14:58:34.736","user":"cxd@%"} |
-| Note: the log is output in the format of json. Special characters such as double quotation marks are escaped with \. The meaning of some keys in json is as follows: |
+| {"affected_rows":"0","command":"CREATE TABLE `t_sharding_01` (\\n`id` int(10) NOT NULL AUTO_INCREMENT,\\n`name` varchar(50) NOT NULL,\\n`age` int(3),\\nPRIMARY KEY (`id`)\\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4","connection_id":"44","end_time":"2020-04-27 14:58:34.769","failed_reason":"","host":"127.0.0.1","ip":"127.0.0.1","log_id":"9524067900080128","logic_db":"CXD_DB","matched_rows":"0","port":"3323","query_rows":"0","sql_subtype":"CREATE","sql_type":"DDL","status":"1","time":"2020-04-27 14:58:34.736","user":"cxd@%"} |
+| Note: the log is output in the format of json. Special characters such as double quotation marks are escaped with . The meaning of some keys in json is as follows: |
 | sql_ type: the type of SQL currently executed, including DDL/DML/DQL/OTHER. |
 | sql_ subtype: the subtype of SQL currently executed, among which DDL includes CREARE/ALTER/DROP/TUNCATE/RENAME; DQL includes SELECT; DML includes UPDATE/DELETE/INSERT/REPLACE/LOAD; OTHER includes SET/PREPARE/TRANSACTION/SHOW. |
 | ip: the IP address of the client executing SQL. |
@@ -10109,7 +10105,7 @@ Property                         Value
 | status: whether the SQL execution status is success or failure. 0 is for failure and 1 is for success. |
 | failed_ reason: the reason why SQL execution failed. |
 | end_ time: end time of SQL execution. |
-| #### recordSQLIntercepted |
+|#### recordSQLIntercepted |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10127,8 +10123,8 @@ Property                         Value
 | **Role of parameter:** |
 | recordSQLIntercepted log records the intercepted statement; configuration of intercepted statement is in Middleware management platform->Safety->SQL firewall. |
 | View /logs/sql.log of compute node installation directory |
-| 2018-06-01 14:17:45.669 [INFO] [SQLINTERCEPTED] [\$NIOExecutor-1-2] g(-1) -- sql: DELETE FROM sql_intercept_tab, user:zy, ip: 192.168.200.45, db: TEST_JZL, intercepted by filewall: not allowed to execute delete without where expression |
-| #### recordSQLKeyConflict |
+| 2018-06-01 14:17:45.669 [INFO] [SQLINTERCEPTED] [$NIOExecutor-1-2] g(-1) -- sql: DELETE FROM sql_intercept_tab, user:zy, ip: 192.168.200.45, db: TEST_JZL, intercepted by filewall: not allowed to execute delete without where expression |
+|#### recordSQLKeyConflict |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10147,14 +10143,14 @@ Property                         Value
 | recordSQLKeyConflict log records the statement with Primary Key conflict and violating foreign key constraint. |
 | Executed as follow: |
 | Create Table: |
-| mysql> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`)); |
+| mysql> CREATE TABLE `vtab001` (`id` int(11) NOT NULL,`name` varchar(255) DEFAULT NULL,PRIMARY KEY (`id`)); |
 | Execute Insert statement once: |
 | mysql> insert into vtab001 values(1,'aaa'); |
 | Execute again, to violate the Primary Key Constraint: |
 | mysql> insert into vtab001 values(1,'aaa'); |
 | View /logs/sql.log of compute node installation directory |
-| 2018-06-01 14:09:47.139 [INFO] [SQLKEYCONFLICT] [\$NIOREACTOR-1-RW] MySQLConnection(65) -- sql: insert into vtab001 values(1,'aaa'), error response from MySQLConnection [node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false], err: Duplicate entry '1' for key 'PRIMARY', CODE: 1062 |
-| #### recordSQLSyntaxError |
+| 2018-06-01 14:09:47.139 [INFO] [SQLKEYCONFLICT] [$NIOREACTOR-1-RW] MySQLConnection(65) -- sql: insert into vtab001 values(1,'aaa'), error response from MySQLConnection [node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false], err: Duplicate entry '1' for key 'PRIMARY', CODE: 1062 |
+|#### recordSQLSyntaxError |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10174,8 +10170,8 @@ Property                         Value
 | For example: |
 | mysql> SELECT * FROM; |
 | View /logs/sql.log of compute node installation directory |
-| 2018-05-22 16:12:42.686 [INFO] [SQLSYNTAXERROR] [\$NIOExecutor-6-3] ServerConnection(671) - SELECT * FROM |
-| #### recordSQLUnsupported |
+| 2018-05-22 16:12:42.686 [INFO] [SQLSYNTAXERROR] [$NIOExecutor-6-3] ServerConnection(671) - SELECT * FROM |
+|#### recordSQLUnsupported |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10193,11 +10189,11 @@ Property                         Value
 | **Role of parameter:** |
 | recordSQLUnsupported log records the unsupported statement. |
 | For example: |
-| Create Table: mysql> CREATE TABLE \`vtab001\` (\`id\` int(11) NOT NULL,\`name\` varchar(255) DEFAULT NULL,PRIMARY KEY (\`id\`)); |
+| Create Table: mysql> CREATE TABLE `vtab001` (`id` int(11) NOT NULL,`name` varchar(255) DEFAULT NULL,PRIMARY KEY (`id`)); |
 | Execute the statement not supported by HotDB for the time being: mysql> select * into vtab001_bak from vtab001; |
 | View /logs/sql.log of compute node installation directory |
-| 2018-05-22 14:19:54.395 [INFO] [SQLUNSUPPORTED] [\$NIOExecutor-6-2] ServerConnection(110) -- sql: select * into vtab001_bak from vtab001 |
-| #### recordSubQuery |
+| 2018-05-22 14:19:54.395 [INFO] [SQLUNSUPPORTED] [$NIOExecutor-6-2] ServerConnection(110) -- sql: select * into vtab001_bak from vtab001 |
+|#### recordSubQuery |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10217,8 +10213,8 @@ Property                         Value
 | For example: |
 | mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ); |
 | View /logs/sql.log of compute node installation directory |
-| 2018-05-23 13:56:11.714 [INFO] [SUBQUERY] [\$NIOExecutor-6-0] SubqueryExecutor(169) -- select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ) |
-| #### recordUNION |
+| 2018-05-23 13:56:11.714 [INFO] [SUBQUERY] [$NIOExecutor-6-0] SubqueryExecutor(169) -- select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ) |
+|#### recordUNION |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10238,8 +10234,8 @@ Property                         Value
 | For example: |
 | mysql> SELECT * FROM trends UNION SELECT * from trends_uint; |
 | View /logs/sql.log of compute node installation directory |
-| 2018-05-23 13:30:27.156 [INFO] [UNION] [\$NIOREACTOR-5-RW] UnionExecutor(162) - SELECT * FROM trends UNION SELECT * from trends_uint |
-| #### routeByRelativeCol |
+| 2018-05-23 13:30:27.156 [INFO] [UNION] [$NIOREACTOR-5-RW] UnionExecutor(162) - SELECT * FROM trends UNION SELECT * from trends_uint |
+|#### routeByRelativeCol |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10256,7 +10252,7 @@ Property                         Value
 | <property name=[routeByRelativeCol](#routeByRelativeCol)>false</property><!-- It does not include the route via Secondary Index Field at the time of sharding key --> |
 | **Role of parameter:** |
 | This function is OFF by default, that is, it does not route via Secondary Index Field when the sharding key is not included, and it is ON after being modified as true. After enabled, it supports to locate to the specific node via Query Secondary Index and distribute the SELECT Query statement to specified node only instead of all nodes when the SELECT Query statement does not include sharding key but includes Unique Constraint Field. |
-| #### serverId |
+|#### serverId |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10273,7 +10269,7 @@ Property                         Value
 | <property name=[serverId](#serverId)>1</property><!-- Cluster node number 1-N (number of nodes), unique in cluster --> |
 | **Role of parameter:** |
 | It is used for dividing connection communication ID among the nodes in the cluster, and this Parameter Setting shall be set from 1 continuously without repetition, and in case of repetition, the cluster will start abnormally. |
-| #### service port & management port |
+|#### service port & management port |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10283,7 +10279,6 @@ Property                         Value
   Default value                    3323
   Whether Reload is valid or not   No
   Min Compatible Version           2.4.3
-
 
 **Property**                     **Value**
   Parameter value                  management port
@@ -10297,7 +10292,7 @@ Property                         Value
 | --- |
 | Service port is used to log in to the compute node to execute relevant statements, and its use is similar to that of MySQL. |
 | management port is used to monitor compute node service information and monitoring statistical information, and you could view by executing relevant commands. |
-| #### showAllAffectedRowsInGlobalTable |
+|#### showAllAffectedRowsInGlobalTable |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10324,7 +10319,7 @@ Property                         Value
 | mysql> update join_us06_ct set e = 'm' where id =4; |
 | Query OK, 1 rows affected (0.10 sec) |
 | Rows matched: 1 Changed: 1 Warnings: 0 |
-| #### skipDatatypeCheck |
+|#### skipDatatypeCheck |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10349,7 +10344,7 @@ Property                         Value
 | skipDatatypeCheck=true: |
 | mysql> alter table skipDatatypeCheck add(phone double(10,3)); |
 | Query OK, 0 rows affected (0.23 sec) |
-| #### socketBacklog |
+|#### socketBacklog |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10367,7 +10362,7 @@ Property                         Value
 | <property name=[socketBacklog](#socketBacklog)>1000</property><!-- service port Socket backlog (Unit: Ge) --> |
 | **Role of parameter:** |
 | Service port socket requires a certain period of time to process socket connection of the Client and has a queue to store the Client Socket haven't been processed in time; the capacity of the queue is backlog. If the queue has been fully occupied by Client socket, ServerSocket will refuse the new connections to guarantee enough queue capacity, thus there will be no connection which can't be connected due to small queue capacity. |
-| #### sqlTimeout |
+|#### sqlTimeout |
 | **Description of parameter:** |
 | +--------------------------------+---------------------------+ |
 | | **Property** | | **Value** | | |
@@ -10395,7 +10390,7 @@ Property                         Value
 | When SQL execution time exceeds the set time, there will be prompt as follow: |
 | mysql> select a.*,b.*,c.* from customer_auto_3 a join customer_auto_1 b on a.postcode=b.postcode join customer_auto_2 c on a.provinceid=c.provinceid where c.provinceid in (12,15) and b.province !='anhui' group by a.postcode order by a.birthday,a.provinceid,b.birthday,c.postcode limit 1000; |
 | ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a new transaction started automatically |
-| #### sslUseSM4 |
+|#### sslUseSM4 |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10416,7 +10411,7 @@ Property                         Value
 | For users, this function can only be viewed through packet capture. Example: if you see the number of an encrypted suite (0xff01) defined by HotDB Server SM4 in TLS handshake package through packet capture, it indicates that SM4 encryption and decryption suite has taken effect.\ |
 | ![](assets/standard/image153.png "fig:")\ |
 | ![](assets/standard/image154.png "fig:") |
-| #### statisticsUpdatePeriod |
+|#### statisticsUpdatePeriod |
 | **Description of parameter:** |
 | +--------------------------------+---------------------------------------+ |
 | | **Property** | | **Value** | | |
@@ -10448,7 +10443,7 @@ Property                         Value
 | mysql> select * from tid; |
 | Empty set (0.03 sec) |
 | ![](assets/standard/image155.png) |
-| #### strategyForRWSplit |
+|#### strategyForRWSplit |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10545,7 +10540,7 @@ Property                         Value
 | +---------+---------+ |
 | 9 rows in set (0.00 sec) |
 | For details, please refer to [Read/write splitting](#high-availability-service-1). |
-| #### switchByLogInFailover |
+|#### switchByLogInFailover |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10563,7 +10558,7 @@ Property                         Value
 | True status: When failover, give priority to determining the switch priority via the Standby Slave synchronization speed, and the specific shall be determined by position of Master_Log_File and Read_Master_Log_Pos, and the switch with quicker synchronization speed will be taken in priority; if all Slave Read_Master_Log_Pos positions are the same, then match according to the set priority |
 | False status: switch according to failover rule of the user |
 | Note: Manual Switch operation is not under control of this parameter |
-| #### switchoverTimeoutForTrans |
+|#### switchoverTimeoutForTrans |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10620,7 +10615,7 @@ Property                         Value
 | | 1 | |
 | +------+ |
 | 1 row in set (0.01 sec) |
-| #### timerExecutor |
+|#### timerExecutor |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10638,7 +10633,7 @@ Property                         Value
 | <property name=[timerExecutor](#timerExecutor)>4</property><!-- Number of threads of timers --> |
 | **Role of parameter:** |
 | The parameter [adaptiveProcessor](#adaptiveprocessor) is enabled by default, and when enabled, the compute node will make Automatic Adaptation to the Max timerExecutor. Log in to 3325 port, execute show @@threadpool; command, and you could view the number of current timerExecutor. |
-| #### timestampProxy |
+|#### timestampProxy |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10659,7 +10654,7 @@ Property                         Value
 | <property name=[timestampProxy](#timestampProxy)>2</property> |
 | **Role of parameter:** |
 | This parameter is used for Complete Global Proxy of the table with on update current_timestamp property or SQL with Time Function, and for solving the problem of data abnormality and inter-node data inconsistency due to insert or update operation when the table has this property. If timestampProxy is set as 0 and the difference is great, or is set as 2, it will greatly influence execution speed and efficiency of all update statements. |
-| #### url & username & password |
+|#### url & username & password |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10670,7 +10665,6 @@ Property                         Value
   Whether Reload is valid or not   Yes
   Min Compatible Version           2.4.3
 
-
 **Property**                     **Value**
   Parameter value                  username
   Visible or not                   Yes
@@ -10678,7 +10672,6 @@ Property                         Value
   Default value                    hotdb_config
   Whether Reload is valid or not   Yes
   Min Compatible Version           2.4.3
-
 
 **Property**                     **Value**
   Parameter value                  password
@@ -10719,7 +10712,7 @@ Property                         Value
 | When configDB connection fails after enabling the compute node, the compute node will reconnect at interval of 3s, until connection still fails after more than 30 minutes of retry, then interrupt Enable operation. |
 | The last packet set successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server. |
 | 2018-06-12 15:25:56.789 [ERROR] [INIT] [main] HotdbConfig(275) -- no available config datasources. retry in 3 seconds. |
-| #### usingAIO |
+|#### usingAIO |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10740,7 +10733,7 @@ Property                         Value
 | root> tail -n 300 hotdb.log | grep 'aio' |
 | 2018-06-01 13:51:18.961 [INFO] [INIT] [main] j(-1) -- using aio network handler |
 | 2018-06-01 13:52:19.644 [INFO] [INIT] [main] j(-1) -- using aio network handler |
-| #### version |
+|#### version |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10774,7 +10767,7 @@ Property                         Value
 | +--------------------+ |
 | 1 row in set (0.03 sec) |
 | Note: When min version number of all data source is inferior to or equals to Max version number supported by the compute node, then among all data sources, show the min version number to the public; when version number of the data source exceeds the Max version number supported by the compute node, then show a complete version number of the Max protocol version supported by the compute node to the public, and currently, 5.7.18 is supported at the highest. When version number of all data sources is bigger than 5.7.18, then this parameter will change the version number, otherwise, the min version among the data sources will be taken directly. |
-| #### versionComment |
+|#### versionComment |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10790,21 +10783,21 @@ Property                         Value
 | versionComment, the version comment of compute node for external display, can be customized and used with the parameter Version. If the parameter value is a different string, you can replace the original version comment with the configured string; if you do not want to display any comment, you can configure the parameter value as a space (and the actual display is a space); if no value is configured, HotDB-2.5.5 HotDB Server by Hotpu Tech will be displayed by default (2.5.5 is the version number of the compute node itself). |
 | For example: |
 | Null：<property name=[versionComment](#versionComment)></property>，connect to the compute node： |
-| [root@hotdb]\## mysql -uroot -proot -P3323 -h192.168.210.49 |
+| [root@hotdb]## mysql -uroot -proot -P3323 -h192.168.210.49 |
 | mysql: [Warning] Using a password on the command line interface can be insecure. |
 | Welcome to the MySQL monitor. Commands end with ; or \\g. |
 | Your MySQL connection id is 235 |
 | Server version: 5.7.23 HotDB-2.5.3 HotDB Server by Hotpu Tech |
 | ...... |
 | A space： <property name=[versionComment](#versionComment)> </property>，connect to the compute node： |
-| [root@hotdb]\## mysql -uroot -proot -P3323 -h192.168.210.49 |
+| [root@hotdb]## mysql -uroot -proot -P3323 -h192.168.210.49 |
 | mysql: [Warning] Using a password on the command line interface can be insecure. |
 | Welcome to the MySQL monitor. Commands end with ; or \\g. |
 | Your MySQL connection id is 235 |
 | Server version: 5.7.23 |
 | ...... |
 | A customized string： <property name=[versionComment](#versionComment)>hotpu</property>，connect to the compute node： |
-| [root@hotdb]\## mysql -uroot -proot -P3323 -h192.168.210.49 |
+| [root@hotdb]## mysql -uroot -proot -P3323 -h192.168.210.49 |
 | mysql: [Warning] Using a password on the command line interface can be insecure. |
 | Welcome to the MySQL monitor. Commands end with ; or \\g. |
 | Your MySQL connection id is 235 |
@@ -10826,7 +10819,7 @@ Property                         Value
 | Protocol version: 10 |
 | Connection: 192.168.210.49 via TCP/IP |
 | ...... |
-| #### VIP & checkVIPPeriod |
+|#### VIP & checkVIPPeriod |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10836,7 +10829,6 @@ Property                         Value
   Default value                    Null
   Whether Reload is valid or not   Yes
   Min Compatible Version           2.4.8
-
 
 **Property**                     **Value**
   Parameter value                  CheckVIPPeriod
@@ -10864,7 +10856,7 @@ Property                         Value
 | It is in Compute Node High Availability environment, and under the condition of change in root password, when making high availability switch, it will make switch by checking according to existence mode of VIP, in order to avoid switch failure after changing the password |
 | ![](assets/standard/image156.png) |
 | ![](assets/standard/image157.png) |
-| #### waitConfigSyncFinish |
+|#### waitConfigSyncFinish |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10891,8 +10883,8 @@ Property                         Value
 | 2018-06-01 16:21:17.216 [INFO] [INIT] [main] j(-1) - usinq aio network handler |
 | ON status: |
 | It could be enabled only after waiting for master/slave synchronization |
-| 2018-07-12 14:28:52.019 [INFO] [INIT] [\$NIOREACTOR-9-RW] XAInitRecoverHandler(125) -- wait for config datasource synchronizing... |
-| #### waitForSlaveInFailover |
+| 2018-07-12 14:28:52.019 [INFO] [INIT] [$NIOREACTOR-9-RW] XAInitRecoverHandler(125) -- wait for config datasource synchronizing... |
+|#### waitForSlaveInFailover |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10922,17 +10914,17 @@ Property                         Value
 | 4 rows in set (0.02 sec) |
 | In the log you can see the prompt of no longer using the failed Master data source, and the data source without replication synchronization will not be enabled |
 | 2018-06-08 10:36:47.921 [INFO] [FAILOVER] [Labor-1552] j(-1) - slave_sql_running is Yes in :[id:178,nodeId:6 192.168.200.52:3312/phy248 status:1,charset:utf8] during failover of datanode 6 |
-| 2018-06-08 10:36:48.417 [WARN] [HEARTBEAT] [\$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:java.net.ConnectException:connection refused |
-| 2018-06-08 10:36:48.418 [WARN] [HEARTBEAT] [\$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused |
-| 2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [\$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:j ava.net.ConnectException: connection refused |
-| 2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [\$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused |
+| 2018-06-08 10:36:48.417 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:java.net.ConnectException:connection refused |
+| 2018-06-08 10:36:48.418 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused |
+| 2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:j ava.net.ConnectException: connection refused |
+| 2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused |
 | 2018-06-0810:36:48.982 [INFO] [FAILOVER] [Labor-1552] j(-1) - masterLogFile:mysql-bin.000518,readMasterLogFile:mysql-bin.000518,readMasterLogPos:384545127,execMaster LogPos:384512435,relayLogFiTe:mysql-relay-bin.000002,relayLogPos; 248414,secondBehindMaster:19,execLogchanged:true in slave: MySQLConnection [node=6, id=140, threadId=3 15945, state=borrowed, closed=false, autocommit=true, host=192.168.200.52, port=3312, database=phy248, localPort=64694, isClose:false, toBeclose:false] |
 | OFF status: |
 | When the master/slave data source has replication latency, it could switch to the Slave directly, without waiting for replication synchronization. |
 | 2018-06-08 16:19:22.864 [INFO] [FAILOVER] [Labor-1852] bh(-1) -- switch datasource:6 for datanode:6 successfully by Manager. |
 | Special note: the effect of master_delay on switching is adjusted in 2.5.6 and above. When the parameter waitForSlaveInFailover |
 | (In failover, whether to wait for the Slave to catch up with replication or not) is enabled, if the delay setting is detected during switching, the setting will be automatically cancelled before catching up with the replication. After the switching, the delay setting will be restored. If it is still greater than 10s after cancelling the delay setting, switching will not be allowed, and the previously set value of master_delay will be restored.) |
-| #### waitSyncFinishAtStartup |
+|#### waitSyncFinishAtStartup |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -10951,9 +10943,9 @@ Property                         Value
 | Precondition: |
 | Under the condition of Master data source latency, enabling compute node will prompt that the replication synchronization of the current data source has not been completed, and it shall provide service only after replication synchronization completes. |
 | Turn on the switch: When enable the compute node, wait for replication synchronization of master/slave data source, so as to guarantee data consistency of master/salve data source |
-| 2018-06-01 17:15:12.990 [info] [INIT] [\$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos:4668659,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false] |
-| 2018-06-01 17:15:12.990 [info] [INIT] [\$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4669275,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=50, threadId=l7084, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=20329, isClose:false, toBeClose:false] |
-| 2018-06-01 17:15:12.990 [info] [INIT] [\$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4670199,execMasterLogPos: 4557471,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2122521,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false] |
+| 2018-06-01 17:15:12.990 [info] [INIT] [$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos:4668659,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false] |
+| 2018-06-01 17:15:12.990 [info] [INIT] [$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4669275,execMasterLogPos:4555931,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2121597,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=50, threadId=l7084, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=20329, isClose:false, toBeClose:false] |
+| 2018-06-01 17:15:12.990 [info] [INIT] [$NIOREACTOR-3-RW] k(-1) - masterLogFile:mysql-bin.000667,relayMasterLogFile:mysql-bin.000667,readMasterLogPos: 4670199,execMasterLogPos: 4557471,relayLogFile:mysql-relay-bin.000004,relayLogPos: 2122521,secondBehindMaster:90,execLogchanged:true in server:MySQLConnection [node=3, id=41, threadId=l7054, state=running, closed=false, autocommit=true, host=192.168.200.52, port=3310, database=db249, localPort=18965, isClose:false, toBeClose:false] |
 | Turn off the switch: No other abnormalities, the compute node could be enabled directly |
 | 2018-06-01 16:21:14.958 [INFO] [INIT] [main] j(-1) - reading config... |
 | 2018-06-01 16:21:15.170 [info] [INIT] [main] a(-1) - using config datasource in start up:[id:-1,nodeld:-1 l27.0.0.1:3306/hotdb_config_249 status:1,charset:utf8] |
@@ -10963,7 +10955,7 @@ Property                         Value
 | 2018-06-01 16:21:16.894 [info] [INIT] [main] j(-1) - Sysconfig params:SystemConfig [ frontwriteQueueSize=2048, service port=9993, management port=9995, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferChunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://127.0.0.1:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://127.0.0.l:3306/hotdb_config_249, usingAIO=o, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=l, heartbeatTimeoutMs=l00, joinable=true, joinCacheSize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,VIP=null,checkVIPPeriod=1600] |
 | 2018-06-01 16:21:17.210 [info] [INIT] [main] BufferPool(-1) - total buffer:163840000,every chunk bytes:16384,chunk number:10000,every threadLocalMaxNumber:1000 |
 | 2018-06-01 16:21:17.216 [info] [INIT] [main] j(-1) - usinq aio network handler |
-| #### weightForSlaveRWSplit |
+|#### weightForSlaveRWSplit |
 | **Description of parameter:** |
 
 **Property**                     **Value**
@@ -11003,12 +10995,12 @@ Property                         Value
 | | 4 | slave | |
 | +------+---------+ |
 | Execute select Query operation for several times, read 50% of master/slave respectively |
-| ## Appendix |
-| ### Notices for HotDB Server |
-| #### Recommendation on JDBC version |
+|## Appendix |
+|### Notices for HotDB Server |
+|#### Recommendation on JDBC version |
 | It's recommended that the JDBC version should be mysql-connector-java-5.1.27.jar, 8.0 could be compatible at the highest. |
-| #### Recommendation on JAVA database connection pool |
+|#### Recommendation on JAVA database connection pool |
 | It's recommended using proxool-0.9 for connection pool |
-| #### Reserved field of database design |
+|#### Reserved field of database design |
 | Compute node could specify data node according to DNID, therefore, the DNID Field name is reserved field of the database (do not use this Field name in table structure). |
 | The compute node judges whether the data source is available or not via operating the hotdb_heartbeat table of the data source, therefore, hotdb_heartbeat serves as reserved field of Table Name. |

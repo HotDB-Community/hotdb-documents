@@ -711,7 +711,7 @@ insert into hotdb_setting values('emailAddress',1,'your_email@xx.cn',1,1);
 
 The SQL configuration is changed as follows:
 
-update \`hotdb_setting\` set \`value\` ='new_email@xx.cn' where \`key\`='emailAddress';
+update `hotdb_setting` set `value` ='new_email@xx.cn' where `key`='emailAddress';
 
 **(2) Notes on updating platform license**
 
