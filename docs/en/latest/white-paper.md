@@ -26,163 +26,152 @@ HotDB Server Architecture Diagram
 
 The complete distributed transactional database HotDB Server cluster system contains the following components:
 
-**Compute node**: the core of the distributed transactional database HotDB Server cluster system. It undertakes all the work related to database services and serves as the lifeblood of the whole distributed service.
-
-**Management platform**: the distributed transactional database platform, also known as HotDB Management, can realize the easy-to-use configuration of database users, data nodes, table types, sharding rules and other information of compute nodes. Besides, it can provide intelligent operation and maintenance related services such as service status monitoring, exception reminder, report viewing, and task management.
-
-**Data source**: the MySQL database that actually stores business data. A data source can be determined by IP, Prot, and Database. In addition, Data Node, a virtual concept in the HotDB Server cluster system, is used to describe a group of data sources with master-slave relations.
-
-**Management platform ConfigDB**: MySQL database that stores metadata of management platform.
-
-**Compute node ConfigDB**: MySQL database that stores metadata of compute nodes.
-
-**High availability component**: the compute node of HotDB Server can cooperate with Keepalived high availability solution to realize the availability check and high availability switch of the compute node in the active standby mode.
-
-**Load balancing component**: Multiple compute node clusters can choose to use LVS and other methods to distribute SQL requests. The application end can access the compute node service of HotDB Server by VIP of LVS, while ensuring the transparency of use and uninterrupted service. Other load balancing schemes can also be used for processing, such as F5 plus user-defined detection, direct connection between application and compute nodes.
-
-**Backup program**: the distributed transactional database backup program developed by Hotpu technology, used for the backup of business data.
+- **Compute node**: the core of the distributed transactional database HotDB Server cluster system. It undertakes all the work related to database services and serves as the lifeblood of the whole distributed service.
+- **Management platform**: the distributed transactional database platform, also known as HotDB Management, can realize the easy-to-use configuration of database users, data nodes, table types, sharding rules and other information of compute nodes. Besides, it can provide intelligent operation and maintenance related services such as service status monitoring, exception reminder, report viewing, and task management.
+- **Data source**: the MySQL database that actually stores business data. A data source can be determined by IP, Prot, and Database. In addition, Data Node, a virtual concept in the HotDB Server cluster system, is used to describe a group of data sources with master-slave relations.
+- **Management platform ConfigDB**: MySQL database that stores metadata of management platform.
+- **Compute node ConfigDB**: MySQL database that stores metadata of compute nodes.
+- **High availability component**: the compute node of HotDB Server can cooperate with Keepalived high availability solution to realize the availability check and high availability switch of the compute node in the active standby mode.
+- **Load balancing component**: Multiple compute node clusters can choose to use LVS and other methods to distribute SQL requests. The application end can access the compute node service of HotDB Server by VIP of LVS, while ensuring the transparency of use and uninterrupted service. Other load balancing schemes can also be used for processing, such as F5 plus user-defined detection, direct connection between application and compute nodes.
+- **Backup program**: the distributed transactional database backup program developed by Hotpu technology, used for the backup of business data.
 
 ### Features
 
 #### Load balancing
 
-- Multi-compute node cluster supports general load balancing solutions for SQL distribution requests.
+Multi-compute node cluster supports general load balancing solutions for SQL distribution requests.
 
-- Data service of multiple compute nodes in the same cluster is peer-to-peer and support all types of data operations.
+Data service of multiple compute nodes in the same cluster is peer-to-peer and support all types of data operations.
 
-- When less than half of the compute nodes in the same cluster fail at the same time, the cluster service is still available; especially, when there are only two compute nodes left after the one-by-one failure of cluster nodes, one of the two compute nodes fails again, and the other node can still provide services.
+When less than half of the compute nodes in the same cluster fail at the same time, the cluster service is still available; especially, when there are only two compute nodes left after the one-by-one failure of cluster nodes, one of the two compute nodes fails again, and the other node can still provide services.
 
 #### High availability
 
-- The compute nodes of HotDB Server support high availability architecture, and clusters with good operation and maintenance management will not cause the overall distributed transactional database service unavailable due to the downtime of the master compute node. And it can be ensured that the total failure time of compute nodes in cluster with good operation and maintenance management in a year is generally no more than 53 minutes.
+The compute nodes of HotDB Server support high availability architecture, and clusters with good operation and maintenance management will not cause the overall distributed transactional database service unavailable due to the downtime of the master compute node. And it can be ensured that the total failure time of compute nodes in cluster with good operation and maintenance management in a year is generally no more than 53 minutes.
 
-- The compute node of the cluster with good operation and maintenance management can guarantee that the total failure time in one year generally does not exceed 53 minutes.
+The compute node of the cluster with good operation and maintenance management can guarantee that the total failure time in one year generally does not exceed 53 minutes.
 
-- The total time of compute node failure judgment and switch service for clusters with good operation and maintenance management is generally less than 7 seconds, and the best practice is about 5 seconds. The total time of MySQL layer failure judgment and switch service is generally less than 3 seconds.
+The total time of compute node failure judgment and switch service for clusters with good operation and maintenance management is generally less than 7 seconds, and the best practice is about 5 seconds. The total time of MySQL layer failure judgment and switch service is generally less than 3 seconds.
 
-- HotDB Server supports high availability reconstruction for the compute nodes after failover or manual switch in a visualized way, which reduces the tedious work of manually modifying the failback configuration.
+HotDB Server supports high availability reconstruction for the compute nodes after failover or manual switch in a visualized way, which reduces the tedious work of manually modifying the failback configuration.
 
-- The data source of HotDB Server supports the native master-slave replication and MGR (MySQL Group Replication) mode of MySQL database.
+The data source of HotDB Server supports the native master-slave replication and MGR (MySQL Group Replication) mode of MySQL database.
 
-- In a set of data sources correctly deployed and configured with data node failover rules, when the master data source service is abnormal, the compute node can sense and execute the data source high availability switch in time, and send the new request to the data source after the high availability switch.
+In a set of data sources correctly deployed and configured with data node failover rules, when the master data source service is abnormal, the compute node can sense and execute the data source high availability switch in time, and send the new request to the data source after the high availability switch.
 
-- The ConfigDB of HotDB Server supports the native master-slave replication and MGR (MySQL Group Replication) mode of MySQL database.
+The ConfigDB of HotDB Server supports the native master-slave replication and MGR (MySQL Group Replication) mode of MySQL database.
 
-- In a set of ConfigDB correctly deployed and have replication relations, when the master ConfigDB is abnormal, the compute node can sense and switch to the standby ConfigDB in time.
+In a set of ConfigDB correctly deployed and have replication relations, when the master ConfigDB is abnormal, the compute node can sense and switch to the standby ConfigDB in time.
 
 #### High performance
 
-- In the single compute node mode of HotDB Server, when the concurrency number is 256 in the performance test transfer scenario, the compute node throughput can reach 200,000 + TPS and 500,000 + QPS.
+In the single compute node mode of HotDB Server, when the concurrency number is 256 in the performance test transfer scenario, the compute node throughput can reach 200,000 + TPS and 500,000 + QPS.
 
-- At present, the performance test result of concurrency number is that it can stably support 2048 and above.
+At present, the performance test result of concurrency number is that it can stably support 2048 and above.
 
-- Compared with a single centralized database, the throughput loss of a single compute node of HotDB Server is less than 5%.
+Compared with a single centralized database, the throughput loss of a single compute node of HotDB Server is less than 5%.
 
-- The acquisition performance of global auto-incremental sequence is greater than 200,000 TPS.
+The acquisition performance of global auto-incremental sequence is greater than 200,000 TPS.
 
-Note: The TPS mentioned above is simple TPS. The above performance indicators are based on the following: using the highest configuration hardware specification described in Distributed Transactional Database HotDB Server Hardware Configuration Recommendation; installing and deploying the HotDB Server in a standardized way and perform the tuning described in Performance Test Report For Single Compute Node Basic Scenario of HotDB Server; with no less than 12 data nodes; no performance bottleneck appears in the data source server\\MySQL instance.
+> !!!NOTE
+> The TPS mentioned above is simple TPS. The above performance indicators are based on the following: using the highest configuration hardware specification described in Distributed Transactional Database HotDB Server Hardware Configuration Recommendation; installing and deploying the HotDB Server in a standardized way and perform the tuning described in Performance Test Report For Single Compute Node Basic Scenario of HotDB Server; with no less than 12 data nodes; no performance bottleneck appears in the data source server\\MySQL instance.
 
 #### Strong transparency
 
-- HotDB Server provides operation experience similar to centralized database. The application only needs to connect to the data service port of the compute node, and does not need to care about the underlying storage location of the data to operate the business data.
-
-- The amount of code needed to be modified by the application program from the traditional database to the distributed transaction database is generally less than 5%.
-
-- Strong consistent distributed transactions are transparent to the application. No SQL commands or transaction processes need to be changed when users operate. They can be used like ordinary transactions.
-
-- The read-write splitting is transparent to the application. Users do not need to care about the location of distributed SQL. The application program automatically routes the SQL according to the configured read-write splitting strategy.
-
-- The global auto-incremental sequence is transparent to the application. Users can use the HotDB Server global auto incremental sequence just like MySQL auto incremental sequence.
-
-- Support JDBC protocol and MySQL native communication protocol.
+HotDB Server provides operation experience similar to centralized database. The application only needs to connect to the data service port of the compute node, and does not need to care about the underlying storage location of the data to operate the business data.
+The amount of code needed to be modified by the application program from the traditional database to the distributed transaction database is generally less than 5%.
+Strong consistent distributed transactions are transparent to the application. No SQL commands or transaction processes need to be changed when users operate. They can be used like ordinary transactions.
+The read-write splitting is transparent to the application. Users do not need to care about the location of distributed SQL. The application program automatically routes the SQL according to the configured read-write splitting strategy.
+The global auto-incremental sequence is transparent to the application. Users can use the HotDB Server global auto incremental sequence just like MySQL auto incremental sequence.
+Support JDBC protocol and MySQL native communication protocol.
 
 #### Easy operation and maintenance
 
-- It supports parameter visualization configuration and online verification of parameter rationality.
+It supports parameter visualization configuration and online verification of parameter rationality.
 
-- It supports immediate effect of dynamic loading after the modification of compute node parameters.
+It supports immediate effect of dynamic loading after the modification of compute node parameters.
 
-- It supports online upgrade of compute node version.
+It supports online upgrade of compute node version.
 
-- It supports multi-thread backup and scheduled automatic backup.
+It supports multi-thread backup and scheduled automatic backup.
 
-- It supports the monitoring of compute node resources, traffic and server status, and shows the data volume of the cluster, the throughput of compute nodes and data nodes in real time.
+It supports the monitoring of compute node resources, traffic and server status, and shows the data volume of the cluster, the throughput of compute nodes and data nodes in real time.
 
-- It dynamically draw the topology map of cluster service status, display the running state of compute node and data source in real time, and facilitate the user to locate and repair the abnormality.
+It dynamically draw the topology map of cluster service status, display the running state of compute node and data source in real time, and facilitate the user to locate and repair the abnormality.
 
-- It supports OnlineDDL, so that changes in database table structure do not block online services.
+It supports OnlineDDL, so that changes in database table structure do not block online services.
 
-- It supports the elastic expansion of data nodes by online data source migration.
+It supports the elastic expansion of data nodes by online data source migration.
 
-- It supports data consistency detection of master/slave data sources in data nodes, and the detection results can accurately locate inconsistency.
+It supports data consistency detection of master/slave data sources in data nodes, and the detection results can accurately locate inconsistency.
 
-- It supports the consistency detection of global table data, and provides a functional entry to repair inconsistent data.
+It supports the consistency detection of global table data, and provides a functional entry to repair inconsistent data.
 
-- It supports the uniqueness detection for the history data of the sharding table creating unique constraints.
+It supports the uniqueness detection for the history data of the sharding table creating unique constraints.
 
-- It supports the user password validity detection of compute node and data source, and reminds the user to change the password in time when expiration is detected.
+It supports the user password validity detection of compute node and data source, and reminds the user to change the password in time when expiration is detected.
 
-- It supports summary recording of business SQL and automatic analysis of SQL worthy of attention for business level tuning.
+It supports summary recording of business SQL and automatic analysis of SQL worthy of attention for business level tuning.
 
-- It supports tutorial, which can quickly guide users to the basic configuration of HotDB Server.
+It supports tutorial, which can quickly guide users to the basic configuration of HotDB Server.
 
-- It supports the automatic deployment of compute node clusters in different architecture modes.
+It supports the automatic deployment of compute node clusters in different architecture modes.
 
-- It supports the health examination of cluster operation environment.
+It supports the health examination of cluster operation environment.
 
-- It supports one click collection of cluster operation information to improve the speed and efficiency of cluster troubleshooting.
+It supports one click collection of cluster operation information to improve the speed and efficiency of cluster troubleshooting.
 
-- It supports visualized display of the business relations between tables based on JOIN SQL logs.
+It supports visualized display of the business relations between tables based on JOIN SQL logs.
 
-- It supports online updating and activation of the license of compute node through the management platform.
+It supports online updating and activation of the license of compute node through the management platform.
 
-- It supports automatic upgrade of ConfigDB of management platform.
+It supports automatic upgrade of ConfigDB of management platform.
 
 #### Safety protection
 
-- It supports overload limit protection mechanism. The protection of compute node and data source can be realized by limiting max connections of the front-end and data source.
+It supports overload limit protection mechanism. The protection of compute node and data source can be realized by limiting max connections of the front-end and data source.
 
-- It supports the flow control function. When enabled, the SQL traffic can be intelligently controlled according to the performance of the data source to keep the data source in the best state.
+It supports the flow control function. When enabled, the SQL traffic can be intelligently controlled according to the performance of the data source to keep the data source in the best state.
 
-- It supports user privilege control of compute node database, which is 99% compatible with MySQL privilege system.
+It supports user privilege control of compute node database, which is 99% compatible with MySQL privilege system.
 
-- It supports the configuration of the IP white list that allows connection to the compute node service. IP addresses outside the white list will be refused to log in when accessing the compute node service.
+It supports the configuration of the IP white list that allows connection to the compute node service. IP addresses outside the white list will be refused to log in when accessing the compute node service.
 
-- It supports cluster abnormality email alarm notification. The management platform includes the operation status of the whole cluster into the monitoring scope. Once the cluster service failure or warning is detected, the program will inform the user by email.
+It supports cluster abnormality email alarm notification. The management platform includes the operation status of the whole cluster into the monitoring scope. Once the cluster service failure or warning is detected, the program will inform the user by email.
 
-- It supports SQL firewall to intercept high-risk SQL and prevent business system from SQL injection, misoperation or malicious operation.
+It supports SQL firewall to intercept high-risk SQL and prevent business system from SQL injection, misoperation or malicious operation.
 
-- It supports the table recycle bin; tables that are dropped or deleted can be retained and restored within the set time range.
+It supports the table recycle bin; tables that are dropped or deleted can be retained and restored within the set time range.
 
-- It supports account information encryption management. HotDB Server encrypts and stores account passwords used in all service processes.
+It supports account information encryption management. HotDB Server encrypts and stores account passwords used in all service processes.
 
-- For high-risk operation of some management platforms, HotDB Server provides two-level password verification protection mechanism to prevent misoperation or malicious operation of system data.
+For high-risk operation of some management platforms, HotDB Server provides two-level password verification protection mechanism to prevent misoperation or malicious operation of system data.
 
-- Login authentication API of management platform supports information encryption in transmission.
+Login authentication API of management platform supports information encryption in transmission.
 
-- It provides encryption and remote storage functions of backup files to ensure data security.
+It provides encryption and remote storage functions of backup files to ensure data security.
 
-- It provides audit log function, including user operation records of management platform, protection and interception records of compute node, and operation records of management port of compute node.
+It provides audit log function, including user operation records of management platform, protection and interception records of compute node, and operation records of management port of compute node.
 
-- It supports the configuration of non-root users with sudo function to connect to the cluster server.
+It supports the configuration of non-root users with sudo function to connect to the cluster server.
 
 #### Expansion capability
 
-- It supports smooth redistribution of table data and smooth migration of data nodes.
+It supports smooth redistribution of table data and smooth migration of data nodes.
 
-- It supports smooth migration of data nodes.
+It supports smooth migration of data nodes.
 
-- It supports the increase of read-only data source and the configuration of read-write splitting weight.
+It supports the increase of read-only data source and the configuration of read-write splitting weight.
 
-- It supports rapid migration of MySQL database to distributed transactional database (extremely short service downtime).
+It supports rapid migration of MySQL database to distributed transactional database (extremely short service downtime).
 
-- It supports MySQL versions 5.6, 5.7, and 8.0.
+It supports MySQL versions 5.6, 5.7, and 8.0.
 
-- It supports INFORMATION_SCHEMA database which is similar to MySQL, to facilitate users to query related information about compute node.
+It supports INFORMATION_SCHEMA database which is similar to MySQL, to facilitate users to query related information about compute node.
 
 #### Disaster recovery
 
-- It supports the deployment of cross-IDC DR mode. When the service of the master center fails, the DR center can automatically take over and continue to provide services. It also supports visualized automatic switching to DR center in the case of internal failure of the master center and repair of the original failed master center.
+It supports the deployment of cross-IDC DR mode. When the service of the master center fails, the DR center can automatically take over and continue to provide services. It also supports visualized automatic switching to DR center in the case of internal failure of the master center and repair of the original failed master center.
 
 ## Function description
 
@@ -201,13 +190,9 @@ HotDB Server supports general data definition operation statements, such as CREA
 HotDB Server supports cross-node SQL operations, such as:
 
 - Cross-node INNER/LEFT/RIGHT JOIN
-
 - Cross-node combination JOIN and JOIN with brackets
-
 - Cross-node aggregate function
-
 - Cross-node GROUPING+HAVING+SORTING+PAGING
-
 - Cross-node UNION/UNION ALL query
 
 ###### Modify sharding key value
@@ -242,13 +227,13 @@ HotDB Server supports the subquery function in some scenarios.
 
 ###### Transactions
 
-- It supports both explicit and implicit distributed transactions.
+It supports both explicit and implicit distributed transactions.
 
-- It supports both distributed transactions with weak consistency and strong consistency.
+It supports both distributed transactions with weak consistency and strong consistency.
 
-- It supports session-level transactional isolation levels: READ COMMITE, REPEATABLE READ, and SERIALIZABLE.
+It supports session-level transactional isolation levels: READ COMMITE, REPEATABLE READ, and SERIALIZABLE.
 
-- It supports defining SAVEPOINT and setting transaction commit rollback attributes, such as COMMIT [WORK] [AND [NO] CHAIN] [[NO] RELEASE] and ROLLBACK [WORK] [AND [NO] CHAIN] [[NO] RELEASE].
+It supports defining SAVEPOINT and setting transaction commit rollback attributes, such as COMMIT [WORK] [AND [NO] CHAIN] [[NO] RELEASE] and ROLLBACK [WORK] [AND [NO] CHAIN] [[NO] RELEASE].
 
 ###### Distributed transactions with Strong consistency(XA)
 
@@ -260,9 +245,9 @@ In the distributed transactional database system, cross-instance deadlock, which
 
 #### Character sets and collations
 
-- HotDB Server supports common character sets, such as utf8, gbk, latin1, and utf8mb4.
+HotDB Server supports common character sets, such as utf8, gbk, latin1, and utf8mb4.
 
-- HotDB Server supports common collations, such as utf8_general_ci, utf8_bin, latin1_swedish_ci, latin1_bin, gbk_chinese_ci, gbk_bin, utf8mb4_general_ci, and utf8mb4_bin.
+HotDB Server supports common collations, such as utf8_general_ci, utf8_bin, latin1_swedish_ci, latin1_bin, gbk_chinese_ci, gbk_bin, utf8mb4_general_ci, and utf8mb4_bin.
 
 #### User privilege system
 
@@ -396,15 +381,15 @@ The management platform supports the management of multiple sets of compute node
 
 #### Logic topological graph
 
-- The management platform dynamically generates: number of connections and QPS for each application client; replication status, data capacity, connections and QPS for each data node; replication latency, connections and QPS for each data source; connections, QPS for each LogicDB and status value of each parameter for each compute node based on the information of application connection pool and database connection pool. This information is shown in the topology map.
+The management platform dynamically generates: number of connections and QPS for each application client; replication status, data capacity, connections and QPS for each data node; replication latency, connections and QPS for each data source; connections, QPS for each LogicDB and status value of each parameter for each compute node based on the information of application connection pool and database connection pool. This information is shown in the topology map.
 
-- The user can set the alarm threshold for the objects monitored in the topology map. When the threshold value is reached, the icon will alarm the system of the exception with flash and color change (yellow for warning, red for alarm). Users can understand the cause of the alarm by hovering over the icon of the specific alarm to help users quickly and accurately locate the problem.
+The user can set the alarm threshold for the objects monitored in the topology map. When the threshold value is reached, the icon will alarm the system of the exception with flash and color change (yellow for warning, red for alarm). Users can understand the cause of the alarm by hovering over the icon of the specific alarm to help users quickly and accurately locate the problem.
 
-- The topological graph supports recording and displaying INFO, WARNIN, ERROR information generated by front-end applications, compute nodes and data sources.
+The topological graph supports recording and displaying INFO, WARNIN, ERROR information generated by front-end applications, compute nodes and data sources.
 
-- It supports topological graph switching between 2D and 2.5D.
+It supports topological graph switching between 2D and 2.5D.
 
-- The users can execute manual high availability switch to the data nodes with master-slave or master-master replication relations through the topological graph, or copy the database connection information of each data source.
+The users can execute manual high availability switch to the data nodes with master-slave or master-master replication relations through the topological graph, or copy the database connection information of each data source.
 
 ![](assets/white-paper/image18.png)
 
@@ -422,23 +407,23 @@ The management platform supports monitoring of compute node service status, comp
 
 - Monitoring of compute node service status: total number of client connections, usage of compute node threads, backend connection status, usage rate of compute node direct memory, real-time data volume, and usage rate of compute node heap memory.
 
-![](assets/white-paper/image21.png)
+    ![](assets/white-paper/image21.png)
 
 - Compute node throughput: network traffic monitoring, TPS, QPS, client operation rate, back-end operation rate.
 
-![](assets/white-paper/image22.png)
+    ![](assets/white-paper/image22.png)
 
 - Compute node server resources: server memory usage, server disk space usage, server CPU load, server CPU usage, server disk read/write, server network traffic in/out, and server disk IO bandwidth utilization.
 
-![](assets/white-paper/image23.png)
+    ![](assets/white-paper/image23.png)
 
 - Cluster resources monitoring: including data sources and other servers with SSH access privileges. Monitoring items include: CPU usage, memory usage, disk usage, network traffic in/out. Alert the server that exceeds the configured monitoring threshold and display the failure of the server that cannot be connected.
 
-![](assets/white-paper/image24.png)
+    ![](assets/white-paper/image24.png)
 
 - Data increment prediction: data capacity of data source/ ConfigDB can be planned in advance according to history data amount.
 
-![](assets/white-paper/image25.png)
+    ![](assets/white-paper/image25.png)
 
 #### JOIN correlation analysis
 
@@ -452,19 +437,19 @@ It supports report display of cluster data volume, compute node throughput, data
 
 - Cluster data volume report: trend chart of cluster data volume change, distribution chart of cluster data volume, distribution chart of LogicDB data volume, distribution chart of table data volume.
 
-![](assets/white-paper/image27.png)
+    ![](assets/white-paper/image27.png)
 
 - Compute node throughput report: compute node throughput change trend chart, compute node throughput type comparison chart, LogicDB throughput comparison chart, table throughput comparison chart.
 
-![](assets/white-paper/image28.png)
+    ![](assets/white-paper/image28.png)
 
 - Data node throughput report: comparison chart of total throughput of data nodes, trend chart of throughput change of data nodes, comparison chart of cluster throughput types, comparison chart of LogicDB throughput, and comparison chart of table throughput.
 
-![](assets/white-paper/image29.png)
+    ![](assets/white-paper/image29.png)
 
 - Compute node connection report: total connections, the connection with the longest connection time, the connection with the most operation times, the connection with the most connection times, the proportion of total connection time, the proportion of total connection times, the proportion of operation times, the distribution diagram of front-end application IP connection, the distribution diagram of connection users, and the distribution diagram of LogicDB.
 
-![](assets/white-paper/image30.png)
+    ![](assets/white-paper/image30.png)
 
 #### Table structure＆index detection
 
@@ -516,25 +501,11 @@ The management platform provides a reasonable score for the sharding plan of the
 
 **Five dimensions:**
 
-- **Score of well-distributed data amount**
-
-Calculate the score according to whether the data distribution of each node is uniform and whether the growth is uniform
-
-- **Score of cross-node transaction proportion**
-
-Calculate the score based on the proportion of cross-node transaction queries
-
-- **Score of SELECT operations**
-
-Calculate the score according to whether the total queries of each node is uniform, the proportion of cross-node join queries, the proportion of single-node queries, and the proportion of queries that are routed to all nodes because they cannot be routed to the specified node.
-
-- **Score of IUD operations**
-
-Calculate the score according to whether the IUD operation of each node is uniform and the single-node IUD operation proportion
-
-- **Score of other dimensions**
-
-Calculate the score according to the number of times the query cannot find the node and whether the sharding key definition is reasonable.
+- **Score of well-distributed data amount: **Calculate the score according to whether the data distribution of each node is uniform and whether the growth is uniform
+- **Score of cross-node transaction proportion: **Calculate the score based on the proportion of cross-node transaction queries
+- **Score of SELECT operations: **Calculate the score according to whether the total queries of each node is uniform, the proportion of cross-node join queries, the proportion of single-node queries, and the proportion of queries that are routed to all nodes because they cannot be routed to the specified node.
+- **Score of IUD operations: **Calculate the score according to whether the IUD operation of each node is uniform and the single-node IUD operation proportion
+- **Score of other dimensions: **Calculate the score according to the number of times the query cannot find the node and whether the sharding key definition is reasonable.
 
 ![](assets/white-paper/image40.png)
 
@@ -548,22 +519,15 @@ After configuring outbox parameters, add information about email receiver and ch
 
 HotDB Server provides HotDB Backup, a multi-thread backup tool similar to Mydumper.
 
-Features:
+**Features:**
 
 - It ensures that the global time point and data status of the distributed transactional database are consistent.
-
 - During the backup period, there is no blocking for online business.
-
 - The incremental backup automatically follows the full backup.
-
 - LogicDB backup and table backup are executed in parallel.
-
 - You can manually cancel the backup task in progress during backup.
-
 - You can add a backup plan to back up business data regularly, or you can manually delay the time of next backup task or set a time point within the scheduled plan not to back up.
-
 - The data backup is supported to be restored a specified time point in XA (strong consistency) mode.
-
 - In addition, HotDB Backup also supports functions such as encrypting backup files, calculating file MD5 values, and backing up to remote.
 
 ![](assets/white-paper/image42.png)
@@ -622,13 +586,8 @@ HotDB Server supports the hot reload of configuration parameters. When updating 
 
 Management platform users, users of the distributed transactional database platform, are divided into manager users and general users.
 
-- **Manager users**
-
-Manager users can add general users for the management platform and deploy compute node clusters. Moreover, manager users can manage the authorized compute node cluster, and support to switch the perspective of manager user role and general user role in the user information of management platform.
-
-- **General users**
-
-General users are the users who actually manage the compute node cluster and have access or control privileges to the authorized compute node cluster.
+- **Manager users: **Manager users can add general users for the management platform and deploy compute node clusters. Moreover, manager users can manage the authorized compute node cluster, and support to switch the perspective of manager user role and general user role in the user information of management platform.
+- **General users: **General users are the users who actually manage the compute node cluster and have access or control privileges to the authorized compute node cluster.
 
 ###### LogicDB users
 
@@ -714,21 +673,19 @@ DNID stands for DATANODE_ID. You can use the DNID-related syntax in hint to cont
 
 #### Read/write splitting
 
-- HotDB Server supports read/write splitting function and supports configuration of read/write splitting weight. This function is off by default and can be configured with multiple modes.
+HotDB Server supports read/write splitting function and supports configuration of read/write splitting weight. This function is off by default and can be configured with multiple modes.
 
 - The read/write are all in the master data source, that is, the read/write splitting is turned off.
-
 - The separable read requests are sent to all available data sources (including the master data source).
-
 - The separable read requests are sent to all available slave data sources.
-
-Note: the above "separable read requests" mainly refers to the automatically submitted read requests without hint and the requests in the explicit read-only transactions. The remaining read requests without hint are "inseparable read requests".
-
 - The read requests before write and the automatically submitted read requests in the transaction (non XA mode) are sent to the available slave data sources. The remaining requests are on the master data source.
 
-- When the data synchronization delay of the data source exceeds 1 second (configurable) or failure occurs, the compute node will remove the data source and prevent it from participating in the read. At this time, other normal data sources will undertake the separable read task, and the removed data sources will not be added back to the read cluster until the delay is recovered.
+> !!!NOTE
+> The above "separable read requests" mainly refers to the automatically submitted read requests without hint and the requests in the explicit read-only transactions. The remaining read requests without hint are "inseparable read requests".
 
-- HotDB Server read/write splitting is completely transparent to application developers and database managers. It does not require developers to add hint or some notes when executing SQL and supports the use of hint to explicitly specify reading master or slave.
+When the data synchronization delay of the data source exceeds 1 second (configurable) or failure occurs, the compute node will remove the data source and prevent it from participating in the read. At this time, other normal data sources will undertake the separable read task, and the removed data sources will not be added back to the read cluster until the delay is recovered.
+
+HotDB Server read/write splitting is completely transparent to application developers and database managers. It does not require developers to add hint or some notes when executing SQL and supports the use of hint to explicitly specify reading master or slave.
 
 #### Third-party client
 
@@ -762,107 +719,96 @@ Cluster of Load Balancing Mode Deployment Architecture Diagram
 
 #### Compute node server (and compute node ConfigDB)
 
+```
 Processor: Gold 6130*2
-
 Memory: 8g*12 (4G * 12 is recommended if there is a single 4G memory)
-
 Hard disk: 2.5'800G write-intensive SATA\\SAS SSD *2 RAID 1 (800G is selected because of longer write life)
-
 RAID card: H730P
-
 Network card: 10G optical network card
-
 Number of servers: 2 (at least 3 and at most 9 in the cluster load balancing mode)
+```
 
-Note: in the cluster load balancing mode, it is recommended that the compute node ConfigDB occupy the server separately and do not share with the compute node or data source server. When compute node ConfigDB occupies server exclusively, please refer to "management platform ConfigDB server" for configuration.
+> !!!NOTE
+> In the cluster load balancing mode, it is recommended that the compute node ConfigDB occupy the server separately and do not share with the compute node or data source server. When compute node ConfigDB occupies server exclusively, please refer to "management platform ConfigDB server" for configuration.
 
 #### Data source server
 
+```
 Processor: Silver 4116*2
-
 Memory: 16G*12
-
-Hard disk: 2.5' 2.4T 10K SAS HDD *2 RAID 1 (for system and backup file storage)
-
-\+ 2.5' 800G write-intensive SATA\\SAS SSD *6 RAID 5 (for MySQL)
-
+Hard disk: 2.5' 2.4T 10K SAS HDD *2 RAID 1 (for system and backup file storage) + 2.5' 800G write-intensive SATA\\SAS SSD *6 RAID 5 (for MySQL)
 RAID card: H730P
-
 Network card: Gigabit optical network card
-
 Number of servers: at least 2 (add as needed)
+```
 
 #### Management platform server
 
+```
 Processor: Silver 4108*2
-
 Memory: 8G*12 (4G*12 is recommended if there is a single 4G memory)
-
 Hard disk: 2.5' 240G SATA SSD *2 RAID 1
-
 RAID card: H330
-
 Network card: Onboard Gigabit
-
 Number of servers: 1 or reused
+```
 
 #### Management platform ConfigDB server
 
+```
 Processor: Silver 4110*2
-
 Memory: 8G*12 (4G*12 is recommended if there is a single 4G memory)
-
 Hard disk: 2.5 '400G write-intensive SATA\\SAS SSD *2 RAID 1
-
 RAID card: H730P
-
 Network card: Gigabit optical network card
-
 Number of servers: 1 or reused
+```
 
 #### LVS server (cluster load balancing mode)
 
+```
 Processor: Silver 4116*2
-
 Memory: 8G*12 (4G*12 is recommended if there is a single 4G memory)
-
 Hard disk: 2.5' 240G SATA SSD *2 RAID 1
-
 RAID card: H330
-
 Network card: 10 Gigabit network card
-
 Number of servers: 2
+```
 
 #### Switch
 
-- It is recommended that the switch interface speed and the network card interface speed configured by the server are the same or higher.
+It is recommended that the switch interface speed and the network card interface speed configured by the server are the same or higher.
 
-- It is recommended to use a switch with convergence level or higher performance level, and the measured packet forwarding rate of the switch exceeds 10 Mpps or supports line speed forwarding.
+It is recommended to use a switch with convergence level or higher performance level, and the measured packet forwarding rate of the switch exceeds 10 Mpps or supports line speed forwarding.
 
-- It is recommended that all servers should be deployed under the same switch (or stack). If this is not possible, the deployment mode of minimum network hops should be adopted.
+It is recommended that all servers should be deployed under the same switch (or stack). If this is not possible, the deployment mode of minimum network hops should be adopted.
 
-Note: it is not recommended that the network traffic of the cluster pass through any router or firewall.
+> !!!WARNING
+> It is not recommended that the network traffic of the cluster pass through any router or firewall.
 
-- If a highly available network is deployed, it is recommended to use Bond0 mode first.
+If a highly available network is deployed, it is recommended to use Bond0 mode first.
 
-Note: in the process of performance test, in addition to the server performance index, we must pay attention to whether the switch loses packets. The actual pps performance of many switches is far lower than the nominal index.
+> !!!WARNING
+> In the process of performance test, in addition to the server performance index, we must pay attention to whether the switch loses packets. The actual pps performance of many switches is far lower than the nominal index.
 
 #### Special instructions
 
-- The above configurations take DELL server as an example. For other computer manufacturers, you can select the same configuration.
+The above configurations take DELL server as an example. For other computer manufacturers, you can select the same configuration.
 
-- The number of MySQL database servers is evaluated based on the TPS / QPS of the production environment or performance test. The single data source server described can make the master/slave latency within 1 second and stably support the operation in the production environment with TPS of 4000-6000, and QPS of 15000 around when the master/slave latency within 1 second.
+The number of MySQL database servers is evaluated based on the TPS / QPS of the production environment or performance test. The single data source server described can make the master/slave latency within 1 second and stably support the operation in the production environment with TPS of 4000-6000, and QPS of 15000 around when the master/slave latency within 1 second.
 
-Note: if the above scenario is read-based, the QPS will be higher; here TPS refers to simple TPS, and complex TPS needs to be measured to get specific data.
+> !!!NOTE
+> If the above scenario is read-based, the QPS will be higher; here TPS refers to simple TPS, and complex TPS needs to be measured to get specific data.
 
-Special instructions: in the performance test environment, MySQL server can usually get higher value than the description, however along with problems such as serious master/slave latency, abnormally long time of SQL response, or response time/throughput jitter, for performance pressure measurement generally does not control the specific flow, but the number of concurrency; enough concurrency can squeeze the performance of MySQL instances to the limit. However, although the throughput is large, the overall QoS (Quality of Service) in this limit state is very poor. Thus, the performance indicators in this limit state are not suitable for evaluating the production environment. When planning the production environment, it is recommended to take the smaller value of 50% of the throughput index and 80% of the replication catch-up speed, which can get better QoS.
+> !!!TIP
+> In the performance test environment, MySQL server can usually get higher value than the description, however along with problems such as serious master/slave latency, abnormally long time of SQL response, or response time/throughput jitter, for performance pressure measurement generally does not control the specific flow, but the number of concurrency; enough concurrency can squeeze the performance of MySQL instances to the limit. However, although the throughput is large, the overall QoS (Quality of Service) in this limit state is very poor. Thus, the performance indicators in this limit state are not suitable for evaluating the production environment. When planning the production environment, it is recommended to take the smaller value of 50% of the throughput index and 80% of the replication catch-up speed, which can get better QoS.
 
-- Performance test with at least two database servers, four pairs of mysqld instances, and master-master replication cross deployment can test scenarios with TPS of more than 40,000 and QPS of more than 100,000.
+Performance test with at least two database servers, four pairs of mysqld instances, and master-master replication cross deployment can test scenarios with TPS of more than 40,000 and QPS of more than 100,000.
 
-Note: under this pressure, MySQL replication delay and poor SQL response time generally occur, which is normal. The performance test index obtained by this test method is significant for evaluating the upper throughput capacity supported by HotDB server compute nodes, but is not suitable for evaluating data source throughput.
+> !!!NOTE
+> Under this pressure, MySQL replication delay and poor SQL response time generally occur, which is normal. The performance test index obtained by this test method is significant for evaluating the upper throughput capacity supported by HotDB server compute nodes, but is not suitable for evaluating data source throughput.
 
-- The deployment recommendation above is for test environments (including pressure test environment) of HA or cluster load balancing architecture. For the actual production environment configuration, you need to contact Hotpu technology for specific assessments.
+The deployment recommendation above is for test environments (including pressure test environment) of HA or cluster load balancing architecture. For the actual production environment configuration, you need to contact Hotpu technology for specific assessments.
 
 ## Cases
 
