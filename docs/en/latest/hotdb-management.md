@@ -869,7 +869,7 @@ If the slave ConfigDB is not added through platform cluster deployment or stand-
 
 **Configure master-master or master-slave type:**
 
-```
+```properties
 spring.datasource.url=jdbc:mysql://192.168.210.134:3308/hotdb_cloud_config134?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&connectTimeout=3000&socketTimeout=3600000&useSSL=false
 spring.datasource.username=hotdb_cloud
 spring.datasource.password=hotdb_cloud
@@ -892,17 +892,14 @@ After the switching of master-master ConfigDB, the original standby master Confi
 
 **The standby master ConfigDB will be updated to:**
 
+```properties
 spring.datasource.url=jdbc:mysql://192.168.210.135:3308/hotdb_cloud_config134?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&connectTimeout=3000&socketTimeout=3600000&useSSL=false
-
 spring.datasource.username=hotdb_cloud
-
 spring.datasource.password=hotdb_cloud
-
 spring.datasource.bakurl=jdbc:mysql://192.168.210.134:3308/hotdb_cloud_config134?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&connectTimeout=3000&socketTimeout=3600000&useSSL=false
-
 spring.datasource.bakusername=hotdb_cloud
-
 spring.datasource.bakpassword=hotdb_cloud
+```
 
 After the switching of master-slave ConfigDB, the original slave ConfigDB will be updated to the master ConfigDB, and the original master ConfigDB will be updated to the slave ConfigDB, and the slave ConfigDB status will be updated to "unavailable".
 
@@ -1132,23 +1129,23 @@ Note:
 >
 > JDK version upgrade: manual upload by default. When "specify the storage directory of existing installation package" is checked, the default directory is /usr/local/hotdb/. Users can also specify the storage directory as needed. When the upgrade fails and rolls back, the upgraded JDK will not be cleaned up, because the JDK version can be compatible with the lower version of the compute node.
 >
-> 1\) When the version of the uploaded update package is greater than or equal to 2.5.6 and the current version of is less than 2.5.6, if you click "start update" after the upload succeeds, a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade", and "JDK version upgrade option" will be given at the same time.
-
-![](assets/hotdb-management/image104.png)
-
-2\) If "manual upload" is selected for JDK version upgrade, when the uploaded file does not match "OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz", it will prompt that "the uploaded file does not meet the standard, please upload again". ![](assets/hotdb-management/image105.png)3) When the uploaded JDK file does not meet the standard, if you still click "Start Update", a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade".
-
-![](assets/hotdb-management/image106.png)
-
-4\) When "specify the storage directory of existing installation package" is selected for "JDK version upgrade", if no JDK upgrade matching file is found in the corresponding directory, click "Start Update", a 3s message will appear that "No matching file is found in the directory corresponding to JDK version upgrade, please fill in again".
-
-![](assets/hotdb-management/image107.png)
-
-license file upgrade: the self-developed license starts to be used in v2.5.6, and the license file is in the keys directory by default. In upgrading, it is necessary to ensure that the authorization is available and the number of authorized nodes is not less than the number of existing nodes and the number of authorized ConfigDBs is not less than the number of existing ConfigDBs.
-
-1\) When the user uploads the authorization file, if it is invalid (that is, the new authorization is not available or the number of authorized nodes is less than the number of existing nodes，the number of authorized ConfigDBs is not less than the number of existing ConfigDBs), a warning will be given on the page "the authorization uploaded by the compute node is invalid, please re-upload available new authorization license file". ![](assets/hotdb-management/image108.png)when the uploaded update package, JDK version and license of the compute node are valid and available, the upgrade page is as follows
-
-![](assets/hotdb-management/image109.png)
+> 1) When the version of the uploaded update package is greater than or equal to 2.5.6 and the current version of is less than 2.5.6, if you click "start update" after the upload succeeds, a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade", and "JDK version upgrade option" will be given at the same time.
+> 
+> ![](assets/hotdb-management/image104.png)
+> 
+> 2) If "manual upload" is selected for JDK version upgrade, when the uploaded file does not match "OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz", it will prompt that "the uploaded file does not meet the standard, please upload again". ![](assets/hotdb-management/image105.png)3) When the uploaded JDK file does not meet the standard, if you still click "Start Update", a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade".
+> 
+> ![](assets/hotdb-management/image106.png)
+> 
+> 3) When "specify the storage directory of existing installation package" is selected for "JDK version upgrade", if no JDK upgrade matching file is found in the corresponding directory, click "Start Update", a 3s message will appear that "No matching file is found in the directory corresponding to JDK version upgrade, please fill in again".
+> 
+> ![](assets/hotdb-management/image107.png)
+> 
+> license file upgrade: the self-developed license starts to be used in v2.5.6, and the license file is in the keys directory by default. In upgrading, it is necessary to ensure that the authorization is available and the number of authorized nodes is not less than the number of existing nodes and the number of authorized ConfigDBs is not less than the number of existing ConfigDBs.
+> 
+> 4) When the user uploads the authorization file, if it is invalid (that is, the new authorization is not available or the number of authorized nodes is less than the number of existing nodes，the number of authorized ConfigDBs is not less than the number of existing ConfigDBs), a warning will be given on the page "the authorization uploaded by the compute node is invalid, please re-upload available new authorization license file". ![](assets/hotdb-management/image108.png)when the uploaded update package, JDK version and license of the compute node are valid and available, the upgrade page is as follows
+> 
+> ![](assets/hotdb-management/image109.png)
 
 ## OEM management
 

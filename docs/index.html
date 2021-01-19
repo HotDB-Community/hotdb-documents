@@ -167,7 +167,7 @@
         crossChapterText: true
       },
       "flexible-alerts": {
-        style: 'flat', //flat, callout
+        style: 'callout', //flat, callout
         note: {
           label: {
             "/zh/":"注意",
@@ -228,6 +228,10 @@
         function(hook, vm) {
           //console.log(vm)
 
+		  hook.init(function(){
+			redirectLocation()
+		  })
+	
           hook.beforeEach(function(html) {
             //console.log(html)
 
@@ -256,23 +260,19 @@
       fileName: "",
       fileUrl: ""
     }
-    
-    window.onload = function() {
-      redirectLocation()
-    }
-
+  
     //地址重定向
     function redirectLocation() {
       let url = window.location.href
       if(url.charAt(url.length - 1) === "/") url = url.substring(0, url.length - 1)
       if(url.indexOf("/#") === -1) {
-        window.location.href = `${url}/#/zh/latest/`
+        window.location.replace(`${url}/#/zh/latest/`)
       } else if(url.endsWith("/#")) {
-        window.location.href = `${url}/zh/latest/`
+        window.location.replace(`${url}/zh/latest/`)
       } else if(url.endsWith("/#/zh")) {
-        window.location.href = `${url}/latest/`
+        window.location.replace(`${url}/latest/`)
       } else if(url.endsWith("/#/en")) {
-        window.location.href = `${url}/latest/`
+        window.location.replace(`${url}/latest/`)
       }
     }
     
