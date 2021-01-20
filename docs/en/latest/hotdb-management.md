@@ -2404,7 +2404,7 @@ Click the [Add Users] button to enter the Add User information page. There are t
 
 ![](assets/hotdb-management/image219.png)
 
-\(1\) **Basic Information**: including required items "Username", "Password", optional items "Host", "Max User Connections", "super privilege" and "Global privilege"
+(1) **Basic Information**: including required items "Username", "Password", optional items "Host", "Max User Connections", "super privilege" and "Global privilege"
 
 - "Username" and "Password" are the database account information used when logging into the compute node. "Username" shall not be repeated and in Chinese. "Password"shall meet the requirements.
 
@@ -2420,7 +2420,7 @@ Click the [Add Users] button to enter the Add User information page. There are t
 
 ![](assets/hotdb-management/image220.png)
 
-\(II\) **LogicDB privilege**: Select the corresponding logicDB to set the corresponding privileges, or create a new logicDB and set the privilege.
+(II) **LogicDB privilege**: Select the corresponding logicDB to set the corresponding privileges, or create a new logicDB and set the privilege.
 
 - If global privilege is set in the basic information, the relevant privileges at the logicDB level can not be changed with the global privilege, and the cursor focus will prompt "Inherited from global privilege".
 
@@ -2434,7 +2434,7 @@ Click the [Add Users] button to enter the Add User information page. There are t
 
 **Note**: Changing the logicDB name may affect the logicDB privileges that some users have added and invalidate table privilege configuration. Therefore, the logicDB name change by logicDB list shall be used with caution.
 
-\(III\) **Table privilege**: User table-level privileges are divided into two parts: table-level privilege allowed and table-level privilege denied. The privilege allowed is the privilege of users to perform table operations. The privilege denied is the privilege not given to users to perform table operations.
+(III) **Table privilege**: User table-level privileges are divided into two parts: table-level privilege allowed and table-level privilege denied. The privilege allowed is the privilege of users to perform table operations. The privilege denied is the privilege not given to users to perform table operations.
 
 - **Table privilege Allowed**
 
@@ -2628,19 +2628,19 @@ The front-end application layer is the front-end application client that connect
 
 - Data node information: "Master/slave Data Consistency" when the node type is master-master, master/slave, or one master with multiple slaves, whether the data and objects on multiple data sources are consistent will be identified. There are three values: "--", "normal" and "abnormal", which are displayed according to the latest detection results of "Detection - > Master/slave Data Consistency Detection".
 
-> 1\) When the master/slave data consistency detection is not performed in the selected node, the master/slave data consistency will be shown as "--"
+> 1) When the master/slave data consistency detection is not performed in the selected node, the master/slave data consistency will be shown as "--"
 
 ![](assets/hotdb-management/image231.png)
 
-2\) When the detection result of the selected node is "unable to detect" or "inconsistent": the master/slave data consistency will be shown as "abnormal", with a hyperlink in orange. Click the hyperlink to jump to the details page of the master/ slave consistency detection result.
+2) When the detection result of the selected node is "unable to detect" or "inconsistent": the master/slave data consistency will be shown as "abnormal", with a hyperlink in orange. Click the hyperlink to jump to the details page of the master/ slave consistency detection result.
 
 ![](assets/hotdb-management/image232.png)
 
-3\) When the detection result of the selected node is "consistent": the master/slave data consistency will be shown as "normal".
+3) When the detection result of the selected node is "consistent": the master/slave data consistency will be shown as "normal".
 
 ![](assets/hotdb-management/image233.png)
 
-4\) When the detection result of the selected node is "consistent"， with a prompt "There are conditions which cannot be detected." (i.e. multiple detection nodes): the master/slave data consistency will be shown according to the actual detection results. For the "consistent" nodes, it will be shown as "normal", and for the nodes that cannot be detected, it will be shown as "abnormal" with a hyperlink in orange.
+4) When the detection result of the selected node is "consistent"， with a prompt "There are conditions which cannot be detected." (i.e. multiple detection nodes): the master/slave data consistency will be shown according to the actual detection results. For the "consistent" nodes, it will be shown as "normal", and for the nodes that cannot be detected, it will be shown as "abnormal" with a hyperlink in orange.
 
 - Data node information "connections": obtained by adding the connections on all data sources under the data node.
 
@@ -3826,13 +3826,13 @@ To use the data backup function of HotDB Management, it needs to install the Hot
 
 #### Manual backup
 
-\(I\) Start backup
+(I) Start backup
 
 ![](assets/hotdb-management/image340.png)
 
 - Click "Manage -> Data Backup -> Backup Task -> [Start Backup]" to manually start a backup task.
 
-\(II\) Select backup method
+(II) Select backup method
 
 ![](assets/hotdb-management/image341.png)
 
@@ -3844,7 +3844,7 @@ To use the data backup function of HotDB Management, it needs to install the Hot
 
 - Compute the File MD5 Value or not: It is checked by default, and mainly records the MD5 value of backup file to facilitate the comparison of file MD5 values during data recovery to ensure the integrity and consistency of data.
 
-\(III\) Backup setting
+(III) Backup setting
 
 ![](assets/hotdb-management/image342.png)
 
@@ -3852,7 +3852,8 @@ To use the data backup function of HotDB Management, it needs to install the Hot
 
 - Local Backup Root Directory: It is the local directory of the server where each data source resides and backup file is stored. This directory needs to be created in advance on the server where each node resides, and the directory of each server shall be consistent. Otherwise, the backup fails and the backup failure message prompts: Failed to create backup directory.
 
-**Tip:** when the data is backed up under different directories due to different hardware specifications and configuration methods of servers, you can use the soft link to unify the directories used for backup.
+> !!!TIP
+> when the data is backed up under different directories due to different hardware specifications and configuration methods of servers, you can use the soft link to unify the directories used for backup.
 
 - Compression Method: It is used to control whether the backup file is compressed, with options of No Compression, ZLIB Flow Compression, and LZ4 Compression. LZ4 compression is to first output the file and then call the system compression operation command.
 
@@ -3870,7 +3871,7 @@ To use the data backup function of HotDB Management, it needs to install the Hot
 
 - Remote Backup File Root Directory: The directory for storing backup files shall be filled out according to the actual situation, but it needs to be created in advance.
 
-\(IV\) Backup task record
+(IV) Backup task record
 
 ![](assets/hotdb-management/image343.png)
 
@@ -3904,7 +3905,7 @@ The backup plan can set periodical backup task for HotDB Management. After setti
 
 ![](assets/hotdb-management/image346.png)
 
-\(I\) Add backup plan
+(I) Add backup plan
 
 ![](assets/hotdb-management/image347.png)
 
@@ -3926,17 +3927,17 @@ The backup plan can set periodical backup task for HotDB Management. After setti
 
 Notes on "Backup File Retention"
 
-\(1\) The file retention period is only for scheduled backups (i.e. for manual backups, the backup file will not be deleted).
+(1) The file retention period is only for scheduled backups (i.e. for manual backups, the backup file will not be deleted).
 
-\(2\) The file retention period is the retention time of the backup file. The backup record will not be deleted accordingly.
+(2) The file retention period is the retention time of the backup file. The backup record will not be deleted accordingly.
 
-\(3\) The scheduled task is executed at 0:00 every day. When the backup is deleted, a full backup will be reserved, that is, it does not fully match the time (for example, if the retention period is 24 hours, a full backup A which is greater than or equal to 24 hours will be found, and all automatic backup files before A will be deleted).
+(3) The scheduled task is executed at 0:00 every day. When the backup is deleted, a full backup will be reserved, that is, it does not fully match the time (for example, if the retention period is 24 hours, a full backup A which is greater than or equal to 24 hours will be found, and all automatic backup files before A will be deleted).
 
 - Add Exception or not: Exceptions for backup can be set in the periodical backup plan. For example, if a periodical plan executes a full back at 0:00 a.m. every morning and executes an incremental backup every 4 hours, but xxx is set as an exception, the backup plan will not be executed on that day.
 
 - Backup Setting: For details, please refer to the "Backup Setting" description in "Manual Backup".
 
-\(II\) Specific setting instructions for backup plan
+(II) Specific setting instructions for backup plan
 
 - Backup plan can set timeout cancellation or add exceptions (no backup plan is executed).
 
@@ -4420,7 +4421,7 @@ Check the modification table configuration and modification plan information, an
 
 - Click "[Batch Operation]->[ Start Modification Task in Batches]" on the "Online Change of Sharding Plan" page, or select multiple sharding recommendation plan records in the "Sharding Plan Recommendation" function to start modification task in batches through [Online Modification] .
 
-\(II\) Filling instructions for starting modification task in batches
+(II) Filling instructions for starting modification task in batches
 
 ![](assets/hotdb-management/image380.png)
 
@@ -4428,7 +4429,7 @@ Check the modification table configuration and modification plan information, an
 
 - The "Source Table Processing" and "Replication Interval" settings in batch started modification do not support customized input values, and only the drop-down box option is supported.
 
-\(III\) Execute batch task
+(III) Execute batch task
 
 ![](assets/hotdb-management/image381.png)
 
@@ -4520,13 +4521,13 @@ The following requirements shall be met for using Table Recycle Bin:
 
 #### Table deletion
 
-\(4\) Click Delete
+(4) Click Delete
 
 ![](assets/hotdb-management/image392.png)
 
 - Click the Delete button of the temporary table on the "Management -> Table Recycle Bin" page, the deletion confirmation box will pop up. Click Confirm, the input box for connection information will pop up.
 
-\(5\) Fill in connection information
+(5) Fill in connection information
 
 ![](assets/hotdb-management/image393.png)
 
@@ -4534,7 +4535,7 @@ The following requirements shall be met for using Table Recycle Bin:
 
 - Enter user password.
 
-\(6\) Confirm the deletion
+(6) Confirm the deletion
 
 ![](assets/hotdb-management/image394.png)
 
@@ -4544,13 +4545,13 @@ The following requirements shall be met for using Table Recycle Bin:
 
 #### Table batch restore
 
-\(1\) Click Batch restore
+(1) Click Batch restore
 
 ![](assets/hotdb-management/image395.png)
 
 - Check tables to be restored, and click "Batch Operation -> Batch restore" on the "Management -> Table Recycle Bin" page.
 
-\(2\) Batch restore connection information
+(2) Batch restore connection information
 
 ![](assets/hotdb-management/image396.png)
 
@@ -4562,7 +4563,7 @@ The following requirements shall be met for using Table Recycle Bin:
 
 - The input box for the restored name displays the original table name by default, which can be modified.
 
-\(3\) Confirm the batch restore
+(3) Confirm the batch restore
 
 ![](assets/hotdb-management/image397.png)
 
@@ -4572,13 +4573,13 @@ The following requirements shall be met for using Table Recycle Bin:
 
 #### Table batch deletion
 
-\(1\) Click Batch deletion
+(1) Click Batch deletion
 
 ![](assets/hotdb-management/image398.png)
 
 - Check tables to be deleted, and click "Batch Operation -> Batch deletion" on the "Management -> Table Recycle Bin" page.
 
-\(2\) Batch deletion connection information
+(2) Batch deletion connection information
 
 ![](assets/hotdb-management/image399.png)
 
@@ -4588,7 +4589,7 @@ The following requirements shall be met for using Table Recycle Bin:
 
 - If there is an error in one piece of connection information, none of the tables can be deleted.
 
-\(3\) Confirm the batch deletion
+(3) Confirm the batch deletion
 
 ![](assets/hotdb-management/image400.png)
 
@@ -6200,9 +6201,9 @@ Cluster operation and maintenance includes data detection, deployment upgrade, a
 
 It includes five types of detection, including master/slave data consistency detection, global table data detection, table structure&index detection, route correctness verification, and data unique constraint detection, which are displayed in combination of graphics and text.
 
-1\) Proportion of exception tables = (number of exception tables / total number of detected tables) * 100%
+1) Proportion of exception tables = (number of exception tables / total number of detected tables) * 100%
 
-2\) In the detection submenu, master/slave data consistency detection, global table data detection, table structure&index detection, route correctness verification, and data unique constraint detection can be performed. Real-time statistics of detection data will be displayed, as shown in the following figure:
+2) In the detection submenu, master/slave data consistency detection, global table data detection, table structure&index detection, route correctness verification, and data unique constraint detection can be performed. Real-time statistics of detection data will be displayed, as shown in the following figure:
 
 ![](assets/hotdb-management/image522.png)
 
