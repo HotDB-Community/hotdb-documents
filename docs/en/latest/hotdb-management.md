@@ -1231,24 +1231,18 @@ HotDB Management displays real-time user-concerned information such as data volu
 
 ![](assets/hotdb-management/image125.png)
 
-- Email Notification: Judge according to whether the monitoring switch in the notification setting is turned on, which can be divided into: Enable All, Not Enable and Partially Enable. Click to jump to the notification setting page.
-
-- System Periodical Detection: Judge according to whether all switches on the periodical detection setting page are turned on, which can be divided into: Enable All, Not Enable and Partially Enable. Click to jump to the periodical detection setting page.
-
-- White List: Judge according to the actual switch state of the white list function, which can be divided into: ON and OFF. Click to jump to the white list page.
-
-- SQL Firewall: Judge according to whether the SQL interception status of SQL firewall is enabled or not, which can be divided into: All ON, Partial ON and OFF. Click to jump to the SQL firewall page.
+- **Email Notification: **Judge according to whether the monitoring switch in the notification setting is turned on, which can be divided into: Enable All, Not Enable and Partially Enable. Click to jump to the notification setting page.
+- **System Periodical Detection: **Judge according to whether all switches on the periodical detection setting page are turned on, which can be divided into: Enable All, Not Enable and Partially Enable. Click to jump to the periodical detection setting page.
+- **White List: **Judge according to the actual switch state of the white list function, which can be divided into: ON and OFF. Click to jump to the white list page.
+- **SQL Firewall: **Judge according to whether the SQL interception status of SQL firewall is enabled or not, which can be divided into: All ON, Partial ON and OFF. Click to jump to the SQL firewall page.
 
 ### Summary of important information
 
 ![](assets/hotdb-management/image126.png)
 
 - **Table**: The first row "Table Configuration" is the number of all tables on the "Table Configuration" page, and the second row "Definition Warning" is the number of tables detected to be abnormal in the "Table Structure＆Index Detection".
-
 - **Optimization**: The first row "SQL Log" is the number of SQL records recorded in the [Slow Query Log Analysis](#Slow%20Query%20Log%20Analysis) function of HotLog Management. The second row "Slow SQL" is the SQL marked with ![](assets/hotdb-management/image127.png) in the [Slow Query Log Analysis](#Slow%20Query%20Log%20Analysis) function of HotLog Management. ("SQL Log" and "Slow SQL" are displayed are not enabled when the Slow Query Log Analysis does not enable SQL statistics)
-
 - **Backup**: The first row "Totals of Backup" is the number of all backup records in the "Backup Task" function of HotDB Management, and the second row "Failure Backup" is the number of task records with backup status as "Backup Failed".
-
 - **Log**: The first row "Cluster Log" is the total number of logs in the "Compute Node Log" function of HotDB Management. The second row "Unread" is the number of logs with status as "Unread" in the compute node log. When the number of logs is greater than 999, the page displays 999+.
 
 ### Data node throughput
@@ -1270,13 +1264,9 @@ HotDB Management displays real-time user-concerned information such as data volu
 **Note**: Display the number of transactions per second (TPS: Transactions Per Second) and the query per second (QPS: Query Per Second) in the cluster.
 
 - The "Cluster Throughput" displayed by clusters in multi-node mode is the sum of all compute nodes.
-
 - Extra-transaction TPS does not count SELECT operations, and intra-transaction SELECT/UPDATE/DELETE/INSERT will be counted.
-
 - QPS does not count transaction statements such as "begin, commit".
-
 - Click on the title to link to the "Compute Node Flow" function page.
-
 - Page data refreshing rate is 3 seconds
 
 ### Overview of data amount and throughput
@@ -1288,11 +1278,8 @@ HotDB Management displays real-time user-concerned information such as data volu
 **Note**: The client throughput is the operations (SELECT, INSERT, UPDATE, DELETE, OTHER) sent by front-end application to compute node
 
 - Display the client throughput data of all compute nodes in the cluster today, which is counted according to the natural day.
-
 - The page refreshing rate is 1 minute.
-
 - The client throughput today is cleared at 0 a.m. every day, and displayed as 0 if no operations are performed on that day.
-
 - Click on the graph to link to the "Compute Node Throughput" report details page.
 
 #### Back-end throughput today
@@ -1302,11 +1289,8 @@ HotDB Management displays real-time user-concerned information such as data volu
 **Note**: The back-end throughput is the operations (SELECT, INSERT, UPDATE, DELETE, OTHER) sent by compute node to the underlying data node.
 
 - Display the back-end throughput data of all compute nodes in the cluster today, which is counted according to the natural day.
-
 - The page refreshing rate is 1 minute.
-
 - The client throughput today is cleared at 0 a.m. every day, and displayed as 0 if no operations are performed on that day.
-
 - Click on the graph to link to the "Compute Node Throughput" report details page.
 
 #### New data amount today
@@ -1316,11 +1300,8 @@ HotDB Management displays real-time user-concerned information such as data volu
 **Note**: The new data amount today is a description of the change of business data volume in the cluster from 0 a.m. today to the current time. If it is negative, it means that the data amount is less than that at 0 a.m.
 
 - Page data is updated once every hour.
-
 - The data is cleared at 0 a.m. every day.
-
 - Calculation formula: The sum of data amount of all tables in the data source of the cluster minus the data amount recorded before 0 a.m. today.
-
 - Click on the graph to link to the "Cluster Data Amount" report details page.
 
 #### Total data amount
@@ -1330,9 +1311,7 @@ HotDB Management displays real-time user-concerned information such as data volu
 **Note**: Display the current total data amount of all data nodes in the cluster, that is, the sum of data amounts of all tables in the normal data source.
 
 - Page data is updated once every hour.
-
 - Only the data amount of master data source in the current data node is obtained.
-
 - Click on the graph to link to the "Cluster Data Amount" report details page.
 
 ### Sharding grade

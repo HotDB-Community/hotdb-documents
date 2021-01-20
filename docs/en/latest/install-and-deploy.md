@@ -445,7 +445,7 @@ default-character-set=utf8
 
 [mysql]
 no-auto-rehash
-prompt="\\\\u@\\\\h : \\\\d \\\\r:\\\\m:\\\\s> "
+prompt="//u@//h : //d //r://m://s> "
 default-character-set=utf8
 show-warnings
 
@@ -538,77 +538,79 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,process,referen
 
 HotDB Backup is a distributed transactional database backup tool independently developed by Shanghai Hotpu Networks Technology Co.,Ltd. It is generally deployed on data source server of the cluster, and listens to the data backup request from the management platform. A data source server needs only one HotDB Backup to be deployed.
 
-**Notice for use:**
-
-- Only data backup of MySQL 5.6 and above versions is supported.
-
-- The binlog must be enabled for the backed-up data source instance.
-
-- Server of HotDB Management must have MySQL Client installed, otherwise, the backup will be affected.
+> !!!NOTE <!--Notice for use-->
+> - Only data backup of MySQL 5.6 and above versions is supported.
+> - The binlog must be enabled for the backed-up data source instance.
+> - Server of HotDB Management must have MySQL Client installed, otherwise, the backup will be affected.
 
 1. **Unzip HotDB Backup installation package**
 
-Upload binary package of "hotdb_backup-2.0-xxxxxxxx.tar.gz" to the server. Create installation directory of HotDB Backup, and unzip the HotDB Backup to the installation directory.
+Upload binary package of `hotdb_backup-2.0-xxxxxxxx.tar.gz` to the server. Create installation directory of HotDB Backup, and unzip the HotDB Backup to the installation directory.
 
-# mkdir /usr/local/hotdb/
-
-# tar -zxvf hotdb_backup-2.0-20190109.tar.gz -C /usr/local/hotdb/
+```bash
+mkdir /usr/local/hotdb/
+tar -zxvf hotdb_backup-2.0-20190109.tar.gz -C /usr/local/hotdb/
+```
 
 2. **Start and stop HotDB Backup**
 
 Start backup service program
 
-# cd /usr/local/hotdb/hotdb_backup
+```bash
+cd /usr/local/hotdb/hotdb_backup
+sh bin/hotdb_backup start -h 192.168.220.104 -p 3322
+```
 
-# sh bin/hotdb_backup start -h 192.168.220.104 -p 3322
-
-Add ip of the management platform server behind -h, and add management platform listening HotDB Backup port number behind -p (generally 3322, but please view parameter server.backup.port in management platform configuration file application.properties specifically).
+Add ip of the management platform server behind `-h`, and add management platform listening HotDB Backup port number behind `-p` (generally `3322`, but please view parameter `server.backup.port` in management platform configuration file `application.properties` specifically).
 
 After successful start, the following logs will be printed
 
+```log
 INFO: Start HotDB-backup ...
-
 INFO: HotDB-backup start successed.
+```
 
 Stop the backup service program
 
-# sh bin/hotdb_backup stop
+```bash
+sh bin/hotdb_backup stop
+```
 
 Print the following log after stopping successfully
 
+```log
 INFO: Stopping HotDB-backup ...
-
 INFO: HotDB-backup stopped success.
+```
 
 View running status of HotDB-Backup
 
-# sh bin/hotdb_backup status
+```bash
+sh bin/hotdb_backup status
+```
 
-**Prompt of already running:**
-
+```log
+# Prompt of already running:
 INFO: HotDB-backup service already running (PID: 11709).
 
-**Prompt of not running:**
-
+# Prompt of not running:
 INFO: HotDB-backup service not running.
+```
 
 View HotDB-Backup log
 
-# cat logs/hotdb_backup.log
+```bash
+cat logs/hotdb_backup.log
+```
 
 HotDB Backup common log
 
-Start backup## 
-Start backup task
-
-Backup is stopped## 
-Stop backup task
-
-Connected to server successfully!## 
-HotDB Backup and HotDB Management are normally connected
-
-Got a quit signal from user, will quit after backup is finished## 
-HotDB Backup exits normally
+```
+Start backup # Start backup task
+Backup is stopped # Stop backup task
+Connected to server successfully! # HotDB Backup and HotDB Management are normally connected
+Got a quit signal from user, will quit after backup is finished # HotDB Backup exits normally
+```
 
 #### HA (master/standby) cluster deployment
 
@@ -633,11 +635,11 @@ Descriptions of master/standby node cluster deployment teaching environment and 
 | ConfigDB | 1 |
 | Data Source | 4 |
 
-**Note:** For description of the component name, refer to the document *Distributed Transactional Database Product HotDB Server - [Explanation of Terms] Function Manual*.
+> !!!NOTE
+> For description of the component name, refer to the document *Distributed Transactional Database Product HotDB Server - [Explanation of Terms] Function Manual*.
 
-**Special description:**
-
-This chapter mainly introduces compute node server.xml configuration, Keepalived installation and configuration, start instruction, high availability switch, etc. under HA cluster mode. Installation steps of compute node, management platform, configDB and Data Source will not be repeated in this chapter, and please refer to "[Single Node Cluster Deployment](#single-node-cluster-deployment)" in the previous chapter for details.
+> !!!INFO
+> This chapter mainly introduces compute node server.xml configuration, Keepalived installation and configuration, start instruction, high availability switch, etc. under HA cluster mode. Installation steps of compute node, management platform, configDB and Data Source will not be repeated in this chapter, and please refer to "[Single Node Cluster Deployment](#single-node-cluster-deployment)" in the previous chapter for details.
 
 **Deployment planning:**
 
@@ -650,7 +652,8 @@ This chapter mainly introduces compute node server.xml configuration, Keepalived
 
 HA compute node deployment diagram
 
-**Note**: The master/standby compute node servers are then installed with keepalived program respectively, and the VIP used is: 192.168.200.140
+> !!!NOTE
+> The master/standby compute node servers are then installed with keepalived program respectively, and the VIP used is: 192.168.200.140
 
 ##### Compute node
 
@@ -660,31 +663,28 @@ Install compute node service respectively on 192.168.220.190 and 192.168.200.191
 
 2. **Modify master/standby compute node configuration file**
 
-Corresponding configuration file server.xml of the deployed master/standby compute node shall be modified, and the detailed modification is as follow:
+Corresponding configuration file `server.xml` of the deployed master/standby compute node shall be modified, and the detailed modification is as follow:
 
-Modification of the server.xml configuration on master compute node 192.168.200.190
+Modification of the `server.xml` configuration on master compute node 192.168.200.190
 
+```xml
 <property name="haState">master</property>< HA role, master node: master, backup node: backup>
-
 <property name="haNodeHost"></property><HA role, other node IP:PORT>
-
 <property name="VIP">192.168.200.140</property><virtual IP address>
+```
 
 Modification of the server.xml configuration on standby compute node192.168.200.191
 
+```xml
 <property name="haState">backup</property>< HA role, master node: master, backup node: backup>
-
 <property name="haNodeHost">192.168.200.190:3325</property><HA role, other node IP:PORT>
-
 <property name="VIP">192.168.200.140</property><virtual IP address>
+```
 
-**Description:**
-
-- haNodeHost in the configuration file is the master compute node's IP+management port, and such parameter only needs to be configured on standby compute node.
-
-- When starting master/standby server, if haState plays as the master, service port (3323) and management port (3325) will be started; if it plays as the Backup, only management port (3325) will be started.
-
-- At the time of master server failure, if keepalived detects that the service is not available, it will automatically switch vip to the backup server, and start the backup service port (3323), to guarantee service without interruption.
+> !!!INFO
+> - haNodeHost in the configuration file is the master compute node's IP+management port, and such parameter only needs to be configured on standby compute node.
+> - When starting master/standby server, if haState plays as the master, service port (3323) and management port (3325) will be started; if it plays as the Backup, only management port (3325) will be started.
+> - At the time of master server failure, if keepalived detects that the service is not available, it will automatically switch vip to the backup server, and start the backup service port (3323), to guarantee service without interruption.
 
 ##### Keepalived
 
@@ -692,273 +692,172 @@ Modification of the server.xml configuration on standby compute node192.168.200.
 
 keepalived could be installed either by means of yum, or by downloading installation tar package from keepalived official website <https://www.keepalived.org/download.html>.
 
-**Install keepalived by means of yum (execute keepalived installation command on master/standby compute node service)**
+```bash
+# Install keepalived by means of yum (execute keepalived installation command on master/standby compute node service)
+yum -y install keepalived
 
-# yum -y install keepalived
+# Start or stop keepalived
+service keepalived start / server keepalived stop
 
-**Start or stop keepalived**
-
-# service keepalived start / server keepalived stop
-
-**View running status of keepalived**
-
-# service keepalived status
+# View running status of keepalived
+service keepalived status
+```
 
 1. **Modify keepalived configuration file**
 
-Keepalived configuration file is stored as "keepalived.conf" under /etc directory by default; copy the following instance contents to substitute contents in corresponding keepalived configuration file, and make actual modification according to the position marked in red. (the corresponding /conf directory in the standard HotDB Server installation package also contains keepalived configuration file of master/slave mode, which can also be copied directly to the /etc directory for customized modification.)
+Keepalived configuration file is stored as `keepalived.conf` under `/etc` directory by default; copy the following instance contents to substitute contents in corresponding keepalived configuration file, and make actual modification according to the position marked in red. (the corresponding /conf directory in the standard HotDB Server installation package also contains keepalived configuration file of master/slave mode, which can also be copied directly to the `/etc` directory for customized modification.)
 
 Keepalived configuration information of master compute node: 192.168.200.190:
 
+```
 ! Configuration File for keepalived
-
 global_defs {
-
-router_id HotDB Server-ha
-
+  router_id HotDB Server-ha
 }
-
 vrrp_script check_HotDB Server_process {
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh process"
-
-interval 5
-
-fall 2
-
-rise 1
-
-weight -10
-
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+  rocess.sh process"
+  interval 5
+  fall 2
+  rise 1
+  weight -10
 }
-
 vrrp_script check_HotDB Server_connect_state {
-
-state
-
-code
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh connect_master"
-
-interval 5
-
-fall 3
-
-rise 1
-
-timeout 5
-
-weight -10
-
+  state
+  code
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+  rocess.sh connect_master"
+  interval 5
+  fall 3
+  rise 1
+  timeout 5
+  weight -10
 }
-
 vrrp_instance VI_1 {
-
-state BACKUP
-
-interface eth1
-
-virtual_router_id 89
-
-nopreempt
-
-priority 100
-
-advert_int 1
-
-authentication {
-
-auth_type PASS
-
-auth_pass 1111
-
+  state BACKUP
+  interface eth1
+  virtual_router_id 89
+  nopreempt
+  priority 100
+  advert_int 1
+  authentication {
+    auth_type PASS
+    auth_pass 1111
+  }
+  track_script {
+    check_HotDB Server_process
+    check_HotDB Server_connect_state
+  }
+  #be careful in red hat
+  track_interface {
+    eth1
+  }
+  virtual_ipaddress {
+    192.168.200.140/24 dev eth1 label eth1:1
+  }
+  notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh master_notify_master"
+  notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh master_notify_backup"
+  notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
 }
-
-track_script {
-
-check_HotDB Server_process
-
-check_HotDB Server_connect_state
-
-}
-
-# be careful in red hat
-
-track_interface {
-
-eth1
-
-}
-
-virtual_ipaddress {
-
-192.168.200.140/24 dev eth1 label eth1:1
-
-}
-
-notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh master_notify_master"
-
-notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh master_notify_backup"
-
-notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
-
-}
+```
 
 Keepalived configuration information of standby compute node: 192.168.200.191:
 
+```
 ! Configuration File for keepalived
-
 global_defs {
-
-router_id HotDB Server-ha
-
+  router_id HotDB Server-ha
 }
-
 vrrp_script check_HotDB Server_process {
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh process"
-
-interval 5
-
-fall 2
-
-rise 1
-
-weight -10
-
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+  rocess.sh process"
+  interval 5
+  fall 2
+  rise 1
+  weight -10
 }
-
 vrrp_script check_HotDB Server_connect_state {
-
-state
-
-code
-
-script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
-
-rocess.sh connect_backup"
-
-interval 5
-
-fall 3
-
-rise 1
-
-timeout 5
-
-weight -10
-
+  state
+  code
+  script "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_p
+  rocess.sh connect_backup"
+  interval 5
+  fall 3
+  rise 1
+  timeout 5
+  weight -10
 }
-
 vrrp_instance VI_1 {
-
-state BACKUP
-
-interface eth0
-
-virtual_router_id 89
-
-priority 95
-
-advert_int 1
-
-authentication {
-
-auth_type PASS
-
-auth_pass 1111
-
+  state BACKUP
+  interface eth0
+  virtual_router_id 89
+  priority 95
+  advert_int 1
+  authentication {
+    auth_type PASS
+    auth_pass 1111
+  }
+  track_script {
+    check_HotDB Server_process
+    check_HotDB Server_connect_state
+  }
+  #be careful in red hat
+  track_interface {
+    eth0
+  }
+  virtual_ipaddress {
+    192.168.200.140/24 dev eth0 label eth0:1
+  }
+  notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh backup_notify_master"
+  notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
+  k_hotdb_process.sh backup_notify_backup"
+  notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
 }
+```
 
-track_script {
-
-check_HotDB Server_process
-
-check_HotDB Server_connect_state
-
-}
-
-# be careful in red hat
-
-track_interface {
-
-eth0
-
-}
-
-virtual_ipaddress {
-
-192.168.200.140/24 dev eth0 label eth0:1
-
-}
-
-notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh backup_notify_master"
-
-notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-
-k_hotdb_process.sh backup_notify_backup"
-
-notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh backup_notify_backup"
-
-}
-
-**Note:** Relevant configuration of master/standby keepalived could also be made referring to keepalived.conf.master and keepalived.conf.backup under compute node installation directory /conf. The red area shall be modified according to actual information, while the other areas shall be keep default setting for other configurations.
+> !!!NOTE
+> Relevant configuration of master/standby keepalived could also be made referring to keepalived.conf.master and keepalived.conf.backup under compute node installation directory /conf. The red area shall be modified according to actual information, while the other areas shall be keep default setting for other configurations.
 
 **Description of customized modification contents:**
 
 - Script: Script path is the actual installation path of compute node, and the called master/standby script shall be configured according to the actual master/standby role
-
 - Interface: the bound network interface card (NIC)
-
 - Nopreempt: set whether to enable the Preempt mode or not. If this parameter is added, Preempt mode will not be enable; otherwise, Preempt mode will be enable. If the master parameter value is priority 100, while the backup parameter value is priority 95, then this parameter shall be set in master keepalived configuration script.
-
 - Priority: the one with high-priority is the master
-
 - virtual_ipaddress: bound vip of instance (vip shall be in the same network segment with the compute node ip)
-
 - Label: give a virtual name to local NIC for binding virtual NIC IP, for example, bind the virtual NIC eth0:1 to the local NIC eth0
-
 - Script: the script path judging whether the service is normal or not, is generally stored under /bin directory of HotDB Server, for example: /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh, this script could check whether the master/standby service process of HotDB Server exists or not, and whether the 3323 port and 3325 port of the master/standby HotDB Server are in normal status or not.
 
-2. **Start instruction**
+3. **Start instruction**
 
 Since the HotDB Servers on the two servers are of master/standby relation, therefore, when starting the service, attention ought to be paid to the start sequence, and the standard start sequence is as follows:
 
 Start the master (192.168.200.190) keepalived first, and then start the master compute node service **after ping VIP successfully**
 
-**Start master keepalived service**
+```bash
+# Start master keepalived service
+service keepalived start
 
-# service keepalived start
+# Then start the master compute node service after ping VIP successfully
+sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
+```
 
-**Then start the master compute node service after ping VIP successfully**
-
-# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
-
-Command "ip a" could be used to could view whether the current master keepalived VIP has been successfully bound or not
+Command `ip a` could be used to could view whether the current master keepalived VIP has been successfully bound or not
 
 ![](assets/install-and-deploy/image6.png)
 
 After master compute node service starts, **wait 20s,** and then start the backup (192.168.200.191) keepalived, and after keepalived starts, **wait 10s**, and then start the standby compute node service
 
-**Start the backup keepalived service**
+```bash
+# Start the backup keepalived service
+service keepalived start
 
-# service keepalived start
-
-**Start the standby compute node service**
-
-# sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
+# Start the standby compute node service
+sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
+```
 
 ##### Description of high availability switch
 
@@ -972,7 +871,7 @@ Keepalived VIP has already been on 192.168.200.191 server now
 
 ##### Description of high availability rebuild
 
-Refer to the chapter of high availability rebuild in *Distributed Transactional Database HotDB Server [Management Platform] Function Manual* for details, and via this function the following could be implemented: in case of failover with the compute node on 192.168.200.190 server, and the master/standby relation could be recovered by manually triggering the compute node high availability rebuild function, and when there is failure with the compute node on 192.168.200.191 server again, it could be switched backed to 192.168.200.190 automatically.
+Refer to the chapter of high availability rebuild in [HotDb Management](hotdb-management.md) document for details, and via this function the following could be implemented: in case of failover with the compute node on 192.168.200.190 server, and the master/standby relation could be recovered by manually triggering the compute node high availability rebuild function, and when there is failure with the compute node on 192.168.200.191 server again, it could be switched backed to 192.168.200.190 automatically.
 
 #### NDB SQL Service
 
@@ -981,9 +880,7 @@ NDB SQL service could be used to assist the compute node in completing calcualti
 1. **Notice before manual installation**
 
 - NDB SQL service matches to compute node service one by one, that is, if every compute node server needs NDB SQL service support, this service program shall be deployed.
-
 - The version of the compute node corresponding to NDB SQL service must be V2.5.2 and above, otherwise, NDB SQL service is not supported.
-
 - One-time follow deployment is recommended for NDB SQL service and compute node. If NDB SQL service needs to be added to the existing compute note, strict attention shall be paid to: parameter transfer problems of --install-ntpd, --ntpdate-server-ip, --ntpdate-server-host, which shall be consistent with the synchronization time configuration of the current deployed cluster.
 
 2. **Description of simultaneous deployment process of compute node and NDB SQL**
@@ -994,53 +891,47 @@ Now, take master/standby cluster for example to illustrate installation of compu
 
 - Log in to the master compute node server, and enter clickOnce deployment default installation directory to execute:
 
+```bash
 sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --install-ntpd=yes --ntpdate-server-host=182.92.12.11
+```
 
 - Log in to the standby compute node server, and enter clickOnce deployment default installation directory to execute:
 
-sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --ntpdate-server-host=
-
-IP address of master compute node server
+```bash
+sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --ntpdate-server-host=<IP address of master compute node server>
+```
 
 3. **Description of separate deployment procedure of NDB SQL**
 
 If compute node has been installed, but NDB SQL service needs to be installed additionally in later period, then it could be installed by separate deployment of NDB SQL via script, or by "[Single Component Deployment](#single-component-deployment-and-installation-of-ndb-sql)" function on the management platform. This example describes additional deployment of NDB SQL service in later period taking single-node cluster for instance.
 
-- Log in to compute node server, and enter rclickOnce deployment resource bundle directory Install_Package to execute installation command.
+Log in to compute node server, and enter rclickOnce deployment resource bundle directory Install_Package to execute installation command.
 
-**Example:**
-
+```bash
 sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
+```
 
-**Notice:**
-
-- The time synchronization parameters used for installing time synchronization address of NDB SQL specified server shall be consistent with those used for previous installation of compute node
-
-That is, whether **ntpdate-server-ip** or **ntpdate-server-host** is used shall be consistent for both times
-
-- The time synchronization parameters used for installing time synchronization address shall be consistent with those used for previous installation of compute node. If there is NTP service in cluster, then the parameter value shall be IP address of NIP server.
+> !!!NOTE
+> - The time synchronization parameters used for installing time synchronization address of NDB SQL specified server shall be consistent with those used for previous installation of compute node. That is, whether `ntpdate-server-ip` or `ntpdate-server-host` is used shall be consistent for both times
+> - The time synchronization parameters used for installing time synchronization address shall be consistent with those used for previous installation of compute node. If there is NTP service in cluster, then the parameter value shall be IP address of NIP server.
 
 4. **Description of NDB SQL configuration**
 
-- After installing NDB SQL service, server.xml configuration shall be modified under installation /conf directory of corresponding compute node. ndbSqlMode in configuration file shall be modified as local. The details are as follow:
+After installing NDB SQL service, server.xml configuration shall be modified under installation /conf directory of corresponding compute node. ndbSqlMode in configuration file shall be modified as local. The details are as follow:
 
+```xml
 <property name="ndbSqlMode">none</property><!-- NDB mode. Disable(by default): none; NDB and HotDB in same machine: local-->
-
 <property name="ndbSqlVersion">5.7.24</property><!-- Version of NDB -->
-
 <property name="ndbVersion">7.5.12</property><!-- Engine verion of NDB -->
-
 <property name="ndbSqlAddr">localhost:3329</property><!-- NDB SQL node address -->
-
 <property name="ndbSqlUser">root</property><!-- NDB SQL node user nmae -->
-
 <property name="ndbSqlPass">root</property><!-- NDB SQL node password -->
-
 <property name="ndbSqlDataAddr">127.0.0.1:3327</property><!-- NDB Data node address -->
+```
 
 5. **Description of NDB SQL start and stop**
 
-- NDB SQL service does not need to be separately started or stopped. It could be started simultaneously when starting compute node, and could also be stopped simultaneously when stopping compute node.
+NDB SQL service does not need to be separately started or stopped. It could be started simultaneously when starting compute node, and could also be stopped simultaneously when stopping compute node.
 
 #### HotDB Listener component
 
@@ -1052,25 +943,28 @@ HotDB Listener is compiled by JDK1.7.0_ 80, and the requirements for the operati
 
 Upload the installation package of one-click deployment auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz (2.5.5 is the version number, and different versions correspond to different numbers. Remember to replace the number synchronously.) to the data source server directory /usr/local/hotdb, and execute the following command:
 
-# cd /usr/local/hotdb
-
-# tar -zxvf auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz
+```bash
+cd /usr/local/hotdb
+tar -zxvf auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz
+```
 
 ##### Installation of Listener
 
 The installation package of one click deployment is built in Listener installation package. Install Listener in the directory /usr/local/hotdb by executing the following command:
 
-# cd /usr/local/hotdb/Install_Package
-
-# tar -zxvf hotdb-listener-0.0.1-alpha-20200420-linux.tar.gz -C /usr/loca l/hotdb/
+```bash
+cd /usr/local/hotdb/Install_Package
+tar -zxvf hotdb-listener-0.0.1-alpha-20200420-linux.tar.gz -C /usr/loca l/hotdb/
+```
 
 ##### Configuration of Listener
 
 Before starting, adjust the heap memory size of Listener according to the available memory space of the server.
 
-# cd /usr/local/hotdb/hotdb-listener/bin
-
-# vi hotdb_listener
+```bash
+cd /usr/local/hotdb/hotdb-listener/bin
+vi hotdb_listener
+```
 
 Set the heap memory size of row 24 to a reasonable range.
 
@@ -1078,9 +972,10 @@ If the server memory is large, G1 algorithm and corresponding configuration can 
 
 Then configure the Listener start port (this step can be omitted if there is no special requirement)
 
-# cd /usr/local/hotdb/hotdb-listener/conf
-
-# vi config.properties
+```bash
+cd /usr/local/hotdb/hotdb-listener/conf
+vi config.properties
+```
 
 The default value of host is 0.0.0.0, which does not need to be modified; the default value of port is 3330, which is not recommended to be modified unless it is occupied.
 
@@ -1088,35 +983,34 @@ The default value of host is 0.0.0.0, which does not need to be modified; the de
 
 Start the Listener by executing the following command:
 
-# cd /usr/local/hotdb/hotdb-listener/bin
-
-# sh hotdb_listener start
+```
+cd /usr/local/hotdb/hotdb-listener/bin
+sh hotdb_listener start
+```
 
 If Listener is started successfully, the window will prompt "HotDB-Listener start successed."
 
 In addition to start, other parameters can be used as follows:
 
-# sh hotdb_listener
-
-Usage: sh hotdb_listener [start|stop|restart]
-
-example:
-
-HotDB-Listener start : sh hotdb_listener start
-
-HotDB-Listener stop : sh hotdb_listener stop
-
-HotDB-Listener restart : sh hotdb_listener restart
+```bash
+sh hotdb_listener
+# Usage: sh hotdb_listener [start|stop|restart]
+# example:
+# HotDB-Listener start : sh hotdb_listener start
+# HotDB-Listener stop : sh hotdb_listener stop
+# HotDB-Listener restart : sh hotdb_listener restart
+```
 
 After startup, you can switch to the logs directory to view the log output, and view the related information of Listener.
 
-# tailf listener.log
-
-2020-05-25 12:09:54.089 [INFO] [INIT] [main] cn.hotpu.hotdb.ListenerServer(158) - Listener-Manager start listening on host 0.0.0.0 port 3330
+```bash
+tailf listener.log
+# 2020-05-25 12:09:54.089 [INFO] [INIT] [main] cn.hotpu.hotdb.ListenerServer(158) - Listener-Manager start listening on host 0.0.0.0 port 3330
+```
 
 ### Automatic deployment
 
-Automatic deployment is a function on management platform which supports automatic installation and deployment of compute node cluster in the interface. At present, V2.5.0 and later version of management platform have two automatic installation functions: "Cluster Deployment" and [Single Component Deployment](#Single%20Component%20Deployment). "Cluster Deployment" is fit for one-time deployment of the whole set of compute node cluster from 0, while [Single Component Deployment](#Single%20Component%20Deployment) is fit for adding individual cluster component to deployed cluster.
+Automatic deployment is a function on management platform which supports automatic installation and deployment of compute node cluster in the interface. At present, V2.5.0 and later version of management platform have two automatic installation functions: [Cluster Deployment](#cluster-deployment) and [Single Component Deployment](#single-component-deployment). **Cluster Deployment** is fit for one-time deployment of the whole set of compute node cluster from 0, while **Single Component Deployment** is fit for adding individual cluster component to deployed cluster.
 
 #### Cluster deployment
 
@@ -1124,75 +1018,67 @@ Every cluster deployment task is conducted with a set of clusters as the unit, a
 
 ##### Description of terms
 
-Please refer to *Distributed Transactional Database HotDB Server [Explanation of Terms] Function Manual* for relevant terms of cluster deployment
+Please refer to [Glossary](glossary.md) document for relevant terms of cluster deployment
 
 ##### Function use instruction
 
-- Cluster deployment only supports CentOS6\\7 RHEL6\\7, MySQL 5.6\\5.7, HotDB-Server2.4, HotDB-Server2.5;
-
+- Cluster deployment only supports CentOS6/7 RHEL6/7, MySQL 5.6/5.7, HotDB-Server2.4, HotDB-Server2.5;
 - The hard disk exceeding 2EB may have computation error;
-
 - It does not support multiple compute nodes or multiple management platforms or multiple HotDB Backups installed on the same server;
-
 - It's recommended adding clean operating system environment server;
-
 - SSH information of server must be configured by the user with root privilege;
-
 - The added server requires available yum source and iso image file of corresponding operating system version under the installation script directory;
-
-- Installation Deployment package name starts with "auto_hotdbinstall" by default, and please don't change the deployment package name under the server arbitrarily;
-
-- Storage route of the uploaded deployment package is /usr/local/hotdb by default of the program;
-
+- Installation Deployment package name starts with `auto_hotdbinstall` by default, and please don't change the deployment package name under the server arbitrarily;
+- Storage route of the uploaded deployment package is `/usr/local/hotdb` by default of the program;
 - MySQL supports installation of 5.6.41, 5.7.25/8.0.16 versions by default, and if requiring other versions, please substitute relevant installation package under the installation directory independently;
-
-- Before deploying the cluster, the management platform shall confirm that there is cluster Installation Deployment package resource under any of the following directories of the management platform server. At the time of cluster deployment, resource bundle will be looked up from the following directories to be uploaded through /usr/local/hotdb route of the target server. (The lookup priority is subject to the following)
-
-> /opt
->
-> /opt/hotdb
->
-> /usr/local
->
-> /usr/local/hotdb
-
+- Before deploying the cluster, the management platform shall confirm that there is cluster Installation Deployment package resource under any of the following directories of the management platform server. At the time of cluster deployment, resource bundle will be looked up from the following directories to be uploaded through `/usr/local/hotdb` route of the target server. (The lookup priority is subject to the following)
+  - `opt`
+  - `opt/hotdb`
+  - `usr/local`
+  - `usr/local/hotdb`
 - There may be some damage during the download process of one-click deployment installation package. Deployment at this time may lead to deployment errors. Therefore, in the management platform version of 2.5.6.1 and above, the integrity check function is added to verify the MD5 value of the uploaded installation package. That is, when uploading the deployment installation package, you need to synchronously upload the MD5 value file corresponding to the current installation package to the same directory of the server, as shown in the following figure:
 
-> ![](assets/install-and-deploy/image9.png)
+![](assets/install-and-deploy/image9.png)
 
 ##### Deploy management platform
 
 1. **Upload deployment installation package and corresponding MD5 value file to the server, and unzip to specified directory**
 
-# mkdir /usr/local/hotdb
-
-# tar -zxvf auto_hotdbinstall_HotDB2.*.tar.gz -C /usr/local/hotdb/
+```bash
+mkdir /usr/local/hotdb
+tar -zxvf auto_hotdbinstall_HotDB2.*.tar.gz -C /usr/local/hotdb/
+```
 
 2. **Execute the installation script to install management platform**
 
-# cd /usr/local/hotdb/Install_Package/
-
-# sh hotdbinstall_v*.sh --ntpdate-server-ip=182.92.12.11 --mysql-version=5.7 --hotdb-config-port=3316 --hotdb-version=2.5 --install-hotdb-server-management=yes
+```bash
+cd /usr/local/hotdb/Install_Package/
+sh hotdbinstall_v*.sh --ntpdate-server-ip=182.92.12.11 --mysql-version=5.7 --hotdb-config-port=3316 --hotdb-version=2.5 --install-hotdb-server-management=yes
+```
 
 3. **View installation log to acquire the installation progress**
 
-## tail -f /usr/local/hotdb/Install_Package/hotdbinstall.log
+```bash
+tail -f /usr/local/hotdb/Install_Package/hotdbinstall.log
+```
 
 4. **If the log prints the following mark, the installation is successful and of normal end**
 
-[INFO] hotdbinstall finished without error, but you should check if there is any warn
-
-ings
+```log
+[INFO] hotdbinstall finished without error, but you should check if there is any warnings
+```
 
 5. **Start management platform**
 
-## sh /usr/local/hotdb/hotdb-management/bin/hotdb_management start
+```bash
+sh /usr/local/hotdb/hotdb-management/bin/hotdb_management start
+```
 
 6. **Open management platform via browser**
 
-After successful start, open the browser to input：
+After successful start, open the browser and goto url: `http://<server IP address>:3324/page/index.html`
 
-After successful opening of the page via http://server IP address:3324/page/index.html, log in to the account to admin user interface. (Both admin username and password are admin|admin by default)
+After successful opening the page , log in to the account to admin user interface. (Both admin username and password are admin|admin by default)
 
 ##### Description of cluster deployment function
 

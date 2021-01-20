@@ -800,7 +800,7 @@ The number of MySQL database servers is evaluated based on the TPS / QPS of the 
 > !!!NOTE
 > If the above scenario is read-based, the QPS will be higher; here TPS refers to simple TPS, and complex TPS needs to be measured to get specific data.
 
-> !!!TIP
+> !!!INFO
 > In the performance test environment, MySQL server can usually get higher value than the description, however along with problems such as serious master/slave latency, abnormally long time of SQL response, or response time/throughput jitter, for performance pressure measurement generally does not control the specific flow, but the number of concurrency; enough concurrency can squeeze the performance of MySQL instances to the limit. However, although the throughput is large, the overall QoS (Quality of Service) in this limit state is very poor. Thus, the performance indicators in this limit state are not suitable for evaluating the production environment. When planning the production environment, it is recommended to take the smaller value of 50% of the throughput index and 80% of the replication catch-up speed, which can get better QoS.
 
 Performance test with at least two database servers, four pairs of mysqld instances, and master-master replication cross deployment can test scenarios with TPS of more than 40,000 and QPS of more than 100,000.
