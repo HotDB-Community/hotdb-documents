@@ -126,6 +126,7 @@ show @@clientquery;
 | `all` | 总和 | `LONG/[number]` |
 
 > !!!NOTE
+> 
 > other统计的是当前客户端执行DDL语句的次数
 
 #### `show @@cluster` - 显示集群成员信息
@@ -347,6 +348,7 @@ show @@heartbeat;
 | `stop` | 心跳是否停止 | `BOOLEAN/[true/false]` |
 
 > !!!NOTE
+> 
 > dn为-1代表配置库
 
 #### `show @@latency` - 显示同步延迟情况
@@ -509,6 +511,7 @@ show @@operation_dn;
 | `all` | 对以上操作的统计 | `LONG/[number]` |
 
 > !!!NOTE
+> 
 > 与全局表相关的操作量根据操作类型分别计数：SELECT仅统计一个节点，INSERT、UPDATE、DELETE操作统计所有节点
 
 #### `show @@operation_ds` - 显示存储节点为单位的命令执行情况
@@ -1136,9 +1139,11 @@ show @@usbkey;
 | `comment` | 备注信息 | `STRING` |
 
 > !!!NOTE
+> 
 > `left_time=0`代表永久或作废；
 
 > !!!NOTE
+> 
 > `usbkey_check_stuck=1`代表检测到线程被卡住。当检测到线程被卡住或累计检测抛出异常次数超过10000时，提示：
 
 ```
@@ -1376,6 +1381,7 @@ onlinemodifyrule cpd_test. zx_cvset_signin_result=4,id:1,2:24:1000:T3:7:0;
 分片方案变更所采用的`functionid`可在配置库的`hotdb_function`表里查看。![](assets/management-port-command/image70.png)
 
 > !!!IMPORTANT
+> 
 > - 执行的变更分片规则需要的`functionid`已经存在于配置库的`hotdb_function`表中；
 > - 使用将要变更的分片规则，需要保证指定的数据节点数目要与`function_id`对应的数据节点数一致；
 > - 源表必须有主键或者唯一键，无触发器，无外键约束，否则会导致变更结果有误；
@@ -1841,6 +1847,7 @@ dbremapping @@add@db01:logic_db;
 ```
 
 > !!!NOTE
+> 
 > 若为同名的物理库添加映射关系到不同逻辑库，将会覆盖之前的映射关系。允许不同的物理库添加映射关系到相同的逻辑库。
 
 例如，先执行命令添加db01到logic_db01的映射关系：
@@ -1890,6 +1897,7 @@ mysql> onlineddl "alter table mytb add column cl1 varchar(90) default '1'";
 ```
 
 > !!!NOTE
+> 
 > 在线修改表结构时，各分片上的数据表结构需要一致，并且需要修改的数据表有唯一索引。
 
 ### `file @@list` - 获取conf目录下文件及其最后修改时间

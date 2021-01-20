@@ -74,6 +74,7 @@ Compared with a single centralized database, the throughput loss of a single com
 The acquisition performance of global auto-incremental sequence is greater than 200,000 TPS.
 
 > !!!NOTE
+> 
 > The TPS mentioned above is simple TPS. The above performance indicators are based on the following: using the highest configuration hardware specification described in Distributed Transactional Database HotDB Server Hardware Configuration Recommendation; installing and deploying the HotDB Server in a standardized way and perform the tuning described in Performance Test Report For Single Compute Node Basic Scenario of HotDB Server; with no less than 12 data nodes; no performance bottleneck appears in the data source server\\MySQL instance.
 
 #### Strong transparency
@@ -681,6 +682,7 @@ HotDB Server supports read/write splitting function and supports configuration o
 - The read requests before write and the automatically submitted read requests in the transaction (non XA mode) are sent to the available slave data sources. The remaining requests are on the master data source.
 
 > !!!NOTE
+> 
 > The above "separable read requests" mainly refers to the automatically submitted read requests without hint and the requests in the explicit read-only transactions. The remaining read requests without hint are "inseparable read requests".
 
 When the data synchronization delay of the data source exceeds 1 second (configurable) or failure occurs, the compute node will remove the data source and prevent it from participating in the read. At this time, other normal data sources will undertake the separable read task, and the removed data sources will not be added back to the read cluster until the delay is recovered.
@@ -729,6 +731,7 @@ Number of servers: 2 (at least 3 and at most 9 in the cluster load balancing mod
 ```
 
 > !!!NOTE
+> 
 > In the cluster load balancing mode, it is recommended that the compute node ConfigDB occupy the server separately and do not share with the compute node or data source server. When compute node ConfigDB occupies server exclusively, please refer to "management platform ConfigDB server" for configuration.
 
 #### Data source server
@@ -784,11 +787,13 @@ It is recommended to use a switch with convergence level or higher performance l
 It is recommended that all servers should be deployed under the same switch (or stack). If this is not possible, the deployment mode of minimum network hops should be adopted.
 
 > !!!WARNING
+> 
 > It is not recommended that the network traffic of the cluster pass through any router or firewall.
 
 If a highly available network is deployed, it is recommended to use Bond0 mode first.
 
 > !!!WARNING
+> 
 > In the process of performance test, in addition to the server performance index, we must pay attention to whether the switch loses packets. The actual pps performance of many switches is far lower than the nominal index.
 
 #### Special instructions
@@ -798,14 +803,17 @@ The above configurations take DELL server as an example. For other computer manu
 The number of MySQL database servers is evaluated based on the TPS / QPS of the production environment or performance test. The single data source server described can make the master/slave latency within 1 second and stably support the operation in the production environment with TPS of 4000-6000, and QPS of 15000 around when the master/slave latency within 1 second.
 
 > !!!NOTE
+> 
 > If the above scenario is read-based, the QPS will be higher; here TPS refers to simple TPS, and complex TPS needs to be measured to get specific data.
 
 > !!!INFO
+> 
 > In the performance test environment, MySQL server can usually get higher value than the description, however along with problems such as serious master/slave latency, abnormally long time of SQL response, or response time/throughput jitter, for performance pressure measurement generally does not control the specific flow, but the number of concurrency; enough concurrency can squeeze the performance of MySQL instances to the limit. However, although the throughput is large, the overall QoS (Quality of Service) in this limit state is very poor. Thus, the performance indicators in this limit state are not suitable for evaluating the production environment. When planning the production environment, it is recommended to take the smaller value of 50% of the throughput index and 80% of the replication catch-up speed, which can get better QoS.
 
 Performance test with at least two database servers, four pairs of mysqld instances, and master-master replication cross deployment can test scenarios with TPS of more than 40,000 and QPS of more than 100,000.
 
 > !!!NOTE
+> 
 > Under this pressure, MySQL replication delay and poor SQL response time generally occur, which is normal. The performance test index obtained by this test method is significant for evaluating the upper throughput capacity supported by HotDB server compute nodes, but is not suitable for evaluating data source throughput.
 
 The deployment recommendation above is for test environments (including pressure test environment) of HA or cluster load balancing architecture. For the actual production environment configuration, you need to contact Hotpu technology for specific assessments.
