@@ -118,18 +118,33 @@
     }
 	
 	.alert.callout.info {
-	  border-left-color: #28a745 !important
+	  border-left-color: #17a2b8 !important
 	}
 	.alert.callout.info .title {
-	  color: #28a745
+	  color: #17a2b8
 	}
 	.alert.flat.info {
-	  color: #285b2a;
-	  background-color: #dbefdc;
-	  border-color: #c9e7cb
+	  color: #02587f;
+	  background-color: #cdeefd;
+	  border-color: #b4e6fc
 	}
 	.alert.flat.info .title {
-	  color: #18381a
+	  color: #01354d
+	}
+	
+	.alert.callout.important {
+	  border-left-color: #17a2b8 !important
+	}
+	.alert.callout.important .title {
+	  color: #17a2b8
+	}
+	.alert.flat.important {
+	  color: #02587f;
+	  background-color: #cdeefd;
+	  border-color: #b4e6fc
+	}
+	.alert.flat.important .title {
+	  color: #01354d
 	}
   </style>
 </head>
@@ -150,7 +165,7 @@
       relativePath: true,
       auto2top: true,
       fallbackLanguages: ["zh"],
-      //coverpage: ["/","/zh/", "/en/"], 
+      //coverpage: ["/zh/", "/en/"], 
       //onlyCover: true,
       loadSidebar: true,
       loadNavbar: true,
@@ -208,6 +223,14 @@
            },
           icon: "fa fa-info-circle",
           className: "info"
+		},
+		important: {
+          label: {
+            "/zh/":"特别说明",
+            "/en/":"Important Information"
+           },
+          icon: "fa fa-info-circle",
+          className: "important"
 		}
       },
 

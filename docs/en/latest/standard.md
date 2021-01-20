@@ -2637,7 +2637,7 @@ cd /usr/local/hotdb/Install_Package/
 
 sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-vip-with-perfix=192.168.210.216/24 --install-ntpd=no --ntpdate-server-host=182.92.12.11
 
-说明：--lvs-vip-with-perfix：当前集群的VIP
+Information: --lvs-vip-with-perfix：VIP of current cluster
 
 **Step 3: adjust parameters and start a new cluster member**
 
@@ -8292,7 +8292,7 @@ MySQL [(none)]> show @@datasource;
 
 13 rows in set (0.00 sec)
 
-注：listener_status为1，代表Listener可用；listener_status为0，代表Listener不可用
+Note: when listener_status is 1, it means that the Listener is available; when listener_status is 0, it means that the Listener is not available.
 
 Please refer to the description of [linear expansion](#linear-expansion) for precautions and other supporting methods.
 
