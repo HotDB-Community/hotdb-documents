@@ -1082,7 +1082,8 @@ After successful opening the page , log in to the account to admin user interfac
 
 ##### Description of cluster deployment function
 
-**Description:** "Multiple-node" cluster deployment is taken for instance this time, to illustrate complete process and corresponding descriptions during cluster deployment.
+> !!!INFO
+> **Multiple-node** cluster deployment is taken for instance this time, to illustrate complete process and corresponding descriptions during cluster deployment.
 
 ###### Add cluster deployment task
 
@@ -1100,19 +1101,16 @@ Cluster is divided into three modes: single node, master/standby node and multip
 
 - Single-node: single-node refers to the cluster mode that there is only one compute node in the whole cluster. Installation of Keepalived or LVS and other high availability components is unnecessary.
 
-![](assets/install-and-deploy/image12.png)
+	![](assets/install-and-deploy/image12.png)
 
 - Master/standby node: master/standby mode is also known as HA mode, namely the cluster mode making high availability rebuild via Keepalived component. There are master and standby compute nodes in the cluster.
 
-![](assets/install-and-deploy/image13.png)
+	![](assets/install-and-deploy/image13.png)
 
-1. Master/standby node mode cluster requires filling in configuration information of 2 servers.
-
-2. Virtual_ipaddress of Keepalived (hereinafter referred to as VIP) is required to be the address not occupied by server or other applications and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24.
-
-3. The virtual_router_id value could be selected from [1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
-
-4. Gateway device name of master/standby Keepalived server is the NIC device name of Keepalived server, and the name must be accurately filled in, and the format is NIC name + :1 for example: "eth0:1". (gateway device name could be viewed via "ip a" command)
+	1. Master/standby node mode cluster requires filling in configuration information of 2 servers.
+	2. Virtual_ipaddress of Keepalived (hereinafter referred to as VIP) is required to be the address not occupied by server or other applications and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24.
+	3. The virtual_router_id value could be selected from [1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
+	4. Gateway device name of master/standby Keepalived server is the NIC device name of Keepalived server, and the name must be accurately filled in, and the format is NIC name + :1 for example: "eth0:1". (gateway device name could be viewed via "ip a" command)
 
 - Multi-node: multi-node mode is also known as load-balancing, which is an architecture mode controlling distribution of traffic to multiple compute nodes in the cluster via LVS component or other load-balancing components. There shall be no less than 3 or no more than 9 compute nodes in the multi-node mode.
 
@@ -1120,19 +1118,13 @@ Cluster is divided into three modes: single node, master/standby node and multip
 
 ![](assets/install-and-deploy/image15.png)
 
-1. In multi-node mode, the number of compute nodes is 3 by default, and the version of compute node must be 2.5.
-
-2. The cluster network segment is the network segment of the server where the compute node is installed, and the format is: network segment+Subnet Mask length, for example: 192.168.200.0/24.
-
-3. Communication port is the port used by various compute nodes in the cluster for communication, and it is 3326 by default. Modification is not recommended without special requirements.
-
-4. LVS is a component realizing load balance in multi-node mode, and it could also close [Install] to select other load-balancing methods to substitute LVS.
-
-5. LVS_vip is the vitual IP address configured in LVS component (hereinafter referred to as VIP), and it's required to be the address not occupied by server or other applications and on the same network segment with compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24.
-
-6. virtual_router_id value could be selected from [1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
-
-7. lvs_net_interface_name is the NIC name of LVS component server, and the name must be accurately filled in, and the format is NIC name + :2 for example: "eth0:2". (gateway device name could be viewed via "ip a" command).
+	1. In multi-node mode, the number of compute nodes is 3 by default, and the version of compute node must be 2.5.
+	2. The cluster network segment is the network segment of the server where the compute node is installed, and the format is: network segment+Subnet Mask length, for example: 192.168.200.0/24.
+	3. Communication port is the port used by various compute nodes in the cluster for communication, and it is 3326 by default. Modification is not recommended without special requirements.
+	4. LVS is a component realizing load balance in multi-node mode, and it could also close [Install] to select other load-balancing methods to substitute LVS.
+	5. LVS_vip is the vitual IP address configured in LVS component (hereinafter referred to as VIP), and it's required to be the address not occupied by server or other applications and on the same network segment with compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24.
+	6. virtual_router_id value could be selected from [1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
+	7. lvs_net_interface_name is the NIC name of LVS component server, and the name must be accurately filled in, and the format is NIC name + :2 for example: "eth0:2". (gateway device name could be viewed via "ip a" command).
 
 ###### Configuration of cluster deployment parameters
 
@@ -1143,28 +1135,17 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 ![](assets/install-and-deploy/image16.png)
 
 1. There shall be three compute nodes by default, and there shall be no less than three or no more than seven when setting.
-
 2. Cluster name will be generated automatically, and the format is: Group+four-digit random number, which could be modified as the case may be.
-
 3. Whether NDB SQL service needs to be installed or not could be viewed as the case may be, if yes, it's required that the version of compute node must be greater than or equal to V2.5.2.
-
 4. Cluster network segment is the network segment scope of the server where the compute node is, and the format is: network segment+Subnet Mask length, for example: 192.168.200.0/24
-
 5. Communication port is the port used by various compute nodes in the cluster for communication, and it is 3326 by default. Modification is not recommended without special requirements.
-
 6. Compute node name will be generated automatically, and the format is: compute node+serial No., which could be modified as the case may be.
-
-7. The login mode is the connecting mode of management platform connecting to the deployment target server; login by "password" shall be used by default. And if using "Password-free" mode, it's required that there shall be password-free channel between the management platform server and the target deployment server, and the specific implementation mode shall be referred to "[Description of implementing password-free login](#description-of-implementing-password-free-login)".
-
+7. The login mode is the connecting mode of management platform connecting to the deployment target server; login by "password" shall be used by default. And if using "Password-free" mode, it's required that there shall be password-free channel between the management platform server and the target deployment server, and the specific implementation mode shall be referred to [Description of implementing password-free login](#description-of-implementing-password-free-login).
 8. When the "Login Mode" is "password", the SSH information of the target server to be connected needing to be input shall include: SSH user, SSH password. The port number is 22 by default, which shall not be modified without special requirement.
-
-9. Heap memory is 4G by default, when the setup is bigger than 8G, it will be prompted to open "G1 garbage collector". Input range of the parameter is [1-64] G.
-
-10. Direct memory is 24G by default, the input range of parameters is [1-64] G.
-
+9. Heap memory is 4G by default, when the setup is bigger than 8G, it will be prompted to open "G1 garbage collector". Input range of the parameter is \[1-64] G.
+10. Direct memory is 24G by default, the input range of parameters is \[1-64] G.
 11. Service port and management port are "3323, 3325" by default, which could be used directly without special requirement. In case of successful modification and installation, corresponding parameters of server.xml configuration file of compute node will also be modified synchronously.
-
-12. Whether the target server is normally connected or not could be tested or whether the SSH information input is available or not could be judged by clicking [Test Connection].
+12. Whether the target server is normally connected or not could be tested or whether the SSH information input is available or not could be judged by clicking \[Test Connection].
 
 2) **ConfigDB parameters**
 
@@ -1173,29 +1154,20 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 ![](assets/install-and-deploy/image18.png)
 
 1. Selectable modes of the installed configDB instance are: single database, standby master and MGR, and MGR mode is taken for instance.
-
 2. configDB version will change due to the mode, and the version must be 5.7 if MGR mode is selected, and MySQL instance version of 5.6 or 5.7 could be selected if other modes are selected.
-
 3. When MGR mode is selected, there shall be three editable instances under MGR mode by default, which shall be no less than three or no more than nine when editing. There is no quantitative limitation if other modes are selected.
-
 4. Create high-privilege user switch, and the switch is open by default, that is, after successful installation of configDB MySQL instance, there will generate a "hotdb_root" account by default, and such account owns all privileges of MySQL instance.
-
 5. The instance port number is 3306 by default, which could be modified independently as the case may be.
-
 6. The parameters "disk device name" and "data directory" are optional, and if they are null, the program will assign a null value for "disk device name" and the default value "/data" for "data directory" automatically. As for detailed description of the parameters, please refer to " [Description of cluster deployment script parameters](#description-of-script-parameters)".
-
-7. [More Parameters] could set more optional parameters for the current deployed MySQL instance, and when the input box of the parameter is null, the Installation Script will make self-computation and processing and assign default value, and modification is not recommended without special requirement. If needing to make the modified parameters applicable to other deployed configDB instance, the option "Synchronize more parameters to other configDB instances" shall be checked.
+7. \[More Parameters] could set more optional parameters for the current deployed MySQL instance, and when the input box of the parameter is null, the Installation Script will make self-computation and processing and assign default value, and modification is not recommended without special requirement. If needing to make the modified parameters applicable to other deployed configDB instance, the option "Synchronize more parameters to other configDB instances" shall be checked.
 
 3) **LVS parameters**
 
 ![](assets/install-and-deploy/image19.png)
 
 1. Cluster deployment does not support installation of LVS related components, and if Not Install is selected, the LVS configuration parameters do not need to be filled in
-
 2. The IP filled in for "LVS_vip" is required to be the one not occupied by server or other application and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24
-
-3. "virtual_router_id value could be selected from [1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
-
+3. "virtual_router_id value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
 4. Master/standby "lvs_net_interface_name" is the gateway device name of the LVS server, and such name must be consistent with the one displayed on the real server (it could be viewed via ip a command), and the format is: gateway device name + ":2", for example: "eth0:2".
 
 4) **Data source parameters**
@@ -1209,31 +1181,18 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 ![](assets/install-and-deploy/image23.png)
 
 1. Data Source shall select the version "5.6, 5.7", which is 5.7 by default.
-
 2. Number of nodes is the number of data nodes in the cluster, which cannot exceed 128 when setting.
-
 3. Node type is the replication relation type of the associated data sources under Data Node, which includes: single database, master/slave, standby master and MGR.
-
-4. Data Source configuration information could be generated according to the optional parameter selected by clicking [Generate] button.
-
+4. Data Source configuration information could be generated according to the optional parameter selected by clicking \[Generate] button.
 5. As for "Create High-Privilege User", please refer to description about this in configDB.
-
 6. "Node Name" is the Data Node Name, which is automatically generated according to "Number of Nodes", and could be modified by the user independently.
-
 7. "Data Source Type" is generated according to the "Node Type" selected by default. for example: if the "Node Type" is "Master/Slave", then there will generate a "Active Master" and "Standby Slave" type data source records respectively under each Data Node.
-
 8. The "Install Listener" switch is ON by default, that is, install the HotDB Listener component on the server where the data source is located. The Listener can be installed to solve the performance linear expansion problem of the compute node cluster mode. If the user does not use Listener temporarily, it can be OFF manually.
-
 9. "Listener port" is the start port of Listener. The default value is 3330, which can be modified manually. To deploy a Listener on a data source server, you need to configure an unoccupied port as the Listener port. Only one Listener can be deployed through cluster deployment on a data source server, that is, the same host name can only be configured with the same Listener port. If "Install Listener" is turned off, the "Listener port" will be grayed and cannot be edited.
-
 10. "Listener service port" refers to the port where the compute node connects to the data source through the Listener. The default value is 4001. If a Listener needs to listen to multiple data sources, it needs to fill in different service ports for them. If "Install Listener" is turned off, the "Listener service port" will be grayed and cannot be edited.
-
 11. "Install HotDB Backup" switch is open by default, that is, install HotDB Backup on the server where the Data Source is.
-
 12. "Associated Management Platform IP" shall be filled in the address of the current management platform executing the cluster deployment task. This address is the management platform address which needs to be specified when starting HotDB Backup and also the service target of HotDB Backup.
-
 13. A line of data source configuration records could be added or deleted by clicking "Add" or "Delete" in operation.
-
 14. If there are too many Data Sources, "Import" mode may be considered for making configuration. Before import, download the template first, and then fill in the configuration information as instructed on the template, and then import into the management platform upon completion. In case of fill-in error, the program will display import failure and detailed failure information.
 
 5) **Time synchronization parameter setting**
@@ -1241,12 +1200,11 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 ![](assets/install-and-deploy/image24.png)
 
 1. Time synchronization is mainly used for designating NTP time service address for all servers of the cluster, so as to ensure time consistency of the servers in the cluster.
-
 2. NTP service program is installed on the server of the master compute node or the multiple nodes by default. If there has been available NTP service in the cluster already, the installation could be cancelled.
-
 3. The other server time synchronization addresses in the cluster refer to the compute node server address installed with NTP server by default. If the compute node has no NTP server installed, then the time synchronization address of the other servers shall be consistent with that of the compute node server.
 
-4. Tips: in the actual scenario, in addition to the clock synchronization configuration of software, you also need to pay attention to whether the hardware clock is synchronized. You can use hwlock to check (generally, there is a greater possibility of difference in the virtual machine environment).
+> !!!TIP
+> In the actual scenario, in addition to the clock synchronization configuration of software, you also need to pay attention to whether the hardware clock is synchronized. You can use hwlock to check (generally, there is a greater possibility of difference in the virtual machine environment).
 
 ###### Parameter checking and saving
 
