@@ -12,6 +12,7 @@
 * [ ] 检查markdown文档的格式
 * [ ] 检查markdown文档中的文档和标题链接
 * [ ] 为markdown文档中的代码块统一注明语言
+* [ ] 润色markdown文档
 * [ ] 修改docsify-glossary插件，允许不同语言的术语表（自行实现）
 * [ ] 编写脚本合并所有文档并生成pdf
 * [ ] 编写脚本从markdown生成toc

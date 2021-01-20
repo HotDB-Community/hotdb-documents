@@ -16,7 +16,8 @@ HotDB Server集群部署对服务器、操作系统、依赖软件等有一定�
 
 集群负载均衡模式部署架构示意图
 
-**注：**集群单节点模式部署架构示意图请参考"图 1-1 集群HA（主备）模式部署架构示意图"，单节点模式中无"HotDB Server （standby）、VIP"部分，其余与HA模式示意图一致。
+> !!!NOTE
+> 集群单节点模式部署架构示意图请参考"图 1-1 集群HA（主备）模式部署架构示意图"，单节点模式中无"HotDB Server （standby）、VIP"部分，其余与HA模式示意图一致。
 
 ### 环境说明
 
@@ -28,9 +29,9 @@ HotDB Server集群部署对服务器、操作系统、依赖软件等有一定�
 
 **推荐配置：**
 
-硬件环境配置推荐参考[硬件环境配置推荐文档](hardware-config-recommendation.md)
+硬件环境配置推荐参考[硬件环境配置推荐文档](hardware-config-recommendation.md)。
 
-集群运行环境配置要求与推荐参考[集群环境要求](cluster-environment-requirement.md)
+集群运行环境配置要求与推荐参考[集群环境要求](cluster-environment-requirement.md)。
 
 ## 部署
 
@@ -62,7 +63,8 @@ HotDB Server集群部署对服务器、操作系统、依赖软件等有一定�
 | 配置库  | 1    |
 | 存储节点 | 4    |
 
-**注：**各组件名称说明可参考[名词解释](glossary.md)文档
+> !!!NOTE
+> 各组件名称说明可参考[名词解释](glossary.md)文档。
 
 ##### 计算节点
 
@@ -70,17 +72,13 @@ HotDB Server集群部署对服务器、操作系统、依赖软件等有一定�
 
 若计算节点版本为V2.5.6（包含）版本以上，则需要安装JDK版本为1.8。
 
-**JDK1.7的安装**，推荐使用64位的JDK1.7_80。从JAVA 官方网站获取JDK 的 RPM 安装包，并上传至服务器也可联系热璞数据库供应商获取。
-
-- 执行下列命令，将 JDK 安装到/usr/local/目录下：
+JDK1.7的安装，推荐使用64位的JDK1.7_80。从JAVA官方网站获取JDK 的 RPM 安装包，并上传至服务器也可联系热璞数据库供应商获取。
 
 ```bash
+# 执行下列命令，将 JDK 安装到/usr/local/目录下：
 rpm -ivh jdk-7u80-linux-x64.rpm --prefix=/usr/java/
-```
 
-- 配置JDK环境变量
-
-```bash
+# 配置JDK环境变量
 # 打开并编辑/etc/profile文件：
 vi /etc/profile
 # 在文件末尾加入下列信息：
@@ -101,7 +99,7 @@ mkdir -p /usr/local/jdk8
 tar -xvf OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz -C /usr/local/jdk8
 ```
 
-1. 检测glibc
+1. **检测glibc**
 
 计算节点的服务授权需要安装加密锁的驱动包，该驱动包依赖于32位的glibc。所以在安装计算节点之前必须检测服务器中是否包含32位的glibc。检测出未安装时需要手动安装完成后再往下操作。
 
@@ -110,7 +108,7 @@ tar -xvf OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz -C /usr/local/jdk8
 rpm -q glibc |egrep 'glibc.*i.86.*'
 ```
 
-2. 安装配置库
+2. **安装配置库**
 
 配置库可与计算节点安装在同一台服务器上，也可以分开单独安装。具体步骤参照[配置库安装说明](#配置库)。
 
@@ -120,7 +118,7 @@ HotDB Server能正常启动并提供服务需要通过热璞科技正规的授�
 
 4. **安装计算节点**
 
-安装计算节点，需要解压计算节点安装包，修改计算节点配置文件server.xml，再导入配置库表结构到安装好的MySQL配置库实例中。
+安装计算节点，需要解压计算节点安装包，修改计算节点配置文件`server.xml`，再导入配置库表结构到安装好的MySQL配置库实例中。
 
 ```bash
 # 将hotdb-server-2.5.0-xxx.tar.gz二进制包上传至服务器，创建HotDB Server的安装目录，并将HotDB Server解压到安装目录。
@@ -145,11 +143,17 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,references,crea
 
 6. **修改计算节点配置文件**
 
-需要修改的配置文件server.xml在计算节点的安装目录conf下。需要设置计算节点连接配置库与端口号（若无特殊要求可直接用默认端口号）等参数。
+需要修改的配置文件`server.xml`在计算节点的安装目录`conf`下。需要设置计算节点连接配置库与端口号（若无特殊要求可直接用默认端口号）等参数。
 
-```
+编辑配置文件：
+
+```bash
 vi /usr/local/hotdb/hotdb-server/conf/server.xml
+```
 
+修改参数信息：
+
+```xml
 <property name="url">jdbc:mysql://192.168.200.1:3306/hotdb_config</property><!-- 配置库地址 -->
 <property name="username">hotdb_config</property><!-- 配置库用户名 -->
 <property name="password">hotdb_config</property><!-- 配置库密码 -->
@@ -157,11 +161,12 @@ vi /usr/local/hotdb/hotdb-server/conf/server.xml
 <property name="managerPort">3325</property><!-- 管理端口 -->
 ```
 
-**注：**若配置库与计算节点安装在同一服务器上，server.xml中的配置库IP地址也需要写具体的IP值，不可用127.0.0.1代替。
+> !!!NOTE
+> 若配置库与计算节点安装在同一服务器上，`server.xml`中的配置库IP地址也需要写具体的IP值，不可用`127.0.0.1`代替。
 
 7. **启动与停止计算节点**
 
-计算节点的启动脚本"hotdb_server"在计算节点的安装目录bin下。执行下列命令即可启动或关闭
+计算节点的启动脚本`hotdb_server`在计算节点的安装目录`bin`下。执行下列命令即可启动或关闭
 
 ```bash
 # 启动计算节点服务
@@ -177,9 +182,8 @@ kill 19833
 # 或者：sh hotdb_server stop
 ```
 
-**说明：**
-
-- 启动时若出现异常，在可安装目录logs下查看计算节点日志hotdb.log。执行日志查看命令：`tail -f /usr/local/hotdb/hotdb-server/logs/hotdb.log`。
+> !!!TIP
+- 启动时若出现异常，可在安装目录`logs`下查看计算节点日志`hotdb.log`。执行日志查看命令：`tail -f /usr/local/hotdb/hotdb-server/logs/hotdb.log`。
 - 若服务器未授权，或安装的计算节点服务未经授权许可都会导致计算节点服务启动失败。
 
 ##### 管理平台
@@ -188,7 +192,7 @@ kill 19833
 
 1. **解压管理平台安装包**
 
-将hotdb-management-2.x.x-xxx.tar.gz二进制包上传至服务器安装目录，并执行以下命令。
+将`hotdb-management-2.x.x-xxx.tar.gz`二进制包上传至服务器安装目录，并执行以下命令。
 
 ```bash
 cd /usr/local/hotdb
@@ -197,9 +201,9 @@ tar -zxvf hotdb-management-2.x.x-xxx.tar.gz
 
 2. **导入管理平台配置库表结构**
 
-管理平台配置库可与计算节点配置库共用一个MySQL实例，但生产环境中不建议共用。管理平台配置库表结构在其安装目录doc下，使用导入配置命令前需要先在配置库中创建管理平台连接配置库的账户"hotdb_cloud"。
+管理平台配置库可与计算节点配置库共用一个MySQL实例，但生产环境中不建议共用。管理平台配置库表结构在其安装目录doc下，使用导入配置命令前需要先在配置库中创建管理平台连接配置库的账户`hotdb_cloud`。
 
-```
+```sql
 # 创建hotdb_cloud账户
 create user 'hotdb_cloud'@'%' identified by 'hotdb_cloud';
 
@@ -212,14 +216,17 @@ GRANT select,insert,update,delete,create,drop,index,alter,references ON *.* TO '
 
 3. **修改管理平台配置文件**
 
-修改的配置文件在管理平台安装目录conf下为"application.properties"，主要修改管理平台对配置库的连接信息,使用端口以及管理平台的语言设置（若无特殊要求可直接用默认端口号和默认语言）。
+修改的配置文件在管理平台安装目录`conf`下为`application.properties`，主要修改管理平台对配置库的连接信息,使用端口以及管理平台的语言设置（若无特殊要求可直接用默认端口号和默认语言）。
 
-```
-# 编辑配置文件
+编辑配置文件：
+
+```bash
 vi /usr/local/hotdb/hotdb-management/conf/application.properties
+```
 
-# 修改参数信息
+修改参数信息：
 
+```properties
 # 管理平台监听端口
 server.port=3324
 # Hotdb Backup备份程序监听端口
@@ -238,7 +245,7 @@ language=English/Chinese
 
 管理平台的启动脚本hotdb_management其安装目录bin下。执行下列命令即可启动或停止管理平台服务。
 
-```
+```bash
 # 进入启动脚本目录
 cd /usr/local/hotdb/hotdb-management/bin
 
@@ -258,25 +265,26 @@ kill 6595
 
 配置库实质上是一个标准的MySQL实例，用途主要为计算节点或管理平台存储相关配置信息。目前配置库支持以单库、双主、MGR三种形式运行。
 
-**说明：**以下将以RPM方式安装一个端口号为3306的MySQL实例作为配置库。其他方式安装请参考MySQL官方安装说明。
+> !!!TIP
+> 以下将以RPM方式安装一个端口号为3306的MySQL实例作为配置库。其他方式安装请参考MySQL官方安装说明。
 
 1. **下载MySQL rpm包**
 
-```
 从MySQL的官网下载MySQL5.6.32的版本到服务器，以下版本针对centos6.x系统推荐，其他系统可参考官方说明下载相应版本。
 
-<http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-shared-compat-5.6.32-1.el6.x86_64.rpm>
-<http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-devel-5.6.32-1.el6.x86_64.rpm>
-<http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-client-5.6.32-1.el6.x86_64.rpm>
-<http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-server-5.6.32-1.el6.x86_64.rpm>
-<http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-shared-5.6.32-1.el6.x86_64.rpm>
+```
+http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-shared-compat-5.6.32-1.el6.x86_64.rpm
+http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-devel-5.6.32-1.el6.x86_64.rpm
+http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-client-5.6.32-1.el6.x86_64.rpm
+http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-server-5.6.32-1.el6.x86_64.rpm
+http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-shared-5.6.32-1.el6.x86_64.rpm
 ```
 
 2. **卸载MariaDB**
 
 若操作系统中已安装有MariaDB则需要卸载后才能安装MySQL。查询MariaDB安装情况与卸载参照如下：
 
-```
+```bash
 # 查看是否安装命令：
 rpm -qa|grep mariadb
 # mariadb-libs-5.5.44-2.el7.centos.x86_64
@@ -287,7 +295,7 @@ yum remove mariadb-libs-5.5.44-2.el7.centos.x86_64
 
 3. **安装MySQL rpm包**
 
-```
+```bash
 # 上传MySQL rpm包到服务器并执行rpm命令安装MySQL
 yum -y localinstall --nogpgcheck MySQL-server-5.6.32-1.el6.x86_64.rpm MySQL-shared-compat-5.6.32-1.el6.x86_64.rpm MySQL-devel-5.6.32-1.el6.x86_64.rpm MySQL-client-5.6.32-1.el6.x86_64.rpm MySQL-shared-5.6.32-1.el6.x86_64.rpm
 
@@ -297,19 +305,22 @@ yum -y localinstall MySQL-*.rpm
 
 4. **MySQL配置文件**
 
-将下列内容复制并替换服务器的/etc/my.cnf文件中的原有内容
+将下列内容复制并替换服务器的`/etc/my.cnf`文件中的原有内容
 
 ```ini
 [client]
 default-character-set=utf8
+
 [mysqld_safe]
 ledir=/usr/sbin
 user=mysql
 open-files-limit=8192
+
 [mysqld_multi]
 mysqld = /usr/bin/mysqld_safe
 user = root
 log = /data/multi.log
+
 [mysqld]
 #***********************************common parameters******************************
 basedir=/usr
@@ -427,20 +438,24 @@ innodb_autoinc_lock_mode=1
 innodb_stats_on_metadata=0
 innodb_lock_wait_timeout=120
 innodb_rollback_on_timeout=1
+
 [mysqldump]
 quick
 max_allowed_packet=2G
 default-character-set=utf8
+
 [mysql]
 no-auto-rehash
 prompt="//u@//h : //d //r://m://s> "
 default-character-set=utf8
 show-warnings
+
 [myisamchk]
 key_buffer=512M
 sort_buffer_size=512M
 read_buffer=8M
 write_buffer=8M
+
 [mysqlhotcopy]
 interactive-timeout
 ```
@@ -489,18 +504,23 @@ netstat -npl |grep mysql
 
 存储节点实质上是一个标准的MySQL实例，用途为整套集群提供底层业务数据的存储。安装数量与搭建复制关系根据实际业务场景而定。
 
-**说明：**存储节点的手动安装过程请参照[配置库](#配置库)说明。批量安装存储节点建议使用管理平台[单机部署](#单机部署)或[集群部署](#集群部署)功能。
+> !!!TIP
+> 存储节点的手动安装过程请参照[配置库](#配置库)说明。批量安装存储节点建议使用管理平台[单机部署](#单机部署)或[集群部署](#集群部署)功能。
 
-**物理库：**存储节点是由IP+实例端口+物理库确定的。所以在管理平台上配置的存储节点需要填写物理库名称。一般手动安装的存储节点实例需要手动创建物理库，方便后期添加到管理平台中供集群使用。
+**物理库：**
+
+存储节点是由IP+实例端口+物理库确定的。所以在管理平台上配置的存储节点需要填写物理库名称。一般手动安装的存储节点实例需要手动创建物理库，方便后期添加到管理平台中供集群使用。
 
 ```sql
 # 在存储节点实例中创建物理库
 create database db01;
 ```
 
-**连接用户：**通过手动安装部署的存储节点，还需创建用于计算节点连接存储节点实例的数据库用户。
+**连接用户：**
 
-```
+通过手动安装部署的存储节点，还需创建用于计算节点连接存储节点实例的数据库用户。
+
+```sql
 # 创建数据库用户
 #create user 'hotdb_datasource'@'%' identified by 'hotdb_datasource';
 
@@ -510,7 +530,9 @@ create database db01;
 # 注意：当存储节点的MySQL版本大于等于8.0时，需要多加一个权限"xa_recover_admin"
 ```
 
-**备份用户：**通过手动安装部署的存储节点，若需要使用数据备份功能，还需要创建用于数据备份的数据库用户。
+**备份用户：**
+
+通过手动安装部署的存储节点，若需要使用数据备份功能，还需要创建用于数据备份的数据库用户。
 
 ```sql
 # 创建数据库用户
@@ -1673,4 +1695,3 @@ sh -x hotdbinstall_v*.sh --hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-
 1. 因当前一键部署安装脚本需要执行tune脚本，tune脚本中会修改网卡相关硬件参数，可能导致网卡短暂失去响应或网卡内部重启。已知在配置了Bond的环境下，可能因为操作系统响应不够快或交换机响应不够快，导致短时间内的网络连接中断，进而导致SSH终端断连或HotDB连接中断，部分情况可通过缩短Bond 配置参数miimon=100缓解。
 
 2. 安装前建议关闭服务器自带的防火墙与selinux功能（selinux重启生效）。
-

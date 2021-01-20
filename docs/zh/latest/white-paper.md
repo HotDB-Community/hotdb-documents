@@ -404,23 +404,23 @@ HotDB Server支持对当前已配置的数据节点、存储节点、逻辑库�
 
 - 计算节点服务状态监控：客户端连接总数、计算节点线程使用情况、后端连接状态、计算节点直接内存使用率、实时数据量、计算节点堆内存使用率。
 
-    ![](assets/white-paper/image21.png)
+![](assets/white-paper/image21.png)
 
 - 计算节点吞吐量：网络流量监控、TPS、QPS、客户端操作速率、后端操作速率。
 
-    ![](assets/white-paper/image22.png)
+![](assets/white-paper/image22.png)
 
 - 计算节点服务器资源：服务器内存使用情况、服务器磁盘空间使用情况、服务器CPU负载情况、服务器CPU使用率、服务器磁盘读写情况、服务器网络流量进出情况、服务器磁盘IO带宽利用率。
 
-    ![](assets/white-paper/image23.png)
+![](assets/white-paper/image23.png)
 
 - 集群资源监控：包括存储节点及其他有SSH访问权限的服务器。监控项有：CPU使用率、内存使用情况、磁盘使用情况、网络进出流量。对超出配置的监控阈值的服务器进行预警、对无法连接的服务器进行故障显示。
 
-    ![](assets/white-paper/image24.png)
+![](assets/white-paper/image24.png)
 
 - 数据增量预测：可以根据历史数据记录，提前规划存储节点/配置库数据容量。
 
-    ![](assets/white-paper/image25.png)
+![](assets/white-paper/image25.png)
 
 #### JOIN关系分析
 
@@ -434,19 +434,19 @@ HotDB Server支持对当前已配置的数据节点、存储节点、逻辑库�
 
 - 集群数据量报表：集群数据量变化趋势图、集群数据量分布图、逻辑库数据量分布图、表数据量分布图。
 
-    ![](assets/white-paper/image27.png)
+![](assets/white-paper/image27.png)
 
 - 计算节点吞吐量报表：计算节点吞吐量变化趋势图、计算节点吞吐类型对比图、逻辑库吞吐量对比图、表吞吐量对比图。
 
-    ![](assets/white-paper/image28.png)
+![](assets/white-paper/image28.png)
 
 - 数据节点吞吐量报表：数据节点吞吐总量对比图、数据节点吞吐量变化趋势、集群吞吐类型对比图、逻辑库吞吐量对比图、表吞吐量对比图。
 
-    ![](assets/white-paper/image29.png)
+![](assets/white-paper/image29.png)
 
 - 计算节点连接报表：总连接数、连接时长最长的连接、操作次数最多的连接、连接次数最多的连接、连接总时长占比、连接总次数占比、操作次数占比、前端应用IP连接分布图、连接用户分布图、逻辑库分布图。
 
-    ![](assets/white-paper/image30.png)
+![](assets/white-paper/image30.png)
 
 #### 表结构与索引检测
 
