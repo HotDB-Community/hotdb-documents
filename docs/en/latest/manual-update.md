@@ -44,15 +44,15 @@ Execute Change SQL Statement according to the specific upgrade script content
 
 Special instructions:
 
--   ConfigDB upgrade script can be obtained from product supplier.
+- ConfigDB upgrade script can be obtained from product supplier.
 
--   Note to distinguish SQL for management platform ConfigDB upgrade and SQL for compute node ConfigDB upgrade when copying upgrade script content.
+- Note to distinguish SQL for management platform ConfigDB upgrade and SQL for compute node ConfigDB upgrade when copying upgrade script content.
 
--   If the management platform is upgraded across versions (for example, 2.4.9->2.5.3), the ConfigDB script needs to be executed successively in version order, and disrupting the order or leaving out the upgraded content of any version is not allowed.
+- If the management platform is upgraded across versions (for example, 2.4.9->2.5.3), the ConfigDB script needs to be executed successively in version order, and disrupting the order or leaving out the upgraded content of any version is not allowed.
 
--   All upgrade SQL statements must be executed successfully without errors when upgrading ConfigDB.
+- All upgrade SQL statements must be executed successfully without errors when upgrading ConfigDB.
 
--   If the upgrade is executed by copying and pasting the content into ssh terminal, please note that the character set of terminal is utf8.
+- If the upgrade is executed by copying and pasting the content into ssh terminal, please note that the character set of terminal is utf8.
 
 #### Handling of ConfigDB Upgrade Abnormality
 
@@ -60,17 +60,17 @@ Special instructions:
 
 1. Statement error in ConfigDB upgrade SQL execution
 
--   Save the SQL error message of execution, and provide ConfigDB upgrade related information including but not limited to: current version of ConfigDB and its upgrade target version, upgrade SQL statement of execution, ConfigDB backup file, etc. for product supplier for analysis and solution.
+- Save the SQL error message of execution, and provide ConfigDB upgrade related information including but not limited to: current version of ConfigDB and its upgrade target version, upgrade SQL statement of execution, ConfigDB backup file, etc. for product supplier for analysis and solution.
 
--   Restore ConfigDB with the file backed up in the previous step. Please stop management platform service program during the restoring
+- Restore ConfigDB with the file backed up in the previous step. Please stop management platform service program during the restoring
 
 2. Exception for non-SQL statement error
 
--   Analyze the causes and solutions of the error according to error message.
+- Analyze the causes and solutions of the error according to error message.
 
--   Restore ConfigDB with the file backed up in the previous step. Please stop management platform service program during the restoring.
+- Restore ConfigDB with the file backed up in the previous step. Please stop management platform service program during the restoring.
 
--   Re-execute the upgrade after problem is repaired and ConfigDB is restored successfully.
+- Re-execute the upgrade after problem is repaired and ConfigDB is restored successfully.
 
 ### Replace Program Package
 
@@ -180,13 +180,13 @@ JAVA_VERSION="1.8.0_252"
 
 1. Management platform log error, and service cannot be started
 
--   Rename the new version directory, and rename the old directory to otdb-management.
+- Rename the new version directory, and rename the old directory to otdb-management.
 
--   Restore the ConfigDB with ConfigDB file previously backed up
+- Restore the ConfigDB with ConfigDB file previously backed up
 
--   Restart management platform service in old version
+- Restart management platform service in old version
 
--   Analyze the start failure, and re-upgrade it with the above steps after solving it.
+- Analyze the start failure, and re-upgrade it with the above steps after solving it.
 
 ## Compute node manual upgrade
 
@@ -460,13 +460,13 @@ In addition to the values of compute node configuration in old version needing t
 
 Compute node log error, and service cannot be started
 
--   Rename the new version directory, and rename the old directory to hotdb-server.
+- Rename the new version directory, and rename the old directory to hotdb-server.
 
--   Restore the ConfigDB with ConfigDB file previously backed up
+- Restore the ConfigDB with ConfigDB file previously backed up
 
--   Restart compute node service in old version directory
+- Restart compute node service in old version directory
 
--   Analyze the start failure, and re-upgrade it with the above steps after solving it.
+- Analyze the start failure, and re-upgrade it with the above steps after solving it.
 
 ### Master/slave node cluster upgrade with service stopped
 
@@ -538,11 +538,11 @@ Version upgrade of master/slave compute node in master/slave node cluster mode w
 
 Upgrade without service stopped of master/slave node cluster mode shall meet the following conditions, or compute node version can only be upgraded with service stopped.
 
--   SQL for Compute node ConfigDB upgrade does not contain any statement for "alter table" modifying existing column(except for modifying the length or range of the added column).
+- SQL for Compute node ConfigDB upgrade does not contain any statement for "alter table" modifying existing column(except for modifying the length or range of the added column).
 
--   SQL for Compute node ConfigDB upgrade does not contain any statement of "drop table".
+- SQL for Compute node ConfigDB upgrade does not contain any statement of "drop table".
 
--   SQL for Compute node ConfigDB upgrade does not contain any statement of "update\\delete" existing data.
+- SQL for Compute node ConfigDB upgrade does not contain any statement of "update\\delete" existing data.
 
 #### High Availability Switch Check
 
@@ -556,11 +556,11 @@ High availability switch is required when compute node is upgraded. To ensure th
 
 **2. Master/slave compute node configuration file server.xml configuration is correct**
 
--   **Current master compute node server.xml configuration**
+- **Current master compute node server.xml configuration**
 
 > <property name="haState">master</property>< HA role, master node: master, slave node: backup><property name="haNodeHost"></property><HA role, other nodes IP:PORT>
 
--   **Current slave compute node server.xml configuration**
+- **Current slave compute node server.xml configuration**
 
 > <property name="haState">backup</property>< HA role, master node: master, slave node: backup>
 >
@@ -570,7 +570,7 @@ High availability switch is required when compute node is upgraded. To ensure th
 
 **3. Master/slave keepalived configuration file keepalived.conf configuration is correct**
 
--   **Current master compute node keepalived.conf configuration**
+- **Current master compute node keepalived.conf configuration**
 
 > ! Configuration File for keepalived
 >
@@ -648,7 +648,7 @@ High availability switch is required when compute node is upgraded. To ensure th
 >
 > }
 >
-># be careful in red hat
+> # be careful in red hat
 >
 > track_interface {
 >
@@ -674,7 +674,7 @@ High availability switch is required when compute node is upgraded. To ensure th
 >
 > }
 
--   **Current slave compute node keepalived.conf configuration**
+- **Current slave compute node keepalived.conf configuration**
 
 > ! Configuration File for keepalived
 >
@@ -750,7 +750,7 @@ High availability switch is required when compute node is upgraded. To ensure th
 >
 > }
 >
-># be careful in red hat
+> # be careful in red hat
 >
 > track_interface {
 >
@@ -778,17 +778,17 @@ High availability switch is required when compute node is upgraded. To ensure th
 
 **4. Configuration check is normal**
 
--   Configuration check is normal. You can check whether ConfigDB configuration is correct in the menu "Configuration->Configuration Check" in management platform
+- Configuration check is normal. You can check whether ConfigDB configuration is correct in the menu "Configuration->Configuration Check" in management platform
 
--   Compute node memory information is consistent with ConfigDB. You can execute the command reload @@config through "dynamic loading" function of management platform or logging in to manager port (3325 by default) to ensure the consistency of the information
+- Compute node memory information is consistent with ConfigDB. You can execute the command reload @@config through "dynamic loading" function of management platform or logging in to manager port (3325 by default) to ensure the consistency of the information
 
 **5. Keepalived is running normally**
 
--   Master/slave keepalived is running normally. You can inquire it in master/slave compute node server through command "service keepalived status"
+- Master/slave keepalived is running normally. You can inquire it in master/slave compute node server through command "service keepalived status"
 
 **6. The VIP of Keepalived is on current master compute node**
 
--   Execute the "ip addr" on current master compute node server, and the display contains the virtual IP address of keepalived configuration)
+- Execute the "ip addr" on current master compute node server, and the display contains the virtual IP address of keepalived configuration)
 
 #### ConfigDB Upgrade
 
@@ -1194,11 +1194,11 @@ notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh
 
 ##### Special instructions
 
--   After the completion of upgrade without service stopped, the virtual IP of keepalived will be drifted. The master/slave compute node roles in the cluster will be swapped.
+- After the completion of upgrade without service stopped, the virtual IP of keepalived will be drifted. The master/slave compute node roles in the cluster will be swapped.
 
--   If master/slave compute node roles need to be restored to their state before upgrade, you can swap compute node roles again through "high availability switch" function provided by management platform or through manual switch (directly stop the simulated failover of current primary service).
+- If master/slave compute node roles need to be restored to their state before upgrade, you can swap compute node roles again through "high availability switch" function provided by management platform or through manual switch (directly stop the simulated failover of current primary service).
 
--   A high availability reconstruction must be executed after completion of switch, through "high availability reconstruction" function provided by management platform or by reference to "manually execute high availability environment reconstruction".
+- A high availability reconstruction must be executed after completion of switch, through "high availability reconstruction" function provided by management platform or by reference to "manually execute high availability environment reconstruction".
 
 ### Multi-node cluster upgrade with service stopped
 
@@ -1238,15 +1238,15 @@ Upgrade of version of three compute nodes in multi-node cluster mode will be ins
 
 Upgrade without service stopped of multi-node cluster mode shall meet the following conditions, or compute node version can only be upgraded with service stopped.
 
--   The upgrade SQL for Compute node ConfigDB does not contain any statement of "alter table" modifying existing column (except for statements of modifying the length or range of the added column).
+- The upgrade SQL for Compute node ConfigDB does not contain any statement of "alter table" modifying existing column (except for statements of modifying the length or range of the added column).
 
--   The upgrade SQL of Compute node ConfigDB does not contain any statement "drop table".
+- The upgrade SQL of Compute node ConfigDB does not contain any statement "drop table".
 
--   The upgrade SQL for Compute node ConfigDB does not contain any statement of "update\\delete" existing data.
+- The upgrade SQL for Compute node ConfigDB does not contain any statement of "update\\delete" existing data.
 
--   The compute node version before upgrade shall be V2.5.1 and above.
+- The compute node version before upgrade shall be V2.5.1 and above.
 
--   If the compute node version before upgrade is V2.5.1 or V2.5.3, the date in the version must be greater than or equal to 20190821 (August 21, 2019).
+- If the compute node version before upgrade is V2.5.1 or V2.5.3, the date in the version must be greater than or equal to 20190821 (August 21, 2019).
 
 **Upgrade Instructions:**
 
@@ -1409,3 +1409,4 @@ port=3330
 # sh hotdb_listener start
 
 **Special instruction:** Listener upgrade on other data source servers only needs to follow the above process.
+
