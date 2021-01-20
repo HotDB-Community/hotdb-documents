@@ -546,11 +546,10 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,process,referen
 
 备份程序（HotDB Backup）为热璞科技自主研发的分布式数据库备份工具。通常部署在集群的存储节点服务器上，监听来自管理平台的数据备份请求。一台存储节点服务器只需部署一个备份程序即可。
 
-**使用须知：**
-
-- 仅支持备份MySQL 5.6及以上版本的数据。
-- 被备份的存储节点实例必须开启binlog。
-- HotDB Management所在的服务器，必须安装MySQL Client,否则会影响备份。
+> !!!NOTE <!--使用须知-->
+> - 仅支持备份MySQL 5.6及以上版本的数据。
+> - 被备份的存储节点实例必须开启binlog。
+> - HotDB Management所在的服务器，必须安装MySQL Client,否则会影响备份。
 
 1. **解压备份程序安装包**
 
@@ -570,17 +569,16 @@ cd /usr/local/hotdb/hotdb_backup
 sh bin/hotdb_backup start -h 192.168.220.104 -p 3322
 ```
 
--h后面加管理平台服务器的ip，-p后面加管理平台监听备份程序端口（一般为3322,具体可在管理平台配置文件application.properties中查看参数server.backup.port）。
+`-h`后面加管理平台服务器的ip，`-p`后面加管理平台监听备份程序端口（一般为`3322`,具体可在管理平台配置文件`application.properties`中查看参数`server.backup.port`）。
 
 启动成功后会打印以下日志
 
-```
+```log
 INFO: Start HotDB-backup ...
 INFO: HotDB-backup start successed.
 ```
 
 停止备份服务程序
-
 
 ```bash
 sh bin/hotdb_backup stop
@@ -588,19 +586,23 @@ sh bin/hotdb_backup stop
 
 关闭成功后会打印以下日志
 
-```
+```log
 INFO: Stopping HotDB-backup ...
 INFO: HotDB-backup stopped success.
 ```
 
 查看HotDB-Backup运行状态
 
-```
+```bash
 sh bin/hotdb_backup status
+```
 
-**已运行提示：**INFO: HotDB-backup service already running (PID: 11709).
+```log
+# 已运行提示
+INFO: HotDB-backup service already running (PID: 11709).
 
-**未运行提示：**INFO: HotDB-backup service not running.
+# 未运行提示
+INFO: HotDB-backup service not running.
 ```
 
 查看HotDB-Backup日志
@@ -612,10 +614,10 @@ sh bin/hotdb_backup status
 HotDB Backup常见日志
 
 ```
-Start backup #备份任务发起
-Backup is stopped #备份任务结束
-Connected to server successfully! #备份程序与HotDB Management正常建立连接
-Got a quit signal from user, will quit after backup is finished #备份程序正常退出
+Start backup # 备份任务发起
+Backup is stopped # 备份任务结束
+Connected to server successfully! # 备份程序与HotDB Management正常建立连接
+Got a quit signal from user, will quit after backup is finished # 备份程序正常退出
 ```
 
 #### HA（主备）模式集群部署
@@ -624,36 +626,28 @@ Got a quit signal from user, will quit after backup is finished #备份程序正
 
 **部署环境：**
 
-
 |           项目            |                  名称                  |
 |-------------------------|--------------------------------------|
 | 服务器属性                   | 物理机                                  |
 | 操作系统                    | CentOS Linux release 7.6.1810 (Core) |
-| MySQL版本    MySQL 5.7.25 |                                      |
-
-JDK          JDK1.7_80
-
------------- --------------------------------------
+| MySQL版本    | MySQL 5.7.25                                      |
+|JDK          | JDK1.7_80|
 
 **部署组件：**
-
--------------- --------------
 
 |     组件名称      | 安装数量 |
 |---------------|------|
 | 计算节点          | 2    |
 | Keepalived    | 2    |
 | 管理平台          | 1    |
-| 配置库         1 |      |
-| 存储节点       4  |      |
+| 配置库          | 1     |
+| 存储节点         | 4     |
 
--------------- --------------
+> !!!NOTE
+> 各组件名称说明可参考[名词解释文档](glossary.md)
 
-**注：**各组件名称说明可参考[名词解释文档](glossary.md)
-
-**特殊说明：**
-
-本章主要介绍在HA集群模式下的计算节点server.xml配置、Keepalived安装与配置、启动说明、高可用切换等。计算节点、管理平台、配置库、存储节点的安装步骤本章不再赘述，具体参照上一章：[单节点模式集群部署](#单节点模式集群部署)。
+> !!!INFO
+> 本章主要介绍在HA集群模式下的计算节点server.xml配置、Keepalived安装与配置、启动说明、高可用切换等。计算节点、管理平台、配置库、存储节点的安装步骤本章不再赘述，具体参照上一章：[单节点模式集群部署](#单节点模式集群部署)。
 
 **部署规划：**
 
@@ -666,7 +660,8 @@ JDK          JDK1.7_80
 
 HA计算节点部署示意图
 
-**注：**主备计算节点服务器上再分别安装keepalived程序，选用VIP为：192.168.200.140
+> !!!NOTE
+> 主备计算节点服务器上再分别安装keepalived程序，选用VIP为：192.168.200.140
 
 ##### 计算节点
 
@@ -676,9 +671,9 @@ HA计算节点部署示意图
 
 2. **修改主备计算节点配置文件**
 
-部署好的主备计算节点需要修改对应的配置文件server.xml，具体修改如下所示：
+部署好的主备计算节点需要修改对应的配置文件`server.xml`，具体修改如下所示：
 
-主计算节点192.168.200.190上server.xml配置修改
+主计算节点192.168.200.190上`server.xml`配置修改
 
 ```xml
 <property name="haState">master</property>< HA 角色，主节点：master，备节点：backup>
@@ -694,11 +689,10 @@ HA计算节点部署示意图
 <property name="VIP">192.168.200.140</property><虚拟IP地址>
 ```
 
-**说明：**
-
-- 配置文件中的haNodeHost为主计算节点的IP+管理端口，只需在备计算节点上配置该参数即可。
-- 启动主备服务时，如果haState的角色为master则会开启服务端口（3323）、管理端口（3325）；如果是 Backup 角色，则只会开启管理端口（3325）。
-- 当master服务故障后，keepalived 检测到服务不可用，会自动切换 vip 到 backup 所在的服务器，并启用 backup 的服务端口（3323），保证服务不中断。
+> !!!INFO
+> - 配置文件中的haNodeHost为主计算节点的IP+管理端口，只需在备计算节点上配置该参数即可。
+> - 启动主备服务时，如果haState的角色为master则会开启服务端口（3323）、管理端口（3325）；如果是 Backup 角色，则只会开启管理端口（3325）。
+> - 当master服务故障后，keepalived 检测到服务不可用，会自动切换 vip 到 backup 所在的服务器，并启用 backup 的服务端口（3323），保证服务不中断。
 
 ##### Keepalived
 
@@ -719,7 +713,7 @@ service keepalived status
 
 2. **修改keepalived配置文件**
 
-Keepalived配置文件默认存放在/etc目录下为"keepalived.conf"，将下列实例内容复制替换到对应的keepalived配置文件中，并按照标红位置进行实际修改（标准的HotDB Server 安装包中对应的conf 目录下也有keepalived主备模式的配置文件，也可将其直接复制到/etc目录下，进行自定义修改）。
+Keepalived配置文件默认存放在`/etc`目录下为`keepalived.conf`，将下列实例内容复制替换到对应的keepalived配置文件中，并按照标红位置进行实际修改（标准的HotDB Server 安装包中对应的`conf`目录下也有keepalived主备模式的配置文件，也可将其直接复制到`/etc`目录下，进行自定义修改）。
 
 主计算节点：192.168.200.190的keepalived配置信息：
 
@@ -832,7 +826,8 @@ vrrp_instance VI_1 {
 }
 ```
 
-**注：**主备 keepalived 的相关配置也可参考计算节点安装目录 conf 目录下的keepalived.conf.master, keepalived.conf.backup 脚本，红色区域需要根据实际信息修改其他使用默认即可。
+> !!!NOTE
+> 主备 keepalived 的相关配置也可参考计算节点安装目录 conf 目录下的keepalived.conf.master, keepalived.conf.backup 脚本，红色区域需要根据实际信息修改其他使用默认即可。
 
 **关于自定义修改内容说明：**
 
@@ -844,11 +839,9 @@ vrrp_instance VI_1 {
 - Label：给本地网卡起一个虚拟名称，用于绑定虚拟网卡 IP ，例如把虚拟网卡 eth0:1 绑定到本地网卡 eth0 上
 - Script：判断服务是否正常的脚本路径，通常存放在 HotDB Server 的 bin目录下， 例如：/usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh，该脚本可检查 HotDB Serve 主备服务的进程是否存在，主备 HotDB Serve 的 3323端口和 3325 端口的状态是否正常
 
-2. **启动说明**
+3. **启动说明**
 
-由于两台机器上的 HotDB Server 互为主备关系，在服务启动的时，需要注
-
-意启动的顺序问题，如下为标准启动顺序：
+由于两台机器上的HotDB Server互为主备关系，在服务启动的时，需要注意启动的顺序问题，如下为标准启动顺序：
 
 先启动主（192.168.200.190）的keepalived，**待ping通vip**后再启动主计算节点服务
 
@@ -881,7 +874,7 @@ sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
 
 ![](assets/install-and-deploy/image7.png)
 
-Keepalived 的 VIP 此时已在 192.168.200.191 服务器上
+Keepalived 的 VIP 此时已在192.168.200.191服务器上
 
 ![](assets/install-and-deploy/image8.png)
 
@@ -913,40 +906,41 @@ sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --instal
 
 - 登录备计算节点服务器，进入一键部署默认安装目录执行：
 
-```
-sh hotdbinsta
-l_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --ntpdate-server-host=主计算节点服务器IP地址
+```bash
+sh hotdbinstal_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --ntpdate-server-host=主计算节点服务器IP地址
 ```
 
 3. **单独部署NDB SQL过程说明**
 
 若已安装好计算节点，但后期需要追加安装NDB SQL服务则可通过脚本单独部署NDB SQL方式进行操作，或通过管理平台"[单机部署](#单机部署安装ndb-sql)"功能实现。本示例以单节点集群为例说明后期追加部署NDB SQL服务的操作。
 
-- 登录计算节点服务器，进入一键部署资源包目录Install_Package下执行安装命令。
-
-**示例：**
+登录计算节点服务器，进入一键部署资源包目录Install_Package下执行安装命令。
 
 ```bash
 sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
 ```
 
-**注意：**
-
-- 安装NDB SQL指定服务器时间同步地址时使用的时间同步参数需要与上一次安装计算节点时保持一致
-
-即当时使用的是`ntpdate-server-ip`还是`ntpdate-server-host`参数，两次必须一致
-
-- 时间同步地址参数值需与上一次安装计算节点时使用的时间同步地址一致，如果集群内已有NTP服务则参数值应该是NTP服务所在服务器的IP地址。
+> !!!NOTE
+> - 安装NDB SQL指定服务器时间同步地址时使用的时间同步参数需要与上一次安装计算节点时保持一致，即当时使用的是`ntpdate-server-ip`还是`ntpdate-server-host`参数，两次必须一致
+> - 时间同步地址参数值需与上一次安装计算节点时使用的时间同步地址一致，如果集群内已有NTP服务则参数值应该是NTP服务所在服务器的IP地址。
 
 4. **NDB SQL配置说明**
 
-- NDB SQL服务安装完成后需要在对应的计算节点安装conf目录下修改server.xml文件配置。需将配置文件中的ndbSqlMode修改为local。具体如下所示：
+NDB SQL服务安装完成后需要在对应的计算节点安装conf目录下修改server.xml文件配置。需将配置文件中的ndbSqlMode修改为local。具体如下所示：
 
-![](assets/install-and-deploy/image9.png)
+```xml
+<property name="ndbSqlMode">none</property><!-- NDB执行模式：none：禁用NDB功能，为默认值；local：NDB SQL服务器和hotdb服务器在同一计算机上(NDB mode. Disable(by default): none; NDB and HotDB in same machine: local) -->
+<property name="ndbSqlVersion">5.7.24</property><!-- NDB SQL版本号(Version of NDB) -->
+<property name="ndbVersion">7.5.12</property><!-- NDB引擎版本号(Engine verion of NDB) -->
+<property name="ndbSqlAddr">localhost:3329</property><!-- NDB SQL端IP地址(NDB SQL node address) -->
+<property name="ndbSqlUser">root</property><!-- NDB SQL前端用户名(NDB SQL node user name) -->
+<property name="ndbSqlPass">root</property><!-- NDB SQL前端密码(NDB SQL node password) -->
+<property name="ndbSqlDataAddr">127.0.0.1:3327</property><!-- 接收NDB SQL连接的IP地址和端口(NDB Data node address) -->
+```
 
 5. **NDB SQL启动关闭说明**
 
-- NDB SQL服务不需要单独启动关闭，启动计算节点时会同时启动NDB SQL服务，关闭计算节点时也会同步关闭NDB SQL服务。
+NDB SQL服务不需要单独启动关闭，启动计算节点时会同时启动NDB SQL服务，关闭计算节点时也会同步关闭NDB SQL服务。
 
 #### HotDB Listener组件
 
@@ -989,7 +983,7 @@ vi hotdb_listener
 
 ```bash
 cd /usr/local/hotdb/hotdb-listener/conf
-#vi config.properties
+vi config.properties
 ```
 
 host默认0.0.0.0，无需修改；port默认3330，不建议修改，除非被占用。
@@ -998,18 +992,16 @@ host默认0.0.0.0，无需修改；port默认3330，不建议修改，除非被�
 
 执行下列命令即可启动Listener：
 
-```
-#cd /usr/local/hotdb/hotdb-listener/bin
-
-#sh hotdb_listener start
+```bash
+cd /usr/local/hotdb/hotdb-listener/bin
+sh hotdb_listener start
 ```
 
 启动成功窗口会提示"HotDB-Listener start successed."
 
 除了start外，还有其他参数可以使用，使用方法如下：
 
-
-```
+```bash
 sh hotdb_listener
 # Usage: sh hotdb_listener [start|stop|restart]
 # example:
@@ -1025,7 +1017,7 @@ tailf listener.log
 
 ### 自动部署
 
-自动部署为管理平台在界面中支持自动化安装部署计算节点集群的功能。目前管理平台从V2.5.0及以后拥有[集群部署](#集群部署)、[单机部署](#单机部署)两个自动化安装功能。[集群部署](#集群部署)适合从0开始一次性部署整套计算节点集群的场景，[单机部署](#单机部署)适合再已部署好的集群上新增个别集群组件的场景。
+自动部署为管理平台在界面中支持自动化安装部署计算节点集群的功能。目前管理平台从V2.5.0及以后拥有[集群部署](#集群部署)、[单机部署](#单机部署)两个自动化安装功能。**集群部署**适合从0开始一次性部署整套计算节点集群的场景，**单机部署**适合再已部署好的集群上新增个别集群组件的场景。
 
 #### 集群部署
 
@@ -1033,7 +1025,7 @@ tailf listener.log
 
 ##### 术语说明
 
-集群部署相关术语请参照[名词解释文档](glossary.md)。
+集群部署相关术语请参照[名词解释](glossary.md)文档。
 
 ##### 功能使用须知
 
@@ -1044,14 +1036,16 @@ tailf listener.log
 - 服务器的SSH信息须使用root权限的用户进行配置；
 - 添加的服务器要求已配置可用的yum源或安装脚本目录下有对应操作系统版本的iso镜像文件；
 - 安装部署包名称默认以`auto_hotdbinstall`开头，请不要随意更改服务器下部署包名称；
-- 程序默认上传部署包存放路径为 /usr/local/hotdb ；
+- 程序默认上传部署包存放路径为`/usr/local/hotdb`；
 - MySQL默认可安装5.6.41、5.7.25、8.0.16版本，如需要安装其他版本，自行在安装目录下替换相关安装包即可；
-- 管理平台在部署集群前需确认在管理平台服务器以下任一目录中存在集群安装部署包资源。集群部署时会在以下目录寻找资源包上传至目标服务器/usr/local/hotdb路径下。（查找优先级按以下为准）
-  * /opt
-  * /opt/hotdb
-  * /usr/local
-  * /usr/local/hotdb
-- 一键部署安装包下载过程中可能存在一些损坏，此时进行部署可能导致部署出错。故在管理平台版本为2.5.6.1（包含）版本以上，增加了完整性校验功能，对上传的安装包进行MD5值校验。即在上传部署安装包时，需同步上传当前安装包对应的MD5值文件至服务器相同目录下，如下图：![](assets/install-and-deploy/image10.png)
+- 管理平台在部署集群前需确认在管理平台服务器以下任一目录中存在集群安装部署包资源。集群部署时会在以下目录寻找资源包上传至目标服务器`/usr/local/hotdb`路径下。（查找优先级按以下为准）
+  - `opt`
+  - `opt/hotdb`
+  - `usr/local`
+  - `usr/local/hotdb`
+- 一键部署安装包下载过程中可能存在一些损坏，此时进行部署可能导致部署出错。故在管理平台版本为2.5.6.1（包含）版本以上，增加了完整性校验功能，对上传的安装包进行MD5值校验。即在上传部署安装包时，需同步上传当前安装包对应的MD5值文件至服务器相同目录下，如下图：
+
+![](assets/install-and-deploy/image10.png)
 
 ##### 部署管理平台
 

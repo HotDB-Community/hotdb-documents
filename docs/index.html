@@ -116,6 +116,21 @@
     .tooltip{
       
     }
+	
+	.alert.callout.info {
+	  border-left-color: #28a745 !important
+	}
+	.alert.callout.info .title {
+	  color: #28a745
+	}
+	.alert.flat.info {
+	  color: #285b2a;
+	  background-color: #dbefdc;
+	  border-color: #c9e7cb
+	}
+	.alert.flat.info .title {
+	  color: #18381a
+	}
   </style>
 </head>
 <body>
@@ -186,12 +201,14 @@
             "/en/":"Warning"
           }
         },
-        attention: {
-          label:{
-            "/zh/":"当心",
-            "/en/":"Attention"
-          }
-        }
+        info: {
+          label: {
+            "/zh/":"说明",
+            "/en/":"Information"
+           },
+          icon: "fa fa-info-circle",
+          className: "info"
+		}
       },
 
       topbar: {
