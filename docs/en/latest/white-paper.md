@@ -407,23 +407,23 @@ The management platform supports monitoring of compute node service status, comp
 
 - Monitoring of compute node service status: total number of client connections, usage of compute node threads, backend connection status, usage rate of compute node direct memory, real-time data volume, and usage rate of compute node heap memory.
 
-    ![](assets/white-paper/image21.png)
+![](assets/white-paper/image21.png)
 
 - Compute node throughput: network traffic monitoring, TPS, QPS, client operation rate, back-end operation rate.
 
-    ![](assets/white-paper/image22.png)
+![](assets/white-paper/image22.png)
 
 - Compute node server resources: server memory usage, server disk space usage, server CPU load, server CPU usage, server disk read/write, server network traffic in/out, and server disk IO bandwidth utilization.
 
-    ![](assets/white-paper/image23.png)
+![](assets/white-paper/image23.png)
 
 - Cluster resources monitoring: including data sources and other servers with SSH access privileges. Monitoring items include: CPU usage, memory usage, disk usage, network traffic in/out. Alert the server that exceeds the configured monitoring threshold and display the failure of the server that cannot be connected.
 
-    ![](assets/white-paper/image24.png)
+![](assets/white-paper/image24.png)
 
 - Data increment prediction: data capacity of data source/ ConfigDB can be planned in advance according to history data amount.
 
-    ![](assets/white-paper/image25.png)
+![](assets/white-paper/image25.png)
 
 #### JOIN correlation analysis
 
@@ -437,19 +437,19 @@ It supports report display of cluster data volume, compute node throughput, data
 
 - Cluster data volume report: trend chart of cluster data volume change, distribution chart of cluster data volume, distribution chart of LogicDB data volume, distribution chart of table data volume.
 
-    ![](assets/white-paper/image27.png)
+![](assets/white-paper/image27.png)
 
 - Compute node throughput report: compute node throughput change trend chart, compute node throughput type comparison chart, LogicDB throughput comparison chart, table throughput comparison chart.
 
-    ![](assets/white-paper/image28.png)
+![](assets/white-paper/image28.png)
 
 - Data node throughput report: comparison chart of total throughput of data nodes, trend chart of throughput change of data nodes, comparison chart of cluster throughput types, comparison chart of LogicDB throughput, and comparison chart of table throughput.
 
-    ![](assets/white-paper/image29.png)
+![](assets/white-paper/image29.png)
 
 - Compute node connection report: total connections, the connection with the longest connection time, the connection with the most operation times, the connection with the most connection times, the proportion of total connection time, the proportion of total connection times, the proportion of operation times, the distribution diagram of front-end application IP connection, the distribution diagram of connection users, and the distribution diagram of LogicDB.
 
-    ![](assets/white-paper/image30.png)
+![](assets/white-paper/image30.png)
 
 #### Table structure＆index detection
 
