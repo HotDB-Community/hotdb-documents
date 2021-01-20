@@ -2,7 +2,7 @@
 
 ## Introduction
 
-To better help users to upgrade the version of management platform and compute node, the Distributed Transaction Database HotDB Server [Manual Upgrade] Function Manual is hereby edited. The manual aims to help users to manually and independently complete the basic upgrade of the management platform and compute node through the operation instructions in this document, and provides suggestions for handling the abnormality of version upgrade.
+To better help users to upgrade the version of management platform and compute node, this document is hereby edited. This document aims to help users to manually and independently complete the basic upgrade of the management platform and compute node through the operation instructions in this document, and provides suggestions for handling the abnormality of version upgrade.
 
 This manual is suitable for upgrade of any version of management platform or compute node. When part of version upgrade requires special handling, corresponding instructions will be given in the document, which should be paid attention to when upgrading. Finally, it is suggested that you upgrade the management platform or compute node in strict accordance with the operation instructions in the manual.
 
