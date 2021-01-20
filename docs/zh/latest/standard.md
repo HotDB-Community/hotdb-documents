@@ -252,6 +252,7 @@ set session sql_log_bin=1;
 ```
 
 > !!!NOTE
+> 
 > 如果存储节点是MySQL8.0版本，授权语句需要增加XA_RECOVER_ADMIN权限。
 
 `hotdb_datasource`账户是HotDB连接各个MySQL实例的唯一账户，所有添加的平台用户都是通过映射到`hotdb_datasource`账户来连接MySQL实例，各平台用户只作用在前端业务连接和用户访问控制。
@@ -281,6 +282,7 @@ show databases;
 登录管理平台页面，选择"配置"->"数据库用户管理"，选择root用户，并点击"编辑"按钮。跳转到"编辑用户权限"页面，在下拉框中勾选创建好的逻辑库"test"，点击"保存"，权限赋予成功。
 
 > !!!NOTE
+> 
 > 管理平台安装后，系统默认创建一个平台用户root（密码root）。
 > 
 > ![](assets/standard/image9.png)
@@ -838,6 +840,7 @@ ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting trans
 ```
 
 > !!!NOTE
+> 
 > 由于MySQL5.7及以上版本，事务中出现死锁回滚后，不会立即开启新事务。参考官方BUG链接：<https://bugs.mysql.com/bug.php?id=98133>。HotDB Server针对上述BUG做了兼容处理：对锁超时、死锁检测、后端连接断开，MySQL5.7及以上版本会根据前端连接autocommit判断是否要开启新事务。
 
 ### SQL报错日志记录
@@ -897,6 +900,7 @@ ERROR 1064 (HY000): Intercepted by sql firewall, because: not allowed to execute
 ```
 
 > !!!NOTE
+> 
 > MySQL错误码解释可参考官方文档：<https://dev.mysql.com/doc/refman/8.0/en/server-error-reference.html>
 
 该类日志信息默认保存在HotDB Server安装目录/logs/extra/unusualsql/目录下的hotdb_unusualsql.log文件中。若日志未记录至文件，可检查HotDB Server安装目录/conf目录下的log4j2.xml下，是否存在以下配置：
@@ -994,6 +998,7 @@ mysql_ssl_rsa_setup --datadir=/usr/local/crt/
 服务端(HotDB)需要的秘钥有：ca.pem、server-cert.pem、server-key.pem；
 
 > !!!NOTE
+> 
 > MySQL自带命令生成的证书无法进行CA认证，参考链接：<https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html>
 
 ![](assets/standard/image37.png)
@@ -1131,6 +1136,7 @@ jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/u
 ![](assets/standard/image48.png)
 
 > !!!NOTE
+> 
 > 对于某些版本的Navicat可能在勾选验证CA证书名后无法连接，比如提示错误："2026 SSL connection error: ASN: bad other signature confirmation"，这可能是该版本的动态链接库不兼容，需要将其目录下的`libmysql.dll`替换为MySQL Workbench中的同名文件，或者更新到更高的版本，参考[链接](https://www.heidisql.com/forum.php?t=19494)。
 
 ## 数据迁移、备份与恢复
@@ -1154,6 +1160,7 @@ HotDB Server支持mysqldump功能，用法同MySQL一样。
 ```
 
 > !!!NOTE
+> 
 > `default-character-set`参数的值请根据实际情况填写，例如utf8或utf8mb4等。
 
 若未使用指定参数，可能会出现时间差的问题，以及对于部分不支持的功能命令会报错。
@@ -1173,6 +1180,7 @@ mysqlbinlog -R -h主机名 -P端口号 -v --base64-output=decode-rows --skip-gti
 ```
 
 > !!!NOTE
+> 
 > `--to-last-log`可替换为`--stop-position`，指定binlog终止位置而非执行到最新的binlog位置。此命令需要跟远程连接的MySQL实例同版本。
 
 例如希望将192.168.200.77:3306中的物理库db01导入计算节点192.168.210.30中的逻辑库logicdb01：
@@ -1194,6 +1202,7 @@ mysqlbinlog -R -h 192.168.200.77 -P3306 -v --base64-output=decode-rows --skip-gt
 此小节将展示如何在实际应用场景中，结合mysqldump的完整备份与mysqlbinlog的增量备份，将数据从源端单机MySQL中迁移到HotDB Server中。
 
 > !!!NOTE
+> 
 > 整个操作过程中，不建议在数据迁移的源端或计算节点执行任何的DDL、参数变更等等非常规的操作动作。由于单线程操作且受网络延迟制约，此方式追数据的执行速度会慢于MySQL复制的执行速度，因此不保证计算节点的执行速度能够满足实时追上的要求，有可能存在数据延迟不断增大的现象，此时需要寻找业务低谷重试，或者另外规划方案。
 
 场景描述：希望将源端192.168.210.45:3309（该实例为有生产数据的普通MySQL实例）中的物理库db01导入计算节点192.168.210.32中的逻辑库logicdb01，参考步骤如下：
@@ -1538,6 +1547,7 @@ mysql> insert into test values(null,1);
 ```
 
 > !!!NOTE
+> 
 > 自增序列2模式可保证全局唯一且长时间范围看是大致正向增长，不保证自增连续性；
 > 对于自增序列的字段类型范围计算节点也可以感知，超过范围计算节点行为同MySQL一致；
 > 若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为2，自增字段类型必须为bigint，否则建表失败：
@@ -1576,6 +1586,7 @@ Can't reset XA in reloading, please restart the hotdb to enable XA
 - 开启XA模式，使用HINT后，因计算节点无法控制HINT语句修改的内容，后续跟这个连接相关的任何操作计算节点都不再控制隔离级别的正确性。
 
 > !!!IMPORTANT
+> 
 > XA模式下：参照SQL99标准，beginstart transaction会立即开启一个事务。也即在XA模式打开的情况下，beginstart transaction将等同于start transaction with consistent snapshot。
 
 在计算节点版本高于2.5.6 （包含）时，XA模式下前端连接断开时会将事务的状态记录到日志及配置库中，也可以直接通过服务端口执行SHOW ABNORMAL_XA_TRX查看是否需要重做事务。
@@ -1591,6 +1602,7 @@ Can't reset XA in reloading, please restart the hotdb to enable XA
 ![](assets/standard/image50.png)
 
 > !!!IMPORTANT
+> 
 > ![](assets/standard/image51.png)
 > 
 > - **disconnect_reason：**连接断开原因，如kill前端连接（kill）、TCP连接断开（program err:java.io.IOException: Connection reset by peer）、SQL执行超时（stream closed,read return -1）、空闲超时（idle timeout）等。
@@ -1664,6 +1676,7 @@ HotDB Server 2.5.3将全局唯一约束优化精确到表级别，默认为所�
 ![](assets/standard/image52.png)
 
 > !!!NOTE
+> 
 > 开启该功能后，可能对SQL语句INSERT、UPDATE、DELETE的执行效率有较大影响，可能导致SQL操作延迟增大；还可能导致锁等待和死锁的情况增加。请酌情考虑后注意取舍。
 
 #### 创建表时的表级别控制
@@ -1800,6 +1813,7 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 故障切换后，会暂停原主从之间IO线程，并对原主库每分钟进行一次心跳检测直到原主库恢复正常。原主库恢复正常后，对比原主库的binlog位置，检测原从库（现主库）是否存在切换前没有获取到的事务，若存在，开启此参数则自动重置主从复制关系。若不存在未接收的事务，则重新开启IO线程并不再做任何处理。
 
 > !!!NOTE
+> 
 > - 检测是否有未接收的事务的前提是主从库都需要开启GTID，否则此参数开启时，故障切换完成会自动重置主从复制关系。
 > - 若原主库在心跳检测时重试超过10080次，仍然为不可用状态，此时，参数为开启状态，也会自动重置主从复制关系。
 > - 若发生自动重置复制关系后，计算节点记录warning级别的报警日志如下：
@@ -2117,6 +2131,7 @@ valid_lft forever preferred_lft forever
 ```
 
 > !!!NOTE
+> 
 > 若通过管理平台手动切换，切换成功的会修改server.xml中的（haState、haNodeHost）的配置，将主备的信息互换，故障切换不会修改配置。
 
 ##### 高可用重建
@@ -2613,6 +2628,7 @@ HotDB Server读写分离对应用研发者和数据库管理员完全透明，�
 ```
 
 > !!!INFO
+> 
 > - 读写分离策略strategyForRWSplit参数为0时读写操作都在主存储节点，也即关闭读写分离。
 > - 读写分离策略strategyForRWSplit参数设置为1时，代表可分离的读请求发往所有可用存储节点（包含主存储节点），写操作与不可分离的读请求在主存储节点上进行。
 >   strategyForRWSplit参数为1时可设置主备存储节点的读比例，设置备存储节点读比例后数据节点下的所有备存储节点均分该比例的读任务。例如：设置weightForSlaveRWSplit值为60%，假设节点为一主两从架构，则可分离的读中，主机读40%，剩余两从机各读30%；
@@ -2621,6 +2637,7 @@ HotDB Server读写分离对应用研发者和数据库管理员完全透明，�
 - 读写分离策略strategyForRWSplit参数为3时，代表事务（非XA模式）中发生写前的读请求与自动提交的读请求发往可用的备存储节点。其余请求在主存储节点上进行。
 
 > !!!NOTE
+> 
 > 在未使用HINT做读写分离的情况下， "可分离的读请求"主要指：自动提交的读请求与显式只读事务中的读请求。其余读请求均为"不可分离的读请求"。例如非自动提交事务中的读请求。
 
 ## HotDB Server 特色功能
@@ -2744,6 +2761,7 @@ DNID只适用于SELECT，UPDATE，DELETE的简单单表语句；并且，DNID只
 ```
 
 > !!!NOTE
+> 
 > dnid_value的值为某个数据节点的ID号。用户可以替换dnid_value的值来指定具体的分片节点。
 
 例如：
@@ -2781,6 +2799,7 @@ hotdb> show hotdb datasources where datasource_id like '22';
 ```
 
 > !!!NOTE
+> 
 > datasource_id的值为某个存储节点的ID，可以指定多个节点用英文","隔开。此语法不会将执行的语句记入存储节点二进制日志文件binlog中，若使用不当，可能存在导致双主数据不一致、GTID位置错乱的情况，使用时需谨慎。
 
 示例：
@@ -2817,6 +2836,7 @@ hotdb> /*!hotdb:dsid=nobinlog:22*/show variables like 'wait_timeout';
 ```
 
 > !!!NOTE
+> 
 > all为所有存储节点(包括灾备模式下灾备机房存储节点)，此语法不会将执行的语句记入二进制日志文件binlog中。
 
 示例：
@@ -2858,6 +2878,7 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 ```
 
 > !!!NOTE
+> 
 > 此语法会将执行的语句记入对应存储节点的二进制日志文件binlog中。同时操作具有复制关系的存储节点时需要谨慎处理，以免导致主从复制同步异常。
 
 - 指定所有datasource_id且写binlog的语法：
@@ -2867,9 +2888,11 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 ```
 
 > !!!NOTE
+> 
 > all为所有存储节点(包括灾备模式下灾备机房存储节点)，此语法会将执行的语句记入二进制日志文件binlog中，同时写binlog可能存在导致具有复制关系的存储节点复制异常、GTID位置错乱的情况，使用时需谨慎。
 
 > !!!NOTE
+> 
 > 若多个存储节点分布在同实例上，使用HINT中datasource_id也需单独指定存储节点执行。
 
 **（七）在HINT中使用分片字段：**
@@ -2881,6 +2904,7 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 ```
 
 > !!!NOTE
+> 
 > table_name即某个分片表的表名；column_value即该表上分片字段某个值。用户可以替换table_name的值指定相应的拆分规则，通过替换column_value的值来指定使用该分片字段的值对应的分片节点。
 
 例如：
@@ -3102,6 +3126,7 @@ mysql> show @@onlineddl;
 ```
 
 > !!!IMPORTANT
+> 
 > onlineddl 语句不是执行下去就代表DDL完成， 返回了"Query OK, 0 rows affected "仅代表DDL语句可以执行， 如果想看是否执行完成，要查看 show @@onlineddl中progress 显示的进度。show @@onlineddl结果为空时，代表所有DDL执行完毕且当前无其他DDL任务，如果中途因为网络或其他异常DDL中断，会回滚整个DDL。
 
 ### NDB Cluster SQL节点服务
@@ -4225,6 +4250,7 @@ CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name [create_option] ... [DEFAULT 
 ```
 
 > !!!INFO
+> 
 > ```sql
 > create_option: [DEFAULT] { CHARACTER SET [=] charset_name | COLLATE [=] collation_name }
 > ```
@@ -4246,6 +4272,7 @@ create database if not exists zjj_d3 default datanode '1,4';
 ![](assets/standard/image110.png)
 
 > !!!NOTE
+> 
 > 指定字符集校对集时，会给出warning提示，因对于计算节点来说设置库级别字符集校对集实际无效，都是跟随存储节点本身默认的配置来识别的。
 
 #### DROP语句
@@ -4446,6 +4473,7 @@ ON priv_level TO 'user_name'@'host_name'[,'user_name'@'host_name'] ...
 ```
 
 > !!!INFO
+> 
 > 可授权的权限类型priv_type 包括：SELECT、 UPDATE、 DELETE、 INSERT 、CREATE 、DROP 、ALTER 、FILE 、 SUPER
 
 可使用[ALL [PRIVILEGES]](https://dev.mysql.com/doc/refman/5.6/en/privileges-provided.html#priv_all) 为用户赋予所有权限（包括SUPER权限）在内，用法等同MySQL。
@@ -5626,6 +5654,7 @@ cat /proc/cpuinfo| grep "processor"| wc -l
 ```
 
 > !!!NOTE
+> 
 > 计算节点在刚刚启动时并不会生成所有线程，而是用多少创建多少，因此执行show @@threadpool;命令，可能会显示如下图：
 
 ```
@@ -6698,6 +6727,7 @@ mysql> show @@datasource;
 ```
 
 > !!!NOTE
+> 
 > 存储节点流控是计算节点内部控制算法。
 
 #### enableHeartbeat&heartbeatPeriod& heartbeatTimeoutMs
@@ -6752,6 +6782,7 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 ```
 
 > !!!NOTE
+> 
 > 若当前存储节点为数据节点最后一个存储节点，存储节点不会置为不可用。且会尝试一直连接；若为纯备存储节点，即使心跳失败次数已经超过阈值，只要心跳检测时能够连接存储节点成功就不标记为不可用。
 
 #### enableLatencyCheck & latencyCheckPeriod
@@ -6848,6 +6879,7 @@ mysql> show @@datasource;
 ```
 
 > !!!NOTE
+> 
 > listener_status为1，代表Listener可用；listener_status为0，代表Listener不可用
 
 注意事项及其他配套使用方法可参考[线性扩展](#线性扩展)章节的描述。
@@ -7663,6 +7695,7 @@ mysql> select b.* from customer_auto_1 a join customer_auto_3 b on a.id=b.id whe
 ```
 
 > !!!NOTE
+> 
 > 参数值仅作举例说明，不做实际参考。
 
 #### joinCacheSize
@@ -8706,6 +8739,7 @@ server.xml中recordAuditlog参数如下配置：
 recordAuditlog参数用于控制是否记录管理端操作信息，开启的情况可通过管理平台中的事件->审计日志查看管理端操作记录。
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordCrossDNJoin
@@ -8752,6 +8786,7 @@ mysql> SELECT * FROM account a JOIN borrower b;
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordDDL
@@ -8791,6 +8826,7 @@ mysql> create table abc(id int);
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordDeadLockSQL
@@ -8826,6 +8862,7 @@ recordDeadLockSQL日志中记录引发死锁的语句：
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordHotDBErrors
@@ -8860,6 +8897,7 @@ recordHotDBErrors日志中记录计算节点返回的错误信息。
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordHotDBWarnings
@@ -8897,6 +8935,7 @@ create table abc(id int);
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordLimitOffsetWithoutOrderby
@@ -8938,6 +8977,7 @@ mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM 
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordMySQLErrors
@@ -8978,6 +9018,7 @@ mysql> select form;
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordMySQLWarnings
@@ -9021,6 +9062,7 @@ mysql> update account set Account_number="$!''##";
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordSql
@@ -9102,6 +9144,7 @@ crc: 321944166562
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordSqlAuditlog
@@ -9136,6 +9179,7 @@ server.xml的recordSqlAuditlog参数默认false：
 ```
 
 > !!!NOTE
+> 
 > 日志输出为json格式，特殊字符如双引号采用进行转义，json中部分key代表的含义如下：
 
 - `sql_type` - 当前执行SQL的类型，包括：DDL/DML/DQL/OTHER。
@@ -9186,6 +9230,7 @@ recordSQLIntercepted记录被拦截的SQL语句，拦截的语句配置在中间
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordSQLKeyConflict
@@ -9240,6 +9285,7 @@ mysql> insert into vtab001 values(1,'aaa');
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordSQLSyntaxError
@@ -9278,6 +9324,7 @@ mysql> SELECT * FROM;
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordSQLUnsupported
@@ -9326,6 +9373,7 @@ mysql> select * into vtab001_bak from vtab001;
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordSubQuery
@@ -9366,6 +9414,7 @@ mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM 
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### recordUNION
@@ -9406,6 +9455,7 @@ mysql> SELECT * FROM trends UNION SELECT * from trends_uint;
 ```
 
 > !!!NOTE
+> 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
 #### routeByRelativeCol
@@ -9858,6 +9908,7 @@ mysql> select * from ss;
 - False状态：根据用户的故障切换规则进行切换。
 
 > !!!NOTE
+> 
 > 手动切换操作不受该参数控制。
 
 #### switchoverTimeoutForTrans
@@ -10143,6 +10194,7 @@ mysql> show @@unusualsqlcount;
 ```
 
 > !!!NOTE
+> 
 > 1. 计数器细化到表级别，针对表级别的每个错误号都有个计数器进行统计
 > 2. 日志路径：`/usr/local/hotdb/hotdb-server/logs/extra/unusualsql/hotdb-unusualsql.log`
 
@@ -10295,6 +10347,7 @@ root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 ```
 
 > !!!NOTE
+> 
 > 当没有配置此参数时：所有存储节点的最低版本号低于或等于计算节点支持的最高版本号时，对外显示所有存储节点中最低的版本号；存储节点的版本号超过计算节点支持的最高版本号时，对外显示计算节点最高支持的协议版本的一个完整版本号，当前最高支持到8.0.15。当配置了此参数时，这个参数会改变对外显示的版本号。
 
 #### versionComment
@@ -10353,6 +10406,7 @@ Server version: 5.7.23 hotpu
 ```
 
 > !!!NOTE
+> 
 > 连接后的status结果及客户端连接计算节点时的提示信息均会同步按照版本备注信息显示。例如：
 
 ```
@@ -10559,6 +10613,7 @@ mysql> show @@latency;
 ```
 
 > !!!IMPORTANT
+> 
 >  在计算节点版本高于2.5.6 （包含）调整了master_delay对切换的影响，waitForSlaveInFailover参数（高可用切换是否等待从机追上复制）开启，当切换时检测到有master_delay的延时设置，会自动在追复制前取消，切换成功后恢复延时复制的设置。若取消master_delay后的复制延迟仍大于10s，则不允许切换，master_delay也会恢复之前设置的值。
 
 #### waitSyncFinishAtStartup

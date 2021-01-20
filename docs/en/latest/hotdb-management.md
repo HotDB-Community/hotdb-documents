@@ -3853,6 +3853,7 @@ To use the data backup function of HotDB Management, it needs to install the Hot
 - Local Backup Root Directory: It is the local directory of the server where each data source resides and backup file is stored. This directory needs to be created in advance on the server where each node resides, and the directory of each server shall be consistent. Otherwise, the backup fails and the backup failure message prompts: Failed to create backup directory.
 
 > !!!TIP
+> 
 > when the data is backed up under different directories due to different hardware specifications and configuration methods of servers, you can use the soft link to unify the directories used for backup.
 
 - Compression Method: It is used to control whether the backup file is compressed, with options of No Compression, ZLIB Flow Compression, and LZ4 Compression. LZ4 compression is to first output the file and then call the system compression operation command.
