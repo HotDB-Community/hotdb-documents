@@ -17,11 +17,11 @@
 
 **说明：**仅针对功能测试使用虚拟机情况，生产环境或开发测试环境等需要参考[硬件配置推荐](hardware-config-recommendation.md)文档。
 
-|        服务器用途         |              服务器配置              |     服务器数量      |
+| 服务器用途 | 服务器配置 | 服务器数量 |
 |----------------------|---------------------------------|----------------|
-| HotDB Server计算节点     | CPU：12核  内存：24G  磁盘：200G  网络：千兆 | 2台HA或3台Cluster |
-| HotDB Management管理平台 | CPU：8核  内存：24G  磁盘：200G  网络：千兆  | 2台             |
-| HotDB Engine 数据源存储节点 | CPU：8核  内存：32G  磁盘：500G  网络：千兆  | 2台起步           |
+| HotDB Server计算节点 | CPU：12核  内存：24G  磁盘：200G  网络：千兆 | 2台HA或3台Cluster |
+| HotDB Management管理平台 | CPU：8核  内存：24G  磁盘：200G  网络：千兆 | 2台 |
+| HotDB Engine 数据源存储节点 | CPU：8核  内存：32G  磁盘：500G  网络：千兆 | 2台起步 |
 
 ### yum源检测
 
@@ -363,7 +363,7 @@ UNIQUE KEY(`telephone`)
 
 分片表customer创建成功后，可以连接计算节点执行下面的SQL语句，操作数据：
 
-```
+```sql
 INSERT INTO customer VALUES (21,'何重庆','13912340021',4,'Chongqing','重庆','某某街某某号');
 INSERT INTO customer VALUES (22,'吕重庆','13912340022',4,'Chongqing','重庆','某某街某某号');
 INSERT INTO customer VALUES (25,'孔福州','13912340025',5,'Fujian','福州','某某街某某号');

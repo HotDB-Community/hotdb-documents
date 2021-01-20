@@ -170,51 +170,51 @@ If to know detailed use method of the management platform, please refer to *Dist
 
 This chapter will briefly introduce the summary of functions which are added, prohibited or deleted in HotDB Server -- V2.5.6. For detailed function usage, click the hyperlink to view the details:
 
--   Support [the online expansion/reduction of compute node services](#compute-node-auto-scaling), that is, the number of online compute node instances;
+- Support [the online expansion/reduction of compute node services](#compute-node-auto-scaling), that is, the number of online compute node instances;
 
--   Multi-node mode is supported for the cross-IDC disaster recovery function. For more details, please refer to the "[Distributed Transactional Database HotDB Server - V2.5.5 Cross-IDC Disaster Recovery Function Specification](file:////Users/anita/Desktop/英文文档/管理平台文档/2.5.5/英文2.5.5/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.5%20%5bManagement%20Platform%5d%20Function%20Manual.doc)".
+- Multi-node mode is supported for the cross-IDC disaster recovery function. For more details, please refer to the "[Distributed Transactional Database HotDB Server - V2.5.5 Cross-IDC Disaster Recovery Function Specification](file:////Users/anita/Desktop/英文文档/管理平台文档/2.5.5/英文2.5.5/Distributed%20Transactional%20Database%20HotDB%20Server%20-%20V2.5.5%20%5bManagement%20Platform%5d%20Function%20Manual.doc)".
 
--   Support direct parsing and identifying some [Oracle functions and Sequence syntax](#enableoraclefunction) to reduce the amount of code modification when Oracle migrates to HotDB Server;
+- Support direct parsing and identifying some [Oracle functions and Sequence syntax](#enableoraclefunction) to reduce the amount of code modification when Oracle migrates to HotDB Server;
 
--   Support direct parsing and identifying of some Oracle functions and Sequence syntax to reduce the amount of code modification when Oracle migrates to HotDB Server;
+- Support direct parsing and identifying of some Oracle functions and Sequence syntax to reduce the amount of code modification when Oracle migrates to HotDB Server;
 
--   Support SSL + [SM4](#sslusesm4) for client connection;
+- Support SSL + [SM4](#sslusesm4) for client connection;
 
--   Optimized function of creating [global tables](#_Global_Table) according to the default sharding node;
+- Optimized function of creating [global tables](#_Global_Table) according to the default sharding node;
 
--   Add parameter [operateMode](#operatemode) to meet one-click configuration of parameter combination under different scenarios, such as performance maximization, debugging mode, etc;
+- Add parameter [operateMode](#operatemode) to meet one-click configuration of parameter combination under different scenarios, such as performance maximization, debugging mode, etc;
 
--   Support [modification of sharding key](#online-modification-of-sharding-key) directly through SQL statements (alter table... change shard column...);
+- Support [modification of sharding key](#online-modification-of-sharding-key) directly through SQL statements (alter table... change shard column...);
 
--   Optimized [deadlock check](#deadlock-check) logic: control whether to roll back the transaction and start new transactions when deadlock occurs according to MySQL version number;
+- Optimized [deadlock check](#deadlock-check) logic: control whether to roll back the transaction and start new transactions when deadlock occurs according to MySQL version number;
 
--   Optimized log record of disconnection in [XA mode](#use-xa-transaction). You can analyze whether the transaction needs to be redone through the log;
+- Optimized log record of disconnection in [XA mode](#use-xa-transaction). You can analyze whether the transaction needs to be redone through the log;
 
--   Optimized logic of role exchange after the failure of [data sources](#high-availability-of-data-node)/[ConfigDBs](#configdb-high-availability) or manual switching, and logic of reloading without changing the service of the original master;
+- Optimized logic of role exchange after the failure of [data sources](#high-availability-of-data-node)/[ConfigDBs](#configdb-high-availability) or manual switching, and logic of reloading without changing the service of the original master;
 
--   Optimized logic of the failure of data sources/ConfigDBs or manual switching. Compatible with the setting of [master_delay](#waitforslaveinfailover). Prevent the failure of switching due to the setting of master_delay;
+- Optimized logic of the failure of data sources/ConfigDBs or manual switching. Compatible with the setting of [master_delay](#waitforslaveinfailover). Prevent the failure of switching due to the setting of master_delay;
 
--   Optimization of [creating table directly via existing Sharding Function](#create-table-directly-via-existing-sharding-function). The sharding attributes can be written after the table definition.
+- Optimization of [creating table directly via existing Sharding Function](#create-table-directly-via-existing-sharding-function). The sharding attributes can be written after the table definition.
 
--   Support the use of SQL statements to [CREATE / DROP user and to GRANT / REVOKE user](#user-management-statement);
+- Support the use of SQL statements to [CREATE / DROP user and to GRANT / REVOKE user](#user-management-statement);
 
--   Support the use of SQL statements to [CREATE LogicDB](#create-statement);
+- Support the use of SQL statements to [CREATE LogicDB](#create-statement);
 
--   Support the use of SQL statements to CREATE / DROP / ALTER VIEW.
+- Support the use of SQL statements to CREATE / DROP / ALTER VIEW.
 
 ### New compute node parameters of Version 2.5.6
 
 This section will introduce the new compute node parameters added and optimized in Compute Node -- V2.5.6, as listed below:
 
-| Parameter name of compute node | Description of compute node parameters | Default value | Reload is valid or not | Version supported |
-| --- | --- | --- | --- | --- |
-| [enableOracleFunction](#enableoraclefunction) | Whether to parse Oracle functions first | false | N | 2.5.6 |
-| [lockWaitTimeout](#lockwaittimeout) | Timeout for obtaining metadata lock (s) | 31536000 | Y | Synchronized downward to 2.5.3 |
-| [operateMode](#operatemode) | Compute node working mode | 0 | Y | Newly added in 2.5.6 |
-| [maxReconnectConfigDBTimes](\l) | Maximum number of retries to connect to the ConfigDB | 3 | Y | 2.5.6 |
-| [sslUseSM4](\l) | Whether to support SM4 | No | Y | Synchronized downward to 2.5.5 |
+| Parameter name of compute node | Description of compute node parameters | Default value | Reload is valid or not | Version supported |   |
+|-----------------------------------------------|------------------------------------------------------|------------------------------|------------------------|--------------------------------|-------|
+| [enableOracleFunction](#enableoraclefunction) | Whether to parse Oracle functions first | false | N | 2.5.6 |   |
+| [lockWaitTimeout](#lockwaittimeout) | Timeout for obtaining metadata lock (s) | 31536000 | Y | Synchronized downward to 2.5.3 |   |
+| [operateMode](#operatemode) | Compute node working mode | 0 | Y | Newly added in 2.5.6 |   |
+| [maxReconnectConfigDBTimes](\l) | Maximum number of retries to connect to the ConfigDB | 3 | Y | 2.5.6 |   |
+| [sslUseSM4](\l) | Whether to support SM4 | No | Y | Synchronized downward to 2.5.5 |   |
 | [haMode](#hamode) | Added status: 4: master center in cluster mode | 5: DR center in cluster mode | 0 | N | 2.5.6 |
-| [crossDbXa](#crossdbxa) | Whether XA transactions are adopted in cross-LogicDB | false | N | 2.5.5 |
+| [crossDbXa](#crossdbxa) | Whether XA transactions are adopted in cross-LogicDB | false | N | 2.5.5 |   |
 
 ## Installation deployment and upgrading of HotDB Server
 
@@ -326,29 +326,29 @@ Log in to Distributed Transactional Database Management Platform page, select "C
 
 The parameters include:
 
--   Group Name: enter data source group name;
+- Group Name: enter data source group name;
 
--   Connection User: The Username of user having access privilege to the physical database (the [Username](#create-mysql-database-and-data-source-user) added in previous section);
+- Connection User: The Username of user having access privilege to the physical database (the [Username](#create-mysql-database-and-data-source-user) added in previous section);
 
--   Connection User Password: the user password having access privilege to the physical database;
+- Connection User Password: the user password having access privilege to the physical database;
 
--   Physical Database Name: citable database name in the data source, for example "db01" (the [LogicDB](#add-logicdb) added in previous section);
+- Physical Database Name: citable database name in the data source, for example "db01" (the [LogicDB](#add-logicdb) added in previous section);
 
--   Backup User: (optional) the username used for backup of the physical database;
+- Backup User: (optional) the username used for backup of the physical database;
 
--   Backup User Password: (optional) the user password used for backup of the physical database;
+- Backup User Password: (optional) the user password used for backup of the physical database;
 
--   Character Set: Character Set of the connected physical database, utf8mb4 by default;
+- Character Set: Character Set of the connected physical database, utf8mb4 by default;
 
--   Max Connections: [[Max Connections]{.ul}](#management-of-back-end-connection-pool) of MySQL physical database, 4200 by default;
+- Max Connections: [[Max Connections]{.ul}](#management-of-back-end-connection-pool) of MySQL physical database, 4200 by default;
 
--   Initial Connections: [Initial Connections](#management-of-back-end-connection-pool) of MySQL physical database, 32 by default;
+- Initial Connections: [Initial Connections](#management-of-back-end-connection-pool) of MySQL physical database, 32 by default;
 
--   Max Idle Connections: [[Max Idle Connections]{.ul}](#management-of-back-end-connection-pool) of MySQL physical database, 512 by default;
+- Max Idle Connections: [[Max Idle Connections]{.ul}](#management-of-back-end-connection-pool) of MySQL physical database, 512 by default;
 
--   Min Idle Connections: [[Min Idle Connections]{.ul}](#management-of-back-end-connection-pool) of MySQL physical database, 32 by default;
+- Min Idle Connections: [[Min Idle Connections]{.ul}](#management-of-back-end-connection-pool) of MySQL physical database, 32 by default;
 
--   Idle Examination Period (second): Idle Examination Period of MySQL physical database, 600 by default. When the connection fails to send request to the server for a long time, the connection will be disconnected as timed, in order to avoid wasting the database connection.
+- Idle Examination Period (second): Idle Examination Period of MySQL physical database, 600 by default. When the connection fails to send request to the server for a long time, the connection will be disconnected as timed, in order to avoid wasting the database connection.
 
 According to business scenarios, select those with the same parameter value as a data source group, for example in this case, the parameter values ticked and entered in the figure below will constitute a data source group.
 
@@ -376,37 +376,37 @@ Either Add Data Node and its corresponding Data Source in batches or Add Data So
 
 Parameters include:
 
--   Data Node: Generate according to the previous parameter filled in by default, Edit is available
+- Data Node: Generate according to the previous parameter filled in by default, Edit is available
 
--   Data Source Type: Generate according to the previous parameter filled in by default, Edit is available
+- Data Source Type: Generate according to the previous parameter filled in by default, Edit is available
 
--   Data Source Group: Generate according to the previous parameter filled in by default, Edit is available
+- Data Source Group: Generate according to the previous parameter filled in by default, Edit is available
 
--   Data Source Name: Auto Check and Generate by default, but you could also enter Data Source Name in the textbox after un-checking, for example "ds_01";
+- Data Source Name: Auto Check and Generate by default, but you could also enter Data Source Name in the textbox after un-checking, for example "ds_01";
 
--   Hostname: enter host Ip of MySQL database.
+- Hostname: enter host Ip of MySQL database.
 
--   Port Number: enter MySQL database port.
+- Port Number: enter MySQL database port.
 
--   Connection User: The Username with access privilege to the physical database ([Username](#create-mysql-database-and-data-source-user) added in previous section);
+- Connection User: The Username with access privilege to the physical database ([Username](#create-mysql-database-and-data-source-user) added in previous section);
 
--   Connection User Password: The User Password with access privilege to the physical database;
+- Connection User Password: The User Password with access privilege to the physical database;
 
--   Physical Database Name: Database Name citable in Data Source, for example "db01" ([LogicDB](#add-logicdb) added in previous section);
+- Physical Database Name: Database Name citable in Data Source, for example "db01" ([LogicDB](#add-logicdb) added in previous section);
 
--   Backup User: (optional) Username used for backup of the physical database;
+- Backup User: (optional) Username used for backup of the physical database;
 
--   Backup User Password: (optional) User Password used for backup of the physical database;
+- Backup User Password: (optional) User Password used for backup of the physical database;
 
--   Listenter hostname(optional): The Listener is installed to solve the performance linear expansion problem of the compute node cluster mode. The Listenter hostname is the host name of the server where the data source is located by default;
+- Listenter hostname(optional): The Listener is installed to solve the performance linear expansion problem of the compute node cluster mode. The Listenter hostname is the host name of the server where the data source is located by default;
 
--   Monitoring port(optional): The port which is used to set the start of monitoring;
+- Monitoring port(optional): The port which is used to set the start of monitoring;
 
--   Listener service port (optional): Listener service port is the port where a compute node connects to a data source through a Listener. If a Listener needs to listen to multiple data sources, it needs to fill in different service ports for them;
+- Listener service port (optional): Listener service port is the port where a compute node connects to a data source through a Listener. If a Listener needs to listen to multiple data sources, it needs to fill in different service ports for them;
 
--   Auto Master/Slave Build: after selection, Compute Node will Auto Build Replication Relation for the data source added according to the configuration information.
+- Auto Master/Slave Build: after selection, Compute Node will Auto Build Replication Relation for the data source added according to the configuration information.
 
--   Master Data Source: This parameter shall be filled in only when it needs to set up replication relation like master-master with slave(s) or multiple levels of slaves. The master data source name needing to be built replication relation in the current data source could be copied and pasted here. By default, the system will make auto judgement according to the configuration.
+- Master Data Source: This parameter shall be filled in only when it needs to set up replication relation like master-master with slave(s) or multiple levels of slaves. The master data source name needing to be built replication relation in the current data source could be copied and pasted here. By default, the system will make auto judgement according to the configuration.
 
 Click [...] to unfold more parameters, including:
 
@@ -426,15 +426,15 @@ Log in to Management Platform page, select "Configuration"->"Sharding Function"-
 
 According to business scenarios, enter configuration parameters, including:
 
--   Sharding Function Name: Generate by default, Edit is available after un-checking
+- Sharding Function Name: Generate by default, Edit is available after un-checking
 
--   Sharding Type: includes ROUTE, RANGE, MATCH, SIMPLE_MOD, CRC32_MOD. Take RANGE for instance, to know more sharding functions, you could view more detailed function description document, and please refer to *Distributed Transactional Database HotDB Server [Management Platform] Function Manual*.
+- Sharding Type: includes ROUTE, RANGE, MATCH, SIMPLE_MOD, CRC32_MOD. Take RANGE for instance, to know more sharding functions, you could view more detailed function description document, and please refer to *Distributed Transactional Database HotDB Server [Management Platform] Function Manual*.
 
--   Setting Mode: includes Auto Setting and Manual Setting, and Auto Setting is taken for instance here. If selecting Auto Setting, the management platform will compute the Value Range automatically according to the configuration parameters, and partition the data nodes automatically; if selecting Manual Setting, the data nodes could be entered into corresponding Value Range manually.
+- Setting Mode: includes Auto Setting and Manual Setting, and Auto Setting is taken for instance here. If selecting Auto Setting, the management platform will compute the Value Range automatically according to the configuration parameters, and partition the data nodes automatically; if selecting Manual Setting, the data nodes could be entered into corresponding Value Range manually.
 
--   Data Node: select Sharding Data Node
+- Data Node: select Sharding Data Node
 
--   Value Range: enter full Value Range of sharding key, and the management platform will compute the Step Length automatically in combination of the Number of Nodes selected
+- Value Range: enter full Value Range of sharding key, and the management platform will compute the Step Length automatically in combination of the Number of Nodes selected
 
 ![](assets/standard/image19.png)
 
@@ -452,15 +452,15 @@ Log in to Management Platform page, select "Configuration"->"Table Configuration
 
 According to business scenarios, after selecting the Table Type, enter the configuration parameters. In this case, under the Sharding Table page, add the parameter configuration as follow:
 
--   LogicDB: From the drop-down menu, select the [LogicDB](#add-logicdb) test added in previous section.
+- LogicDB: From the drop-down menu, select the [LogicDB](#add-logicdb) test added in previous section.
 
--   Default Sharding Key: When filling in the Table Name, Table Name and its corresponding Sharding Key shall be separated by English comma, and if no Sharding Key is filled in, the default Sharding Key shall be taken. Therefore, "provinceid" is filled in here
+- Default Sharding Key: When filling in the Table Name, Table Name and its corresponding Sharding Key shall be separated by English comma, and if no Sharding Key is filled in, the default Sharding Key shall be taken. Therefore, "provinceid" is filled in here
 
--   Sharding Mode: In this case, either Auto Sharding, or the [Sharding Function](#add-sharding-function) added in previous section could be selected here
+- Sharding Mode: In this case, either Auto Sharding, or the [Sharding Function](#add-sharding-function) added in previous section could be selected here
 
--   Data Node: select Sharding Data Node. in this case, the [Data Node](#add-data-node-and-data-source) added in previous section shall be selected
+- Data Node: select Sharding Data Node. in this case, the [Data Node](#add-data-node-and-data-source) added in previous section shall be selected
 
--   Please Fill in Table Name: enter "customer", when Add multiple tables but different sharding keys, "customer:provinceid" could be entered.
+- Please Fill in Table Name: enter "customer", when Add multiple tables but different sharding keys, "customer:provinceid" could be entered.
 
 ![](assets/standard/image22.png)
 
@@ -586,29 +586,29 @@ Next, you could log in to Compute Node Service, to execute DELETE, UPDATE and SE
 
 ### Instruction on enabling compute node
 
--   When the configuration error of Data Node, Data Source and other information can't pass the Config Checking, Compute Node cannot be enabled;
+- When the configuration error of Data Node, Data Source and other information can't pass the Config Checking, Compute Node cannot be enabled;
 
--   To enable compute node, you could switch to /usr/local/hotdb/hotdb-server/bin directory first, and then run the Startup Script, or add the following path directly: sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start;
+- To enable compute node, you could switch to /usr/local/hotdb/hotdb-server/bin directory first, and then run the Startup Script, or add the following path directly: sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start;
 
--   Synchronization State of configDB could influence Compute Node Enable, when compute node is enabled or in case of online High Availability Switch, configDB must ensure synchronization to catch up;
+- Synchronization State of configDB could influence Compute Node Enable, when compute node is enabled or in case of online High Availability Switch, configDB must ensure synchronization to catch up;
 
--   Synchronization Status of Data Source could influence Compute Node Enable. Use true/false attribute of the configuration parameter [waitSyncFinishAtStartup](#waitsyncfinishatstartup) in server.xml to Control whether to wait for synchronization of data source to catch up when Compute Node is enabled. Wait by default;
+- Synchronization Status of Data Source could influence Compute Node Enable. Use true/false attribute of the configuration parameter [waitSyncFinishAtStartup](#waitsyncfinishatstartup) in server.xml to Control whether to wait for synchronization of data source to catch up when Compute Node is enabled. Wait by default;
 
--   When Compute Node is enabled, if the Data Source is of abnormal connection, you could control whether the Master Data Source in Data Node shall be re-initialized or not and the Initialization Timeout time through editing the configuration parameter [masterSourceInitWaitTimeout](#keystore) in server.xml, and please refer to [Judgment of availability of LogicDB when enabling compute node](#judgment-of-availability-of-logicdb-when-enabling-compute-node) for specific control logic.
+- When Compute Node is enabled, if the Data Source is of abnormal connection, you could control whether the Master Data Source in Data Node shall be re-initialized or not and the Initialization Timeout time through editing the configuration parameter [masterSourceInitWaitTimeout](#keystore) in server.xml, and please refer to [Judgment of availability of LogicDB when enabling compute node](#judgment-of-availability-of-logicdb-when-enabling-compute-node) for specific control logic.
 
 #### Judgment of availability of LogicDB when enabling compute node
 
 In order to ensure that in case of Unavailable Status of Data Node in Vertical sharding scenario, the unassociated business scenarios of different LogicDB are not influenced, therefore, at the time of Compute Node Enable, special judgment and treatment have been made toward available status of all LogicDB, and the description is as follow:
 
--   If the configured Master Data Source is in Available status, but this data source can't be connected in reality, then at the time of Compute Node Enable, it will wait for configuration time of [masterSourceInitWaitTimeout](#keystore) (default:300s), to judge whether the data source is really un-connectable or not, and if during this period, the data source comes into reconnection without abnormality, then this node is successfully initialized;
+- If the configured Master Data Source is in Available status, but this data source can't be connected in reality, then at the time of Compute Node Enable, it will wait for configuration time of [masterSourceInitWaitTimeout](#keystore) (default:300s), to judge whether the data source is really un-connectable or not, and if during this period, the data source comes into reconnection without abnormality, then this node is successfully initialized;
 
--   If there are Unavailable nodes under all LogicDB, then the compute node can't be enabled, log prompt: 04/13 10:50:54.644 ERROR [main] (HotdbServer.java:436) -datanodes:[3] init failed. System exit.
+- If there are Unavailable nodes under all LogicDB, then the compute node can't be enabled, log prompt: 04/13 10:50:54.644 ERROR [main] (HotdbServer.java:436) -datanodes:[3] init failed. System exit.
 
--   As long as corresponding data node of a LogicDB is available, then the compute node could start, and the table under corresponding logic could come into normal operation. If there is unavailable node under other LogicDB, then the table under the LogicDB can't make normal Read/Write, Client prompt: ERROR 1003 (HY000): DATABASE is unavailable when datanodes: [datanode_id] unavailable.
+- As long as corresponding data node of a LogicDB is available, then the compute node could start, and the table under corresponding logic could come into normal operation. If there is unavailable node under other LogicDB, then the table under the LogicDB can't make normal Read/Write, Client prompt: ERROR 1003 (HY000): DATABASE is unavailable when datanodes: [datanode_id] unavailable.
 
 > For example: ALogicDB includes Node 1, 2, and BLogicDB includes Node 3, 4. If Node 1, 2 are Unavailable, but Node 3, 4 are available, then compute node could start, the table under BLogicDB could come into normal operation, the table under ALogicDB can't make Read/Write; if Node 1, 3 are Unavailable, then the compute node can't be enabled.
 
--   Judgment of whether a node is available or not, is related with the status of the data source in configDB and the actual available status of the data source, and it's required that the configuration status shall be consistent with the data source status. Otherwise, Compute Node Enable will be influenced, and when compute node is enabled, connect configured available data source of configDB. If connection succeeded, it shall be deemed as available; if a data source configured available cannot be connected, even if the node has other available data sources which could be connected, the node shall be deemed as Unavailable, and each node shall be configured with at least one available data source, otherwise compute node can't be enabled. The specific conditions are as follow:
+- Judgment of whether a node is available or not, is related with the status of the data source in configDB and the actual available status of the data source, and it's required that the configuration status shall be consistent with the data source status. Otherwise, Compute Node Enable will be influenced, and when compute node is enabled, connect configured available data source of configDB. If connection succeeded, it shall be deemed as available; if a data source configured available cannot be connected, even if the node has other available data sources which could be connected, the node shall be deemed as Unavailable, and each node shall be configured with at least one available data source, otherwise compute node can't be enabled. The specific conditions are as follow:
 
 1. Master/slave data source is configured available
 
@@ -634,13 +634,13 @@ As for following parameters of MySQL data source service port, they are required
 
 2. **innodb_rollback_on_timeout shall be ON,** and the innodb_rollback_on_timeout parameter shown by show [global|session] variables at any time shall be on, the description is as follow:
 
--   If innodb_rollback_on_timeout parameters are all off, then compute node allows successful load, but the behavior of the compute node equals to the transaction rollback method when innodb_rollback_on_timeout parameter is on, and the following prompts will be given at the time of Config Checking:
+- If innodb_rollback_on_timeout parameters are all off, then compute node allows successful load, but the behavior of the compute node equals to the transaction rollback method when innodb_rollback_on_timeout parameter is on, and the following prompts will be given at the time of Config Checking:
 
 ![](assets/standard/image26.png)
 
 And at the time of Reload, the log output will be: innodb_rollback_on_timeout=off is not supported, HotDB behavior will be equivalent to innodb_rollback_on_timeout = on.
 
--   If innodb_rollback_on_timeout parameter data sources are inconsistent, Reload will fail, and there will be prompt as follow at the time of Config Checking:
+- If innodb_rollback_on_timeout parameter data sources are inconsistent, Reload will fail, and there will be prompt as follow at the time of Config Checking:
 
 ![](assets/standard/image27.png)
 
@@ -648,21 +648,21 @@ And at the time of Reload, the data source being off will have log output: MySQL
 
 3. **read_only**, the parameter description is as follow:
 
--   If for master data source, the parameter read_only=1, then compute node will refuse to start, and reload fails.
+- If for master data source, the parameter read_only=1, then compute node will refuse to start, and reload fails.
 
--   If for the Slave, the parameter read_only=1 and is configured with the configuration rule of Switch to the Slave, then compute node could start, RELOAD fails.
+- If for the Slave, the parameter read_only=1 and is configured with the configuration rule of Switch to the Slave, then compute node could start, RELOAD fails.
 
--   If for the Slave, the parameter read_only=1 and is not configured with the configuration rule of Switch to the Slave, then compute node could start, and reload will be successful if without other error.
+- If for the Slave, the parameter read_only=1 and is not configured with the configuration rule of Switch to the Slave, then compute node could start, and reload will be successful if without other error.
 
 #### Parameters requiring consistent configuration of all nodes
 
 For the following parameters of MySQL data source service port, parameter values between the data sources are required to be set consistent by the compute node:
 
--   autocommit
+- autocommit
 
--   transaction_isolation
+- transaction_isolation
 
--   div_precision_increment
+- div_precision_increment
 
 If the above parameters are configured inconsistent between the data sources, compute node will give warning message. For transaction_isolation parameter, if the min configuration value is lower than REPEATABLE-READ, compute node will use REPEATABLE-READ mode; if the max configuration value is higher than REPEATABLE-READ, SERIALIZABLE will be used.
 
@@ -834,13 +834,13 @@ Show variables could be used to view limit conditions of current connections.
 
 Compute node will make connection with data source during the start and running, and when [[Add Data Source]{.ul}](#add-data-source-group), four configurations could be used to control the number of connections:
 
--   Max Connections: Max Connections available between compute node and data source (that is MySQL physical database), SQL can't come into normal execution if exceeded;
+- Max Connections: Max Connections available between compute node and data source (that is MySQL physical database), SQL can't come into normal execution if exceeded;
 
--   Initial Connections: Initial Connections established between compute node and data source;
+- Initial Connections: Initial Connections established between compute node and data source;
 
--   Min Idle Connections: Min Idle Connections established between compute node and data source;
+- Min Idle Connections: Min Idle Connections established between compute node and data source;
 
--   Max Idle Connections: Max Idle Connections established between compute node and data source.
+- Max Idle Connections: Max Idle Connections established between compute node and data source.
 
 When the Timing Detection Thread founds that the Idle Connections in the connection pool are smaller than the Min Idle Connections, then Create Connection; if bigger than Max Idle Connections, then Disable Connection. That is: Min Idle Connections ≤ Idle Connections in connection pool ≤ Max Idle Connections, and the Max and Min Idle Connections are mainly used for controlling Idle Connections in connection pool within a certain range.
 
@@ -898,13 +898,13 @@ In Distributed Transactional Database system, in case of deadlock between two da
 
 The operations in the following table, describe the deadlock process of two data nodes in distributed system. Session 1 and Session 2 execute DELETE operation respectively on the two data nodes:
 
-| Session 1 | Session 2 |
-| --- | --- |
-| Session 1 Start transaction | start transaction; |
+| Session 1 | Session 2 |   |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------|----------------------------------------------|
+| Session 1 Start transaction | start transaction; |   |
 | Session 2 Start transaction | 　 | start transaction; |
-| Session 1 Execute DELETE statement on data node where DNID = 15 | delete from customer where dnid=15 and id=1; |
+| Session 1 Execute DELETE statement on data node where DNID = 15 | delete from customer where dnid=15 and id=1; |   |
 | Session 2 Execute DELETE statement on data node where DNID = 13 | 　 | delete from customer where dnid=13 and id=4; |
-| Session 1 Execute DELETE statement on data node where DNID = 13; DELETE operation will be blocked by Session 2 | delete from customer where dnid=13 and id=4; |
+| Session 1 Execute DELETE statement on data node where DNID = 13; DELETE operation will be blocked by Session 2 | delete from customer where dnid=13 and id=4; |   |
 | Session 2 Execute DELETE statement on data node where DNID = 15; this operation will be blocked by Session 1; since Session 1 is blocked by Session 2, and Session 2 is also blocked by Session 1, therefore, there will be deadlock at this time | 　 | delete from customer where dnid=15 and id=1; |
 
 Under the above condition, Session 1 and Session 2 are mutually blocked, thus there will be deadlock. Since the deadlock occurs between two data sources of data node, MySQL can't detect existence of the deadlock.
@@ -965,51 +965,51 @@ Note: In MySQL 5.7 and above, a new transaction will not be started immediately 
 
 If the following error information is returned during SQL execution, the compute node will record it in the compute node log (hotdb-unusualsql.log):
 
--   ERROR information caused by primary key\\unique key conflict or foreign key constraint not satisfied (i.e. MySQL error code 1062, 1216, 1217, 1451, 1452, 1557, 1761, 1762, 3008)
+- ERROR information caused by primary key\\unique key conflict or foreign key constraint not satisfied (i.e. MySQL error code 1062, 1216, 1217, 1451, 1452, 1557, 1761, 1762, 3008)
 
--   Data overflow (i.e. MySQL error code 1264, 1690, 3155, 3669) and data truncation (i.e. MySQL error code 1265, 1292, 1366) caused by data type conversion or implicit conversion
+- Data overflow (i.e. MySQL error code 1264, 1690, 3155, 3669) and data truncation (i.e. MySQL error code 1265, 1292, 1366) caused by data type conversion or implicit conversion
 
--   Involving binlog unsafe statements (i.e. MySQL error codes 1418, 1592, 1663, 1668, 1669, 1671, 1673, 1674, 1675, 1693, 1714, 1715, 1716, 1719, 1722, 1724, 1727, 1785, 3006, 3199, 3570, 3571, MY-010908, MY-013098)
+- Involving binlog unsafe statements (i.e. MySQL error codes 1418, 1592, 1663, 1668, 1669, 1671, 1673, 1674, 1675, 1693, 1714, 1715, 1716, 1719, 1722, 1724, 1727, 1785, 3006, 3199, 3570, 3571, MY-010908, MY-013098)
 
--   When the INSERT operation is performed on the sharding table whose sharding key is not an auto-incremental field, the INSERT of auto increment is specified externally.
+- When the INSERT operation is performed on the sharding table whose sharding key is not an auto-incremental field, the INSERT of auto increment is specified externally.
 
--   Mismatch between MATCH and AFFECT in UPDATE statement
+- Mismatch between MATCH and AFFECT in UPDATE statement
 
--   Zero rows are deleted in DELETE
+- Zero rows are deleted in DELETE
 
--   UPDATE or DELETE AFFECT are more than 10000 rows
+- UPDATE or DELETE AFFECT are more than 10000 rows
 
--   INSERT, UPDATE, DELETE, and DDL statements are used in HINT statements
+- INSERT, UPDATE, DELETE, and DDL statements are used in HINT statements
 
--   ERROR information is reported during the execution of DDL statements. In addition, there will be additional logging in the following two cases: 1. When the character set of the specified table or field in CREATE TABLE or ALTER TABLE is inconsistent with the character set of the data source or the character set used in the connection; 2. In the sharding table of CREATE TABLE or ALTER TABLE, the primary key or unique key does not contain the sharding key and does not use the global unique constraint to ensure field uniqueness.
+- ERROR information is reported during the execution of DDL statements. In addition, there will be additional logging in the following two cases: 1. When the character set of the specified table or field in CREATE TABLE or ALTER TABLE is inconsistent with the character set of the data source or the character set used in the connection; 2. In the sharding table of CREATE TABLE or ALTER TABLE, the primary key or unique key does not contain the sharding key and does not use the global unique constraint to ensure field uniqueness.
 
--   A partial commit occurs, that is, when some nodes have issued a commit, the rest nodes have not issued a commit but the connection is stopped, or when the rest of the back-end connections have issued a commit, there is no response and the connection is stopped. In the above cases, the whole transaction will be recorded to the compute node log.
+- A partial commit occurs, that is, when some nodes have issued a commit, the rest nodes have not issued a commit but the connection is stopped, or when the rest of the back-end connections have issued a commit, there is no response and the connection is stopped. In the above cases, the whole transaction will be recorded to the compute node log.
 
--   A syntax error occurs.
+- A syntax error occurs.
 
--   Execution of SQL that cannot be routed due to lack of routing rules, such as ROUTE rules that do not exist in INSERT
+- Execution of SQL that cannot be routed due to lack of routing rules, such as ROUTE rules that do not exist in INSERT
 
--   Execution of SQL blocked by SQL firewall
+- Execution of SQL blocked by SQL firewall
 
--   Execution of SQL which timed out
+- Execution of SQL which timed out
 
--   Transaction killed due to the dead lock
+- Transaction killed due to the dead lock
 
--   Transaction killed due to data source switching and other reasons
+- Transaction killed due to data source switching and other reasons
 
--   Execution of SQL with lock which timed out and rolled back
+- Execution of SQL with lock which timed out and rolled back
 
--   SQL killed after Kill Command is executed
+- SQL killed after Kill Command is executed
 
--   SQL being rolled back
+- SQL being rolled back
 
--   SQL rolled back caused by abnormal front-end connection and connection stopping
+- SQL rolled back caused by abnormal front-end connection and connection stopping
 
--   Rollback caused by abnormal back-end connection and connection stopping or other exceptions
+- Rollback caused by abnormal back-end connection and connection stopping or other exceptions
 
--   Unexpected throwing of exception by compute node
+- Unexpected throwing of exception by compute node
 
--   If the above SQLs are too long, the SQL statements will be intercepted, and the WARNING information will be additionally recorded
+- If the above SQLs are too long, the SQL statements will be intercepted, and the WARNING information will be additionally recorded
 
 For example, execute a SQL with primary key conflict as follows:
 
@@ -1086,7 +1086,7 @@ HotDB Server has two kinds of users, one is Compute Node User who operates data,
 LogicDB must be accessed with granted compute node user privilege. Compute node provides LogicDB with operating privilege similar to that of MySQL, as follow:
 
 | Privilege type | Executable SQL statement |
-| --- | --- |
+|----------------|---------------------------------------------------|
 | CREATE | CREATE TABLE,CREATE INDEX |
 | DROP | DROP TABLE,DROP INDEX,TRUNCATE TABLE,RENAME TABLE |
 | ALTER | ALTER TABLE,RENAME TABLE |
@@ -1108,15 +1108,15 @@ The user with SUPER privilege could execute hint statement at 3323port. For exam
 
 When granting privilege for compute node user, in addition to SUPER privilege, operating privilege of the user toward LogicDB or table will be specified. Privilege range is divided into Global Privilege, LogicDB Privilege and Table Privilege:
 
--   Global privilege: the user with Global Privilege has the privilege to specify all objects under LogicDB. For example: if check Global privilege: SELECT, UPDATE, INSERT, CREATE, and click Save, then the current user could make S/U/I/C operation toward all LogicDB and tables.
+- Global privilege: the user with Global Privilege has the privilege to specify all objects under LogicDB. For example: if check Global privilege: SELECT, UPDATE, INSERT, CREATE, and click Save, then the current user could make S/U/I/C operation toward all LogicDB and tables.
 
 ![](assets/standard/image33.png)
 
--   LogicDB privilege: the user with LogicDB Privilege has the privilege to specify all objects under LogicDB.
+- LogicDB privilege: the user with LogicDB Privilege has the privilege to specify all objects under LogicDB.
 
 ![](assets/standard/image34.png)
 
--   Table privilege: Table privilege is also divided into Table privilege Allowed and Table privilege Denied. The user with Table privilege Allowed owns the privilege to check the table; the user with Table privilege Denied owns all privileges other than check privilege toward the table; for example: check Table privilege Denied: SELECT, UPDATE, INSERT, CREATE, and click Save, then the current user can't make S/U/I/C operation of the table, but has the privilege to DELETE, DROP, ALTER.
+- Table privilege: Table privilege is also divided into Table privilege Allowed and Table privilege Denied. The user with Table privilege Allowed owns the privilege to check the table; the user with Table privilege Denied owns all privileges other than check privilege toward the table; for example: check Table privilege Denied: SELECT, UPDATE, INSERT, CREATE, and click Save, then the current user can't make S/U/I/C operation of the table, but has the privilege to DELETE, DROP, ALTER.
 
 ![](assets/standard/image35.png)
 
@@ -1212,15 +1212,15 @@ Users have no need to restart the compute node service for the parameter modific
 
 **Notes:**
 
--   If the compute node cannot find any available server.jks file, the following error messages will be output when starting or synchronously loading.
+- If the compute node cannot find any available server.jks file, the following error messages will be output when starting or synchronously loading.
 
 ![](assets/standard/image41.png)
 
--   If the keyStorePass configuration is wrong, the following error messages will be output during startup or synchronously loading.
+- If the keyStorePass configuration is wrong, the following error messages will be output during startup or synchronously loading.
 
 ![](assets/standard/image42.png)
 
--   If the certificate configuration is wrong, the following error messages will be output during login
+- If the certificate configuration is wrong, the following error messages will be output during login
 
 ![](assets/standard/image43.png)
 
@@ -1448,18 +1448,18 @@ mysql> show @@masterslaveconsistency;
 
 It's shown in the result that for the JOIN_Z table in LogicDBDB_T, among master/slave data sources of all nodes, the data is consistent. Table structure is as follow:
 
--   db: LogicDB name.
+- db: LogicDB name.
 
--   table: Table Name.
+- table: Table Name.
 
--   dn: data node name; when the table is inconsistent in master/slave data source, this column will display data node name;
+- dn: data node name; when the table is inconsistent in master/slave data source, this column will display data node name;
 
--   result: if checking result is YES, it means that the table is consistent between master/slave data sources; if NO, it means that the table is inconsistent between master/slave data sources, and meanwhile, inconsistency information will be output in info; UNKNOWN means unknown error, which may have the condition of table structure inconsistency, and master/slave replication interruption may also occur in UNKNOWN.
+- result: if checking result is YES, it means that the table is consistent between master/slave data sources; if NO, it means that the table is inconsistent between master/slave data sources, and meanwhile, inconsistency information will be output in info; UNKNOWN means unknown error, which may have the condition of table structure inconsistency, and master/slave replication interruption may also occur in UNKNOWN.
 
--   info: In case of master/slave data consistency, there is no information output; in case of master/slave data inconsistency, there will be several kinds of information as follow:
+- info: In case of master/slave data consistency, there is no information output; in case of master/slave data inconsistency, there will be several kinds of information as follow:
 
 | A large amount of data inconsistency in table | Table: ... in datanode: ... exist a large amount of data inconsistency |
-| --- | --- |
+|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
 | Some data inconsistency in table | Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows' Primary Key (...)： |
 | Standby Slave Table doesn't exist | exist data inconsistency, because DS: ... Table '...' doesn't exist |
 | Index of table doesn't exist | DN: ... not exsit index of table:... |
@@ -1745,17 +1745,17 @@ After enabling XA TRANSACTION function in compute node, the operations toward th
 
 To use XA TRANSACTION of compute node in the system, in order to guarantee strong consistency of transaction, several points below shall be paid attention to:
 
--   MySQL Version must be 5.7.17 and above. As for the versions before 5.7.17, MySQL has defect in processing XA TRANSACTION. Therefore, under XA mode, if it's detected when enabling compute node that MySQL version of any data source is lower than 5.7.17, then Compute Node Enable failed; if data source lower than the version 5.7.1.7. is added after starting the compute node, then reload will fail; if before starting the compute node, the data source lower than the version 5.7.17 can't be connected, then even if reconnection succeeded after restart, the data source is still Unavailable and reload will fail. There will be output of ERROR level log prompt for the above circumstances: Currently in XA mode, MySQL version is not allowed to be lower than 5.7.17.
+- MySQL Version must be 5.7.17 and above. As for the versions before 5.7.17, MySQL has defect in processing XA TRANSACTION. Therefore, under XA mode, if it's detected when enabling compute node that MySQL version of any data source is lower than 5.7.17, then Compute Node Enable failed; if data source lower than the version 5.7.1.7. is added after starting the compute node, then reload will fail; if before starting the compute node, the data source lower than the version 5.7.17 can't be connected, then even if reconnection succeeded after restart, the data source is still Unavailable and reload will fail. There will be output of ERROR level log prompt for the above circumstances: Currently in XA mode, MySQL version is not allowed to be lower than 5.7.17.
 
--   Data Source and configDB shall enable semi-synchronization replication (**extra attention: when enabling XA mode, MySQL Group Replication mode is not allowed),** when enabling semi-synchronization replication, it's not recommended enabling Master-1 (innodb_flush_log_at_trx_commit = 1,sync_binlog = 1) mode, and simultaneous enabling of both will also influence the performance;
+- Data Source and configDB shall enable semi-synchronization replication (**extra attention: when enabling XA mode, MySQL Group Replication mode is not allowed),** when enabling semi-synchronization replication, it's not recommended enabling Master-1 (innodb_flush_log_at_trx_commit = 1,sync_binlog = 1) mode, and simultaneous enabling of both will also influence the performance;
 
--   To deploy and use XA strong consistency mode, high availability of data node shall be configured, and attention shall be paid to that after host failover to Slave, the original host can't be reused, and can't be marked Available directly in compute node, and the original host must be redeployed in later period in order to be marked Available.
+- To deploy and use XA strong consistency mode, high availability of data node shall be configured, and attention shall be paid to that after host failover to Slave, the original host can't be reused, and can't be marked Available directly in compute node, and the original host must be redeployed in later period in order to be marked Available.
 
--   Isolation level of XA TRANSACTION supports serializable and repeatable read, if splitting level of data source is set as read uncommitted and read committed, the compute node will process directly according to repeatable read. Meanwhile, under XA mode, isolation level of sessions can't be set as read uncommitted and read committed.
+- Isolation level of XA TRANSACTION supports serializable and repeatable read, if splitting level of data source is set as read uncommitted and read committed, the compute node will process directly according to repeatable read. Meanwhile, under XA mode, isolation level of sessions can't be set as read uncommitted and read committed.
 
--   XA transaction fully supports serializable, repeatable read and read committed, while read uncommitted is not supported for the moment. When the front-end isolation level is set to be read committed, you need to refer to the parameter description of allowRCWithoutReadConsistentInXA to avoid strong read-write consistency.
+- XA transaction fully supports serializable, repeatable read and read committed, while read uncommitted is not supported for the moment. When the front-end isolation level is set to be read committed, you need to refer to the parameter description of allowRCWithoutReadConsistentInXA to avoid strong read-write consistency.
 
--   After enabling XA mode and using HINT, since compute node can't control modified contents of HINT statement, therefore, for any operations related with the connection in later period, the compute node will no longer control accuracy of the isolation level.
+- After enabling XA mode and using HINT, since compute node can't control modified contents of HINT statement, therefore, for any operations related with the connection in later period, the compute node will no longer control accuracy of the isolation level.
 
 Special description:
 
@@ -1795,24 +1795,24 @@ The Non-Deterministic Function will bring some column problems in use, especiall
 
 1. For Time Function, compute node makes Uniform Proxy.
 
--   When the Table Field type is datetime (or timestamp) and free of default value, the parameter [timestampProxy](#timestampproxy) will control Proxy Range of the compute node (Auto Mode by default, and Global Processing/Auto Detection are optional), and insert such Function Proxy as specific value into Table;
+- When the Table Field type is datetime (or timestamp) and free of default value, the parameter [timestampProxy](#timestampproxy) will control Proxy Range of the compute node (Auto Mode by default, and Global Processing/Auto Detection are optional), and insert such Function Proxy as specific value into Table;
 
--   In case the Functions such as curdate(), curtime(), etc. appear in select/insert/update/delete statement, compute node will insert such Function Proxy as specific value into Table;
+- In case the Functions such as curdate(), curtime(), etc. appear in select/insert/update/delete statement, compute node will insert such Function Proxy as specific value into Table;
 
 2. For Random Value Function, compute node conducts different Proxy methods toward different SQL statements.
 
 3. For Unique Value Function, compute node makes Uniform Proxy.
 
--   In case uuid() or uuid_short() appear in select/insert/update/delete statement, compute node will make Proxy Unique Value according to standard UUIDv1 algorithm;
+- In case uuid() or uuid_short() appear in select/insert/update/delete statement, compute node will make Proxy Unique Value according to standard UUIDv1 algorithm;
 
--   In case of server_id conflict between data source and configDB, compute node will Auto Disable uuid_short() and inform the user of adjusting the server_id manually. You can refer to description in official website of MySQL:\
-    <https://dev.mysql.com/doc/refman/5.7/en/replication-options.html>.
+- In case of server_id conflict between data source and configDB, compute node will Auto Disable uuid_short() and inform the user of adjusting the server_id manually. You can refer to description in official website of MySQL:\
+  <https://dev.mysql.com/doc/refman/5.7/en/replication-options.html>.
 
 ### Global Time Zone Support
 
 In order to guarantee data accuracy, for different time zones are set due to existence of different data source servers, and thus resulting in data error of the time type in database, HotDB Server provided support for Global Time Zone, including:
 
--   When the time_zone parameters are specific same value or for SYSTEM the system_time_zone are all the same specific value, HotDB Server makes no special treatment, otherwise, HotDB Server will set the time_zone as uniform fixed value: "+8:00" and will record warning level log (The datasources' time_zones are not consistent);
+- When the time_zone parameters are specific same value or for SYSTEM the system_time_zone are all the same specific value, HotDB Server makes no special treatment, otherwise, HotDB Server will set the time_zone as uniform fixed value: "+8:00" and will record warning level log (The datasources' time_zones are not consistent);
 
 > For example, after login service port, enter the command:
 
@@ -1840,15 +1840,15 @@ mysql> show variables like '%time_zone';
 
 2 rows in set (0.09 sec)
 
--   At the time of Backup and Recovery, HotDB Server could guarantee that the time type data after recovery is consistent with that before backup.
+- At the time of Backup and Recovery, HotDB Server could guarantee that the time type data after recovery is consistent with that before backup.
 
 ### Global Unique Constraint
 
 If start Global Unique Constraint function, HotDB Server could guarantee that the column with Unique Constraint (UNIQUE, PRIMARY KEY) is unique in all nodes, including but not limited to the following scenarios:
 
--   Unique Constraint Key is not sharding key or doesn't include sharding key
+- Unique Constraint Key is not sharding key or doesn't include sharding key
 
--   Under Parent/Child Table, associate field of Child Table and Parent Table is not the same column with Unique Constraint Key of Child Table
+- Under Parent/Child Table, associate field of Child Table and Parent Table is not the same column with Unique Constraint Key of Child Table
 
 HotDB Server 2.5.3 optimizes and accurate Global Unique Constraint to Table Level, and Global Unique Constraint is disabled for all tables added in the future by default, or Global Unique Constraint could be separately disabled / enabled for some tables manually when Add Table.
 
@@ -1878,15 +1878,15 @@ mysql> create table test03(id int Primary Key,id1 int) **GLOBAL_UNIQUE =1**;
 
 If not using GLOBAL_UNIQUE [=] {0 | 1}, then by default, it will be set Enable or Disable according to default value of the compute node parameter configuration or the Table Configuration added on the management platform; if GLOBAL_UNIQUE=1, it shall be judged as Enable; if GLOBAL_UNIQUE=0, it shall be judged as Disable.
 
--   If GLOBAL_UNIQUE setting is different from the default value, then GLOBAL_UNIQUE shall prevail;
+- If GLOBAL_UNIQUE setting is different from the default value, then GLOBAL_UNIQUE shall prevail;
 
--   If GLOBAL_UNIQUE setting is different from Global Unique Constraint configuration of this table on the Management Platform, then Create Table will fail, and error prompt will be given, for example when Add test01 on the management platform, Global Unique Constraint is disabled:
+- If GLOBAL_UNIQUE setting is different from Global Unique Constraint configuration of this table on the Management Platform, then Create Table will fail, and error prompt will be given, for example when Add test01 on the management platform, Global Unique Constraint is disabled:
 
 mysql> create table test01(id int)global_unique=1;
 
 ERROR 10172 (HY000): CREATE TABLE FAILED due to generated table config already in HotDB config datasource. You may need to check config datasource or reload HotDB config.
 
--   If using GLOBAL_UNIQUE in Create Table statement in Vertical Sharding Table or Global Table, then Create Table will succeed, but warning message will be given, because no extra treatment is required for its Unique Constraint, for example, test03 is a Vertical Sharding Table:
+- If using GLOBAL_UNIQUE in Create Table statement in Vertical Sharding Table or Global Table, then Create Table will succeed, but warning message will be given, because no extra treatment is required for its Unique Constraint, for example, test03 is a Vertical Sharding Table:
 
 mysql> create table test03(id int)**global_unique=1**;
 
@@ -1992,11 +1992,11 @@ After failover, IO thread between the original Master/Slave will be suspended, a
 
 **Notice:**
 
--   The precondition for detecting whether there is transaction not received or not is that both the Active Master and Standby Slave need to enable GTID, otherwise, when this parameter is enabled, there will be Auto Reset of master/slave replication relation after failover completed.
+- The precondition for detecting whether there is transaction not received or not is that both the Active Master and Standby Slave need to enable GTID, otherwise, when this parameter is enabled, there will be Auto Reset of master/slave replication relation after failover completed.
 
--   If at the time of Heartbeat Detection, the original Active Master is still in Unavailable state after more than 10080 times of Retry, at this time, parameter is in Enable status, and there will also be Auto Reset of master/slave replication relation.
+- If at the time of Heartbeat Detection, the original Active Master is still in Unavailable state after more than 10080 times of Retry, at this time, parameter is in Enable status, and there will also be Auto Reset of master/slave replication relation.
 
--   For example, after Auto Reset of replication relation, warning log recorded by compute node at warning level will be as follow:
+- For example, after Auto Reset of replication relation, warning log recorded by compute node at warning level will be as follow:
 
 you should decide whether to manually execute the unexecuted part of binlog or rebuild the replication according to the actual situation.
 
@@ -2004,7 +2004,7 @@ you should decide whether to manually execute the unexecuted part of binlog or r
 
 ![](assets/standard/image57.png)
 
--   If after failover completed, the Master Active and Standby Slave neither Switch GTID or have transaction not received, but this parameter is disabled, then the compute node will also record warning log at warning level as follow:
+- If after failover completed, the Master Active and Standby Slave neither Switch GTID or have transaction not received, but this parameter is disabled, then the compute node will also record warning log at warning level as follow:
 
 DBA is required to deal with the new master, which is the original slave before switching and decide whether to stop replication or continue replication regardless. In addition, there is risk of data error caused by automatic reconnection of replication after manual or unexpected restart of the new master.
 
@@ -2018,11 +2018,11 @@ HotDB Server provides MySQL high availability in data node, when the Master data
 
 If to use high availability of data node, the following preconditions shall be met:
 
--   Rules for configuration of master/slave data source and failover priority in data node;
+- Rules for configuration of master/slave data source and failover priority in data node;
 
--   Master/slave data source must have been configured master/slave or standby master replication relation;
+- Master/slave data source must have been configured master/slave or standby master replication relation;
 
--   Enable Heartbeat function in compute node Config File.
+- Enable Heartbeat function in compute node Config File.
 
 #### High availability of data node
 
@@ -2068,15 +2068,15 @@ In "Configuration"->"Node Management", click [Switch] of a data node, thus Manua
 
 Description:
 
--   If being Master - Slave, select the data source with highest priority for Switch, and after Switch, the compute node will set the original master and the other Slaves of the original master as Unavailable, which can no longer be switched.
+- If being Master - Slave, select the data source with highest priority for Switch, and after Switch, the compute node will set the original master and the other Slaves of the original master as Unavailable, which can no longer be switched.
 
--   If being standby master, after Switch, the Active Master will not be set as Unavailable, and you can switch back and forth.
+- If being standby master, after Switch, the Active Master will not be set as Unavailable, and you can switch back and forth.
 
--   If the Standby Slave with the highest-priority is Unavailable or delays for more than 10s, select the one with higher priority from the remaining Standby Slaves for Switch, if they are all Unavailable or delay for more than 10s, there shall be no Switch, and will be error prompt (Switch Failure Log will prompt: switch datasource datasourceid failed due to:no available backup found)
+- If the Standby Slave with the highest-priority is Unavailable or delays for more than 10s, select the one with higher priority from the remaining Standby Slaves for Switch, if they are all Unavailable or delay for more than 10s, there shall be no Switch, and will be error prompt (Switch Failure Log will prompt: switch datasource datasourceid failed due to:no available backup found)
 
--   In V2.5.6 and above, in the case of manual switching, it will check first whether the current table hotdb_datanode/hotdb_datasource/hotdb_failover is consistent with the running table. If they are not consistent, it will prompt: "Unable to switch because the the configuration of the current data source is inconsistent with the configuration in memory. Please try again after reloading." If they are consistent, the taken data source will be updated to the master before new data source taking over, and the original master data source will be updated to the standby master or slave. (Note: if it is master/slave relation, the original master data source and its related slave nodes will be cascaded to be unavailable; the original replication relations will be cleaned up synchronously during the switching; the failover rules of the original master data source and the original slave data source will be exchanged, waiting for the manual offline reconstruction of replication relations.
+- In V2.5.6 and above, in the case of manual switching, it will check first whether the current table hotdb_datanode/hotdb_datasource/hotdb_failover is consistent with the running table. If they are not consistent, it will prompt: "Unable to switch because the the configuration of the current data source is inconsistent with the configuration in memory. Please try again after reloading." If they are consistent, the taken data source will be updated to the master before new data source taking over, and the original master data source will be updated to the standby master or slave. (Note: if it is master/slave relation, the original master data source and its related slave nodes will be cascaded to be unavailable; the original replication relations will be cleaned up synchronously during the switching; the failover rules of the original master data source and the original slave data source will be exchanged, waiting for the manual offline reconstruction of replication relations.
 
--   After Switch succeeded, the compute node will record switch process log:
+- After Switch succeeded, the compute node will record switch process log:
 
 INFO [pool-1-thread-1064] (SwitchDataSource.java:78) -received switch datasourceid command from Manager : [Connection Information]
 
@@ -2084,27 +2084,27 @@ WARN [pool-1-thread-1339] (BackendDataNode.java:263) -datanode id switch datasou
 
 INFO [pool-1-thread-1339] (SwitchDataSource.java:68) -switch datasource:id for datanode:id successfully by Manager.
 
--   In case of no Switching Rule configured, there will be no Switch, and will be the error prompt: switch datasource id failed due to:found no backup information)
+- In case of no Switching Rule configured, there will be no Switch, and will be the error prompt: switch datasource id failed due to:found no backup information)
 
 ##### Failover
 
 Failover is generally the Auto Switch after data source failure, and the description is as follow:
 
--   Whether Standby Master or master/slave, after Failure and Switch of the Active Master, they will set the Active Master as Unavailable, which can no longer be switched. The Active Master needs to be recovered manually, and after the Active Master becomes normal, set the Active Master as Available manually, and the Active Master will be restored as available after Reload.
+- Whether Standby Master or master/slave, after Failure and Switch of the Active Master, they will set the Active Master as Unavailable, which can no longer be switched. The Active Master needs to be recovered manually, and after the Active Master becomes normal, set the Active Master as Available manually, and the Active Master will be restored as available after Reload.
 
--   If the Standby Slave Status is Unavailable, there will be no Switch, and the compute node will record log
+- If the Standby Slave Status is Unavailable, there will be no Switch, and the compute node will record log
 
 WARN [pool-1-thread-2614] datanode id failover failed due to found no available backup
 
--   In server.xml, you could configure the parameter waitForSlaveInFailover to control whether the Switch shall wait for the Standby Slave to catch up with replication. If the parameter is true by default, which means Waiting, then during Switch process, it will wait for the Standby Slave to catch up with replication. If set as false, which means Not Waiting, then it will Switch immediately. (There is a risk of data loss in the immediate switch, which is not recommended).
+- In server.xml, you could configure the parameter waitForSlaveInFailover to control whether the Switch shall wait for the Standby Slave to catch up with replication. If the parameter is true by default, which means Waiting, then during Switch process, it will wait for the Standby Slave to catch up with replication. If set as false, which means Not Waiting, then it will Switch immediately. (There is a risk of data loss in the immediate switch, which is not recommended).
 
--   In V2.5.6 and above, in the case of failover, the taken over data source will be updated to the master before new data source taking over, and the original master data source will be updated to the standby master or slave. The original master data source and its related slave nodes will be cascaded to be unavailable. (Note: if it is master/slave relation, the original replication relations will be cleaned up synchronously during the switching; the failover rules of the original master data source and the original slave data source will be exchanged, waiting for the manual offline reconstruction of replication relations.
+- In V2.5.6 and above, in the case of failover, the taken over data source will be updated to the master before new data source taking over, and the original master data source will be updated to the standby master or slave. The original master data source and its related slave nodes will be cascaded to be unavailable. (Note: if it is master/slave relation, the original replication relations will be cleaned up synchronously during the switching; the failover rules of the original master data source and the original slave data source will be exchanged, waiting for the manual offline reconstruction of replication relations.
 
--   During Failover, Active Master Heartbeat is continuous. If Heartbeat succeed for two successive time, then give up Switch, and the compute node will record log
+- During Failover, Active Master Heartbeat is continuous. If Heartbeat succeed for two successive time, then give up Switch, and the compute node will record log
 
 INFO [$NIOREACTOR-6-RW] (Heartbeat.java:502) -heartbeat continue success twice for datasource 5 192.168.200.52:3310/phy243_05, give up failover.
 
--   After Switch succeeded, the compute node will record log, and record the cause for Switch:
+- After Switch succeeded, the compute node will record log, and record the cause for Switch:
 
 If being network failure, server down, power down, etc., then it will record: Network is unreachable
 
@@ -2126,11 +2126,11 @@ For example: when stopping the data source service, the whole Switch process is 
 
 02/21 15:57:29.429 WARN [pool-1-thread-1066] (Heartbeat.java:416) -datasource 5 192.168.200.52:331001_3310_ms heartbeat failed and will be no longer used.
 
--   In case of Switching Rule configured, there will be no Switch, and the compute node will record log：
+- In case of Switching Rule configured, there will be no Switch, and the compute node will record log：
 
 WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no backup information
 
--   After Failover of data source, whether Master/Slave or Standby Master, we have the uniform requirement that, the precondition for setting the data source as Available manually is that the operating personnel must be clear about that the existing master/slave service is free of abnormalities, the data synchronization is free of abnormalities, and especially for the master/slave mode, it must be guaranteed that the data at the time of Slave service during the period has been synchronized to the Master data source. When data source is enabled, we shall form the habit of not skipping the Master / Slave Consistency Detection.
+- After Failover of data source, whether Master/Slave or Standby Master, we have the uniform requirement that, the precondition for setting the data source as Available manually is that the operating personnel must be clear about that the existing master/slave service is free of abnormalities, the data synchronization is free of abnormalities, and especially for the master/slave mode, it must be guaranteed that the data at the time of Slave service during the period has been synchronized to the Master data source. When data source is enabled, we shall form the habit of not skipping the Master / Slave Consistency Detection.
 
 #### ConfigDB High Availability
 
@@ -2150,9 +2150,9 @@ When the configDB and some data sources are deployed on the same MySQL instance 
 
 <property name="bakPassword">hotdb_config</property><!-- Slave configDB password -->
 
--   In case of failure with the Master configDB, it will switch to the Slave configDB automatically. In case of delay in the Switch process, it will wait for the Slave configDB to catch up with replication.
+- In case of failure with the Master configDB, it will switch to the Slave configDB automatically. In case of delay in the Switch process, it will wait for the Slave configDB to catch up with replication.
 
--   When the compute node version is 2.5.6 or above, in case of failure with the Master configDB, the slave ConfigDB will be updated to the master before taking over, and the original master ConfigDB will be updated to the slave. Server.xml will be adjusted synchronously, as shown below:
+- When the compute node version is 2.5.6 or above, in case of failure with the Master configDB, the slave ConfigDB will be updated to the master before taking over, and the original master ConfigDB will be updated to the slave. Server.xml will be adjusted synchronously, as shown below:
 
 <property name="url">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- Master configDB address -->
 
@@ -2166,7 +2166,7 @@ When the configDB and some data sources are deployed on the same MySQL instance 
 
 <property name="bakPassword">hotdb_config</property><!-- Slave configDB password -->
 
--   If Compute Node High Availability service involves master/slave relation of configDB, then it shall be guaranteed that configuration of a group of Compute Node High Availability master/slave configDB in server.xml is identical, and there shall be no staggered configuration.
+- If Compute Node High Availability service involves master/slave relation of configDB, then it shall be guaranteed that configuration of a group of Compute Node High Availability master/slave configDB in server.xml is identical, and there shall be no staggered configuration.
 
 2. configDB also supports MGR configDB at the same time (MySQL must be above the Version 5.7, configDB MGR only supports three nodes for the time being), in server.xml, configure configDB information with MGR relation, and guarantee that the MGR relation is normal. Under the condition where MGR relation is inaccurate, configDB may can't provide normal service, and may result in Startup Failure.
 
@@ -2246,7 +2246,7 @@ inet6 fe80::21d:ff:fe14:8bfa/64 scope link
 
 valid_lft forever preferred_lft forever
 
--   Restart the Keepalived on the server where the slave compute node resides, and restart the slave compute node:
+- Restart the Keepalived on the server where the slave compute node resides, and restart the slave compute node:
 
 View the compute node log:
 
@@ -2426,13 +2426,13 @@ Please refer to the Distributed Transactional Database HotDB Server - [Installat
 
 These requirements must be met before using the Listener:
 
--   Compute node version is 2.5.5 and above
+- Compute node version is 2.5.5 and above
 
--   Multi-node cluster mode
+- Multi-node cluster mode
 
--   XA mode is enabled
+- XA mode is enabled
 
--   The parameter [enableListener](#enablelistener) is set to true in server.xml.
+- The parameter [enableListener](#enablelistener) is set to true in server.xml.
 
 ####### Add node configuration of Listener
 
@@ -2448,11 +2448,11 @@ In steps 1-4, fill in the host name and port number of the data source, connecti
 
 The rules are as follows:
 
--   Listener host name: "default" by default, no need to modify
+- Listener host name: "default" by default, no need to modify
 
--   Listening port: the start port of Listener. 3330 by default
+- Listening port: the start port of Listener. 3330 by default
 
--   Listener service port: the port where Listener provides services to HotDB Server. 4001 by default. If there are multiple MySQL instances on the same data source server that need to bind Listener, the service port needs to be unique.
+- Listener service port: the port where Listener provides services to HotDB Server. 4001 by default. If there are multiple MySQL instances on the same data source server that need to bind Listener, the service port needs to be unique.
 
 After filling is achieved, click Connection Test, and click Save and Return after passing the test.
 
@@ -2480,11 +2480,11 @@ Click Edit to add information about the Listener.
 
 The rules are as follows:
 
--   Listener host name: "default" by default, no need to modify
+- Listener host name: "default" by default, no need to modify
 
--   Listener port: the start port of Listener. 3330 by default
+- Listener port: the start port of Listener. 3330 by default
 
--   Listener service port: the port where Listener provides services to HotDB Server. 4001 by default. If there are multiple MySQL instances on the same data source server that need to bind Listener, the service port needs to be unique.
+- Listener service port: the port where Listener provides services to HotDB Server. 4001 by default. If there are multiple MySQL instances on the same data source server that need to bind Listener, the service port needs to be unique.
 
 After filling is achieved, click Connection Test, and click Save and Return after passing the test.
 
@@ -2519,7 +2519,7 @@ In order to satisfy the demand for business development and application data gro
 Parameters involved are as follows:
 
 | Parameters | Instructions | Reference value | Whether the reloading is valid |
-| --- | --- | --- | --- |
+|----------------|-----------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|--------------------------------|
 | haMode | High availability mode: 0: master and slave; 1: cluster | In cluster environment, the parameter value is 1 | yes |
 | serverId | Cluster node number 1-N (number of nodes), unique in the cluster and N < = total number of nodes in the cluster | The serverID should start from 1 and should not be repeated continuously in the cluster | yes |
 | clusterName | Cluster group name | HotDB-Cluster | yes |
@@ -2533,7 +2533,7 @@ Parameters involved are as follows:
 Expand from HA mode to multi-node mode is mainly about how to switch keepalived to LVS. This section mainly describes the expansion operation of HA to cluster. The information of components involved is as follows:
 
 | Role | Connection information | Name |
-| --- | --- | --- |
+|---------------------|--------------------------|---------------------|
 | Master compute node | 192.168.210.67_3323_3325 | HotDB_01 |
 | Slave compute node | 192.168.210.68_3325 | HotDB_02 |
 | LVS service | 192.168.210.136 | VIP:192.168.210.218 |
@@ -2612,7 +2612,7 @@ The adaptation mode is the same as "[Expand compute nodes in cluster mode](#expa
 This section mainly describes the operation of expanding compute nodes in cluster mode. The information of involved components is as follows:
 
 | Role | Connection information | Name |
-| --- | --- | --- |
+|--------------------------|---------------------------|---------------------|
 | Master compute node | 192.168.210.157_3323_3325 | HotDB_01 |
 | Slave compute node | 192.168.210.156_3323_3325 | HotDB_02 |
 | Slave compute node | 192.168.210.155_3323_3325 | HotDB_03 |
@@ -2665,11 +2665,11 @@ Edit the compute node cluster, and add the newly introduced compute nodes via th
 
 **Notes:**
 
--   If new compute nodes are added in the cluster, repeat the operation from the first step.
+- If new compute nodes are added in the cluster, repeat the operation from the first step.
 
--   If the value of clusterSize and haMode of the compute node does not match the actual configured cluster, reload @@config in step 4 will fail, therefore it shall be ensured that the configuration be consistent with the actual situation.
+- If the value of clusterSize and haMode of the compute node does not match the actual configured cluster, reload @@config in step 4 will fail, therefore it shall be ensured that the configuration be consistent with the actual situation.
 
--   The parameter serverId of new compute nodes should be unique and continuous with the original cluster, otherwise it will cause abnormal startup.
+- The parameter serverId of new compute nodes should be unique and continuous with the original cluster, otherwise it will cause abnormal startup.
 
 ##### Reduction of compute nodes
 
@@ -2791,11 +2791,11 @@ By default, Read/write splitting function is Disable in the compute node. To ena
 
 strategyForRWSplit is allowed to be set as 0, 1, 2, 3. If set as 0, the Read/Write operations are conducted in the Master data source.
 
--   When set as 1, the Master data source participates in the Read/Write, and the Slave participates in Read.
+- When set as 1, the Master data source participates in the Read/Write, and the Slave participates in Read.
 
--   When set as 2, the Active Master in non-transaction only participates in Write, and the Slave only participates in Read.
+- When set as 2, the Active Master in non-transaction only participates in Write, and the Slave only participates in Read.
 
--   When set as 3, then before write request, the Active Master in transaction only participates in Write, and the Slave only participates in Read, after Write occurs in transaction, all Read and Write in the transaction are sent to the Active Master.
+- When set as 3, then before write request, the Active Master in transaction only participates in Write, and the Slave only participates in Read, after Write occurs in transaction, all Read and Write in the transaction are sent to the Active Master.
 
 Note: when HINT is not used for read-write splitting, the "separable read request" mainly refers to the auto committed read request and the read request in the explicit read-only transaction. The rest of the read requests are "inseparable read requests". For example, a read request in a non-auto-commit transaction.
 
@@ -2823,13 +2823,13 @@ While supporting Read/write splitting, compute node could control the master/sla
 
 Description:
 
--   When the Read/write splitting strategy strategyForRWSplit is configured as 0, it only makes Read/Write on the Active Master, and the setting of weightForSlaveRWSplit Slave Read Proportion is meaningless;
+- When the Read/write splitting strategy strategyForRWSplit is configured as 0, it only makes Read/Write on the Active Master, and the setting of weightForSlaveRWSplit Slave Read Proportion is meaningless;
 
--   When Read/write splitting strategy strategyForRWSplit is configured as 1, Active Master participates in Read/Write, the Slave participates in Read, and only in this way could weightForSlaveRWSplit have practical significance. Read proportion of Active Master is 100% ---percentage value of weightForSlaveRWSplit, and the remaining Slaves shares equal distribution of all proportions of weightForSlaveRWSplit setting, for example: if the weightForSlaveRWSplit value is set as 60%, and the existing node is of one-master and two-slave architecture, then the Master Read 40%, while the two Slave Read 30% respectively;
+- When Read/write splitting strategy strategyForRWSplit is configured as 1, Active Master participates in Read/Write, the Slave participates in Read, and only in this way could weightForSlaveRWSplit have practical significance. Read proportion of Active Master is 100% ---percentage value of weightForSlaveRWSplit, and the remaining Slaves shares equal distribution of all proportions of weightForSlaveRWSplit setting, for example: if the weightForSlaveRWSplit value is set as 60%, and the existing node is of one-master and two-slave architecture, then the Master Read 40%, while the two Slave Read 30% respectively;
 
--   When Read/write splitting strategy strategyForRWSplit is configured as 2, Active Master only participates in Write, and the Slave participates in Read; all Slave share equal distribution of Read proportion, and for one-master and two-slave architecture, the Slave Read 50% each;
+- When Read/write splitting strategy strategyForRWSplit is configured as 2, Active Master only participates in Write, and the Slave participates in Read; all Slave share equal distribution of Read proportion, and for one-master and two-slave architecture, the Slave Read 50% each;
 
--   When Read/write splitting strategy strategyForRWSplit is configured as 3, for Read in transaction before Write, the Slave participates in Read, and the Active Master participates in Write; the Read operations in transaction after Write will be taken over by the Master data source; while the operations beyond the transaction are consistent with that in mode 2.
+- When Read/write splitting strategy strategyForRWSplit is configured as 3, for Read in transaction before Write, the Slave participates in Read, and the Active Master participates in Write; the Read operations in transaction after Write will be taken over by the Master data source; while the operations beyond the transaction are consistent with that in mode 2.
 
 ## Characteristic functions of HotDB Server
 
@@ -2841,7 +2841,7 @@ DNID is abbreviation of DATANODE_ID
 
 On compute node, DNID could be used as filter condition in WHERE Clause, and as a Query item in SELECT statement; DNID (data node) of the results of each row could also be displayed in Result Set.
 
--   **Use DNID field in SELECT, UPDATE, DELETE Clauses**
+- **Use DNID field in SELECT, UPDATE, DELETE Clauses**
 
 SELECT * FROM customer WHERE dnid=1;
 
@@ -2855,13 +2855,13 @@ UPDATE customer SET id=4 WHERE dnid=1 AND name='a';
 
 If executing this DELETE statement, compute node will modify the data of Sharding Table customer with DNID being 1 and Field Name = 'a'.
 
--   **Use DNID as a Query item to execute SELECT statement**
+- **Use DNID as a Query item to execute SELECT statement**
 
 SELECT *,dnid FROM tab_name;
 
 If executing this SELECT statement, compute node will display dnid value of all results in the Result Set, and dnid must be placed behind *, otherwise, there will be Syntax Error.
 
--   **Show DNID in Result Set**
+- **Show DNID in Result Set**
 
 After log in the compute node, if executing the SET SHOW_DNID=1 statement, compute node will return DNID (data node ID) of results of each row in the SELECT statement.
 
@@ -2939,7 +2939,7 @@ mysql> select * from customer where id in (77,67,52,20);
 
 4 rows in set (0.00 sec)
 
--   **Limit for DNID**
+- **Limit for DNID**
 
 DNID Field is reserved field of the compute node, and it's forbidden from using DNID Field in Transaction Table, and using DNID as alias in SQL statement.
 
@@ -2949,7 +2949,7 @@ DNID is only applicable to simple single-table statements of SELECT, UPDATE, DEL
 
 If using HINT Syntax on compute node, you can bypass the HotDB Server Parser, and execute arbitrary SQL statement of MySQL on specified data node directly. Compute node supports two modes of HINT Syntax:
 
--   **Use DNID (data node ID) in HINT:**
+- **Use DNID (data node ID) in HINT:**
 
 Syntax:
 
@@ -2963,7 +2963,7 @@ For example:
 
 This statement will be executed on database node 1. The user could, via "Data Node" page on Distributed Transactional Database Management Platform, find the name of the data source with data node ID being 1, and search specified data source name of the "Data Node" page, thus the practical MySQL database could be located.
 
--   **Use DSID (data source ID) in HINT:**
+- **Use DSID (data source ID) in HINT:**
 
 HINT statement supports the specified datasource_id to skip the compute node and send the statement directly to the data source. You can view the data source datasource_ id through the service port command.
 
@@ -2981,7 +2981,7 @@ hotdb> show hotdb datasources where datasource_id like '22';
 
 | 23 | 22 | 192.168.210.41_3308_hotdb157 | 1 | 1 | 192.168.210.41 | 3308 | hotdb157 | 1 |
 
--   Specify a specific datasource_id without writing binlog:
+- Specify a specific datasource_id without writing binlog:
 
 /*!hotdb:dsid=nobinlog:datasource_id*/SQL to be executed
 
@@ -3015,7 +3015,7 @@ hotdb> /*!hotdb:dsid=nobinlog:22*/show variables like 'wait_timeout';
 
 1 row in set (0.01 sec)
 
--   Specify all datasource_ids without writing binlog:
+- Specify all datasource_ids without writing binlog:
 
 /*!hotdb:dsid=nobinlog:all*/SQL to be executed
 
@@ -3059,13 +3059,13 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 
 8 rows in set (0.00 sec)
 
--   Specify a specific datasource_id with writing binlog:
+- Specify a specific datasource_id with writing binlog:
 
 /*!hotdb:dsid=datasource_id*/SQL to be executed
 
 Note: this statement will record the executed statements into binlog of the corresponding data source. When operating data sources with replication relations, care should be taken to avoid the master-slave replication synchronization exception.
 
--   Specify all datasource_ids with writing binlog：
+- Specify all datasource_ids with writing binlog：
 
 /*!hotdb:dsid=all*/SQL to be executed
 
@@ -3073,7 +3073,7 @@ Note: all refers to all data sources (including data sources in the DR center wh
 
 Note: if multiple data sources are distributed on the same instance, use of datasource_id in HINT needs to be executed by the specified data source.
 
--   **Use sharding key in HINT:**
+- **Use sharding key in HINT:**
 
 Syntax:
 
@@ -3183,7 +3183,6 @@ mysql> show warnings;
 
 | Level | Code | Message
 
-|
 
 +-------+-------+----------------------------------------------------------------------------------------------------------------+
 
@@ -3297,9 +3296,9 @@ EXPLAIN statement is only applicable to simple single-table statements of INSERT
 
 SupportOnlineDDL function on [management port (3325)](#management-port-information-monitoring) of compute node, guarantees that the online Read/Write transaction will not be blocked at the time of Table Change, the database can still provide foreign access, and the specific use methods are as follow:
 
--   Log in 3325 management port, and onlineddl "[DDLSTATEMENT]" Syntax could be used to execute onlineddl statement, for example: onlineddl "alter table customer add column testddl varchar (20) default '测试onlineddl'";
+- Log in 3325 management port, and onlineddl "[DDLSTATEMENT]" Syntax could be used to execute onlineddl statement, for example: onlineddl "alter table customer add column testddl varchar (20) default '测试onlineddl'";
 
--   Executing show @@onlineddl statement, it could show the current running OnlineDDL statement and execution speed of the statement, progress shows the current DDL execution progress (unit: %), speed shows the current DDL running speed (unit: row/ms), for example:
+- Executing show @@onlineddl statement, it could show the current running OnlineDDL statement and execution speed of the statement, progress shows the current DDL execution progress (unit: %), speed shows the current DDL running speed (unit: row/ms), for example:
 
 mysql> show @@onlineddl;
 
@@ -3325,35 +3324,35 @@ The compute node below the version of V2.5.2 has incomplete support toward SQL s
 
 When NDB SQL mode starts, NDB SQL logic could be used only after meeting the following conditions simultaneously:
 
--   If Global Unique is not enabled, there must be Primary Key or Unique Key, and both the Primary Key and Unique Key must sharding key or Auto Increment;
+- If Global Unique is not enabled, there must be Primary Key or Unique Key, and both the Primary Key and Unique Key must sharding key or Auto Increment;
 
--   When Global Unique is enabled, there must be Primary Key or Unique Key;
+- When Global Unique is enabled, there must be Primary Key or Unique Key;
 
--   The Primary Key and Unique Key in the above two items must be Single Field Value type;
+- The Primary Key and Unique Key in the above two items must be Single Field Value type;
 
--   Execute the Query statement originally not supported by the compute node.
+- Execute the Query statement originally not supported by the compute node.
 
 For the following SQL type statements, the compute node doesn't support itself, but supports Query after NDB SQL is enabled
 
 | MySQL statement type | Clause type | Function | Description |
-| --- | --- | --- | --- |
+|----------------------|----------------------------------|----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | SELECT | INNER/LEFT JOIN/RIGHT JOIN WHERE | Operation Expression | column1+column2、column1-column2、column1*column2、column1/column2 |
-|     |     |     | <=> or <> |
-|     |     | \% or MOD | Only support column% constant; not support column1% column2 |
-|     |     | RAND() | 2.3 Not support all rand() related Syntax, including group by rand(), order by rand() |
-|     |     | / or DIV | Only support column div constant; not support column1 div column2 |
-|     |     | INNER/LEFT JOIN/RIGHT JOIN ON | IN/IS NOT NULL/IS NULL/BETWEEN...AND/LIKE |
-|     |     |     | <=> or <> |
-|     |     |     | XOR |
-|     |     |     | CAST() |
-|     |     | CONCAT() | Not support concat() to serve as JOIN condition in Operation Expression (on Clause condition), or as association condition in where Clause |
-|     |     | CASE...WHEN...END | Only support Field of the table judged single by CASE WHEN; not support conditional judgement of multi-table Field, such as: CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias |
-|     | Function | MIN(MIN(column_name))\ | Nested Function not supported |
-|     |     |     | ABS(MAX()) |
-|     |     | Multi-table (above three tables) Query | Mixed LEFT/INNER/NATURAL JOIN\ |
-|     |     |     | Single NATURAL JOIN |
-|     |     | Subquery | Query Operational Condition (any, all) |
-|     |     |     | Nested Multi-layer Association Subquery |
+|   |   |   | <=> or <> |
+|   |   | \% or MOD | Only support column% constant; not support column1% column2 |
+|   |   | RAND() | 2.3 Not support all rand() related Syntax, including group by rand(), order by rand() |
+|   |   | / or DIV | Only support column div constant; not support column1 div column2 |
+|   |   | INNER/LEFT JOIN/RIGHT JOIN ON | IN/IS NOT NULL/IS NULL/BETWEEN...AND/LIKE |
+|   |   |   | <=> or <> |
+|   |   |   | XOR |
+|   |   |   | CAST() |
+|   |   | CONCAT() | Not support concat() to serve as JOIN condition in Operation Expression (on Clause condition), or as association condition in where Clause |
+|   |   | CASE...WHEN...END | Only support Field of the table judged single by CASE WHEN; not support conditional judgement of multi-table Field, such as: CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias |
+|   | Function | MIN(MIN(column_name))\ | Nested Function not supported |
+|   |   |   | ABS(MAX()) |
+|   |   | Multi-table (above three tables) Query | Mixed LEFT/INNER/NATURAL JOIN\ |
+|   |   |   | Single NATURAL JOIN |
+|   |   | Subquery | Query Operational Condition (any, all) |
+|   |   |   | Nested Multi-layer Association Subquery |
 
 In case of table structure non-geometry type Space Type Field and json type Field in the table structure, then the Query SQL originally not supported is still not supported;
 
@@ -3377,25 +3376,25 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 
 #### Restrictions on use
 
--   The source table must have a primary key or a unique key, and the length of the table name cannot exceed 45 characters;
+- The source table must have a primary key or a unique key, and the length of the table name cannot exceed 45 characters;
 
--   There can be no triggers on the source table, or the source table cannot be associated with other triggers;
+- There can be no triggers on the source table, or the source table cannot be associated with other triggers;
 
--   The source table cannot have foreign key constraints;
+- The source table cannot have foreign key constraints;
 
--   The new sharding key must be contained in the table structure, and cannot be the one currently used by the table;
+- The new sharding key must be contained in the table structure, and cannot be the one currently used by the table;
 
--   Data types of the new sharding key cannot be BIT, TINYTEXT, TEXT, MEDIUMTEXT, LONGTEXT, TINYBLOB, BLOB, MEDIUMBLOB, LONGBLOB, GEOMETRY, POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING、MULTIPOLYGON, GEOMETRYCOLLECTION, JSON；
+- Data types of the new sharding key cannot be BIT, TINYTEXT, TEXT, MEDIUMTEXT, LONGTEXT, TINYBLOB, BLOB, MEDIUMBLOB, LONGBLOB, GEOMETRY, POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING、MULTIPOLYGON, GEOMETRYCOLLECTION, JSON；
 
--   The global table, vertical sharding table, parent table and child table are not supported. It only supports using alter to modify the sharding key for sharding tables;
+- The global table, vertical sharding table, parent table and child table are not supported. It only supports using alter to modify the sharding key for sharding tables;
 
--   In the sharding table, using alter to modify the sharding key is not supported for the source table with sharding functions of RANGE, MATCH or ROUTE;
+- In the sharding table, using alter to modify the sharding key is not supported for the source table with sharding functions of RANGE, MATCH or ROUTE;
 
--   When alter is used to modify the sharding key, there should not be a sharding plan modification task in progress in the source table;
+- When alter is used to modify the sharding key, there should not be a sharding plan modification task in progress in the source table;
 
--   If there is master/slave data inconsistency in the source table, the detection will be directly skipped when alter is used to modify the sharding key (it is recommended to manually perform the master/slave data consistency detection through the management platform before execution);
+- If there is master/slave data inconsistency in the source table, the detection will be directly skipped when alter is used to modify the sharding key (it is recommended to manually perform the master/slave data consistency detection through the management platform before execution);
 
--   When the global unique constraint is enabled for the source table, the historical data of the unique constraint field of the source table must be unique when using alter to modify the sharding key;
+- When the global unique constraint is enabled for the source table, the historical data of the unique constraint field of the source table must be unique when using alter to modify the sharding key;
 
 ## Data type and character set support
 
@@ -3404,42 +3403,42 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 #### Value type
 
 | MySQL data type | Support status | Description |
-| --- | --- | --- |
-|     | BIT | Support |
-|     | TINYINT | Support |
-|     | SMALLINT | Support |
-|     | MEDIUMINT | Support |
-|     | INT | Support |
-|     | INTEGER | Support |
-|     | BIGINT | Support |
+|----------------------|----------------|----------------------------------------------------------------------------------------------|
+|   | BIT | Support |
+|   | TINYINT | Support |
+|   | SMALLINT | Support |
+|   | MEDIUMINT | Support |
+|   | INT | Support |
+|   | INTEGER | Support |
+|   | BIGINT | Support |
 | SERIAL | Support | Synchronous with BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE |
 | SERIAL DEFAULT VALUE | Support | Synonymous with NOT NULL AUTO_INCREMENT UNIQUE |
 | REAL | Not support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
 | DOUBLE | Not support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
 | FLOAT | Not support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-|     | DECIMAL | Support |
-|     | NUMERIC | Support |
+|   | DECIMAL | Support |
+|   | NUMERIC | Support |
 
 #### Date and time type
 
 | MySQL data type | Support status | Description |
-| --- | --- | --- |
-|     | DATE | Support |
-|     | TIME | Support |
-|     | TIMESTAMP | Support |
-|     |     | Support |
-|     | DATETIME | Support |
-|     |     | Support |
-|     | YEAR | Support |
+|-----------------|----------------|-------------|
+|   | DATE | Support |
+|   | TIME | Support |
+|   | TIMESTAMP | Support |
+|   |   | Support |
+|   | DATETIME | Support |
+|   |   | Support |
+|   | YEAR | Support |
 
 #### Character string type
 
 | MySQL data type | Support status | Description |
-| --- | --- | --- |
-|     | CHAR | Support |
-|     | VARCHAR | Support |
-|     | BINARY | Support |
-|     | VARBINARY | Support |
+|-----------------|----------------|----------------------------------------------------------------------------------------------|
+|   | CHAR | Support |
+|   | VARCHAR | Support |
+|   | BINARY | Support |
+|   | VARBINARY | Support |
 | TINYBLOB | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
 | BLOB | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
 | MEDIUMBLOB | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
@@ -3448,8 +3447,8 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 | TEXT | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
 | MEDIUMTEXT | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
 | LONGTEXT | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-|     | ENUM | Support |
-|     | SET | Support |
+|   | ENUM | Support |
+|   | SET | Support |
 
 #### Space type
 
@@ -3458,7 +3457,7 @@ Compute node supports use Space typespatial_type when Create Table; it supports 
 #### Other types
 
 | MySQL data type | Support status | Description |
-| --- | --- | --- |
+|-----------------|----------------|---------------------------------------------------------------------------------------------------------------|
 | JSON | Support | 　It's forbidden from being used either as sharding key, Parent/Child Table associated Field, or as join Field |
 
 ### Support of HotDB Server toward character set
@@ -4373,15 +4372,15 @@ DELETE FROM t PARTITION(p0);
 
 ##### Cross-node DELETE statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |
-| --- | --- | --- | --- | --- |
-|     | DELETE | PARTITION | 　 | Support |
-|     |     | ORDER BY DESC|ASC | 　 | Support |
-|     |     | LIMIT | 　 | Support |
-|     | ORDER BY ... LIMIT ... | 　 | Support | Parent/Child Table is not supported |
-|     |     | ORDER BY case sensitive of Field value | 　 | Support |
-|     |     | WHERE | Function in WHERE | Support |
-|     | JOIN | 　 | Support | Scenarios with temporary tables are not supported |
+| MySQL statement type | Clause type | Function | Support status | Description |   |
+|----------------------|------------------------|----------------------------------------|-------------------|---------------------------------------------------|---------|
+|   | DELETE | PARTITION | 　 | Support |   |
+|   |   | ORDER BY DESC | ASC | 　 | Support |
+|   |   | LIMIT | 　 | Support |   |
+|   | ORDER BY ... LIMIT ... | 　 | Support | Parent/Child Table is not supported |   |
+|   |   | ORDER BY case sensitive of Field value | 　 | Support |   |
+|   |   | WHERE | Function in WHERE | Support |   |
+|   | JOIN | 　 | Support | Scenarios with temporary tables are not supported |   |
 
 In cross-node DELETE statement, the following Multi-table statement is not supported:
 
@@ -4408,34 +4407,34 @@ USING table_references
 ##### Single-node INSERT statement
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-| --- | --- | --- | --- | --- |
-|     | INSERT | INSERT ... SELECT ... | Single-node simple single-table Query | Support |
-|     |     |     | Single-node JOIN | Support |
-|     |     |     | Single-node Subquery | Support |
-|     |     |     | Single-node UNION/UNION ALL | Support |
-|     |     | IGNORE | 　 | Support |
-|     |     | PARTITION | 　 | Support |
-|     |     | ON DUPLICATE KEY UPDATE | 　 | Support |
-|     |     | INSERT INTO table_name(columns... ) VALUES(values...) | 　 | Support |
-|     |     | INSERT INTO ... VALUES() | 　 | Support |
-|     |     | INSERT INTO ... SET | 　 | Support |
-|     |     | Sharding Table Splitting-free Field | 　 | Not support |
-|     | Sharding Table Splitting Field value is NULL | 　 | Support | NULL value parameter needs to be configured in Sharding Function |
-|     | Child Table Non-Associated Field value | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
-|     | Child Table Associated Field value is NULL | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
-|     |     | INSERT BATCH | Sharding Table | Support |
-|     |     |     | Global Table | Support |
-|     |     | Child Table | Conditional limit | Associated field of Parent Table is not supported if it is not sharding key. |
+|----------------------|----------------------------------------------|-------------------------------------------------------|---------------------------------------|------------------------------------------------------------------------------|
+|   | INSERT | INSERT ... SELECT ... | Single-node simple single-table Query | Support |
+|   |   |   | Single-node JOIN | Support |
+|   |   |   | Single-node Subquery | Support |
+|   |   |   | Single-node UNION/UNION ALL | Support |
+|   |   | IGNORE | 　 | Support |
+|   |   | PARTITION | 　 | Support |
+|   |   | ON DUPLICATE KEY UPDATE | 　 | Support |
+|   |   | INSERT INTO table_name(columns... ) VALUES(values...) | 　 | Support |
+|   |   | INSERT INTO ... VALUES() | 　 | Support |
+|   |   | INSERT INTO ... SET | 　 | Support |
+|   |   | Sharding Table Splitting-free Field | 　 | Not support |
+|   | Sharding Table Splitting Field value is NULL | 　 | Support | NULL value parameter needs to be configured in Sharding Function |
+|   | Child Table Non-Associated Field value | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
+|   | Child Table Associated Field value is NULL | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
+|   |   | INSERT BATCH | Sharding Table | Support |
+|   |   |   | Global Table | Support |
+|   |   | Child Table | Conditional limit | Associated field of Parent Table is not supported if it is not sharding key. |
 
--   INSERT INTO...SELECT...
+- INSERT INTO...SELECT...
 
--   For INSERT INTO... SELECT ... statement, if the SELECT clause is not supported, INSERT INTO... SELECT...is not supported either. It can be executed in other circumstances.
+- For INSERT INTO... SELECT ... statement, if the SELECT clause is not supported, INSERT INTO... SELECT...is not supported either. It can be executed in other circumstances.
 
--   INSERT IGNORE
+- INSERT IGNORE
 
--   On compute node, INSERT IGNORE reserves original features of MySQL. In case of Primary Key/Unique Key conflict, data and conflict information will be ignored.
+- On compute node, INSERT IGNORE reserves original features of MySQL. In case of Primary Key/Unique Key conflict, data and conflict information will be ignored.
 
--   Parent/Child Table does not support inser/replace into... select....
+- Parent/Child Table does not support inser/replace into... select....
 
 mysql> create table test(id int not null Primary Key,provinceid int)engine=innodb;
 
@@ -4487,7 +4486,7 @@ With the global unique constraint disabled, when inserting the second row, if th
 
 With the global unique constraint enabled, when inserting the second row, if the values of id column 1 and 2 are routed to the same node, the second SQL will be ignored. If it is not the same node, the second SQL will also be ignored.
 
--   INSERT no sharding key
+- INSERT no sharding key
 
 If the value of the sharding key is not specified in the INSERT clause:
 
@@ -4504,15 +4503,15 @@ INSERT BATCH refers to the mode of writing single INSERT statement into multi-ro
 INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-| --- | --- | --- | --- | --- |
-|     | INSERT | INSERT ... SELECT ... | Cross-node simple single-table Query | Support |
-|     |     |     | Cross-node JOIN | Not support |
-|     |     |     | Cross-node UNION | Not support |
-|     | INSERT BATCH | Child Table | Support | JOIN Field of Parent Table is not supported if not being sharding key |
-|     |     |     | Global Table | Support |
-|     |     |     | Sharding Table | Support |
+|----------------------|--------------|-----------------------|--------------------------------------|-----------------------------------------------------------------------|
+|   | INSERT | INSERT ... SELECT ... | Cross-node simple single-table Query | Support |
+|   |   |   | Cross-node JOIN | Not support |
+|   |   |   | Cross-node UNION | Not support |
+|   | INSERT BATCH | Child Table | Support | JOIN Field of Parent Table is not supported if not being sharding key |
+|   |   |   | Global Table | Support |
+|   |   |   | Sharding Table | Support |
 
--   **Special instructions for INSERT BATCH**
+- **Special instructions for INSERT BATCH**
 
 For INSERT BATCH in a transaction, if parts succeed and parts failed, it will automatically roll back to the previous SAVEPOINT.
 
@@ -4563,24 +4562,24 @@ For INSERT BATCH in a transaction, if parts succeed and parts failed, it will au
 ##### Single-node REPLACE statement
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-| --- | --- | --- | --- | --- |
-|     | REPALCE | REPLACE ... SELECT ... | Single-node simple single-table Query | Support |
-|     |     |     | Single-node JOIN | Support |
-|     |     |     | Single-node Subquery | Support |
-|     |     |     | Single-node UNION/UNION ALL | Support |
-|     |     | IGNORE | 　 | Support |
-|     |     | PARTITION | 　 | Support |
-|     |     | ON DUPLICATE KEY UPDATE | 　 | Support |
-|     |     | REPLACE INTO table_name(columns... ) VALUES(values...) | 　 | Support |
-|     |     | REPALCE INTO ... VALUES() | 　 | Support |
-|     |     | REPLACE INTO ... SET | 　 | Support |
-|     |     | Sharding table has no sharding key | 　 | Not support |
-|     | Sharding table sharding key value is NULL | 　 | Support | NULL value parameter needs to be configured in Sharding Function parameter |
-|     | Child table has no related field value | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
-|     | Child table related field value is NULL | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
-|     |     | REPLACE BATCH | Sharding Table | Support |
-|     |     |     | Global Table | Support |
-|     |     | Child Table | Conditional support | Associated field of Parent Table is not supported if it is not sharding key. |
+|----------------------|-------------------------------------------|--------------------------------------------------------|---------------------------------------|------------------------------------------------------------------------------|
+|   | REPALCE | REPLACE ... SELECT ... | Single-node simple single-table Query | Support |
+|   |   |   | Single-node JOIN | Support |
+|   |   |   | Single-node Subquery | Support |
+|   |   |   | Single-node UNION/UNION ALL | Support |
+|   |   | IGNORE | 　 | Support |
+|   |   | PARTITION | 　 | Support |
+|   |   | ON DUPLICATE KEY UPDATE | 　 | Support |
+|   |   | REPLACE INTO table_name(columns... ) VALUES(values...) | 　 | Support |
+|   |   | REPALCE INTO ... VALUES() | 　 | Support |
+|   |   | REPLACE INTO ... SET | 　 | Support |
+|   |   | Sharding table has no sharding key | 　 | Not support |
+|   | Sharding table sharding key value is NULL | 　 | Support | NULL value parameter needs to be configured in Sharding Function parameter |
+|   | Child table has no related field value | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
+|   | Child table related field value is NULL | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
+|   |   | REPLACE BATCH | Sharding Table | Support |
+|   |   |   | Global Table | Support |
+|   |   | Child Table | Conditional support | Associated field of Parent Table is not supported if it is not sharding key. |
 
 ##### Cross-node REPLACE statement
 
@@ -4591,13 +4590,13 @@ REPLACE BATCH refers to the mode of writing single REPLACE statement into multip
 REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-| --- | --- | --- | --- | --- |
-|     | REPLACE | REPLACE ... SELECT ... | Cross-node simple single-table Query | Support |
-|     |     |     | Cross-node JOIN | Not support |
-|     |     |     | Cross-node UNION | Not support |
-|     | REPLACE BATCH | Child Table | Support | JOIN Field of Parent Table is not supported if it is not sharding key. |
-|     |     |     | Global Table | Support |
-|     |     |     | Sharding Table | Support |
+|----------------------|---------------|------------------------|--------------------------------------|------------------------------------------------------------------------|
+|   | REPLACE | REPLACE ... SELECT ... | Cross-node simple single-table Query | Support |
+|   |   |   | Cross-node JOIN | Not support |
+|   |   |   | Cross-node UNION | Not support |
+|   | REPLACE BATCH | Child Table | Support | JOIN Field of Parent Table is not supported if it is not sharding key. |
+|   |   |   | Global Table | Support |
+|   |   |   | Sharding Table | Support |
 
 #### SELECT statement
 
@@ -5094,27 +5093,27 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 #### ALTER statement
 
 | MySQL statement type | Clause type | Support status | Description |
-| --- | --- | --- | --- |
-|     | ALTER TABLE | ADD COLUMN | Support |
-|     | ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY | Support | Support ADD UNIQUE [index_name][index_type]index_col_name |
-|     | ADD FOREIGN KEY for child table(s) | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
-|     |     | ADD SPATIAL [INDEX|KEY] | Support |
-|     |     | ADD CONSTRAINT [CONSTRAINT [symbol]] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY | Support |
-|     | ADD CONSTRAINT [CONSTRAINT [symbol]] FOREIGN KEY for child table(s) | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
-|     | ALGORITHM | Support | New INSTANT of MySQL8.0, and INSTANT is used by default |
-|     |     | ALTER COLUMN | Support |
-|     |     | LOCK | Support |
-|     |     | MODIFY/CHANGE [COLUMN] | Support |
-|     |     | DROP COLUMN | Support |
-|     |     | DROP PRIMARY KEY/KEY/INDEX/FOREIGN KEY | Support |
-|     |     | DISABLE KEYS | Support |
-|     |     | ENABLE KEYS | Support |
-|     |     | DISCARD TABLESPACE | Not support |
-|     |     | IMPORT TABLESPACE | Not support |
-|     |     | ADD/DROP/TRUNCATE PARTITION | Support |
-|     | GENERATED COLUMNS | Support | New function of MySQL8.0 and 5.7 |
-|     | SECONDARY INDEXES | Support | New function of MySQL8.0 and 5.7 |
-|     | CHECK | Support | New function of MySQL8.0 |
+|----------------------|---------------------------------------------------------------------|-------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|   | ALTER TABLE | ADD COLUMN | Support |
+|   | ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY | Support | Support ADD UNIQUE [index_name][index_type]index_col_name |
+|   | ADD FOREIGN KEY for child table(s) | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
+|   |   | ADD SPATIAL [INDEX|KEY] | Support |
+|   |   | ADD CONSTRAINT [CONSTRAINT [symbol]] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY | Support |
+|   | ADD CONSTRAINT [CONSTRAINT [symbol]] FOREIGN KEY for child table(s) | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
+|   | ALGORITHM | Support | New INSTANT of MySQL8.0, and INSTANT is used by default |
+|   |   | ALTER COLUMN | Support |
+|   |   | LOCK | Support |
+|   |   | MODIFY/CHANGE [COLUMN] | Support |
+|   |   | DROP COLUMN | Support |
+|   |   | DROP PRIMARY KEY/KEY/INDEX/FOREIGN KEY | Support |
+|   |   | DISABLE KEYS | Support |
+|   |   | ENABLE KEYS | Support |
+|   |   | DISCARD TABLESPACE | Not support |
+|   |   | IMPORT TABLESPACE | Not support |
+|   |   | ADD/DROP/TRUNCATE PARTITION | Support |
+|   | GENERATED COLUMNS | Support | New function of MySQL8.0 and 5.7 |
+|   | SECONDARY INDEXES | Support | New function of MySQL8.0 and 5.7 |
+|   | CHECK | Support | New function of MySQL8.0 |
 | ALTER | VIEW | Support | Supported in V2.5.6 and above |
 
 #### CREATE statement
@@ -5187,11 +5186,11 @@ The statement of CREATING DATABASE on the server end is:
 
 create database if not exists zjj_d3 default datanode '1,4';
 
--   Associate non-existent data nodes
+- Associate non-existent data nodes
 
 ![](assets/standard/image108.png)
 
--   When the character set is specified, a warning will be given as follows
+- When the character set is specified, a warning will be given as follows
 
 ![](assets/standard/image109.png)
 
@@ -5200,24 +5199,24 @@ Note: the warning prompt will be given when the character set and collations is 
 #### DROP statement
 
 | MySQL statement type | Clause type | Support status | Description |
-| --- | --- | --- | --- |
-|     | DROP DATABASE | 　 | Forbidden |
-|     | DROP EVENT | 　 | Forbidden |
-|     | DROP FUNCTION | 　 | Forbidden |
-|     | DROP INDEX | UNIQUE | Support |
-|     |     | Regular index KEY | Support |
-|     |     | FOREIGN KEY | Support |
-|     |     |     | Support |
-|     |     | FULLTEXT | Support |
-|     |     | SPATIAL | Support |
-|     |     | ALGORITHM | Support |
-|     |     | LOCK | Support |
-|     | DROP TABLE | DROP [TEMPORARY] TABLE [IF EXISTS] | Forbidden |
-|     |     | DROP TABLE | Support |
-|     | DROP TABLE multi-table | Support | Multi-table must be guaranteed in the same node |
-|     |     | DROP TABLE table_name [RESTRICT | CASCADE] | Support |
+|----------------------|------------------------|--------------------------------------------|-------------------------------------------------|
+|   | DROP DATABASE | 　 | Forbidden |
+|   | DROP EVENT | 　 | Forbidden |
+|   | DROP FUNCTION | 　 | Forbidden |
+|   | DROP INDEX | UNIQUE | Support |
+|   |   | Regular index KEY | Support |
+|   |   | FOREIGN KEY | Support |
+|   |   |   | Support |
+|   |   | FULLTEXT | Support |
+|   |   | SPATIAL | Support |
+|   |   | ALGORITHM | Support |
+|   |   | LOCK | Support |
+|   | DROP TABLE | DROP [TEMPORARY] TABLE [IF EXISTS] | Forbidden |
+|   |   | DROP TABLE | Support |
+|   | DROP TABLE multi-table | Support | Multi-table must be guaranteed in the same node |
+|   |   | DROP TABLE table_name [RESTRICT | CASCADE] | Support |
 | DROP TRIGGER | 　 | Support | DROP privilege shall be granted |
-|     | DROP VIEW | 　 | Support |
+|   | DROP VIEW | 　 | Support |
 
 #### TRUNCATE AND RENAME statement
 
@@ -5371,25 +5370,25 @@ HotDB Server only supports Storage Procedure, Custom Function statement in verti
 
 #### Prepare SQL Statement
 
-| Statement type | SQL statement | Support status | Description |
-| --- | --- | --- | --- |
-|     | Prepare SQL Statement | PREPARE ... FROM ... | Support |
-|     |     | EXECUTE ... | Support |
-|     |     | {DEALLOCATE | DROP} PREPARE | Support |
+| Statement type | SQL statement | Support status | Description |   |
+|----------------|-----------------------|----------------------|---------------|---------|
+|   | Prepare SQL Statement | PREPARE ... FROM ... | Support |   |
+|   |   | EXECUTE ... | Support |   |
+|   |   | {DEALLOCATE | DROP} PREPARE | Support |
 
 #### User management statement
 
 HotDB Server realizes a set of its own username and privilege management system, which could be merely operated on the Distributed Transactional Database Management Platform page. SQL statements of MySQL database user management are all Forbidden.
 
 | Statement type | SQL statement | Support status | Description |
-| --- | --- | --- | --- |
-|     | User management statement | ALTER USER | Forbidden |
-|     |     | CREATE USER | Support |
-|     |     | DROP USER | Support |
-|     |     | GRANT | Support |
-|     |     | RENAME USER | Forbidden |
-|     |     | REVOKE | Support |
-|     |     | SET PASSWORD | Forbidden |
+|----------------|---------------------------|----------------|-------------|
+|   | User management statement | ALTER USER | Forbidden |
+|   |   | CREATE USER | Support |
+|   |   | DROP USER | Support |
+|   |   | GRANT | Support |
+|   |   | RENAME USER | Forbidden |
+|   |   | REVOKE | Support |
+|   |   | SET PASSWORD | Forbidden |
 
 []{# _Toc60015876 .anchor}Support the use of SQL statements to CREATE / DROP user and to GRANT / REVOKE user when the compute node version is higher than 2.5.6.
 
@@ -5405,19 +5404,19 @@ create user 'jingjingjing'@'%' identified by 'jing' with max_user_connections 3;
 
 When CREATE USER, the execution user must have super privilege. NULL password creation is not supported. The max length of user name is limited to 64 characters, and the password is not limited temporarily.
 
--   When the execution user does not have super privilege. it will prompt:
+- When the execution user does not have super privilege. it will prompt:
 
 ![](assets/standard/image110.png)
 
--   When creating with NULL password, it will prompt:
+- When creating with NULL password, it will prompt:
 
 ![](assets/standard/image111.png)
 
--   If the user name exceeds the limit, it will prompt:
+- If the user name exceeds the limit, it will prompt:
 
 ![](assets/standard/image112.png)
 
--   When creating user repeatedly, it will prompt:
+- When creating user repeatedly, it will prompt:
 
 ![](assets/standard/image113.png)
 
@@ -5433,11 +5432,11 @@ drop user 'jingjingjing'@'%';
 
 When DROP USER, the execution user must have super privilege.
 
--   When the execution user does not have super privilege, it will prompt:
+- When the execution user does not have super privilege, it will prompt:
 
 ![](assets/standard/image114.png)
 
--   When deleting a non-existent user, it will prompt:
+- When deleting a non-existent user, it will prompt:
 
 ![](assets/standard/image115.png)
 
@@ -5447,11 +5446,11 @@ The statement is:
 
 GRANT
 
-priv_type[, priv_type ] ...
+priv_type[, priv_type] ...
 
 ON  priv_level TO 'user_name'@'host_name'[,'user_name'@'host_name'] ...
 
-[WITH MAX_USER_CONNECTIONS con_num ]
+[WITH MAX_USER_CONNECTIONS con_num]
 
 **Description:**
 
@@ -5489,27 +5488,27 @@ Notes on GRANT:
 
 5. Privilege modification is only valid for the new connection and will not change the privilege of the created connection.
 
--   When the user who GRANTs does not have super privilege, it will prompt:
+- When the user who GRANTs does not have super privilege, it will prompt:
 
 ![](assets/standard/image116.png)
 
--   User is created synchronously when GRANT.
+- User is created synchronously when GRANT.
 
 ![](assets/standard/image117.png)
 
--   User is created synchronously when GRANT without password, it will prompt:
+- User is created synchronously when GRANT without password, it will prompt:
 
 ![](assets/standard/image118.png)
 
--   super must be granted global management privilege, and node-level and table-level grant is not supported.
+- super must be granted global management privilege, and node-level and table-level grant is not supported.
 
 ![](assets/standard/image119.png)
 
--   file must be granted global privilege, and node-level and table-level grant is not supported.
+- file must be granted global privilege, and node-level and table-level grant is not supported.
 
 ![](assets/standard/image120.png)
 
--   all can not be used with other privileges at the same time. It can only be granted separately.
+- all can not be used with other privileges at the same time. It can only be granted separately.
 
 ![](assets/standard/image121.png)
 
@@ -5517,7 +5516,7 @@ Notes on GRANT:
 
 The statement is:
 
-REVOKE priv_type [, priv_type ] ...ON priv_level FROM 'user_name'@'host_name' [, 'user_name'@'host_name'] ...
+REVOKE priv_type [, priv_type] ...ON priv_level FROM 'user_name'@'host_name' [, 'user_name'@'host_name'] ...
 
 The statement of REVOKE on the server end is:
 
@@ -5533,27 +5532,27 @@ Notes on REVOKE:
 
 4. Privilege modification is only valid for the new connection and will not change the privilege of the created connection.
 
--   When the user who REVOKEs does not have super privilege, it will prompt:
+- When the user who REVOKEs does not have super privilege, it will prompt:
 
 ![](assets/standard/image122.png)
 
--   REVOKE of some privileges is supported:
+- REVOKE of some privileges is supported:
 
 ![](assets/standard/image123.png)
 
--   REVOKE of all privileges is supported:
+- REVOKE of all privileges is supported:
 
 ![](assets/standard/image124.png)
 
--   REVOKE of node-level privileges is supported:
+- REVOKE of node-level privileges is supported:
 
 ![](assets/standard/image125.png)
 
--   REVOKE of table-level privileges is supported:
+- REVOKE of table-level privileges is supported:
 
 ![](assets/standard/image126.png)
 
--   If you REVOKE a privilege and use it again, error will be reported as follows:
+- If you REVOKE a privilege and use it again, error will be reported as follows:
 
 ![](assets/standard/image127.png)
 
@@ -5562,12 +5561,12 @@ Notes on REVOKE:
 #### Table maintenance statement
 
 | Statement type | SQL statement | Support status | Description |
-| --- | --- | --- | --- |
-|     | Table maintenance statement | ANALYZE TABLE | Forbidden |
-|     |     | CHECK TABLE | Forbidden |
-|     |     | CHECKSUM TABLE | Forbidden |
-|     |     | OPTIMIZE TABLE | Forbidden |
-|     |     | REPAIR TABLE | Forbidden |
+|----------------|-----------------------------|----------------|-------------|
+|   | Table maintenance statement | ANALYZE TABLE | Forbidden |
+|   |   | CHECK TABLE | Forbidden |
+|   |   | CHECKSUM TABLE | Forbidden |
+|   |   | OPTIMIZE TABLE | Forbidden |
+|   |   | REPAIR TABLE | Forbidden |
 
 #### SET statement
 
@@ -5699,11 +5698,11 @@ Notes on REVOKE:
 
 #### HotDB PROFILE
 
-| Statement type | SQL statement | Support status | Description |
-| --- | --- | --- | --- |
-| SET statement | set hotdb_profiling={0|1|on|off} | Support | Support set [session] hotdb_profiling |
-|     | SHOW statement | show hotdb_profiles | Support |
-|     | show hotdb_profile for query N [relative time|real time] | Support | N represents the SQL id executed |
+| Statement type | SQL statement | Support status | Description |   |   |   |
+|----------------|----------------------------------------------------------|---------------------|----------------------------------|------|---------|---------------------------------------|
+| SET statement | set hotdb_profiling={0 | 1 | on | off} | Support | Support set [session] hotdb_profiling |
+|   | SHOW statement | show hotdb_profiles | Support |   |   |   |
+|   | show hotdb_profile for query N [relative time|real time] | Support | N represents the SQL id executed |   |   |   |
 
 **Function Description**: this function is limited to Session level only
 
@@ -5819,20 +5818,20 @@ result send end time: the time point when the compute node completes sending the
 
 #### Other MySQL management statement
 
-| Statement type | SQL statement | Support status | Description |
-| --- | --- | --- | --- |
-|     | Other management statements | BINLOG 'str' | Forbidden |
-|     |     | CACHE INDEX | Forbidden |
-|     |     | KILL [CONNECTION | QUERY] | Support |
-|     |     | LOAD INDEX INTO CACHE | Forbidden |
-|     |     | RESET MASTER | Forbidden |
-|     |     | RESET QUERY CACHE | Forbidden |
-|     |     | RESET SLAVE | Forbidden |
-|     | MySQL Utility Statements | DESCRIBE|DESC | Support |
-|     | EXPLAIN | Support | Please refer to [EXPLAIN](#explain) |
-|     |     | EXPLAIN EXTENDED | Not support |
-|     |     | HELP | Not support |
-|     |     | USE | Support |
+| Statement type | SQL statement | Support status | Description |   |
+|----------------|-----------------------------|---------------------------|-------------------------------------|---------|
+|   | Other management statements | BINLOG 'str' | Forbidden |   |
+|   |   | CACHE INDEX | Forbidden |   |
+|   |   | KILL [CONNECTION | QUERY] | Support |   |
+|   |   | LOAD INDEX INTO CACHE | Forbidden |   |
+|   |   | RESET MASTER | Forbidden |   |
+|   |   | RESET QUERY CACHE | Forbidden |   |
+|   |   | RESET SLAVE | Forbidden |   |
+|   | MySQL Utility Statements | DESCRIBE | DESC | Support |
+|   | EXPLAIN | Support | Please refer to [EXPLAIN](#explain) |   |
+|   |   | EXPLAIN EXTENDED | Not support |   |
+|   |   | HELP | Not support |   |
+|   |   | USE | Support |   |
 
 The use method of KILL statement is the same with that of MySQL KILL statement. KILL will simultaneously disable the front-end connection of the compute node, and data source connection of MySQL database.
 
@@ -5955,7 +5954,7 @@ The following parameter are of special processing, the for its specific show res
 +--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
 
 | Status Name | Show description |
-| --- | --- |
+|-------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
 | Compression | All OFF (compute node does not support Compression Protocol for the time being) |
 | Innodb_buffer_pool_dump_status | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB |
 | Innodb_buffer_pool_load_status | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB |
@@ -6013,15 +6012,15 @@ By default, the compute node could Create Table only after making appropriate Ta
 
 **Premise for use: LogicDB sets default node**
 
-1.  Log in to Distributed Transactional Database Management Platform, select "Configuration"->"LogicDB", set LogicDB default node
+1. Log in to Distributed Transactional Database Management Platform, select "Configuration"->"LogicDB", set LogicDB default node
 
 ![](assets/standard/image129.png)
 
--   By default on the management platform, after Reload of LogicDB Configuration, table could be directly created by Create statement (without being defined on the management platform any longer), configuration will be generated automatically after Create Table (including table configuration and Sharding Function, etc.)
+- By default on the management platform, after Reload of LogicDB Configuration, table could be directly created by Create statement (without being defined on the management platform any longer), configuration will be generated automatically after Create Table (including table configuration and Sharding Function, etc.)
 
--   If LogicDB selects single node, then Vertical Sharding Table will be created by default; if it selects multiple nodes, Sharding Table with sharding type of AUTO_CRC32 will be created by default, and will give priority to select Primary Key and Unique Key as the sharding key
+- If LogicDB selects single node, then Vertical Sharding Table will be created by default; if it selects multiple nodes, Sharding Table with sharding type of AUTO_CRC32 will be created by default, and will give priority to select Primary Key and Unique Key as the sharding key
 
--   If to change the default node of LogicDB in later period, it will have no influence on tables created before change, and only applies the new LogicDB node to the new tables added after change
+- If to change the default node of LogicDB in later period, it will have no influence on tables created before change, and only applies the new LogicDB node to the new tables added after change
 
 ![](assets/standard/image130.png)
 
@@ -6043,7 +6042,7 @@ mysql> create table test02(id not null auto_increment Primary Key,a char(8),b de
 
 ![](assets/standard/image131.png)
 
--   For Sharding Table automatically created, selection sequence of sharding key is: Primary Key Field -> Unique Key Field ->the 1^st^ Integer Field (BIGINT, INT, MEDIUMINT, SMALLINT, TINYINT) - >after taking the Integer Field, take the Character String Type Field (CHAR, VARCHAR ), and in case of no appropriate one after taking all types above, a Field will be randomly selected as the Sharding Key by default.
+- For Sharding Table automatically created, selection sequence of sharding key is: Primary Key Field -> Unique Key Field ->the 1^st^ Integer Field (BIGINT, INT, MEDIUMINT, SMALLINT, TINYINT) - >after taking the Integer Field, take the Character String Type Field (CHAR, VARCHAR ), and in case of no appropriate one after taking all types above, a Field will be randomly selected as the Sharding Key by default.
 
 Notice: This function is only recommended to be used when contacting customer for the first time, and is not recommended for formal delivery and online, and Sharding shall be made according to the practical transaction scenarios;
 
@@ -6215,11 +6214,11 @@ Query OK, 0 rows affected (0.09 sec)
 
 For Create Table according to this Syntax Rule, pay attention to several points below:
 
--   'functionid | functionname | functiontype' is specific specified Sharding Function ID, Sharding Function name and Sharding Function type
+- 'functionid | functionname | functiontype' is specific specified Sharding Function ID, Sharding Function name and Sharding Function type
 
--   'shardcolumnname' is specified sharding key
+- 'shardcolumnname' is specified sharding key
 
--   'datanodeid' is node ID, which could be separated by comma, and support specification in interval form, such as: '1,3,4,5-10,12-40', the node ID could log in to Distributed Transactional Database Management Platform page, and select "Configuration"->" Node Management" to view, and could also log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function) to show hotdb datanodes; view:
+- 'datanodeid' is node ID, which could be separated by comma, and support specification in interval form, such as: '1,3,4,5-10,12-40', the node ID could log in to Distributed Transactional Database Management Platform page, and select "Configuration"->" Node Management" to view, and could also log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function) to show hotdb datanodes; view:
 
 mysql> show hotdb datanodes;
 
@@ -6245,13 +6244,13 @@ mysql> show hotdb datanodes;
 
 6 rows in set (0.00 sec)
 
--   Function Type only support auto_crc32/auto_mod; if other types are used, it will prompt: ERROR:The fucntiontype can only be auto_crc32/auto_mod.
+- Function Type only support auto_crc32/auto_mod; if other types are used, it will prompt: ERROR:The fucntiontype can only be auto_crc32/auto_mod.
 
 mysql> create table ft_match shard by functiontype 'match' using column 'id' on datanode '11,13'(id int(10) Primary Key, a char(20) not null);
 
 ERROR 10070 (HY000): The functiontype can only by auto_crc32/auto_mode.
 
--   When using functionid | functionname to Create Table, if the specified function information associated function_type is auto_crc32/auto_mod, it needs to specify on datanode 'datanodes', otherwise, it will prompt: The function must be specified datanodes. If being other types, specification is unnecessary.
+- When using functionid | functionname to Create Table, if the specified function information associated function_type is auto_crc32/auto_mod, it needs to specify on datanode 'datanodes', otherwise, it will prompt: The function must be specified datanodes. If being other types, specification is unnecessary.
 
 mysql> create table mod_ft shard by functionid '15' using column 'id'(id int(10) Primary Key, a char(20) not null);
 
@@ -6309,7 +6308,7 @@ Query OK, 0 rows affected (0.07 sec)
 
 For Create Table according to this Syntax Rule, pay attention to several points below:
 
--   If associated function_type with specified rule is auto_crc32/auto_mod, then it needs to specify on datanode 'datanodes', if being other types, thre is no need to specify datanode.
+- If associated function_type with specified rule is auto_crc32/auto_mod, then it needs to specify on datanode 'datanodes', if being other types, thre is no need to specify datanode.
 
 mysql> show hotdb rules;
 
@@ -6343,7 +6342,7 @@ mysql> CREATE TABLE route2_rptb1 shard by rulename 'AUTO_GENERATE_3_ROUTE1_TB' o
 
 ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
 
--   When associated function_type with specified rule is auto_crc32/auto_mod, in case of inconsistence between specified data nodes and the parameter, then it will prompt: ERROR: The total number of datanodes must be XXX (XXX is the column_value of the practical rule id associated function info)
+- When associated function_type with specified rule is auto_crc32/auto_mod, in case of inconsistence between specified data nodes and the parameter, then it will prompt: ERROR: The total number of datanodes must be XXX (XXX is the column_value of the practical rule id associated function info)
 
 mysql> CREATE TABLE auto_c shard by ruleid '63' on datanode '9'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '',adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE=INNODB;
 
@@ -6405,7 +6404,7 @@ Query OK, 0 rows affected (0.07 sec)
 
 global in syntax rules means creating a global table. The 'datanodeid' is the node ID, which can be separated by English commas and can be specified in the form of interval, such as 1, 3, 4, 5-10, 12-40. The nodes of the global table with sharidng functions created by global should include all nodes under the LogicDB.
 
--   If there is no sharding node or defined table under the LogicDB, you need to specify the nodes of the global table distribution when creating the global table using special syntax:
+- If there is no sharding node or defined table under the LogicDB, you need to specify the nodes of the global table distribution when creating the global table using special syntax:
 
 mysql> CREATE TABLE tb2_quan shard by global(id int not null auto_increment primary key,a int(10),b decimanl(5,2),c decimal(5,2),d date,e time(6),f timestamp(6) DEFAULT CURRENT_TIMESTAMP(6),g datetime(6) DEFAULT CURRENT_TIMESTAMP(6),h year,i char(20) null,j varchar(30),k blob,l text, m enum('','null','1','2','3'),n set('','null','1','2','3'));
 
@@ -6430,14 +6429,14 @@ mysql> show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 **The command contains parameters and its description:**
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-----------|---------------------------------------------------------|--------|
 | pattern | Optional, Fuzzy Query Expression, Match rule_name Field | STRING |
 | expr | Optional, Fuzzy Query Expression, Match Specified Field | STRING |
 
 **The result contains Field and its Description:**
 
 | Column name | Description | Value type/Range |
-| --- | --- | --- |
+|---------------|-------------------------|------------------|
 | datanode_id | Node ID | INTEGER |
 | datanode_name | Node name | STRING |
 | datanode_type | 0: Master/Slave; 1: MGR | INTEGER |
@@ -6497,14 +6496,14 @@ mysql> show hotdb functions;
 **The command contains parameters and its description:**
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-----------|-------------------------------------------------------------|--------|
 | pattern | Optional, Fuzzy Query Expression, Match function_name Field | STRING |
 | expr | Optional, Fuzzy Query Expression, Match function_name Field | STRING |
 
 **The result contains Field and its Description:**
 
 | Column name | Description | Value type/Range |
-| --- | --- | --- |
+|----------------|---------------------------------------------------------------------------------------------|------------------|
 | function_id | Sharding Function ID | INTEGER |
 | function_name | Sharding Function name | STRING |
 | function_type | Sharding Type | STRING |
@@ -6587,13 +6586,13 @@ mysql> show hotdb function infos [WHERE expr];
 **The command contains parameters and its description:**
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-----------|---------------------------------------------------------|--------|
 | expr | Optional, Fuzzy Query Expression, Match Specified Field | STRING |
 
 **The result contains Field and its Description:**
 
 | Column name | Description | Value type/Range |
-| --- | --- | --- |
+|--------------|----------------------|------------------|
 | function_id | Sharding Function ID | INTEGER |
 | column_value | Sharding Key value | STRING |
 | datanode_id | Data node id | INTEGER |
@@ -6665,14 +6664,14 @@ mysql> show hotdb rules [LIKE 'pattern' | WHERE expr];
 **The command contains parameters and its description:**
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-----------|---------------------------------------------------------|--------|
 | pattern | Optional, Fuzzy Query Expression, Match rule_name Field | STRING |
 | expr | Optional, Fuzzy Query Expression, Match rule_name Field | STRING |
 
 **The result contains Field and its Description:**
 
 | Column name | Description | Value type/Range |
-| --- | --- | --- |
+|----------------|---------------------------------------------------------------------------------------------|------------------|
 | rule_id | Sharding Function ID | INTEGER |
 | rule_name | Sharding Function name | STRING |
 | rule_column | Sharding Key Name | STRING |
@@ -6779,15 +6778,15 @@ The restoration operation could either RENAME temporary table respectively under
 
 Pay attention to the key points as following when making restoration:
 
--   The table created after management platform configuration, could be RENAME as the original table name directly. For the table created via Auto Create Table function, Table Configuration is not retained at the time of DROP TABLE, therefore, it can't be RENAME as the original table name directly.
+- The table created after management platform configuration, could be RENAME as the original table name directly. For the table created via Auto Create Table function, Table Configuration is not retained at the time of DROP TABLE, therefore, it can't be RENAME as the original table name directly.
 
--   The table created after restoring the Auto Create Table, could be RENAME as this table name after Add Configuration on the management platform. That is, the restoration operation allows to restore the deleted name to any table configured but not defined on the management platform via RENAME the table name.
+- The table created after restoring the Auto Create Table, could be RENAME as this table name after Add Configuration on the management platform. That is, the restoration operation allows to restore the deleted name to any table configured but not defined on the management platform via RENAME the table name.
 
--   In case of change in the Sharding Function cited by the deleted table, or configuration of different Sharding Function, after restoration, the data route will be consistent with that before Delete, that is, the practical data route will not match with the configured route. It's recommended configuring restoration according to the original Sharding Function, in order to prevent the problem of data loss or inconsistency.
+- In case of change in the Sharding Function cited by the deleted table, or configuration of different Sharding Function, after restoration, the data route will be consistent with that before Delete, that is, the practical data route will not match with the configured route. It's recommended configuring restoration according to the original Sharding Function, in order to prevent the problem of data loss or inconsistency.
 
--   If there is foreign key or trigger on the deleted table, then at the time of DROP TABLE, foreign key and trigger will be deleted in the temporary table. Since foreign key is deleted, after restoration, the Parent/Child Table no longer has Parent/Child Table relation.
+- If there is foreign key or trigger on the deleted table, then at the time of DROP TABLE, foreign key and trigger will be deleted in the temporary table. Since foreign key is deleted, after restoration, the Parent/Child Table no longer has Parent/Child Table relation.
 
--   The restoration operation of RENAME temporary table could take effect only after Reload. The Reload supported by the compute node at present could take effect only under the condition of change in configDB, therefore, if there is no other change in configDB except RENAME operation, the Reload will take effect only upon manual change in configDB, that is, the restored table could be viewed.
+- The restoration operation of RENAME temporary table could take effect only after Reload. The Reload supported by the compute node at present could take effect only under the condition of change in configDB, therefore, if there is no other change in configDB except RENAME operation, the Reload will take effect only upon manual change in configDB, that is, the restored table could be viewed.
 
 ## INFORMATION_SCHEMA
 
@@ -6796,7 +6795,7 @@ INFORMATION_SCHEMA database provides information and data of the existing comput
 This chapter lists the tables and its special processing contents in INFORMATION_SCHEMA supported by the compute node, as follows:
 
 | Table name | Special processing |
-| --- | --- |
+|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | character_sets | Only return the Character Set and Collation Set data supported by the compute node |
 | collations | Only return the Character Set and Collation Set data supported by the compute node |
 | collation_character_set_applicability | Only return the Character Set and Collation Set data supported by the compute node |
@@ -6860,7 +6859,7 @@ This chapter lists the tables and its special processing contents in INFORMATION
 In order to be compatible with the data source above MySQL 8.0, conduct the following special processing for the New contents of MySQL8.0:
 
 | Table Name | Special processing |
-| --- | --- |
+|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | check_constraints | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
 | column_statistics | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
 | keywords | Return Null Set |
@@ -6880,7 +6879,7 @@ During the use process, the compute node has maintained many system configuratio
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|---------------------------------------------------------------------|
 | Parameter value | adaptiveProcessor |
 | Visible or not | Hidden |
 | Description of parameters | Control whether the startup service is Automatic Adaptation or not. |
@@ -6983,7 +6982,7 @@ Only when the compute node is under pressure could it reach the Automatic Adapta
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-----------------------------------------------------------------------------------------------|
 | Parameter value | allowRCWithoutReadConsistentInXA |
 | Visible or not | No |
 | Description of parameters | RC isolation level that does not gurantee strong read-write consistency is allowed in XA mode |
@@ -7042,7 +7041,7 @@ In version 2.5.3 and below, only true or false can be set. Setting as true is eq
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|--------------------------------------|
 | Parameter value | badConnAfterContinueGet |
 | Visible or not | No |
 | Description of parameters | Continue to obtain connection or not |
@@ -7063,7 +7062,7 @@ After compute node obtaining connection from the connection pool and having cond
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|---------------------------------------------------------------------------------------------------|
 | Parameter value | badConnAfterFastCheckAllIdle |
 | Visible or not | No |
 | Description of parameters | When broken back-end connection is obtained, whether to check all idle connections rapidly or not |
@@ -7084,7 +7083,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------------------|
 | Parameter value | bakUrl |
 | Visible or not | Yes |
 | Description of parameters | Slave configDB address |
@@ -7093,7 +7092,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 | Min Compatible Version | 2.4.4 |
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-------------------------|
 | Parameter value | bakUsername |
 | Visible or not | Yes |
 | Description of parameters | Slave configDB username |
@@ -7102,7 +7101,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 | Min Compatible Version | 2.4.4 |
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-------------------------|
 | Parameter value | bakPassword |
 | Visible or not | Yes |
 | Description of parameters | Slave configDB password |
@@ -7147,7 +7146,7 @@ description: NULL
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | Parameter value | checkConnLastUsedTime |
 | Visible or not | No |
 | Description of parameters | Max allowed interval time of last use by the back-end connection. If exceeded, it will check whether this connection is valid or not, unit: ms |
@@ -7182,7 +7181,7 @@ mysql> show @@session;
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------------------------------------------|
 | Parameter value | CheckConnValid |
 | Visible or not | No |
 | Description of parameters | Whether to check whether the back-end connection is valid or not |
@@ -7205,7 +7204,7 @@ When obtaining connection from the connection pool, check availability of the co
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|--------------------------------------------------------------------------------|
 | Parameter value | checkConnValidTimeout |
 | Visible or not | No |
 | Description of parameters | At the time of checking validity of back-end connection, max timeout, unit: ms |
@@ -7260,7 +7259,7 @@ Check whether interval time of MySQL Parameter Setting is reasonable or not. The
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------------------------------------------|
 | Parameter value | checkUpdate |
 | Visible or not | No |
 | Description of parameters | Whether to intercept update operation of the sharding key or not |
@@ -7305,7 +7304,7 @@ mysql> select * from ss where a='aa';
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-----------------------------------------------------------|
 | Parameter value | clientFoundRows |
 | Visible or not | No |
 | Description of parameters | Use found rows to replace the affected rows in OK package |
@@ -7336,7 +7335,7 @@ jdbc is committed useAffectedRows=true，the actual number of rows affected will
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-------------------------------|
 | Parameter value | clusterElectionTimeoutMs |
 | Visible or not | No |
 | Description of parameters | Cluster Election Timeout (ms) |
@@ -7359,7 +7358,7 @@ This parameter is used for setting Cluster Election Timeout of the compute node,
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|--------------------------------|
 | Parameter value | clusterHeartbeatTimeoutMs |
 | Visible or not | No |
 | Description of parameters | Cluster Heartbeat Timeout (ms) |
@@ -7382,7 +7381,7 @@ This parameter is used for setting Cluster Heartbeat Timeout of the compute node
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------|
 | Parameter value | clusterHost |
 | Visible or not | Yes |
 | Description of parameters | IP of the current node |
@@ -7405,7 +7404,7 @@ This parameter shall be set consistent with the actual IP of the compute node (c
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|--------------------|
 | Parameter value | clusterName |
 | Visible or not | Yes |
 | Description of parameters | Cluster Group Name |
@@ -7428,7 +7427,7 @@ Specify the name of the group added after cluster startup, and this parameter of
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-------------------------|
 | Parameter value | clusterNetwork |
 | Visible or not | Yes |
 | Description of parameters | Cluster Network Segment |
@@ -7451,7 +7450,7 @@ This parameter is the network segment of the whole cluster, and it's limited tha
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|---------------------------------------------------------|
 | Parameter value | clusterPacketTimeoutMs |
 | Visible or not | No |
 | Description of parameters | Failure time of inter-cluster communication packet (ms) |
@@ -7474,7 +7473,7 @@ This parameter is used for setting Cluster Packet Timeout, and generally modific
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|----------------------------|
 | Parameter value | clusterPort |
 | Visible or not | Yes |
 | Description of parameters | Cluster Communication Port |
@@ -7497,7 +7496,7 @@ The default value 3326 specifies the port of listening cluster information. This
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|----------------------------------|
 | Parameter value | clusterSize |
 | Visible or not | Yes |
 | Description of parameters | Total number of nodes in cluster |
@@ -7520,7 +7519,7 @@ This parameter is total number of compute node in cluster. If haMode is set as 1
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-------------------------------------------------------|
 | Parameter value | clusterStartedPacketTimeoutMs |
 | Visible or not | No |
 | Description of parameters | Failure Time of Cluster Started Broadcast Packet (ms) |
@@ -7543,7 +7542,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|----------------------------------|
 | Parameter value | configMGR |
 | Visible or not | Yes |
 | Description of parameters | Whether configDB uses MGR or not |
@@ -7570,7 +7569,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 +--------------------------------+----------------------+
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-----------------------|
 | Parameter value | bak1Username |
 | Visible or not | Yes |
 | Description of parameters | MGR configDB username |
@@ -7579,7 +7578,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 | Min Compatible Version | 2.5.0 |
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-----------------------|
 | Parameter value | bak1Password |
 | Visible or not | Yes |
 | Description of parameters | MGR configDB password |
@@ -7604,7 +7603,7 @@ configMGR and bak1Url and bak1Username and bak1Password are supporting parameter
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------------------------------|
 | Parameter value | crossDbXa |
 | Visible or not | No |
 | Description of parameters | Whether XA transactions are adopted in cross-LogicDB |
@@ -7699,7 +7698,7 @@ Result: select * from B.b; execute normally
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|--------------------------------------|
 | Parameter value | cryptMandatory |
 | Visible or not | Yes |
 | Description of parameters | Mandatory password encryption or not |
@@ -7715,17 +7714,17 @@ Result: select * from B.b; execute normally
 
 It's used for setting whether to make mandatory password identification or not when the compute node reads the data source password
 
--   True status:
+- True status:
 
--   When the data source password is plaintext, the compute node will fail to connect to this data source
+- When the data source password is plaintext, the compute node will fail to connect to this data source
 
--   When the data source password is cyphertext, the compute node can connect to this data source
+- When the data source password is cyphertext, the compute node can connect to this data source
 
--   False status:
+- False status:
 
--   When the data source password is plaintext, the compute node can connect to this data source
+- When the data source password is plaintext, the compute node can connect to this data source
 
--   When the data source password is cyphertext, the compute node will fail to connect to this data source
+- When the data source password is cyphertext, the compute node will fail to connect to this data source
 
 #### dataNodeIdleCheckPeriod
 
@@ -7810,7 +7809,7 @@ ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-------------------|
 | Parameter value | defaultMaxLimit |
 | Visible or not | No |
 | Description of parameters | default max limit |
@@ -7887,7 +7886,7 @@ ztm@10.10.0.207:pm 5.7.19-HotDB-2.5.1 06:10:45> show processlist;
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|----------------------------------------------------|
 | Parameter value | dropTableRetentionTime |
 | Visible or not | Yes |
 | Description of parameters | dropTableRetentionTime, 0 by default, no retention |
@@ -7910,7 +7909,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------------------|
 | Parameter value | drBakUrl |
 | Visible or not | Yes |
 | Description of parameters | Slave ConfigDB address of DR center |
@@ -7919,7 +7918,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 | Min Compatible Version | 2.5.3.1 |
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|--------------------------------------|
 | Parameter value | drBakUsername |
 | Visible or not | Yes |
 | Description of parameters | Slave ConfigDB username of DR center |
@@ -7928,7 +7927,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 | Min Compatible Version | 2.5.3.1 |
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|--------------------------------------|
 | Parameter value | drBakPassword |
 | Visible or not | Yes |
 | Description of parameters | Slave ConfigDB password of DR center |
@@ -7951,7 +7950,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------------------|
 | Parameter value | drUrl |
 | Visible or not | Yes |
 | Description of parameters | ConfigDB address of DR center |
@@ -7960,7 +7959,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 | Min Compatible Version | 2.5.3.1 |
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-------------------------------|
 | Parameter value | drUsername |
 | Visible or not | Yes |
 | Description of parameters | ConfigDB usernameof DR center |
@@ -7969,7 +7968,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 | Min Compatible Version | 2.5.3.1 |
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-------------------------------|
 | Parameter value | drPassword |
 | Visible or not | Yes |
 | Description of parameters | ConfigDB passwordof DR center |
@@ -7992,7 +7991,7 @@ drUrl, drUsername and drPassword are supporting parameters, among which drUrl re
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|----------------------------------------------------------|
 | Parameter value | enableCursor |
 | Visible or not | Yes |
 | Description of parameters | Allow PREPARE statement to obtain data via CURSOR or not |
@@ -8239,7 +8238,7 @@ mysql> show @@latency;
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------|
 | Parameter value | enableListener |
 | Visible or not | Yes |
 | Description of parameters | Enable Listener mode or not. |
@@ -8302,7 +8301,7 @@ Please refer to the description of [linear expansion](#linear-expansion) for pre
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|--------------------------------|
 | Parameter value | enableOracleFunction |
 | Visible or not | No |
 | Description of parameters | Support oracle function or not |
@@ -8322,7 +8321,7 @@ enableOracleFunction is a hidden parameter. If you want to enable it, you need t
 
 When Oracle data is migrated to MySQL, some functions are replaced to make it run successfully and reduce the cost of migration. Besides, sequence objects and its related functions of Oracle are supported. When this parameter is enabled, it will be parsed according to Oracle mode first, otherwise it will be parsed according to MySQL mode.
 
--   For functions supported by Oracle but not supported by MySQL, some of them support rewriting. If you want to know functions that compute nodes support to rewrite, please refer to "HotDB Server Latest Function List".
+- For functions supported by Oracle but not supported by MySQL, some of them support rewriting. If you want to know functions that compute nodes support to rewrite, please refer to "HotDB Server Latest Function List".
 
 > When it is set to true, the Oracle function parse identifies rewriting support and executes successfully. Example:
 >
@@ -8350,7 +8349,7 @@ When it is set to false, for functions not supported by MySQL, it will report "n
 >
 > ERROR 1305 (42000): FUNCTION db256_01.TO_CHAR does not exist
 
--   For Sequence related functions, please refer to "HotDB Server Latest Function List"
+- For Sequence related functions, please refer to "HotDB Server Latest Function List"
 
 When it is set to true, the sequence related functions execute successfully. Example:
 
@@ -8385,7 +8384,7 @@ When it is set to false, it will prompt error:
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------------------|
 | Parameter value | enableSleep |
 | Visible or not | Yes |
 | Description of parameters | Whether SLEEP Function is allowed or not |
@@ -8428,7 +8427,7 @@ mysql> select sleep(2);
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-------------------------------------------|
 | Parameter value | enableSSL |
 | Visible or not | Yes |
 | Description of parameters | Whether to enable SSL connection function |
@@ -8447,7 +8446,7 @@ This parameter is used to set whether the compute node is allowed to connect usi
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------------------------------------|
 | Parameter value | enableSubquery |
 | Visible or not | No |
 | Description of parameters | Whether Subquery under special scenarios is allowed or not |
@@ -8568,7 +8567,7 @@ You could view check information of data source switch via log:
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-----------------------------|
 | Parameter value | enableXA |
 | Visible or not | Yes |
 | Description of parameters | Apply XA TRANSACTION or not |
@@ -8587,7 +8586,7 @@ Using the external XA TRANSACTION provided by MySQL, the compute node could solv
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------------------------|
 | Parameter value | errorsPermittedInTransaction |
 | Visible or not | Yes |
 | Description of parameters | Whether error is allowed in transaction or not |
@@ -8676,7 +8675,7 @@ mysql> select * from ss where id=1;
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|------------------------------------------------------------------------|
 | Parameter value | failoverAutoresetslave |
 | Visible or not | Yes |
 | Description of parameters | When failover, auto reset the master/slave replication relation or not |
@@ -8697,7 +8696,7 @@ This parameter is used for guaranteeing data accuracy after data source failover
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|----------------------------------------------|
 | Parameter value | frontConnectionTrxIsoLevel |
 | Visible or not | No |
 | Description of parameters | Front-end connection default isolation level |
@@ -8754,7 +8753,7 @@ Great network latency or unreachable network from the compute node to the client
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|---------------------------|
 | Parameter value | generatePrefetchCostRatio |
 | Visible or not | No |
 | Description of parameters | 触发提前预取的已消耗比例 |
@@ -8867,7 +8866,7 @@ In HotDB Server 2.5.6 and above, haMode can be set to 0,1,2,3,4,5. Among them, 4
 +--------------------------------+----------------------+
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|-----------------------------|
 | Parameter value | haNodeHost |
 | Visible or not | Yes |
 | Description of parameters | HA role, Other node IP:PORT |
@@ -8968,7 +8967,7 @@ mysql> show @@debug;
 **Description of parameter:**
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|----------------------------------------|
 | Parameter value | idcId |
 | Visible or not | Yes |
 | Description of parameters | ID of IDC, 1:master center,2:DR center |
@@ -8977,7 +8976,7 @@ mysql> show @@debug;
 | Min Compatible Version | 2.5.3.1 |
 
 | Property | Value |
-| --- | --- |
+|--------------------------------|---------------------------------------|
 | Parameter value | idcNodeHost |
 | Visible or not | Yes |
 | Description of parameters | connection information of another IDC |
@@ -9001,101 +9000,101 @@ For example, set idcId as 1 in server.xml of the master center, idcNodeHost for 
 
 Property                         Value
 
-| Parameter value | idleTimeout |
-| --- | --- |
-| Visible or not | No |
-| Description of parameters | Front-end idle connection timeout time |
-| Default value | 28800 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
-|     | **Parameter Setting:** |
-|     | In server.xml，the parameter idleTimeout is configured as follows: |
-|     | <property name=[idleTimeout](#idleTimeout)>28800</property><!-- Front-end idle connection timeout time，unit: seconds --> |
-|     | **Role of parameter:** |
-|     | This parameter is used to detect the timeout time of idle connections at the front end. If Time of connection in the "sleep" state at the front-end exceeds the set value, HotDB will close the idle connection. When the parameter is set to 0, it means that the current front-end idle connection never timeout. |
-|     | To facilitate the demonstration, the value is set to 60 seconds in the test. |
-|     | mysql > show processlist; |
-|     | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |
-|     | | Id | User | Host | db | Command | Time | State | Info | |
-|     | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |
-|     | | 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist | |
-|     | | 7 | ztm | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep | 59 | | NULL | |
-|     | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |
-|     | 2 rows in set (0.00 sec) |
-|     | mysql > show processlist; |
-|     | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |
-|     | | Id | User | Host | db | Command | Time | State | Info | |
-|     | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |
-|     | | 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist | |
-|     | | 7 | ztm | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep | 60 | | NULL | |
-|     | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |
-|     | 2 rows in set (0.00 sec) |
-|     | mysql > show processlist; |
-|     | +------+------+-----------------------+------+---------+------+-----------+------------------+ |
-|     | | Id | User | Host | db | Command | Time | State | Info | |
-|     | +------+------+-----------------------+------+---------+------+-----------+------------------+ |
-|     | | 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist | |
-|     | +------+------+-----------------------+------+---------+------+-----------+------------------+ |
-|     | 1 row in set (0.00 sec) |
-|     | At this time, the front-end connection session time outs. Entering SQL in, it will prompt that the connection has been disconnected, and try to reconnect. Finally, the reconnection is successful: |
-|     | msyql> show databases; |
-|     | +--------------------+ |
-|     | | DATABASE | |
-|     | +--------------------+ |
-|     | | INFORMATION_SCHEMA | |
-|     | +--------------------+ |
-|     | 1 row in set (0.00 sec) |
-|     | mysql> show databases; |
-|     | ERROR 2013 (HY000): Lost connection to MySQL server during query |
-|     | ERROR 2006 (HY000): MySQL server has gone away |
-|     | No connection. Trying to reconnect... |
-|     | Connection id: 10 |
-|     | Current database: INFORMATION_SCHEMA |
-|     | If it is set to 0, the front-end idle connection will never time out, and the connection time in sleep status will increase all the time. |
-|     |#### joinable |
-|     | **Description of parameter:** |
+| Parameter value | idleTimeout |   |   |   |   |   |   |   |   |   |
+|--------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|------|-----------------------|--------------------|---------|------|-----------|------------------|---|
+| Visible or not | No |   |   |   |   |   |   |   |   |   |
+| Description of parameters | Front-end idle connection timeout time |   |   |   |   |   |   |   |   |   |
+| Default value | 28800 |   |   |   |   |   |   |   |   |   |
+| Whether Reload is valid or not | No |   |   |   |   |   |   |   |   |   |
+| Min Compatible Version | 2.4.3 |   |   |   |   |   |   |   |   |   |
+|   | **Parameter Setting:** |   |   |   |   |   |   |   |   |   |
+|   | In server.xml，the parameter idleTimeout is configured as follows: |   |   |   |   |   |   |   |   |   |
+|   | <property name=[idleTimeout](#idleTimeout)>28800</property><!-- Front-end idle connection timeout time，unit: seconds --> |   |   |   |   |   |   |   |   |   |
+|   | **Role of parameter:** |   |   |   |   |   |   |   |   |   |
+|   | This parameter is used to detect the timeout time of idle connections at the front end. If Time of connection in the "sleep" state at the front-end exceeds the set value, HotDB will close the idle connection. When the parameter is set to 0, it means that the current front-end idle connection never timeout. |   |   |   |   |   |   |   |   |   |
+|   | To facilitate the demonstration, the value is set to 60 seconds in the test. |   |   |   |   |   |   |   |   |   |
+|   | mysql > show processlist; |   |   |   |   |   |   |   |   |   |
+|   | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |   |   |   |   |   |   |   |   |   |
+|   |   | Id | User | Host | db | Command | Time | State | Info |   |
+|   | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |   |   |   |   |   |   |   |   |   |
+|   |   | 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |   |
+|   |   | 7 | ztm | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep | 59 |   | NULL |   |
+|   | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |   |   |   |   |   |   |   |   |   |
+|   | 2 rows in set (0.00 sec) |   |   |   |   |   |   |   |   |   |
+|   | mysql > show processlist; |   |   |   |   |   |   |   |   |   |
+|   | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |   |   |   |   |   |   |   |   |   |
+|   |   | Id | User | Host | db | Command | Time | State | Info |   |
+|   | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |   |   |   |   |   |   |   |   |   |
+|   |   | 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |   |
+|   |   | 7 | ztm | 192.168.220.211:26470 | INFORMATION_SCHEMA | Sleep | 60 |   | NULL |   |
+|   | +------+------+-----------------------+--------------------+---------+------+-----------+------------------+ |   |   |   |   |   |   |   |   |   |
+|   | 2 rows in set (0.00 sec) |   |   |   |   |   |   |   |   |   |
+|   | mysql > show processlist; |   |   |   |   |   |   |   |   |   |
+|   | +------+------+-----------------------+------+---------+------+-----------+------------------+ |   |   |   |   |   |   |   |   |   |
+|   |   | Id | User | Host | db | Command | Time | State | Info |   |
+|   | +------+------+-----------------------+------+---------+------+-----------+------------------+ |   |   |   |   |   |   |   |   |   |
+|   |   | 9 | root | 192.168.220.211:26568 | NULL | Query | 0 | executing | show processlist |   |
+|   | +------+------+-----------------------+------+---------+------+-----------+------------------+ |   |   |   |   |   |   |   |   |   |
+|   | 1 row in set (0.00 sec) |   |   |   |   |   |   |   |   |   |
+|   | At this time, the front-end connection session time outs. Entering SQL in, it will prompt that the connection has been disconnected, and try to reconnect. Finally, the reconnection is successful: |   |   |   |   |   |   |   |   |   |
+|   | msyql> show databases; |   |   |   |   |   |   |   |   |   |
+|   | +--------------------+ |   |   |   |   |   |   |   |   |   |
+|   |   | DATABASE |   |   |   |   |   |   |   |   |
+|   | +--------------------+ |   |   |   |   |   |   |   |   |   |
+|   |   | INFORMATION_SCHEMA |   |   |   |   |   |   |   |   |
+|   | +--------------------+ |   |   |   |   |   |   |   |   |   |
+|   | 1 row in set (0.00 sec) |   |   |   |   |   |   |   |   |   |
+|   | mysql> show databases; |   |   |   |   |   |   |   |   |   |
+|   | ERROR 2013 (HY000): Lost connection to MySQL server during query |   |   |   |   |   |   |   |   |   |
+|   | ERROR 2006 (HY000): MySQL server has gone away |   |   |   |   |   |   |   |   |   |
+|   | No connection. Trying to reconnect... |   |   |   |   |   |   |   |   |   |
+|   | Connection id: 10 |   |   |   |   |   |   |   |   |   |
+|   | Current database: INFORMATION_SCHEMA |   |   |   |   |   |   |   |   |   |
+|   | If it is set to 0, the front-end idle connection will never time out, and the connection time in sleep status will increase all the time. |   |   |   |   |   |   |   |   |   |
+|   | #### joinable |   |   |   |   |   |   |   |   |   |
+|   | **Description of parameter:** |   |   |   |   |   |   |   |   |   |
 
 **Property**                     **Value**
-  Parameter value                  joinable
-  Visible or not                   Yes
-  Description of parameters        Allow JOIN Query or not, Yes: true, No: false
-  Default value                    true
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  joinable
+Visible or not                   Yes
+Description of parameters        Allow JOIN Query or not, Yes: true, No: false
+Default value                    true
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
-| Role of parameter: |
-| --- |
-| This parameter could limit some SQL statement execution, including cross-node join queries and single-node join queries among sharding table that are judged to be distributed by sharding key. Under Global Table join and Vertical Sharding Table join, there will be no corresponding limit when this parameter is enabled. When this parameter is disabled，the execution of some join statements will be restricted, including cross-node join queries and some single-node join queries among sharding table that are judged to be distributed by sharding key. |
-| Set JOIN Query as false, and execute statement under this environment. Report ERROR 1064 (HY000): joinable is not configured. |
-| mysql> select * from join_cross_a_jwy a inner join join_cross_b_jwy b on a.adnid between 108 and 110; |
-| ERROR 1064 (HY000): joinable is not configured. |
-| mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept limit 5; |
-| ERROR 1064 (HY000): joinable is not configured. |
-| Set JOIN Query as true, and execute the statement under this environment: |
-| mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept limit 5; |
-| +---------+ |
-| | adept | |
-| +---------+ |
-| | aa | |
-| | bb | |
-| | cc | |
-| +---------+ |
-| 3 rows in set (0.03 sec) |
-|#### joinBatchSize |
-| **Description of parameter:** |
+| Role of parameter: |   |   |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------|---|
+| This parameter could limit some SQL statement execution, including cross-node join queries and single-node join queries among sharding table that are judged to be distributed by sharding key. Under Global Table join and Vertical Sharding Table join, there will be no corresponding limit when this parameter is enabled. When this parameter is disabled，the execution of some join statements will be restricted, including cross-node join queries and some single-node join queries among sharding table that are judged to be distributed by sharding key. |   |   |
+| Set JOIN Query as false, and execute statement under this environment. Report ERROR 1064 (HY000): joinable is not configured. |   |   |
+| mysql> select * from join_cross_a_jwy a inner join join_cross_b_jwy b on a.adnid between 108 and 110; |   |   |
+| ERROR 1064 (HY000): joinable is not configured. |   |   |
+| mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept limit 5; |   |   |
+| ERROR 1064 (HY000): joinable is not configured. |   |   |
+| Set JOIN Query as true, and execute the statement under this environment: |   |   |
+| mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept limit 5; |   |   |
+| +---------+ |   |   |
+|   | adept |   |
+| +---------+ |   |   |
+|   | aa |   |
+|   | bb |   |
+|   | cc |   |
+| +---------+ |   |   |
+| 3 rows in set (0.03 sec) |   |   |
+| #### joinBatchSize |   |   |
+| **Description of parameter:** |   |   |
 
 **Property**                     **Value**
-  Parameter value                  joinBatchSize
-  Visible or not                   Yes
-  Description of parameters        At equi-join query, record number of equi-join queries turning into IN queries per batch
-  Default value                    1000
-  Min value                        100
-  Max value                        100000
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  joinBatchSize
+Visible or not                   Yes
+Description of parameters        At equi-join query, record number of equi-join queries turning into IN queries per batch
+Default value                    1000
+Min value                        100
+Max value                        100000
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
 | Role of parameter: |
-| --- |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | At equi-join query, record number of equi-join queries turning into IN queries per batch. The value exceeding the setting will be transferred in several times. This parameter belongs to optimization parameter of join Query, and it could improve the join Query speed. For example: |
 | <property name=[joinBatchSize](#joinBatchSize)>3</property><!---At equi-join query, record number of equi-join queries turning into IN queries per batch --> |
 | At this time, execute: |
@@ -9105,21 +9104,21 @@ Property                         Value
 | 1993 Query SELECT B.`ID`, B.`name`, B.`telephone`, B.`provinceid`, B.`province`, B.`city`, B.`address`, B.`postcode`, B.`birthday`, b.id AS `hotdb_tmp_col_alia s_1` FROM customer_auto_3 AS b WHERE B.ID IN **(4043006, 4053408, 4056542)** |
 | ...More are omitted... |
 | Notice: The parameter value is for illustration only, not for practical reference. |
-|#### joinCacheSize |
+| #### joinCacheSize |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  joinCacheSize
-  Visible or not                   No
-  Description of parameters        Off-heap memory size of JOIN cache (M)
-  Default value                    32
-  Min value                        0
-  Max value                        128
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  joinCacheSize
+Visible or not                   No
+Description of parameters        Off-heap memory size of JOIN cache (M)
+Default value                    32
+Min value                        0
+Max value                        128
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
 | Role of parameter: |
-| --- |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | It presents available direct memory size of join, and could influence speed of JOIN query cache. |
 | When direct memory used by join exceeds the set value, it will be stored on local disk temporarily, and after execution of join statement completed, the temporary file will be deleted automatically. |
 | root> pwd |
@@ -9129,21 +9128,21 @@ Property                         Value
 | -rw-r--r-- 1 root root 8778410 May 9 17:28 positions_5302007528422328273.tmp |
 | -rw-r--r-- 1 root root 141868981 May 9 17:28 row_411809270296834018.tmp |
 | -rw-r--r-- 1 root root 26113612 May 9 18:01 row_4342139033645193593.tmp |
-|#### joinLoopSize |
+| #### joinLoopSize |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  joinLoopSize
-  Visible or not                   Yes
-  Description of parameters        JOIN Query times per batch of each node when using BNL algorithm
-  Default value                    1000
-  Min value                        100
-  Max value                        10000
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  joinLoopSize
+Visible or not                   Yes
+Description of parameters        JOIN Query times per batch of each node when using BNL algorithm
+Default value                    1000
+Min value                        100
+Max value                        10000
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
 | Role of parameter: |
-| --- |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | JOIN Query times per batch of each node when using BNL algorithm belongs to optimization parameter of join Query, and it could improve the join Query speed. |
 | <property name=[joinLoopSize](#joinLoopSize)>1000</property><!-- 使用BNL算法做JOIN时各节点每批次查询数量 --> |
 | <property name=[joinLoopSize](#joinLoopSize)>1000</property><!-- JOIN Query times per batch of each node when using BNL algorithm --> |
@@ -9153,666 +9152,666 @@ Property                         Value
 | 1187022 Query SELECT A.id, A.a, A.bchar, A.cdeci, A.dtime FROM bn_a_jwy AS a ORDER BY A.ID LIMIT 1001 |
 | 1187022 Query SELECT C.id, C.a, C.bchar, C.cdeci, C.dtime FROM bn_c_jwy AS c WHERE C.id IN (0) ORDER BY C.ID LIMIT 0 , 1001 |
 | 1187022 Query SELECT B.id, B.a, B.bchar, B.cdeci, B.dtime FROM bn_b_jwy AS b WHERE B.a COLLATE utf8_general_ci IN ('d') ORDER BY B.ID LIMIT 0 , 1001 ...More are omitted... |
-|#### keyStore |
+| #### keyStore |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  keyStore
-  Visible or not                   Yes
-  Description of parameters        Path to the data certificate .jks file for TLS connection
-  Default value                    /server.jks
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.5
+Parameter value                  keyStore
+Visible or not                   Yes
+Description of parameters        Path to the data certificate .jks file for TLS connection
+Default value                    /server.jks
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.5
 
 | Parameter setting: |
-| --- |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[keyStore](#keyStore)>/server.jks</property><!-- Path to the data certificate .jks file for TLS connection --> |
 | **Role of parameter:** |
 | This parameter is used to set the path to the data certificate .jks file for connection using SSL authentication. For details, please refer to the [TLS connection login](#tls-connection-login), and use it together with parameters [enableSSL](#enablessl) and [keyStorePass](#keystorepass). |
-|#### keyStorePass |
+| #### keyStorePass |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  keyStorePass
-  Visible or not                   Yes
-  Description of parameters        Password of the data certificate .jks file for TLS connection
-  Default value                    BB5A70F75DD5FEB214A5623DD171CEEB
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.5
+Parameter value                  keyStorePass
+Visible or not                   Yes
+Description of parameters        Password of the data certificate .jks file for TLS connection
+Default value                    BB5A70F75DD5FEB214A5623DD171CEEB
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.5
 
 | Parameter setting: |
-| --- |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[keyStore](#keyStore)>/server.jks</property><!-- Password of the data certificate .jks file for TLS connection --> |
 | **Role of parameter:** |
 | This parameter is used to set the password of the data certificate .jks file for connection using SSL authentication. For details, please refer to the [TLS connection login](#tls-connection-login), and use it together with parameters [enableSSL](#enablessl) and [keyStore](#keystore). |
-|#### lockWaitTimeout |
+| #### lockWaitTimeout |
 | **Description of parameter:** |
 
 Property                         Value
-  Parameter value                  lockWaitTimeout
-  Visible or not                   Yes
-  Description of parameters        Timeout for obtaining metadata lock (s)
-  Default value                    31536000
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.3
-  Max value                        31536000
-  Min value                        1
+Parameter value                  lockWaitTimeout
+Visible or not                   Yes
+Description of parameters        Timeout for obtaining metadata lock (s)
+Default value                    31536000
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.3
+Max value                        31536000
+Min value                        1
 
 | Parameter Setting: |
-| --- |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | This parameter is used to set the timeout (s) for obtaining metadata lock. The value range is 1-31536000s, and the default value is 31536000s, i.e. 365 days, representing if the metadata lock timeout exceeds 365 days, the client will prompt the lock timeout. |
 | <property name=[lockWaitTimeout](#lockWaitTimeout)>31536000</property> <!-- Timeout for obtaining metadata lock --> |
 | session A execute: |
 | ![](assets/standard/image144.png) |
 | session B execute: if the set value of lockWaitTimeout is exceeded, the following prompt will be given:![](assets/standard/image145.png) |
-|#### masterSourceInitWaitTimeout |
+| #### masterSourceInitWaitTimeout |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  masterSourceInitWaitTimeout
-  Visible or not                   No
-  Description of parameters        When start, Master Data Source Initialization Timeout in data node
-  Default value                    300
-  Min value                        0
-  Max value                        600
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  masterSourceInitWaitTimeout
+Visible or not                   No
+Description of parameters        When start, Master Data Source Initialization Timeout in data node
+Default value                    300
+Min value                        0
+Max value                        600
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
 | Role of parameter: |
-| --- |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | When start, the Master data source will reconnect continuously after initial initialization failure; in case of existing standby data source and initialization timeout time of the Master data source is exceeded, it will switch to available standby data source; in case of initialization failure with all data sources of this node, then the whole node is Unavailable. If all nodes of at least one LogicDB in the compute node has Initialized successfully, then the compute node Start succeeded, otherwise, Start failed. |
 | 2018-05-28 18:07:29.719 [WARN] [INIT] [main] r(-1) -- failed in connecting datasource:[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8], exception:...omitted... |
 | The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the sever. |
 | 2018-05-28 18:07:31.719 [INFO] [INIT] [main] b(-1) -- try reinit datasource:[id:182,nodeId:11 192.168.220.101:3306/db01 status:1,charset:utf8] |
 | Causes for data source timeout are: beyond limit of the system or database connection, authentication failure of data source user password, great network latency, etc. |
-|#### maxAllowedPacket |
+| #### maxAllowedPacket |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  maxAllowedPacket
-  Visible or not                   No
-  Description of parameters        Max data packet allowed to be received
-  Default value                    65536
-  Min value                        1
-  Max value                        1048576
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.5
+Parameter value                  maxAllowedPacket
+Visible or not                   No
+Description of parameters        Max data packet allowed to be received
+Default value                    65536
+Min value                        1
+Max value                        1048576
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.5
 
-| Role of parameter: |
-| --- |
-| Control packet size sent from the front-end connection. 64M by default, when the SQL statement size sent exceeds the default value 64M, the compute node will give prompt (Get a packet bigger than 'max_allowed_packet'). |
-| ERROR 1153 (HY000): Get a packet bigger than 'max allowed packet' |
-| Meanwhile, show variables could show the configuration value. |
-| mysql> show variables like '%allowed%; |
-| +--------------------------+---------------------+ |
-| | variable_name | value | |
-| +--------------------------+---------------------+ |
-| | max_allowed_packet | 16777216 | |
-| +--------------------------+---------------------+ |
-|#### maxConnections & maxUserConnections |
-| **Description of parameter:** |
-
-**Property**                     **Value**
-  Parameter value                  maxConnections
-  Visible or not                   Yes
-  Description of parameters        Front-end Max Connections
-  Default value                    5000
-  Min value                        300000
-  Max value                        1
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.4
+| Role of parameter: |   |   |   |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|----------|---|
+| Control packet size sent from the front-end connection. 64M by default, when the SQL statement size sent exceeds the default value 64M, the compute node will give prompt (Get a packet bigger than 'max_allowed_packet'). |   |   |   |
+| ERROR 1153 (HY000): Get a packet bigger than 'max allowed packet' |   |   |   |
+| Meanwhile, show variables could show the configuration value. |   |   |   |
+| mysql> show variables like '%allowed%; |   |   |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | variable_name | value |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | max_allowed_packet | 16777216 |   |
+| +--------------------------+---------------------+ |   |   |   |
+| #### maxConnections & maxUserConnections |   |   |   |
+| **Description of parameter:** |   |   |   |
 
 **Property**                     **Value**
-  Parameter value                  maxUserConnections
-  Visible or not                   Yes
-  Description of parameters        User Front-end Max Connections, 0 means no limit
-  Default value                    0
-  Min value                        300000
-  Max value                        0
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.4
-
-| Role of parameter: |
-| --- |
-| The compute node supports the Front-End Connections Control function, which could provide guarantee in case of access overload. |
-| maxConnections is the Max Connections allowed for user front-end connection, and is the upper limit of simultaneous sessions allowed by the compute node. The user could set maxConnections according to actual needs, adjust this value appropriately, but can't increase the set value blindly. |
-| maxUserConnections is commonly known to be the Max Connections of the same account to the compute node simultaneously. User Front-end Max Connections could be null, and 0 is given by default in case of null, meaning no limit for user connections, and at this time, this connection shall be subject to the front-end Max Connections. |
-| When number of connections exceeds the set value, if executing front-end connection, there will be prompt as follow: |
-| root> mysql -uzy -pzy -h127.0.0.1 -P9993 |
-| Warning: Using a password on the command line interface can be insecure. |
-| ERROR 1040 (HY000): too many connections |
-| The value of maxConnections and maxUserConnections could be modified via Set, the parameters are at GLOBAL level: |
-| mysql> set global max_connections = 5000; |
-| Query OK, 0 rows affected (0.00 sec) |
-| mysql> show variables like '%max_connections%; |
-| +--------------------------+---------------------+ |
-| | variable_name | value | |
-| +--------------------------+---------------------+ |
-| | max_connections | 5000 | |
-| +--------------------------+---------------------+ |
-| mysql> set global max_user_connections = 1000; |
-| Query OK, 0 rows affected (0.00 sec) |
-| mysql> show variables like '%max_user_connections%; |
-| +--------------------------+---------------------+ |
-| | variable_name | value | |
-| +--------------------------+---------------------+ |
-| | max_user_connections | 1000 | |
-| +--------------------------+---------------------+ |
-|#### maxIdleTransactionTimeout |
-| **Description of parameter:** |
+Parameter value                  maxConnections
+Visible or not                   Yes
+Description of parameters        Front-end Max Connections
+Default value                    5000
+Min value                        300000
+Max value                        1
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.4
 
 **Property**                     **Value**
-  Parameter value                  maxIdleTransactionTimeout
-  Visible or not                   Yes
-  Description of parameters        Non-committed Idle Transaction Timeout (ms)
-  Default value                    86400000
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.1
+Parameter value                  maxUserConnections
+Visible or not                   Yes
+Description of parameters        User Front-end Max Connections, 0 means no limit
+Default value                    0
+Min value                        300000
+Max value                        0
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.4
+
+| Role of parameter: |   |   |   |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|-------|---|
+| The compute node supports the Front-End Connections Control function, which could provide guarantee in case of access overload. |   |   |   |
+| maxConnections is the Max Connections allowed for user front-end connection, and is the upper limit of simultaneous sessions allowed by the compute node. The user could set maxConnections according to actual needs, adjust this value appropriately, but can't increase the set value blindly. |   |   |   |
+| maxUserConnections is commonly known to be the Max Connections of the same account to the compute node simultaneously. User Front-end Max Connections could be null, and 0 is given by default in case of null, meaning no limit for user connections, and at this time, this connection shall be subject to the front-end Max Connections. |   |   |   |
+| When number of connections exceeds the set value, if executing front-end connection, there will be prompt as follow: |   |   |   |
+| root> mysql -uzy -pzy -h127.0.0.1 -P9993 |   |   |   |
+| Warning: Using a password on the command line interface can be insecure. |   |   |   |
+| ERROR 1040 (HY000): too many connections |   |   |   |
+| The value of maxConnections and maxUserConnections could be modified via Set, the parameters are at GLOBAL level: |   |   |   |
+| mysql> set global max_connections = 5000; |   |   |   |
+| Query OK, 0 rows affected (0.00 sec) |   |   |   |
+| mysql> show variables like '%max_connections%; |   |   |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | variable_name | value |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | max_connections | 5000 |   |
+| +--------------------------+---------------------+ |   |   |   |
+| mysql> set global max_user_connections = 1000; |   |   |   |
+| Query OK, 0 rows affected (0.00 sec) |   |   |   |
+| mysql> show variables like '%max_user_connections%; |   |   |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | variable_name | value |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | max_user_connections | 1000 |   |
+| +--------------------------+---------------------+ |   |   |   |
+| #### maxIdleTransactionTimeout |   |   |   |
+| **Description of parameter:** |   |   |   |
+
+**Property**                     **Value**
+Parameter value                  maxIdleTransactionTimeout
+Visible or not                   Yes
+Description of parameters        Non-committed Idle Transaction Timeout (ms)
+Default value                    86400000
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.1
 
 | Parameter Setting: |
-| --- |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[maxIdleTransactionTimeout](#maxIdleTransactionTimeout)>864000000</property> |
 | maxIdleTransactionTimeout parameter has the default value of 86400000ms, that is 24h, which means that when the last SQL is completed in the transaction, the transaction fails to be submitted within 24h, it will be judged as timeout transaction, and HotDB records connection IP, port, username, LogicDB, lastsql, whether to autocommit or not, innodb_trx of back-end connection and other information with the mark [INFO] [WATCHDOG] WatchDogLongTransactionCheckHandler in hotdb.log, and disable the connection, and auto rollback the transaction. |
 | The parameter is only valid when enableWatchdog=true. In Watchdog, maxIdleTransactionTimeout is checked every 10 mins. Idle time of the transaction connected is judged in next check of Watchdog toward maxIdleTransactionTimeout; if exceeding the set threshold value, disable the connection, therefore, the practical transaction Idle time doesn't equal to the set threshold value. |
 | For example, if the transaction Idle time exceeds the set threshold value, then disable the connection, and at this time, view log: |
 | 2019-07-01 18:09:24.528 [INFO] [WATCHDOG] [$NIOREACTOR-20-RW] cn.hotpu.hotdb.mysql.nio.handler.WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-13,id=1,user=ztm,host=127.0.0.1,port=3323,localport=46138,schema=PM] has not been queryed for 593s. executed IUDs:[UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. binded connection:[MySQLConnection [node=2, id=59, threadId=14921, state=borrowed, closed=false, autocommit=false, host=10.10.0.202, port=3307, database=db_test251, localPort=52736, isClose:false, toBeClose:false] lastSQL:SET autocommit=0;UPDATE customer_auto_1 SET city = 'xxxx' WHERE id = 1]. innodb_trx:[(ds:2 trx_id:3435056156 trx_state:RUNNING trx_started:2019-07-01 17:59:33 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:3 trx_mysql_thread_id:14921 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:2 trx_lock_memory_bytes:1136 trx_rows_locked:1 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now. |
 | When the parameter is set as 0, it means never timeout, that is, no limit for COMMIT time of the transaction. |
-|#### maxJoinSize |
+| #### maxJoinSize |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  maxJoinSize
-  Visible or not                   Yes
-  Description of parameters        Row limits in JOIN query cache (M: Million, K: Thousand)
-  Default value                    10M
-  Min value                        1K
-  Max value                        1000M
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  maxJoinSize
+Visible or not                   Yes
+Description of parameters        Row limits in JOIN query cache (M: Million, K: Thousand)
+Default value                    10M
+Min value                        1K
+Max value                        1000M
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
-| Role of parameter: |
-| --- |
-| Max rows allowed for Join query cache. Computation method of JOIN query cache is: when there is no condition in SQL statement, compute the Cartesian product; when there is condition in SQL statement, compute the rows meeting join condition. |
-| When the JOIN query cache has rows greater than the set value, the message will be prompted as follow: |
-| mysql> select * from customer_auto_1 a join customer_auto_3 b on a.postcode=b.postcode; |
-| ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml |
-| The current session parameter value could be modified via set session max_join_size, to make the JOIN query cache within 1\~ 2124000000: |
-| mysql> show variables like '%max_join_size%; |
-| +--------------------------+---------------------+ |
-| | variable_name | value | |
-| +--------------------------+---------------------+ |
-| | max_join_size | 5000 | |
-| +--------------------------+---------------------+ |
-| mysql> set global max_user_connections = 1000; |
-| Query OK, 0 rows affected (0.00 sec) |
-| mysql> show variables like '%max_user_connections%; |
-| +--------------------------+---------------------+ |
-| | variable_name | value | |
-| +--------------------------+---------------------+ |
-| | max_user_connections | 2124000000 | |
-| +--------------------------+---------------------+ |
-| mysql> set session max_join_size=1; |
-| Query OK, 0 rows affected (0.00 sec) |
-| mysql> show variables like '%max_user_connections%; |
-| +--------------------------+---------------------+ |
-| | variable_name | value | |
-| +--------------------------+---------------------+ |
-| | max_user_connections | 1 | |
-| +--------------------------+---------------------+ |
-| mysql> select * from bn_a_jwy a join bn_c_jwy b on a.a=b.a where a.a='d'; |
-| ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml |
-|#### maxLatencyForRWSplit |
-| **Description of parameter:** |
-
-**Property**                     **Value**
-  Parameter value                  maxLatencyForRWSplit
-  Visible or not                   Yes
-  Description of parameters        Max Latency of Readable Standby Slave in Read/write splitting
-  Default value                    1000ms
-  Min value                        200
-  Max value                        10000
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.5
-
-| Role of parameter: |
-| --- |
-| After Read/write splitting is enabled, when the master/slave latency is smaller than the set latency time, read the Standby Slave: |
-| mysql> select * from cd; |
-| +------+---------+ |
-| | id | name | |
-| +------+---------+ |
-| | 1 | slave | |
-| | 2 | slave | |
-| | 3 | slave | |
-| | 4 | slave | |
-| | 5 | slave | |
-| +------+---------+ |
-| 5 rows in set (0.00 sec) |
-| After Read/write splitting is enabled, when latency of readable Standby Slave exceeds the set time, it will read the Active Master: |
-| mysql> select * from cd; |
-| +------+----------+ |
-| | id | name | |
-| +------+----------+ |
-| | 1 | master | |
-| | 2 | master | |
-| | 3 | master | |
-| | 4 | master | |
-| | 5 | master | |
-| +------+----------+ |
-| 5 rows in set (0.00 sec) |
-|#### maxNotInSubquery |
-| **Description of parameter:** |
+| Role of parameter: |   |   |   |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|------------|---|
+| Max rows allowed for Join query cache. Computation method of JOIN query cache is: when there is no condition in SQL statement, compute the Cartesian product; when there is condition in SQL statement, compute the rows meeting join condition. |   |   |   |
+| When the JOIN query cache has rows greater than the set value, the message will be prompted as follow: |   |   |   |
+| mysql> select * from customer_auto_1 a join customer_auto_3 b on a.postcode=b.postcode; |   |   |   |
+| ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml |   |   |   |
+| The current session parameter value could be modified via set session max_join_size, to make the JOIN query cache within 1\~ 2124000000: |   |   |   |
+| mysql> show variables like '%max_join_size%; |   |   |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | variable_name | value |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | max_join_size | 5000 |   |
+| +--------------------------+---------------------+ |   |   |   |
+| mysql> set global max_user_connections = 1000; |   |   |   |
+| Query OK, 0 rows affected (0.00 sec) |   |   |   |
+| mysql> show variables like '%max_user_connections%; |   |   |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | variable_name | value |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | max_user_connections | 2124000000 |   |
+| +--------------------------+---------------------+ |   |   |   |
+| mysql> set session max_join_size=1; |   |   |   |
+| Query OK, 0 rows affected (0.00 sec) |   |   |   |
+| mysql> show variables like '%max_user_connections%; |   |   |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | variable_name | value |   |
+| +--------------------------+---------------------+ |   |   |   |
+|   | max_user_connections | 1 |   |
+| +--------------------------+---------------------+ |   |   |   |
+| mysql> select * from bn_a_jwy a join bn_c_jwy b on a.a=b.a where a.a='d'; |   |   |   |
+| ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check your maxJoinSize in server.xml |   |   |   |
+| #### maxLatencyForRWSplit |   |   |   |
+| **Description of parameter:** |   |   |   |
 
 **Property**                     **Value**
-  Parameter value                  maxNotInSubquery
-  Visible or not                   Hidden
-  Description of parameters        Max number of not in in subquery
-  Default value                    20000
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.9
+Parameter value                  maxLatencyForRWSplit
+Visible or not                   Yes
+Description of parameters        Max Latency of Readable Standby Slave in Read/write splitting
+Default value                    1000ms
+Min value                        200
+Max value                        10000
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.5
 
-| Parameter Setting: |
-| --- |
-| maxNotInSubquery parameter in server.xml is configured as follow: |
-| <property name=[maxNotInSubquery](#maxNotInSubquery)>20000</property><!-- Max number of not in in subquery --> |
-| **Role of parameter:** |
-| It's used to control max number of not in in subquery, which is 20000 by default, and when max number of not in in subquery of SQL statement executed exceeds the default value 20000, HotDB will limit execution of this SQL, and give ERROR prompt |
-| (ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml）。 |
-| For example: |
-| (For the convenience of test, maxNotInSubquery is set as 10) |
-| mysql> use pm |
-| Database changed |
-| mysql> show tables; |
-| +------------------+ |
-| | Tables_in_PM | |
-| +------------------+ |
-| | customer_quan_2 | |
-| | customer_route_1 | |
-| | customer_route_2 | |
-| +------------------+ |
-| 3 rows in set (0.00 sec) |
-| mysql> select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20); |
-| ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml |
-| The log will record corresponding information with [INFO] [SQL] mark |
-| 2019-10-08 14:33:41.725 [INFO] [SQL] [$NIOExecutor-3-2] cn.hotpu.hotdb.j.h(2626) - unsupported subquery:[thread=$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM] AutoCommitTransactionSession in [thread=$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM], sql:select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20), error code:1104, error msg:The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml |
-| Meanwhile, you could view the configured value in log and 3325 port show @@systemconfig, and this parameter after modification could be valid upon reload. |
-| mysql> show @@systemconfig; |
-| config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql):"false",[defaultMaxLimit](#defaultMaxLimit):"10000","bakPassword":"hotdb_config","bakUrl":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha","management port":"3325","heartbeatPeriod":"2",[cryptMandatory](#cryptMandatory):"false","password":"hotdb_config",[enableCursor](#enableCursor):"false","username":"hotdb_config",[enableXA](#enableXA):"false",[errorsPermittedInTransaction](#errorsPermittedInTransaction):"true",[strategyForRWSplit](#strategyForRWSplit):"0",[enableWatchdog](#enableWatchdog):"false","haNodeHost":"192.168.220.139:3325",[maxJoinSize](#maxJoinSize):"9148M",[maxNotInSubquery](#maxNotInSubquery):"10",[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit):"0",[clientFoundRows](#clientFoundRows):"false",[joinCacheSize](#joinCacheSize):"236","enableHeartbeat":"true","url":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha",[parkPeriod](#parkPeriod):"100000",[maxSqlRecordLength](#maxSqlRecordLength):"4000",[joinBatchSize](#joinBatchSize):"46000",[enableSubquery](#enableSubquery):"true","heartbeatTimeoutMs":"500",[pingPeriod](#pingPeriod):"300",[joinLoopSize](#joinLoopSize):"18500","VIP":"192.168.220.171",[joinable](#joinable):"true","maxUserConnections":"4900",[pingLogCleanPeriod](#pingLogCleanPeriod):"1",[dataNodeIdleCheckPeriod](#dataNodeIdleCheckPeriod):"120",[deadlockCheckPeriod](#deadlockCheckPeriod):"3000",[sqlTimeout](#sqlTimeout):"3600","bakUsername":"hotdb_config","enableLatencyCheck":"true",[waitSyncFinishAtStartup](#waitSyncFinishAtStartup):"true","checkVIPPeriod":"500",[statisticsUpdatePeriod](#statisticsUpdatePeriod):"0",[usingAIO](#usingAIO):"0",[showAllAffectedRowsInGlobalTable](#showAllAffectedRowsInGlobalTable):"false",[maxLatencyForRWSplit](#maxLatencyForRWSplit):"1000","maxConnections":"5000",[enableSleep](#enableSleep):"false",[waitForSlaveInFailover](#waitForSlaveInFailover):"true",[autoIncrement](#autoIncrement):"true",[processorExecutor](#processorExecutor):"4",[highCostSqlConcurrency](#highCostSqlConcurrency):"400","latencyCheckPeriod":"500","processors":"16",[weightForSlaveRWSplit](#weightForSlaveRWSplit):"50","haState":"master",[readOnly](#readOnly):"false",[timerExecutor](#timerExecutor):"4","service port":"3323",[frontWriteBlockTimeout](#frontWriteBlockTimeout):"10000",[switchoverTimeoutForTrans](#switchoverTimeoutForTrans):"3000"} |
-| 1 row in set (0.01 sec) |
-|#### maxReconnectConfigDBTimes |
-| **Description of parameter:** |
+| Role of parameter: |   |   |   |
+|-------------------------------------------------------------------------------------------------------------------------------------|----|--------|---|
+| After Read/write splitting is enabled, when the master/slave latency is smaller than the set latency time, read the Standby Slave: |   |   |   |
+| mysql> select * from cd; |   |   |   |
+| +------+---------+ |   |   |   |
+|   | id | name |   |
+| +------+---------+ |   |   |   |
+|   | 1 | slave |   |
+|   | 2 | slave |   |
+|   | 3 | slave |   |
+|   | 4 | slave |   |
+|   | 5 | slave |   |
+| +------+---------+ |   |   |   |
+| 5 rows in set (0.00 sec) |   |   |   |
+| After Read/write splitting is enabled, when latency of readable Standby Slave exceeds the set time, it will read the Active Master: |   |   |   |
+| mysql> select * from cd; |   |   |   |
+| +------+----------+ |   |   |   |
+|   | id | name |   |
+| +------+----------+ |   |   |   |
+|   | 1 | master |   |
+|   | 2 | master |   |
+|   | 3 | master |   |
+|   | 4 | master |   |
+|   | 5 | master |   |
+| +------+----------+ |   |   |   |
+| 5 rows in set (0.00 sec) |   |   |   |
+| #### maxNotInSubquery |   |   |   |
+| **Description of parameter:** |   |   |   |
+
+**Property**                     **Value**
+Parameter value                  maxNotInSubquery
+Visible or not                   Hidden
+Description of parameters        Max number of not in in subquery
+Default value                    20000
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.9
+
+| Parameter Setting: |   |   |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
+| maxNotInSubquery parameter in server.xml is configured as follow: |   |   |
+| <property name=[maxNotInSubquery](#maxNotInSubquery)>20000</property><!-- Max number of not in in subquery --> |   |   |
+| **Role of parameter:** |   |   |
+| It's used to control max number of not in in subquery, which is 20000 by default, and when max number of not in in subquery of SQL statement executed exceeds the default value 20000, HotDB will limit execution of this SQL, and give ERROR prompt |   |   |
+| (ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml）。 |   |   |
+| For example: |   |   |
+| (For the convenience of test, maxNotInSubquery is set as 10) |   |   |
+| mysql> use pm |   |   |
+| Database changed |   |   |
+| mysql> show tables; |   |   |
+| +------------------+ |   |   |
+|   | Tables_in_PM |   |
+| +------------------+ |   |   |
+|   | customer_quan_2 |   |
+|   | customer_route_1 |   |
+|   | customer_route_2 |   |
+| +------------------+ |   |   |
+| 3 rows in set (0.00 sec) |   |   |
+| mysql> select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20); |   |   |
+| ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml |   |   |
+| The log will record corresponding information with [INFO] [SQL] mark |   |   |
+| 2019-10-08 14:33:41.725 [INFO] [SQL] [$NIOExecutor-3-2] cn.hotpu.hotdb.j.h(2626) - unsupported subquery:[thread=$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM] AutoCommitTransactionSession in [thread=$NIOExecutor-3-2,id=152197,user=ztm,host=127.0.0.1,port=3323,localport=49458,schema=PM], sql:select * from customer_route_2 a where a.postcode not in (select postcode from customer_route_1 b where b.id > 205119 limit 20), error code:1104, error msg:The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml |   |   |
+| Meanwhile, you could view the configured value in log and 3325 port show @@systemconfig, and this parameter after modification could be valid upon reload. |   |   |
+| mysql> show @@systemconfig; |   |   |
+| config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql):"false",[defaultMaxLimit](#defaultMaxLimit):"10000","bakPassword":"hotdb_config","bakUrl":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha","management port":"3325","heartbeatPeriod":"2",[cryptMandatory](#cryptMandatory):"false","password":"hotdb_config",[enableCursor](#enableCursor):"false","username":"hotdb_config",[enableXA](#enableXA):"false",[errorsPermittedInTransaction](#errorsPermittedInTransaction):"true",[strategyForRWSplit](#strategyForRWSplit):"0",[enableWatchdog](#enableWatchdog):"false","haNodeHost":"192.168.220.139:3325",[maxJoinSize](#maxJoinSize):"9148M",[maxNotInSubquery](#maxNotInSubquery):"10",[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit):"0",[clientFoundRows](#clientFoundRows):"false",[joinCacheSize](#joinCacheSize):"236","enableHeartbeat":"true","url":"jdbc:mysql://192.168.220.138:3306/hotdb_config_249ha",[parkPeriod](#parkPeriod):"100000",[maxSqlRecordLength](#maxSqlRecordLength):"4000",[joinBatchSize](#joinBatchSize):"46000",[enableSubquery](#enableSubquery):"true","heartbeatTimeoutMs":"500",[pingPeriod](#pingPeriod):"300",[joinLoopSize](#joinLoopSize):"18500","VIP":"192.168.220.171",[joinable](#joinable):"true","maxUserConnections":"4900",[pingLogCleanPeriod](#pingLogCleanPeriod):"1",[dataNodeIdleCheckPeriod](#dataNodeIdleCheckPeriod):"120",[deadlockCheckPeriod](#deadlockCheckPeriod):"3000",[sqlTimeout](#sqlTimeout):"3600","bakUsername":"hotdb_config","enableLatencyCheck":"true",[waitSyncFinishAtStartup](#waitSyncFinishAtStartup):"true","checkVIPPeriod":"500",[statisticsUpdatePeriod](#statisticsUpdatePeriod):"0",[usingAIO](#usingAIO):"0",[showAllAffectedRowsInGlobalTable](#showAllAffectedRowsInGlobalTable):"false",[maxLatencyForRWSplit](#maxLatencyForRWSplit):"1000","maxConnections":"5000",[enableSleep](#enableSleep):"false",[waitForSlaveInFailover](#waitForSlaveInFailover):"true",[autoIncrement](#autoIncrement):"true",[processorExecutor](#processorExecutor):"4",[highCostSqlConcurrency](#highCostSqlConcurrency):"400","latencyCheckPeriod":"500","processors":"16",[weightForSlaveRWSplit](#weightForSlaveRWSplit):"50","haState":"master",[readOnly](#readOnly):"false",[timerExecutor](#timerExecutor):"4","service port":"3323",[frontWriteBlockTimeout](#frontWriteBlockTimeout):"10000",[switchoverTimeoutForTrans](#switchoverTimeoutForTrans):"3000"} |   |
+| 1 row in set (0.01 sec) |   |   |
+| #### maxReconnectConfigDBTimes |   |   |
+| **Description of parameter:** |   |   |
 
 Property                         Value
-  Parameter value                  maxReconnectConfigDBTimes
-  Visible or not                   No
-  Description of parameters        Max times of reconnecting ConfigDB
-  Default value                    3
-  Max value                        1000
-  Min value                        0
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.4
+Parameter value                  maxReconnectConfigDBTimes
+Visible or not                   No
+Description of parameters        Max times of reconnecting ConfigDB
+Default value                    3
+Max value                        1000
+Min value                        0
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.4
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | In server.xml, maxReconnectConfigDBTimes is configured as follows: |
 | <property name=" maxReconnectConfigDBTimes ">3</property><!-- Max times of reconnecting ConfigDB --> |
 | **Role of parameter:** |
 | The parameter can prevent long time consumption for configDB connection during the compute node start, the HA switch, or reloading, and increase the reconnection times of configDB. If the max times of reconnections is exceeded (the default reconnection time is 3*2s), it will automatically switch to connecting from the ConfigDB. |
-|#### maxSqlRecordLength |
+| #### maxSqlRecordLength |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  maxSqlRecordLength
-  Visible or not                   Yes
-  Description of parameters        Max length of SQL statement record in SQL execution statistics
-  Default value                    1000
-  Min value                        1000
-  Max value                        16000
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.5
+Parameter value                  maxSqlRecordLength
+Visible or not                   Yes
+Description of parameters        Max length of SQL statement record in SQL execution statistics
+Default value                    1000
+Min value                        1000
+Max value                        16000
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.5
 
 | Role of parameter: |
-| --- |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | This parameter refers to the max length of SQL statistics in Slow Query Log Analysis. |
 | When the length of the executed SQL statement exceeds the set length, it will be cut out automatically, and replaced with ellipsis..., as shown in the following figure: |
 | ![](assets/standard/image146.png) |
-|#### ndbSqlAddr & ndbSqlUser & ndb SqlPass |
+| #### ndbSqlAddr & ndbSqlUser & ndb SqlPass |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  ndbSqlAddr
-  Visible or not                   Yes
-  Description of parameters        NDB SQL-end IP address
-  Default value                    localhost:3329
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.5.2
+Parameter value                  ndbSqlAddr
+Visible or not                   Yes
+Description of parameters        NDB SQL-end IP address
+Default value                    localhost:3329
+Whether Reload is valid or not   No
+Min Compatible Version           2.5.2
 
 **Property**                     **Value**
-  Parameter value                  ndbSqlUser
-  Visible or not                   Yes
-  Description of parameters        NDB SQL front-end username
-  Default value                    root
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.5.2
+Parameter value                  ndbSqlUser
+Visible or not                   Yes
+Description of parameters        NDB SQL front-end username
+Default value                    root
+Whether Reload is valid or not   No
+Min Compatible Version           2.5.2
 
 **Property**                     **Value**
-  Parameter value                  ndbSqlPass
-  Visible or not                   Yes
-  Description of parameters        NDB SQL front-end password
-  Default value                    root
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.5.2
+Parameter value                  ndbSqlPass
+Visible or not                   Yes
+Description of parameters        NDB SQL front-end password
+Default value                    root
+Whether Reload is valid or not   No
+Min Compatible Version           2.5.2
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | ndbSqlAddr, ndbSqlUser, ndbSqlPass are supporting parameters: ndbSqlAddr is physical address of NDB SQL node; ndbSqlUser and ndbSqlPass are respectively username and password for connecting NDB SQL node. |
 | <property name="ndbSqlAddr">localhost:3329</property> |
 | <property name="ndbSqlUser">root</property> |
 | <property name="ndbSqlPass">root</property> |
-|#### ndbSqlDataAddr |
+| #### ndbSqlDataAddr |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  ndbSqlDataAddr
-  Visible or not                   Yes
-  Description of parameters        IP address and port receiving NDB SQL connection
-  Default value                    127.0.0.1:3327
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.5.2
+Parameter value                  ndbSqlDataAddr
+Visible or not                   Yes
+Description of parameters        IP address and port receiving NDB SQL connection
+Default value                    127.0.0.1:3327
+Whether Reload is valid or not   No
+Min Compatible Version           2.5.2
 
 | Parameter Setting: |
-| --- |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | The connection from NDB SQL to compute node, that is the communication port from the server IP and NDB SQL where the compute node resides to the compute node, the default value is 127.0.0.1:3327. |
 | property name=[ndbSqlDataAddr](#ndbSqlDataAddr)>127.0.0.1:3327</property> |
-|#### ndbSqlMode |
+| #### ndbSqlMode |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  ndbSqlMode
-  Visible or not                   Yes
-  Description of parameters        Mode used by NDB SQL node (NDB execution mode: none: Forbidden NDB function, the default value; local: NDB SQL server and compute node server are on the same computer)
-  Default value                    none
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.5.2
+Parameter value                  ndbSqlMode
+Visible or not                   Yes
+Description of parameters        Mode used by NDB SQL node (NDB execution mode: none: Forbidden NDB function, the default value; local: NDB SQL server and compute node server are on the same computer)
+Default value                    none
+Whether Reload is valid or not   No
+Min Compatible Version           2.5.2
 
 | Parameter Setting: |
-| --- |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | none: the default value, representing Forbidden NDB function; local: NDB SQL server and compute node server are on the same computer, execute NDB logic if meeting NDB condition. |
 | <property name=[ndbSqlMode](#ndbSqlMode)>none</property> |
-|#### ndbSqlVersion & ndbVersion |
+| #### ndbSqlVersion & ndbVersion |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  ndbSqlVersion
-  Visible or not                   Yes
-  Description of parameters        NDB SQL Version Number
-  Default value                    5.7.24
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.5.2
+Parameter value                  ndbSqlVersion
+Visible or not                   Yes
+Description of parameters        NDB SQL Version Number
+Default value                    5.7.24
+Whether Reload is valid or not   No
+Min Compatible Version           2.5.2
 
 **Property**                     **Value**
-  Parameter value                  ndbVersion
-  Visible or not                   Yes
-  Description of parameters        NDB Engine Version Number
-  Default value                    7.5.12
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.5.2
+Parameter value                  ndbVersion
+Visible or not                   Yes
+Description of parameters        NDB Engine Version Number
+Default value                    7.5.12
+Whether Reload is valid or not   No
+Min Compatible Version           2.5.2
 
 | Parameter Setting: |
-| --- |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | ndbSqlVersion and ndbVersion are of corresponding relation, and please refer to official MySQL document for the specific corresponding relation. ndbSqlVersion is 5.7.24 by default, and ndbVersion is 7.5.12 by default. The NDB Engine Version supported by the current compute node is 7.5.4 and above, and if to use NDB version, it's required that the data source version must be 5.7.16 and above. |
 | <property name="ndbSqlVersion">5.7.24</property> |
 | <property name="ndbVersion">7.5.12</property> |
-|#### operateMode |
+| #### operateMode |
 | **Description of parameter:** |
 
 Property                         Value
-  Parameter value                  operateMode
-  Visible or not                   No
-  Description of parameters        Operating mode of compute node
-  Default value                    0
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.6
+Parameter value                  operateMode
+Visible or not                   No
+Description of parameters        Operating mode of compute node
+Default value                    0
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.6
 
-| Parameter Setting: |
-| --- |
-| server.xml中operateMode参数配置如下： |
-| <property name=[operateMode](#operateMode)>0</property><!-- Operating mode, 0: normal mode, 1: performance mode, 2: debug mode--> |
-| **Role of parameter:** |
-| The parameter controls the operating mode of compute nodes, 0 is normal mode, 1 is performance mode, 2 is debug mode. In normal mode, no other parameters or functions will be changed. In performance mode, the functions related to the following parameters will be forced to disable, while in debug mode, the functions related to the following parameters will be forced to enable. |
-| recordSql |
-| recordSQLSyntaxError |
-| recordCrossDNJoin |
-| recordUNION |
-| recordSubQuery |
-| recordDeadLockSQL |
-| recordLimitOffsetWithoutOrderby |
-| recordSQLKeyConflict |
-| recordSQLUnsupported |
-| recordMySQLWarnings |
-| recordMySQLErrors |
-| recordHotDBWarnings |
-| recordHotDBErrors |
-| recordDDL |
-| recordSQLIntercepted |
-| recordAuditlog |
-| recordSQLForward |
-| recordSqlAuditlog |
-| operateMode is a hidden parameter, and the default mode is normal mode, that is, operateMode=0. When the compute node is started, the corresponding log will be output in hotdb.log as follows: |
-| ![](assets/standard/image147.png) |
-| In normal mode, the compute nodes will start according to the parameter configuration of server.xml, and not be affected by operateMode. |
-| When it is set to performance mode, that is, modifying server.xml, adding operateMode =1 parameter configuration, then make it work by executing reload @@config in 3325 port, and the compute node will output the corresponding information in hotdb.log as follows: |
-| ![](assets/standard/image148.png) |
-| In performance mode, the compute node will initially force to disable the parameters that affect the performance of compute nodes, for example: |
-| recordSql=false,recordSQLSyntaxError=false,recordCrossDNJoin=false,recordUNION=false,recordSubQuery=false,recordDeadLockSQL=false,recordLimitOffsetWithoutOrderby=false,recordSQLKeyConflict=false,recordSQLUnsupported=false,recordMySQLWarnings=false,recordMySQLErrors=false,recordHotDBWarnings=false,recordHotDBErrors=false,recordDDL=false,recordSQLIntercepted=false,recordAuditlog=false,recordSQLForward=false,recordSqlAuditlog=false, even these parameters are configured to true in server.xml. |
-| When it is debug mode, the compute node will output the corresponding information in hotdb.log, as follows: |
-| ![](assets/standard/image149.png) |
-| In debug mode, the compute node will force to enable the parameters related to the debug function, for example: |
-| recordSql=true,recordSQLSyntaxError=true,recordCrossDNJoin=true,recordUNION=true,recordSubQuery=true,recordDeadLockSQL=true,recordLimitOffsetWithoutOrderby=true,recordSQLKeyConflict=true,recordSQLUnsupported=true,recordMySQLWarnings=true,recordMySQLErrors=true,recordHotDBWarnings=true,recordHotDBErrors=true,recordDDL=true,recordSQLIntercepted=true,recordAuditlog=true,recordSQLForward=true,recordSqlAuditlog=true， even if the parameters are configured to false in server.xml. It should be noted that in debug mode, the compute node will generate more log files, so it is necessary to pay attention to the remaining available disk space to prevent the log files from occupying the disk and causing the compute node service downtime. |
-|#### parkPeriod |
-| **Description of parameter:** |
-| +--------------------------------+----------------------------------------------------------------+ |
-| | **Property** | | **Value** | | |
-| +--------------------------------+----------------------------------------------------------------+ |
-| | Parameter value | | parkPeriod | | |
-| +--------------------------------+----------------------------------------------------------------+ |
-| | Visible or not | | Yes | | |
-| +--------------------------------+----------------------------------------------------------------+ |
-| | Description of parameters | | Thread Dormancy Period at the idle time of Message System (ns) | |
-| +--------------------------------+----------------------------------------------------------------+ |
-| | Default value | | 100000 | | |
-| +--------------------------------+----------------------------------------------------------------+ |
-| | Min value | | 1000000 | | |
-| +--------------------------------+----------------------------------------------------------------+ |
-| | Max value | | 1000 | | |
-| +--------------------------------+----------------------------------------------------------------+ |
-| | Whether Reload is valid or not | N for v.2.4.5 | | |
-| | | | | | |
-| | | | Y for v.2.4.7 and above | | |
-| +--------------------------------+----------------------------------------------------------------+ |
-| | Min Compatible Version | | 2.4.3 | | |
-| +--------------------------------+----------------------------------------------------------------+ |
-| **Parameter Setting:** |
-| The parkPeriod parameter in Server.xml is set as follow: |
-| <property name=[parkPeriod](#parkPeriod)>100000</property> |
-| **Role of parameter:** |
-| This parameter is used for adjusting sleep time of cost message queue thread at the idle time of message queue of internal thread communication. |
-|#### pingLogCleanPeriod |
-| **Description of parameter:** |
+| Parameter Setting: |   |   |   |   |   |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|---------------|----------------------------------------------------------------|---|---|
+| server.xml中operateMode参数配置如下： |   |   |   |   |   |
+| <property name=[operateMode](#operateMode)>0</property><!-- Operating mode, 0: normal mode, 1: performance mode, 2: debug mode--> |   |   |   |   |   |
+| **Role of parameter:** |   |   |   |   |   |
+| The parameter controls the operating mode of compute nodes, 0 is normal mode, 1 is performance mode, 2 is debug mode. In normal mode, no other parameters or functions will be changed. In performance mode, the functions related to the following parameters will be forced to disable, while in debug mode, the functions related to the following parameters will be forced to enable. |   |   |   |   |   |
+| recordSql |   |   |   |   |   |
+| recordSQLSyntaxError |   |   |   |   |   |
+| recordCrossDNJoin |   |   |   |   |   |
+| recordUNION |   |   |   |   |   |
+| recordSubQuery |   |   |   |   |   |
+| recordDeadLockSQL |   |   |   |   |   |
+| recordLimitOffsetWithoutOrderby |   |   |   |   |   |
+| recordSQLKeyConflict |   |   |   |   |   |
+| recordSQLUnsupported |   |   |   |   |   |
+| recordMySQLWarnings |   |   |   |   |   |
+| recordMySQLErrors |   |   |   |   |   |
+| recordHotDBWarnings |   |   |   |   |   |
+| recordHotDBErrors |   |   |   |   |   |
+| recordDDL |   |   |   |   |   |
+| recordSQLIntercepted |   |   |   |   |   |
+| recordAuditlog |   |   |   |   |   |
+| recordSQLForward |   |   |   |   |   |
+| recordSqlAuditlog |   |   |   |   |   |
+| operateMode is a hidden parameter, and the default mode is normal mode, that is, operateMode=0. When the compute node is started, the corresponding log will be output in hotdb.log as follows: |   |   |   |   |   |
+| ![](assets/standard/image147.png) |   |   |   |   |   |
+| In normal mode, the compute nodes will start according to the parameter configuration of server.xml, and not be affected by operateMode. |   |   |   |   |   |
+| When it is set to performance mode, that is, modifying server.xml, adding operateMode =1 parameter configuration, then make it work by executing reload @@config in 3325 port, and the compute node will output the corresponding information in hotdb.log as follows: |   |   |   |   |   |
+| ![](assets/standard/image148.png) |   |   |   |   |   |
+| In performance mode, the compute node will initially force to disable the parameters that affect the performance of compute nodes, for example: |   |   |   |   |   |
+| recordSql=false,recordSQLSyntaxError=false,recordCrossDNJoin=false,recordUNION=false,recordSubQuery=false,recordDeadLockSQL=false,recordLimitOffsetWithoutOrderby=false,recordSQLKeyConflict=false,recordSQLUnsupported=false,recordMySQLWarnings=false,recordMySQLErrors=false,recordHotDBWarnings=false,recordHotDBErrors=false,recordDDL=false,recordSQLIntercepted=false,recordAuditlog=false,recordSQLForward=false,recordSqlAuditlog=false, even these parameters are configured to true in server.xml. |   |   |   |   |   |
+| When it is debug mode, the compute node will output the corresponding information in hotdb.log, as follows: |   |   |   |   |   |
+| ![](assets/standard/image149.png) |   |   |   |   |   |
+| In debug mode, the compute node will force to enable the parameters related to the debug function, for example: |   |   |   |   |   |
+| recordSql=true,recordSQLSyntaxError=true,recordCrossDNJoin=true,recordUNION=true,recordSubQuery=true,recordDeadLockSQL=true,recordLimitOffsetWithoutOrderby=true,recordSQLKeyConflict=true,recordSQLUnsupported=true,recordMySQLWarnings=true,recordMySQLErrors=true,recordHotDBWarnings=true,recordHotDBErrors=true,recordDDL=true,recordSQLIntercepted=true,recordAuditlog=true,recordSQLForward=true,recordSqlAuditlog=true， even if the parameters are configured to false in server.xml. It should be noted that in debug mode, the compute node will generate more log files, so it is necessary to pay attention to the remaining available disk space to prevent the log files from occupying the disk and causing the compute node service downtime. |   |   |   |   |   |
+| #### parkPeriod |   |   |   |   |   |
+| **Description of parameter:** |   |   |   |   |   |
+| +--------------------------------+----------------------------------------------------------------+ |   |   |   |   |   |
+|   | **Property** |   | **Value** |   |   |
+| +--------------------------------+----------------------------------------------------------------+ |   |   |   |   |   |
+|   | Parameter value |   | parkPeriod |   |   |
+| +--------------------------------+----------------------------------------------------------------+ |   |   |   |   |   |
+|   | Visible or not |   | Yes |   |   |
+| +--------------------------------+----------------------------------------------------------------+ |   |   |   |   |   |
+|   | Description of parameters |   | Thread Dormancy Period at the idle time of Message System (ns) |   |   |
+| +--------------------------------+----------------------------------------------------------------+ |   |   |   |   |   |
+|   | Default value |   | 100000 |   |   |
+| +--------------------------------+----------------------------------------------------------------+ |   |   |   |   |   |
+|   | Min value |   | 1000000 |   |   |
+| +--------------------------------+----------------------------------------------------------------+ |   |   |   |   |   |
+|   | Max value |   | 1000 |   |   |
+| +--------------------------------+----------------------------------------------------------------+ |   |   |   |   |   |
+|   | Whether Reload is valid or not | N for v.2.4.5 |   |   |   |
+|   |   |   |   |   |   |
+|   |   |   | Y for v.2.4.7 and above |   |   |
+| +--------------------------------+----------------------------------------------------------------+ |   |   |   |   |   |
+|   | Min Compatible Version |   | 2.4.3 |   |   |
+| +--------------------------------+----------------------------------------------------------------+ |   |   |   |   |   |
+| **Parameter Setting:** |   |   |   |   |   |
+| The parkPeriod parameter in Server.xml is set as follow: |   |   |   |   |   |
+| <property name=[parkPeriod](#parkPeriod)>100000</property> |   |   |   |   |   |
+| **Role of parameter:** |   |   |   |   |   |
+| This parameter is used for adjusting sleep time of cost message queue thread at the idle time of message queue of internal thread communication. |   |   |   |   |   |
+| #### pingLogCleanPeriod |   |   |   |   |   |
+| **Description of parameter:** |   |   |   |   |   |
 
 **Property**                     **Value**
-  Parameter value                  pingLogCleanPeriod
-  Visible or not                   Hidden
-  Description of parameters        Ping Log Clean Period, 3 by default
-  Default value                    3
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.9
+Parameter value                  pingLogCleanPeriod
+Visible or not                   Hidden
+Description of parameters        Ping Log Clean Period, 3 by default
+Default value                    3
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.9
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | pingLogCleanPeriod parameter configuration in Server.xml is configured as follow: |
 | <property name=[pingLogCleanPeriod](#pingLogCleanPeriod)>3</property><!-- Ping Log Clean Period, 3 by default --> |
 | **Role of parameter:** |
 | pingLogCleanPeriod parameter is 3 by default, with the optional unit being Hour, Day and Month, which shall be decided by the other parameter pingLogCleanPeriodUnit. This parameter is mainly used to control the clean period of the data stored in configDB at the time of ping check, and delete the data before specified time periodically every day. |
-|#### pingLogCleanPeriodUnit |
+| #### pingLogCleanPeriodUnit |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  pingLogCleanPeriodUnit
-  Visible or not                   Hidden
-  Description of parameters        Unit of ping log clean period, 2 by default, 0: Hour, 1: Day, 2: Month
-  Default value                    2
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.9
+Parameter value                  pingLogCleanPeriodUnit
+Visible or not                   Hidden
+Description of parameters        Unit of ping log clean period, 2 by default, 0: Hour, 1: Day, 2: Month
+Default value                    2
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.9
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | pingLogCleanPeriodUnit parameter configuration in Server.xml is configured as follow: |
 | <property name=[pingLogCleanPeriodUnit](#pingLogCleanPeriodUnit)>2</property><!-- Unit of ping log clean period, 2 by default, 0: Hour, 1: Day, 2: Month --> |
 | **Role of parameter:** |
 | pingLogCleanPeriodUnit parameter is 2 by default, meaning that the unit of ping log clean period is Month, besides, the option 0 means Hour and 1 means Day. This parameter is mainly used to control the unit of ping log clean period, and is in support use with the pingLogCleanPeriod parameter. |
-|#### pingPeriod |
+| #### pingPeriod |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  pingPeriod
-  Visible or not                   Hidden
-  Description of parameters        ping server period, Unit: s, 3600s by default, min 300s
-  Default value                    3600
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.9
+Parameter value                  pingPeriod
+Visible or not                   Hidden
+Description of parameters        ping server period, Unit: s, 3600s by default, min 300s
+Default value                    3600
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.9
 
-| Parameter Setting: |
-| --- |
-| pingPeriod parameter configuration in Server.xml is configured as follow: |
-| <property name=[pingPeriod](#pingPeriod)>3600</property><!-- ping server period, Unit: s, 3600s by default, min 300s --> |
-| **Role of parameter:** |
-| pingPeriod parameter is 3600 by default, Unit: s, which is mainly used to control ping check period. It's by default to ping a round of IP address of all servers connected with the HotDB Server per hour, for example, client server, configDB server, data source server, etc. Min 300s (that is 5mins) could be configured to trigger a round of check. If the previous round of check is not completed in an hour, then this round of check shall be abandoned directly. |
-| In the detection process, for a certain IP address, the program will automatically use 10 packets (64 byte), 10 packets (65000 byte), which are pinged every 1 second. When the network quality is found to be failed, the interval of ping will be shortened to once per minute, and the criteria of failure judgment are as follows: |
+| Parameter Setting: |   |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| pingPeriod parameter configuration in Server.xml is configured as follow: |   |
+| <property name=[pingPeriod](#pingPeriod)>3600</property><!-- ping server period, Unit: s, 3600s by default, min 300s --> |   |
+| **Role of parameter:** |   |
+| pingPeriod parameter is 3600 by default, Unit: s, which is mainly used to control ping check period. It's by default to ping a round of IP address of all servers connected with the HotDB Server per hour, for example, client server, configDB server, data source server, etc. Min 300s (that is 5mins) could be configured to trigger a round of check. If the previous round of check is not completed in an hour, then this round of check shall be abandoned directly. |   |
+| In the detection process, for a certain IP address, the program will automatically use 10 packets (64 byte), 10 packets (65000 byte), which are pinged every 1 second. When the network quality is found to be failed, the interval of ping will be shortened to once per minute, and the criteria of failure judgment are as follows: |   |
 | - | If 64-byte packets in the same IDC are not all lost, when the average delay is greater than 1 ms or the max delay is greater than 2 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log。 If 65000-byte packets are not all lost, when the average delay is greater than 3 ms, or the max delay is greater than 5 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log table. |
 | - | If 64-byte packets across the IDCs are not all lost, when the average delay is greater than 10 ms or the max delay is greater than 20 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log。 If 65000-byte packets are not all lost, when the average delay is greater than 15 ms, or the max delay is greater than 30 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log table. |
-|#### prefetchBatchInit |
-| **Description of parameter:** |
+| #### prefetchBatchInit |   |
+| **Description of parameter:** |   |
 
 Property                         Value
-  Parameter value                  prefetchBatchInit
-  Visible or not                   Yes
-  Description of parameters        The initial value of the auto-incremental batch size
-  Default value                    100
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.4
+Parameter value                  prefetchBatchInit
+Visible or not                   Yes
+Description of parameters        The initial value of the auto-incremental batch size
+Default value                    100
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.4
 
 | Parameter Setting: |
-| --- |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[prefetchBatchInit](#prefetchBatchInit)>100</property> |
 | **Role of parameter:** |
 | The initial value of the auto-incremental batch size. If the initial value is set as 100, the range difference of the prefetch interval is 100 by default. For example, if the prefetch starts from 123, the prefetch interval is [123, 223]. |
 | The initial value can be configured within the upper and lower limits of the auto-incremental batch size actually configured (prefetchBatchMax and prefetchBatchMin). The default range is [10, 10000]. |
-|#### prefetchBatchMax |
+| #### prefetchBatchMax |
 | **Description of parameter:** |
 
 Property                         Value
-  Parameter value                  prefetchBatchMax
-  Visible or not                   Yes
-  Description of parameters        The upper limit of the auto-incremental batch size
-  Default value                    10000
-  Min value                        10
-  Max value                        100000
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.4
+Parameter value                  prefetchBatchMax
+Visible or not                   Yes
+Description of parameters        The upper limit of the auto-incremental batch size
+Default value                    10000
+Min value                        10
+Max value                        100000
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.4
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[prefetchBatchMax](#prefetchBatchMax)>10000</property> |
 | **Role of parameter:** |
 | The upper limit of the auto-incremental batch size. If 1000 is set, the maximum value of the range difference of each prefetch interval is 1000. For example, if the prefetch starts from 123, the maximum value in the prefetch interval is not more than 1123, that is, the values are within [123,1123]. |
-|#### prefetchBatchMin |
+| #### prefetchBatchMin |
 | **Description of parameter:** |
 
 **Property**                     Value
-  Parameter value                  prefetchBatchMin
-  Visible or not                   Yes
-  Description of parameters        The lower limit of the auto-incremental batch size
-  Default value                    10
-  Min value                        2
-  Max value                        1000
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.4
+Parameter value                  prefetchBatchMin
+Visible or not                   Yes
+Description of parameters        The lower limit of the auto-incremental batch size
+Default value                    10
+Min value                        2
+Max value                        1000
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.4
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[prefetchBatchMin](#prefetchBatchMin)>10</property> |
 | **Role of parameter:** |
 | The lower limit of the auto-incremental prefetch batch size. If 100 is set, the minimum value of the range difference of each prefetch interval is 100. For example, if the prefetch starts from 123, the maximum value in the prefetch interval is not less than 223, that is, the next prefetch batch starts from 223 at least, and the next prefetch batch [>=223, 223+prefetch batch size]. |
-|#### prefetchValidTimeout |
+| #### prefetchValidTimeout |
 | **Description of parameter:** |
 
 Property                         Value
-  Parameter value                  prefetchValidTimeout
-  Visible or not                   Yes
-  Description of parameters        The valid timeout time of prefetch(seconds)
-  Default value                    10
-  Min value                        3
-  Max value                        86400
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.4
+Parameter value                  prefetchValidTimeout
+Visible or not                   Yes
+Description of parameters        The valid timeout time of prefetch(seconds)
+Default value                    10
+Min value                        3
+Max value                        86400
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.4
 
 | Parameter Setting: |
-| --- |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[prefetchValidTimeout](#prefetchValidTimeout)>30</property> |
 | **Role of parameter:** |
 | The valid timeout time of prefetching the auto-incremental batch. When set as 0, it means that the auto-incremental batch is not abandoned due to the timeout. For example, if 30 seconds is set, the prefetch range is 1-100. If it is more than 30 seconds, the unused value is no longer used. |
-|#### processorExecutor |
+| #### processorExecutor |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  processorExecutor
-  Visible or not                   Yes
-  Description of parameters        Number of threads of processors
-  Default value                    4
-  Min value                        2
-  Max value                        8
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.4.3
+Parameter value                  processorExecutor
+Visible or not                   Yes
+Description of parameters        Number of threads of processors
+Default value                    4
+Min value                        2
+Max value                        8
+Whether Reload is valid or not   No
+Min Compatible Version           2.4.3
 
 | Parameter Setting: |
-| --- |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[processorExecutor](#processorExecutor)>4</property><!-- Number of threads of processors --> |
 | **Role of parameter:** |
 | This parameter is used for setting number of threads of processors in internal thread pool model of the compute node. The parameter [adaptiveProcessor](#adaptiveprocessor) is Enabled by default, and when enabled, the compute node will make Automatic Adaptation to Max processorExecutor. |
 | Log in to 3325 port, execute the show @@threadpool; command, and then you could view the current number of processorExecutor. |
-|#### Processors |
+| #### Processors |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  processors
-  Visible or not                   Yes
-  Description of parameters        Number of processors
-  Default value                    8
-  Min value                        4
-  Max value                        128
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.4.3
+Parameter value                  processors
+Visible or not                   Yes
+Description of parameters        Number of processors
+Default value                    8
+Min value                        4
+Max value                        128
+Whether Reload is valid or not   No
+Min Compatible Version           2.4.3
 
 | Parameter Setting: |
-| --- |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name="processors">8</property><!---Number of processors --> |
 | **Role of parameter:** |
 | This parameter is used for setting number of threads in internal thread pool model of the compute node. The parameter [adaptiveProcessor](#adaptiveprocessor) is Enable by default, and when enabled, the compute node will make Automatic Adaptation to the max number of processors. |
 | Log in to 3325 port, execute show @@threadpool; command, and then you could view the number of current processors. |
-|#### readOnly |
+| #### readOnly |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  readOnly
-  Visible or not                   No
-  Description of parameters        readOnly mode or not
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.8
+Parameter value                  readOnly
+Visible or not                   No
+Description of parameters        readOnly mode or not
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.8
 
 | Parameter Setting: |
-| --- |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[readOnly](#readOnly)>false</property><!-- readOnly mode or not --> |
 | **Role of parameter:** |
 | It is used for setting the current compute node as readonly mode. In readonly mode, compute node only receives DQL (SELECT statement) operation, and SET command row and SHOW type operations, and refuses to execute DDL(CREATE TABLE/VIEW/INDEX/SYN/CLUSTER statement), DML(INSERT, UPDATE, DELETE) and DCL (GRANT, ROLLBACK [WORK] TO [SAVEPOINT], COMMIT) modification operation commands |
@@ -9820,36 +9819,36 @@ Property                         Value
 | Enable status: |
 | mysql> drop table customer; |
 | ERROR 1289 (HY000): Command not allowed in Read-Only mode. |
-|#### recordAuditlog |
+| #### recordAuditlog |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordAuditlog
-  Visible or not                   No
-  Description of parameters        Record audit log
-  Default value                    true
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.0
+Parameter value                  recordAuditlog
+Visible or not                   No
+Description of parameters        Record audit log
+Default value                    true
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.0
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | recordAuditlog parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordAuditlog](#recordAuditlog)>true</property><!---Record audit log --> |
 | **Role of parameter:** |
 | recordAuditlog enables audit log or not. This parameter is used for controlling whether to record the management port operation information or not. When the audit log is enabled, you could view management port operation record via Event->Audit log on the management platform. |
-|#### recordCrossDNJoin |
+| #### recordCrossDNJoin |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordCrossDNJoin
-  Visible or not                   No
-  Description of parameters        Record cross-node JOIN in log
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordCrossDNJoin
+Visible or not                   No
+Description of parameters        Record cross-node JOIN in log
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|------------------------------------------------------------------------------------------------------------------------------|
 | recordCrossDNJoin parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordCrossDNJoin](#recordCrossDNJoin)>false</property> |
 | **Role of parameter:** |
@@ -9861,19 +9860,19 @@ Property                         Value
 | mysql> SELECT * FROM account a JOIN borrower b; |
 | View /logs/sql.log of compute node installation directory |
 | 2018-05-22 16:17:11.607 [INFO] [CROSSDNJOIN] [$NIOExecutor-6-2] JoinVisitor(4947) -- SELECT * FROM account a JOIN borrower b |
-|#### recordDDL |
+| #### recordDDL |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordDDL
-  Visible or not                   No
-  Description of parameters        Record DDL statement in log
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordDDL
+Visible or not                   No
+Description of parameters        Record DDL statement in log
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | recordDDL parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordDDL](#recordDDL)>false</property> |
 | **Role of parameter:** |
@@ -9882,19 +9881,19 @@ Property                         Value
 | View /logs/sql.log of compute node installation directory |
 | 2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without Primary Key and unique key} |
 | 2018-05-23 14:23:52.698 [INFO] [DDL] [$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int) |
-|#### recordDeadLockSQL |
+| #### recordDeadLockSQL |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordDeadLockSQL
-  Visible or not                   No
-  Description of parameters        The log records the statement triggering deadlock
-  Default value                    true
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordDeadLockSQL
+Visible or not                   No
+Description of parameters        The log records the statement triggering deadlock
+Default value                    true
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | recordDeadLockSQL parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordDeadLockSQL](#recordDeadLockSQL)>true</property> |
 | **Role of parameter:** |
@@ -9902,38 +9901,38 @@ Property                         Value
 | 1. Create deadlock scenario |
 | 2. View /logs/hotdb.log of compute node installation directory: |
 | 2018-05-23 14:54:30.865 [INFO] [DEADLOCK] [$NIOREACTOR-1-RW] am(-1) -- sql: INSERT INTO table2000 VALUES (3); error response from MySQLConnection [node=4, id=277, threadId=133815, state=borrowed, close=false, autocommit=false, host=192.168.220.102, port=3309, database=db249, localPort=15332, isClose:false, toBeClose:false], err: Lock wait timeout exceeded; try restarting transaction, code: 1205 |
-|#### recordHotDBErrors |
+| #### recordHotDBErrors |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordHotDBErrors
-  Visible or not                   No
-  Description of parameters        The log records error message returned by HotDB
-  Default value                    true
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.8
+Parameter value                  recordHotDBErrors
+Visible or not                   No
+Description of parameters        The log records error message returned by HotDB
+Default value                    true
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.8
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | recordHotDBErrors parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordHotDBErrors](#recordHotDBErrors)>true</property> |
 | **Role of parameter:** |
 | recordHotDBErrors log records error message returned by compute node |
 | For example: when executing Create statement by user without create privilege, the prompt is as follow: |
 | 2018-06-04 10:43:07.316 [INFO] [HOTDBERROR] [$NIOExecutor-3-0] ServerConnection(155) -- sql: create table a001(id int), err: [CREATE] command denied to user 'jzl' to logic database 'TEST_JZL' |
-|#### recordHotDBWarnings |
+| #### recordHotDBWarnings |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordHotDBWarnings
-  Visible or not                   No
-  Description of parameters        The log records the warning message returned by the compute node
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordHotDBWarnings
+Visible or not                   No
+Description of parameters        The log records the warning message returned by the compute node
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | recordHotDBWarnings parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordHotDBWarnings](#recordHotDBWarnings)>false</property> |
 | **Role of parameter:** |
@@ -9942,19 +9941,19 @@ Property                         Value
 | View /logs/sql.log of the compute node installation directory |
 | 2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without Primary Key and unique key} |
 | 2018-05-23 14:23:52.698 [INFO] [DDL] [$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int) |
-|#### recordLimitOffsetWithoutOrderby |
+| #### recordLimitOffsetWithoutOrderby |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordLimitOffsetWithoutOrderby
-  Visible or not                   No
-  Description of parameters        The log records the limit statement without orderby
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordLimitOffsetWithoutOrderby
+Visible or not                   No
+Description of parameters        The log records the limit statement without orderby
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | recordLimitOffsetWithoutOrderby parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordLimitOffsetWithoutOrderby](#recordLimitOffsetWithoutOrderby)>false</property> |
 | **Role of parameter:** |
@@ -9965,19 +9964,19 @@ Property                         Value
 | 2018-05-23 14:05:14.915 [INFO] [LIMITOFFSETWITHOUTORDERBY] [$NIOExecutor-6-l] SubqueryExecutor(97) - sql: select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3 |
 | 2018-05-23 14:05:14.922 [INFO] [LIMITOFFSETWITHOUTORDERBY] [$NIOExecutor-2-3] BaseSession(97) - sql: SELECT A.`Balance`, A.`Branch_name`, A.`Account_number`, A.`account_date` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776 |
 | F6f64'), NULL) LIMIT 1 , 3 |
-|#### recordMySQLErrors |
+| #### recordMySQLErrors |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordMySQLErrors
-  Visible or not                   No
-  Description of parameters        The log records error message returned by MySQL
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordMySQLErrors
+Visible or not                   No
+Description of parameters        The log records error message returned by MySQL
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | recordMySQLErrors parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordMySQLErrors](#recordMySQLErrors)>false</property> |
 | **Role of parameter:** |
@@ -9986,103 +9985,103 @@ Property                         Value
 | msyql> select form; |
 | View /logs/hotdb.log of compute node installation directory |
 | 2018-05-23 14:38:55.843 [INFO] [MYSQLERROR] [$NIOREACTOR-7-RW] MySQLConnection(56) -- sql: select form, error response from MySQLConnection [node=4, id=223, threadId=118551, state=borrowed, close=false, autocommit=true, host=192.168.220.103, port=3309, database=db249, localPort=27007, isClose:false, toBeClose:false], err: Unknown column 'form' in 'field list', code: 1054 |
-|#### recordMySQLWarnings |
+| #### recordMySQLWarnings |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordMySQLWarnings
-  Visible or not                   Hidden
-  Description of parameters        The log records the warning message returned by MySQL
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordMySQLWarnings
+Visible or not                   Hidden
+Description of parameters        The log records the warning message returned by MySQL
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
-| Parameter Setting: |
-| --- |
-| recordMySQLWarnings parameter configuration in Server.xml is configured as follow: |
-| <property name=[recordMySQLWarnings](#recordMySQLWarnings)>false</property> |
-| **Role of parameter:** |
-| recordMySQLWarnings log records the warning message returned by MySQL. |
-| Execute as follow: |
-| mysql> update account set Account_number="$!\\\''## "; |
-| View /logs/sql.log of compute node installation directory, |
-| 2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265 |
-| 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265 |
-| 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265 |
-| 2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265 |
-|#### recordSql |
-| **Description of parameter:** |
+| Parameter Setting: |   |
+|------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| recordMySQLWarnings parameter configuration in Server.xml is configured as follow: |   |
+| <property name=[recordMySQLWarnings](#recordMySQLWarnings)>false</property> |   |
+| **Role of parameter:** |   |
+| recordMySQLWarnings log records the warning message returned by MySQL. |   |
+| Execute as follow: |   |
+| mysql> update account set Account_number="$!\\\''## "; |   |
+| View /logs/sql.log of compute node installation directory, |   |
+| 2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] | [$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265 |
+| 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] | [$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265 |
+| 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] | [$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265 |
+| 2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] | [$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\\\'\'## ', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265 |
+| #### recordSql |   |
+| **Description of parameter:** |   |
 
 **Property**                     **Value**
-  Parameter value                  recordSql
-  Visible or not                   Yes
-  Description of parameters        Make statistics of SQL execution condition or not
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  recordSql
+Visible or not                   Yes
+Description of parameters        Make statistics of SQL execution condition or not
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
-| Parameter Setting: |
-| --- |
-| <property name=[recordSql](#recordSql)>false</property><!-- Make statistics of SQL execution condition or not, Yes: true, No: false --> |
-| **Role of parameter:** |
-| Make statistics of SQL execution condition or not. |
+| Parameter Setting: |   |
+|-----------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+| <property name=[recordSql](#recordSql)>false</property><!-- Make statistics of SQL execution condition or not, Yes: true, No: false --> |   |
+| **Role of parameter:** |   |
+| Make statistics of SQL execution condition or not. |   |
 | 1. | View via the Slow Query Log Analysis page on the management platform |
 | - | OFF status |
-| ![](assets/standard/image150.png) |
+| ![](assets/standard/image150.png) |   |
 | - | ON status |
-| ![](assets/standard/image151.png) |
-| 2. View statistics of SQL execution via server configDB |
-| mysql> select * from hotdb_query_records order by db_id limit 1\\G |
-| ******************************1. row*************************** |
-| id: 2 |
-| db_id: 1 |
-| type: SELECT |
-| query: SELECT COUNT(*) FROM union b |
-| total_hotdb_time: 67934 |
-| total_mysql_time: 52105 |
-| hms1: 0 |
-| hms10: 1 |
-| hms300: 1 |
-| hs1: 0 |
-| hs3: 0 |
-| hs10: 0 |
-| hs60: 0 |
-| hs600: 0 |
-| hs600p: 0 |
-| mmsl: 0 |
-| mms10: 1 |
-| mms300: 1 |
-| ms1: 0 |
-| ms3: 0 |
-| ms10: 0 |
-| ms60: 0 |
-| ms600: 0 |
-| ms600p: 0 |
-| htime24: 67934 |
-| htime48: 67934 |
-| mtime24: 52105 |
-| mtime48: 52105 |
-| hcount24: 2 |
-| hcount48: 2 |
-| mcount24: 2 |
-| mcount48: 2 |
-| return_rows: 2 |
-| last update time: 2018-05-29 11:04:31.000000 |
-| crc: 321944166562 |
-| 1 row in set (0.00 sec) |
-|#### recordSqlAuditlog |
-| **Description of parameter:** |
+| ![](assets/standard/image151.png) |   |
+| 2. View statistics of SQL execution via server configDB |   |
+| mysql> select * from hotdb_query_records order by db_id limit 1\\G |   |
+| ******************************1. row*************************** |   |
+| id: 2 |   |
+| db_id: 1 |   |
+| type: SELECT |   |
+| query: SELECT COUNT(*) FROM union b |   |
+| total_hotdb_time: 67934 |   |
+| total_mysql_time: 52105 |   |
+| hms1: 0 |   |
+| hms10: 1 |   |
+| hms300: 1 |   |
+| hs1: 0 |   |
+| hs3: 0 |   |
+| hs10: 0 |   |
+| hs60: 0 |   |
+| hs600: 0 |   |
+| hs600p: 0 |   |
+| mmsl: 0 |   |
+| mms10: 1 |   |
+| mms300: 1 |   |
+| ms1: 0 |   |
+| ms3: 0 |   |
+| ms10: 0 |   |
+| ms60: 0 |   |
+| ms600: 0 |   |
+| ms600p: 0 |   |
+| htime24: 67934 |   |
+| htime48: 67934 |   |
+| mtime24: 52105 |   |
+| mtime48: 52105 |   |
+| hcount24: 2 |   |
+| hcount48: 2 |   |
+| mcount24: 2 |   |
+| mcount48: 2 |   |
+| return_rows: 2 |   |
+| last update time: 2018-05-29 11:04:31.000000 |   |
+| crc: 321944166562 |   |
+| 1 row in set (0.00 sec) |   |
+| #### recordSqlAuditlog |   |
+| **Description of parameter:** |   |
 
 **Property**                     **Value**
-  Parameter value                  recordSqlAuditlog
-  Visible or not                   No
-  Description of parameters        Record SQL audit log.
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.5
+Parameter value                  recordSqlAuditlog
+Visible or not                   No
+Description of parameters        Record SQL audit log.
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.5
 
 | Parameter Setting: |
-| --- |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | The parameter recordSqlAuditlog in Server.xml is configured as false by default: |
 | <property name=[recordSqlAuditlog](#recordSqlAuditlog)>false</property> |
 | **Role of parameter:** |
@@ -10105,38 +10104,38 @@ Property                         Value
 | status: whether the SQL execution status is success or failure. 0 is for failure and 1 is for success. |
 | failed_ reason: the reason why SQL execution failed. |
 | end_ time: end time of SQL execution. |
-|#### recordSQLIntercepted |
+| #### recordSQLIntercepted |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordSQLIntercepted
-  Visible or not                   No
-  Description of parameters        The log records the intercepted statement
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordSQLIntercepted
+Visible or not                   No
+Description of parameters        The log records the intercepted statement
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | recordSQLIntercepted parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordSQLIntercepted](#recordSQLIntercepted)>true</property> |
 | **Role of parameter:** |
 | recordSQLIntercepted log records the intercepted statement; configuration of intercepted statement is in Middleware management platform->Safety->SQL firewall. |
 | View /logs/sql.log of compute node installation directory |
 | 2018-06-01 14:17:45.669 [INFO] [SQLINTERCEPTED] [$NIOExecutor-1-2] g(-1) -- sql: DELETE FROM sql_intercept_tab, user:zy, ip: 192.168.200.45, db: TEST_JZL, intercepted by filewall: not allowed to execute delete without where expression |
-|#### recordSQLKeyConflict |
+| #### recordSQLKeyConflict |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordSQLKeyConflict
-  Visible or not                   No
-  Description of parameters        The log records the statement with Primary Key conflict and violating foreign key constraint
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordSQLKeyConflict
+Visible or not                   No
+Description of parameters        The log records the statement with Primary Key conflict and violating foreign key constraint
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | recordSQLKeyConflict parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordSQLKeyConflict](#recordSQLKeyConflict)>false</property> |
 | **Role of parameter:** |
@@ -10150,19 +10149,19 @@ Property                         Value
 | mysql> insert into vtab001 values(1,'aaa'); |
 | View /logs/sql.log of compute node installation directory |
 | 2018-06-01 14:09:47.139 [INFO] [SQLKEYCONFLICT] [$NIOREACTOR-1-RW] MySQLConnection(65) -- sql: insert into vtab001 values(1,'aaa'), error response from MySQLConnection [node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false], err: Duplicate entry '1' for key 'PRIMARY', CODE: 1062 |
-|#### recordSQLSyntaxError |
+| #### recordSQLSyntaxError |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordSQLSyntaxError
-  Visible or not                   No
-  Description of parameters        The log records statement with Syntax error
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordSQLSyntaxError
+Visible or not                   No
+Description of parameters        The log records statement with Syntax error
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|----------------------------------------------------------------------------------------------------------|
 | recordSQLSyntaxError parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordSQLSyntaxError](#recordSQLSyntaxError)>false</property> |
 | **Role of parameter:** |
@@ -10171,19 +10170,19 @@ Property                         Value
 | mysql> SELECT * FROM; |
 | View /logs/sql.log of compute node installation directory |
 | 2018-05-22 16:12:42.686 [INFO] [SQLSYNTAXERROR] [$NIOExecutor-6-3] ServerConnection(671) - SELECT * FROM |
-|#### recordSQLUnsupported |
+| #### recordSQLUnsupported |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordSQLUnsupported
-  Visible or not                   No
-  Description of parameters        The log records the statement not supported
-  Default value                    true
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordSQLUnsupported
+Visible or not                   No
+Description of parameters        The log records the statement not supported
+Default value                    true
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|-----------------------------------------------------------------------------------------------------------------------------------------|
 | recordSQLUnsupported parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordSQLUnsupported](#recordSQLUnsupported)>true</property> |
 | **Role of parameter:** |
@@ -10193,19 +10192,19 @@ Property                         Value
 | Execute the statement not supported by HotDB for the time being: mysql> select * into vtab001_bak from vtab001; |
 | View /logs/sql.log of compute node installation directory |
 | 2018-05-22 14:19:54.395 [INFO] [SQLUNSUPPORTED] [$NIOExecutor-6-2] ServerConnection(110) -- sql: select * into vtab001_bak from vtab001 |
-|#### recordSubQuery |
+| #### recordSubQuery |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordSubQuery
-  Visible or not                   No
-  Description of parameters        The log records Subquery
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordSubQuery
+Visible or not                   No
+Description of parameters        The log records Subquery
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | recordSubQuery parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordSubQuery](#recordSubQuery)>false</property> |
 | **Role of parameter:** |
@@ -10214,19 +10213,19 @@ Property                         Value
 | mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ); |
 | View /logs/sql.log of compute node installation directory |
 | 2018-05-23 13:56:11.714 [INFO] [SUBQUERY] [$NIOExecutor-6-0] SubqueryExecutor(169) -- select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ) |
-|#### recordUNION |
+| #### recordUNION |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  recordUNION
-  Visible or not                   No
-  Description of parameters        The log records UNION
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.7
+Parameter value                  recordUNION
+Visible or not                   No
+Description of parameters        The log records UNION
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.7
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------|
 | recordUNION parameter configuration in Server.xml is configured as follow: |
 | <property name=[recordUNION](#recordUNION)>false</property> |
 | **Role of parameter:** |
@@ -10235,76 +10234,76 @@ Property                         Value
 | mysql> SELECT * FROM trends UNION SELECT * from trends_uint; |
 | View /logs/sql.log of compute node installation directory |
 | 2018-05-23 13:30:27.156 [INFO] [UNION] [$NIOREACTOR-5-RW] UnionExecutor(162) - SELECT * FROM trends UNION SELECT * from trends_uint |
-|#### routeByRelativeCol |
+| #### routeByRelativeCol |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  routeByRelativeCol
-  Visible or not                   No
-  Description of parameters        It does not include the route via Secondary Index Field at the time of sharding key
-  Default value                    false
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.5.2
+Parameter value                  routeByRelativeCol
+Visible or not                   No
+Description of parameters        It does not include the route via Secondary Index Field at the time of sharding key
+Default value                    false
+Whether Reload is valid or not   No
+Min Compatible Version           2.5.2
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | routeByRelativeCol parameter configuration in Server.xml is configured as follow: |
 | <property name=[routeByRelativeCol](#routeByRelativeCol)>false</property><!-- It does not include the route via Secondary Index Field at the time of sharding key --> |
 | **Role of parameter:** |
 | This function is OFF by default, that is, it does not route via Secondary Index Field when the sharding key is not included, and it is ON after being modified as true. After enabled, it supports to locate to the specific node via Query Secondary Index and distribute the SELECT Query statement to specified node only instead of all nodes when the SELECT Query statement does not include sharding key but includes Unique Constraint Field. |
-|#### serverId |
+| #### serverId |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  serverId
-  Visible or not                   Yes
-  Description of parameters        Cluster node number 1-N (number of nodes), unique in cluster
-  Default value                    1
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.5.0
+Parameter value                  serverId
+Visible or not                   Yes
+Description of parameters        Cluster node number 1-N (number of nodes), unique in cluster
+Default value                    1
+Whether Reload is valid or not   No
+Min Compatible Version           2.5.0
 
 | Parameter Setting: |
-| --- |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | serverId parameter configuration in Server.xml is configured as follow: |
 | <property name=[serverId](#serverId)>1</property><!-- Cluster node number 1-N (number of nodes), unique in cluster --> |
 | **Role of parameter:** |
 | It is used for dividing connection communication ID among the nodes in the cluster, and this Parameter Setting shall be set from 1 continuously without repetition, and in case of repetition, the cluster will start abnormally. |
-|#### service port & management port |
+| #### service port & management port |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  service port
-  Visible or not                   Yes
-  Description of parameters        service port
-  Default value                    3323
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.4.3
+Parameter value                  service port
+Visible or not                   Yes
+Description of parameters        service port
+Default value                    3323
+Whether Reload is valid or not   No
+Min Compatible Version           2.4.3
 
 **Property**                     **Value**
-  Parameter value                  management port
-  Visible or not                   Yes
-  Description of parameters        management port
-  Default value                    3325
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.4.3
+Parameter value                  management port
+Visible or not                   Yes
+Description of parameters        management port
+Default value                    3325
+Whether Reload is valid or not   No
+Min Compatible Version           2.4.3
 
 | Role of parameter: |
-| --- |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Service port is used to log in to the compute node to execute relevant statements, and its use is similar to that of MySQL. |
 | management port is used to monitor compute node service information and monitoring statistical information, and you could view by executing relevant commands. |
-|#### showAllAffectedRowsInGlobalTable |
+| #### showAllAffectedRowsInGlobalTable |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  showAllAffectedRowsInGlobalTable
-  Visible or not                   Yes
-  Description of parameters        Whether Global Table IDU statement shows total number of AffectedRows in all nodes
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  showAllAffectedRowsInGlobalTable
+Visible or not                   Yes
+Description of parameters        Whether Global Table IDU statement shows total number of AffectedRows in all nodes
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
 | Role of parameter: |
-| --- |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | When showAllAffectedRowsInGlobalTable Parameter is set as true, Global Table will execute insert,delete,update related SQL statements, and the result will show total number of affected nodes. |
 | For example: Global Table join_c06_ct associates 8 nodes; after executing this SQL statement, 1 row of the actual data will be updated; when this Parameter is set as true, the result will show that the affected number is 8 (that is: number of updated rows*number of affected nodes). |
 | mysql> delete from join_us06_ct where id = 8; |
@@ -10319,19 +10318,19 @@ Property                         Value
 | mysql> update join_us06_ct set e = 'm' where id =4; |
 | Query OK, 1 rows affected (0.10 sec) |
 | Rows matched: 1 Changed: 1 Warnings: 0 |
-|#### skipDatatypeCheck |
+| #### skipDatatypeCheck |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  skipDatatypeCheck
-  Visible or not                   No
-  Description of parameters        Control whether to skip checking of column data type in table structure
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.5
+Parameter value                  skipDatatypeCheck
+Visible or not                   No
+Description of parameters        Control whether to skip checking of column data type in table structure
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.5
 
 | Parameter Setting: |
-| --- |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------|
 | skipDatatypeCheck parameter in Server.xml |
 | <property name=[skipDatatypeCheck](#skipDatatypeCheck)>true</property> |
 | **Role of parameter:** |
@@ -10344,308 +10343,308 @@ Property                         Value
 | skipDatatypeCheck=true: |
 | mysql> alter table skipDatatypeCheck add(phone double(10,3)); |
 | Query OK, 0 rows affected (0.23 sec) |
-|#### socketBacklog |
+| #### socketBacklog |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  socketBacklog
-  Visible or not                   No
-  Description of parameters        service port Socket backlog
-  Default value                    1000
-  Min value                        1000
-  Max value                        4000
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.4.3
+Parameter value                  socketBacklog
+Visible or not                   No
+Description of parameters        service port Socket backlog
+Default value                    1000
+Min value                        1000
+Max value                        4000
+Whether Reload is valid or not   No
+Min Compatible Version           2.4.3
+
+| Parameter Setting: |   |   |   |   |   |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|---------------|---------------------------|---|---|
+| <property name=[socketBacklog](#socketBacklog)>1000</property><!-- service port Socket backlog (Unit: Ge) --> |   |   |   |   |   |
+| **Role of parameter:** |   |   |   |   |   |
+| Service port socket requires a certain period of time to process socket connection of the Client and has a queue to store the Client Socket haven't been processed in time; the capacity of the queue is backlog. If the queue has been fully occupied by Client socket, ServerSocket will refuse the new connections to guarantee enough queue capacity, thus there will be no connection which can't be connected due to small queue capacity. |   |   |   |   |   |
+| #### sqlTimeout |   |   |   |   |   |
+| **Description of parameter:** |   |   |   |   |   |
+| +--------------------------------+---------------------------+ |   |   |   |   |   |
+|   | **Property** |   | **Value** |   |   |
+| +--------------------------------+---------------------------+ |   |   |   |   |   |
+|   | Parameter value |   | sqlTimeout |   |   |
+| +--------------------------------+---------------------------+ |   |   |   |   |   |
+|   | Visible or not |   | Yes |   |   |
+| +--------------------------------+---------------------------+ |   |   |   |   |   |
+|   | Description of parameters |   | Sql Execution Timeout (S) |   |   |
+| +--------------------------------+---------------------------+ |   |   |   |   |   |
+|   | Default value |   | 3600 |   |   |
+| +--------------------------------+---------------------------+ |   |   |   |   |   |
+|   | Min value |   | 1 |   |   |
+| +--------------------------------+---------------------------+ |   |   |   |   |   |
+|   | Max value |   | 28800 |   |   |
+| +--------------------------------+---------------------------+ |   |   |   |   |   |
+|   | Whether Reload is valid or not | N for v.2.4.5 |   |   |   |
+|   |   |   |   |   |   |
+|   |   |   | Y for v.2.4.7 and above |   |   |
+| +--------------------------------+---------------------------+ |   |   |   |   |   |
+|   | Min Compatible Version |   | 2.4.3 |   |   |
+| +--------------------------------+---------------------------+ |   |   |   |   |   |
+| **Role of parameter:** |   |   |   |   |   |
+| This is the max time of compute node from sending SQL to data source to receiving SQL execution result (including single-node and cross-node). If exceeding the set time, timeout will be prompted. |   |   |   |   |   |
+| When SQL execution time exceeds the set time, there will be prompt as follow: |   |   |   |   |   |
+| mysql> select a.*,b.*,c.* from customer_auto_3 a join customer_auto_1 b on a.postcode=b.postcode join customer_auto_2 c on a.provinceid=c.provinceid where c.provinceid in (12,15) and b.province !='anhui' group by a.postcode order by a.birthday,a.provinceid,b.birthday,c.postcode limit 1000; |   |   |   |   |   |
+| ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a new transaction started automatically |   |   |   |   |   |
+| #### sslUseSM4 |   |   |   |   |   |
+| **Description of parameter:** |   |   |   |   |   |
+
+**Property**                     **Value**
+Parameter value                  sslUseSM4
+Visible or not                   No
+Description of parameters        Whether to support SM4 native cipher algorithm
+Default value                    no
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.5
+
+| Parameter Setting: |   |   |   |   |   |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|---------------|---------------------------------------|---|---|
+| sslUseSM4 in server.xml is configure as follows: |   |   |   |   |   |
+| <property name=[sslUseSM4](#sslUseSM4)>true</property><!-- Whether to support SM4 native cipher algorithm --> |   |   |   |   |   |
+| **Role of parameter:** |   |   |   |   |   |
+| If enableSSL and sslUseSM4 in server.xml are enabled, the client can access the compute node in the encrypted state of native cipher algorithm.\ |   |   |   |   |   |
+| ![](assets/standard/image152.png) |   |   |   |   |   |
+| For users, this function can only be viewed through packet capture. Example: if you see the number of an encrypted suite (0xff01) defined by HotDB Server SM4 in TLS handshake package through packet capture, it indicates that SM4 encryption and decryption suite has taken effect.\ |   |   |   |   |   |
+| ![](assets/standard/image153.png "fig:")\ |   |   |   |   |   |
+| ![](assets/standard/image154.png "fig:") |   |   |   |   |   |
+| #### statisticsUpdatePeriod |   |   |   |   |   |
+| **Description of parameter:** |   |   |   |   |   |
+| +--------------------------------+---------------------------------------+ |   |   |   |   |   |
+|   | **Property** |   | **Value** |   |   |
+| +--------------------------------+---------------------------------------+ |   |   |   |   |   |
+|   | Parameter value |   | statisticsUpdatePeriod |   |   |
+| +--------------------------------+---------------------------------------+ |   |   |   |   |   |
+|   | Visible or not |   | Yes |   |   |
+| +--------------------------------+---------------------------------------+ |   |   |   |   |   |
+|   | Description of parameters |   | Command Statistics Persistence Period |   |   |
+| +--------------------------------+---------------------------------------+ |   |   |   |   |   |
+|   | Default value |   | 0 Non-persistence |   |   |
+| +--------------------------------+---------------------------------------+ |   |   |   |   |   |
+|   | Min value |   | 0 |   |   |
+| +--------------------------------+---------------------------------------+ |   |   |   |   |   |
+|   | Max value |   | 3600000 |   |   |
+| +--------------------------------+---------------------------------------+ |   |   |   |   |   |
+|   | Whether Reload is valid or not | N for v.2.4.5 |   |   |   |
+|   |   |   |   |   |   |
+|   |   |   | Y for v.2.4.7 and above |   |   |
+| +--------------------------------+---------------------------------------+ |   |   |   |   |   |
+|   | Min Compatible Version |   | 2.4.3 |   |   |
+| +--------------------------------+---------------------------------------+ |   |   |   |   |   |
+| **Role of parameter:** |   |   |   |   |   |
+| This is the period of command statistics information persistence to the configDB. |   |   |   |   |   |
+| If set as 0, the program will exit due to abnormality, and there will be no persistence； if the configured value is greater than 0, then periodical persistence could be made to the database, and could also be accumulated upon restart. |   |   |   |   |   |
+| When executing SQL statement on Client, relevant commands will be counted into configDB. When set as 0, none will be counted into configDB. |   |   |   |   |   |
+| mysql> use test_ct |   |   |   |   |   |
+| Database changed |   |   |   |   |   |
+| mysql> select * from tid; |   |   |   |   |   |
+| Empty set (0.03 sec) |   |   |   |   |   |
+| ![](assets/standard/image155.png) |   |   |   |   |   |
+| #### strategyForRWSplit |   |   |   |   |   |
+| **Description of parameter:** |   |   |   |   |   |
+
+**Property**                     **Value**
+Parameter value                  strategyForRWSplit
+Visible or not                   Yes
+Description of parameters        Enable Read/write splitting or not
+Default value                    0
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
+
+| Role of parameter: |   |   |   |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|--------|---|
+| When the parameter is set as 0, it means not to enable Read/write splitting, and all will be read from the host. |   |   |   |
+| mysql> select * from ss order by id; |   |   |   |
+| +------+---------+ |   |   |   |
+|   | id | a |   |
+| +------+---------+ |   |   |   |
+|   | 1 | master |   |
+|   | 2 | master |   |
+|   | 3 | master |   |
+|   | 4 | master |   |
+|   | 5 | master |   |
+| +------+---------+ |   |   |   |
+| 5 rows in set (0.00 sec) |   |   |   |
+| When the parameter is set as 1, it means that splittable Read requests are sent to all available data sources, and according to the set read proportion of the Slave, read the Slave or Master. |   |   |   |
+| mysql> select * from ss; |   |   |   |
+| +------+---------+ |   |   |   |
+|   | id | a |   |
+| +------+---------+ |   |   |   |
+|   | 1 | master |   |
+|   | 2 | master |   |
+|   | 3 | master |   |
+|   | 4 | slave |   |
+|   | 5 | slave |   |
+| +------+---------+ |   |   |   |
+| 5 rows in set (0.00 sec) |   |   |   |
+| When the parameter is set as 2, it means that splittable Read requests are sent to available Slave data sources, and all Read requests beyond the transaction are sent to the Slave data source, while the Read requests within the transaction are sent to the Master data source. |   |   |   |
+| - | Beyond transaction: |   |   |
+| mysql> select * from ss; |   |   |   |
+| +------+---------+ |   |   |   |
+|   | id | a |   |
+| +------+---------+ |   |   |   |
+|   | 1 | slave |   |
+|   | 2 | slave |   |
+|   | 3 | slave |   |
+|   | 4 | slave |   |
+|   | 5 | slave |   |
+| +------+---------+ |   |   |   |
+| 5 rows in set (0.00 sec) |   |   |   |
+| - | Within transaction: |   |   |
+| mysql> select * from ss order by id; |   |   |   |
+| +------+---------+ |   |   |   |
+|   | id | a |   |
+| +------+---------+ |   |   |   |
+|   | 1 | master |   |
+|   | 2 | master |   |
+|   | 3 | master |   |
+|   | 4 | master |   |
+|   | 5 | master |   |
+| +------+---------+ |   |   |   |
+| 5 rows in set (0.00 sec) |   |   |   |
+| When the parameter is set as 3, it means that the Read requests in transaction before Write occurs are sent to available Slave data sources. Read requests beyond the transaction are sent to available Salve data sources. |   |   |   |
+| mysql> begin |   |   |   |
+| Query OK, 0 row affected (0.00 sec) |   |   |   |
+| mysql> select * from ss; |   |   |   |
+| +---------+---------+ |   |   |   |
+|   | id | a |   |
+| +---------+---------+ |   |   |   |
+|   | 4 | slave |   |
+|   | 5 | slave |   |
+|   | 600004 | write |   |
+|   | 600007 | write |   |
+|   | 600013 | write |   |
+|   | 1 | slave |   |
+|   | 2 | slave |   |
+|   | 3 | slave |   |
+| +---------+---------+ |   |   |   |
+| 8 rows in set (0.00 sec) |   |   |   |
+| mysql> insert into ss values(null,'write'); |   |   |   |
+| Query OK, 0 row affected (0.01 sec) |   |   |   |
+| mysql> select * from ss; |   |   |   |
+| +---------+---------+ |   |   |   |
+|   | id | a |   |
+| +---------+---------+ |   |   |   |
+|   | 1 | master |   |
+|   | 2 | master |   |
+|   | 3 | master |   |
+|   | 600014 | write |   |
+|   | 4 | master |   |
+|   | 5 | master |   |
+|   | 600004 | write |   |
+|   | 600007 | write |   |
+|   | 600013 | write |   |
+| +---------+---------+ |   |   |   |
+| 9 rows in set (0.00 sec) |   |   |   |
+| For details, please refer to [Read/write splitting](#high-availability-service-1). |   |   |   |
+| #### switchByLogInFailover |   |   |   |
+| **Description of parameter:** |   |   |   |
+
+**Property**                     **Value**
+Parameter value                  switchByLogInFailover
+Visible or not                   No
+Description of parameters        When failover, control whether to determine switch priority by Master_Log_File position of various data sources under the node or not
+Default value                    false
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.5
 
 | Parameter Setting: |
-| --- |
-| <property name=[socketBacklog](#socketBacklog)>1000</property><!-- service port Socket backlog (Unit: Ge) --> |
-| **Role of parameter:** |
-| Service port socket requires a certain period of time to process socket connection of the Client and has a queue to store the Client Socket haven't been processed in time; the capacity of the queue is backlog. If the queue has been fully occupied by Client socket, ServerSocket will refuse the new connections to guarantee enough queue capacity, thus there will be no connection which can't be connected due to small queue capacity. |
-|#### sqlTimeout |
-| **Description of parameter:** |
-| +--------------------------------+---------------------------+ |
-| | **Property** | | **Value** | | |
-| +--------------------------------+---------------------------+ |
-| | Parameter value | | sqlTimeout | | |
-| +--------------------------------+---------------------------+ |
-| | Visible or not | | Yes | | |
-| +--------------------------------+---------------------------+ |
-| | Description of parameters | | Sql Execution Timeout (S) | |
-| +--------------------------------+---------------------------+ |
-| | Default value | | 3600 | | |
-| +--------------------------------+---------------------------+ |
-| | Min value | | 1 | | |
-| +--------------------------------+---------------------------+ |
-| | Max value | | 28800 | | |
-| +--------------------------------+---------------------------+ |
-| | Whether Reload is valid or not | N for v.2.4.5 | | |
-| | | | | | |
-| | | | Y for v.2.4.7 and above | | |
-| +--------------------------------+---------------------------+ |
-| | Min Compatible Version | | 2.4.3 | | |
-| +--------------------------------+---------------------------+ |
-| **Role of parameter:** |
-| This is the max time of compute node from sending SQL to data source to receiving SQL execution result (including single-node and cross-node). If exceeding the set time, timeout will be prompted. |
-| When SQL execution time exceeds the set time, there will be prompt as follow: |
-| mysql> select a.*,b.*,c.* from customer_auto_3 a join customer_auto_1 b on a.postcode=b.postcode join customer_auto_2 c on a.provinceid=c.provinceid where c.provinceid in (12,15) and b.province !='anhui' group by a.postcode order by a.birthday,a.provinceid,b.birthday,c.postcode limit 1000; |
-| ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a new transaction started automatically |
-|#### sslUseSM4 |
-| **Description of parameter:** |
-
-**Property**                     **Value**
-  Parameter value                  sslUseSM4
-  Visible or not                   No
-  Description of parameters        Whether to support SM4 native cipher algorithm
-  Default value                    no
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.5
-
-| Parameter Setting: |
-| --- |
-| sslUseSM4 in server.xml is configure as follows: |
-| <property name=[sslUseSM4](#sslUseSM4)>true</property><!-- Whether to support SM4 native cipher algorithm --> |
-| **Role of parameter:** |
-| If enableSSL and sslUseSM4 in server.xml are enabled, the client can access the compute node in the encrypted state of native cipher algorithm.\ |
-| ![](assets/standard/image152.png) |
-| For users, this function can only be viewed through packet capture. Example: if you see the number of an encrypted suite (0xff01) defined by HotDB Server SM4 in TLS handshake package through packet capture, it indicates that SM4 encryption and decryption suite has taken effect.\ |
-| ![](assets/standard/image153.png "fig:")\ |
-| ![](assets/standard/image154.png "fig:") |
-|#### statisticsUpdatePeriod |
-| **Description of parameter:** |
-| +--------------------------------+---------------------------------------+ |
-| | **Property** | | **Value** | | |
-| +--------------------------------+---------------------------------------+ |
-| | Parameter value | | statisticsUpdatePeriod | | |
-| +--------------------------------+---------------------------------------+ |
-| | Visible or not | | Yes | | |
-| +--------------------------------+---------------------------------------+ |
-| | Description of parameters | | Command Statistics Persistence Period | |
-| +--------------------------------+---------------------------------------+ |
-| | Default value | | 0 Non-persistence | | |
-| +--------------------------------+---------------------------------------+ |
-| | Min value | | 0 | | |
-| +--------------------------------+---------------------------------------+ |
-| | Max value | | 3600000 | | |
-| +--------------------------------+---------------------------------------+ |
-| | Whether Reload is valid or not | N for v.2.4.5 | | |
-| | | | | | |
-| | | | Y for v.2.4.7 and above | | |
-| +--------------------------------+---------------------------------------+ |
-| | Min Compatible Version | | 2.4.3 | | |
-| +--------------------------------+---------------------------------------+ |
-| **Role of parameter:** |
-| This is the period of command statistics information persistence to the configDB. |
-| If set as 0, the program will exit due to abnormality, and there will be no persistence； if the configured value is greater than 0, then periodical persistence could be made to the database, and could also be accumulated upon restart. |
-| When executing SQL statement on Client, relevant commands will be counted into configDB. When set as 0, none will be counted into configDB. |
-| mysql> use test_ct |
-| Database changed |
-| mysql> select * from tid; |
-| Empty set (0.03 sec) |
-| ![](assets/standard/image155.png) |
-|#### strategyForRWSplit |
-| **Description of parameter:** |
-
-**Property**                     **Value**
-  Parameter value                  strategyForRWSplit
-  Visible or not                   Yes
-  Description of parameters        Enable Read/write splitting or not
-  Default value                    0
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
-
-| Role of parameter: |
-| --- |
-| When the parameter is set as 0, it means not to enable Read/write splitting, and all will be read from the host. |
-| mysql> select * from ss order by id; |
-| +------+---------+ |
-| | id | a | |
-| +------+---------+ |
-| | 1 | master | |
-| | 2 | master | |
-| | 3 | master | |
-| | 4 | master | |
-| | 5 | master | |
-| +------+---------+ |
-| 5 rows in set (0.00 sec) |
-| When the parameter is set as 1, it means that splittable Read requests are sent to all available data sources, and according to the set read proportion of the Slave, read the Slave or Master. |
-| mysql> select * from ss; |
-| +------+---------+ |
-| | id | a | |
-| +------+---------+ |
-| | 1 | master | |
-| | 2 | master | |
-| | 3 | master | |
-| | 4 | slave | |
-| | 5 | slave | |
-| +------+---------+ |
-| 5 rows in set (0.00 sec) |
-| When the parameter is set as 2, it means that splittable Read requests are sent to available Slave data sources, and all Read requests beyond the transaction are sent to the Slave data source, while the Read requests within the transaction are sent to the Master data source. |
-| - | Beyond transaction: |
-| mysql> select * from ss; |
-| +------+---------+ |
-| | id | a | |
-| +------+---------+ |
-| | 1 | slave | |
-| | 2 | slave | |
-| | 3 | slave | |
-| | 4 | slave | |
-| | 5 | slave | |
-| +------+---------+ |
-| 5 rows in set (0.00 sec) |
-| - | Within transaction: |
-| mysql> select * from ss order by id; |
-| +------+---------+ |
-| | id | a | |
-| +------+---------+ |
-| | 1 | master | |
-| | 2 | master | |
-| | 3 | master | |
-| | 4 | master | |
-| | 5 | master | |
-| +------+---------+ |
-| 5 rows in set (0.00 sec) |
-| When the parameter is set as 3, it means that the Read requests in transaction before Write occurs are sent to available Slave data sources. Read requests beyond the transaction are sent to available Salve data sources. |
-| mysql> begin |
-| Query OK, 0 row affected (0.00 sec) |
-| mysql> select * from ss; |
-| +---------+---------+ |
-| | id | a | |
-| +---------+---------+ |
-| | 4 | slave | |
-| | 5 | slave | |
-| | 600004 | write | |
-| | 600007 | write | |
-| | 600013 | write | |
-| | 1 | slave | |
-| | 2 | slave | |
-| | 3 | slave | |
-| +---------+---------+ |
-| 8 rows in set (0.00 sec) |
-| mysql> insert into ss values(null,'write'); |
-| Query OK, 0 row affected (0.01 sec) |
-| mysql> select * from ss; |
-| +---------+---------+ |
-| | id | a | |
-| +---------+---------+ |
-| | 1 | master | |
-| | 2 | master | |
-| | 3 | master | |
-| | 600014 | write | |
-| | 4 | master | |
-| | 5 | master | |
-| | 600004 | write | |
-| | 600007 | write | |
-| | 600013 | write | |
-| +---------+---------+ |
-| 9 rows in set (0.00 sec) |
-| For details, please refer to [Read/write splitting](#high-availability-service-1). |
-|#### switchByLogInFailover |
-| **Description of parameter:** |
-
-**Property**                     **Value**
-  Parameter value                  switchByLogInFailover
-  Visible or not                   No
-  Description of parameters        When failover, control whether to determine switch priority by Master_Log_File position of various data sources under the node or not
-  Default value                    false
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.5
-
-| Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[switchByLogInFailover](#switchByLogInFailover)>false</property><!---When failover, select switch priority accoriding to Read_Master_Log_Pos --> |
 | **Role of parameter:** |
 | True status: When failover, give priority to determining the switch priority via the Standby Slave synchronization speed, and the specific shall be determined by position of Master_Log_File and Read_Master_Log_Pos, and the switch with quicker synchronization speed will be taken in priority; if all Slave Read_Master_Log_Pos positions are the same, then match according to the set priority |
 | False status: switch according to failover rule of the user |
 | Note: Manual Switch operation is not under control of this parameter |
-|#### switchoverTimeoutForTrans |
+| #### switchoverTimeoutForTrans |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  switchoverTimeoutForTrans
-  Visible or not                   Yes
-  Description of parameters        When making Manual Switch, the old transaction Wait Commit Timeout (ms)
-  Default value                    3000
-  Min value                        1800000
-  Max value                        0
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  switchoverTimeoutForTrans
+Visible or not                   Yes
+Description of parameters        When making Manual Switch, the old transaction Wait Commit Timeout (ms)
+Default value                    3000
+Min value                        1800000
+Max value                        0
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
-| Parameter Setting: |
-| --- |
-| switchoverTimeoutForTransParameter in Server.xml is set as below: |
-| <property name=[switchoverTimeoutForTrans](#switchoverTimeoutForTrans)>3000</property> |
-| **Role of parameter:** |
-| At the time of manual Master/Slave switch, check whether there is old transaction timeout or not. |
-| That is: Before manual execution of Master/Slave switch, enable Non-commit of execution transaction, then execute Manual Switch, and commit transaction with Timeout, and then transaction commit succeeded. If the timeout time is exceeded, the front-end connection will be disconnected, and transaction will roll back automatically. |
-| For example: |
-| 1. Set [switchoverTimeoutForTrans](#switchoverTimeoutForTrans)Timeout as 36000ms |
-| 2. Enable transaction to execute Insert operation, make manual execution of Master/Slave switch, and commit transaction within 36000ms. Commit succeeded as follow: |
-| mysql> begin; |
-| Query OK, 0 rows affected (0.00 sec) |
-| mysql> insert into TEST_001 values(1); |
-| Query OK, 0 rows affected (0.00 sec) |
-| mysql> commit; |
-| Query OK, 0 rows affected (0.00 sec) |
-| mysql> select * from TEST_001; |
-| +------+ |
-| | id | |
-| +------+ |
-| | 1 | |
-| +------+ |
-| 1 row in set (0.01 sec) |
-| After committing the transaction, it's queried that id=1 |
-| 3. Enable the transaction to execute Insert operation, make manual execution of Master/Slave switch. If the transaction is not committed within 36000 ms, then due to Commit timeout, the transaction will roll back as follow: |
-| mysql> begin; |
-| Query OK, 0 rows affected (0.00 sec) |
-| mysql> insert into TEST_001 values(2); |
-| Query OK, 0 rows affected (0.00 sec) |
-| Execute Query statement one minute later: |
-| mysql> select * from TEST_001; |
-| ERROR 2013 (HY000): Lost connection to MySQL server during query |
-| ERROR 2016 (HY000): MySQL server has gone away |
-| No connection. Trying to reconnect... |
-| Connection id: 40672 |
-| Current database: test_jzl |
-| Query after re-login, and it's found that the transaction is not committed: |
-| mysql> select * from TEST_001; |
-| +------+ |
-| | id | |
-| +------+ |
-| | 1 | |
-| +------+ |
-| 1 row in set (0.01 sec) |
-|#### timerExecutor |
-| **Description of parameter:** |
+| Parameter Setting: |   |   |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----|---|
+| switchoverTimeoutForTransParameter in Server.xml is set as below: |   |   |
+| <property name=[switchoverTimeoutForTrans](#switchoverTimeoutForTrans)>3000</property> |   |   |
+| **Role of parameter:** |   |   |
+| At the time of manual Master/Slave switch, check whether there is old transaction timeout or not. |   |   |
+| That is: Before manual execution of Master/Slave switch, enable Non-commit of execution transaction, then execute Manual Switch, and commit transaction with Timeout, and then transaction commit succeeded. If the timeout time is exceeded, the front-end connection will be disconnected, and transaction will roll back automatically. |   |   |
+| For example: |   |   |
+| 1. Set [switchoverTimeoutForTrans](#switchoverTimeoutForTrans)Timeout as 36000ms |   |   |
+| 2. Enable transaction to execute Insert operation, make manual execution of Master/Slave switch, and commit transaction within 36000ms. Commit succeeded as follow: |   |   |
+| mysql> begin; |   |   |
+| Query OK, 0 rows affected (0.00 sec) |   |   |
+| mysql> insert into TEST_001 values(1); |   |   |
+| Query OK, 0 rows affected (0.00 sec) |   |   |
+| mysql> commit; |   |   |
+| Query OK, 0 rows affected (0.00 sec) |   |   |
+| mysql> select * from TEST_001; |   |   |
+| +------+ |   |   |
+|   | id |   |
+| +------+ |   |   |
+|   | 1 |   |
+| +------+ |   |   |
+| 1 row in set (0.01 sec) |   |   |
+| After committing the transaction, it's queried that id=1 |   |   |
+| 3. Enable the transaction to execute Insert operation, make manual execution of Master/Slave switch. If the transaction is not committed within 36000 ms, then due to Commit timeout, the transaction will roll back as follow: |   |   |
+| mysql> begin; |   |   |
+| Query OK, 0 rows affected (0.00 sec) |   |   |
+| mysql> insert into TEST_001 values(2); |   |   |
+| Query OK, 0 rows affected (0.00 sec) |   |   |
+| Execute Query statement one minute later: |   |   |
+| mysql> select * from TEST_001; |   |   |
+| ERROR 2013 (HY000): Lost connection to MySQL server during query |   |   |
+| ERROR 2016 (HY000): MySQL server has gone away |   |   |
+| No connection. Trying to reconnect... |   |   |
+| Connection id: 40672 |   |   |
+| Current database: test_jzl |   |   |
+| Query after re-login, and it's found that the transaction is not committed: |   |   |
+| mysql> select * from TEST_001; |   |   |
+| +------+ |   |   |
+|   | id |   |
+| +------+ |   |   |
+|   | 1 |   |
+| +------+ |   |   |
+| 1 row in set (0.01 sec) |   |   |
+| #### timerExecutor |   |   |
+| **Description of parameter:** |   |   |
 
 **Property**                     **Value**
-  Parameter value                  timerExecutor
-  Visible or not                   Yes
-  Description of parameters        Number of threads of timers
-  Default value                    4
-  Min value                        2
-  Max value                        8
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.4.3
+Parameter value                  timerExecutor
+Visible or not                   Yes
+Description of parameters        Number of threads of timers
+Default value                    4
+Min value                        2
+Max value                        8
+Whether Reload is valid or not   No
+Min Compatible Version           2.4.3
 
 | Parameter Setting: |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[timerExecutor](#timerExecutor)>4</property><!-- Number of threads of timers --> |
 | **Role of parameter:** |
 | The parameter [adaptiveProcessor](#adaptiveprocessor) is enabled by default, and when enabled, the compute node will make Automatic Adaptation to the Max timerExecutor. Log in to 3325 port, execute show @@threadpool; command, and you could view the number of current timerExecutor. |
-|#### timestampProxy |
+| #### timestampProxy |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  timestampProxy
-  Visible or not                   Yes
-  Description of parameters        TimeProxy mode
-  Default value                    0
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.1
+Parameter value                  timestampProxy
+Visible or not                   Yes
+Description of parameters        TimeProxy mode
+Default value                    0
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.1
 
 | Parameter Setting: |
-| --- |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | When timestampProxy parameter is 0, it means auto mode, and when the compute node checks that the time difference of data source is greater than 0.5, it will be the auto Proxy of the Global Time Function. If less than 0.5, it only make Proxy of the time function of the Global Table, high-accuracy time stamp and cross-node statement. |
 | <property name=[timestampProxy](#timestampProxy)>0</property> |
 | When the parameter is set as 1, it means global_table_only, only in Global Table mode; the compute node only make Proxy of the time function of Global Table. |
@@ -10654,132 +10653,132 @@ Property                         Value
 | <property name=[timestampProxy](#timestampProxy)>2</property> |
 | **Role of parameter:** |
 | This parameter is used for Complete Global Proxy of the table with on update current_timestamp property or SQL with Time Function, and for solving the problem of data abnormality and inter-node data inconsistency due to insert or update operation when the table has this property. If timestampProxy is set as 0 and the difference is great, or is set as 2, it will greatly influence execution speed and efficiency of all update statements. |
-|#### url & username & password |
+| #### url & username & password |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  url
-  Visible or not                   Yes
-  Description of parameters        configDB address
-  Default value                    jdbc:mysql://127.0.0.1:3306/hotdb_config
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  url
+Visible or not                   Yes
+Description of parameters        configDB address
+Default value                    jdbc:mysql://127.0.0.1:3306/hotdb_config
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
 **Property**                     **Value**
-  Parameter value                  username
-  Visible or not                   Yes
-  Description of parameters        configDB username
-  Default value                    hotdb_config
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  username
+Visible or not                   Yes
+Description of parameters        configDB username
+Default value                    hotdb_config
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
 **Property**                     **Value**
-  Parameter value                  password
-  Visible or not                   Yes
-  Description of parameters        configDB password
-  Default value                    hotdb_config
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  password
+Visible or not                   Yes
+Description of parameters        configDB password
+Default value                    hotdb_config
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
-| Role of parameter: |
-| --- |
-| url, username and password are supporting parameters: url is the configDB route storing compute node configuration information; username and password are username and password for connecting this physical database. This configDB is used for storing configuration information. |
-| <property name="url">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- Master configDB address --> |
-| <property name="username">hotdb_config</property><!-- Master configDB username --> |
-| <property name="password">hotdb_config</property><!-- Master configDB password --> |
-| <property |
-| This username and password shall be created in MySQL instance, and could log in to this configDB only after being granted with privilege. Both the username and password could be customized. |
-| mysql> grant select,insert,update,delete,super on *.* to hotdb_config_9@'%' identified by 'hotdb_config_9'; |
-| Query OK, 0 row affected (0.00 sec) |
-| root@127.0.0.1:(none) 5.7.19-HotDB-2.5.2 04:20:08> show grants; |
-| +--------------------------------------------------------------------+ |
-| | Grants for root@localhost | |
-| +--------------------------------------------------------------------+ |
-| | GRANT ALL PRIVILEGED ON *.* TO 'root'@'localhost' WITH GRANT OPTION | |
-| | GRANT PROXY ON ''@'' TO 'root'@'localhost' WITH GRANT OPTION | |
-| +--------------------------------------------------------------------+ |
-| 1 row in set (0.07 sec) |
-| root> mysql -uhotdb_config_9 -photdb_config_9 -h127.0.0.1 -P3306 |
-| mysql: [Warning] Using a password on the command line interface can be insecure. |
-| Welcome to the MySQL monitor. Commands end with ; or \\g. |
-| Your MySQL connection id is 16323 |
-| Server version: 5.7.19-HotDB-2.5.2 HotDB Server by Hotpu Tech |
-| Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved. |
-| Oracle is a registered trademark of Oracle Corporation and/or its |
-| affiliates. Other names may be trademarks of their respective |
-| owners. |
-| Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. |
-| When configDB connection fails after enabling the compute node, the compute node will reconnect at interval of 3s, until connection still fails after more than 30 minutes of retry, then interrupt Enable operation. |
-| The last packet set successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server. |
-| 2018-06-12 15:25:56.789 [ERROR] [INIT] [main] HotdbConfig(275) -- no available config datasources. retry in 3 seconds. |
-|#### usingAIO |
-| **Description of parameter:** |
+| Role of parameter: |   |   |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|---|
+| url, username and password are supporting parameters: url is the configDB route storing compute node configuration information; username and password are username and password for connecting this physical database. This configDB is used for storing configuration information. |   |   |
+| <property name="url">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- Master configDB address --> |   |   |
+| <property name="username">hotdb_config</property><!-- Master configDB username --> |   |   |
+| <property name="password">hotdb_config</property><!-- Master configDB password --> |   |   |
+| <property |   |   |
+| This username and password shall be created in MySQL instance, and could log in to this configDB only after being granted with privilege. Both the username and password could be customized. |   |   |
+| mysql> grant select,insert,update,delete,super on *.* to hotdb_config_9@'%' identified by 'hotdb_config_9'; |   |   |
+| Query OK, 0 row affected (0.00 sec) |   |   |
+| root@127.0.0.1:(none) 5.7.19-HotDB-2.5.2 04:20:08> show grants; |   |   |
+| +--------------------------------------------------------------------+ |   |   |
+|   | Grants for root@localhost |   |
+| +--------------------------------------------------------------------+ |   |   |
+|   | GRANT ALL PRIVILEGED ON *.* TO 'root'@'localhost' WITH GRANT OPTION |   |
+|   | GRANT PROXY ON ''@'' TO 'root'@'localhost' WITH GRANT OPTION |   |
+| +--------------------------------------------------------------------+ |   |   |
+| 1 row in set (0.07 sec) |   |   |
+| root> mysql -uhotdb_config_9 -photdb_config_9 -h127.0.0.1 -P3306 |   |   |
+| mysql: [Warning] Using a password on the command line interface can be insecure. |   |   |
+| Welcome to the MySQL monitor. Commands end with ; or \\g. |   |   |
+| Your MySQL connection id is 16323 |   |   |
+| Server version: 5.7.19-HotDB-2.5.2 HotDB Server by Hotpu Tech |   |   |
+| Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved. |   |   |
+| Oracle is a registered trademark of Oracle Corporation and/or its |   |   |
+| affiliates. Other names may be trademarks of their respective |   |   |
+| owners. |   |   |
+| Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. |   |   |
+| When configDB connection fails after enabling the compute node, the compute node will reconnect at interval of 3s, until connection still fails after more than 30 minutes of retry, then interrupt Enable operation. |   |   |
+| The last packet set successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server. |   |   |
+| 2018-06-12 15:25:56.789 [ERROR] [INIT] [main] HotdbConfig(275) -- no available config datasources. retry in 3 seconds. |   |   |
+| #### usingAIO |   |   |
+| **Description of parameter:** |   |   |
 
 **Property**                     **Value**
-  Parameter value                  usingAIO
-  Visible or not                   No
-  Description of parameters        Use AIO or not, Yes
-  Default value                    0
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.4.3
+Parameter value                  usingAIO
+Visible or not                   No
+Description of parameters        Use AIO or not, Yes
+Default value                    0
+Whether Reload is valid or not   No
+Min Compatible Version           2.4.3
 
-| Parameter Setting: |
-| --- |
-| <property name=[usingAIO](#usingAIO)>0</property><!---Use AIO or not, Yes: 1, No: 0 --> |
-| When the parameter is set as 0, the compute node uses NIO, and marks opposition between AIO and NIO |
-| **Role of parameter:** |
-| It's used for setting whether the current compute node enables AIO or not |
-| AIO: Asynchronous Input/Output, and the server realization mode is to create a thread for a valid request, and all I/O requests of the Client are firstly completed by OS and then informed to the server application to enable thread for processing, IO mode is applicable to the architecture with many connections and long connections (heavy operation). Since at present, AIO hasn't been completed on Linux and optimization of AIO by compute node is far inferior to NIO, therefore, it's not recommended to enable this parameter. |
+| Parameter Setting: |   |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| <property name=[usingAIO](#usingAIO)>0</property><!---Use AIO or not, Yes: 1, No: 0 --> |   |
+| When the parameter is set as 0, the compute node uses NIO, and marks opposition between AIO and NIO |   |
+| **Role of parameter:** |   |
+| It's used for setting whether the current compute node enables AIO or not |   |
+| AIO: Asynchronous Input/Output, and the server realization mode is to create a thread for a valid request, and all I/O requests of the Client are firstly completed by OS and then informed to the server application to enable thread for processing, IO mode is applicable to the architecture with many connections and long connections (heavy operation). Since at present, AIO hasn't been completed on Linux and optimization of AIO by compute node is far inferior to NIO, therefore, it's not recommended to enable this parameter. |   |
 | root> tail -n 300 hotdb.log | grep 'aio' |
-| 2018-06-01 13:51:18.961 [INFO] [INIT] [main] j(-1) -- using aio network handler |
-| 2018-06-01 13:52:19.644 [INFO] [INIT] [main] j(-1) -- using aio network handler |
-|#### version |
-| **Description of parameter:** |
+| 2018-06-01 13:51:18.961 [INFO] [INIT] [main] j(-1) -- using aio network handler |   |
+| 2018-06-01 13:52:19.644 [INFO] [INIT] [main] j(-1) -- using aio network handler |   |
+| #### version |   |
+| **Description of parameter:** |   |
 
 **Property**                     **Value**
-  Parameter value                  version
-  Visible or not                   No
-  Description of parameters        The version number shown to the public by the compute node
-  Default value                    Synchronize with result of the compute node show @@version, for example:5.6.29-HotDB-2.5.1
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  version
+Visible or not                   No
+Description of parameters        The version number shown to the public by the compute node
+Default value                    Synchronize with result of the compute node show @@version, for example:5.6.29-HotDB-2.5.1
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
-| Role of parameter: |
-| --- |
-| The version number shown by the compute node to the public, which could be modified by Custom, and it could specify relevant connection protocol of inferior versions. |
-| <property name=[version](#version)>5.6.1</property><!---Version Number --> |
-| When log in to MySQL instance, you could view corresponding version number: |
-| root> mysql -uct -pct -h127.0.0.1 -P2473 |
-| mysql: [Warning] Using a password on the command line interface can be insecure. |
-| Welcome to the MySQL monitor. Commands end with ; or \\g. |
-| Your MySQL connection id is 30 |
-| Server version: **5.6.1**-HotDB-2.4.7 HotDB Server by Hotpu Tech |
-| Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved. |
-| Oracle is a registered trademark of Oracle Corporation and/or its |
-| affiliates. Other names may be trademarks of their respective |
-| owners. |
-| Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. |
-| root@127.0.0.1:(none) 5.7.19-HotDB-2.5.2 04:20:14> select version(); |
-| +--------------------+ |
-| | VERSION() | |
-| +--------------------+ |
-| | **5.6.1**-HotDB-2.4.7 | |
-| +--------------------+ |
-| 1 row in set (0.03 sec) |
-| Note: When min version number of all data source is inferior to or equals to Max version number supported by the compute node, then among all data sources, show the min version number to the public; when version number of the data source exceeds the Max version number supported by the compute node, then show a complete version number of the Max protocol version supported by the compute node to the public, and currently, 5.7.18 is supported at the highest. When version number of all data sources is bigger than 5.7.18, then this parameter will change the version number, otherwise, the min version among the data sources will be taken directly. |
-|#### versionComment |
-| **Description of parameter:** |
+| Role of parameter: |   |   |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|---|
+| The version number shown by the compute node to the public, which could be modified by Custom, and it could specify relevant connection protocol of inferior versions. |   |   |
+| <property name=[version](#version)>5.6.1</property><!---Version Number --> |   |   |
+| When log in to MySQL instance, you could view corresponding version number: |   |   |
+| root> mysql -uct -pct -h127.0.0.1 -P2473 |   |   |
+| mysql: [Warning] Using a password on the command line interface can be insecure. |   |   |
+| Welcome to the MySQL monitor. Commands end with ; or \\g. |   |   |
+| Your MySQL connection id is 30 |   |   |
+| Server version: **5.6.1**-HotDB-2.4.7 HotDB Server by Hotpu Tech |   |   |
+| Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved. |   |   |
+| Oracle is a registered trademark of Oracle Corporation and/or its |   |   |
+| affiliates. Other names may be trademarks of their respective |   |   |
+| owners. |   |   |
+| Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement. |   |   |
+| root@127.0.0.1:(none) 5.7.19-HotDB-2.5.2 04:20:14> select version(); |   |   |
+| +--------------------+ |   |   |
+|   | VERSION() |   |
+| +--------------------+ |   |   |
+|   | **5.6.1**-HotDB-2.4.7 |   |
+| +--------------------+ |   |   |
+| 1 row in set (0.03 sec) |   |   |
+| Note: When min version number of all data source is inferior to or equals to Max version number supported by the compute node, then among all data sources, show the min version number to the public; when version number of the data source exceeds the Max version number supported by the compute node, then show a complete version number of the Max protocol version supported by the compute node to the public, and currently, 5.7.18 is supported at the highest. When version number of all data sources is bigger than 5.7.18, then this parameter will change the version number, otherwise, the min version among the data sources will be taken directly. |   |   |
+| #### versionComment |   |   |
+| **Description of parameter:** |   |   |
 
 **Property**                     **Value**
-  Parameter value                  versionComment
-  Visible or not                   No
-  Description of parameters        Version comment of compute node.
-  Default value                    (None)
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.5.5
+Parameter value                  versionComment
+Visible or not                   No
+Description of parameters        Version comment of compute node.
+Default value                    (None)
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.5.5
 
 | Parameter Setting: |
-| --- |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | versionComment, the version comment of compute node for external display, can be customized and used with the parameter Version. If the parameter value is a different string, you can replace the original version comment with the configured string; if you do not want to display any comment, you can configure the parameter value as a space (and the actual display is a space); if no value is configured, HotDB-2.5.5 HotDB Server by Hotpu Tech will be displayed by default (2.5.5 is the version number of the compute node itself). |
 | For example: |
 | Null：<property name=[versionComment](#versionComment)></property>，connect to the compute node： |
@@ -10819,29 +10818,29 @@ Property                         Value
 | Protocol version: 10 |
 | Connection: 192.168.210.49 via TCP/IP |
 | ...... |
-|#### VIP & checkVIPPeriod |
+| #### VIP & checkVIPPeriod |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html# sysvar_back_log)
-  Visible or not                   Yes
-  Description of parameters        Virtual IP address
-  Default value                    Null
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.8
+Parameter value                  [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html# sysvar_back_log)
+Visible or not                   Yes
+Description of parameters        Virtual IP address
+Default value                    Null
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.8
 
 **Property**                     **Value**
-  Parameter value                  CheckVIPPeriod
-  Visible or not                   Yes
-  Description of parameters        Check VIP Period
-  Default value                    500ms
-  Min value                        10ms
-  Max value                        1000ms
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.8
+Parameter value                  CheckVIPPeriod
+Visible or not                   Yes
+Description of parameters        Check VIP Period
+Default value                    500ms
+Min value                        10ms
+Max value                        1000ms
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.8
 
 | VIP and checkVIPPeriod are supporting parameters; VIP is set as Keepalived virtual IP, and checkVIPPeriod is used for controlling check frequency of virtual IP. When the compute node enables VIP check, if the compute node in slave status founds existence of VIP, then it will execute online automatically; if compute node in master status founds that VIP does not exist, then it will auto offline. This group of parameters are applicable to Compute Node High Availability environment, and it's recommended making configuration under compute node Master/Slave node environment, and shall be set as actual virtual IP of the current Keepalived. If not set or in case of set error, there will be no processing, while this parameter could be ignored in single compute node |
-| --- |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Parameter Setting:** |
 | VIP Parameter of Server.xml is set as IP of Keepalived; CheckVIPPeriod is the check period, and the unit: ms |
 | <property name="VIP">192.168.220.106</property><!-- virtual IP (Null if not filled or if the format is not IPv4) --> |
@@ -10856,19 +10855,19 @@ Property                         Value
 | It is in Compute Node High Availability environment, and under the condition of change in root password, when making high availability switch, it will make switch by checking according to existence mode of VIP, in order to avoid switch failure after changing the password |
 | ![](assets/standard/image156.png) |
 | ![](assets/standard/image157.png) |
-|#### waitConfigSyncFinish |
+| #### waitConfigSyncFinish |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  cryptMandatory
-  Visible or not                   No
-  Description of parameters        When enabled, wait for configDB synchronization or not
-  Default value                    false
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.4.3
+Parameter value                  cryptMandatory
+Visible or not                   No
+Description of parameters        When enabled, wait for configDB synchronization or not
+Default value                    false
+Whether Reload is valid or not   No
+Min Compatible Version           2.4.3
 
 | Parameter Setting: |
-| --- |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[waitConfigSyncFinish](#waitConfigSyncFinish)>true</property><!-- When enabled, wait for configDB synchronization or not --> |
 | **Role of parameter:** |
 | It is used for setting whether to wait for configDB synchronization or not when enabled. Turn on the switch, in case of latency between configDB master/slave, it shall wait for the master/slave configDB to catch up with the Slave configDB, and maintain that the configDB data currently used is the latest data, only in this way could it be enabled |
@@ -10884,59 +10883,59 @@ Property                         Value
 | ON status: |
 | It could be enabled only after waiting for master/slave synchronization |
 | 2018-07-12 14:28:52.019 [INFO] [INIT] [$NIOREACTOR-9-RW] XAInitRecoverHandler(125) -- wait for config datasource synchronizing... |
-|#### waitForSlaveInFailover |
+| #### waitForSlaveInFailover |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  waitForSlaveInFailover
-  Visible or not                   Yes
-  Description of parameters        In failover, whether to wait for the Slave to catch up with replication or not
-  Default value                    true
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.3
+Parameter value                  waitForSlaveInFailover
+Visible or not                   Yes
+Description of parameters        In failover, whether to wait for the Slave to catch up with replication or not
+Default value                    true
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.3
 
-| Parameter Setting: |
-| --- |
-| <property name=[waitForSlaveInFailover](#waitForSlaveInFailover)>true</property><!-- In failover, whether to wait for the Slave to catch up with replication or not --> |
-| **Role of parameter:** |
-| It's used for setting in failover, whether to wait for the Slave to catch up with replication or not |
-| ON status: |
-| When the Slave has replication latency, it can't switch to the Slave, and the compute node will keep checking, and could make switch only after waiting for replication synchronization |
-| mysql> show @@latency; |
-| +----+----------------------------+----------------------------+---------+ |
-| | dn | info | | latency | |
-| +----+----------------------------+----------------------------+---------+ |
-| | 4 | 192.168.200.51:3310/phy248 | 192.168.200.51:3310/phy248 | 0 ms | |
-| | 5 | 192.168.200.51:3311/phy248 | 192.168.200.51:3311/phy248 | 0 ms | |
-| | 6 | 192.168.200.51:3312/phy248 | 192.168.200.51:3312/phy248 | 19582 ms | |
-| | 7 | 192.168.200.51:3313/phy248 | 192.168.200.51:3313/phy248 | 0 ms | |
-| +----+----------------------------+----------------------------+---------+ |
-| 4 rows in set (0.02 sec) |
-| In the log you can see the prompt of no longer using the failed Master data source, and the data source without replication synchronization will not be enabled |
-| 2018-06-08 10:36:47.921 [INFO] [FAILOVER] [Labor-1552] j(-1) - slave_sql_running is Yes in :[id:178,nodeId:6 192.168.200.52:3312/phy248 status:1,charset:utf8] during failover of datanode 6 |
-| 2018-06-08 10:36:48.417 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:java.net.ConnectException:connection refused |
-| 2018-06-08 10:36:48.418 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused |
-| 2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:j ava.net.ConnectException: connection refused |
-| 2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused |
-| 2018-06-0810:36:48.982 [INFO] [FAILOVER] [Labor-1552] j(-1) - masterLogFile:mysql-bin.000518,readMasterLogFile:mysql-bin.000518,readMasterLogPos:384545127,execMaster LogPos:384512435,relayLogFiTe:mysql-relay-bin.000002,relayLogPos; 248414,secondBehindMaster:19,execLogchanged:true in slave: MySQLConnection [node=6, id=140, threadId=3 15945, state=borrowed, closed=false, autocommit=true, host=192.168.200.52, port=3312, database=phy248, localPort=64694, isClose:false, toBeclose:false] |
-| OFF status: |
-| When the master/slave data source has replication latency, it could switch to the Slave directly, without waiting for replication synchronization. |
-| 2018-06-08 16:19:22.864 [INFO] [FAILOVER] [Labor-1852] bh(-1) -- switch datasource:6 for datanode:6 successfully by Manager. |
-| Special note: the effect of master_delay on switching is adjusted in 2.5.6 and above. When the parameter waitForSlaveInFailover |
-| (In failover, whether to wait for the Slave to catch up with replication or not) is enabled, if the delay setting is detected during switching, the setting will be automatically cancelled before catching up with the replication. After the switching, the delay setting will be restored. If it is still greater than 10s after cancelling the delay setting, switching will not be allowed, and the previously set value of master_delay will be restored.) |
-|#### waitSyncFinishAtStartup |
-| **Description of parameter:** |
+| Parameter Setting: |   |   |   |   |   |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----|----------------------------|----------------------------|----------|---|
+| <property name=[waitForSlaveInFailover](#waitForSlaveInFailover)>true</property><!-- In failover, whether to wait for the Slave to catch up with replication or not --> |   |   |   |   |   |
+| **Role of parameter:** |   |   |   |   |   |
+| It's used for setting in failover, whether to wait for the Slave to catch up with replication or not |   |   |   |   |   |
+| ON status: |   |   |   |   |   |
+| When the Slave has replication latency, it can't switch to the Slave, and the compute node will keep checking, and could make switch only after waiting for replication synchronization |   |   |   |   |   |
+| mysql> show @@latency; |   |   |   |   |   |
+| +----+----------------------------+----------------------------+---------+ |   |   |   |   |   |
+|   | dn | info |   | latency |   |
+| +----+----------------------------+----------------------------+---------+ |   |   |   |   |   |
+|   | 4 | 192.168.200.51:3310/phy248 | 192.168.200.51:3310/phy248 | 0 ms |   |
+|   | 5 | 192.168.200.51:3311/phy248 | 192.168.200.51:3311/phy248 | 0 ms |   |
+|   | 6 | 192.168.200.51:3312/phy248 | 192.168.200.51:3312/phy248 | 19582 ms |   |
+|   | 7 | 192.168.200.51:3313/phy248 | 192.168.200.51:3313/phy248 | 0 ms |   |
+| +----+----------------------------+----------------------------+---------+ |   |   |   |   |   |
+| 4 rows in set (0.02 sec) |   |   |   |   |   |
+| In the log you can see the prompt of no longer using the failed Master data source, and the data source without replication synchronization will not be enabled |   |   |   |   |   |
+| 2018-06-08 10:36:47.921 [INFO] [FAILOVER] [Labor-1552] j(-1) - slave_sql_running is Yes in :[id:178,nodeId:6 192.168.200.52:3312/phy248 status:1,charset:utf8] during failover of datanode 6 |   |   |   |   |   |
+| 2018-06-08 10:36:48.417 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:java.net.ConnectException:connection refused |   |   |   |   |   |
+| 2018-06-08 10:36:48.418 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused |   |   |   |   |   |
+| 2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:j ava.net.ConnectException: connection refused |   |   |   |   |   |
+| 2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused |   |   |   |   |   |
+| 2018-06-0810:36:48.982 [INFO] [FAILOVER] [Labor-1552] j(-1) - masterLogFile:mysql-bin.000518,readMasterLogFile:mysql-bin.000518,readMasterLogPos:384545127,execMaster LogPos:384512435,relayLogFiTe:mysql-relay-bin.000002,relayLogPos; 248414,secondBehindMaster:19,execLogchanged:true in slave: MySQLConnection [node=6, id=140, threadId=3 15945, state=borrowed, closed=false, autocommit=true, host=192.168.200.52, port=3312, database=phy248, localPort=64694, isClose:false, toBeclose:false] |   |   |   |   |   |
+| OFF status: |   |   |   |   |   |
+| When the master/slave data source has replication latency, it could switch to the Slave directly, without waiting for replication synchronization. |   |   |   |   |   |
+| 2018-06-08 16:19:22.864 [INFO] [FAILOVER] [Labor-1852] bh(-1) -- switch datasource:6 for datanode:6 successfully by Manager. |   |   |   |   |   |
+| Special note: the effect of master_delay on switching is adjusted in 2.5.6 and above. When the parameter waitForSlaveInFailover |   |   |   |   |   |
+| (In failover, whether to wait for the Slave to catch up with replication or not) is enabled, if the delay setting is detected during switching, the setting will be automatically cancelled before catching up with the replication. After the switching, the delay setting will be restored. If it is still greater than 10s after cancelling the delay setting, switching will not be allowed, and the previously set value of master_delay will be restored.) |   |   |   |   |   |
+| #### waitSyncFinishAtStartup |   |   |   |   |   |
+| **Description of parameter:** |   |   |   |   |   |
 
 **Property**                     **Value**
-  Parameter value                  waitSyncFinishAtStartup
-  Visible or not                   Yes
-  Description of parameters        When enabled, wait for synchronization of the Master data source or not
-  Default value                    true
-  Whether Reload is valid or not   No
-  Min Compatible Version           2.4.3
+Parameter value                  waitSyncFinishAtStartup
+Visible or not                   Yes
+Description of parameters        When enabled, wait for synchronization of the Master data source or not
+Default value                    true
+Whether Reload is valid or not   No
+Min Compatible Version           2.4.3
 
 | Parameter Setting: |
-| --- |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <property name=[waitSyncFinishAtStartup](#waitSyncFinishAtStartup)>true</property><!-- When enabled, wait for synchronization of the Master data source or not --> |
 | **Role of parameter:** |
 | When enabled, wait for synchronization of the Master data source or not. Turn on the switch, wait for master/slave data source to make replication synchronization when enabling the compute node, so as to guarantee data consistency of master/slave data source |
@@ -10955,52 +10954,53 @@ Property                         Value
 | 2018-06-01 16:21:16.894 [info] [INIT] [main] j(-1) - Sysconfig params:SystemConfig [ frontwriteQueueSize=2048, service port=9993, management port=9995, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferChunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://127.0.0.1:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://127.0.0.l:3306/hotdb_config_249, usingAIO=o, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=l, heartbeatTimeoutMs=l00, joinable=true, joinCacheSize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,VIP=null,checkVIPPeriod=1600] |
 | 2018-06-01 16:21:17.210 [info] [INIT] [main] BufferPool(-1) - total buffer:163840000,every chunk bytes:16384,chunk number:10000,every threadLocalMaxNumber:1000 |
 | 2018-06-01 16:21:17.216 [info] [INIT] [main] j(-1) - usinq aio network handler |
-|#### weightForSlaveRWSplit |
+| #### weightForSlaveRWSplit |
 | **Description of parameter:** |
 
 **Property**                     **Value**
-  Parameter value                  weightForSlaveRWSplit
-  Visible or not                   Yes
-  Description of parameters        Read Proportion of the Slave, 50 by default (percentage)
-  Default value                    50
-  Whether Reload is valid or not   Yes
-  Min Compatible Version           2.4.4
+Parameter value                  weightForSlaveRWSplit
+Visible or not                   Yes
+Description of parameters        Read Proportion of the Slave, 50 by default (percentage)
+Default value                    50
+Whether Reload is valid or not   Yes
+Min Compatible Version           2.4.4
 
-| Parameter Setting: |
-| --- |
-| weightForSlaveRWSplitParameter in server.xml is set as 50 |
-| <property name=[weightForSlaveRWSplit](#weightForSlaveRWSplit)>50</property> |
-| **Role of parameter:** |
-| weightForSlaveRWSplit and strategyForRWSplit are supporting parameters, and only when Read/write splitting strategy is 1 (separatable Read requests are sent to all available data sources), could Read Proportion of the Slave be meaningful. If the Slave latency exceeds threshold value of readable Standby Slave, read the Active Master by default |
-| Under master/slave condition: read proportion of the Slave is 50% by default |
-| Under one-master and multi-slave condition (such as: one master and double slaves): read proportion of the Master is 50%, read proportion of Slave A is 25%, and read proportion of Slave B is 25% |
-| For example: Active Master mark: name= Master |
-| mysql> select * from vrab001; |
-| +------+---------+ |
-| | id | name | |
-| +------+---------+ |
-| | 1 | Master | |
-| | 2 | Master | |
-| | 3 | Master | |
-| | 4 | Master | |
-| +------+---------+ |
-| Slave mark: name= Slave |
-| mysql> select * from vrab001; |
-| +------+---------+ |
-| | id | name | |
-| +------+---------+ |
-| | 1 | slave | |
-| | 2 | slave | |
-| | 3 | slave | |
-| | 4 | slave | |
-| +------+---------+ |
-| Execute select Query operation for several times, read 50% of master/slave respectively |
-|## Appendix |
-|### Notices for HotDB Server |
-|#### Recommendation on JDBC version |
-| It's recommended that the JDBC version should be mysql-connector-java-5.1.27.jar, 8.0 could be compatible at the highest. |
-|#### Recommendation on JAVA database connection pool |
-| It's recommended using proxool-0.9 for connection pool |
-|#### Reserved field of database design |
-| Compute node could specify data node according to DNID, therefore, the DNID Field name is reserved field of the database (do not use this Field name in table structure). |
-| The compute node judges whether the data source is available or not via operating the hotdb_heartbeat table of the data source, therefore, hotdb_heartbeat serves as reserved field of Table Name. |
+| Parameter Setting: |   |   |   |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----|--------|---|
+| weightForSlaveRWSplitParameter in server.xml is set as 50 |   |   |   |
+| <property name=[weightForSlaveRWSplit](#weightForSlaveRWSplit)>50</property> |   |   |   |
+| **Role of parameter:** |   |   |   |
+| weightForSlaveRWSplit and strategyForRWSplit are supporting parameters, and only when Read/write splitting strategy is 1 (separatable Read requests are sent to all available data sources), could Read Proportion of the Slave be meaningful. If the Slave latency exceeds threshold value of readable Standby Slave, read the Active Master by default |   |   |   |
+| Under master/slave condition: read proportion of the Slave is 50% by default |   |   |   |
+| Under one-master and multi-slave condition (such as: one master and double slaves): read proportion of the Master is 50%, read proportion of Slave A is 25%, and read proportion of Slave B is 25% |   |   |   |
+| For example: Active Master mark: name= Master |   |   |   |
+| mysql> select * from vrab001; |   |   |   |
+| +------+---------+ |   |   |   |
+|   | id | name |   |
+| +------+---------+ |   |   |   |
+|   | 1 | Master |   |
+|   | 2 | Master |   |
+|   | 3 | Master |   |
+|   | 4 | Master |   |
+| +------+---------+ |   |   |   |
+| Slave mark: name= Slave |   |   |   |
+| mysql> select * from vrab001; |   |   |   |
+| +------+---------+ |   |   |   |
+|   | id | name |   |
+| +------+---------+ |   |   |   |
+|   | 1 | slave |   |
+|   | 2 | slave |   |
+|   | 3 | slave |   |
+|   | 4 | slave |   |
+| +------+---------+ |   |   |   |
+| Execute select Query operation for several times, read 50% of master/slave respectively |   |   |   |
+| ## Appendix |   |   |   |
+| ### Notices for HotDB Server |   |   |   |
+| #### Recommendation on JDBC version |   |   |   |
+| It's recommended that the JDBC version should be mysql-connector-java-5.1.27.jar, 8.0 could be compatible at the highest. |   |   |   |
+| #### Recommendation on JAVA database connection pool |   |   |   |
+| It's recommended using proxool-0.9 for connection pool |   |   |   |
+| #### Reserved field of database design |   |   |   |
+| Compute node could specify data node according to DNID, therefore, the DNID Field name is reserved field of the database (do not use this Field name in table structure). |   |   |   |
+| The compute node judges whether the data source is available or not via operating the hotdb_heartbeat table of the data source, therefore, hotdb_heartbeat serves as reserved field of Table Name. |   |   |   |
+

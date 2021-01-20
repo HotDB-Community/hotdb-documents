@@ -4,7 +4,7 @@
 
 HotDB Server集群部署对服务器、操作系统、依赖软件等有一定要求，不符合要求的环境部署出来的集群可能无法使用或不满足使用要求。建议部署前详细了解HotDB Server集群部署对环境的[要求说明](#环境说明)。
 
-此文档将详细描述普通模式下，如何部署一套HotDB Server集群。若要了解开启灾备模式后，相较于普通模式，需要特殊注意的地方，请参考[跨机房灾备文档](cross-idc-disaster-covocery#安装部署)中「安装部署」章节。
+此文档将详细描述普通模式下，如何部署一套HotDB Server集群。若要了解开启灾备模式后，相较于普通模式，需要特殊注意的地方，请参考[跨机房灾备文档](cross-idc-disaster-recovery.md)中的[安装部署](cross-idc-disaster-recovery.md#安装部署)章节。
 
 ### 部署架构示意图
 
@@ -47,21 +47,21 @@ HotDB Server集群部署对服务器、操作系统、依赖软件等有一定�
 
 **部署环境：**
 
-|   项目    |                  名称                  |
+| 项目 | 名称 |
 |---------|--------------------------------------|
-| 服务器属性   | 虚拟机                                  |
-| 操作系统    | CentOS Linux release 7.6.1810 (Core) |
-| MySQL版本 | MySQL 5.7.25                         |
-| JDK     | JDK1.7_80                            |
+| 服务器属性 | 虚拟机 |
+| 操作系统 | CentOS Linux release 7.6.1810 (Core) |
+| MySQL版本 | MySQL 5.7.25 |
+| JDK | JDK1.7_80 |
 
 **部署组件：**
 
 | 组件名称 | 安装数量 |
 |------|------|
-| 计算节点 | 1    |
-| 管理平台 | 1    |
-| 配置库  | 1    |
-| 存储节点 | 4    |
+| 计算节点 | 1 |
+| 管理平台 | 1 |
+| 配置库 | 1 |
+| 存储节点 | 4 |
 
 > !!!NOTE
 > 各组件名称说明可参考[名词解释](glossary.md)文档。
@@ -183,6 +183,7 @@ kill 19833
 ```
 
 > !!!TIP
+
 - 启动时若出现异常，可在安装目录`logs`下查看计算节点日志`hotdb.log`。执行日志查看命令：`tail -f /usr/local/hotdb/hotdb-server/logs/hotdb.log`。
 - 若服务器未授权，或安装的计算节点服务未经授权许可都会导致计算节点服务启动失败。
 
@@ -547,6 +548,7 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,process,referen
 备份程序（HotDB Backup）为热璞科技自主研发的分布式数据库备份工具。通常部署在集群的存储节点服务器上，监听来自管理平台的数据备份请求。一台存储节点服务器只需部署一个备份程序即可。
 
 > !!!NOTE <!--使用须知-->
+>
 > - 仅支持备份MySQL 5.6及以上版本的数据。
 > - 被备份的存储节点实例必须开启binlog。
 > - HotDB Management所在的服务器，必须安装MySQL Client,否则会影响备份。
@@ -626,22 +628,22 @@ Got a quit signal from user, will quit after backup is finished # 备份程序�
 
 **部署环境：**
 
-|           项目            |                  名称                  |
-|-------------------------|--------------------------------------|
-| 服务器属性                   | 物理机                                  |
-| 操作系统                    | CentOS Linux release 7.6.1810 (Core) |
-| MySQL版本    | MySQL 5.7.25                                      |
-|JDK          | JDK1.7_80|
+| 项目 | 名称 |
+|---------|--------------------------------------|
+| 服务器属性 | 物理机 |
+| 操作系统 | CentOS Linux release 7.6.1810 (Core) |
+| MySQL版本 | MySQL 5.7.25 |
+| JDK | JDK1.7_80 |
 
 **部署组件：**
 
-|     组件名称      | 安装数量 |
-|---------------|------|
-| 计算节点          | 2    |
-| Keepalived    | 2    |
-| 管理平台          | 1    |
-| 配置库          | 1     |
-| 存储节点         | 4     |
+| 组件名称 | 安装数量 |
+|------------|------|
+| 计算节点 | 2 |
+| Keepalived | 2 |
+| 管理平台 | 1 |
+| 配置库 | 1 |
+| 存储节点 | 4 |
 
 > !!!NOTE
 > 各组件名称说明可参考[名词解释文档](glossary.md)
@@ -651,10 +653,10 @@ Got a quit signal from user, will quit after backup is finished # 备份程序�
 
 **部署规划：**
 
-|  实例   |       IP        | 服务端口 | 管理端口 |  HA角色  |
+| 实例 | IP | 服务端口 | 管理端口 | HA角色 |
 |-------|-----------------|------|------|--------|
 | 主计算节点 | 192.168.200.190 | 3323 | 3325 | Master |
-| 备计算节点 | 192.168.200.191 | 3323 | 3325 | Slave  |
+| 备计算节点 | 192.168.200.191 | 3323 | 3325 | Slave |
 
 ![](assets/install-and-deploy/image5.png)
 
@@ -690,6 +692,7 @@ HA计算节点部署示意图
 ```
 
 > !!!INFO
+>
 > - 配置文件中的haNodeHost为主计算节点的IP+管理端口，只需在备计算节点上配置该参数即可。
 > - 启动主备服务时，如果haState的角色为master则会开启服务端口（3323）、管理端口（3325）；如果是 Backup 角色，则只会开启管理端口（3325）。
 > - 当master服务故障后，keepalived 检测到服务不可用，会自动切换 vip 到 backup 所在的服务器，并启用 backup 的服务端口（3323），保证服务不中断。
@@ -921,6 +924,7 @@ sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
 ```
 
 > !!!NOTE
+>
 > - 安装NDB SQL指定服务器时间同步地址时使用的时间同步参数需要与上一次安装计算节点时保持一致，即当时使用的是`ntpdate-server-ip`还是`ntpdate-server-host`参数，两次必须一致
 > - 时间同步地址参数值需与上一次安装计算节点时使用的时间同步地址一致，如果集群内已有NTP服务则参数值应该是NTP服务所在服务器的IP地址。
 
@@ -1107,30 +1111,30 @@ admin用户登录管理平台后进入"集群管理->计算节点集群"，点�
 
 - 单节点：单节点指整个集群中只有一个计算节点的集群模式。无需安装Keepalived或LVS等高可用组件。
 
-	![](assets/install-and-deploy/image13.png)
+  ![](assets/install-and-deploy/image13.png)
 
 - 主备节点：主备模式也称HA模式，即通过Keepalived组件进行高可用搭建的集群模式。在集群中存在主、备两个计算节点。
 
-	![](assets/install-and-deploy/image14.png)
+  ![](assets/install-and-deploy/image14.png)
 
-	1. 主备节点模式的集群，需要填写2台服务器的配置信息。
-	2. Keepalived的virtual_ipaddress（简称VIP）要求为没有被服务器或其他应用所占用且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：192.168.200.120/24。
-	3. virtual_router_id的值可自行在范围【1-255】选定一个值，但该值要求在集群使用的网段内是唯一的，即不与其他应用服务选择的值冲突。
-	4. 主备Keepalived服务器网关设备名称是Keepalived所在服务器的网卡设备名称，该名称必须填写正确，格式为网卡名称+ :1 例："eth0:1"。（网关设备名称可通过"ip a"命令查看）
+  1. 主备节点模式的集群，需要填写2台服务器的配置信息。
+  2. Keepalived的virtual_ipaddress（简称VIP）要求为没有被服务器或其他应用所占用且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：192.168.200.120/24。
+  3. virtual_router_id的值可自行在范围【1-255】选定一个值，但该值要求在集群使用的网段内是唯一的，即不与其他应用服务选择的值冲突。
+  4. 主备Keepalived服务器网关设备名称是Keepalived所在服务器的网卡设备名称，该名称必须填写正确，格式为网卡名称+ :1 例："eth0:1"。（网关设备名称可通过"ip a"命令查看）
 
 - 多节点：多节点模式也叫作负载均衡模式，是通过LVS组件或其他负载均衡组件来控制分发业务流量到集群中的多个计算节点上的一种架构模式。多节点模式中计算节点个数不能低于3个或超过9个。
 
-	![](assets/install-and-deploy/image15.png)
+  ![](assets/install-and-deploy/image15.png)
 
-	![](assets/install-and-deploy/image16.png)
+  ![](assets/install-and-deploy/image16.png)
 
-	1. 多节点模式中，计算节点个数默认为3个，且计算节点版本必须为2.5。
-	2. 集群网段为计算节点安装服务器所在网段，格式为：网段+子网掩码长度，例：192.168.200.0/24。
-	3. 通信端口为集群内各计算节点进行通信时所用端口，默认为3326.无特殊要求时不建议修改。
-	4. LVS是多节点模式中实现负载均衡的组件，也可以关闭【安装】选择其他负载均衡方式代替LVS。
-	5. LVS_vip为LVS组件中所配置的虚拟IP地址（简称VIP），要求必须为没有被服务器或其他应用所占用且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：192.168.200.120/24。
-	6. virtual_router_id的值可自行在范围【1-255】选定一个值，但该值要求在集群使用的网段内是唯一的，即不与其他应用服务选择的值冲突。
-	7. lvs_net_interface_name是LVS组件所在服务器的网卡名称，该名称必须填写正确，格式为网卡名称+ :2 例："eth0:2"。（网关设备名称可通过"ip a"命令查看）。
+  1. 多节点模式中，计算节点个数默认为3个，且计算节点版本必须为2.5。
+  2. 集群网段为计算节点安装服务器所在网段，格式为：网段+子网掩码长度，例：192.168.200.0/24。
+  3. 通信端口为集群内各计算节点进行通信时所用端口，默认为3326.无特殊要求时不建议修改。
+  4. LVS是多节点模式中实现负载均衡的组件，也可以关闭【安装】选择其他负载均衡方式代替LVS。
+  5. LVS_vip为LVS组件中所配置的虚拟IP地址（简称VIP），要求必须为没有被服务器或其他应用所占用且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：192.168.200.120/24。
+  6. virtual_router_id的值可自行在范围【1-255】选定一个值，但该值要求在集群使用的网段内是唯一的，即不与其他应用服务选择的值冲突。
+  7. lvs_net_interface_name是LVS组件所在服务器的网卡名称，该名称必须填写正确，格式为网卡名称+ :2 例："eth0:2"。（网关设备名称可通过"ip a"命令查看）。
 
 ###### 集群部署参数配置
 
@@ -1588,59 +1592,59 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 
 ##### 脚本参数说明
 
-|               参数名称             |                                                                                                           参数说明                                                                                                           |
+| 参数名称 | 参数说明 |
 |-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dry-run                           | 只做检查，不做任何修改，可选范围"yes" "no"，默认"no"                                                                                                                                                                                        |
-| hotdb-version                     | 指定HotDB大版本号，可选范围"2.3" "2.4" "zabbix"，默认"2.4"                                                                                                                                                                             |
-| install-hotdb-server              | 是否安装HotDB-server，可选范围"yes" "no"，默认"no"                                                                                                                                                                                   |
-| install-ndbsql                    | 是否安装ndbsql，可选范围"yes" "no"，默认"no"                                                                                                                                                                                         |
-| install-hotdb-listener            | 是否安装HotDB-listener，可选范围"yes" "no"，默认"no"                                                                                                                                                                                 |
-| --listener-heap-mem-size-gb       | 如果指定，会帮助将HotDB Listener启动脚本中堆内存大小由4G修改为指定值，默认不修改                                                                                                                                                                         |
-| --listener-max-direct-mem-size-gb | 如果指定，会帮助将HotDB Listener启动脚本中直接内存大小由24G修改为指定值，默认不修改                                                                                                                                                                       |
-| hotdb-use-g1                      | 如果指定，会帮助将hotdb启动脚本修改为使用G1垃圾回收器，默认不修改                                                                                                                                                                                     |
-| hotdb-heap-mem-size-gb            | 如果指定，会帮助将hotdb启动脚本中堆内存大小由4G修改为指定值，默认不修改                                                                                                                                                                                  |
-| hotdb-max-direct-mem-size-gb      | 如果指定，会帮助将hotdb启动脚本中直接内存大小由24G修改为指定值，默认不修改                                                                                                                                                                                |
-| install-hotdb-server-management   | 是否安装HotDB-server-management，可选范围"yes" "no"，默认"no"                                                                                                                                                                        |
-| install-hotdb-backup              | 是否安装HotDB-backup，可选范围"yes" "no"，默认"no"                                                                                                                                                                                   |
-| mysql-version                     | 指定MySQL大版本号，可选范围"5.6" "5.7"，默认"5.6"                                                                                                                                                                                      |
-| mysql-port-list                   | 指定要安装的MySQL数据源端口列表，逗号分隔，要求递增顺序排列，示例："3306,3307,3308,3309"，默认为空                                                                                                                                                           |
-| hotdb-config-port                 | 指定要安装的配置库端口列表，不可以和MySQL数据源端口冲突，默认为空                                                                                                                                                                                      |
-| hotdb-config-init                 | 是否要在hotdb-config-port指定的实例初始化hotdb_config库，可选范围"yes" "no"，默认安装HotDB-server时为yes，不安装HotDB-server时为no。                                                                                                                     |
-| mysql-data-diskname               | 指定用于MySQL数据目录的磁盘设备名称，如果该设备没有挂载，且没有被格式化过，将自动格式化此设备并挂载到数据目录，默认为空                                                                                                                                                           |
-| mysql-data-rootdir                | 指定要使用的MySQL数据目录根目录，默认"/data"，必须是绝对路径                                                                                                                                                                                     |
-| rename-datadir-before-initdb      | 指定在初始化数据库前，是否重命名可能存在的旧数据目录，默认为"yes"                                                                                                                                                                                      |
-| server-id-perfix                  | 指定server-id使用的前缀，要求为小于429496的数字，默认自动计算，但不保证绝对无冲突                                                                                                                                                                         |
-| character-set-server              | 指定字符集，可选范围"latin1" "gbk" "utf8" "utf8mb4"，默认"utf8mb4"                                                                                                                                                                    |
-| collation-server                  | 指定校对集，可选范围"latin1_swedish_ci" "latin1_bin" "gbk_chinese_ci" "gbk_bin" "utf8_general_ci","utf8_bin" "utf8mb4_general_ci" "utf8mb4_bin"，默认值为配置的字符集的默认校对集                                                                   |
-| innodb-buffer-pool-size-mb        | 单位为MB的innodb-buffer-pool-size大小，默认自动计算                                                                                                                                                                                   |
-| innodb-log-file-size-mb           | 单位为MB的innodb-log-file-size大小，默认自动计算                                                                                                                                                                                      |
-| innodb-data-file-size-mb          | 单位为MB的ibdata文件大小，默认"4096"                                                                                                                                                                                                |
-| innodb-io-capacity                | 指定innodb-io-capacity的大小，默认自动计算                                                                                                                                                                                           |
-| innodb-flush-log-at-trx-commit    | 指定innodb-flush-log-at-trx-commit设置，默认"2"                                                                                                                                                                                 |
-| sync-binlog                       | 指定sync-binlog的设置，默认"10"                                                                                                                                                                                                  |
-| binlog-format                     | 指定binlog-format的设置，可选范围"MIXED" "ROW"，默认"MIXED"                                                                                                                                                                           |
-| gtid-mode                         | 是否启用gtid，可选范围"on" "off"，默认"on"                                                                                                                                                                                           |
-| rpl-semi-sync-enabled             | 是否启动半同步复制，可选范围"on" "off"，默认"on"                                                                                                                                                                                          |
-| mgr-group-name-list               | MySQL端口号:MGR组UUID:MGR本地端口号列表，逗号分隔，如果提供该参数，将为对应端口打开MGR，例如"3306:540c2b46-5d73-11e8-ad9b-00a0c9000000:33060,3308:5f5c1e2d-5d73-11e8-ad9b-00a0c9000000:33080"，默认为空。（注意，仍然需要在mysql-port-list、hotdb-config-port中指定欲创建的MySQL实例） |
-| mgr-group-local-ip                | MGR本地端口绑定的本地IP地址，默认自动计算。                                                                                                                                                                                                 |
-| mgr-group-seeds-list              | MySQL端口号:MGR组成员IP:端口逗号分隔列表，斜杠分隔，如果提供该参数，将在my.cnf文件中对应端口添加该值，默认为空，例如"3306:192.168.200.101:33060,192.168.200.102:33060,192.168.200.103:33060/3308:192.168.200.101:33080,192.168.200.102:33080,192.168.200.103:33080"       |
-| creat-hotdbroot-in-mysql          | 是否在MySQL中创建hotdb_root用户，用户拥有所有权限，并且可以从任意位置连接，默认密码hotdb_root，可选范围"yes" "no"，默认"no"                                                                                                                                        |
-| install-keepalived                | 是否安装keepalive，可选范围"master" "backup" "no"，默认"no"                                                                                                                                                                          |
-| keepalived-vip-with-perfix        | 如果指定，会帮助将keepalive配置中的vip由192.168.200.140/24替换为该值，默认不修改                                                                                                                                                                  |
-| keepalived-virtual-router-id      | 如果指定，会帮助将keepalive配置中的virtual-router-id由151替换为该值，默认不修改                                                                                                                                                                   |
-| keepalived-net-interface-name     | 如果指定，会帮助将keepalive配置中的vip设备名称由eth0:1替换为该值，默认不修改                                                                                                                                                                          |
-| install-lvs                       | 是否安装lvs服务端，可选范围"master" "backup" "no"，默认"no"                                                                                                                                                                             |
-| lvs-vip-with-perfix               | 如果指定，会帮助将lvs配置中的vip由192.168.56.203/24替换为该值，默认不修改                                                                                                                                                                         |
-| lvs-port                          | 如果指定，会帮助将lvs配置中的监听端口由3306替换为该值，默认不修改，端口需要和HotDB集群的数据服务端口相同                                                                                                                                                               |
-| lvs-virtual-router-id             | 如果指定，会帮助将lvs配置中的virtual-router-id由51替换为该值，默认不修改                                                                                                                                                                          |
-| lvs-net-interface-name            | 如果指定，会帮助将lvs配置中的vip设备名称由eth1:2替换为该值，默认不修改                                                                                                                                                                                |
-| lvs-real-server-list              | lvs后端HotDB服务器IP:数据服务端口:管理端口列表，逗号分隔，例如"192.168.0.1:3323:3325,192.168.0.2:4323:4325"，默认为空                                                                                                                                  |
-| lvs-real-server-user              | lvs健康检查脚本连接后端HotDB服务器管理端口使用的用户名，默认"root"                                                                                                                                                                                 |
-| lvs-real-server-password          | lvs健康检查脚本连接后端HotDB服务器管理端口使用的用密码，默认"root"                                                                                                                                                                                 |
-| lvs-real-server-startup-type      | 作为lvs的realserver时，服务器相关调整的配置方式，可选范围"no" "config" "service" 默认"no"                                                                                                                                                        |
-| install-ntpd                      | 是否安装ntpd，可选范围"yes" "no"，如果安装HotDB，则默认安装ntpd，否则默认不安装。注意，一个HotDB集群里面，应当只有一个ntpd；HotDB备机应当向HotDB主机同步时间。如果内网有ntp源，则不必安装ntpd。                                                                                                 |
-| ntpdate-server-ip                 | 配置时间同步的ip地址，该参数与ntpdate-server-host必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。                                             |
-| ntpdate-server-host               | 配置时间同步的主机地址，允许为域名或ip，脚本不会对该参数做任何处理与检查，需要依赖调用者保证正确性，该参数与ntpdate-server-ip必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。        |
+| dry-run | 只做检查，不做任何修改，可选范围"yes" "no"，默认"no" |
+| hotdb-version | 指定HotDB大版本号，可选范围"2.3" "2.4" "zabbix"，默认"2.4" |
+| install-hotdb-server | 是否安装HotDB-server，可选范围"yes" "no"，默认"no" |
+| install-ndbsql | 是否安装ndbsql，可选范围"yes" "no"，默认"no" |
+| install-hotdb-listener | 是否安装HotDB-listener，可选范围"yes" "no"，默认"no" |
+| --listener-heap-mem-size-gb | 如果指定，会帮助将HotDB Listener启动脚本中堆内存大小由4G修改为指定值，默认不修改 |
+| --listener-max-direct-mem-size-gb | 如果指定，会帮助将HotDB Listener启动脚本中直接内存大小由24G修改为指定值，默认不修改 |
+| hotdb-use-g1 | 如果指定，会帮助将hotdb启动脚本修改为使用G1垃圾回收器，默认不修改 |
+| hotdb-heap-mem-size-gb | 如果指定，会帮助将hotdb启动脚本中堆内存大小由4G修改为指定值，默认不修改 |
+| hotdb-max-direct-mem-size-gb | 如果指定，会帮助将hotdb启动脚本中直接内存大小由24G修改为指定值，默认不修改 |
+| install-hotdb-server-management | 是否安装HotDB-server-management，可选范围"yes" "no"，默认"no" |
+| install-hotdb-backup | 是否安装HotDB-backup，可选范围"yes" "no"，默认"no" |
+| mysql-version | 指定MySQL大版本号，可选范围"5.6" "5.7"，默认"5.6" |
+| mysql-port-list | 指定要安装的MySQL数据源端口列表，逗号分隔，要求递增顺序排列，示例："3306,3307,3308,3309"，默认为空 |
+| hotdb-config-port | 指定要安装的配置库端口列表，不可以和MySQL数据源端口冲突，默认为空 |
+| hotdb-config-init | 是否要在hotdb-config-port指定的实例初始化hotdb_config库，可选范围"yes" "no"，默认安装HotDB-server时为yes，不安装HotDB-server时为no。 |
+| mysql-data-diskname | 指定用于MySQL数据目录的磁盘设备名称，如果该设备没有挂载，且没有被格式化过，将自动格式化此设备并挂载到数据目录，默认为空 |
+| mysql-data-rootdir | 指定要使用的MySQL数据目录根目录，默认"/data"，必须是绝对路径 |
+| rename-datadir-before-initdb | 指定在初始化数据库前，是否重命名可能存在的旧数据目录，默认为"yes" |
+| server-id-perfix | 指定server-id使用的前缀，要求为小于429496的数字，默认自动计算，但不保证绝对无冲突 |
+| character-set-server | 指定字符集，可选范围"latin1" "gbk" "utf8" "utf8mb4"，默认"utf8mb4" |
+| collation-server | 指定校对集，可选范围"latin1_swedish_ci" "latin1_bin" "gbk_chinese_ci" "gbk_bin" "utf8_general_ci","utf8_bin" "utf8mb4_general_ci" "utf8mb4_bin"，默认值为配置的字符集的默认校对集 |
+| innodb-buffer-pool-size-mb | 单位为MB的innodb-buffer-pool-size大小，默认自动计算 |
+| innodb-log-file-size-mb | 单位为MB的innodb-log-file-size大小，默认自动计算 |
+| innodb-data-file-size-mb | 单位为MB的ibdata文件大小，默认"4096" |
+| innodb-io-capacity | 指定innodb-io-capacity的大小，默认自动计算 |
+| innodb-flush-log-at-trx-commit | 指定innodb-flush-log-at-trx-commit设置，默认"2" |
+| sync-binlog | 指定sync-binlog的设置，默认"10" |
+| binlog-format | 指定binlog-format的设置，可选范围"MIXED" "ROW"，默认"MIXED" |
+| gtid-mode | 是否启用gtid，可选范围"on" "off"，默认"on" |
+| rpl-semi-sync-enabled | 是否启动半同步复制，可选范围"on" "off"，默认"on" |
+| mgr-group-name-list | MySQL端口号:MGR组UUID:MGR本地端口号列表，逗号分隔，如果提供该参数，将为对应端口打开MGR，例如"3306:540c2b46-5d73-11e8-ad9b-00a0c9000000:33060,3308:5f5c1e2d-5d73-11e8-ad9b-00a0c9000000:33080"，默认为空。（注意，仍然需要在mysql-port-list、hotdb-config-port中指定欲创建的MySQL实例） |
+| mgr-group-local-ip | MGR本地端口绑定的本地IP地址，默认自动计算。 |
+| mgr-group-seeds-list | MySQL端口号:MGR组成员IP:端口逗号分隔列表，斜杠分隔，如果提供该参数，将在my.cnf文件中对应端口添加该值，默认为空，例如"3306:192.168.200.101:33060,192.168.200.102:33060,192.168.200.103:33060/3308:192.168.200.101:33080,192.168.200.102:33080,192.168.200.103:33080" |
+| creat-hotdbroot-in-mysql | 是否在MySQL中创建hotdb_root用户，用户拥有所有权限，并且可以从任意位置连接，默认密码hotdb_root，可选范围"yes" "no"，默认"no" |
+| install-keepalived | 是否安装keepalive，可选范围"master" "backup" "no"，默认"no" |
+| keepalived-vip-with-perfix | 如果指定，会帮助将keepalive配置中的vip由192.168.200.140/24替换为该值，默认不修改 |
+| keepalived-virtual-router-id | 如果指定，会帮助将keepalive配置中的virtual-router-id由151替换为该值，默认不修改 |
+| keepalived-net-interface-name | 如果指定，会帮助将keepalive配置中的vip设备名称由eth0:1替换为该值，默认不修改 |
+| install-lvs | 是否安装lvs服务端，可选范围"master" "backup" "no"，默认"no" |
+| lvs-vip-with-perfix | 如果指定，会帮助将lvs配置中的vip由192.168.56.203/24替换为该值，默认不修改 |
+| lvs-port | 如果指定，会帮助将lvs配置中的监听端口由3306替换为该值，默认不修改，端口需要和HotDB集群的数据服务端口相同 |
+| lvs-virtual-router-id | 如果指定，会帮助将lvs配置中的virtual-router-id由51替换为该值，默认不修改 |
+| lvs-net-interface-name | 如果指定，会帮助将lvs配置中的vip设备名称由eth1:2替换为该值，默认不修改 |
+| lvs-real-server-list | lvs后端HotDB服务器IP:数据服务端口:管理端口列表，逗号分隔，例如"192.168.0.1:3323:3325,192.168.0.2:4323:4325"，默认为空 |
+| lvs-real-server-user | lvs健康检查脚本连接后端HotDB服务器管理端口使用的用户名，默认"root" |
+| lvs-real-server-password | lvs健康检查脚本连接后端HotDB服务器管理端口使用的用密码，默认"root" |
+| lvs-real-server-startup-type | 作为lvs的realserver时，服务器相关调整的配置方式，可选范围"no" "config" "service" 默认"no" |
+| install-ntpd | 是否安装ntpd，可选范围"yes" "no"，如果安装HotDB，则默认安装ntpd，否则默认不安装。注意，一个HotDB集群里面，应当只有一个ntpd；HotDB备机应当向HotDB主机同步时间。如果内网有ntp源，则不必安装ntpd。 |
+| ntpdate-server-ip | 配置时间同步的ip地址，该参数与ntpdate-server-host必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。 |
+| ntpdate-server-host | 配置时间同步的主机地址，允许为域名或ip，脚本不会对该参数做任何处理与检查，需要依赖调用者保证正确性，该参数与ntpdate-server-ip必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。 |
 
 ##### 参数使用说明
 
@@ -1671,3 +1675,4 @@ sh -x hotdbinstall_v*.sh --hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-
 1. 因当前一键部署安装脚本需要执行tune脚本，tune脚本中会修改网卡相关硬件参数，可能导致网卡短暂失去响应或网卡内部重启。已知在配置了Bond的环境下，可能因为操作系统响应不够快或交换机响应不够快，导致短时间内的网络连接中断，进而导致SSH终端断连或HotDB连接中断，部分情况可通过缩短Bond 配置参数miimon=100缓解。
 
 2. 安装前建议关闭服务器自带的防火墙与selinux功能（selinux重启生效）。
+

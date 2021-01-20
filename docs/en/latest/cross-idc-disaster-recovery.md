@@ -308,19 +308,19 @@ Note: the clusterName in the cluster of the same IDC must be consistent, but the
 
 1. In addition to the special modification items described above, for the deployment of multi-node cluster in DR mode you should also pay attention to:
 
-1. The serverID in the same IDC must be continuous. In the master center and DR center, it is according to the number of nodes and increases from 1 by default.
+2. The serverID in the same IDC must be continuous. In the master center and DR center, it is according to the number of nodes and increases from 1 by default.
 
-2. When all compute nodes of the cluster in the same IDC are deployed on one server, haNodeHost in the master center should be configured as the cluster information of all members in the IDC: host name (IP) + communication port, for example: 192.168.210.86:3326,192.168.210.86:3327,192.168.210.86:3328. When not on the same server, there is no need to pay attention to haNodeHost.
+3. When all compute nodes of the cluster in the same IDC are deployed on one server, haNodeHost in the master center should be configured as the cluster information of all members in the IDC: host name (IP) + communication port, for example: 192.168.210.86:3326,192.168.210.86:3327,192.168.210.86:3328. When not on the same server, there is no need to pay attention to haNodeHost.
 
-3. ConfigMGR(whether ConfigDB uses MGR) must be set to false, and ConfigDB MGR is not supported in multi-node cluster mode.
+4. ConfigMGR(whether ConfigDB uses MGR) must be set to false, and ConfigDB MGR is not supported in multi-node cluster mode.
 
-4. Other cluster related modification items, such as clusterSize, clusterNetwork, clusterHost and clusterPort, are consistent with the configured mode in the ordinary single IDC.
+5. Other cluster related modification items, such as clusterSize, clusterNetwork, clusterHost and clusterPort, are consistent with the configured mode in the ordinary single IDC.
 
-2. It allows the master center to be multi-node cluster mode, DR center to be the master/slave compute node mode or vice versa. Different architectures are compatible.
+6. It allows the master center to be multi-node cluster mode, DR center to be the master/slave compute node mode or vice versa. Different architectures are compatible.
 
-3. The corresponding host names of all components in the DR center cannot be consistent with the master. Otherwise, it will not pass the verification.
+7. The corresponding host names of all components in the DR center cannot be consistent with the master. Otherwise, it will not pass the verification.
 
-4. The information of multi-node cluster after normal deployment is shown in the list as follows:
+8. The information of multi-node cluster after normal deployment is shown in the list as follows:
 
 ![](assets/cross-idc-disaster-recovery/image21.png)
 
@@ -773,14 +773,14 @@ The deployment environment examination not only supports the current active cent
 - Several examination items for the current standby center are skipped due to the inability to connect to the service port. The skipped items are listed as follows:
 
 | Examination Dimensions | Examination Items | Examination Details |
-| --- | --- | --- |
+|------------------------|-----------------------------------|------------------------------------------------------------------------------|
 | Software Configuration | High Availability of Compute Node | The compute node service port and management port can be normally connected. |
-|     |     | Connection to the compute node service port via VIP is normal. |
-|     |     | Compute Node Mode |
-|     | Basic function verification | Data Source High Availability Switch |
-|     |     | Compute Node High Availability Switch |
-|     |     | Backup Program |
-|     |     | 10s Performance Test |
+|   |   | Connection to the compute node service port via VIP is normal. |
+|   |   | Compute Node Mode |
+|   | Basic function verification | Data Source High Availability Switch |
+|   |   | Compute Node High Availability Switch |
+|   |   | Backup Program |
+|   |   | 10s Performance Test |
 
 ### Configuration
 
@@ -1471,19 +1471,19 @@ All MySQL instance versions are 5.7.25, GTID enabled, and semi-synchronous repli
 The actual connection information corresponding to each component is listed as follows:
 
 | IDC Type | Component Type | Role | Code Name | Connection Information |
-| --- | --- | --- | --- | --- |
+|---------------|----------------|---------------|-----------|---------------------------|
 | Master Center | Compute Node | Master | HotDB-01 | 192.168.220.181_3323_3325 |
-|     |     | Slave | HotDB-02 | 192.168.220.182_3323_3325 |
-|     | Data Source | Master | ds01 | 192.168.220.181_3307 |
-|     |     | Master-master | ds02 | 192.168.220.182_3307 |
-|     | ConfigDB | Master | hc01 | 192.168.220.181_3306 |
-|     |     | Master-master | hc02 | 192.168.220.182_3306 |
+|   |   | Slave | HotDB-02 | 192.168.220.182_3323_3325 |
+|   | Data Source | Master | ds01 | 192.168.220.181_3307 |
+|   |   | Master-master | ds02 | 192.168.220.182_3307 |
+|   | ConfigDB | Master | hc01 | 192.168.220.181_3306 |
+|   |   | Master-master | hc02 | 192.168.220.182_3306 |
 | DR Center | Compute Node | Master | HotDB-03 | 192.168.220.183_3323_3325 |
-|     |     | Master-master | HotDB-04 | 192.168.220.184_3323_3325 |
-|     | Data Source | Master | ds03 | 192.168.220.183_3307 |
-|     |     | Master-master | ds04 | 192.168.220.184_3307 |
-|     | ConfigDB | Master | hc03 | 192.168.220.183_3306 |
-|     |     | Master-master | hc04 | 192.168.220.184_3306 |
+|   |   | Master-master | HotDB-04 | 192.168.220.184_3323_3325 |
+|   | Data Source | Master | ds03 | 192.168.220.183_3307 |
+|   |   | Master-master | ds04 | 192.168.220.184_3307 |
+|   | ConfigDB | Master | hc03 | 192.168.220.183_3306 |
+|   |   | Master-master | hc04 | 192.168.220.184_3306 |
 
 Note:
 

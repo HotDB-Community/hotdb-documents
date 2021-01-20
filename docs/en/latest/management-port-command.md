@@ -2,29 +2,29 @@
 
 ## New commands in V2.5.6
 
--   [show backupmasterdelay [DNID]](#show-backupmasterdelay-dnid-show-masterslave-replication-delay-of-specified-data-node) -show master/slave replication delay of specified data node[DNID]
+- [show backupmasterdelay [DNID]](#show-backupmasterdelay-dnid-show-masterslave-replication-delay-of-specified-data-node) -show master/slave replication delay of specified data node[DNID]
 
--   [disable_election](#disable_election-disable-election-in-cluster) -disable election in cluster
+- [disable_election](#disable_election-disable-election-in-cluster) -disable election in cluster
 
--   [enable_election](#enable_election-enable-election-in-cluster)-enable election in cluster
+- [enable_election](#enable_election-enable-election-in-cluster)-enable election in cluster
 
--   [disable_non_query_command](#disable_non_query_command-only-allow-query-command) -only allow query command
+- [disable_non_query_command](#disable_non_query_command-only-allow-query-command) -only allow query command
 
--   [enable_non_query_command](#enable_non_query_command-allow-non-query-command) -allow non-query command
+- [enable_non_query_command](#enable_non_query_command-allow-non-query-command) -allow non-query command
 
--   [offline_to_dr](#offline_to_dr-execute-offline-and-online-is-not-allowed) -execute offline and online is not allowed
+- [offline_to_dr](#offline_to_dr-execute-offline-and-online-is-not-allowed) -execute offline and online is not allowed
 
--   [exchangeconfig](#exchangeconfig-exchange-configuration-of-idc) -exchange configuration of IDC
+- [exchangeconfig](#exchangeconfig-exchange-configuration-of-idc) -exchange configuration of IDC
 
--   [exchangememoryconfig](#exchangememoryconfig-exchange-configuration-in-memory) -exchange configuration in memory
+- [exchangememoryconfig](#exchangememoryconfig-exchange-configuration-in-memory) -exchange configuration in memory
 
--   [online_dr_check](#online_dr_check-check-idc-switching) -check IDC switching
+- [online_dr_check](#online_dr_check-check-idc-switching) -check IDC switching
 
--   [online_dr_process](#online_dr_process-show-idc-switching-process) -show IDC switching process
+- [online_dr_process](#online_dr_process-show-idc-switching-process) -show IDC switching process
 
--   [check @@datasource_config_new](#check-datasource_config_new-check-mysql-parameter-configuration-information) -check MySQL parameter configuration information
+- [check @@datasource_config_new](#check-datasource_config_new-check-mysql-parameter-configuration-information) -check MySQL parameter configuration information
 
--   [reset @@dberrorcount](#reset-dberrorcount-clear-all-the-error-messages-of-logicdbs) -clear all the error messages of LogicDBs
+- [reset @@dberrorcount](#reset-dberrorcount-clear-all-the-error-messages-of-logicdbs) -clear all the error messages of LogicDBs
 
 ## Data Detection Statement
 
@@ -53,7 +53,7 @@ mysql> /*!hotdb:dnid=all*/select * from information_schema.processlist where inf
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | processor | The processor | STRING/["Processor"number] |
 | id | Backend connection id | LONG/[number] |
 | mysqlid | Corresponding MySQL connection id | LONG/[number] |
@@ -65,24 +65,24 @@ mysql> /*!hotdb:dnid=all*/select * from information_schema.processlist where inf
 | net_out | Bytes sent | LONG/[number] |
 | up_time | Uptime (s) | LONG/[number] |
 | state | Connection status | connecting: the process of actively connecting to the server. A socket setup request is initiated, but not successful yet |
-|     |     | authenticating: handshake authentication process |
-|     |     | idle: idle available status |
-|     |     | borrowed: borrowed status: in the presence of a transaction scenario, even if the backend does not execute sql, the connection will still be held until commit and rollback are committed. |
-|     |     | running: a request is sent, and in the status of waiting for response or processing the response |
-|     |     | closed: connection is closed |
+|   |   | authenticating: handshake authentication process |
+|   |   | idle: idle available status |
+|   |   | borrowed: borrowed status: in the presence of a transaction scenario, even if the backend does not execute sql, the connection will still be held until commit and rollback are committed. |
+|   |   | running: a request is sent, and in the status of waiting for response or processing the response |
+|   |   | closed: connection is closed |
 | send_queue | size of send queue | INT/[number] |
 | iso_level | transaction isolation level | 0: read uncommitted |
-|     |     | 1: read committed |
-|     |     | 2: repeatable read |
-|     |     | 3: serializable |
+|   |   | 1: read committed |
+|   |   | 2: repeatable read |
+|   |   | 3: serializable |
 | autocommit | autocommit or not | BOOLEAN/[true/false] |
 | closed | closed or not | BOOLEAN/[true/false] |
 | version | connection pool version number | INT/[number] |
 | charset | result charset | STRING/[charset] |
 | comment | comment | heartbeat: connection used by heartbeat |
-|     |     | latency check: connection used by latency detection |
-|     |     | idle: connection for idle status |
-|     |     | querying: connection for executing query |
+|   |   | latency check: connection used by latency detection |
+|   |   | idle: connection for idle status |
+|   |   | querying: connection for executing query |
 
 #### show @@bufferpool - Show the status of bufferpool
 
@@ -95,7 +95,7 @@ mysql> show @@bufferpool;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|---------------------|----------------------------------------------------|----------------------------------------------------------------------------|
 | thread | thread name | STRING/ ["$NIOREACTOR-"[number]"-RW", "$NIOExecutor-"[number]"-" [number]] |
 | pool_size | bufferpool size | INT/[number] |
 | local_allocate_opts | The count of buffer requests of local cache thread | LONG /[number] |
@@ -114,7 +114,7 @@ mysql> show @@clientquery;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|-------------------------------|-------------------|
 | client | client information | STRING/[host] |
 | db | LogicDB name | STRING/[database] |
 | select | The count of query | LONG /[number] |
@@ -137,7 +137,7 @@ mysql> show @@cluster;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|--------------|------------------------------|------------------|
 | status | member status | STRING |
 | host | member host | STRING/[host] |
 | port | cluster communication port | INTEGER/[port] |
@@ -155,7 +155,7 @@ mysql> show @@connection;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|------------------------------|----------------------------|
 | processor | processor name | STRING/["Processor"number] |
 | id | frontend connection id | LONG/[number] |
 | host | client information | STRING/[host:port] |
@@ -168,9 +168,9 @@ mysql> show @@connection;
 | recv_buffer | size of receive queue (byte) | LONG/[number] |
 | send_queue | size of send queue (byte) | LONG/[number] |
 | iso_level | transaction isolation level | 0: read uncommitted |
-|     |     | 1: read committed |
-|     |     | 2: repeatable read |
-|     |     | 3: serializable |
+|   |   | 1: read committed |
+|   |   | 2: repeatable read |
+|   |   | 3: serializable |
 | autocommit | autocommit or not | BOOLEAN/[true/false] |
 
 #### show @@connection_statistics -- Show current live frontend connection statistics
@@ -184,7 +184,7 @@ mysql> show @@connection_statistics;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-----------------|--------------------------------------------|-------------------|
 | id | connection id | INTEGER/[number] |
 | client_addr | client ip address | STRING/[host] |
 | port | client connection port | INTEGER/[number] |
@@ -206,7 +206,7 @@ mysql> show @@database;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|-------------|-------------------|
 | database | LogicDB | STRING/[database] |
 
 #### show @@datanode - show data node information
@@ -280,16 +280,16 @@ mysql> show @@datasource;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|--------------------|-----------------------------------------------------------------------------------------------|------------------------------|
 | dn | data node number (the command restart @@heartbeat can be used to restore heartbeat detection) | INT/[number] |
 | ds | current data source information | STRING/[host:port/database] |
 | type | current data source type | 1: Active Master |
-|     |     | 2: Master/Slave |
-|     |     | 3: Standby Slave |
-|     |     | 4：MGR |
+|   |   | 2: Master/Slave |
+|   |   | 3: Standby Slave |
+|   |   | 4：MGR |
 | status | data source status | 0: unavailable |
-|     |     | 1: available |
-|     |     | 2: last data source abnormal |
+|   |   | 1: available |
+|   |   | 2: last data source abnormal |
 | host | host address | STRING/[IP] |
 | port | host port | STRING /[port] |
 | schema | database name | STRING/[database] |
@@ -366,7 +366,7 @@ mysql> show @@heartbeat;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|------------------|-------------------------------------------------------------------|------------------------------------------------------|
 | dn | data node id | INT/[number] |
 | ds_id | data source id | INT/[number] |
 | ds_type | data source type | STRING/[master/slave] |
@@ -375,10 +375,10 @@ mysql> show @@heartbeat;
 | db | database name | STRING/[database] |
 | retry | number of retries | INT/[number] |
 | status | heartbeat status | checking: checking |
-|     |     | idle: heartbeat detection is normally started |
-|     |     | stopped: stopped |
-|     |     | paused: heartbeat detection is paused |
-|     |     | unknown: heartbeat detection function is not started |
+|   |   | idle: heartbeat detection is normally started |
+|   |   | stopped: stopped |
+|   |   | paused: heartbeat detection is paused |
+|   |   | unknown: heartbeat detection function is not started |
 | period | heartbeat period | INT/[number] |
 | execute_time | average heartbeat response time of recent 10s, 1min and 5min (ms) | STRING/[number],[number],[number] |
 | last_active_time | lastest heartbeat success time | DATETIME/[yyyy-MM-dd HH:mm:ss] |
@@ -403,7 +403,7 @@ If there is no latency, it shows:
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | dn | data node id | INT/[number] |
 | info | current data source path | STRING/[ip]:[port]/[database] |
 | backup_info | slave data source path | STRING/[ip]:[port]/[database] |
@@ -424,7 +424,7 @@ select trx_id, trx_started from information_schema.innodb_trx where trx_started<
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|----------------|------------------|
 | host | host address | STRING/[IP] |
 | port | host port | INT/[PORT] |
 | trx_id | transaction id | STRING/[number] |
@@ -448,7 +448,7 @@ The above result shows that the CC table in the LogicDB LGG has no index defined
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|--------------------|--------------------------------|
 | db | LogicDB name | STRING/[database] |
 | table | table name | STRING/[table] |
 | dn | data node name | STRING |
@@ -474,7 +474,7 @@ mysql> select * from operation where `TABLE` like '%tid%';
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|-----------------------------------------------------------------------------------|-------------------|
 | schema | LogicDB name | STRING/[database] |
 | dn | data node id | INT/[number] |
 | ds | data source id | INT/[number] |
@@ -501,7 +501,7 @@ mysql> show @@operation_db;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|---------------------------------------------------------------------------------------------|-------------------|
 | db | LogicDB name | STRING/[database] |
 | select | The count of SELECT the [table] | LONG /[number] |
 | insert | The count of INSERT the [table] | LONG /[number] |
@@ -522,7 +522,7 @@ mysql> show @@operation_dn;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|--------------------------------------------------------------------------------------------|------------------|
 | dn | database node id | INT/[number] |
 | select | The count of SELECT the [table] | LONG/[number] |
 | insert | The count of INSERT the [table] | LONG/[number] |
@@ -583,7 +583,7 @@ mysql> show @@operation_table;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|-----------------------------------------------------------------------------------|------------------|
 | table | table name | STRING/[table] |
 | select | The count of SELECT the [table] | LONG /[number] |
 | insert | The count of INSERT the [table] | LONG /[number] |
@@ -604,7 +604,7 @@ mysql> show @@processor;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-----------------|------------------------|--------------------------|
 | name | processor name | STRING/[Processornumber] |
 | front_net_in | fronend received bytes | LONG/[number] |
 | front_net_out | frontend sent bytes | LONG/[number] |
@@ -625,7 +625,7 @@ mysql> show @@query;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|----------------------------------------------------------------------------------------------|------------------|
 | select | The count of calling SELECT of this service | LONG /[number] |
 | insert | The count of calling INSERT of this service | LONG /[number] |
 | update | The count of calling UPDATE of this service | LONG /[number] |
@@ -644,7 +644,7 @@ mysql> show @@query_db;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|-----------------------------------------------------------------------------------------------|-------------------|
 | schema | LogicDB | STRING/[database] |
 | select | The count of SELECT the LogicDB [schema] | LONG /[number] |
 | insert | The count of INSERT the LogicDB [schema] | LONG /[number] |
@@ -664,7 +664,7 @@ mysql> show @@query_tb;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|-----------------------------------------------------------------------------------------------------------------|-------------------|
 | schema | LogicDB | STRING/[database] |
 | table | table name | STRING/[table] |
 | select | The count of SELECT the [table] under the LogicDB [schema] | LONG /[number] |
@@ -685,7 +685,7 @@ mysql> show @@session;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|--------------------|---------------------------------------------|----------------------------------|
 | id | current session id | INT/[number] |
 | running | SQL is in progress or not | BOOLEAN/[TRUE/FALSE] |
 | trx_started | transaction start time | STRING/[yyyy-MM-dd HH:mm:ss.SSS] |
@@ -717,7 +717,7 @@ mysql> show @@tableinfo;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|---------------------|-------------------|
 | schema | LogicDB | STRING/[database] |
 | dn | data node id | INT/[number] |
 | ds | data source id | INT/[number] |
@@ -726,7 +726,7 @@ mysql> show @@tableinfo;
 | db | database | STRING/[database] |
 | table | database name | STRING/[number] |
 | table_type | table type | 0: Global table |
-|     |     | 1: Sharding table |
+|   |   | 1: Sharding table |
 | table_rows | database rows | INT/[number] |
 | data_length | data length (byte) | LONG/[number] |
 
@@ -741,7 +741,7 @@ mysql> show @@tableinfo_db;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|--------------------|-------------------|
 | db | LogicDB name | STRING/[database] |
 | table_rows | database rows | INT/[number] |
 | data_length | data length (byte) | LONG /[number] |
@@ -757,7 +757,7 @@ mysql> show @@tableinfo_dn
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|--------------------|------------------|
 | dn | data node id | INT/[number] |
 | table_rows | database rows | INT/[number] |
 | data_length | data length (byte) | LONG /[number] |
@@ -773,7 +773,7 @@ mysql> show @@tableinfo_ds
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|--------------------|------------------|
 | ds | data source id | INT/[number] |
 | table_rows | database rows | INT/[number] |
 | data_length | data length (byte) | LONG /[number] |
@@ -789,7 +789,7 @@ mysql> show @@tableinfo_table;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|--------------------|------------------|
 | table | table name | STRING/[table] |
 | table_rows | database rows | INT/[number] |
 | data_length | data length (byte) | LONG /[number] |
@@ -833,7 +833,7 @@ mysql> show @@transaction;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|----------------------------|-------------------|
 | schema | LogicDB | STRING/[database] |
 | transaction | the number of transactions | LONG/[number] |
 
@@ -846,7 +846,7 @@ mysql> show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 **Parameter description:**
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-----------|-----------------------------------------------------------|--------|
 | pattern | optional, fuzzy query expression, match the key rule_name | STRING |
 | expr | optional, fuzzy query expression, match the specified key | STRING |
 
@@ -861,7 +861,7 @@ For another example:
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|---------------|-------------------------|------------------|
 | datanode_id | node id | INTEGER |
 | datanode_name | node name | STRING |
 | datanode_type | 0: master/slave; 1: MGR | INTEGER |
@@ -875,7 +875,7 @@ mysql> show hotdb functions;
 **Parameter description:**
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-----------|---------------------------------------------------------------|--------|
 | pattern | optional, fuzzy query expression, match the key function_name | STRING |
 | expr | optional, fuzzy query expression, match the key function_name | STRING |
 
@@ -892,7 +892,7 @@ For another example:
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|----------------|---------------------------------------------------------------------------------------------------------------|------------------|
 | function_id | sharding function id | INTEGER |
 | function_name | sharding function name | STRING |
 | function_type | sharding type | STRING |
@@ -907,7 +907,7 @@ mysql> show hotdb function infos [WHERE expr];
 **Parameter description:**
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-----------|-----------------------------------------------------------|--------|
 | expr | optional: fuzzy query expression, match the specified key | STRING |
 
 For example:
@@ -921,7 +921,7 @@ For another example:
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|--------------|----------------------|------------------|
 | function_id | sharding function id | INTEGER |
 | column_value | sharding key value | STRING |
 | datanode_id | data node id | INTEGER |
@@ -935,7 +935,7 @@ mysql> show hotdb rules [LIKE 'pattern' | WHERE expr];
 **Parameter description:**
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-----------|-----------------------------------------------------------|--------|
 | pattern | optional: fuzzy query expression, match the key rule_name | STRING |
 | expr | optional: fuzzy query expression, match the key rule_name | STRING |
 
@@ -952,7 +952,7 @@ For another example:
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|----------------|---------------------------------------------------------------------------------------------------------------|------------------|
 | rule_id | sharding function id | INTEGER |
 | rule_name | sharding function name | STRING |
 | rule_column | sharding key name | STRING |
@@ -968,7 +968,7 @@ mysql> show backupmasterdelay [DNID];
 **Parameter description:**
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-----------|--------------|---------|
 | DNID | Data node id | INTEGER |
 
 For example:
@@ -978,7 +978,7 @@ For example:
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------------|---------------------------------|------------------|
 | datasource_id | Data source id | INTEGER |
 | sql_delay | Replication delay (s) | LONG |
 | slave_io_running | Slave io_thread status (Yes/No) | STRING |
@@ -999,7 +999,7 @@ mysql> show @@config_master_status
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------------|-----------------------------------|------------------|
 | file | Binlog file | STRING |
 | position | Binlog position | INTEGER |
 | binlog_do_db | Database to be recorded by Binlog | STRING |
@@ -1069,7 +1069,7 @@ mysql> show @@serversourceusage;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|--------------|------------------------------|------------------------------|
 | used_memory | used memory (MB) | STRING/[number] |
 | total_memory | total memory (MB) | STRING /[number] |
 | disk | usage of disk | STRING/[path number,...] |
@@ -1093,7 +1093,7 @@ mysql> show @@systemconfig_memory;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|---------------|------------------|
 | config | configuration | STRING/[number] |
 
 #### show @@time_current -- show the current time
@@ -1107,7 +1107,7 @@ mysql> show @@time_current;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|------------------------------|-------------------------------|
 | timestamp | current time of HotDB Server | STRING/[ yyyy-MM-dd HH:mm:ss] |
 
 #### show @@time_startup -- show the startup time of HotDB
@@ -1121,7 +1121,7 @@ mysql> show @@time_startup;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|------------------------------|-------------------------------|
 | timestamp | current time of HotDB Server | STRING/[ yyyy-MM-dd HH:mm:ss] |
 
 #### show @@usbkey -- show USB-KEY status
@@ -1189,7 +1189,7 @@ mysql> show @@version;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|---------------|------------------|
 | version | HotDB version | STRING |
 
 ### MySQL Services
@@ -1205,7 +1205,7 @@ mysql> show @@ddl;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|------------------------|-------------------|
 | schema | LogicDB | STRING/[database] |
 | dn | data node id | INT/[number] |
 | ds | data source id | INT/[number] |
@@ -1224,7 +1224,7 @@ mysql> show @@lastsql;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------------|-------------------------------------------------------------|---------------------------|
 | id | backend id | LONG/[number] |
 | mysqlid | data node id | LONG/[number] |
 | dn_ds | data node id -- data source id | STRING/[number_number] |
@@ -1242,7 +1242,7 @@ mysql> show @@onlineddl;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|----------------|-------------------|
 | schema | LogicDB | STRING/[database] |
 | onlineddl | statement | STRING/[SQL] |
 | progress | progress | LONG/[number] |
@@ -1261,7 +1261,7 @@ mysql> show @@tableindex;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|-----------------------|-------------------|
 | schema | LogicDB | STRING/[database] |
 | dn | data node id | INT/[number] |
 | ds | data source id | INT/[number] |
@@ -1273,13 +1273,13 @@ mysql> show @@tableindex;
 
 This section introduces the command of online modifying sharding plan in Management Port, with the following steps:
 
--   Step one, check the modification plan ([onlinemodificationrulecheck](#onlinemodificationrulecheck))
+- Step one, check the modification plan ([onlinemodificationrulecheck](#onlinemodificationrulecheck))
 
--   Step two, modify the sharding plan ([onlinemodificationrule](#onlinemodificationrule))
+- Step two, modify the sharding plan ([onlinemodificationrule](#onlinemodificationrule))
 
--   Step three, view the modification progress ([onlinemodificationruleprogress](#onlinemodificationruleprogress))
+- Step three, view the modification progress ([onlinemodificationruleprogress](#onlinemodificationruleprogress))
 
--   Whether to continue the modification ([onlinemodificationrulecontinue](#onlinemodificationrulecontinue)). Cancelling the current ongoing task ([onlinemodificationrulecancel](#onlinemodificationrulecancel)) is an optional operation item and can be executed according to actual situation
+- Whether to continue the modification ([onlinemodificationrulecontinue](#onlinemodificationrulecontinue)). Cancelling the current ongoing task ([onlinemodificationrulecancel](#onlinemodificationrulecancel)) is an optional operation item and can be executed according to actual situation
 
 The above steps shall be carried out in sequence, or the result may not be successful.
 
@@ -1291,21 +1291,21 @@ onlinemodificationrulecheck db.tablename[=functionid,rulecol:datanodes:checkcons
 
 **The command contains the following fields and their description:**
 
-| Parameter | Description |
-| --- | --- |
-| db | LogicDB |
-| tablename | table name |
-| functionid | refer to the table hotdb_function in the configdb hotdb_config for the sharding rule id |
-| rulecol | sharding key |
-| datanodes | refer to the table hotdb_datanode in the configdb hotdb_config for the data node |
-| checkconsistency | whether to check the master/slave consistency 1|0 |
+| Parameter | Description |   |
+|------------------|-----------------------------------------------------------------------------------------|---|
+| db | LogicDB |   |
+| tablename | table name |   |
+| functionid | refer to the table hotdb_function in the configdb hotdb_config for the sharding rule id |   |
+| rulecol | sharding key |   |
+| datanodes | refer to the table hotdb_datanode in the configdb hotdb_config for the data node |   |
+| checkconsistency | whether to check the master/slave consistency 1 | 0 |
 
 It is used in two ways:
 
 1. It can be used to check whether sharding rule modification related items pass. The check item id and corresponding check items are as follows:
 
 | Check Item ID | Corresponding Key | Description of Check Item |
-| --- | --- | --- |
+|---------------|-------------------|---------------------------------------------------------------------------------------------------------|
 | 1 | tbNameLess45 | The source table name is not longer than 45 characters |
 | 2 | running | No sharding plan modification task is being executed in source table |
 | 3 | validCol | Sharding key is the key contained in table structure |
@@ -1339,7 +1339,7 @@ onlinemodificationrulecheck db.tablename [db.tablename...]
 **Fields and their description are contained in the result:**
 
 | Column Name | Description |
-| --- | --- |
+|-------------|--------------------------------------|
 | db | LogicDB |
 | tablename | table name |
 | id | check item id |
@@ -1406,17 +1406,17 @@ The functionid used for sharding plan modification can be viewed in the table ho
 
 Special instructions:
 
--   The functionid required for sharding rule modifiction has already existed in the table hotdb_function in configdb;
+- The functionid required for sharding rule modifiction has already existed in the table hotdb_function in configdb;
 
--   When using the sharding rule to be modified, we must ensure that the number of data nodes specified is consistent with that of data nodes in function_id;
+- When using the sharding rule to be modified, we must ensure that the number of data nodes specified is consistent with that of data nodes in function_id;
 
--   The source table must have master key or unique key, no trigger and no foreign key constraint, or the modification result may be incorrect;
+- The source table must have master key or unique key, no trigger and no foreign key constraint, or the modification result may be incorrect;
 
--   If the parameter of source table handling is 0 when in modification, then the historical table will be preserved in the table information, and the naming format is: "source table name + roYYMMDDHHMMSS";
+- If the parameter of source table handling is 0 when in modification, then the historical table will be preserved in the table information, and the naming format is: "source table name + roYYMMDDHHMMSS";
 
--   If the modification of sharding rule of a table in the same batch fails, then the modification of all tables in this batch will fail;
+- If the modification of sharding rule of a table in the same batch fails, then the modification of all tables in this batch will fail;
 
--   The sever cannot be restarted when executing this command, or the modification may fail, but the original table may be preserved.
+- The sever cannot be restarted when executing this command, or the modification may fail, but the original table may be preserved.
 
 #### onlinemodificationruleprogress
 
@@ -1427,7 +1427,7 @@ onlinemodificationruleprogress db.tablename[,db1.tablename1,..]
 **Fields and their description are contained in the command:**
 
 | Parameter | Description |
-| --- | --- |
+|-----------|-------------|
 | db | LogicDB |
 | tablename | table name |
 
@@ -1438,7 +1438,7 @@ As shown below: cpd_test is LogicDB, cv_live_courseware and cv_live_study are ta
 **Fields and their description are contained in the result:**
 
 | Key Name | Description |
-| --- | --- |
+|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | db | LogicDB |
 | tablename | table name |
 | progress | 0-100, integer |
@@ -1463,7 +1463,7 @@ onlinemodificationrulecontinue db.tablename;
 **fields and their description are contained in the command:**
 
 | Parameter | Description |
-| --- | --- |
+|-----------|-------------|
 | db | LogicDB |
 | tablename | table name |
 
@@ -1498,7 +1498,7 @@ mysql> check @@datasource_config;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|----------------------------------------------|-----------------------------|
 | Level | exception information level (Warning, Error) | STRING/[ "Error","Warning"] |
 | Code | exception code | INT/[number] |
 | Message | error message | STRING |
@@ -1549,7 +1549,7 @@ mysql> check @@route [db_name.tb_name | tb_name];
 Parameter description:
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-----------|---------------|--------|
 | db_name | database name | STRING |
 | tb_name | table name | STRING |
 
@@ -1564,7 +1564,7 @@ When the data routing is inconsistent, the result is:
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-----------------|--------------------------|------------------|
 | shard_key_value | the routing key value | STRING |
 | route_dn | the routing node | INT/[number] |
 | actual_dn | the actually stored node | INT/[number] |
@@ -1578,7 +1578,7 @@ mysql> kill @@connection [id1,id2,id3...idn];
 Parameter description:
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|---------------|------------------|---------------------------------------------------------|
 | connection_id | the connected id | INTEGER/obtained through the command [show @connection] |
 
 For example:
@@ -1686,7 +1686,7 @@ mysql> restart @@heartbeat [datanode_id];
 Parameter description:
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-------------|--------------|------|
 | datanode_id | data node id | INT |
 
 For example:
@@ -1706,7 +1706,7 @@ mysql> stop @@heartbeat [datanode_id:time(s)]
 Parameter description:
 
 | Parameter | Description | Type |
-| --- | --- | --- |
+|-------------|---------------|------|
 | datanode_id | data node id | INT |
 | time | stop time (s) | INT |
 
@@ -1805,7 +1805,7 @@ This command is used to view the progress of IDC switching in the DR mode, for e
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------|
 | process | Handling process, 0-8 | INTEGER |
 | error | Error message (error format：srcDs1:dstDs1,srcDs2:dstDs2,...;errormsg or ds,ds:ds,...;errormsg, data source format (datanodeID_datasourceID_datasourceIP_port_dbname)，if included：then src is the original master center，dst is the original DR center) | STRING |
 | error_code | Error code status, 1 is finished, 0 is unfinished | INTEGER |
@@ -1888,7 +1888,7 @@ mysql> file @@list;
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-| --- | --- | --- |
+|-------------|-------------------------------------------------------|---------------------------------------------------|
 | DATA | information of related files under the conf directory | STRING/[number : file "time":yyyy-MM-dd hh:mm:ss] |
 
 ### hold commit -- Set connection status of all clients as HOLD_ALL_COMMIT
@@ -1999,13 +1999,13 @@ mysql> unique @@create;
 
 +------------------+-------------+---------+-----------------------------+
 
--   If the secondary index is successfully created, then the result is success;
+- If the secondary index is successfully created, then the result is success;
 
--   If the global unique constraint of this table is in off state, then the result is fail, and the information is shown: global_unique is turned off;
+- If the global unique constraint of this table is in off state, then the result is fail, and the information is shown: global_unique is turned off;
 
--   If the historical data is unique, but the secondary index fails to be created, then the result is fail, and the information error is shown;
+- If the historical data is unique, but the secondary index fails to be created, then the result is fail, and the information error is shown;
 
--   If the historical data is not unique, then the result is fail, and inconsistent result and the command [check @@history_unique](#check-history_unique-check-the-uniqueness-of-historical-data-of-unique-key) are shown.
+- If the historical data is not unique, then the result is fail, and inconsistent result and the command [check @@history_unique](#check-history_unique-check-the-uniqueness-of-historical-data-of-unique-key) are shown.
 
 2. Table name is specified: check whether the historical data of unique constraint key of the specified table is unique. For example:
 
@@ -2037,6 +2037,7 @@ mysql> unique @@drop HOTDB_SERVER_253.beyond1,HOTDB_SERVER_253.test1,HOTDB_SERVE
 
 +------------------+----------+---------+---------+
 
--   If the secondary index is deleted successfully, then the result is success;
+- If the secondary index is deleted successfully, then the result is success;
 
--   If the secondary index fails to be deleted, then the result is fail and the error information is shown.
+- If the secondary index fails to be deleted, then the result is fail and the error information is shown.
+

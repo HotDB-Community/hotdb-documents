@@ -16,11 +16,11 @@ When the master center is the current active center, the "switch the active cent
 
 2. Only the management port of the DR center can be connected.
 
--   When the service port and management port of the master center are both connected normally, and the management port of the DR center is connected normally, the entry page to "switch the active center" will be shown as:
+- When the service port and management port of the master center are both connected normally, and the management port of the DR center is connected normally, the entry page to "switch the active center" will be shown as:
 
 ![](assets/visual-idc/image1.png)
 
--   When only the management port of the DR center can be connected, the cluster name will be marked in orange and the entry page to "switch the active center" will be shown as:
+- When only the management port of the DR center can be connected, the cluster name will be marked in orange and the entry page to "switch the active center" will be shown as:
 
 ![](assets/visual-idc/image2.png)
 
@@ -36,11 +36,11 @@ When the DR center is the current active center and the service port and managem
 
 ### Entry to IDC removal
 
--   When the master center is the current active center, and the service port and management port of the master center are connected normally, the DR center will be provided with the "remove the IDC" entry button:
+- When the master center is the current active center, and the service port and management port of the master center are connected normally, the DR center will be provided with the "remove the IDC" entry button:
 
 ![](assets/visual-idc/image4.png)
 
--   When the DR center is the current acti ve center, and the service port and management port of the DR center are connected normally, the master center will be provided with the " remove the IDC" entry button:
+- When the DR center is the current acti ve center, and the service port and management port of the DR center are connected normally, the master center will be provided with the " remove the IDC" entry button:
 
 ![](assets/visual-idc/image5.png)
 
@@ -76,13 +76,13 @@ Slave compute node: displays the slave compute node of the current IDC
 
 Service status: displays the connection status of the service port / management port of the slave compute node in the current IDC
 
--   Backup information confirmation of compute node cluster
+- Backup information confirmation of compute node cluster
 
 By default, all backup items are checked in the backup information confirmation module of the compute node cluster. You can also select the backup items by yourself. After selecting at least one item, the [next] button will be opened normally and allow to enter the next step.
 
 ![](assets/visual-idc/image12.png)
 
--   Confirmation of IDC switching results
+- Confirmation of IDC switching results
 
 Displays information about the active center and master compute node after switching
 
@@ -92,7 +92,7 @@ The pre-detection of cluster running status, configuration information, replicat
 
 ![](assets/visual-idc/image13.png)
 
--   Buttons description
+- Buttons description
 
 Retry: retry the current step.
 
@@ -102,7 +102,7 @@ Return: return to the "cluster information confirmation" page.
 
 Next step: available only after all detection and backup items are passed. Otherwise, it will be grayed.
 
--   Detection items must all be passed before taking the next step. Otherwise, manual intervention is required to solve the failed items.
+- Detection items must all be passed before taking the next step. Otherwise, manual intervention is required to solve the failed items.
 
 1. Abnormal high availability status of compute nodes in the master center .
 
@@ -120,7 +120,7 @@ Next step: available only after all detection and backup items are passed. Other
 
 ![](assets/visual-idc/image17.png)
 
--   The data backup before switching is mainly to back up the backup items selected in the previous step and store data under the directory /hotdb-management / databak / cluster number / backup time.
+- The data backup before switching is mainly to back up the backup items selected in the previous step and store data under the directory /hotdb-management / databak / cluster number / backup time.
 
 #### Strategy selection for the master center
 
@@ -138,21 +138,21 @@ The first switching strategy is selected by default.
 
 #### Officially switch the IDC
 
--   Confirm again before the official switching.
+- Confirm again before the official switching.
 
 ![](assets/visual-idc/image19.png)
 
--   In this step, you can click the exit button to exit and switch it to an active center task. After the detection, exit will not be allowed.
+- In this step, you can click the exit button to exit and switch it to an active center task. After the detection, exit will not be allowed.
 
 ![](assets/visual-idc/image20.png)
 
--   If there is a task which is quitted in the detection phase, you can either choose to continue the last task or cancel the previous unfinished task, and start a new task within 24 hours. (when you choose to continue the last task, the page will jump to the phase where the last task is quitted, and when you choose to cancel the previous unfinished task and start a new task, the last unfinished result will be ignored.)
+- If there is a task which is quitted in the detection phase, you can either choose to continue the last task or cancel the previous unfinished task, and start a new task within 24 hours. (when you choose to continue the last task, the page will jump to the phase where the last task is quitted, and when you choose to cancel the previous unfinished task and start a new task, the last unfinished result will be ignored.)
 
 ![](assets/visual-idc/image21.png)
 
--   The exceptions detected in the process of IDC switching can be handled manually.
+- The exceptions detected in the process of IDC switching can be handled manually.
 
--   Different switching strategies correspond to different switching processes.
+- Different switching strategies correspond to different switching processes.
 
 1. Reserve the current master center and switch its role to a DR center.
 
@@ -170,15 +170,15 @@ The first switching strategy is selected by default.
 
 Operation buttons for the current standby IDC on the final "complete the switching" page is different based on the switching strategy you chose.
 
--   Reserve the master center and exchange roles
+- Reserve the master center and exchange roles
 
 ![](assets/visual-idc/image25.png)
 
--   Delete the current master center.
+- Delete the current master center.
 
 ![](assets/visual-idc/image26.png)
 
--   Only switch the current active center to the DR center.
+- Only switch the current active center to the DR center.
 
 ![](assets/visual-idc/image27.png)
 
@@ -192,35 +192,35 @@ When the connection status of the service port of the master center is abnormal,
 
 #### Pre-detection and data backup before switching
 
--   The pre-detection of cluster running status, configuration information, replication latency and replication relations of nodes is to ensure the normal running and data accuracy of compute nodes and data sources after the switching. The data backup ensures that the data will not be lost if switching failed.
+- The pre-detection of cluster running status, configuration information, replication latency and replication relations of nodes is to ensure the normal running and data accuracy of compute nodes and data sources after the switching. The data backup ensures that the data will not be lost if switching failed.
 
--   When the service port of the master center is connected abnormally, some detection related to the master center will not be executed and a warning in orange will be given. With this warning, detections will be directly ignored, which has no impact on the current task of switching the active center.
+- When the service port of the master center is connected abnormally, some detection related to the master center will not be executed and a warning in orange will be given. With this warning, detections will be directly ignored, which has no impact on the current task of switching the active center.
 
--   The data backup remains consistent with the master center of normal service.
+- The data backup remains consistent with the master center of normal service.
 
 ![](assets/visual-idc/image29.png)
 
 #### Strategy selection for the master center
 
--   There are three switching strategies provided on the page, with the second one selected by default. Only the second strategy and third strategy can be selected because the service port of the master center is connected abnormally.
+- There are three switching strategies provided on the page, with the second one selected by default. Only the second strategy and third strategy can be selected because the service port of the master center is connected abnormally.
 
--   When the master center service cannot be connected, the original master center can be repaired after switching.
+- When the master center service cannot be connected, the original master center can be repaired after switching.
 
 ![](assets/visual-idc/image30.png)
 
 #### Officially switch the IDC
 
--   Confirm again before officially switching the IDC. The confirmation is displayed according to the strategy selection.
+- Confirm again before officially switching the IDC. The confirmation is displayed according to the strategy selection.
 
 ![](assets/visual-idc/image31.png)
 
--   A re-detection of necessary conditions is required for the "officially switch the IDC" step. You can click the exit button to exit and switch it to an active center task during the step. After the re-detection step, you cannot exit.
+- A re-detection of necessary conditions is required for the "officially switch the IDC" step. You can click the exit button to exit and switch it to an active center task during the step. After the re-detection step, you cannot exit.
 
 ![](assets/visual-idc/image32.png)
 
--   The exceptions occurred during switching can be processed manually according to the specific information.
+- The exceptions occurred during switching can be processed manually according to the specific information.
 
--   Different switching strategies correspond to different switching processes.
+- Different switching strategies correspond to different switching processes.
 
 1. Delete the master center
 
@@ -232,19 +232,19 @@ When the connection status of the service port of the master center is abnormal,
 
 #### Complete the switching
 
--   Delete the master center
+- Delete the master center
 
 ![](assets/visual-idc/image35.png)
 
--   Only switch the current active center to the DR center.
+- Only switch the current active center to the DR center.
 
 ![](assets/visual-idc/image36.png)
 
 ### Other instructions
 
--   Tasks cannot be initiated when the status of switching the active center button on the compute node cluster page is not up-to-date. If you click the button, it will prompt that "The current status is not up-to-date. Please refresh the page."
+- Tasks cannot be initiated when the status of switching the active center button on the compute node cluster page is not up-to-date. If you click the button, it will prompt that "The current status is not up-to-date. Please refresh the page."
 
--   New tasks cannot be initiated when there is a task in progress (in all clusters monitored under the management platform).
+- New tasks cannot be initiated when there is a task in progress (in all clusters monitored under the management platform).
 
 ## Repair the IDC
 
@@ -260,37 +260,37 @@ Before repairing the IDC, it is necessary to ensure the normal service of the co
 
 ![](assets/visual-idc/image38.png)
 
--   There are two repair strategies provided on the page, with the first one selected by default.
+- There are two repair strategies provided on the page, with the first one selected by default.
 
--   It may take a long time to repair the master center. Please be patient.
+- It may take a long time to repair the master center. Please be patient.
 
--   At least one item shall be selected. Otherwise, you cannot proceed to the next step.
+- At least one item shall be selected. Otherwise, you cannot proceed to the next step.
 
 ![](assets/visual-idc/image39.png)
 
 ### Pre-detection and data backup before repair
 
--   Before the repair of the IDC, the cluster running status, various configuration, and the replication latency and replication relations of nodes should be thoroughly detected to ensure the normal execution of the repair of the IDC.
+- Before the repair of the IDC, the cluster running status, various configuration, and the replication latency and replication relations of nodes should be thoroughly detected to ensure the normal execution of the repair of the IDC.
 
 ![](assets/visual-idc/image40.png)
 
--   The exceptions detected can be processed manually according to the specific information. You can ignore the steps which have no impact on the repair (generally prompted in orange) and proceed to the next step directly.
+- The exceptions detected can be processed manually according to the specific information. You can ignore the steps which have no impact on the repair (generally prompted in orange) and proceed to the next step directly.
 
 ![](assets/visual-idc/image41.png)
 
 ### Execution of repair strategy for the master center
 
--   Confirm again before the repair of the IDC. And the confirmation is displayed according to the strategy selection.
+- Confirm again before the repair of the IDC. And the confirmation is displayed according to the strategy selection.
 
 ![](assets/visual-idc/image42.png)
 
--   A re-detection of necessary conditions is required for the official repair of the IDC. You can click the exit button to exit and switch it to an active center task during the step. After the re-detection step, you cannot exit.
+- A re-detection of necessary conditions is required for the official repair of the IDC. You can click the exit button to exit and switch it to an active center task during the step. After the re-detection step, you cannot exit.
 
 ![](assets/visual-idc/image43.png)
 
--   The exceptions detected during the repair can be processed manually according to the specific information.
+- The exceptions detected during the repair can be processed manually according to the specific information.
 
--   Different repair strategies have different repair processes.
+- Different repair strategies have different repair processes.
 
 1. Roles exchange
 
@@ -310,9 +310,9 @@ After the repair of IDC, you can choose to switch the active center in the curre
 
 ### Other instructions
 
--   Tasks cannot be initiated when the status of repair the IDC button on the compute node cluster page is not up-to-date. If you click the button, it will prompt that "The current status is not up-to-date. Please refresh the page."
+- Tasks cannot be initiated when the status of repair the IDC button on the compute node cluster page is not up-to-date. If you click the button, it will prompt that "The current status is not up-to-date. Please refresh the page."
 
--   New tasks cannot be initiated when there is a task in progress (in all clusters monitored under the management platform).
+- New tasks cannot be initiated when there is a task in progress (in all clusters monitored under the management platform).
 
 ## Remove the IDC
 
@@ -320,45 +320,45 @@ After the repair of IDC, you can choose to switch the active center in the curre
 
 When the DR center is the current active center and the service port and the management port is connected normally, the master center can be removed and the DR center can run as a single IDC. Swap server.xml and update server.xml to single-node mode.
 
--   Confirm again before removing the IDC. Click the "confirm" button to enter the process of removing the IDC, and click the "Cancel" button to return to the compute node cluster page.
+- Confirm again before removing the IDC. Click the "confirm" button to enter the process of removing the IDC, and click the "Cancel" button to return to the compute node cluster page.
 
 ![](assets/visual-idc/image48.png)
 
--   During the process of removing the IDC, the dynamic loading will be performed twice to the current active center. If you click "yes", the task will be continued; if you click "no", the task will be cancelled, with a 3-second prompt " task cancelled".
+- During the process of removing the IDC, the dynamic loading will be performed twice to the current active center. If you click "yes", the task will be continued; if you click "no", the task will be cancelled, with a 3-second prompt " task cancelled".
 
 ![](assets/visual-idc/image49.png)
 
--   If the dynamic loading fails, a pop-up prompt "the IDC cannot be removed temporarily" will be shown.
+- If the dynamic loading fails, a pop-up prompt "the IDC cannot be removed temporarily" will be shown.
 
 ![](assets/visual-idc/image50.png)
 
--   After the preparation for removing the IDC is completed, confirm again whether to remove the master center. Click "yes" to. Click "no" to cancel the task of removing the IDC. The page will disappear in 3 seconds and prompt "cancel the task of removing the IDC".
+- After the preparation for removing the IDC is completed, confirm again whether to remove the master center. Click "yes" to. Click "no" to cancel the task of removing the IDC. The page will disappear in 3 seconds and prompt "cancel the task of removing the IDC".
 
--   If you click "yes", removal of the IDC will be officially started and the loading status will be displayed on the page; if you click "no", the task will be cancelled, with a 3-second prompt " task cancelled".
+- If you click "yes", removal of the IDC will be officially started and the loading status will be displayed on the page; if you click "no", the task will be cancelled, with a 3-second prompt " task cancelled".
 
 ![](assets/visual-idc/image51.png)
 
--   If removal fails, the specific failure reason will be displayed, and the configuration will be rolled back.
+- If removal fails, the specific failure reason will be displayed, and the configuration will be rolled back.
 
 ![](assets/visual-idc/image52.png)
 
--   If the removal is successful, a 3-second prompt "removed successfully" will be shown and the cluster info will be updated to single-node mode.
+- If the removal is successful, a 3-second prompt "removed successfully" will be shown and the cluster info will be updated to single-node mode.
 
 ![](assets/visual-idc/image53.png)
 
 ### Remove the DR center
 
--   When the master center is the current active center and the service port and the management port is connected normally, the DR center can be removed and the master center can run as a single IDC. Remove the DR center and server.xml will be updated to single-node mode
+- When the master center is the current active center and the service port and the management port is connected normally, the DR center can be removed and the master center can run as a single IDC. Remove the DR center and server.xml will be updated to single-node mode
 
--   During the removal, there is no need to swap server.xml. You shall directly update server.xml. Other processes are consistent with the removal of the master center
+- During the removal, there is no need to swap server.xml. You shall directly update server.xml. Other processes are consistent with the removal of the master center
 
 ### Other instructions
 
--   After the removal of IDC, the other IDC will run independently as a single IDC, so please be careful with the operation.
+- After the removal of IDC, the other IDC will run independently as a single IDC, so please be careful with the operation.
 
--   Before removal, you should ensure that the service port and management port of the current active center are connected normally.
+- Before removal, you should ensure that the service port and management port of the current active center are connected normally.
 
--   The operation of removing the IDC will not clear the replication relations of data sources and ConfigDBs in the removed IDC, but only clear the configuration and monitoring data related to the IDC.
+- The operation of removing the IDC will not clear the replication relations of data sources and ConfigDBs in the removed IDC, but only clear the configuration and monitoring data related to the IDC.
 
 ## Historical records
 
@@ -366,21 +366,21 @@ Operations including switching the active center, repairing the IDC, removing th
 
 ![](assets/visual-idc/image54.png)
 
--   You can search by typing or selecting key words such as compute node name, operation user, access IP, execution content and execution status.
+- You can search by typing or selecting key words such as compute node name, operation user, access IP, execution content and execution status.
 
--   Sorting is supported by all columns except for the "operation" column.
+- Sorting is supported by all columns except for the "operation" column.
 
--   When the compute node cluster is available, you can click the cluster name to enter the edit page.
+- When the compute node cluster is available, you can click the cluster name to enter the edit page.
 
--   Only when the execution content is "switch the active center" or "repair the IDC", the corresponding execution strategy will be displayed. Otherwise, the execution strategy column will be empty.
+- Only when the execution content is "switch the active center" or "repair the IDC", the corresponding execution strategy will be displayed. Otherwise, the execution strategy column will be empty.
 
--   The execution status column records the specific execution status. Hovering over the cursor, the specific status will be displayed, such as execution success, in progress..., halfway exit, and execution failed (failure reason will be marked).
+- The execution status column records the specific execution status. Hovering over the cursor, the specific status will be displayed, such as execution success, in progress..., halfway exit, and execution failed (failure reason will be marked).
 
 ![](assets/visual-idc/image55.png)
 
--   Only when the execution content is "switch the active center" or "repair the IDC", the "details" button will be displayed in the operation column.
+- Only when the execution content is "switch the active center" or "repair the IDC", the "details" button will be displayed in the operation column.
 
--   Click the "details" button in the operation column, you can enter the task records of switching the active center / repairing the IDC and view the detailed switching / repair process. Click the "delete" button to delete the latest historical record.
+- Click the "details" button in the operation column, you can enter the task records of switching the active center / repairing the IDC and view the detailed switching / repair process. Click the "delete" button to delete the latest historical record.
 
 ## IDC switching drill
 
@@ -396,13 +396,13 @@ In the cluster with DR mode enabled, if the cluster meets the conditions for the
 
 **The following conditions shall be met for the IDC switching drill:**
 
--   V.2.5.6 and above, with DR mode enabled;
+- V.2.5.6 and above, with DR mode enabled;
 
--   Only one group of compute node clusters is allowed to be selected;
+- Only one group of compute node clusters is allowed to be selected;
 
--   Switching-related operations are allowed in the current cluster;
+- Switching-related operations are allowed in the current cluster;
 
--   There is no switching task in progress in the current cluster;
+- There is no switching task in progress in the current cluster;
 
 ![](assets/visual-idc/image1.png)
 
@@ -416,77 +416,77 @@ When the master center and the DR center are serving normally, you can carry out
 
 ![](assets/visual-idc/image60.png)
 
--   This step is divided into three modules: information confirmation of compute node cluster, backup information confirmation of compute node cluster and confirmation of IDC switching results;
+- This step is divided into three modules: information confirmation of compute node cluster, backup information confirmation of compute node cluster and confirmation of IDC switching results;
 
--   The information confirmation module of compute node cluster displays the latest information and service status of the current cluster;
+- The information confirmation module of compute node cluster displays the latest information and service status of the current cluster;
 
--   By default, all backup items are checked in the backup information confirmation module of the compute node cluster. You can also select the backup items by yourself.
+- By default, all backup items are checked in the backup information confirmation module of the compute node cluster. You can also select the backup items by yourself.
 
--   The [next] button is only opened after selecting at least one item.
+- The [next] button is only opened after selecting at least one item.
 
--   The confirmation of IDC switching results module displays the active center and the master compute node after the switching;
+- The confirmation of IDC switching results module displays the active center and the master compute node after the switching;
 
 #### Pre-detection and data backup before switching
 
 ![](assets/visual-idc/image61.png)
 
--   This step is divided into two modules: pre-detection before switching and data backup before switching;
+- This step is divided into two modules: pre-detection before switching and data backup before switching;
 
--   The pre-detection module before switching is mainly to detect the detection items of each IDC in the current cluster;
+- The pre-detection module before switching is mainly to detect the detection items of each IDC in the current cluster;
 
--   The data backup before switching is mainly to back up the backup items selected in the previous step and store data under the directory /hotdb-management / databak / cluster number / backup time.
+- The data backup before switching is mainly to back up the backup items selected in the previous step and store data under the directory /hotdb-management / databak / cluster number / backup time.
 
--   Detection items must all be passed before taking the next step. Otherwise, manual intervention is required to solve the failed items.
+- Detection items must all be passed before taking the next step. Otherwise, manual intervention is required to solve the failed items.
 
 #### Strategy selection for the master center
 
 ![](assets/visual-idc/image62.png)
 
--   There are mainly three switching strategies: reserve the current master center and switch its role to a DR center; delete the current master center and manage the DR center as in the single-IDC mode; only switch the current active center to the DR center. And decision will be made after the switching.
+- There are mainly three switching strategies: reserve the current master center and switch its role to a DR center; delete the current master center and manage the DR center as in the single-IDC mode; only switch the current active center to the DR center. And decision will be made after the switching.
 
--   Reserve the current master center and switch its role to a DR center, i.e. exchange the master center and the DR center.
+- Reserve the current master center and switch its role to a DR center, i.e. exchange the master center and the DR center.
 
--   Delete the current master center and manage the DR center as in the single-IDC mode, i.e. return to the single-IDC mode.
+- Delete the current master center and manage the DR center as in the single-IDC mode, i.e. return to the single-IDC mode.
 
--   Only switch the current active center to the DR center. And decision will be made after the switching, i.e. only switch to the DR center.
+- Only switch the current active center to the DR center. And decision will be made after the switching, i.e. only switch to the DR center.
 
 #### Officially switch the IDC
 
 ![](assets/visual-idc/image63.png)
 
--   In this step, you can confirm to start the IDC switching drill or terminate the operation. It should be noted that now it is in the drill mode of IDC switching. No real operations will be performed;
+- In this step, you can confirm to start the IDC switching drill or terminate the operation. It should be noted that now it is in the drill mode of IDC switching. No real operations will be performed;
 
--   Click "terminate the operation", you will exit from the IDC switching drill and return to the compute node cluster page;
+- Click "terminate the operation", you will exit from the IDC switching drill and return to the compute node cluster page;
 
--   Click "Confirm to perform immediately", the necessary conditions will be re-detected to improve the probability of success. When the re-detection is finished, the message will be given as "Congrats! All pre-detection items of IDC switching have been completed. Now it is in the drill mode. You can view the simulated process of IDC switching through animation or click Next to enter the final confirmation page."
+- Click "Confirm to perform immediately", the necessary conditions will be re-detected to improve the probability of success. When the re-detection is finished, the message will be given as "Congrats! All pre-detection items of IDC switching have been completed. Now it is in the drill mode. You can view the simulated process of IDC switching through animation or click Next to enter the final confirmation page."
 
 #### View the animation of IDC switching
 
 ![](assets/visual-idc/image64.png)
 
--   Click the "view the animation of IDC switching" button, and view the animation on the popped-up new page. This step is the key step of IDC switching drill, which shows the detailed process of IDC switching through animation;
+- Click the "view the animation of IDC switching" button, and view the animation on the popped-up new page. This step is the key step of IDC switching drill, which shows the detailed process of IDC switching through animation;
 
--   During the animation, you can click the "replay" button in the upper right corner to replay the animation. The button is available in the entire process;
+- During the animation, you can click the "replay" button in the upper right corner to replay the animation. The button is available in the entire process;
 
 ![](assets/visual-idc/image65.png)
 
 #### Complete the switching
 
--   This step mainly displays the results of IDC switching drill based on the previously selected strategy;
+- This step mainly displays the results of IDC switching drill based on the previously selected strategy;
 
--   When you select the strategy "reserve the current master center and switch its role to a DR center", the switching steps will be as follows:
+- When you select the strategy "reserve the current master center and switch its role to a DR center", the switching steps will be as follows:
 
 ![](assets/visual-idc/image66.png)
 
--   When you select the strategy "delete the current master center and manage the DR center as in the single-IDC mode", the switching steps will be as follows:
+- When you select the strategy "delete the current master center and manage the DR center as in the single-IDC mode", the switching steps will be as follows:
 
 ![](assets/visual-idc/image67.png)
 
--   When you select the strategy "only switch the current active center to the DR center. And decision will be made after the switching", the switching steps will be as follows:
+- When you select the strategy "only switch the current active center to the DR center. And decision will be made after the switching", the switching steps will be as follows:
 
 ![](assets/visual-idc/image68.png)
 
--   Click "Finish" to complete the IDC switching drill and return to the compute node cluster page.
+- Click "Finish" to complete the IDC switching drill and return to the compute node cluster page.
 
 ### Under abnormal service of the master center
 
@@ -498,77 +498,77 @@ When the service of the master center is abnormal, while the DR center is servin
 
 ![](assets/visual-idc/image70.png)
 
--   This step is divided into three modules: information confirmation of compute node cluster, backup information confirmation of compute node cluster and confirmation of IDC switching results;
+- This step is divided into three modules: information confirmation of compute node cluster, backup information confirmation of compute node cluster and confirmation of IDC switching results;
 
--   The information confirmation module of compute node cluster displays the latest information and service status of the current cluster. When the service of the master center is abnormal, a message in red will be given to remind that the management port / service port cannot be connected;
+- The information confirmation module of compute node cluster displays the latest information and service status of the current cluster. When the service of the master center is abnormal, a message in red will be given to remind that the management port / service port cannot be connected;
 
--   By default, all backup items are checked in the backup information confirmation module of the compute node cluster. You can also select the backup items by yourself. When the service port of compute nodes in the master center cannot be connected, the backup will be based on the configuration of the master compute node in the DR center by default;
+- By default, all backup items are checked in the backup information confirmation module of the compute node cluster. You can also select the backup items by yourself. When the service port of compute nodes in the master center cannot be connected, the backup will be based on the configuration of the master compute node in the DR center by default;
 
--   The confirmation of IDC switching results module displays the active center and the master compute node after the switching. When the compute node service of the master center before switching cannot be connected, some detection related to the master center will not be carried out; after the switching, the original master center service can be repaired;
+- The confirmation of IDC switching results module displays the active center and the master compute node after the switching. When the compute node service of the master center before switching cannot be connected, some detection related to the master center will not be carried out; after the switching, the original master center service can be repaired;
 
--   The [next] button is only opened after selecting at least one item.
+- The [next] button is only opened after selecting at least one item.
 
 #### Pre-detection and data backup before switching
 
 ![](assets/visual-idc/image71.png)
 
--   This step is divided into two modules: pre-detection before switching and data backup before switching;
+- This step is divided into two modules: pre-detection before switching and data backup before switching;
 
--   The pre-detection module before switching is mainly to detect the detection items of each IDC in the current cluster. When the service of the master center is abnormal and some detection items cannot be detected, a message in yellow will be given "detection is not available, because the compute node service of the current master center cannot be connected, which however has no impact on the switching.". You can select "ignore this item and continue to the next step" and choose "yes" in the pop-up window, and other items that cannot be detected will be ignored directly;
+- The pre-detection module before switching is mainly to detect the detection items of each IDC in the current cluster. When the service of the master center is abnormal and some detection items cannot be detected, a message in yellow will be given "detection is not available, because the compute node service of the current master center cannot be connected, which however has no impact on the switching.". You can select "ignore this item and continue to the next step" and choose "yes" in the pop-up window, and other items that cannot be detected will be ignored directly;
 
 ![](assets/visual-idc/image72.png)
 
--   The data backup before switching is mainly to back up the backup items selected in the previous step and store data under the directory /hotdb-management / databak / cluster number / backup time.
+- The data backup before switching is mainly to back up the backup items selected in the previous step and store data under the directory /hotdb-management / databak / cluster number / backup time.
 
--   Detection items must all be passed before taking the next step. Otherwise, manual intervention is required to solve the failed items.
+- Detection items must all be passed before taking the next step. Otherwise, manual intervention is required to solve the failed items.
 
 #### Strategy selection for the master center
 
 ![](assets/visual-idc/image73.png)
 
--   There are mainly three switching strategies: reserve the current master center and switch its role to a DR center; delete the current master center and manage the DR center as in the single-IDC mode; only switch the current active center to the DR center. And decision will be made after the switching.
+- There are mainly three switching strategies: reserve the current master center and switch its role to a DR center; delete the current master center and manage the DR center as in the single-IDC mode; only switch the current active center to the DR center. And decision will be made after the switching.
 
--   Reserve the current master center and switch its role to a DR center, i.e. exchange the master center and the DR center.
+- Reserve the current master center and switch its role to a DR center, i.e. exchange the master center and the DR center.
 
--   Delete the current master center and manage the DR center as in the single-IDC mode, i.e. return to the single-IDC mode.
+- Delete the current master center and manage the DR center as in the single-IDC mode, i.e. return to the single-IDC mode.
 
--   Only switch the current active center to the DR center. And decision will be made after the switching, i.e. only switch to the DR center.
+- Only switch the current active center to the DR center. And decision will be made after the switching, i.e. only switch to the DR center.
 
 #### Officially switch the IDC
 
 ![](assets/visual-idc/image74.png)
 
--   In this step, you can confirm to start the IDC switching drill or terminate the operation. It should be noted that now it is in the drill mode of IDC switching. No real operations will be performed;
+- In this step, you can confirm to start the IDC switching drill or terminate the operation. It should be noted that now it is in the drill mode of IDC switching. No real operations will be performed;
 
--   Click "terminate the operation", you will exit from the IDC switching drill and return to the compute node cluster page;
+- Click "terminate the operation", you will exit from the IDC switching drill and return to the compute node cluster page;
 
--   Click "Confirm to perform immediately", the necessary conditions will be re-detected to improve the probability of success. When the re-detection is finished, the message will be given as "Congrats! All pre-detection items of IDC switching have been completed. Now it is in the drill mode. You can view the simulated process of IDC switching through animation or click Next to enter the final confirmation page."
+- Click "Confirm to perform immediately", the necessary conditions will be re-detected to improve the probability of success. When the re-detection is finished, the message will be given as "Congrats! All pre-detection items of IDC switching have been completed. Now it is in the drill mode. You can view the simulated process of IDC switching through animation or click Next to enter the final confirmation page."
 
 #### View the animation of IDC switching
 
 ![](assets/visual-idc/image64.png)
 
--   Click the "view the animation of IDC switching" button, and view the animation on the popped-up new page. This step is the key step of IDC switching drill, which shows the detailed process of IDC switching through animation;
+- Click the "view the animation of IDC switching" button, and view the animation on the popped-up new page. This step is the key step of IDC switching drill, which shows the detailed process of IDC switching through animation;
 
--   When the service of the master center is abnormal, the compute node in the left IDC will be red at the beginning of the animation, with ConfigDBs and data nodes unavailable;
+- When the service of the master center is abnormal, the compute node in the left IDC will be red at the beginning of the animation, with ConfigDBs and data nodes unavailable;
 
--   During the animation, you can click the "replay" button in the upper right corner to replay the animation. The button is available in the entire process;
+- During the animation, you can click the "replay" button in the upper right corner to replay the animation. The button is available in the entire process;
 
 ![](assets/visual-idc/image75.png)
 
 #### Complete the switching
 
--   This step mainly displays the results of IDC switching drill based on the previously selected strategy;
+- This step mainly displays the results of IDC switching drill based on the previously selected strategy;
 
--   When you select the strategy "reserve the current master center and switch its role to a DR center", the switching steps will be as follows:
+- When you select the strategy "reserve the current master center and switch its role to a DR center", the switching steps will be as follows:
 
 ![](assets/visual-idc/image76.png)
 
--   When you select the strategy "only switch the current active center to the DR center. And decision will be made after the switching", the switching steps will be as follows:
+- When you select the strategy "only switch the current active center to the DR center. And decision will be made after the switching", the switching steps will be as follows:
 
 ![](assets/visual-idc/image77.png)
 
--   Click "Finish" to complete the IDC switching drill and return to the compute node cluster page.
+- Click "Finish" to complete the IDC switching drill and return to the compute node cluster page.
 
 ### Notes
 
@@ -577,3 +577,4 @@ In the IDC switching drill, all detection items are in their real status. It sho
 Once you click "confirm", the strategy you select will be valid immediately. Even if other strategies are selected in the following operations, the first-time selection shall prevail.
 
 If you want to view the animation under other strategies, you need to exit this switching drill, select a cluster on the compute node cluster page and restart the IDC switching animation.
+

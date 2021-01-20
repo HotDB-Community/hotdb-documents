@@ -4,7 +4,7 @@
 
 HotDB Server cluster deployment has certain requirements for the server, operating system and depended-upon software, etc., and the cluster deployed in non-compliant environment may not be usable or may not meet the use requirements. It's suggested making detailed understanding of the [Description of Requirements](#environment-description) of HotDB Server cluster deployment for environment before deployment.
 
-This document will describe in detail how to deploy a set of HotDB Server clusters in single-IDC mode. If you want to know what you need to pay attention to when you enable the disaster recovery mode, please refer to the "Installation and deployment" chapter of the [Distributed Transactional Database HotDB Server - Cross-IDC Disaster Recovery Function Specification](../Distributed%20Transactional%20Database.docx).
+This document will describe in detail how to deploy a set of HotDB Server clusters in single-IDC mode. If you want to know what you need to pay attention to when you enable the disaster recovery mode, please refer to the [Installation and deployment](cross-idc-disaster-recovery.md#installation-and-deployment) chapter of the [Cross-IDC Disaster Recovery](cross-idc-disaster-recovery.md) document.
 
 ### Deployment architecture diagram
 
@@ -29,13 +29,13 @@ Cluster load-balancing deployment architecture diagram
 
 **Recommended configuration:**
 
-Refer to [Hardware Config Recommendation](hardware-config-recommendation.md) document for hardware environment configuration.
+Refer to the [Hardware Config Recommendation](hardware-config-recommendation.md) document for hardware environment configuration.
 
-Refer to [Cluster Environment Requirement](cluster-environment-requirement) document for cluster running environment configuration requirements and recommendation.
+Refer to the [Cluster Environment Requirement](cluster-environment-requirement.md) document for cluster running environment configuration requirements and recommendation.
 
 ## Deployment
 
-Deployment of HotDB Server cluster could be either manually installed offline, or automatically installed via "Cluster Deployment" or [Single Component Deployment](#Single%20Component%20Deployment) on the management platform.
+Deployment of HotDB Server cluster could be either manually installed offline, or automatically installed via "Cluster Deployment" or [Single Component Deployment](#single-component-deployment) on the management platform.
 
 ### Manual deployment
 
@@ -48,7 +48,7 @@ Descriptions of teaching environment of single-node deployment and the deploymen
 **Deployment environment:**
 
 | Item | Name |
-| --- | --- |
+|-------------------|--------------------------------------|
 | Server Properties | Virtual Machine |
 | Operating System | CentOS Linux release 7.6.1810 (Core) |
 | MySQL Version | MySQL 5.7.25 |
@@ -57,14 +57,14 @@ Descriptions of teaching environment of single-node deployment and the deploymen
 **Deployment components:**
 
 | Component name | Number of installations |
-| --- | --- |
+|---------------------|-------------------------|
 | Compute Node | 1 |
 | Management Platform | 1 |
 | ConfigDB | 1 |
 | Data Source | 4 |
 
 > !!!NOTE
-> For description of the component name, refer to [Glossary](glossary.md) document.
+> For description of the component name, refer to the [Glossary](glossary.md) document.
 
 ##### Compute node
 
@@ -113,7 +113,7 @@ ConfigDB and Compute Node could be either installed on the same server, or insta
 
 3. **Service Authorization**
 
-To start normally and provide service, HotDB Server shall acquire formal authorization and privilege from Shanghai Hotpu Networks Technology Co.,Ltd, which could be interpreted as license is necessary. Please refer to *Distributed Transactional Database HotDB Server [Service Authorization] Function Manual* for detailed service authorization instruction.
+To start normally and provide service, HotDB Server shall acquire formal authorization and privilege from Shanghai Hotpu Networks Technology Co.,Ltd, which could be interpreted as license is necessary. Please refer to the [Service License](service-license.md) document for detailed service authorization instruction.
 
 4. **Install compute node**
 
@@ -182,6 +182,7 @@ kill 19833
 ```
 
 > !!!TIP
+>
 > - In case of abnormal start, view the compute node log `hotdb.log` under the installable directory `logs`. Execute the log view command: `tail -f /usr/local/hotdb/hotdb-server/logs/hotdb.log`.
 > - If the server is unauthorized, or the installed compute node service is unauthorized, both of which could result in start failure of compute node service.
 
@@ -506,7 +507,7 @@ Use startup script of mysql to start the database.
 Data Source is a standard MySQL instance in nature, and it is used for storing underlying transaction data of the whole set of clusters. The number of installations and the building of replication relation depend on the actual business scenarios.
 
 > !!!TIP
-> Please refer to description of "[ConfigDB](#configdb)" for manual installation process of data source. "[Single Component Deployment](#single-component-deployment)" of "[Cluster Deployment](#cluster-deployment)" on the management platform are suggested for batch installation of data source.
+> Please refer to description of [ConfigDB](#configdb) for manual installation process of data source. [Single Component Deployment](#single-component-deployment) of [Cluster Deployment](#cluster-deployment) on the management platform are suggested for batch installation of data source.
 
 **Connection user:**
 
@@ -539,6 +540,7 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,process,referen
 HotDB Backup is a distributed transactional database backup tool independently developed by Shanghai Hotpu Networks Technology Co.,Ltd. It is generally deployed on data source server of the cluster, and listens to the data backup request from the management platform. A data source server needs only one HotDB Backup to be deployed.
 
 > !!!NOTE <!--Notice for use-->
+>
 > - Only data backup of MySQL 5.6 and above versions is supported.
 > - The binlog must be enabled for the backed-up data source instance.
 > - Server of HotDB Management must have MySQL Client installed, otherwise, the backup will be affected.
@@ -619,7 +621,7 @@ Descriptions of master/standby node cluster deployment teaching environment and 
 **Deployment environment:**
 
 | Item | Name |
-| --- | --- |
+|------------------|--------------------------------------|
 | Physical Server | Physical Server |
 | Operating System | CentOS Linux release 7.6.1810 (Core) |
 | MySQL Version | MySQL 5.7.25 |
@@ -628,7 +630,7 @@ Descriptions of master/standby node cluster deployment teaching environment and 
 **Deployment components**
 
 | Component name | Number of installations |
-| --- | --- |
+|---------------------|-------------------------|
 | Compute Node | 2 |
 | Keepalived | 2 |
 | Management Platform | 1 |
@@ -636,15 +638,15 @@ Descriptions of master/standby node cluster deployment teaching environment and 
 | Data Source | 4 |
 
 > !!!NOTE
-> For description of the component name, refer to the document *Distributed Transactional Database Product HotDB Server - [Explanation of Terms] Function Manual*.
+> For description of the component name, refer to the [Glossary](glossary.md) document.
 
 > !!!INFO
-> This chapter mainly introduces compute node server.xml configuration, Keepalived installation and configuration, start instruction, high availability switch, etc. under HA cluster mode. Installation steps of compute node, management platform, configDB and Data Source will not be repeated in this chapter, and please refer to "[Single Node Cluster Deployment](#single-node-cluster-deployment)" in the previous chapter for details.
+> This chapter mainly introduces compute node server.xml configuration, Keepalived installation and configuration, start instruction, high availability switch, etc. under HA cluster mode. Installation steps of compute node, management platform, configDB and Data Source will not be repeated in this chapter, and please refer to [Single Node Cluster Deployment](#single-node-cluster-deployment) in the previous chapter for details.
 
 **Deployment planning:**
 
 | Instance | IP | service port | management port | HA role |
-| --- | --- | --- | --- | --- |
+|----------------------|-----------------|--------------|-----------------|---------|
 | Master compute node | 192.168.200.190 | 3323 | 3325 | Master |
 | Standby compute node | 192.168.200.191 | 3323 | 3325 | Slave |
 
@@ -659,7 +661,7 @@ HA compute node deployment diagram
 
 1. **Install master/standby compute node**
 
-Install compute node service respectively on 192.168.220.190 and 192.168.200.191, and refer to "[Compute Node](#compute-node)" in the previous chapter for the installation process.
+Install compute node service respectively on 192.168.220.190 and 192.168.200.191, and refer to [Compute Node](#compute-node) in the previous chapter for the installation process.
 
 2. **Modify master/standby compute node configuration file**
 
@@ -682,6 +684,7 @@ Modification of the server.xml configuration on standby compute node192.168.200.
 ```
 
 > !!!INFO
+>
 > - haNodeHost in the configuration file is the master compute node's IP+management port, and such parameter only needs to be configured on standby compute node.
 > - When starting master/standby server, if haState plays as the master, service port (3323) and management port (3325) will be started; if it plays as the Backup, only management port (3325) will be started.
 > - At the time of master server failure, if keepalived detects that the service is not available, it will automatically switch vip to the backup server, and start the backup service port (3323), to guarantee service without interruption.
@@ -875,7 +878,7 @@ Refer to the chapter of high availability rebuild in [HotDb Management](hotdb-ma
 
 #### NDB SQL Service
 
-NDB SQL service could be used to assist the compute node in completing calcualtion of relatively complex SQL query statements under distributed environment. Refer to description in *Distributed Transactional Database Product HotDB Server - [Standard] Function Manual* for detailed introduction to NDB SQL service. At present, NDB SQL Service supports installation by clickOnce deployment and installation of script and automatic deployment by "[Cluster Deployment](#cluster-deployment)" and "[Single Component Deployment](#single-component-deployment)" functions on management platform. Installation and deployment of NDB SQL service by script will be introduced as follow.
+NDB SQL service could be used to assist the compute node in completing calculation of relatively complex SQL query statements under distributed environment. Refer to description in the [Standard](standard.md) document for detailed introduction to NDB SQL service. At present, NDB SQL Service supports installation by clickOnce deployment and installation of script and automatic deployment by [Cluster Deployment](#cluster-deployment) and [Single Component Deployment](#single-component-deployment) functions on management platform. Installation and deployment of NDB SQL service by script will be introduced as follow.
 
 1. **Notice before manual installation**
 
@@ -912,6 +915,7 @@ sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
 ```
 
 > !!!NOTE
+>
 > - The time synchronization parameters used for installing time synchronization address of NDB SQL specified server shall be consistent with those used for previous installation of compute node. That is, whether `ntpdate-server-ip` or `ntpdate-server-host` is used shall be consistent for both times
 > - The time synchronization parameters used for installing time synchronization address shall be consistent with those used for previous installation of compute node. If there is NTP service in cluster, then the parameter value shall be IP address of NIP server.
 
@@ -1018,7 +1022,7 @@ Every cluster deployment task is conducted with a set of clusters as the unit, a
 
 ##### Description of terms
 
-Please refer to [Glossary](glossary.md) document for relevant terms of cluster deployment
+Please refer to the [Glossary](glossary.md) document for relevant terms of cluster deployment
 
 ##### Function use instruction
 
@@ -1087,13 +1091,13 @@ After successful opening the page , log in to the account to admin user interfac
 
 ###### Add cluster deployment task
 
-After the admin user logs in to management platform, enter "Cluster Management->Compute Node Cluster", and click [Cluster Deployment] button to enter the page of Cluster Deployment function.
+After the admin user logs in to management platform, enter "Cluster Management->Compute Node Cluster", and click \[Cluster Deployment] button to enter the page of Cluster Deployment function.
 
 ![](assets/install-and-deploy/image10.png)
 
 ###### Select cluster mode of deployment
 
-Cluster is divided into three modes: single node, master/standby node and multiple node, and after selecting the cluster mode, click [Parameter Configuration] button to enter the page of Cluster Deployment Parameter Configuration.
+Cluster is divided into three modes: single node, master/standby node and multiple node, and after selecting the cluster mode, click \[Parameter Configuration] button to enter the page of Cluster Deployment Parameter Configuration.
 
 ![](assets/install-and-deploy/image11.png)
 
@@ -1101,30 +1105,30 @@ Cluster is divided into three modes: single node, master/standby node and multip
 
 - Single-node: single-node refers to the cluster mode that there is only one compute node in the whole cluster. Installation of Keepalived or LVS and other high availability components is unnecessary.
 
-	![](assets/install-and-deploy/image12.png)
+  ![](assets/install-and-deploy/image12.png)
 
 - Master/standby node: master/standby mode is also known as HA mode, namely the cluster mode making high availability rebuild via Keepalived component. There are master and standby compute nodes in the cluster.
 
-	![](assets/install-and-deploy/image13.png)
+  ![](assets/install-and-deploy/image13.png)
 
-	1. Master/standby node mode cluster requires filling in configuration information of 2 servers.
-	2. Virtual_ipaddress of Keepalived (hereinafter referred to as VIP) is required to be the address not occupied by server or other applications and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24.
-	3. The virtual_router_id value could be selected from [1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
-	4. Gateway device name of master/standby Keepalived server is the NIC device name of Keepalived server, and the name must be accurately filled in, and the format is NIC name + :1 for example: "eth0:1". (gateway device name could be viewed via "ip a" command)
+  1. Master/standby node mode cluster requires filling in configuration information of 2 servers.
+  2. Virtual_ipaddress of Keepalived (hereinafter referred to as VIP) is required to be the address not occupied by server or other applications and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24.
+  3. The virtual_router_id value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
+  4. Gateway device name of master/standby Keepalived server is the NIC device name of Keepalived server, and the name must be accurately filled in, and the format is NIC name + :1 for example: "eth0:1". (gateway device name could be viewed via "ip a" command)
 
 - Multi-node: multi-node mode is also known as load-balancing, which is an architecture mode controlling distribution of traffic to multiple compute nodes in the cluster via LVS component or other load-balancing components. There shall be no less than 3 or no more than 9 compute nodes in the multi-node mode.
 
-![](assets/install-and-deploy/image14.png)
+  ![](assets/install-and-deploy/image14.png)
 
-![](assets/install-and-deploy/image15.png)
+  ![](assets/install-and-deploy/image15.png)
 
-	1. In multi-node mode, the number of compute nodes is 3 by default, and the version of compute node must be 2.5.
-	2. The cluster network segment is the network segment of the server where the compute node is installed, and the format is: network segment+Subnet Mask length, for example: 192.168.200.0/24.
-	3. Communication port is the port used by various compute nodes in the cluster for communication, and it is 3326 by default. Modification is not recommended without special requirements.
-	4. LVS is a component realizing load balance in multi-node mode, and it could also close [Install] to select other load-balancing methods to substitute LVS.
-	5. LVS_vip is the vitual IP address configured in LVS component (hereinafter referred to as VIP), and it's required to be the address not occupied by server or other applications and on the same network segment with compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24.
-	6. virtual_router_id value could be selected from [1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
-	7. lvs_net_interface_name is the NIC name of LVS component server, and the name must be accurately filled in, and the format is NIC name + :2 for example: "eth0:2". (gateway device name could be viewed via "ip a" command).
+  1. In multi-node mode, the number of compute nodes is 3 by default, and the version of compute node must be 2.5.
+  2. The cluster network segment is the network segment of the server where the compute node is installed, and the format is: network segment+Subnet Mask length, for example: 192.168.200.0/24.
+  3. Communication port is the port used by various compute nodes in the cluster for communication, and it is 3326 by default. Modification is not recommended without special requirements.
+  4. LVS is a component realizing load balance in multi-node mode, and it could also close \[Install] to select other load-balancing methods to substitute LVS.
+  5. LVS_vip is the vitual IP address configured in LVS component (hereinafter referred to as VIP), and it's required to be the address not occupied by server or other applications and on the same network segment with compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24.
+  6. virtual_router_id value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
+  7. lvs_net_interface_name is the NIC name of LVS component server, and the name must be accurately filled in, and the format is NIC name + :2 for example: "eth0:2". (gateway device name could be viewed via "ip a" command).
 
 ###### Configuration of cluster deployment parameters
 
@@ -1147,7 +1151,7 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 11. Service port and management port are "3323, 3325" by default, which could be used directly without special requirement. In case of successful modification and installation, corresponding parameters of server.xml configuration file of compute node will also be modified synchronously.
 12. Whether the target server is normally connected or not could be tested or whether the SSH information input is available or not could be judged by clicking \[Test Connection].
 
-2) **ConfigDB parameters**
+13) **ConfigDB parameters**
 
 ![](assets/install-and-deploy/image17.png)
 
@@ -1161,7 +1165,7 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 6. The parameters "disk device name" and "data directory" are optional, and if they are null, the program will assign a null value for "disk device name" and the default value "/data" for "data directory" automatically. As for detailed description of the parameters, please refer to " [Description of cluster deployment script parameters](#description-of-script-parameters)".
 7. \[More Parameters] could set more optional parameters for the current deployed MySQL instance, and when the input box of the parameter is null, the Installation Script will make self-computation and processing and assign default value, and modification is not recommended without special requirement. If needing to make the modified parameters applicable to other deployed configDB instance, the option "Synchronize more parameters to other configDB instances" shall be checked.
 
-3) **LVS parameters**
+8) **LVS parameters**
 
 ![](assets/install-and-deploy/image19.png)
 
@@ -1170,7 +1174,7 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 3. "virtual_router_id value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
 4. Master/standby "lvs_net_interface_name" is the gateway device name of the LVS server, and such name must be consistent with the one displayed on the real server (it could be viewed via ip a command), and the format is: gateway device name + ":2", for example: "eth0:2".
 
-4) **Data source parameters**
+5) **Data source parameters**
 
 ![](assets/install-and-deploy/image20.png)
 
@@ -1195,7 +1199,7 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 13. A line of data source configuration records could be added or deleted by clicking "Add" or "Delete" in operation.
 14. If there are too many Data Sources, "Import" mode may be considered for making configuration. Before import, download the template first, and then fill in the configuration information as instructed on the template, and then import into the management platform upon completion. In case of fill-in error, the program will display import failure and detailed failure information.
 
-5) **Time synchronization parameter setting**
+15) **Time synchronization parameter setting**
 
 ![](assets/install-and-deploy/image24.png)
 
@@ -1212,17 +1216,18 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 
 ![](assets/install-and-deploy/image26.png)
 
-1. Save Only: Click [Save Only] button, the program will not verify legality and integrity of the configuration parameter input, and it only checks whether the required items have been computed or not.
+1. Save Only: Click \[Save Only] button, the program will not verify legality and integrity of the configuration parameter input, and it only checks whether the required items have been computed or not.
 
-2. Check and Save: click [Check and Save] button, the program will check the legality and integrity of the configuration parameters, and send the installation deployment package and the corresponding MD5 value file to the target server to verify whether it meets requirement for cluster deployment, and if not, there will be pop-up prompt. **All clusters could be installed only after passing the [Check and Save] before deployment starts**.
+2. Check and Save: click \[Check and Save] button, the program will check the legality and integrity of the configuration parameters, and send the installation deployment package and the corresponding MD5 value file to the target server to verify whether it meets requirement for cluster deployment, and if not, there will be pop-up prompt. **All clusters could be installed only after passing the \[Check and Save] before deployment starts**.
 
-Note: if the installation package is damaged or changed in the process of downloading or sending, it will be detected that the current MD5 value of the installation package is inconsistent with the original MD5 value during **[Check and Save]**, and the pop-up window will prompt "The integrity check of the one-click deployment package failed. Please check manually", as shown in the figure below:
+> !!!NOTE
+> if the installation package is damaged or changed in the process of downloading or sending, it will be detected that the current MD5 value of the installation package is inconsistent with the original MD5 value during **\[Check and Save]**, and the pop-up window will prompt "The integrity check of the one-click deployment package failed. Please check manually", as shown in the figure below:
 
 ![](assets/install-and-deploy/image27.png)
 
 3. If the cluster configuration parameter fails the test, modification shall be made correspondingly according to the error condition, and then checking shall be made again.
 
-4. If test fails due to that the server hardware configuration does not meet requirement, it's recommended saving the configuration parameters via [Save Only] button first, and then adjusting hardware configuration of the target server or replacing the target server as prompted, and then make checking again.
+4. If test fails due to that the server hardware configuration does not meet requirement, it's recommended saving the configuration parameters via \[Save Only] button first, and then adjusting hardware configuration of the target server or replacing the target server as prompted, and then make checking again.
 
 ![](assets/install-and-deploy/image28.png)
 
@@ -1240,11 +1245,11 @@ Note: if the installation package is damaged or changed in the process of downlo
 
 ![](assets/install-and-deploy/image32.png)
 
-1. Click [Start Deployment] to enter the Installation Process.
+1. Click \[Start Deployment] to enter the Installation Process.
 
-- For the cluster which fails the checking, when clicking [Start Deployment], it will be prompted that deployment is not allowed.
+- For the cluster which fails the checking, when clicking \[Start Deployment], it will be prompted that deployment is not allowed.
 
-- For the cluster which passes the checking, if the installation package on any server in the cluster is damaged during [Start Deployment], that is, it is detected that the current MD5 value of the installation package is inconsistent with the original MD5 value, the pop-up window will also prompt:
+- For the cluster which passes the checking, if the installation package on any server in the cluster is damaged during \[Start Deployment], that is, it is detected that the current MD5 value of the installation package is inconsistent with the original MD5 value, the pop-up window will also prompt:
 
 ![](assets/install-and-deploy/image33.png)
 
@@ -1264,7 +1269,7 @@ Note: if the installation package is damaged or changed in the process of downlo
 
 1. For the successfully deployed cluster, monitoring will be opened automatically on "Cluster Management" page, and running state information of the components will be displayed in the "Cluster Deployment Information" columns.
 
-2. Click [Deployment Topology] button to enter the deployment topology page, it could be seen that all icons on the topology have become full line ones.
+2. Click \[Deployment Topology] button to enter the deployment topology page, it could be seen that all icons on the topology have become full line ones.
 
 ###### Instance password modification
 
@@ -1278,7 +1283,7 @@ Since the password and account No. of the generated account are consistent, ther
 
 1. Modification of instance password is divided into two parts: modification of configDB instance password, and modification of Data Source instance password.
 
-2. You can modify user passwords one by one by clicking the [Password Modification] button in the Action Bar or in batches by clicking [clickOnce Modification of Password] button.
+2. You can modify user passwords one by one by clicking the \[Password Modification] button in the Action Bar or in batches by clicking \[clickOnce Modification of Password] button.
 
 3. Modification of user passwords in batches is divided and displayed by user roles, for example, if modifying the password of repl account in configDB instance, then the repl account passwords in all instances of configDB will be modified synchronously. So does the Data Source.
 
@@ -1288,11 +1293,11 @@ Since the password and account No. of the generated account are consistent, ther
 
 #### Single Component Deployment
 
-Single Component Deployment function could continue to add new components to the existing cluster for the user. In addition, it could also deploy a set of new clusters from zero, because it could also provide High Availability Rebuild, clickOnce Start and other functions in addition to installation function, but relative to "[Cluster Deployment](#cluster-deployment)" function, [Single Component Deployment](#Single%20Component%20Deployment) is more suitable for deploying single component.
+Single Component Deployment function could continue to add new components to the existing cluster for the user. In addition, it could also deploy a set of new clusters from zero, because it could also provide High Availability Rebuild, clickOnce Start and other functions in addition to installation function, but relative to "[Cluster Deployment](#cluster-deployment)" function, [Single Component Deployment](#single-component-deployment) is more suitable for deploying single component.
 
 ##### Description of terms
 
-Please refer to *Distributed Transactional Database HotDB Server [Explanation of Terms] Function Manual* for relevant terms of Single Component Deployment
+Please refer to the [Glossary](glossary.md) document for relevant terms of Single Component Deployment
 
 ##### Function use instruction
 
@@ -1304,11 +1309,12 @@ Single Component Deployment is a function in management platform, and before use
 
 ##### Single Component Deployment
 
-**Description:** Deployment of a master/standby mode cluster will be illustrated via [Single Component Deployment](#Single%20Component%20Deployment) this time. Keepalived virtual address (VIP) uses "192.168.200.112"; master/standby compute node server is installed on "192.168.200.45 and 192.168.200.46" servers respectively. Meanwhile, 4 Data Source MySQL instances are installed respectively on servers "192.168.200.47 and 192.168.200.48".
+> !!!INFO
+> Deployment of a master/standby mode cluster will be illustrated via [Single Component Deployment](#single-component-deployment) this time. Keepalived virtual address (VIP) uses "192.168.200.112"; master/standby compute node server is installed on "192.168.200.45 and 192.168.200.46" servers respectively. Meanwhile, 4 Data Source MySQL instances are installed respectively on servers "192.168.200.47 and 192.168.200.48".
 
 ###### Add deployment task
 
-After logging in to the management platform via admin user, select "Compute Node Cluster ->Single Component Deployment" and click [Add Deployment Task]
+After logging in to the management platform via admin user, select "Compute Node Cluster ->Single Component Deployment" and click \[Add Deployment Task]
 
 ![](assets/install-and-deploy/image38.png)
 
@@ -1322,9 +1328,9 @@ After logging in to the management platform via admin user, select "Compute Node
 
 2. The target deployment server could be logged in via "Password and Password-free" modes, if Password-free mode is used, password-free channel between the servers shall be manually established in advance, referring to "[Description of implementing password-free login](#description-of-implementing-password-free-login)" for details. If "Password" mode is used, SSH connection username and password shall be input.
 
-3. By clicking [Test Connection], whether the management platform server and the target deployment server could be of normal connection could be tested.
+3. By clicking \[Test Connection], whether the management platform server and the target deployment server could be of normal connection could be tested.
 
-4. When logging in by password mode, in order to gaurantee SSH information safety, the management platform will save it for 24 h only, after that, in case of needing reconnection to the target server, click [Edit] for re-saving.
+4. When logging in by password mode, in order to gaurantee SSH information safety, the management platform will save it for 24 h only, after that, in case of needing reconnection to the target server, click \[Edit] for re-saving.
 
 ![](assets/install-and-deploy/image41.png)
 
@@ -1336,7 +1342,7 @@ After logging in to the management platform via admin user, select "Compute Node
 
 4. If compute node and configDB are installed on the same server, the configDB related information could use the default value directly, but the configDB address IP shall be filled in actual value; if the compute node and configDB are on different servers, then the configDB information shall be modified according to actual condition.
 
-5. The heap memory and direct memory are "4G and 24G" by default, and the user could also adjust according to actual condition, but the input scope shall not exceed [1-64] G. When the heap memory exceeds 8G, it's recommended opening the G1 Garbage Collector.
+5. The heap memory and direct memory are "4G and 24G" by default, and the user could also adjust according to actual condition, but the input scope shall not exceed \[1-64] G. When the heap memory exceeds 8G, it's recommended opening the G1 Garbage Collector.
 
 ![](assets/install-and-deploy/image42.png)
 
@@ -1344,9 +1350,9 @@ After logging in to the management platform via admin user, select "Compute Node
 
 2. Keepalived's virtual_ip address (hereinafter referred to as VIP) is required to be the one not occupied by intranet server or other applications and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24. In this place, we shall fill in the VIP address "192.168.200.112/24" planned previously.
 
-3. virtual_router_id value could be selected from [1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
+3. virtual_router_id value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
 
-4. keepalived_net_interface_name is the NIC name of the Keepalived server; the name must be accurately filled in, and the format is NIC name +:1, for example: "eth0:1". (gateway device name could be viewed via "ip a" command).
+4. keepalived_net_interface_name is the NIC name of the Keepalived server; the name must be accurately filled in, and the format is NIC name + `:1`, for example: `eth0:1`. (gateway device name could be viewed via `ip a` command).
 
 ![](assets/install-and-deploy/image43.png)
 
@@ -1370,17 +1376,17 @@ After logging in to the management platform via admin user, select "Compute Node
 
 - If NTPD server is not installed on the server, then the server time synchronization address shall be specified as the address of the intranet server installed with NTPD server
 
-3. Click [Save the Information] will save the configuration information for later installation, while clicking [Start Installation] will enter the installation progress directly.
+3. Click \[Save the Information] will save the configuration information for later installation, while clicking \[Start Installation] will enter the installation progress directly.
 
 ![](assets/install-and-deploy/image45.png)
 
-1. At the time of initial installation, the one-click installation deployment package and the corresponding MD5 value file of the management platform server shall be uploaded to the target deployment server, therefore, [Upload] must be clicked. Please refer to the last item of "[Function use instruction on cluster deployment](#function-use-instruction)" for description of storing resource bundle in management platform server.
+1. At the time of initial installation, the one-click installation deployment package and the corresponding MD5 value file of the management platform server shall be uploaded to the target deployment server, therefore, \[Upload] must be clicked. Please refer to the last item of "[Function use instruction on cluster deployment](#function-use-instruction)" for description of storing resource bundle in management platform server.
 
-- If the installation package is damaged in the process of uploading, it will be detected that the current MD5 value of the installation package is inconsistent with its corresponding MD5 value during [Confirm to Upload], and the pop-up window will prompt:
+- If the installation package is damaged in the process of uploading, it will be detected that the current MD5 value of the installation package is inconsistent with its corresponding MD5 value during \[Confirm to Upload], and the pop-up window will prompt:
 
 ![](assets/install-and-deploy/image46.png)
 
-2. If to manually upload the one-click installation package and the corresponding MD5 value file to the target server /usr/local/hotdb manually or has uploaded the package resources already, click [Start installation directly] to skip the action of uploading installation package. However, the integrity of the package should be guaranteed when the package is uploaded manually.
+2. If to manually upload the one-click installation package and the corresponding MD5 value file to the target server /usr/local/hotdb manually or has uploaded the package resources already, click \[Start installation directly] to skip the action of uploading installation package. However, the integrity of the package should be guaranteed when the package is uploaded manually.
 
 ![](assets/install-and-deploy/image47.png)
 
@@ -1394,7 +1400,7 @@ After logging in to the management platform via admin user, select "Compute Node
 
 1. The installation task in progress could be placed in the background, and then continue to add new installation tasks, and after completing the installation tasks, the installation status of the components could be viewed by refreshing the page.
 
-2. The saved or installed tasks could be "cloned", clicking [Clone] could copy all configuration parameters of the task to a new deployment task, which could reduce repeated configurations appropriately.
+2. The saved or installed tasks could be "cloned", clicking \[Clone] could copy all configuration parameters of the task to a new deployment task, which could reduce repeated configurations appropriately.
 
 ![](assets/install-and-deploy/image49.png)
 
@@ -1418,11 +1424,11 @@ After logging in to the management platform via admin user, select "Compute Node
 
 ![](assets/install-and-deploy/image51.png)
 
-1. Click [Start Installation] and upload the installation package and the corresponding MD5 value file to target delpoyment server of Data Source.
+1. Click \[Start Installation] and upload the installation package and the corresponding MD5 value file to target delpoyment server of Data Source.
 
 2. Real-time installation progress could be viewed via log.
 
-3. Clone the deployment task of Data Source to "192.168.200.48" via the [Clone] button, and modify the SSH information, then installation could be started.
+3. Clone the deployment task of Data Source to "192.168.200.48" via the \[Clone] button, and modify the SSH information, then installation could be started.
 
 ##### High availability build of Single Component Deployment
 
@@ -1432,7 +1438,7 @@ High availability rebuild could provide high availability automatic build servic
 
 ![](assets/install-and-deploy/image52.png)
 
-1. Click [High Availability Build] button to enter the high availability build page, and then in the "Compute Node High Availability Build" module, by clicking [Add], the configuration window of adding compute node high availability will be popped up.
+1. Click \[High Availability Build] button to enter the high availability build page, and then in the "Compute Node High Availability Build" module, by clicking \[Add], the configuration window of adding compute node high availability will be popped up.
 
 ![](assets/install-and-deploy/image53.png)
 
@@ -1446,7 +1452,7 @@ High availability rebuild could provide high availability automatic build servic
 
 5. Master Name and Backup Name are remark name of compute node, which could be customized but shall not be repeated with the existing compute node name.
 
-6. Clicking [Save] means starting to build high availability relation for master/standby compute node.
+6. Clicking \[Save] means starting to build high availability relation for master/standby compute node.
 
 ![](assets/install-and-deploy/image54.png)
 
@@ -1456,7 +1462,7 @@ High availability rebuild could provide high availability automatic build servic
 
 ![](assets/install-and-deploy/image56.png)
 
-1. Click [Batch Add] button in "node high availability build" module, if the compute node high availability is not constructed or free of build history record, then clicking [Batch Build] will prompt "Please build a compute node cluster first" (because Data Source High Availability Build needs to select the belonging compute node cluster).
+1. Click \[Batch Add] button in "node high availability build" module, if the compute node high availability is not constructed or free of build history record, then clicking \[Batch Build] will prompt "Please build a compute node cluster first" (because Data Source High Availability Build needs to select the belonging compute node cluster).
 
 2. Adding Data Source High Availability Configuration needs to select the "Compute Node Cluster" first, and the newly cosntructed compute node cluster could be selected.
 
@@ -1466,11 +1472,11 @@ High availability rebuild could provide high availability automatic build servic
 
 5. When adding multiple node high availability records, new configuration record could be added by clicking "+".
 
-6. After completing the Node High Availability Configuration, clicking [Start Construct] will automatically build high availability replication relation for Data Source.
+6. After completing the Node High Availability Configuration, clicking \[Start Construct] will automatically build high availability replication relation for Data Source.
 
 ![](assets/install-and-deploy/image57.png)
 
-1. Success record will be displayed with Data Node as the unit upon completion of build, and for the failure record, rebuild after modifying the parameters by clicking [Edit] button.
+1. Success record will be displayed with Data Node as the unit upon completion of build, and for the failure record, rebuild after modifying the parameters by clicking \[Edit] button.
 
 ###### ConfigDB high availability build
 
@@ -1478,7 +1484,7 @@ High availability rebuild could provide high availability automatic build servic
 
 ![](assets/install-and-deploy/image59.png)
 
-1. Select the installed configDB instance, and select its belonging cluster, and click [Build] button to start the build.
+1. Select the installed configDB instance, and select its belonging cluster, and click \[Build] button to start the build.
 
 2. Upon completion of build, the program will modify the configDB address with sandby master relation to server.xml file.
 
@@ -1490,7 +1496,7 @@ Startup program mainly provides clickOnce start service for the cluster with com
 
 ![](assets/install-and-deploy/image61.png)
 
-1. The startup program page could be entered via either [Startup Program] button on the page of Single Component Deployment, or by clicking [Startup Program] directly on the lower right corner after completing high availability build.
+1. The startup program page could be entered via either \[Startup Program] button on the page of Single Component Deployment, or by clicking \[Startup Program] directly on the lower right corner after completing high availability build.
 
 ![](assets/install-and-deploy/image62.png)
 
@@ -1504,13 +1510,13 @@ Startup program mainly provides clickOnce start service for the cluster with com
 
 ![](assets/install-and-deploy/image63.png)
 
-1. If Data Source [HotDB Backup](#HotDB%20Backup) is contained in the Start item, then there will be pop-up window of "Start Parameter Setting", asking the user to specify the management platform IP address at the time of HotDB Backup Start.
+1. If Data Source [HotDB Backup](#hotdb-backup) is contained in the Start item, then there will be pop-up window of "Start Parameter Setting", asking the user to specify the management platform IP address at the time of HotDB Backup Start.
 
 2. "HotDB Backup IP" is the IP address of the server of the HotDB Backup to be started, "management platform IP address" is the associated management platform IP address at the time of HotDB Backup start (the management platform IP address currently used could be selected).
 
 ![](assets/install-and-deploy/image64.png)
 
-1. Click [clickOnce Start], program will start and configuration will generate.
+1. Click \[clickOnce Start], program will start and configuration will generate.
 
 ##### Single Component Deployment and installation of NDB SQL
 
@@ -1519,9 +1525,7 @@ If compute node has been installed, but NDB SQL server needs to be added in late
 **Notice for use:**
 
 - Use Single Component Deployment function to seaprately install NDB SQL for compute node, which shall meet the requirement that the compute node in the cluster is deployed manually offline instead of using Cluster Deployment or Single Component Deployment function.
-
 - If the Compute Node is deployed by means of Cluster Deployment or Single Component Deployment, the NDB SQL function needing to be added in later period shall be conducted by means of [Offline Manual Installation](#ndb-sql-service) only.
-
 - NDB SQL must be installed on the same server with compute node, and the version of compute node shall be no lower than V 2.5.2.
 
 **Operating steps:**
@@ -1540,19 +1544,19 @@ Password-free login requires password-free channel established between two serve
 
 Take password-free connection between 192.168.190.186 and 192.168.190.187 for instance
 
-1) Execute ssh-keygen on the server of 192.168.190.186, press Enter button for 3 consecutive times, generate public key and private key, among which id_rsa is private key and id_rsa_pub is public key, and the private key and public key files newly generated upon command could be viewed under /root/.ssh directory.
+1. Execute ssh-keygen on the server of 192.168.190.186, press Enter button for 3 consecutive times, generate public key and private key, among which id_rsa is private key and id_rsa_pub is public key, and the private key and public key files newly generated upon command could be viewed under /root/.ssh directory.
 
 ![](assets/install-and-deploy/image66.png)
 
-2) Input IP of ssh-copy-id target server, and then input password of the target server, thus the public key could be sent to the target server
+2. Input IP of ssh-copy-id target server, and then input password of the target server, thus the public key could be sent to the target server
 
 ![](assets/install-and-deploy/image67.png)
 
-3) View the public key file "authorized_key" sent from 192.168.190.186 server on 192.168.190.187 server
+3. View the public key file "authorized_key" sent from 192.168.190.186 server on 192.168.190.187 server
 
-> ![](assets/install-and-deploy/image68.png)
+![](assets/install-and-deploy/image68.png)
 
-4) Test whether successful login could be made directly from 192.168.190.186 server ssh to 192.168.190.187 server without inputting password.
+4. Test whether successful login could be made directly from 192.168.190.186 server ssh to 192.168.190.187 server without inputting password.
 
 ![](assets/install-and-deploy/image69.png)
 
@@ -1563,7 +1567,7 @@ Without using management platform, you could also install directly using Install
 ##### Description of script parameters
 
 | Parameter name | Description of parameter |
-| --- | --- |
+|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dry-run | Check only with no Modification. You can choose "yes" or "no", among which "no" is the default option. |
 | hotdb-version | Specify major version No. of HotDB. You can choose "2.3", "2.4" and "zabbix", among which "2.4" is the default option. |
 | install-hotdb-server | Install HotDB-server or not. You can choose "yes" or "no", among which "no" is the default option. |
@@ -1620,26 +1624,26 @@ Without using management platform, you could also install directly using Install
 
 Combined use of parameters: parameter name = value + blank+ parameter name=value, for example:
 
---hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192
-
-.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+```
+--hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+```
 
 Install data source Listener using script:
 
---hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192
-
-.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --install-hotdb-listener=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+```
+--hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --install-hotdb-listener=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+```
 
 Method used for running script:
 
+```bash
 sh -x script name .sh+ space + parameter string
-
-sh -x hotdbinstall_v*.sh --hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1
-
---ntpdate-server-ip=192.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.6 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.4 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+sh -x hotdbinstall_v*.sh --hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1--ntpdate-server-ip=192.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.6 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.4 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+```
 
 ##### Other descriptions of script
 
-1. Since the clickOnce Deployment and Installation Script at present requires tunescript, and NIC related hardware parameters will be modified in tunescript, which may result in temporary loss of NIC response or interior restart of NIC. It's known that under the environment of Bond configured, short-time network interruption may be caused due to that the operating system response or interchanger response is not quick enough, thus resulting in SSH terminal disconnection or HotDB interruption, part of which could be relieved through shortening the Bond configuration parameter miimon=100.
+Since the clickOnce Deployment and Installation Script at present requires tunescript, and NIC related hardware parameters will be modified in tunescript, which may result in temporary loss of NIC response or interior restart of NIC. It's known that under the environment of Bond configured, short-time network interruption may be caused due to that the operating system response or interchanger response is not quick enough, thus resulting in SSH terminal disconnection or HotDB interruption, part of which could be relieved through shortening the Bond configuration parameter miimon=100.
 
-2. Before installation, it's recommended closing the built-in firewall and selinux functions of the server (selinux restart is effective).
+Before installation, it's recommended closing the built-in firewall and selinux functions of the server (selinux restart is effective).
+

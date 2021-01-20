@@ -162,9 +162,9 @@ create time: 2020-12-23
 
 customer info: poc_license_for_bank_of_256test
 
--   If it is a trial license, type: TRAIL can be seen when viewing the license info;
+- If it is a trial license, type: TRAIL can be seen when viewing the license info;
 
--   If it is an official license, type: OFFICIAL can be seen when viewing the license info;
+- If it is an official license, type: OFFICIAL can be seen when viewing the license info;
 
 ### Notes
 
@@ -180,11 +180,11 @@ When you get the official license file, you should keep the file properly to avo
 
 #### Out of the scope of license
 
--   If the number of compute node cluster groups or compute nodes currently managed by the management platform reaches the upper limit of the number of cluster groups or compute nodes authorized by the license, it is not allowed to add new clusters, and it will prompt "it is not allowed to add because the number of compute nodes exceeds the number of available compute nodes authorized by the platform."
+- If the number of compute node cluster groups or compute nodes currently managed by the management platform reaches the upper limit of the number of cluster groups or compute nodes authorized by the license, it is not allowed to add new clusters, and it will prompt "it is not allowed to add because the number of compute nodes exceeds the number of available compute nodes authorized by the platform."
 
--   If the number of compute node cluster groups or compute nodes currently managed by the management platform reaches the upper limit of the number of cluster groups or compute nodes authorized by the license, it is not allowed to deploy new clusters, and it will prompt "it is not allowed to add clusters through the parameter configuration function because the number of compute node cluster groups exceeds the number of available compute node cluster groups authorized by the platform."
+- If the number of compute node cluster groups or compute nodes currently managed by the management platform reaches the upper limit of the number of cluster groups or compute nodes authorized by the license, it is not allowed to deploy new clusters, and it will prompt "it is not allowed to add clusters through the parameter configuration function because the number of compute node cluster groups exceeds the number of available compute node cluster groups authorized by the platform."
 
--   If the number of cluster groups or compute nodes currently managed by the management platform exceeds the max number of cluster groups or compute nodes authorized by the license, it is not allowed to enter the operating page after refreshing the page after 1 minute or restarting the management platform, and the license needs to be updated to meet the number of cluster groups or compute nodes currently managed;
+- If the number of cluster groups or compute nodes currently managed by the management platform exceeds the max number of cluster groups or compute nodes authorized by the license, it is not allowed to enter the operating page after refreshing the page after 1 minute or restarting the management platform, and the license needs to be updated to meet the number of cluster groups or compute nodes currently managed;
 
 Distributed Transactional Database
 
@@ -322,7 +322,7 @@ Or view the license info output from the hotdb.log file after the compute node i
 
 You can also view the license info by executing show @@usbkey\\G on port 3325.
 
-root@127.0.0.1:(none) 5.7.22 01:57:34> show @@usbkey\\G
+\\Groot@127.0.0.1:(none) 5.7.22 01:57:34> show @@usbkey
 
 *************************** 1. row ***************************
 
@@ -428,7 +428,7 @@ Or view the license info output from the hotdb.log file after the compute node i
 
 You can also view the license info by executing show @@usbkey\\G at port 3325.
 
-root@127.0.0.1:(none) 5.7.22 03:00:56> show @@usbkey\\G
+\\Groot@127.0.0.1:(none) 5.7.22 03:00:56> show @@usbkey
 
 *************************** 1. row ***************************
 
@@ -482,11 +482,11 @@ expire time: 2020-12-14
 
 time left: 89 days 22 hours 55 minutes 48 seconds.
 
--   If it is a trial license, type: TRAIL can be seen when viewing the license info;
+- If it is a trial license, type: TRAIL can be seen when viewing the license info;
 
--   If it is a term official license, type: EXPIRATION can be seen when viewing the license info;
+- If it is a term official license, type: EXPIRATION can be seen when viewing the license info;
 
--   If it is a permanent official license, type: PERPETUAL can be seen when viewing the license info.
+- If it is a permanent official license, type: PERPETUAL can be seen when viewing the license info.
 
 ### Notes
 
@@ -518,7 +518,7 @@ With an expired license, the service will be failed to start and a message of no
 
 2020-12-15 00:10:47.388 [ERROR] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(158) - no available matched license detected. we will shutdown now.
 
-2020-12-15 00:10:47.389 [INFO] [EXIT[ FLOW ]] [ShutdownHook] cn.hotpu.hotdb.c(770) - begin to exit...
+2020-12-15 00:10:47.389 [INFO] [EXIT[ FLOW]] [ShutdownHook] cn.hotpu.hotdb.c(770) - begin to exit...
 
 Therefore, when the license is about to expire, you should apply for a new license and update it as soon as possible.
 
@@ -544,3 +544,4 @@ ERROR 10190 (HY000): Reload config failure, Number of Logic Database Exceeded Ma
 #### Server time
 
 The new self-developed encrypted license is highly dependent on the current server time, so it is necessary to keep the server time and network time synchronized. If it is suddenly prompted that the license is not available, you should first check whether the server time has been tampered with.
+

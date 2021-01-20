@@ -421,43 +421,43 @@ Deployment grade Examination is a set of operation environment examination grade
 **Examination dimension:**
 
 | Examination dimension | Examination item |
-| --- | --- |
+|-----------------------------|------------------------------------------|
 | Hardware resource | Server attribute |
-|     | Disk space |
-|     | Disk IO response time |
-|     | Memory |
-|     | CPU |
-|     | Network quality |
+|   | Disk space |
+|   | Disk IO response time |
+|   | Memory |
+|   | CPU |
+|   | Network quality |
 | Operation system | periodical scheduling |
-|     | sysctl.conf |
-|     | Time synchronization |
-|     | Can be connected to the external network |
-|     | Firewall and selinux |
-|     | yum |
-|     | Time zone |
-|     | tune |
-|     | limits.cnf |
-|     | Character set |
-|     | SSH connection |
+|   | sysctl.conf |
+|   | Time synchronization |
+|   | Can be connected to the external network |
+|   | Firewall and selinux |
+|   | yum |
+|   | Time zone |
+|   | tune |
+|   | limits.cnf |
+|   | Character set |
+|   | SSH connection |
 | Software deployment | Backup program |
-|     | MySQL client |
-|     | MySQL server |
-|     | Java environment |
+|   | MySQL client |
+|   | MySQL server |
+|   | Java environment |
 | Software configuration | MySQL connection |
-|     | MySQL high availability |
-|     | Compute node startup script |
-|     | ConfigDB |
-|     | MySQL disk space |
-|     | MySQL parameter configuration |
-|     | MySQL user privilege |
-|     | server.xml |
-|     | Compute node high availability |
-|     | Monitoring port |
+|   | MySQL high availability |
+|   | Compute node startup script |
+|   | ConfigDB |
+|   | MySQL disk space |
+|   | MySQL parameter configuration |
+|   | MySQL user privilege |
+|   | server.xml |
+|   | Compute node high availability |
+|   | Monitoring port |
 | Basic function verification | Data source high availability switch |
-|     | Compute node high availability switch |
-|     | LogicDB privilege |
-|     | Backup program |
-|     | 10 s performance test |
+|   | Compute node high availability switch |
+|   | LogicDB privilege |
+|   | Backup program |
+|   | 10 s performance test |
 
 **Examination panel:**
 
@@ -1130,21 +1130,21 @@ Note:
 > JDK version upgrade: manual upload by default. When "specify the storage directory of existing installation package" is checked, the default directory is /usr/local/hotdb/. Users can also specify the storage directory as needed. When the upgrade fails and rolls back, the upgraded JDK will not be cleaned up, because the JDK version can be compatible with the lower version of the compute node.
 >
 > 1) When the version of the uploaded update package is greater than or equal to 2.5.6 and the current version of is less than 2.5.6, if you click "start update" after the upload succeeds, a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade", and "JDK version upgrade option" will be given at the same time.
-> 
+>
 > ![](assets/hotdb-management/image104.png)
-> 
+>
 > 2) If "manual upload" is selected for JDK version upgrade, when the uploaded file does not match "OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz", it will prompt that "the uploaded file does not meet the standard, please upload again". ![](assets/hotdb-management/image105.png)3) When the uploaded JDK file does not meet the standard, if you still click "Start Update", a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade".
-> 
+>
 > ![](assets/hotdb-management/image106.png)
-> 
+>
 > 3) When "specify the storage directory of existing installation package" is selected for "JDK version upgrade", if no JDK upgrade matching file is found in the corresponding directory, click "Start Update", a 3s message will appear that "No matching file is found in the directory corresponding to JDK version upgrade, please fill in again".
-> 
+>
 > ![](assets/hotdb-management/image107.png)
-> 
+>
 > license file upgrade: the self-developed license starts to be used in v2.5.6, and the license file is in the keys directory by default. In upgrading, it is necessary to ensure that the authorization is available and the number of authorized nodes is not less than the number of existing nodes and the number of authorized ConfigDBs is not less than the number of existing ConfigDBs.
-> 
+>
 > 4) When the user uploads the authorization file, if it is invalid (that is, the new authorization is not available or the number of authorized nodes is less than the number of existing nodes，the number of authorized ConfigDBs is not less than the number of existing ConfigDBs), a warning will be given on the page "the authorization uploaded by the compute node is invalid, please re-upload available new authorization license file". ![](assets/hotdb-management/image108.png)when the uploaded update package, JDK version and license of the compute node are valid and available, the upgrade page is as follows
-> 
+>
 > ![](assets/hotdb-management/image109.png)
 
 ## OEM management
@@ -2181,61 +2181,61 @@ DR mode explanation: when the DR mode is enabled, please refer to the chapter [C
 **Config Checking Items**:
 
 | Type | Checking Content |
-| --- | --- |
+|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Data source table configuration | Data Node reference is normal |
-|     | Data Source database does not repeat |
-|     | Data Source cannot be connected |
-|     | A Data Node must contain available data source |
-|     | Data Node must contain Data Source |
-|     | One data node has only one Active Master |
-|     | One Data Node must contain a Data Source of Active Master type |
-|     | The character set of data source must be consistent |
-|     | Non-MGR Data Node cannot cite MGR type Data Source |
-|     | Data node cannot cite common master-slave data source |
-|     | ConfigDB cannot be added as data source |
-|     | Data source user and configDB user cannot share |
-|     | The logical architecture of compute nodes in the master center and the DR center is the same. |
+|   | Data Source database does not repeat |
+|   | Data Source cannot be connected |
+|   | A Data Node must contain available data source |
+|   | Data Node must contain Data Source |
+|   | One data node has only one Active Master |
+|   | One Data Node must contain a Data Source of Active Master type |
+|   | The character set of data source must be consistent |
+|   | Non-MGR Data Node cannot cite MGR type Data Source |
+|   | Data node cannot cite common master-slave data source |
+|   | ConfigDB cannot be added as data source |
+|   | Data source user and configDB user cannot share |
+|   | The logical architecture of compute nodes in the master center and the DR center is the same. |
 | Node switching rule table configuration | Data Source reference is normal |
-|     | Data Source and Data Node high availability source cannot be the same |
-|     | Data Source and Data Node high availability source must belong to the same data node |
+|   | Data Source and Data Node high availability source cannot be the same |
+|   | Data Source and Data Node high availability source must belong to the same data node |
 | LogicDB table configuration | Data Node reference is normal |
 | Sharding function parameter table configuration | Sharding function reference is normal |
-|     | Data Node reference is normal |
-|     | The column_value of RANGE or HASH route method must be in the form of an interval, such as: a:b, and a and b shall be numbers, a<=b |
-|     | The sharding parameter value range of HASH route method cannot contain negative numbers |
-|     | The sharding parameter value of automatic Sharding Route method shall be a positive integer |
-|     | The sharding parameter value of ROUTE route method shall be an integer |
-|     | Sharding function parameter is normal |
-|     | Sharding interval of RANGE or HASH shall have no overlap |
-|     | The column_value of SIMPLE_MOD or CRC32_MOD route method can be a number greater than or equal to 0 or an interval, such as: a:b, and a and b shall be numbers, a>=0, b>=0, a< =b |
-|     | The module value of SIMPLE_MOD or CRC32_MOD must be within 2-2147483647 |
-|     | SIMPLE_MOD or CRC32_MOD must be configured with module values |
-|     | The sharding parameter value interval of SIMPLE_MOD or CRC32_MOD shall have no overlap |
+|   | Data Node reference is normal |
+|   | The column_value of RANGE or HASH route method must be in the form of an interval, such as: a:b, and a and b shall be numbers, a<=b |
+|   | The sharding parameter value range of HASH route method cannot contain negative numbers |
+|   | The sharding parameter value of automatic Sharding Route method shall be a positive integer |
+|   | The sharding parameter value of ROUTE route method shall be an integer |
+|   | Sharding function parameter is normal |
+|   | Sharding interval of RANGE or HASH shall have no overlap |
+|   | The column_value of SIMPLE_MOD or CRC32_MOD route method can be a number greater than or equal to 0 or an interval, such as: a:b, and a and b shall be numbers, a>=0, b>=0, a< =b |
+|   | The module value of SIMPLE_MOD or CRC32_MOD must be within 2-2147483647 |
+|   | SIMPLE_MOD or CRC32_MOD must be configured with module values |
+|   | The sharding parameter value interval of SIMPLE_MOD or CRC32_MOD shall have no overlap |
 | Sharding function table configuration | Sharding function reference is normal |
 | Table Configuration | Global table is normal |
-|     | Sharding function reference is normal |
-|     | Data Node reference is normal |
-|     | LogicDB reference is normal |
-|     | Table name conflict detection is normal |
-|     | Global table node must contain all nodes of the logicDB it belongs to |
-|     | Association between table and data node is normal |
-|     | Sharding table sharding function association is normal |
-|     | Vertical sharding table belongs to only one node |
-|     | After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table. |
+|   | Sharding function reference is normal |
+|   | Data Node reference is normal |
+|   | LogicDB reference is normal |
+|   | Table name conflict detection is normal |
+|   | Global table node must contain all nodes of the logicDB it belongs to |
+|   | Association between table and data node is normal |
+|   | Sharding table sharding function association is normal |
+|   | Vertical sharding table belongs to only one node |
+|   | After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table. |
 | Child table configuration | Parent table reference is normal |
-|     | Parent table sharding type is normal |
-|     | Association between one parent table and multiple child tables is normal |
-|     | Relation between child table and parent table is normal |
-|     | Child table has no conflict with parent table name |
+|   | Parent table sharding type is normal |
+|   | Association between one parent table and multiple child tables is normal |
+|   | Relation between child table and parent table is normal |
+|   | Child table has no conflict with parent table name |
 | License management | Node number limitation checking passed |
-|     | LogicDB number limitation checking passed |
+|   | LogicDB number limitation checking passed |
 | Data source configuration | Data source configuration is correct |
-|     | Reload requirement: the replication latency between available master Data Source and original master Data Source cannot exceed 10s |
-|     | Reload requires that the replication status between available master data source and original master data source shall be normal |
+|   | Reload requirement: the replication latency between available master Data Source and original master Data Source cannot exceed 10s |
+|   | Reload requires that the replication status between available master data source and original master data source shall be normal |
 | ConfigDB status | ConfigDB connection is normal |
-|     | ConfigDB replication status is normal |
+|   | ConfigDB replication status is normal |
 | user privilege configuration | The data source connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,process,references,super,reload (only when the node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client,trigger,display view,create view,create routine,xa_recover_admin (only for data source instances of version 8.0 and above), alter routine,execute,event) |
-|     | The configDB connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload (only when the compute node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client) |
+|   | The configDB connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload (only when the compute node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client) |
 | Compute node configuration | Whether the currently configured compute node mode matches the real compute node mode. |
 
 Notes:
@@ -2698,7 +2698,7 @@ Move the mouse cursor into the [<] button to activate the Topological Graph Info
 
 The information recorded in the Topological Graph Info Panel cannot be deleted manually. However, the window period (local retention time) of the recorded information can be set using the [Setting] button in the upper right corner of the Info Panel. In order to reduce the excessive information at the WARNING level, the information can be set to be recorded only when the warning occurs for three consecutive times.
 
-####D topological graph
+#### D topological graph
 
 2.5D topological graph is a visual upgrade based on the original basic topological graph content. The component and component information displayed by this function are consistent with that of the above-mentioned "General View" topological graph, and the functions are similar.
 
@@ -3104,7 +3104,7 @@ The "Monitoring Management" function is to execute the compute node management p
 
 #### Monitoring command description
 
--
+- 
 
 ##### Server Connection Information display processlist
 
@@ -3132,7 +3132,7 @@ If jing is entered, you cannot get the record information of user jing01.
 
 ![](assets/hotdb-management/image278.png)
 
--
+- 
 
 ##### Front-end Connection Status display @@connection
 
@@ -3160,7 +3160,7 @@ It displays the connection status of the compute node front-end connection (incl
 
 ![](assets/hotdb-management/image284.png)
 
--
+- 
 
 ##### Current Session Information display @@session
 
@@ -3186,7 +3186,7 @@ It displays the current session processing information of the compute node.
 
 ![](assets/hotdb-management/image290.png)
 
--
+- 
 
 ##### Back-end Connection Status display @@backend
 
@@ -3208,7 +3208,7 @@ It displays the back-end connection of the compute node (that is, between comput
 
 ![](assets/hotdb-management/image295.png)
 
--
+- 
 
 ##### Data Node Information display @@datanode
 
@@ -3216,7 +3216,7 @@ It displays information about all data nodes in the current compute node. The qu
 
 ![](assets/hotdb-management/image296.png)
 
--
+- 
 
 ##### Data Source Information display @@datasource
 
@@ -3224,7 +3224,7 @@ It displays information about all data sources in the current cluster. The query
 
 ![](assets/hotdb-management/image297.png)
 
--
+- 
 
 ##### Back-end Heartbeat Status display @@heartbeat
 
@@ -3232,7 +3232,7 @@ It displays the back-end heartbeat status of the current cluster. The query resu
 
 ![](assets/hotdb-management/image298.png)
 
--
+- 
 
 ##### Synchronization Delay display @@latency
 
@@ -3240,7 +3240,7 @@ It displays the synchronization delay. The query results include "Current Data S
 
 ![](assets/hotdb-management/image299.png)
 
--
+- 
 
 ##### Buffer Pool Status display @@bufferpool
 
@@ -3248,7 +3248,7 @@ It queries the buffer pool status. The query results include "Thread Name", "Buf
 
 ![](assets/hotdb-management/image300.png)
 
--
+- 
 
 ##### TeoThread Information display @@processor
 
@@ -3256,7 +3256,7 @@ It displays the current TeoThread Information. The query results include "Thread
 
 ![](assets/hotdb-management/image301.png)
 
--
+- 
 
 ##### Thread Pool Status display @@threadpool
 
@@ -3264,7 +3264,7 @@ It displays the current thread pool status. The query results include "Thread Po
 
 ![](assets/hotdb-management/image302.png)
 
--
+- 
 
 ##### Long-lived Transaction display @@longtransaction
 
@@ -3272,7 +3272,7 @@ It displays the long-lived transaction and the query results include "Host IP Ad
 
 ![](assets/hotdb-management/image303.png)
 
--
+- 
 
 ##### Compute node server status display @@server
 
@@ -3280,7 +3280,7 @@ It displays the compute node server status. The query results include the runnin
 
 ![](assets/hotdb-management/image304.png)
 
--
+- 
 
 ##### Borrowed Connection Finally Executed SQL Information
 
@@ -3288,7 +3288,7 @@ Queries of the borrowed connection finally executed SQL information is usually u
 
 ![](assets/hotdb-management/image305.png)
 
--
+- 
 
 ##### Acquire the File under conf Directory and the Last Modification Time
 
@@ -5274,7 +5274,7 @@ History events record and display history information at the HotDB Management pl
 
 #### Alert type description
 
--
+- 
 
 ##### Server time difference
 
@@ -5282,67 +5282,67 @@ History events record and display history information at the HotDB Management pl
 
 **Alert Level**: The level is WARNING when the difference time is 0.5s-3s, and the level is ERROR when the difference time is more than 3s.
 
--
+- 
 
 ##### Parameter perception
 
 **Description**: The parameters of data source MySQL affect the processing of some commands by the compute node. Therefore, HotDB Management periodically checks whether the parameters of each data source are consistent, and an alert is given if the parameters are inconsistent.
 
--
+- 
 
 ##### Data source is shared
 
 **Description**: HotDB Management will give an alert when the heartbeat detects that a data source is used by multiple compute nodes. The specific heartbeat detection mechanism is completed in the compute node, and the HotDB Management notifies the user of the detection result and displays the data source shared within 10 minutes.
 
--
+- 
 
 ##### Master/slave data consistency detection
 
 **Description**: It displays the detection result of whether the table structure, index and records on the master/slave data sources are consistent. The detection results are shown here.
 
--
+- 
 
 ##### Data source migration
 
 **Description**: When HotDB Management has performed a data source migration, a history event will be recorded to view whether the data source migration result is Successful, Failed, or Warning.
 
--
+- 
 
 ##### Periodic modification detection of database user password
 
 **Description**: When the database user password expiration reminder is enabled and it is detected that the database user password is about to expire or has expired, HotDB Management gives an alert and detailed information can be viewed in History Events.
 
--
+- 
 
 ##### Periodic modification detection of data source user password
 
 **Description**: When the data source password expiration reminder is enabled and it is detected that the data source user password is about to expire or has expired, HotDB Management gives gives an alert and detailed information can be viewed in History Events.
 
--
+- 
 
 ##### Table structure&index detection exception
 
 **Description**: When HotDB Management starts a "Table Structure＆Index Detection" task, if the detection result is abnormal, HotDB Management records the abnormal detection result as a history event.
 
--
+- 
 
 ##### Configuration modification backup failure
 
 **Description**: When a user modifies certain configDB information under the HotDB Management configuration menu, the backup file of related logicDB may be affected. History events will record the failure of related logicDB backup file due to configuration modification. The level of this alert type is WARNING.
 
--
+- 
 
 ##### Online change of sharding plan
 
 **Description**: The history event records the task execution when the execution of "Online Change of Sharding Plan" task is completed. The level of this alert type is WARNING, ERROR and INFO.
 
--
+- 
 
 ##### Global unique constraint exception
 
 **Description:** When the global unique constraint of a created table fails to take effect or the global unique constraint is closed but the deletion of secondary index fails, an alert is given. The level of this alert type is WARNING.
 
--
+- 
 
 ##### Compute node service status
 
