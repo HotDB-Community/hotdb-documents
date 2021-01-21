@@ -99,13 +99,13 @@ HotDB Server的计算节点可通过Keepalived实现高可用。Keepalived负责
 
 HotDB Server的计算节点集群模式可通过LVS/F5实现高可用和负载均衡。应用 通过LVS的VIP访问HotDB Server的分布式事务数据库服务，分布式事务数据 库服务对应用程序透明，计算节点集群中单个或多个节点故障对应用程序无影 响。
 
-### HotDBBackup
+### HotDB Backup
 
-热璞科技自研的分布式事务数据库备份程序，负责业务数据的备份。
+热璞数据库自研的分布式事务数据库备份程序，负责业务数据的备份。
 
-### HotDBListener
+### HotDB Listener
 
-热璞科技自研的分布式事务数据库监听程序，可解决强一致模式下计算节点性能 线性扩展问题，简称Listener。
+热璞数据库自研的分布式事务数据库监听程序，可解决强一致模式下计算节点性能 线性扩展问题，简称Listener。
 
 ## HotDB Management相关名词
 

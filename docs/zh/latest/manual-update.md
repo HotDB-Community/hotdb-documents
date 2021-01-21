@@ -134,7 +134,7 @@ spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 
 ```
 # 上传OpenJDK8安装包
-可使用rz命令或ftp文件传输工具上传OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz安装包，该安装包可联系热璞科技索要
+可使用rz命令或ftp文件传输工具上传OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz安装包，该安装包可联系热璞数据库索要
 
 # 解压安装包
 mkdir -p /usr/local/jdk8

@@ -50,9 +50,9 @@ The distributed transactional database cluster (HotDB Server) is a database mana
 
 **Load balancing:** The compute node cluster mode of HotDB Server can achieve high availability and load balancing through LVS/F5. The application accesses the distributed transactional database service of HotDB Server through VIP of LVS. The distributed transactional database service is transparent to the application program, and the failure of single or multiple nodes in the compute node cluster has no effect on the application program.
 
-**HotDB Backup:** Distributed transactional database backup program independently developed by Hotpu, is responsible for backup of transaction data.
+**HotDB Backup:** Distributed transactional database backup program independently developed by HotDB, is responsible for backup of transaction data.
 
-**HotDB Listener:** A pluggable component developed by HotDB technology, which needs to be deployed separately and run in an independent process, so as to solve the problem of linear performance expansion under the strong consistency (XA) mode of cluster.
+**HotDB Listener:** A pluggable component developed by HotDB, which needs to be deployed separately and run in an independent process, so as to solve the problem of linear performance expansion under the strong consistency (XA) mode of cluster.
 
 #### Explanation of technical terms
 
@@ -1073,7 +1073,7 @@ Enter password SDcrtest
 
 2. Convert pfx to jks file using keytool provided by Java:
 
-```
+```bash
 keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcstoretype PKCS12
 ```
 
@@ -1086,19 +1086,19 @@ Enter password SDcrtest
 After the TLS secret key is generated, the corresponding secret key file should be transferred to the server where the server and client of the compute node are located and configured with the following three parameters in the compute node as required before using:
 
 ```xml
-<property name=enableSSL>false</property><!-- Enable SSL connection or not -->
+<property name="enableSSL">false</property><!-- Enable SSL connection or not -->
 ```
 
 Parameter description: true means to enable SSL function; false means to disable SSL function; default value is false.
 
 ```xml
-<property name=keyStore>/server.jks</property><!-- Path to the data certificate .jks file for TLS connection -->
+<property name="keyStore">/server.jks</property><!-- Path to the data certificate .jks file for TLS connection -->
 ```
 
 Parameter description: a set of pem file related to server.jks and client is provided by default by compute nodes under /conf directory, with password of hotdb.com, which can be used for simple connection testing. When you choose to use your own generated TLS certificate or pay-for-use TLS certificate to connect, you need to fill in according to the actual path and name. For example, /usr/local/crt/server.jks.
 
-```
-<property name=keyStorePass>BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- Password of the data certificate .jks file for TLS connection -->
+```xml
+<property name="keyStorePass">BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- Password of the data certificate .jks file for TLS connection -->
 ```
 
 Parameter description: the password in the key file that comes with the program is hotdb.com, which can be encrypted by users through select hex(aes_encrypt('hotdb.com',unhex(md5('Hotpu@2013# shanghai#')))); to get the default value BB5A70F75DD5FEB214A5623DD171CEEB and fill the value in keyStorePass. If users use their own generated key file, the value be filled is based on the password which is actually entered. If SDcrtest is entered as password, users can get the value of keyStorePass through select hex(aes_encrypt('SDcrtest',unhex(md5('Hotpu@2013# shanghai#')))) and fill the value C43BD9DDE9C908FEE7683AED7A301E33 in keyStorePass.
@@ -1129,7 +1129,9 @@ Users have no need to restart the compute node service for the parameter modific
 
 For MySQL clients, users can specify a secret key file to connect using the following method:
 
+```bash
 mysql -ujing01 -p123456 -h192.168.240.117 -P3323 --ssl-ca=/usr/local/crt/ca.pem --ssl-cert=/usr/local/crt/client-cert.pem --ssl-key=/usr/local/crt/client-key.pem --ssl-mode=verify_ca
+```
 
 ![](assets/standard/image44.png)
 
@@ -1141,25 +1143,32 @@ Check whether SSL is enabled:
 
 For JDBC, the corresponding key file is also required. Please refer to the [official MySQL manual](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-using-ssl.html). Here are two ways for reference:
 
-1） By importing CA into Java trust store:
+1. By importing CA into Java trust store:
 
+```bash
 keytool -importcert -alias MySQLCACert -file ca.pem -keystore truststore
+```
 
 ![](assets/standard/image46.png)\
 The truststore file is used for JDBC connection：
 
+```
 jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/usr/local/crt/truststore&clientCertificateKeyStorePassword=hotdb.com&verifyServerCertificate=true
+```
 
-2\) By using a certificate:
+2. By using a certificate:
 
+```bash
 openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name "mysqlclient" -out client-keystore.p12
-
 keytool -importkeystore -srckeystore client-keystore.p12 -srcstoretype pkcs12 -destkeystore keystore -deststoretype JKS
+```
 
 ![](assets/standard/image47.png)\
 The truststore file is used for JDBC connection:
 
+```
 jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/usr/local/crt/keystore&clientCertificateKeyStorePassword=hotdb.com
+```
 
 ##### Navicat and other similar clients
 
@@ -1179,11 +1188,15 @@ HotDB Server supports mysqldump function, and the usage is the same with MySQL.
 
 When using mysqldump to export data from compute node, it's required to Add the following specified parameters:
 
+```
 --set-gtid-purged=OFF --no-tablespaces --skip-triggers --single-transaction --default-character-set=utf8mb4 --complete-insert --compact --skip-tz-utc [--replace|--insert-ignore] [--hex-blob] [--where=xxx]
+```
 
 When using mysqldump to export data from MySQL and then import to compute node, it's required to Add the following parameters:
 
+```
 --no-defaults --no-tablespaces --complete-insert --default-character-set=utf8mb4 --hex-blob --master-data=2 --no-create-db --set-gtid-purged=OFF --single-transaction --skip-add-locks --skip-disable-keys --skip-triggers --skip-tz-utc [--replace|--insert-ignore] [--no-create-info|--no-data] [--where=xxx] --databases xxx
+```
 
 Note: Please fill in value of default-character-set parameter according to actual conditions, for example utf8 or utf8mb4, etc.
 
@@ -1195,23 +1208,31 @@ If specified parameters are not used, there may be problem of time difference, a
 
 Compute node supports parsing mysqlbinlog syntax to synchronize incremental data, in order to reduce downtime for migrating standalone MySQL data to compute node. Use mysqlbinlog to execute SQL statement of a certain binlog file in MySQL connection, so as to import data from a certain database to a certain LogicDB of compute node. Firstly, log in to [management port](#management-port-information-monitoring) (default port: 3325), execute dbremapping command to Add database mapping relation, and for use method of dbremapping command, please refer to *Distributed Transactional Database HotDB Server [management port Command] Function Manual*.
 
+```sql
 dbremapping @@add@ database name: LogicDB name expected to be imported
+```
 
 Then use mysqlbinlog statement to execute SQL statement in binlog of the selected part, and it's required to use the following syntax and parameters:
 
+```sql
 mysqlbinlog --base64-output=decode-rows --skip-gtids --to-last-log --stop-never --database= database name --start-position=binlog initial position binlog file name | mysql -u username -p password -h server -Pservice port -c --show-warnings=false
+```
 
-Note: --to-last-log could be replaced with --stop-position, specify end position of binlog instead of the latest execution position of binlog.
+Note: `--to-last-log` could be replaced with --stop-position, specify end position of binlog instead of the latest execution position of binlog.
 
 For example, if hoping to import physical database db01 in 192.168.200.77:3306 to LogicDB logicdb01 configured on the management platform, then the belonging compute node of the LogicDB is 192.168.210.30.
 
 1. Firstly, go to 192.168.210.30 to log in to [management port 3325](#data-consistency-guarantee), and execute:
 
+```sql
 dbremapping @@add@db01:logicdb01
+```
 
 2. Then, go to 192.168.210.30 server to make remote login to 192.168.200.77 to execute the following command:
 
+```bash
 mysqlbinlog -R -h 192.168.200.77 -P3306 -v --base64-output=decode-rows --skip-gtids --to-last-log --stop-never --database=db01 --start-position=0 mysql-bin.000009 | mysql -uroot -proot --h192.168.210.30 --P3323 -c -A
+```
 
 #### Practical application of mysqldump and mysqlbinlog
 
@@ -1223,29 +1244,40 @@ Scenario description: Hoping to import physical database db01 at source-end 192.
 
 1. Use mysqldump to export table structure from source end of data migration (that is192.168.210.45:3309), and execute the following commands on 192.168.210.45 server (the following parameters must be added):
 
+```
 root> mysqldump --no-defaults -h127.0.0.1 -P3309 -uhotdb_datasource -photdb_datasource **--no-data** --skip-triggers --set-gtid-purged=OFF --no-tablespaces --single-transaction --default-character-set=utf8mb4 --hex-blob --master-data=2 --no-create-db --skip-add-locks --skip-disable-keys --skip-tz-utc --databases db01 >db01.sql
+```
 
 2. After uploading SQL file of table structure to the server where compute node is, that is 192.168.210.32, log in to compute node to execute the following commands, and then Import Table Structure succeeded:
 
+```
 mysql> source /root/db01.sql
+```
 
 3. Use mysqldump to export table data from source end of data migration (that is 192.168.210.45:3309), execute the following commands on 192.168.210.45 server (the following parameters must be added):
 
+```
 root> mysqldump --no-defaults -h127.0.0.1 -P3309 -uhotdb_datasource -photdb_datasource **--no-create-info** --skip-triggers --set-gtid-purged=OFF --no-tablespaces --single-transaction --default-character-set=utf8mb4 --hex-blob --master-data=2 --no-create-db --skip-add-locks --skip-disable-keys --skip-tz-utc --databases db01 >db01-1.sql
+```
 
 4. Open export file of table data, view the current binlog position, and the display below means that the binlog position is 2410, and binlog file is mysql-bin.000076:
 
+```sql
 CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000076', MASTER_LOG_POS=2410;
+```
 
 5. After uploading SQL file of table structure to the server where compute node is, that is 192.168.210.32, log in to compute node to execute the following commands, and then Import Table Data succeeded:
 
+```
 mysql> source /root/db01.sql
+```
 
 Pay attention: if foreign key is used, the following commands shall be executed additionally:
 
+```
 mysql> set foreign_key_checks=0
-
 mysql> source /root/db01.sql
+```
 
 During the execution process, pay close attention to whether there is Warning or Error, otherwise, there will be problem of data inconsistency.
 
@@ -1253,11 +1285,15 @@ Tips: If transaction data is free of messy code problem, it could be considered 
 
 6. Use mysqlbinlog to make incremental data synchronization. If database name of the source end is different from LogicDB name of the compute node, then it needs to add database mapping relation in management port first, for example:
 
+```sql
 dbremapping @@add@db01:logicdb01
+```
 
 Add is unnecessary in this case, and go to the server where compute node is (192.168.210.32) directly to make remote login to the source end (192.168.200.77) to execute the following command, binlog initial position is the position recorded in Step 4 (in this case it is 2410, binlog file is mysql-bin.000076):
 
+```bash
 mysqlbinlog -R -h192.168.210.45 -P3309 -uhotdb_datasource -photdb_datasource -v --base64-output=decode-rows --skip-gtids --to-last-log --stop-never --database=db01 **--start-position=2410 mysql-bin.000076** | mysql -uroot -proot --h192.168.210.32 --P3323 -c -A
+```
 
 In order to accelerate data-catching speed, it's recommended that the server executing the mysqlbinlog command is the server where compute node is, which will save the time overhead of SQL and ok packet via network when the MySQL command line client executes SQL, and could greatly improve SQL execution speed of compute node single thread.
 
@@ -1265,55 +1301,37 @@ In order to accelerate data-catching speed, it's recommended that the server exe
 
 Tips: After both the source end and the compute node have executed the following commands, you could view whether the select results are consistent or not to approximately judge whether the data is consistent or not
 
+```sql
 use xxx
-
 set session group_concat_max_len=1048576;
-
 set @mytablename='xxx';
-
 set @mydbname=database();
-
 select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
+```
 
 If consistent, then data increment synchronization completed, for example, execute the following in the source end (192.168.200.77) MySQL instance:
 
+```
 mysql> use db01
-
 Database changed
-
 mysql> set session group_concat_max_len=1048576;
-
 Query OK, 0 rows affected (0.00 sec)
-
 mysql> set @mytablename='table02';
-
 Query OK, 0 rows affected (0.00 sec)
-
 mysql> set @mydbname=database();
-
 Query OK, 0 rows affected (0.00 sec)
-
 mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
-
 *************************** 1. row ***************************
-
 sqltext: select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
-
 1 row in set (0.00 sec)
-
 msyql> select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
-
 +------------+
-
 | sum |
-
 +------------+
-
 | 1812521567 |
-
 +------------+
-
 1 row in set (0.00 sec)
+```
 
 If the result (1812521567) is consistent with execution result of compute node, then data synchronization completed.
 
@@ -1327,23 +1345,17 @@ Master/slave data consistency detection, could check whether table structure of 
 
 Log in to [management port (3325 Port)](#management-port-information-monitoring) of the compute node to execute show @@masterslaveconsistency command, thus it could be viewed whether the table is consistent on Active Master and Standby Slave:
 
+```
 mysql> show @@masterslaveconsistency;
-
 +---------------------------------+---------------------------------+-------+--------+-------------------------------------+
-
 | db | table | dn | result | info |
-
 +---------------------------------+---------------------------------+-------+--------+--------------------------------------+
-
 | DB_T | FB_STUDENT | dn_04 | NO | There is data inconsistency, because data source: 5, table: FB_STUDENT, MySQL error: Table 'db252.fb_student' doesn't exist |
-
 | DB_A | SP | dn_04 | NO | table: SP has data inconsistency in node: 4, column: ID, distribution interval is: 0-17;, and unique key of the inconsistent line is: (ID):(2),(1) |
-
 | DB_T | JOIN_Z | | YES | |
-
 +---------------------------------+---------------------------------+-------+--------+-------------------------------------+
-
 3 row in set (0.07 sec)
+```
 
 It's shown in the result that for the JOIN_Z table in LogicDBDB_T, among master/slave data sources of all nodes, the data is consistent. Table structure is as follow:
 
@@ -1372,7 +1384,9 @@ Global AUTO_INCREMENT, refers to that the AUTO_INCREMENT column of the table mak
 
 HotDB Server provides Global AUTO_INCREMENT support. When the table contains AUTO_INCREMENT column, and in server.xml file, the value of the parameter autoIncrement is set as non-zero (one or two), Global AUTO_INCREMENT of compute node could be used the same as using AUTO_INCRMENT of MySQL:
 
-<property name=[autoIncrement](#autoIncrement)>1</property>
+```xml
+<property name="autoIncrement">1</property>
+```
 
 #### When the parameter is set as 0
 
@@ -1380,79 +1394,59 @@ If the parameter autoIncrement is set as 0, the auto-incremental field will be m
 
 For example: customer is an auto sharding table, and the sharding field is id, and name is defined as auto-incremental sequence. Then the auto increment feature of name is controlled by each data source:
 
+```
 mysql> create table customer(id int ,name int auto_increment primary key);
-
 mysql> insert into customer values (1,null),(2,null),(3,null),(4,null);
-
 Query OK, 4 rows affected (0.01 sec)
-
 Records: 4 Duplicates:0 Warnings: 0
-
 mysql> select * from customer;
-
 +------+------+------+
-
 | id | name | DNID |
-
 +------+------+------+
-
 | 4 | 1 | 1001 |
-
 | 2 | 1 | 1006 |
-
 | 3 | 1 | 1004 |
-
 | 1 | 1 | 1008 |
-
 +------+------+------+
-
 4 rows in set (0.00 sec)
+```
 
 #### When the parameter is set as 1
 
 If the parameter autoIncrement is set as 1, the compute node takes over the auto increment of all tables, which can ensure the global auto increment.
 
-<property name=[autoIncrement](#autoIncrement)>1</property>
+```xml
+<property name="autoIncrement">1</property>
+```
 
 For example: customer is an auto sharding table, and the sharding field is id, and name is defined as auto-incremental sequence. Then the auto increment feature of name is controlled by the compute node, which can realize global auto increment:
 
+```
 mysql> create table customer(id int ,name int auto_increment primary key);
-
 mysql> insert into customer values (1,null),(2,null),(3,null),(4,null);
-
 Query OK, 4 rows affected (0.01 sec)
-
 Records: 4 Duplicates: 0 Warnings: 0
-
 mysql> select * From customer order by id;
-
 +------+------+------+
-
 | id | name | DNID |
-
 +------+------+------+
-
 | 1 | 1 | 1008 |
-
 | 2 | 2 | 1006 |
-
 | 3 | 3 | 1004 |
-
 | 4 | 4 | 1001 |
-
 +------+------+------+
-
 4 rows in set (0.00 sec)
+```
 
 若将参数[autoIncrement](#_autoIncrement)设置为1，自增字段类型必须为INT或BIGINT，否则建表提示warning：
 
 If the parameter autoIncrement is set as 1, the auto-incremental field type must be INT or BIGINT, otherwise, the table creation prompt warning:
 
+```
 mysql> create table table_test(id tinyint auto_increment primary key);
-
 Query OK, 0 rows affected, 1 warning (0.05 sec)
-
 Warning (Code 10212): auto_increment column must be bigint or int
+```
 
 The auto-incremental sequence 1 mode can guarantee the global uniqueness and strict positive increment, but does not guarantee the auto-incremental continuity.
 
@@ -1462,155 +1456,111 @@ If the parameter autoIncrement is set as 2, the compute node takes over the auto
 
 For example, if the prefetchbatchinit of the existing Primary compute node A, Secondary compute node B and Secondary compute node C is set as 100, the prefetch interval of the auto-incremental sequence of compute node A is [1,100], the prefetch interval of compute node B is [101,200] and the prefetch interval of compute node C is [201,300], that is:
 
+```
 mysql> create table test(id int auto_increment primary key,num int);
-
 Execute the code on compute node A:
-
 mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
-
 mysql> select * from test order by id;
-
 +----+------+
-
 | id | num |
-
 +----+------+
-
 | 1 | 1 |
-
 | 2 | 2 |
-
 | 3 | 3 |
-
 | 4 | 4 |
-
 +----+------+
+```
 
-// the prefetch interval of the auto-incremental sequence is [1,100]
+> !!!TIP
+> 
+> The prefetch interval of the auto-incremental sequence is [1,100]
 
 Execute the code on compute node B:
 
+```
 mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
-
 mysql> select * from test order by id;
-
 +-----+------+
-
 | id | num |
-
 +-----+------+
-
 | 1 | 1 |
-
 | 2 | 2 |
-
 | 3 | 3 |
-
 | 4 | 4 |
-
 | 101 | 1 |
-
 | 102 | 2 |
-
 | 103 | 3 |
-
 | 104 | 4 |
-
 +-----+------+
+```
 
-// the prefetch interval of the auto-incremental sequence is [101,200]
+> !!!NOTE
+> 
+> the prefetch interval of the auto-incremental sequence is [101,200]
 
 Execute the code on compute node C
 
+```
 mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
-
 mysql> select * from test order by id;
-
 +-----+------+
-
 | id | num |
-
 +-----+------+
-
 | 1 | 1 |
-
 | 2 | 2 |
-
 | 3 | 3 |
-
 | 4 | 4 |
-
 | 101 | 1 |
-
 | 102 | 2 |
-
 | 103 | 3 |
-
 | 104 | 4 |
-
 | 201 | 1 |
-
 | 202 | 2 |
-
 | 203 | 3 |
-
 | 204 | 4 |
-
 +-----+------+
+```
 
-// the prefetch interval of the auto-incremental sequence is [201,300]
+> !!!NOTE
+> 
+> the prefetch interval of the auto-incremental sequence is [201,300]
 
 In the following two cases, it will judge whether to re prefetch the batch and recalculate the next batch size, so as to adjust the batch size suitable for the current business environment:
 
-\(1\) If the current batch utilization reaches the consumed proportion configured by the hidden parameter generatePrefetchCostRatio, the next batch will be prefetched. For example, if the consumed proportion is 90%, the current batch size is 100, and the auto increment has reached 90, the next batch will be prefetched at this time.
-
-\(2\) It is calculated from the time of fetching the batch. If it has reached the prefetchvalidtimeout, it will determine whether to prefetch the next batch according to the utilization rate of the current batch. For example, if you set the consumed proportion as 90%, the current batch size as 100, and the current auto increment has reached 80, when the timeout time is reached and the current batch utilization rate reaches 50% of the configured consumed proportion, the next batch will be prefetched.
+1. If the current batch utilization reaches the consumed proportion configured by the hidden parameter generatePrefetchCostRatio, the next batch will be prefetched. For example, if the consumed proportion is 90%, the current batch size is 100, and the auto increment has reached 90, the next batch will be prefetched at this time.
+2. It is calculated from the time of fetching the batch. If it has reached the prefetchvalidtimeout, it will determine whether to prefetch the next batch according to the utilization rate of the current batch. For example, if you set the consumed proportion as 90%, the current batch size as 100, and the current auto increment has reached 80, when the timeout time is reached and the current batch utilization rate reaches 50% of the configured consumed proportion, the next batch will be prefetched.
 
 Currently, users are allowed to insert a specified auto increment. Whether the size of the auto increment is larger than the batch size or not, it can ensure the global orderly increment of the auto increment. For example, if the current batch size is 100, insert an auto increment value smaller than the batch size:
 
 Execute the code on compute node A
 
+```
 mysql> insert into test values(null,1);
-
 mysql> insert into test values (11,5);
-
 mysql> insert into test values(null,1);
-
 mysql> select * from test order by id;
-
 +----+------+
-
 | id | num |
-
 +----+------+
-
 | 1 | 1 |
-
 | 11 | 5 |
-
 | 12 | 1 |
-
 +----+------+
+```
 
 Execute the code on compute node B
 
+```
 mysql> insert into test values(null,1);
-
 +----+------+
-
 | id | num |
-
 +----+------+
-
 | 1 | 1 |
-
 | 11 | 5 |
-
 | 12 | 1 |
-
 | 101 | 1 |
-
 +----+------+
+```
 
 Notes:
 
@@ -1620,9 +1570,10 @@ The compute node can perceive the field type range of the auto-incremental seque
 
 If the parameter autoIncrement is set as 2, the auto-incremental field type must be bigint, otherwise the table creation fails:
 
+```
 mysql> create table table_test(id tinyint auto_increment primary key);
-
 ERROR 10212 (HY000): auto_increment column must be bigint
+```
 
 ### Data strong consistency (XA transaction)
 
@@ -1634,7 +1585,9 @@ Using foreign XA TRANSACTION provided by MySQL, HotDB Server could solve data st
 
 In compute node, by default, XA TRANSACTION is disabled. To use XA transaction, the attribute enableXA shall be set TRUE in server.xml file:
 
-<property name=[enableXA](#enableXA)>true</property>
+```xml
+<property name="enableXA">true</property>
+```
 
 It could take effect after restart the compute node, i.e. XA TRANSACTION function is enabled. If after XA TRANSACTION switch is modified, reload is directly conducted without reenabling compute node, then the Modify results shall not take effect and there will be INFO message in compute node log:
 
@@ -1662,17 +1615,17 @@ Under XA mode: refer to SQL99 Standard, begin\\start transaction will immediatel
 
 When the compute node version is 2.5.6 and above, if the front end is disconnected under XA mode, the transaction status will be recorded to the log and ConfigDB. You can check whether the transaction needs to be redone by executing SHOW ABNORMAL_XA_TRX directly at the service port.
 
+```log
 2020-10-30 15:42:29.857 [WARN] [MANAGER] [$NIOExecutor-2-10] cn.hotpu.hotdb.manager.response.v(39) - [thread=$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT]killed by manager
-
 2020-10-30 15:42:29.857 [INFO] [INNER] [$NIOExecutor-2-10] cn.hotpu.hotdb.server.d.c(1066) - XATransactionSession in [thread=$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT]'s query will be killed due to a kill command, current sql:null
-
 2020-10-30 15:42:29.859 [INFO] [CONNECTION] [$NIOExecutor-2-10] cn.hotpu.hotdb.server.b(3599) - [thread=$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT] will be closed because a kill command.
+```
 
 ![](assets/standard/image49.png)
 
 ![](assets/standard/image50.png)
 
-[]{# _Toc60015816 .anchor}disconnect_ reason: reasons for disconnection, such as kill, TCP disconnection (program err:java.io.IOException: Connection reset by peer), SQL execution timeout (stream closed, read return -1), idle timeout, etc.
+disconnect_ reason: reasons for disconnection, such as kill, TCP disconnection (program err:java.io.IOException: Connection reset by peer), SQL execution timeout (stream closed, read return -1), idle timeout, etc.
 
 trx_ state: the transaction status of disconnection, including:
 
@@ -1715,29 +1668,24 @@ In order to guarantee data accuracy, for different time zones are set due to exi
 
 > For example, after login service port, enter the command:
 
+```sql
 set time_zone = '+0:00';
-
 show variables like '%time_zone';
+```
 
 > It will still display that the time_zone is '+8:00':
 
+```
 mysql> set time_zone='+0:00';
-
 mysql> show variables like '%time_zone';
-
 +------------------+--------+
-
 | Variable_name | Value |
-
 +------------------+--------+
-
 | system_time_zone | CST |
-
 | time_zone | +08:00 |
-
 +------------------+--------+
-
 2 rows in set (0.09 sec)
+```
 
 - At the time of Backup and Recovery, HotDB Server could guarantee that the time type data after recovery is consistent with that before backup.
 
@@ -1753,7 +1701,9 @@ HotDB Server 2.5.3 optimizes and accurate Global Unique Constraint to Table Leve
 
 You could either modify the following parameter in server.xml or modify the parameter in compute node parameter configuration on the management platform. Modify parameter only sets Global unique default value for the table added in the future, but doesn't influence Global Uniqueness of history data table.
 
-<property name=[globalUniqueConstraint](#globalUniqueConstraint)>false</property><!-- Global unique constraints enable on newly added table by default or not -->
+```xml
+<property name="globalUniqueConstraint">false</property><!-- Global unique constraints enable on newly added table by default or not -->
+```
 
 ![](assets/standard/image51.png)
 
@@ -1771,9 +1721,10 @@ Both Vertical Sharding Table and Global Table have no such exit, because no spec
 
 2. Using [Auto Create Table](#_建表即分片) function, the switch of Global Unique Constraint could be set via table option GLOBAL_UNIQUE [=] {0 | 1}. For example:
 
-mysql> create table test02(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int) **GLOBAL_UNIQUE=0**;
-
-mysql> create table test03(id int Primary Key,id1 int) **GLOBAL_UNIQUE =1**;
+```
+mysql> create table test02(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int) GLOBAL_UNIQUE=0;
+mysql> create table test03(id int Primary Key,id1 int) GLOBAL_UNIQUE =1;
+```
 
 If not using GLOBAL_UNIQUE [=] {0 | 1}, then by default, it will be set Enable or Disable according to default value of the compute node parameter configuration or the Table Configuration added on the management platform; if GLOBAL_UNIQUE=1, it shall be judged as Enable; if GLOBAL_UNIQUE=0, it shall be judged as Disable.
 
@@ -1781,49 +1732,46 @@ If not using GLOBAL_UNIQUE [=] {0 | 1}, then by default, it will be set Enable o
 
 - If GLOBAL_UNIQUE setting is different from Global Unique Constraint configuration of this table on the Management Platform, then Create Table will fail, and error prompt will be given, for example when Add test01 on the management platform, Global Unique Constraint is disabled:
 
+```
 mysql> create table test01(id int)global_unique=1;
-
 ERROR 10172 (HY000): CREATE TABLE FAILED due to generated table config already in HotDB config datasource. You may need to check config datasource or reload HotDB config.
+```
 
 - If using GLOBAL_UNIQUE in Create Table statement in Vertical Sharding Table or Global Table, then Create Table will succeed, but warning message will be given, because no extra treatment is required for its Unique Constraint, for example, test03 is a Vertical Sharding Table:
 
-mysql> create table test03(id int)**global_unique=1**;
-
+```
+mysql> create table test03(id int)global_unique=1;
 Query OK, 0 rows affected, 2 warnings (0.09 sec)
-
 Warning (Code 10032): Create table without Primary Key and unique key
-
 Note (Code 10210): Global_unique is not applicable to vertical-sharding tables or global tables.
+```
 
 In order to meet compatibility of MySQL, for example, when using mysqldump, there is no worry about that the backup results will be interfered by GLOBAL_UNIQUE, therefore, GLOBAL_UNIQUE syntax is parsed as Annotation Format, for example:
 
+```
 mysql> create table test02(id int) GLOBAL_UNIQUE=1;
-
 mysql> show create table test02
-
 +-------+----------------------------------------+
-
 | Table | Create Table |
-
 +-------+----------------------------------------+
-
 | test3 | CREATE TABLE `test3` (
-
 `id` int(11) DEFAULT NULL
-
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4**/*hotdb:020503 global_unique=1*/** |
-
 +-------+----------------------------------------+
-
 1 row in set (0.00 sec)
+```
 
 Importing the Create Table statement containing GLOBAL_UNIQUE Syntax into MySQL will have no influence on the result. In compute node, Annotation Syntax could also be directly used to operate GLOBAL_UNIQUE, and use -c as login parameter of MySQL, and annotation is allowed to be executed.
 
+```
 root> mysql -c -uroot -proot -h127.0.0.1 -P3323
+```
 
 For example, executing the following statement, means that when the version of HotDB Server is higher than 2.5.3, GLOBAL_UNIQUE=0 will be executed:
 
+```
 mysql> create table test02(id not null auto_increment Primary Key,a char(8),b decimal(4,2),c int) /*hotdb:020503 GLOBAL_UNIQUE=0*/;
+```
 
 #### Table level control when modifying a table
 
@@ -1837,23 +1785,17 @@ If the Table Structure is Created Table, then after Modify the Global Unique Con
 
 2. Use GLOBAL_UNIQUE Syntax in the compute node via ALTER TABLE, enable Global Unique, and similarly, if appearing warning message, it means that it could take effect only after executing unique @@create:
 
+```
 mysql> alter table keevey01 global_unique=1;
-
 Query OK, 0 rows affected, 1 warning (0.01 sec)
-
 mysql> show warnings;
-
 +-------+-------+---------------------------------------------------------+
-
 | Level | Code | Message |
-
 +-------+-------+---------------------------------------------------------+
-
 | Note | 10210 | please go to HotDB Server manager port and execute this command: unique @@create, otherwise this global_unique setting doesn't work. |
-
 +-------+-------+---------------------------------------------------------+
-
 1 row in set (0.00 sec)
+```
 
 #### Online Change of Sharding Plan
 
@@ -1869,13 +1811,17 @@ After Enable, the Modification Plan Pre-detection will detect whether history da
 
 This function also supports that when the SELECT Query statement doesn't contain sharding key but contains Unique Constraint field, locate to fixed node via Query Secondary Index, and distribute SELECT Query statement to specified node only instead of all nodes.
 
-<property name=[routeByRelativeCol](#routeByRelativeCol)>false</property><!--When not containing sharding key, via Secondary Index Field Route-->
+```xml
+<property name="routeByRelativeCol">false</property><!--When not containing sharding key, via Secondary Index Field Route-->
+```
 
 This function is Disable by default, which could be enabled by modifying the routeByRelativeCol parameter in server.xml or adding the parameter "When not containing sharding key, enable via Secondary Index Field Route or not" in compute node parameter configuration under Management Platform Configuration Menu.
 
 After the parameter is enabled, example of its role is as follow: for an existing Sharding Table table01, sharding key is id, sharding function is auto_mod, when executing the following Query statement:
 
-SELECT * FROM table01 WHERE unique_col = 100; //unique_col is Unique Constraint column
+```sql
+SELECT * FROM table01 WHERE unique_col = 100; # unique_col is Unique Constraint column
+```
 
 This Query statement will be distributed to the data node with unique_col = 100 only, instead of all data nodes
 
@@ -1885,7 +1831,9 @@ Whether Asynchronous Replication or Semi-synchronization Replication, there may 
 
 Therefore, compute node parameter [failoverAutoresetslave](#failoverautoresetslave) is added, which is Disable by default.
 
-<property name=[failoverAutoresetslave](#failoverAutoresetslave)>false</property><!-- At the time of failover, Auto Reset master/slave replication relation or not -->
+```xml
+<property name="failoverAutoresetslave">false</property><!-- At the time of failover, Auto Reset master/slave replication relation or not -->
+```
 
 After failover, IO thread between the original Master/Slave will be suspended, and Heartbeat Detection of the original Active Master will be conducted once every minute, until the original Active Master recovers normal. After the original Active Master recovers normal, comparing with binlog position of the original Active Master, detect whether the original Standby Slave (the existing Active Master) has the transaction not acquired before Switch, if yes, enable this parameter will Auto Reset the master/slave replication relation. If not, there will be no treatment after Re-enable the IO Thread.
 
@@ -1929,7 +1877,9 @@ For master/slave configuration mode of MySQL database, please refer to official 
 
 By default, compute node Heartbeat function is enabled:
 
+```
 <property name="enableHeartbeat">true</property>
+```
 
 Assuming that instance 3308 of 192.168.210.41 and instance 3308 of 192.168.210.42 are a pair of MySQL databases of master/slave replication.
 
@@ -1977,11 +1927,11 @@ Description:
 
 - After Switch succeeded, the compute node will record switch process log:
 
+```log
 INFO [pool-1-thread-1064] (SwitchDataSource.java:78) -received switch datasourceid command from Manager : [Connection Information]
-
 WARN [pool-1-thread-1339] (BackendDataNode.java:263) -datanode id switch datasource:id to datasource:id in failover. due to: Manual Switch by User: username
-
 INFO [pool-1-thread-1339] (SwitchDataSource.java:68) -switch datasource:id for datanode:id successfully by Manager.
+```
 
 - In case of no Switching Rule configured, there will be no Switch, and will be the error prompt: switch datasource id failed due to:found no backup information)
 
@@ -1993,7 +1943,9 @@ Failover is generally the Auto Switch after data source failure, and the descrip
 
 - If the Standby Slave Status is Unavailable, there will be no Switch, and the compute node will record log
 
+```log
 WARN [pool-1-thread-2614] datanode id failover failed due to found no available backup
+```
 
 - In server.xml, you could configure the parameter waitForSlaveInFailover to control whether the Switch shall wait for the Standby Slave to catch up with replication. If the parameter is true by default, which means Waiting, then during Switch process, it will wait for the Standby Slave to catch up with replication. If set as false, which means Not Waiting, then it will Switch immediately. (There is a risk of data loss in the immediate switch, which is not recommended).
 
@@ -2001,7 +1953,9 @@ WARN [pool-1-thread-2614] datanode id failover failed due to found no available 
 
 - During Failover, Active Master Heartbeat is continuous. If Heartbeat succeed for two successive time, then give up Switch, and the compute node will record log
 
+```log
 INFO [$NIOREACTOR-6-RW] (Heartbeat.java:502) -heartbeat continue success twice for datasource 5 192.168.200.52:3310/phy243_05, give up failover.
+```
 
 - After Switch succeeded, the compute node will record log, and record the cause for Switch:
 
@@ -2013,17 +1967,14 @@ If MySQL service is enabled, but the response is abnormal, then it will record: 
 
 For example: when stopping the data source service, the whole Switch process is promoted as follow:
 
+```log
 02/21 15:57:29.342 INFO [HeartbeatTimer] (BackendDataNode.java:396) -start failover for datanode:5
-
 02/21 15:57:29.344 INFO [HeartbeatTimer] (BackendDataNode.java:405) -found candidate backup for datanode 5 :[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1] in failover, start checking slave status.
-
 02/21 15:57:29.344 WARN [$NIOREACTOR-0-RW] (HeartbeatInitHandler.java:44) -datasoruce 5 192.168.200.52:331001_3310_ms init heartbeat failed due to:MySQL Error Packet{length=36,id=1}
-
 02/21 15:57:29.344 INFO [pool-1-thread-1020] (CheckSlaveHandler.java:241) -slave_sql_running is Yes in :[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1] during failover of datanode 5
-
 02/21 15:57:29.424 WARN [pool-1-thread-1066] (BackendDataNode.java:847) -datanode 5 switch datasource 5 to 9 in failover. due to: MySQL Service Stopped
-
 02/21 15:57:29.429 WARN [pool-1-thread-1066] (Heartbeat.java:416) -datasource 5 192.168.200.52:331001_3310_ms heartbeat failed and will be no longer used.
+```
 
 - In case of Switching Rule configured, there will be no Switch, and the compute node will record log：
 
@@ -2037,57 +1988,44 @@ When the configDB and some data sources are deployed on the same MySQL instance 
 
 1. Configure connection information of master/slave configDB in server.xml, in order to guarantee normal master/slave relation
 
+```xml
 <property name="url">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- Master configDB address-->
-
 <property name="username">hotdb_config</property><!-- Master configDB username -->
-
 <property name="password">hotdb_config</property><!-- Master configDB password -->
-
 <property name="bakUrl">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- Slave configDB address -->
-
 <property name="bakUsername">hotdb_config</property><!-- Slave configDB username -->
-
 <property name="bakPassword">hotdb_config</property><!-- Slave configDB password -->
+```
 
 - In case of failure with the Master configDB, it will switch to the Slave configDB automatically. In case of delay in the Switch process, it will wait for the Slave configDB to catch up with replication.
 
 - When the compute node version is 2.5.6 or above, in case of failure with the Master configDB, the slave ConfigDB will be updated to the master before taking over, and the original master ConfigDB will be updated to the slave. Server.xml will be adjusted synchronously, as shown below:
 
+```xml
 <property name="url">jdbc:mysql://192.168.200.190:3310/hotdb_config</property><!-- Master configDB address -->
-
 <property name="username">hotdb_config</property><!-- Master configDB username -->
-
 <property name="password">hotdb_config</property><!-- Master configDB password -->
-
 <property name="bakUrl">jdbc:mysql://192.168.200.191:3310/hotdb_config</property><!-- Slave configDB address -->
-
 <property name="bakUsername">hotdb_config</property><!-- Slave configDB username -->
-
 <property name="bakPassword">hotdb_config</property><!-- Slave configDB password -->
+```
 
 - If Compute Node High Availability service involves master/slave relation of configDB, then it shall be guaranteed that configuration of a group of Compute Node High Availability master/slave configDB in server.xml is identical, and there shall be no staggered configuration.
 
 2. configDB also supports MGR configDB at the same time (MySQL must be above the Version 5.7, configDB MGR only supports three nodes for the time being), in server.xml, configure configDB information with MGR relation, and guarantee that the MGR relation is normal. Under the condition where MGR relation is inaccurate, configDB may can't provide normal service, and may result in Startup Failure.
 
+```xml
 <property name="url">jdbc:mysql://192.168.210.22:3308/hotdb_config_test250</property><!-- configDB address -->
-
 <property name="username">hotdb_config</property><!-- configDB username -->
-
 <property name="password">hotdb_config</property><!-- configDB password -->
-
 <property name="bakUrl">jdbc:mysql://192.168.210.23:3308/hotdb_config_test250</property><!-- Slave configDB address (if configDB uses MGR, this item must be configured) -->
-
 <property name="bakUsername">hotdb_config</property><!-- Slave configDB username (if configDB uses MGR, this item must be configured) -->
-
 <property name="bakPassword">hotdb_config</property><!-- Slave configDB password (if configDB uses MGR, this item must be configured) -->
-
 <property name="configMGR">true</property><!-- Whether configDB uses MGR or not-->
-
 <property name="bak1Url">jdbc:mysql://192.168.210.24:3308/hotdb_config_test250</property><!-- MGR configDB address (if configDB uses MGR, this item must be configured) -->
-
 <property name="bak1Username">hotdb_config</property><!-- MGR configDB username (if configDB uses MGR, this item must be configured) -->
-
 <property name="bak1Password">hotdb_config</property><!-- MGR configDB password (if configDB uses MGR, this item must be configured) -->
+```
 
 In case of failure with the Active Master, MGR configDB will re-select the Master Logic according to actual MySQL, and when new Active Master is selected, it will switch to new Master configDB timely.
 
@@ -2103,69 +2041,53 @@ When start the master/slave compute node service under High Availability Archite
 
 View the compute node log:
 
+```log
 2018-06-13 09:40:04.408 [INFO] [INIT] [Labor-3] j(-1) -- HotDB-Manager listening on 3325
-
 2018-06-13 09:40:04.412 [INFO] [INIT] [Labor-3] j(-1) -- HotDB-Server listening on 3323
+```
 
 View the port listening status:
 
+```
 root> ss -npl | grep 3323
-
 LISTEN 0 1000 *:3323 *:* users:(("java",12639,87))
-
 root> ps -aux |grep hotdb
-
 Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
-
 root 12639 60.7 34.0 4194112 2032134 ? Sl Jun04 7043:58 /usr/java/jdk1.7.0_80/bin/java -DHOTDB_HOME=/usr/local/hotdb-2.4/hotdb-server -classpath /usr/local/hotdb-2.4/hotdb-server/conf: ...省略更多... -Xdebug -Xrunjdwp:transport=dt_socket,address=8065,server=y,suspend=n -Djava.net.preferIPv4Stack=true cn.hotpu.hotdb.HotdbStartup
-
 Using command"ip a", you could view whether Keepalived VIP of the existing master compute node has been successfully bound or not, for example in the following instance, 192.168.200.190 is the address of the server where master compute node resides; 192.168.200.140 is the configured VIP address
-
 root> ip a
-
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
-
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-
 inet 127.0.0.1/8 scope host lo
-
 inet6 ::1/128 scope host
-
 valid_lft forever preferred_lft forever
-
 2: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
-
 link/ether 00:1d:0f:14:8b:fa brd ff:ff:ff:ff:ff:ff
-
-**inet 192.168.200.190/24** brd 192.168.200.255 scope global eth1
-
-**inet 192.168.200.140/24** scope global secondary eth1:1
-
+inet 192.168.200.190/24 brd 192.168.200.255 scope global eth1
+inet 192.168.200.140/24 scope global secondary eth1:1
 inet6 fe80::21d:ff:fe14:8bfa/64 scope link
-
 valid_lft forever preferred_lft forever
+```
 
 - Restart the Keepalived on the server where the slave compute node resides, and restart the slave compute node:
 
 View the compute node log:
 
+```log
 2018-06-04 18:14:32:321 [INFO] [INIT] [main] j(-1) -- Using nio network handler
-
 2018-06-04 18:14:32:356 [INFO] [INIT] [main] j(-1) -- HotDB-Manager listening on 3325
-
 2018-06-04 18:14:32:356 [INFO] [AUTHORITY] [checker] Z(-1) -- Thanks for choosing HotDB
+```
 
 View the port listening status:
 
+```
 root> ss -npl | grep 3325
-
 LISTEN 0 1000 *:3325 *:* users:(("java",11603,83))
-
 root> ps -aux |grep hotdb
-
 Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
-
 root 11603 12.0 13.6 3788976 1086196 ? Sl Jun04 1389:44 /usr/java/jdk1.7.0_80/bin/java -DHOTDB_HOME=/usr/local/hotdb-2.4/hotdb-server -classpath /usr/local/hotdb-2.4/hotdb-server/conf: ...省略更多... -Xdebug -Xrunjdwp:transport=dt_socket,address=8065,server=y,suspend=n -Djava.net.preferIPv4Stack=true cn.hotpu.hotdb.HotdbStartup
+```
 
 ##### Description of High Availability Switch
 
@@ -2173,43 +2095,31 @@ In case of failure with the server where master compute node resides (take 192.1
 
 After the keepalived on the server where the slave compute node resides (take 192.168.200.191 for instance) receives vrrp packet inferior to its own priority (the priority of 192.168.200.191 is 95), it will switch to the master status, and preempt the vip (take 192.168.200.140 for instance). Meanwhile, after entering the master status, it will execute the notify_master script, have access to management port of the compute node on 192.168.200.191 to execute online command, start and initialize the service port of the compute node on 192.168.200.191. If this compute node is enabled successfully, then Master/Slave Switch succeeded, and it will continue to provide service. Log of the compute node on 192.168.200.191 is as follow:
 
+```log
 2018-06-12 21:54:45.128 [INFO] [INIT] [Labor-3] j(-1) -- HotDB-Server listening on 3323
-
 2018-06-12 21:54:45.128 [INFO] [INIT] [Labor-3] j(-1) -- =============================================
-
 2018-06-12 21:54:45.141 [INFO] [MANAGER] [Labor-4] q(-1) -- Failed to offline master Because mysql: [Warning] Using a password on the command line interface can be insecure.
-
 ERROR 2003 (HY000): Can't connect to MySQL server on '192.168.200.190' (111)
-
 2018-06-12 21:54:45.141 [INFO] [RESPONSE] [$NIOREACTOR-8-RW] af(-1) -- connection killed for HotDB backup startup
-
 ...More are omitted...
+```
 
 VIP of Keepalived has been on the 192.168.200.191 server already:
 
+```
 root> ip a
-
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
-
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-
 inet 127.0.0.1/8 scope host lo
-
 inet6 ::1/128 scope host
-
 valid_lft forever preferred_lft forever
-
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
-
 link/ether 18:a9:05:1b:0f:a8 brd ff:ff:ff:ff:ff:ff
-
-**inet 192.168.200.191/24** brd 192.168.200.255 scope global eth0
-
-**inet 192.168.200.140/24** scope global secondary eth0:1
-
+inet 192.168.200.191/24 brd 192.168.200.255 scope global eth0
+inet 192.168.200.140/24 scope global secondary eth0:1
 inet6 fe80::1aa9:5ff:fe1b:fa8/64 scope link
-
 valid_lft forever preferred_lft forever
+```
 
 Note: For Manual Switch on the management platform, if Switch succeeded, it will modify the configuration in server.xml (haState、haNodeHost), interchange the Master/Slave information, while the configuration will not be modified in case of failover.
 
@@ -2225,7 +2135,7 @@ HotDB Server supports node autonomy of multiple compute node cluster. Hereinafte
 
 HotDB Server supports load-balancing: you could select LVS and other means to distribute SQL request. The application client could have access to database service of HotDB Server via VIP of LVS, and at the same time, use transparency and service un-interruption are guaranteed. It could also use the remaining load-balancing plans for processing, for example F5 plus Custom Test; apply the mode of direct connection compute node, but replace node in case of abnormality, etc.
 
-![9R8QD$VPCV%J$4_]YYIOGHX](media/image64.png)
+![](assets/standard/image64.png)
 
 ##### Startup description
 
@@ -2257,9 +2167,10 @@ When Primary service is abnormal, one from the remaining Secondary will become t
 
 Original Primary:
 
-# cd /usr/local/hotdb-2.5.0/hotdb-server/bin
-
-# sh hotdb_server stop
+```bash
+cd /usr/local/hotdb-2.5.0/hotdb-server/bin
+sh hotdb_server stop
+```
 
 ![](assets/standard/image69.png)
 
@@ -2275,9 +2186,10 @@ If the original Primary service restarts (equivalent to Add of new node), for th
 
 Original Primary:
 
-# cd /usr/local/hotdb-2.5.0/hotdb-server/bin
-
-# sh hotdb_server start
+```bash
+cd /usr/local/hotdb-2.5.0/hotdb-server/bin
+sh hotdb_server start
+```
 
 ![](assets/standard/image72.png)
 
@@ -2450,27 +2362,31 @@ Disable keepalived and compute node service of HotDB_02
 
 Taking single LVS service as an example, select 192.168.210.136 as LVS server, and 192.68.210.218 is used for VIP.
 
-（1）Deploy LVS service on LVS server
+1. Deploy LVS service on LVS server
 
+```bash
 cd /usr/local/hotdb/Install_Package
-
 sh hotdbinstall_v*.sh --dry-run=no --install-lvs=master --lvs-vip-with-perfix=192.168.210.218/24 --lvs-port=3323 --lvs-virtual-router-id=44 --lvs-net-interface-name=eth0:1 --lvs-real-server-list=192.168.210.134:3323:3325,192.168.210.67:3323:3325,192.168.210.68:3323:3325 --ntpdate-server-ip=182.92.12.11
+```
 
-（2）Configure LVS service on compute node server （HotDB_01/HotDB_02/HotDB_03）
+2. Configure LVS service on compute node server （HotDB_01/HotDB_02/HotDB_03）
 
 HotDB_01/HotDB_02/HotDB_03服务器分别执行脚本：
 
+```bash
 cd /usr/local/hotdb/Install_Package
-
 sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-vip-with-perfix=192.168.210.218/24 --install-ntpd=yes --ntpdate-server-host=182.92.12.11
+```
 
-（3）Enable LVS service on LVS server
+3. Enable LVS service on LVS server
 
+```bash
 service keepalived start
+```
 
 **Step 3: Adjust parameters and enable cluster service**
 
-（1）server.xml of compute node（HotDB_01/HotDB_02/HotDB_03）is adjusted according to relevant [parameters](#parameter-introduction)，as in the following figure:
+1. server.xml of compute node（HotDB_01/HotDB_02/HotDB_03）is adjusted according to relevant [parameters](#parameter-introduction)，as in the following figure:
 
 For HotDB_ 01 parameters, refer to the configuration of selected area:
 
@@ -2484,17 +2400,19 @@ For HotDB_ 03 parameters, refer to the configuration of selected area:
 
 ![](assets/standard/image87.png)
 
-（2）Executes reload @@ config HotDB_ 01 at the management end of HotDB_01, and execute show @@cluster you can see HotDB_01 join the cluster as PRIMARY.
+2. Executes `reload @@config HotDB_01` at the management end of HotDB_01, and execute show @@cluster you can see HotDB_01 join the cluster as PRIMARY.
 
 ![](assets/standard/image88.png)
 
-（3）Disable keepalived service of HotDB_01
+3. Disable keepalived service of HotDB_01
 
+```bash
 service keepalived stop
+```
 
 ![](assets/standard/image89.png)
 
-\(4\) Start HotDB_02, HotDB_03, and then execute show @@cluster at the management end of HotDB_01; you can see that all cluster members have joined.
+4. Start HotDB_02, HotDB_03, and then execute show @@cluster at the management end of HotDB_01; you can see that all cluster members have joined.
 
 ![](assets/standard/image90.png)
 
@@ -2520,11 +2438,13 @@ This section mainly describes the operation of expanding compute nodes in cluste
 
 **Step 1: add a new compute node to LVS server**
 
-\(1\) Add virtual service of HotDB_04 to the master/slave LVS server.
+1. Add virtual service of HotDB_04 to the master/slave LVS server.
 
+```
 ipvsadm -a -t 192.168.210.216:3323 -r 192.168.210.134
+```
 
-\(2\) Add the service info of HotDB_04 to keepalived.conf of the master/slave LVS, as shown in the following figure:
+2. Add the service info of HotDB_04 to keepalived.conf of the master/slave LVS, as shown in the following figure:
 
 ![](assets/standard/image93.png)
 
@@ -2532,19 +2452,20 @@ ipvsadm -a -t 192.168.210.216:3323 -r 192.168.210.134
 
 Execute deployment script and configure LVS at the HotDB_04 server:
 
+```bash
 cd /usr/local/hotdb/Install_Package/
-
 sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-vip-with-perfix=192.168.210.216/24 --install-ntpd=no --ntpdate-server-host=182.92.12.11
+```
 
 Information: --lvs-vip-with-perfix：VIP of current cluster
 
 **Step 3: adjust parameters and start a new cluster member**
 
-\(1\) Modify the value of ClusterSize in server.xml of all compute node servers（HotDB_01/HotDB_02/HotDB_03/HotDB_04）to ensure that the value of ClusterSize is equal to the actual number of cluster members (here is 4). Other parameters require no adjustment, but it should be noted that the values of clusterName, clusterSize, clusterNetwork, clusterPort are consistent in the same cluster.
+1. Modify the value of ClusterSize in server.xml of all compute node servers（HotDB_01/HotDB_02/HotDB_03/HotDB_04）to ensure that the value of ClusterSize is equal to the actual number of cluster members (here is 4). Other parameters require no adjustment, but it should be noted that the values of clusterName, clusterSize, clusterNetwork, clusterPort are consistent in the same cluster.
 
 ![](assets/standard/image94.png)
 
-\(2\) Adjust other cluster parameters in server.xml and start the service in the new compute node server (HotDB_04), as shown in the following figure:
+2. Adjust other cluster parameters in server.xml and start the service in the new compute node server (HotDB_04), as shown in the following figure:
 
 ![](assets/standard/image95.png)
 
@@ -2578,17 +2499,13 @@ The number of compute nodes can be reduced by compute node reduction function. A
 
 Parameters involved are as follows:
 
-+----------------+----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+------------------------------------+
-| **Parameters** | **Instructions**                                                                             | **Reference value**                                                                           | **Whether the reloading is valid** |
-+----------------+----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+------------------------------------+
+| Parameters | Instructions                                                                             | Reference value                                                                           | **Whether the reloading is valid** |
+|---|---|---|
 | haMode         | High availibity：0：master/slave；1：cluster                                                 | In cluster environment, the parameter value is 1.                                             | Yes                                |
-+----------------+----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+------------------------------------+
 | HaState        | Master / slave role configuration in HA mode.                                                | Configuration of primary compute node: master, configuration of standby compute node: backup. | Yes                                |
-+----------------+----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+------------------------------------+
 | haNodeHost     | The connection information of the current active compute node in the high availability mode. | The configuration format is IP: PORT                                                          | Yes                                |
 |                |                                                                                              |                                                                                               |                                    |
 |                |                                                                                              | 192.168.200.1:3325                                                                            |                                    |
-+----------------+----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+------------------------------------+
 
 ###### Reduce from cluster mode to HA mode
 
@@ -2604,33 +2521,35 @@ Disable the compute node services of HotDB_ 02 and HotDB_ 03. This process will 
 
 **Step 2: deploy keepalived and adjust the compute node configuration**
 
-（1）HotDB_ 01、HotDB_ 02 servers are respectively deployed with master and slave keepalived (the corresponding VIP can be the same with and VIP of LVS, but virtual_ router_ id cannot be the same)
+1. HotDB_ 01、HotDB_ 02 servers are respectively deployed with master and slave keepalived (the corresponding VIP can be the same with and VIP of LVS, but virtual_ router_ id cannot be the same)
 
 **HotDB_01 server execution script**：
 
+```bash
 /usr/local/hotdb/Install_Package
-
 sh hotdbinstall_v*.sh --dry-run=no --install-keepalived=master --keepalived-vip-with-prefix=192.168.210.218/24 --keepalived-virtual-router-id=218 --keepalived-net-interface-name=eth0:1 --ntpdate-server-host=182.92.12.11 --install-ntpd=yes
+```
 
 **HotDB_02 server execution script：**
 
+```bash
 cd /usr/local/hotdb/Install_Package
-
 sh hotdbinstall_v*.sh --dry-run=no --install-keepalived=backup --keepalived-vip-with-prefix=192.168.210.218/24 --keepalived-virtual-router-id=218 --keepalived-net-interface-name=eth0:1 --ntpdate-server-host=182.92.12.11 --install-ntpd=yes
+```
 
-（2）Modify the configuration of keepalived.conf of HotDB_01、HotDB_02 servers，refer to the chapter 2.1.2.2 in the document Installation and Deployment
+2. Modify the configuration of keepalived.conf of HotDB_01、HotDB_02 servers，refer to the chapter 2.1.2.2 in the document Installation and Deployment
 
-（3）Modify server.xml of HotDB_01、HotDB_02 compute nodes. Configure relevant parameters as HA mode，as in the following figure：
+3. Modify server.xml of HotDB_01、HotDB_02 compute nodes. Configure relevant parameters as HA mode，as in the following figure：
 
 ![](assets/standard/image99.png)
 
 ![](assets/standard/image100.png)
 
-（4）Enable keepalived of HotDB_01，until the VIP of keepalived is mounted。
+4. Enable keepalived of HotDB_01，until the VIP of keepalived is mounted。
 
 ![](assets/standard/image101.png)
 
-**（5）**Execute reload @@ config at managemtn end of HotDB_01 to make the remaining compute nodes become the master compute nodes in HA mode.
+5. Execute reload @@ config at managemtn end of HotDB_01 to make the remaining compute nodes become the master compute nodes in HA mode.
 
 ![](assets/standard/image102.png)
 
@@ -2642,19 +2561,24 @@ At this time, if there is a pressure measurement task, it will flash off and ret
 
 Disables LVS service on LVS server
 
+```bash
 systemctl stop keepalived.service
+```
 
 **Step 4: Clear LVS configuration of compute node server**
 
-（1）HotDB_01、HotDB_02、HotDB_03 stop lvsrs
+1. HotDB_01、HotDB_02、HotDB_03 stop lvsrs
 
+```bash
 /etc/init.d/lvsrs stop
+```
 
 （2）HotDB_01、HotDB_02、HotDB_03 delete lvsrs
 
+````
 cd /etc/init.d
-
 rm -rf lvsrs
+```
 
 **Step 5: Enable slave compute node and slave keepalived service.**
 
@@ -2706,19 +2630,24 @@ In the compute node, through [HINT](#hint) function, it could specify the data s
 
 Specify that SQL statement shall execute the following in the Master data source:
 
+```sql
 /*!hotdb:rw=master*/select * from customer;
+```
 
 Specify that SQL statement shall execute the following in the Standby Slave data source:
 
+```sql
 /*!hotdb:rw=slave*/select * from customer;
+```
 
 #### Weight configuration of Read/write splitting
 
 While supporting Read/write splitting, compute node could control the master/slave Read proportion via the configuration parameter in server.xml. Enter conf directory under installation directory of compute node, and edit server.xml, to modify the following related settings:
 
-<property name=[strategyForRWSplit](#strategyForRWSplit)>1</property><!-- Read/write splitting strategy, only Active Master participates in Read/Write: 0; Active Master participates in Read/Write, the Slave participates in Read; 1:Active Master only participates in Write, the Slave participates in Read: 2: Splittable Read request is distributed to available Slave data sources; 3: Read request in transaction before Write is distributed to available Slave data sources; -->
-
+```xml
+<property name="strategyForRWSplit](#strategyForRWSplit)>1</property><!-- Read/write splitting strategy, only Active Master participates in Read/Write: 0; Active Master participates in Read/Write, the Slave participates in Read; 1:Active Master only participates in Write, the Slave participates in Read: 2: Splittable Read request is distributed to available Slave data sources; 3: Read request in transaction before Write is distributed to available Slave data sources; -->
 <property name=[weightForSlaveRWSplit](#weightForSlaveRWSplit)>100</property><!-- the Slave Read proportion, 50 (percent) by default, and 0 means that the modified parameter is invalid -->
+```
 
 Description:
 
@@ -2756,7 +2685,9 @@ If executing this DELETE statement, compute node will modify the data of Shardin
 
 - **Use DNID as a Query item to execute SELECT statement**
 
+```sql
 SELECT *,dnid FROM tab_name;
+```
 
 If executing this SELECT statement, compute node will display dnid value of all results in the Result Set, and dnid must be placed behind *, otherwise, there will be Syntax Error.
 

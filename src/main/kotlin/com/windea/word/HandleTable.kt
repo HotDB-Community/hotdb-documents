@@ -3,6 +3,8 @@ package com.windea.word
 import java.io.*
 import java.util.*
 
+//用来让格式化的表格有正确的长度
+
 private val scanner = Scanner(System.`in`)
 
 fun main(){
