@@ -29,9 +29,9 @@
 > * T - 待编写
 > * L - 优化列表
 > * F - 适用代码块codeFence
-> * C - 标注代码块语言
 > * M - 必要的单词/命令标注为代码
 > * P - 润色，适用警告框（NOTE/TIP/WARNING等）、尾注等特殊语法
+> * C - 中英文对比校对
 > * 任务状态 - 是否已经具有良好的浏览效果
 
 中文文档（截止时间：2021-01-14 15:00:21）
@@ -51,13 +51,13 @@
   * [X] `docs/zh/latest/hardware-config-recommendation.md` F
 * `hotdb-server`
   * [X] `docs/zh/latest/standard.md` F
-  * [X] `docs/zh/latest/management-port-command.md` L C M F
+  * [X] `docs/zh/latest/management-port-command.md` L M F
 * `hotdb-management`
   * [X] `docs/zh/latest/hotdm-management.md` F
-  * [X] `docs/zh/latest/intelligent-inspection.md` L C F
+  * [X] `docs/zh/latest/intelligent-inspection.md` L F
 * `idc`
-  * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` C F
-  * [X] `docs/zh/latest/visual-idc.md` L C F
+  * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` F
+  * [X] `docs/zh/latest/visual-idc.md` L F
 * `appendix`
   * [X] `docs/zh/latest/glossary.md` F
   * [X] `docs/zh/latest/parameters.md` F
@@ -88,6 +88,6 @@
   * [ ] `docs/en/latest/cross-idc-disaster-recovery.md` D
   * [ ] `docs/en/latest/visual-idc.md`
 * `appendix`
-  * [ ] `docs/en/latest/glossary.md`
+  * [X] `docs/en/latest/glossary.md` C
   * [ ] `docs/en/latest/parameters.md`
   * [ ] `docs/en/latest/error-codes.md`

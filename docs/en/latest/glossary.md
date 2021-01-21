@@ -11,7 +11,6 @@ Cluster usually refers to the whole set of architectural components required in 
 Compute node is the core of distributed transaction database HotDB Server cluster system. It provides the core control functions of distributed transactional database, such as SQL parsing, routing distribution and result set merging, and is the lifeblood of the whole distributed service.
 
 **Service Port:** compute node will open two ports, one of which is the service port, which is 3323 by default. It is the channel through which the client application connects compute node to obtain the data service. It is similar to the port of MySQL instance.
-
 **Management Port:** this is another port that the compute node opens. It mainly provides information monitoring and management, such as viewing the client connection information in the current compute node, rebuilding the connection pool, etc.
 
 ### ConfigDB
@@ -73,7 +72,7 @@ It is used to connect the compute node to access specific logicDB or log into th
 
 ### Compute Node
 
-Please refer to the description of "[Compute Node](#compute-node)" in Common Nouns.
+Please refer to the description of [Compute Node](#compute-node) in Common Nouns.
 
 ### NDB SQL Service
 
@@ -85,11 +84,11 @@ Distributed transactional database management platform (hereinafter referred to 
 
 ### Data Source
 
-Please refer to the description of "[Data Source](#data-source)" in Common Nouns.
+Please refer to the description of [Data Source](#data-source) in Common Nouns.
 
 ### ConfigDB
 
-Please refer to the description of "[ConfigDB](#configdb)"in Common Nouns.
+Please refer to the description of [ConfigDB](#configdb) in Common Nouns.
 
 ### High Availability
 
