@@ -94,7 +94,7 @@ JDK1.8的安装，推荐使用OpenJDK8安装包，其操作步骤推荐如下：
 
 ```bash
 # 上传OpenJDK8安装包
-# 可使用rz命令或ftp文件传输工具上传OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz安装包，该安装包可联系热璞科技索要
+# 可使用rz命令或ftp文件传输工具上传OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz安装包，该安装包可联系热璞数据库索要
 
 # 解压安装包即可
 mkdir -p /usr/local/jdk8
@@ -116,7 +116,7 @@ rpm -q glibc |egrep 'glibc.*i.86.*'
 
 3. **服务授权**
 
-HotDB Server能正常启动并提供服务需要通过热璞科技正规的授权许可，可理解为需要license。具体服务授权说明请参考[服务授权](service-license.md)文档。
+HotDB Server能正常启动并提供服务需要通过热璞数据库正规的授权许可，可理解为需要license。具体服务授权说明请参考[服务授权](service-license.md)文档。
 
 4. **安装计算节点**
 
@@ -551,7 +551,7 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,process,referen
 
 ##### 备份程序
 
-备份程序（HotDB Backup）为热璞科技自主研发的分布式数据库备份工具。通常部署在集群的存储节点服务器上，监听来自管理平台的数据备份请求。一台存储节点服务器只需部署一个备份程序即可。
+备份程序（HotDB Backup）为热璞数据库自主研发的分布式数据库备份工具。通常部署在集群的存储节点服务器上，监听来自管理平台的数据备份请求。一台存储节点服务器只需部署一个备份程序即可。
 
 > !!!NOTE
 >  <!--使用须知-->

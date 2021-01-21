@@ -234,7 +234,7 @@ It supports both distributed transactions with weak consistency and strong consi
 
 It supports session-level transactional isolation levels: READ COMMITE, REPEATABLE READ, and SERIALIZABLE.
 
-It supports defining SAVEPOINT and setting transaction commit rollback attributes, such as COMMIT [WORK] [AND [NO] CHAIN] [[NO] RELEASE] and ROLLBACK [WORK] [AND [NO] CHAIN] [[NO] RELEASE].
+It supports defining SAVEPOINT and setting transaction commit rollback attributes, such as `COMMIT [WORK] [AND [NO] CHAIN] [[NO] RELEASE]` and `ROLLBACK [WORK] [AND [NO] CHAIN] [[NO] RELEASE]`.
 
 ###### Distributed transactions with Strong consistency(XA)
 
