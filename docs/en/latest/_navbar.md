@@ -1,4 +1,4 @@
-<a href="https://hotdb.com">
+<a href="https://hotdb.com" target="_blank">
 <img class="navicon" src="assets/navicon-colorful.png" alt="hotdb.com"/>
 </a>
 

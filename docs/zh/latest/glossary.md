@@ -93,7 +93,7 @@ NDB SQL服务是为计算节点支持复杂查询类SQL 场景引入的服务程
 
 ### 高可用
 
-HotDBServer的计算节点可通过Keepalived实现高可用。Keepalived负责计算 节点的主、备切换和VIP漂移。
+HotDB Server的计算节点可通过Keepalived实现高可用。Keepalived负责计算 节点的主、备切换和VIP漂移。
 
 ### 负载均衡
 
