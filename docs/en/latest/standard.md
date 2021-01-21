@@ -66,91 +66,54 @@ Compute node is data service provider, and its default service port is 3323, and
 
 After login, compute node could be used the same as MySQL database, for example:
 
+```
 root> mysql -uroot -proot -h127.0.0.1 -P3323
-
 mysql: [Warning] Using a password on the command line interface can be insecure.
-
 Welcome to the MySQL monitor. Commands end with ; or \\g.
-
 Your MySQL connection id is 515
-
 Server version: 5.1.27-HotDB-2.5.0 HotDB Server by Hotpu Tech
-
 Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
-
 Oracle is a registered trademark of Oracle Corporation and/or its
-
 affiliates. Other names may be trademarks of their respective
-
 owners.
-
 Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
-
 mysql> show databases;
-
 +-----------------+
-
 | DATABASE |
-
 +-----------------+
-
 | CLASSIC_LOGICDB |
-
 | HotDB |
-
 +-----------------+
-
 2 rows in set (0.01 sec)
-
 mysql> use CLASSIC_LOGICDB
-
 Database changed
-
 mysql> show tables;
-
 +---------------------------+
-
 | Tables_in_CLASSIC_LOGICDB |
-
 +---------------------------+
-
 | customer |
-
 +---------------------------+
-
 1 row in set (0.03 sec)
+```
 
 The application program connection of compute node is consistent with connection of MySQL, and only host, port, database, user and password information of the database Config File in the application program need to be modified. MySQL database drive and connection pool under different development platforms are supported, such as JDBC, c3p0, DHCP, DRUID connection pool of JAVA development platform. The following is configuration instance of c3p0 connection pool:
 
+```xml
 <!--database mapping-->
-
 <!-- com.mchange.v2.c3p0.ComboPooledDataSource, org.apache.commons.dbcp.BasicDataSource -->
-
-<bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-
-destroy-method="close">
-
+<bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 <property name="driverClass" value="com.mysql.jdbc.Driver" />
-
 <property name="driverClass" value="com.mysql.jdbc.Driver" />
-
 <property name="jdbcUrl" value="jdbc:mysql://192.168.137.101:**3323**.cloth?characterEncoding=UTF-8" /> Where, port 3323 should be changed to the service port of the compute node.
-
 <!--database mapping-->
-
 <property name="user" value="root" />
-
 <property name="password" value="$root" />
-
 <property name="initialPoolSize" value="10" />
-
 <property name="maxPoolSize" value="$256" />
-
 <property name="minPoolSize" value="10" />
-
 <property name="maxIdleTime" value="1800" />
-
 <property name="maxStatements" value="1000" />
+```
 
 Meanwhile, compute node provides management port as 3325 by default, and the current service could be monitored and managed using command in management port. To know more information, please refer to [management port Information Monitoring](#management-port-information-monitoring).
 
@@ -211,8 +174,8 @@ This section will introduce the new compute node parameters added and optimized 
 | [enableOracleFunction](#enableoraclefunction) | Whether to parse Oracle functions first | false | N | 2.5.6 |   |
 | [lockWaitTimeout](#lockwaittimeout) | Timeout for obtaining metadata lock (s) | 31536000 | Y | Synchronized downward to 2.5.3 |   |
 | [operateMode](#operatemode) | Compute node working mode | 0 | Y | Newly added in 2.5.6 |   |
-| [maxReconnectConfigDBTimes](\l) | Maximum number of retries to connect to the ConfigDB | 3 | Y | 2.5.6 |   |
-| [sslUseSM4](\l) | Whether to support SM4 | No | Y | Synchronized downward to 2.5.5 |   |
+| [maxReconnectConfigDBTimes](maxReconnectConfigDBTimes) | Maximum number of retries to connect to the ConfigDB | 3 | Y | 2.5.6 |   |
+| [sslUseSM4](sslUseSM4) | Whether to support SM4 | No | Y | Synchronized downward to 2.5.5 |   |
 | [haMode](#hamode) | Added status: 4: master center in cluster mode | 5: DR center in cluster mode | 0 | N | 2.5.6 |
 | [crossDbXa](#crossdbxa) | Whether XA transactions are adopted in cross-LogicDB | false | N | 2.5.5 |   |
 
@@ -236,7 +199,9 @@ After modification of some server.xml parameters, they will take effect only aft
 
 If the parameters listed in [Instruction on use of compute node parameters](#_计算节点参数使用说明_2) do not exist in server.xml, that means the default value is used by the parameter; if you want to adjust a parameter value or add a parameter, please add the following code in server.xml, or add via "Configuration"->"Compute Node Parameters" page of the management platform.
 
+```xml
 <property name=" dropTableRetentionTime">0</property><!---retention time of dropped table, o by default, not retained-->
+```
 
 ## Rapid configuration of HotDB Server
 
@@ -298,7 +263,9 @@ Usually, the database created by create database in MySQL is called "LogicDB". A
 
 LogicDB is a virtual database in compute node, after logging in to compute node by MySQL command, display the LogicDB list via the following statements:
 
+```sql
 show databases;
+```
 
 Log in to management platform page, select "Configuration"->"LogicDB"->[Add LogicDB](#Add%20LogicDB). Click "**√**", save the configuration, and the LogicDB is successfully added.
 
@@ -355,7 +322,7 @@ According to business scenarios, select those with the same parameter value as a
 When Add Node, the data source group is applied on several data sources, which will Autofill the preset parameter value of the group; when Edit a parameter of the group, the parameter of all data sources in the group will be Edited in batches.
 
 ![](assets/standard/image11.png)
-
+ 
 ### Add data node and data source
 
 In this case, six MySQL instances are divided into three groups (three shardings) with two MySQL instances in each group (one active and one standby). The above description corresponds to the distributed transactional database system: the total data consists of three data nodes, each of which has two data sources. We need to do the following operations on the platform: add three data nodes and add two data sources for the three data nodes.
@@ -408,11 +375,11 @@ Parameters include:
 
 - Master Data Source: This parameter shall be filled in only when it needs to set up replication relation like master-master with slave(s) or multiple levels of slaves. The master data source name needing to be built replication relation in the current data source could be copied and pasted here. By default, the system will make auto judgement according to the configuration.
 
-Click [...] to unfold more parameters, including:
+Click \[...] to unfold more parameters, including:
 
 ![](assets/standard/image16.png)
 
-3. After completing the parameters, click [Connection Test] to verify that the entry is accurate and after all data sources are successfully connected, click [Save and Return], thus 3 data nodes and their respective corresponding 6 data sources have been successfully added.
+3. After completing the parameters, click \[Connection Test] to verify that the entry is accurate and after all data sources are successfully connected, click [Save and Return], thus 3 data nodes and their respective corresponding 6 data sources have been successfully added.
 
 ![](assets/standard/image17.png)
 
@@ -442,7 +409,7 @@ Click [Preview] to view the generated results, and click [Modify] to modify the 
 
 ![](assets/standard/image20.png)
 
-Click [Save and Return] to add sharding function.
+Click \[Save and Return] to add sharding function.
 
 ### Add table configuration
 
@@ -464,7 +431,7 @@ According to business scenarios, after selecting the Table Type, enter the confi
 
 ![](assets/standard/image22.png)
 
-Click [Save], and Customer Auto Sharding Table is successfully added. Note: The Sharding Function cited in this table is AUTO_CRC32 type (for difference of the sharding types AUTO_MOD and AUTO_CRC32, the "Mode Declaration" in the page could be viewed).
+Click \[Save], and Customer Auto Sharding Table is successfully added. Note: The Sharding Function cited in this table is AUTO_CRC32 type (for difference of the sharding types AUTO_MOD and AUTO_CRC32, the "Mode Declaration" in the page could be viewed).
 
 ### Check and reload configuration information
 
@@ -482,55 +449,40 @@ Click [Reload](#Reload) in the page, if it's promoted "Reload Succeeded" in the 
 
 Use MySQL command line, to specify actual IP address, and log in to the compute node:
 
+```sql
 mysql -uroot -proot -h127.0.0.1 -P3323 -Dtest
+```
 
 For example:
 
+```
 root> mysql -h127.0.0.1 -uroot -proot -P3323 -Dtest
-
 mysql: [Warning] Using a password on the command line interface can be insecure.
-
 Welcome to the MySQL monitor. Commands end with ; or \\g.
-
 Your MySQL connection id is 100728
-
 Server version: 5.7.19-HotDB-2.5.2 HotDB Server by Hotpu Tech
-
 Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
-
 Oracle is a registered trademark of Oracle Corporation and/or its
-
 affiliates. Other names may be trademarks of their respective
-
 owners.
-
 Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
-
-mysql>
+```
 
 Execute customer Create Table statement:
 
+```sql
 CREATE TABLE `customer`(
-
 `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-
 `name` VARCHAR(32) NOT NULL,
-
 `telephone` VARCHAR(16) NOT NULL,
-
 `provinceid` TINYINT UNSIGNED NOT NULL DEFAULT 0,
-
 `province` ENUM ('Anhui','Aomen','Beijing','Chongqing','Fujian','Gansu','Guangdong','Guangxi','Guizhou','Hainan','Hebei','Heilongjiang','Henan','Hubei','Hunan','Jiangsu','Jiangxi','Jilin','Liaoning','Neimenggu','Ningxia','Qinghai','Shaanxi','Shandong','Shanghai','Shanxi','Sichuan','Taiwan','Tianjin','Xianggang','Xinjiang','Xizang','Yunnan','Zhejiang') NULL,
-
 `city` VARCHAR(16) NULL default '',
-
 `address` VARCHAR(64) NULL,
-
 PRIMARY KEY(`id`),
-
 UNIQUE KEY(`telephone`)
-
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+```
 
 Compute node will Create Customer Table in various data nodes. You can log in to various MySQL data sources, to verify whether customer has been created or not.
 
@@ -544,41 +496,26 @@ Enter [LogicDB Username Password](#grant-user-logicdb-privilege), and after sele
 
 After the Sharding Table Customer is successfully created, you could execute the following SQL statements in Compute Node, and write in data:
 
+```sql
 INSERT INTO customer VALUES (21,'何重庆','13912340021',4,'Chongqing','重庆','某某街某某号');
-
 INSERT INTO customer VALUES (22,'吕重庆','13912340022',4,'Chongqing','重庆','某某街某某号');
-
 INSERT INTO customer VALUES (25,'孔福州','13912340025',5,'Fujian','福州','某某街某某号');
-
 INSERT INTO customer VALUES (26,'曹兰州','13912340026',6,'Gansu','兰州','某某街某某号');
-
 INSERT INTO customer VALUES (67,'岑南昌','13912340067',17,'Jiangxi','南昌','某某街某某号');
-
 INSERT INTO customer VALUES (68,'薛长春','13912340068',18,'Jilin','长春','某某街某某号');
-
 INSERT INTO customer VALUES (69,'雷沈阳','13912340069',19,'Liaoning','沈阳','某某街某某号');
-
 INSERT INTO customer VALUES (70,'贺呼和浩特','13912340070',20,'Neimenggu','呼和浩特','某某街某某号');
-
 INSERT INTO customer VALUES (71,'倪银川','13912340071',21,'Ningxia','银川','某某街某某号');
-
 INSERT INTO customer VALUES (72,'汤西宁','13912340072',22,'Qinghai','西宁','某某街某某号');
-
 INSERT INTO customer VALUES (73,'滕西安','13912340073',23,'Shaanxi','西安','某某街某某号');
-
 INSERT INTO customer VALUES (74,'殷济南','13912340074',24,'Shandong','济南','某某街某某号');
-
 INSERT INTO customer VALUES (93,'顾台北','13912340093',28,'Taiwan','台北','某某街某某号');
-
 INSERT INTO customer VALUES (94,'孟天津','13912340094',29,'Tianjin','天津','某某街某某号');
-
 INSERT INTO customer VALUES (95,'平香港','13912340095',30,'Xianggang','香港','某某街某某号');
-
 INSERT INTO customer VALUES (96,'黄乌鲁木齐','13912340096',31,'Xinjiang','乌鲁木齐','某某街某某号');
-
 INSERT INTO customer VALUES (99,'萧杭州','13912340099',34,'Zhejiang','杭州','某某街某某号');
-
 INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州','某某街某某号');
+```
 
 Next, you could log in to Compute Node Service, to execute DELETE, UPDATE and SELECT operations toward the Customer Sharding Table.
 
@@ -680,147 +617,98 @@ HotDB Server provides the customer a set of information monitoring, statistics a
 
 The user could log in to management port (default port: 3325) to use show @@help command to view the supported management port command and corresponding role.
 
+```
 root> mysql -uroot -proot -P3325 -h192.168.200.201
-
 mysql: [Warning] Using a password on the command line interface can be insecure.
-
 Welcome to the MySQL monitor. Commands end with ; or \\g.
-
 Your MySQL connection id is 992081
-
 Server version: 5.1.27-HotDB-2.5.0 HotDB Manager by Hotpu Tech
-
 Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
-
 Oracle is a registered trademark of Oracle Corporation and/or its
-
 affiliates. Other names may be trademarks of their respective
-
 owners.
-
 Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
-
 mysql> show @@help;
-
 +-------------------------------------------+---------------------------------------------------------------------------+
-
 | statement | description |
-
 +-------------------------------------------+---------------------------------------------------------------------------+
-
 | check @@datasource_config | Inspect MySQL parameter configuration information |
-
 | check @@route [db_name.tb_name | tb_name] | Detect the data routing correctness of Sharding Table |
-
 | kill @@connection [connection_id] | Close one appointed connection |
-
 | onlineddl "[DDLSTATEMENT]" | Execution onlineddl |
-
 | rebuild @@pool | Rebuild currently available datasources of all nodes |
-
 | reload @@config | Re-load the configuration information |
-
 | restart @@heartbeat [datanode_id] | Recover the heartbeat detection on the appointed data node |
-
 | show @@auxtable | Displays the created auxiliary table information |
-
 ...more contents are omitted, and you could log in to view...
+```
 
 #### Management port operation
 
 The user can enter corresponding command to monitor service condition of compute node, such as showing the data source information:
 
+```
 mysql> show @@datasource;
-
 +------+------+------------------------------+------+--------+-----------------+------+----------------------+--------+------+------+--------------------+--------------+
-
 | dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control |
-
 +------+------+------------------------------+------+--------+-----------------+------+----------------------+--------+------+------+--------------------+--------------+
-
 | 186 | 227 | 192.168.210.68_3307_db252 | 1 | 1 | 192.168.210.68 | 3307 | db252 | 0 | 512 | 512 | NULL | 0/64 |
-
 | 186 | 228 | 192.168.210.68_3308_db252 | 3 | 1 | 192.168.210.68 | 3308 | db252 | 0 | 512 | 512 | NULL | 0/64 |
-
 | 1 | 7 | 192.168.210.41_3307_db252 | 1 | 1 | 192.168.210.41 | 3307 | db252 | 0 | 512 | 512 | NULL | 0/64 |
-
 | 2 | 8 | 192.168.210.42_3307_db252 | 1 | 1 | 192.168.210.42 | 3307 | db252 | 0 | 512 | 512 | NULL | 0/64 |
-
 | 101 | 74 | 192.168.210.41_3307_clu_db30 | 1 | 1 | 192.168.210.41 | 3307 | clu_db30 | 0 | 512 | 512 | NULL | 0/64 |
-
 ...more contents are omitted, and you could log in to view...
+```
 
-The content behind show @@ command is a table name, for example in the previous instance, "show @@datasource;", datasource is a table name.
+The content behind `show @@command` is a table name, for example in the previous instance, "show @@datasource;", datasource is a table name.
 
 The user could also make DESC operation of the table name behind show @@ command, to view meanings of various fields in this table, such as viewing the meaning of various fields in data source information:
 
+```
 mysql> desc datasource;
-
 +--------------------+----------------------------------------------+
-
 | filedname | description |
-
 +--------------------+----------------------------------------------+
-
 | dn | Datanode |
-
 | ds | Datasource |
-
 | name | Datasource name |
-
 | type | Datasource type |
-
 | status | Datasource status |
-
 | host | Host |
-
 | port | Port |
-
 | schema | Physical database name |
-
 | active | Active connections |
-
 | idle | Idle connections |
-
 | size | Total connections |
-
 | unavailable_reason | Reason for datasource unavailable |
-
 | flow_control | Remaining available quantity in flow control |
-
 | idc_id | ID of IDC |
-
 | listener_id | LISTENER ID(ID of LISTENER) |
-
 | listener_status | LISTENER STATUS(STATUS of LISTENER) |
-
 +--------------------+----------------------------------------------+
-
 16 rows in set (0.00 sec)
+```
 
-The user could also make SELECT operation of the table name behind show @@ command, to make SQL query under arbitrary condition, such as viewing the data source on No. 11 data node:
+The user could also make SELECT operation of the table name behind `show @@command`, to make SQL query under arbitrary condition, such as viewing the data source on No. 11 data node:
 
+```
 mysql> select * from datasource where dn=11;
-
 +------+------+-----------------------------+------+--------+----------------+------+---------+--------+------+------+--------------------+--------------+
-
 | dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control |
-
 +------+------+-----------------------------+------+--------+----------------+------+---------+--------+------+------+--------------------+--------------+
-
 | 11 | 9 | 192.168.210.70_3310_yds_db1 | 1 | 1 | 192.168.210.70 | 3310 | yds_db1 | 2 | 32 | 34 | NULL | 0/16 |
-
 +------+------+-----------------------------+------+--------+----------------+------+---------+--------+------+------+--------------------+--------------+
-
 1 row in set (0.00 sec)
+```
 
 ### Limit on number of front-end connections
 
 Compute node supports the function of Limit on Number of Front-end Connections, which could provide guarantee in case of access overload, and the function is the same as MySQL. The use method is: make configuration in server.xml:
 
+```xml
 <property name="maxConnections">5000</property><!-- Front maximum connections -->
-
 <property name="maxUserConnections">0</property><!-- User's front maximum connections, Unlimited: 0 -->
+```
 
 maxConnections is front-end Max Connections, 5000 by default;
 
@@ -864,7 +752,9 @@ When the user conducts operations such as SQL Query Insert, etc. after Create Se
 
 Error-level logs recorded by compute node logs are as follow, and when End Session, the prompt message is the same with it:
 
+```log
 2019-06-10 18:03:24.423 [ERROR] [DISKSPACE] [Employee-2] cn.hotpu.hotdb.mysql.nio.handler.MultiNodeHandler(88) - session[1606] was killed,due to less than 1G space left on device,and the size of temp-file is larger than the usable space.
+```
 
 ### Reload
 
@@ -913,7 +803,9 @@ In Distributed Transactional Database system of HotDB Server, compute node could
 
 In Config File server.xml of compute node, set Deadlock Check Period at the value bigger than 0, which will enable Deadlock Auto Check function. By default, Deadlock Check is enabled, and the Check Period is 3000ms.
 
+```xml
 <property name=" deadlockCheckPeriod ">3000</property>
+```
 
 When the value of deadlockCheckPeriod is set as 0, Deadlock Check function will not start.
 
@@ -921,43 +813,48 @@ When Start Deadlock Check of compute node, re-execute the above-mentioned DELETE
 
 Session 1, start transaction:
 
+```
 mysql> start transaction;
-
 Query OK, 0 rows affected (0.00 sec)
+```
 
 Session 2, start transaction:
 
+```
 mysql> start transaction;
-
 Query OK, 0 rows affected (0.00 sec)
+```
 
 Session 1, Execute DELETE statement on data node where DNID = 15:
 
+```
 mysql> delete from customer where dnid=15 and id=1;
-
 Query OK, 1 row affected (0.00 sec)
+```
 
 Session 2, Execute DELETE statement on data node where DNID = 13
 
+```
 mysql> delete from customer where dnid=13 and id=4;
-
 Query OK, 1 row affected (0.00 sec)
+```
 
 Session 1, Execute DELETE statement on data node where DNID = 13; DELETE operation will be blocked by Session 2:
 
+```
 mysql> delete from customer where dnid=13 and id=4;
-
 Session 2, Execute DELETE statement on data node where DNID = 15; this operation will be blocked by Session 1; since Session 1 is blocked by Session 2, and Session 2 is also blocked by Session 1, therefore, there will be deadlock at this time
 
 mysql> delete from customer where dnid=15 and id=1;
-
 Query OK, 1 row affected (1.59 sec)
+```
 
 Compute node checks deadlock, and rolls back to transaction in Session 1:
 
+```
 mysql> delete from customer where dnid=13 and id=4;
-
 ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting transaction
+```
 
 Note: In MySQL 5.7 and above, a new transaction will not be started immediately after a deadlock rollback occurs in the transaction. You can refer to the official BUG link: <https://bugs.mysql.com/bug.php?id=98133>. HotDB Server does compatibility processing for the above BUGs: for the lock timeout, deadlock detection, and back-end disconnection, MySQL 5.7 and above will determine whether to start a new transaction according to the front-end connection of autocommit.
 
@@ -1013,23 +910,29 @@ If the following error information is returned during SQL execution, the compute
 
 For example, execute a SQL with primary key conflict as follows:
 
+```
 mysql> insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');
-
 ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'
+```
 
 View the compute node log（hotdb-unusualsql.log）：
 
-2019-10-12 15:27:45.051 [INFO] **[UNUSUALSQL]** [$NIOREACTOR-7-RW] cn.hotpu.hotdb.mysql.nio.MySQLConnection(415) - ERROR 1062:Duplicate entry '3' for key 'PRIMARY' [frontend:[thread=$NIOREACTOR-7-RW,id=453,user=root,host=192.168.210.225,port=3323,localport=65442,schema=DBY]; backend:null; frontend_sql:insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');backend_sql:null]
+```log
+2019-10-12 15:27:45.051 [INFO] [UNUSUALSQL] [$NIOREACTOR-7-RW] cn.hotpu.hotdb.mysql.nio.MySQLConnection(415) - ERROR 1062:Duplicate entry '3' for key 'PRIMARY' [frontend:[thread=$NIOREACTOR-7-RW,id=453,user=root,host=192.168.210.225,port=3323,localport=65442,schema=DBY]; backend:null; frontend_sql:insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');backend_sql:null]
+```
 
 For another example, execute a SQL intercepted by SQL firewall as follows:
 
+```
 mysql> select * from test;
-
 ERROR 1064 (HY000): Intercepted by sql firewall, because: not allowed to execute select without where expression
+```
 
 View the compute node log（hotdb-unusualsql.log）：
 
-2019-10-14 15:41:42.246 [INFO] **[UNUSUALSQL]** [$NIOExecutor-1-2] cn.hotpu.hotdb.route.RouteService(415) - ERROR 10029:not pass sql firewall [frontend:[thread=$NIOExecutor-1-2,id=1433,user=root,host=192.168.210.225,port=3323,localport=64658,schema=DBY]; backend:null; frontend_sql:null; backend_sql:null] [DBY.count]=33
+```log
+2019-10-14 15:41:42.246 [INFO] [UNUSUALSQL] [$NIOExecutor-1-2] cn.hotpu.hotdb.route.RouteService(415) - ERROR 10029:not pass sql firewall [frontend:[thread=$NIOExecutor-1-2,id=1433,user=root,host=192.168.210.225,port=3323,localport=64658,schema=DBY]; backend:null; frontend_sql:null; backend_sql:null] [DBY.count]=33
+```
 
 Note:
 
@@ -1037,45 +940,27 @@ For MySQL error code explanations, please refer to the official document; <https
 
 By default, this type of log information is saved in the file hotdb_unusualsql.log under the HotDB Server installation directory /logs/extra/unusualsql/. If the log is not recorded to a file, check whether the following configuration exists under log4j2.xml in the HotDB Server installation directory /conf:
 
-</RollingFile>
-
+```
 <RollingFile
-
-name="**Unusualsql**"
-
-filename="${sys:HOTDB_HOME}**/logs/extra/unusualsql/hotdb-unusualsql.log**"
-
+name="Unusualsql"
+filename="${sys:HOTDB_HOME}/logs/extra/unusualsql/hotdb-unusualsql.log"
 filepattern="${sys:HOTDB_HOME}/logs/extra/unusualsql/hotdb-unusualsql-%d{yyyy-MM-dd-HH-mm-ss}.log">
-
 <PatternLayout
-
 pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-4p] [%marker] [%t] %c(%L) - %msg%n"/>
-
 <Policies>
-
 <SizeBasedTriggeringPolicy size="100 MB"/>
-
 </Policies>
-
 <!-- only record unusual sql log -->
-
 <filters>
-
-<MarkerFilter marker="U**NUSUALSQL**" onMatch="ACCEPT" onMismatch="DENY"></MarkerFilter>
-
+<MarkerFilter marker="UNUSUALSQL" onMatch="ACCEPT" onMismatch="DENY"></MarkerFilter>
 </filters>
-
 <DefaultRolloverStrategy max="1000"/>
-
 </RollingFile>
-
 </Appenders>
-
 <Loggers>
-
 <Root level="info">
-
-<AppenderRef ref="**Unusualsql**" />
+<AppenderRef ref="Unusualsql" />
+```
 
 ## Safety
 
@@ -1102,7 +987,9 @@ The user with SUPER privilege, could log in to 3325port of compute node, and cou
 
 The user with SUPER privilege could execute hint statement at 3323port. For example:
 
+```sql
 /*!hotdb:dnid=1*/select * from table
+```
 
 **Privilege range:**
 
@@ -1136,7 +1023,9 @@ Since HotDB-Server v.2.5.5, SSL encrypted connection mode to log in to the compu
 
 Please refer to the [official MySQL documents](https://dev.mysql.com/doc/refman/5.7/en/creating-ssl-rsa-files.html) to generate a self-signed secret key. For example, you can generate the certificate and key files using MySQL's own command mysql_ssl_rsa_setup.
 
+```bash
 mysql_ssl_rsa_setup --datadir=/usr/local/crt/
+```
 
 ![](assets/standard/image36.png)
 
@@ -1170,19 +1059,23 @@ If you need to generate a self-signed certificate capable of CA authentication, 
 
 For a compute node, the secret key needs to be converted to a Java-standard KeyStore file. That is .jks as mentioned below. The generation steps are:
 
-1\) First, synthesize cert and key files into pfx files using openssl:
+1. First, synthesize cert and key files into pfx files using openssl:
 
 In this example, SDcrtest should be entered as password (the password of the key file that comes with the program is hotdb.com, which can be used directly. This example is for when generation of a new secret key is required.)
 
+```
 openssl pkcs12 -export -out server.pfx -inkey server-key.pem -in server-cert.pem -CAfile ca.pem
+```
 
 Enter password SDcrtest
 
 ![](assets/standard/image38.png)
 
-2\) Convert pfx to jks file using keytool provided by Java:
+2. Convert pfx to jks file using keytool provided by Java:
 
+```
 keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcstoretype PKCS12
+```
 
 Enter password SDcrtest
 
@@ -1192,21 +1085,27 @@ Enter password SDcrtest
 
 After the TLS secret key is generated, the corresponding secret key file should be transferred to the server where the server and client of the compute node are located and configured with the following three parameters in the compute node as required before using:
 
-<property name=[enableSSL](#enableSSL)>false</property><!-- Enable SSL connection or not -->
+```xml
+<property name=enableSSL>false</property><!-- Enable SSL connection or not -->
+```
 
 Parameter description: true means to enable SSL function; false means to disable SSL function; default value is false.
 
-<property name=[keyStore](#keyStore)>/server.jks</property><!-- Path to the data certificate .jks file for TLS connection -->
+```xml
+<property name=keyStore>/server.jks</property><!-- Path to the data certificate .jks file for TLS connection -->
+```
 
 Parameter description: a set of pem file related to server.jks and client is provided by default by compute nodes under /conf directory, with password of hotdb.com, which can be used for simple connection testing. When you choose to use your own generated TLS certificate or pay-for-use TLS certificate to connect, you need to fill in according to the actual path and name. For example, /usr/local/crt/server.jks.
 
-<property name=[keyStorePass](#keyStorePass)>BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- Password of the data certificate .jks file for TLS connection -->
+```
+<property name=keyStorePass>BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- Password of the data certificate .jks file for TLS connection -->
+```
 
 Parameter description: the password in the key file that comes with the program is hotdb.com, which can be encrypted by users through select hex(aes_encrypt('hotdb.com',unhex(md5('Hotpu@2013# shanghai#')))); to get the default value BB5A70F75DD5FEB214A5623DD171CEEB and fill the value in keyStorePass. If users use their own generated key file, the value be filled is based on the password which is actually entered. If SDcrtest is entered as password, users can get the value of keyStorePass through select hex(aes_encrypt('SDcrtest',unhex(md5('Hotpu@2013# shanghai#')))) and fill the value C43BD9DDE9C908FEE7683AED7A301E33 in keyStorePass.
 
 The configured parameters are as follows:
 
-![}]2__08H0B`61[421T9YIBK](media/image40.png)
+![](assets/standard/image40.png)
 
 Users have no need to restart the compute node service for the parameter modification, for server.jks documents will be read again during dynamic loading. If SSL-related logic initialization fails, the dynamic loading will not fail, though the subsequent SSL connections cannot be established normally. Non-SSL connections will not be affected.
 
