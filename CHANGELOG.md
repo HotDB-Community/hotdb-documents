@@ -12,11 +12,11 @@
 * [X] 格式化所有markdown文档
 * [X] 为所有中文文档适用markdown警告框语法（`> !!!NOTE`)
 * [X] 更新图片，修复英文单词之间没有空格的问题
-* [ ] 更新图片：中文管理平台、跨机房灾备、白皮书
+* [X] 更新图片：中文管理平台、跨机房灾备、白皮书
 * [ ] 检查markdown文档的格式
 * [ ] 检查markdown文档中的文档和标题链接
-* [ ] 为markdown文档中的代码块统一注明语言
-* [ ] 润色markdown文档
+* [ ] 为markdown文档中的代码块
+* [ ] 润色markdown文档中的内联代码
 * [ ] 修改docsify-glossary插件，允许不同语言的术语表（自行实现）
 * [ ] 编写脚本合并所有文档并生成pdf
 * [ ] 编写脚本从markdown生成toc
@@ -90,8 +90,9 @@
 * `appendix`
   * [X] `docs/en/latest/glossary.md` C
   * [X] `docs/en/latest/parameters.md` C
-  * [ ] `docs/en/latest/error-codes.md`
+  * [X] `docs/en/latest/error-codes.md` C
   
 # 问题
 
-参数说明，allowRCWithoutReadConsistentInXA，中英文不一致
+* 参数说明，allowRCWithoutReadConsistentInXA，中英文不一致
+* 计算节点错误码 英文，未翻译
