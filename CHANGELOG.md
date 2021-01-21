@@ -32,6 +32,7 @@
 > * C - 标注代码块语言
 > * M - 必要的单词/命令标注为代码
 > * P - 润色，适用警告框（NOTE/TIP/WARNING等）、尾注等特殊语法
+> * 任务状态 - 是否已经具有良好的浏览效果
 
 中文文档（截止时间：2021-01-14 15:00:21）
 
@@ -65,28 +66,28 @@
 英文文档（截止时间：2021-01-14 15:00:21）
 
 * `introduce`
-  * [X] `docs/zh/latest/introduce.md` P
-  * [X] `docs/zh/latest/white-paper.md` P 
-  * [ ] `docs/zh/latest/whats-new.md` T
+  * [X] `docs/en/latest/introduce.md` P
+  * [X] `docs/en/latest/white-paper.md` P 
+  * [ ] `docs/en/latest/whats-new.md` T
 * `quick-start`
-  * [X] `docs/zh/latest/quick-start-guide.md`
-  * [ ] `docs/zh/latest/basic-operations.md` T
+  * [X] `docs/en/latest/quick-start-guide.md`
+  * [ ] `docs/en/latest/basic-operations.md` T
 * `install-deploy-update`
-  * [X] `docs/zh/latest/install-and-deploy.md`
-  * [X] `docs/zh/latest/service-license.md`
-  * [X] `docs/zh/latest/manual-update.md`
-  * [X] `docs/zh/latest/cluster-environment-requirement.md`
-  * [X] `docs/zh/latest/hardware-config-recommendation.md`
+  * [X] `docs/en/latest/install-and-deploy.md`
+  * [X] `docs/en/latest/service-license.md`
+  * [X] `docs/en/latest/manual-update.md`
+  * [X] `docs/en/latest/cluster-environment-requirement.md`
+  * [X] `docs/en/latest/hardware-config-recommendation.md`
 * `hotdb-server`
-  * [X] `docs/zh/latest/standard.md` D
-  * [X] `docs/zh/latest/management-port-command.md` D
+  * [ ] `docs/en/latest/standard.md` D
+  * [ ] `docs/en/latest/management-port-command.md` D
 * `hotdb-management`
-  * [X] `docs/zh/latest/hotdm-management.md`
-  * [X] `docs/zh/latest/intelligent-inspection.md`
+  * [ ] `docs/en/latest/hotdm-management.md`
+  * [ ] `docs/en/latest/intelligent-inspection.md`
 * `idc`
-  * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` D
-  * [X] `docs/zh/latest/visual-idc.md`
+  * [ ] `docs/en/latest/cross-idc-disaster-recovery.md` D
+  * [ ] `docs/en/latest/visual-idc.md`
 * `appendix`
-  * [X] `docs/zh/latest/glossary.md`
-  * [X] `docs/zh/latest/parameters.md`
-  * [X] `docs/zh/latest/error-codes.md`
+  * [ ] `docs/en/latest/glossary.md`
+  * [ ] `docs/en/latest/parameters.md`
+  * [ ] `docs/en/latest/error-codes.md`
