@@ -89,5 +89,9 @@
   * [ ] `docs/en/latest/visual-idc.md`
 * `appendix`
   * [X] `docs/en/latest/glossary.md` C
-  * [ ] `docs/en/latest/parameters.md`
+  * [X] `docs/en/latest/parameters.md` C
   * [ ] `docs/en/latest/error-codes.md`
+  
+# 问题
+
+参数说明，allowRCWithoutReadConsistentInXA，中英文不一致
