@@ -117,7 +117,7 @@
 | 110 | 数据库运维 | dataNodeIdleCheckPeriod | 数据节点默认空闲检查时间 | Y | 该参数用于设置数据节点空闲检查任务的间隔，计算节点会定时检查后端存储节点连接情况，关闭多余的空闲连接或者补足连接池的可用连接，保持连接不被MySQL关闭，维护连接池的正常运作 | `120(s)` | `1` | `3600` | 2.4.5版本为N， 2.4.7及以上为Y | 2.4.3 | |
 | 111 | 数据库运维 | waitSyncFinishAtStartup | 启动时是否等待主存储节点同步追上 | Y | 开启时，启动计算节点会等待存储节点主从复制追平，从而保证主从存储节点数据一致 | `true` | / | / | N | 2.4.3 | 管理平台显示对应 - true：是，false：否 |
 | 112 | 数据库运维 | waitConfigSyncFinish | 启动时是否等待配置库同步追上 | N | 用于设置启动时是否等待配置库同步追上, 开启开关，当配置库主从之间存在延迟的情况下，需要等到主从配置库追上从配置库，保持当前使用的配置库的数据为最新的数据，才能启动 | `false` | / | / | N | 2.4.3 | 管理平台显示对应 - true：是，false：否 |
-| 113 | 数据库运维 | checkConnLastUsedTime | 后端连接最后一次使用最大允许间隔时间 | N | 后端连接最后一次使用最大允许间隔时间，超过将校验该连接是否有效 | `3000(ms)`` | `0` | `600000` | Y | 2.4.3 | | | |
+| 113 | 数据库运维 | checkConnLastUsedTime | 后端连接最后一次使用最大允许间隔时间 | N | 后端连接最后一次使用最大允许间隔时间，超过将校验该连接是否有效 | `3000(ms) | 0 | 600000` | Y | 2.4.3 | | | |
 | 114 | 数据库运维 | checkConnValidTimeout | 后端连接有效校验时，最大超时时间 | N | 后端连接有效校验时，当检测时间超过“后端连接校验超时时间”，则判断为无效的连接，当检测后端连接属于超时连接时，会把该连接从连接池中清除 | `500(ms)` | `100` | `1000` | Y | 2.4.3 | |
 | 115 | 数据库运维 | badConnAfterContinueGet | 是否继续获取连接 | N | 计算节点从连接池获取连接后，如果进行了连接有效性检验并获取到了一个失效的连接，如果该参数为true，连接池将继续获取可用连接，如果为false，连接池将返回null，由外部代码逻辑继续进行处理 | `true` | / | / | Y | 2.4.3 | 管理平台显示对应 - true：是，false：否 |
 | 116 | 数据库运维 | badConnAfterFastCheckAllIdle | 当获取坏的后端连接时，是否快速检测所有空闲连接 | N | 设置为true时，当获取到坏的后端连接，计算节点连接池会快速检测全部的空闲连接 | `true` | / | / | Y | 2.4.3 | 管理平台显示对应 - true：是，false：否 |
@@ -151,6 +151,7 @@
 | 144 | 数据库运维 | maxReconnectConfigDBTimes | 最大重试连接配置库次数 | N | 防止计算节点启动、切换或reload时配置库连接耗时过长，增加配置库重连次数。超过最大重试连接次数，自动切换到从配置库连接 | `3` | `0` | `1000` | Y | 2.5.4 | 基于V2.5.4版本同步 |
 | 145 | 数据库运维 | sslUseSM4 | 是否支持国密算法 | N | 此功能是在TLS中对称加密环节指定使用国密SM4算法来进行加解密 | `false` | / | / | Y | 2.5.6 | 基于V2.5.5版本同步 |
 | 146 | 数据库运维 | crossDbXa | 跨逻辑库是否采用XA事务 | N | 开启enableXA时，如果存在跨逻辑库查询的XA事务，需要开启crossDbXa才能保证强一致性。当crossDbXa未开启时也可以支持，但不能保证数据的强一致 | `false` | / | / | N | 2.5.5 | 管理平台暂未兼容 |
+| 147 | 数据库运维 | unusualSQLMode | 控制unusualSQL输出日志的频率 | N | 控制unusualSQL输出日志的频率,：配置为0，记录所有计数器，第一次出现时输出日志；配置为1，记录所有SQL；配置为>1，记录所有计数器，计数器每满N时输出日志 | `1` | 0 | / | Y | 2.5.5 | 2.5.5版本中途新增 |
 
 [^1]: recordSql, recordSQLSyntaxError, recordCrossDNJoin, recordUNION, recordSubQuery, recordDeadLockSQL, recordLimitOffsetWithoutOrderby, recordSQLKeyConflict, recordSQLUnsupported, recordMySQLWarnings, recordMySQLErrors, recordHotDBWarnings, recordHotDBErrors, recordDDL, recordSQLIntercepted, recordAuditlog, recordSQLForward, recordSqlAuditlog
 
