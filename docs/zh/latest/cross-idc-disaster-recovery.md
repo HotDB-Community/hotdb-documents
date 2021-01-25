@@ -451,44 +451,45 @@ mysql> show tables;
 
 点击【开启灾备模式】，需要填写中心机房和灾备机房两套计算节点信息，分别由两个【计算节点模式】选择器控制计算节点个数。根据不同的计算节点模式进行选择，如果是主备模式则选择主备节点，如果是集群多计算节点模式，则选择多节点。
 
-![](assets/cross-idc-disaster-recovery/image23.png)
+![](assets/cross-idc-disaster-recovery/image22.png)
 
 > !!!NOTE
 > 
 > 1. 在多节点模式下，需添加集群通信端口的配置，若计算节点分布在不同服务器且通信端口一致，则可填写一个端口即可（默认3326），若集群模式下计算节点均部署在同一台或多台服务器上，且端口不同，则需要使用英文逗号将通信端口进行间隔，例如：3326,3327,3328。且该通信端口的顺序需要同其对应的计算节点添加的顺序一一对应。否则在保存校验时会拒绝保存并提醒"计算节点在同一服务器上，通信端口必须与计算节点个数匹配且不能重复"。
 > 2. 若集群多计算节点均部署在同一台服务器上时，其通信端口+服务端口+管理端口均要彼此唯一，不能存在相同的端口组合。
 
-![](assets/cross-idc-disaster-recovery/image24.png)
+![](assets/cross-idc-disaster-recovery/image23.png)
 
 当添加的计算节点集群模式与真实的计算节点模式不匹配时，配置校验会同步校验出当前状态并给予错误提醒
 
-![](assets/cross-idc-disaster-recovery/image25.png)
+![](assets/cross-idc-disaster-recovery/image24.png)
 
 **（二）配置库：**
 
 若计算节点管理端口可连接，则管理平台会自动获取配置库信息，无需手动配置配置库；若计算节点管理端口不可连接，则管理平台无法获取配置库信息，需要手动添加配置库信息。勾选【手动设置配置库】后，分别填写两个机房的配置库信息。
 
-![](assets/cross-idc-disaster-recovery/image26.png)
+![](assets/cross-idc-disaster-recovery/image25.png)
 
 **（三）测试连接：**
 
 点击【测试】测试计算节点连接是否正常。
 
-![](assets/cross-idc-disaster-recovery/image27.png)
+![](assets/cross-idc-disaster-recovery/image26.png)
 
 连接正常示例图
 
-![](assets/cross-idc-disaster-recovery/image28.png)
+![](assets/cross-idc-disaster-recovery/image27.png)
 
 连接异常示例图
 
 相对于单机房模式下的四项检测项都增加机房标识，可以清楚标示出是哪个机房连接异常；
 
 增加配置库的灾备状态检测，包括两项：
+
 - 配置库复制状态：检测两个机房内部双主（主从）配置库的复制关系是否正常以及两个机房主配置库之间的灾备关系是否正常。若两个机房主配置库之间的灾备关系异常，则不再检测机房内部的配置库复制状态。
 - 元数据一致：两个机房中所有配置库与中心机房当前主配置库的数据是否一致。
 
-![](assets/cross-idc-disaster-recovery/image29.png)
+![](assets/cross-idc-disaster-recovery/image28.png)
 
 若中心机房故障后，灾备机房切换为当前主机房，此处的【测试】仍会以集群配置状态检测，即检测中心机房的端口连接状态、以当前主机房的当前主配置库为标准检测与其他所有配置库的数据一致性、检测机房内部与机房之间的复制状态等。
 
@@ -621,13 +622,13 @@ mysql> start slave;
 
 若已通过线下手动部署，将灾备机房的计算节点部署成功，则可以通过管理平台，修改已运行集群的灾备模式状态，填入灾备机房配置信息，将灾备机房添加至该集群。
 
-![](assets/cross-idc-disaster-recovery/image30.png)
+![](assets/cross-idc-disaster-recovery/image29.png)
 
 1. 在集群管理页面中，点击一个已运行的集群名称，进入到计算节点集群编辑页面。
 
 2. 点击【开启灾备模式】，则将已有集群信息作为中心机房配置信息，并为其添加灾备机房的配置信息，详情请参考[集群添加](#计算节点集群添加)。
 
-![](assets/cross-idc-disaster-recovery/image31.png)
+![](assets/cross-idc-disaster-recovery/image30.png)
 
 ##### 备机房存储节点添加
 
@@ -643,25 +644,25 @@ mysql> start slave;
 
 - 若该用户拥有对一个开启灾备模式的集群的访问或控制权限，且该集群运行正常，则当前主机房显示为绿色，当前备机房显示为蓝色。例如，中心机房为当前主机房，灾备机房为当前备机房，两个机房均连接正常，则显示如下图。
 
-![](assets/cross-idc-disaster-recovery/image32.png)
+![](assets/cross-idc-disaster-recovery/image31.png)
 
 - 点击任意一个机房模块都将进入对这个集群的同一套监控信息的管理平台。未在此文档特殊提及的页面，都将显示或控制当前主机房的信息。例如，当一个机房故障无法连接并切换到另一个机房后，点击任意一个机房模块，都将进入同一套主要监控当前主机房的管理平台页面。
 
 - 每一个机房模块都将显示自己机房的连接状态。连接状态显示情况与单机房模式的集群相同，包括：计算节点无法连接时，计算节点标红且为异常；配置库无法连接时，底部配置库连接显示异常；部分配置库无法连接时，鼠标移入"部分异常"字样显示具体配置库连接异常信息等
 
-![](assets/cross-idc-disaster-recovery/image33.png)
+![](assets/cross-idc-disaster-recovery/image32.png)
 
 > 上图为中心机房故障，灾备机房切换为当前主机房
 
 - 若中心机房所有计算节点都无法连接，则点击任意机房面板，显示当前中心机房无法提供服务的提示信息。请确保主机房的所有计算节点被关闭后，人工启动灾备机房。若需要启动灾备机房，请参考[中心机房故障后切换至灾备机房](#中心机房故障后切换至灾备机房)。
 
-![](assets/cross-idc-disaster-recovery/image34.png)
+![](assets/cross-idc-disaster-recovery/image33.png)
 
 - 若人工介入并切换至灾备机房后，则灾备机房为当前主机房，显示为绿色。点击任意机房面板，进入监控灾备机房为当前主机房的管理平台。若人工修复中心机房后，需要重新启动中心机房，请参考[跨机房故障修复和回切](#跨机房故障修复和回切)。
 
 - 集群模式下的计算节点集群选择页面，如下图所示，其状态与主备模式类同：
 
-![](assets/cross-idc-disaster-recovery/image35.png)
+![](assets/cross-idc-disaster-recovery/image34.png)
 
 ### 部署环境体检
 
@@ -669,7 +670,7 @@ mysql> start slave;
 
 - 点击【发起体检】时，若选择开启灾备模式的集群，则可以继续选择对中心机房或灾备机房进行体检。
 
-![](assets/cross-idc-disaster-recovery/image36.png)
+![](assets/cross-idc-disaster-recovery/image35.png)
 
 - 对当前备机房的体检项中有若干项由于无法连接服务端口而被跳过检测。被跳过的体检项列举如下：
 
@@ -689,17 +690,17 @@ mysql> start slave;
 
 节点管理页面将同时管理中心机房和灾备机房的所有数据节点和存储节点。要求中心机房与灾备机房添加的数据节点个数一致，名称一一对应。
 
-![](assets/cross-idc-disaster-recovery/image37.png)
+![](assets/cross-idc-disaster-recovery/image36.png)
 
 **（一）增加的列表信息说明：**
 
-**机房类型**：
+**机房类型：**
 
 指该数据节点所属机房类型，中心机房或灾备机房。根据机房状态显示颜色：可用 - 绿色、备用 - 蓝色、不可用 - 红色。机房状态与[计算节点集群选择](#计算节点集群选择)页面显示的机房状态一致。
 
 例如，集群正常运行时，中心机房显示为绿色，灾备机房显示为蓝色；又如，中心机房宕机后，所有中心机房数据节点的机房类型显示为红色。
 
-**灾备状态**：
+**灾备状态：**
 
 指中心机房当前主存储节点与灾备机房当前主存储节点之间的复制状态。
 
@@ -716,7 +717,7 @@ mysql> start slave;
 
 若中心机房故障后切换至灾备机房，计算节点会删除中心机房原主存储节点与灾备机房原主存储节点之间的复制状态，此时灾备状态将显示为**未知**。
 
-**主备状态**：
+**主备状态：**
 
 中心机房的主备状态功能与单机房模式一致，根据配置显示主从复制状态
 
@@ -745,36 +746,36 @@ mysql> start slave;
 - 允许删除任意机房下的存储节点，但若要删除一个数据节点，则必须删除中心机房的数据节点，此时将同时将灾备机房下的对应数据节点也删除，即不允许单独删除灾备机房下的数据节点。
 - 勾选【自动搭建灾备关系】，则会自动为添加的两个机房对应数据节点之间搭建复制关系。
 
-![](assets/cross-idc-disaster-recovery/image38.png)
+![](assets/cross-idc-disaster-recovery/image37.png)
 
 **（二）仅添加存储节点：**
 
 - 勾选【仅添加存储节点】可以为中心机房或灾备机房已存在的数据节点添加存储节点。
 - 因仅添加存储节点时，不会影响两个机房数据节点的逻辑架构，故仅添加存储节点时，将不限制任意一个机房模块下的添加的存储节点个数。例如，若希望单独为中心机房的一个数据节点下添加存储节点，将灾备机房模块下自动生成的存储节点删除即可。
 
-![](assets/cross-idc-disaster-recovery/image39.png)
+![](assets/cross-idc-disaster-recovery/image38.png)
 
 **（三）添加缺失数据节点：**
 
 点击【添加节点】，当中心机房是当前主机房时，管理平台会检测当前两个机房的逻辑架构是否一致。若检测发现存在中心机房数据节点个数比灾备机房多，则管理平台会要求用户为灾备机房也添加对应节点，否则无法使用添加节点功能。这样的场景适用于为已有的生产环境添加灾备机房后，再单独为灾备机房补全与生产环境对应的数据节点。也可以避免人为在配置库修改节点信息的情况。
 
-![](assets/cross-idc-disaster-recovery/image40.png)
+![](assets/cross-idc-disaster-recovery/image39.png)
 
 点击【确定】后，管理平台将自动生成灾备机房缺失节点，节点类型与中心机房一致。可以修改【数据节点类型】或【存储节点组】后重新生成，但数据节点名称与个数不能修改，仍然与中心机房保持一致。
 
-![](assets/cross-idc-disaster-recovery/image41.png)
+![](assets/cross-idc-disaster-recovery/image40.png)
 
 **（四）导入功能：**
 
 使用导入功能时，需要保证导入的中心机房与灾备机房的数据节点逻辑架构一致，即数据节点个数相同，名称一一对应，否则将导入失败。
 
-![](assets/cross-idc-disaster-recovery/image42.png)
+![](assets/cross-idc-disaster-recovery/image41.png)
 
 ##### 主从搭建
 
 主从搭建不仅可以为单个机房内的尚未搭建复制关系的存储节点搭建复制关系，还可以为两个机房主存储节点之间搭建灾备关系。
 
-![](assets/cross-idc-disaster-recovery/image43.png)
+![](assets/cross-idc-disaster-recovery/image42.png)
 
 **（一）搭建须知：**
 
@@ -788,7 +789,7 @@ mysql> start slave;
 
 搭建过程中的报错信息统一增加机房类型，标识不满足要求的存储节点属于哪个机房。
 
-![](assets/cross-idc-disaster-recovery/image44.png)
+![](assets/cross-idc-disaster-recovery/image43.png)
 
 若中心机房故障，灾备机房切换成为当前主机房，灾备关系的主从搭建将不提供搭建。
 
@@ -800,7 +801,7 @@ mysql> start slave;
 
 **（一）添加切换规则：**
 
-![](assets/cross-idc-disaster-recovery/image45.png)
+![](assets/cross-idc-disaster-recovery/image44.png)
 
 选择机房类型，为单个机房内的存储节点添加切换规则。
 
@@ -808,7 +809,7 @@ mysql> start slave;
 
 **（二）自动适配：**
 
-![](assets/cross-idc-disaster-recovery/image46.png)
+![](assets/cross-idc-disaster-recovery/image45.png)
 
 选择机房类型，为单个机房内的数据节点自动适配切换规则。自动适配规则不变。
 
@@ -816,7 +817,7 @@ mysql> start slave;
 
 配置校验主要为计算节点相关配置提供校验功能，防止人为错误设置或线下修改计算节点相关配置导致运行异常的问题出现。在灾备模式下，做了如下适配：
 
-![](assets/cross-idc-disaster-recovery/image47.png)
+![](assets/cross-idc-disaster-recovery/image46.png)
 
 - 与存储节点相关校验的报错信息中增加机房类型，可以明确标识是哪个机房的存储节点校验不通过，由此排查问题。
 - 校验项【存储节点连接正常】修改为warning级别的校验。例如，中心机房或灾备机房任意一个存储节点连接异常，会在配置校验中出现warning提醒，但不影响动态加载。当中心机房或灾备机房故障且作为当前备机房时，此校验项仍会检测两个机房内的所有存储节点是否连接正常，但不影响动态加载。
@@ -825,16 +826,15 @@ mysql> start slave;
 - 在【配置库】中，【配置库连接正常】修改为warning级别的校验，与【存储节点连接正常】类似，检测两个机房内的所有配置库是否连接正常。
 - 在【配置库】中增加一项warning级别的校验项：配置库之间复制状态正常，即单个机房内部配置库复制状态和两个机房主配置库之间的复制状态是否正常。
 
-![](assets/cross-idc-disaster-recovery/image48.png)
+![](assets/cross-idc-disaster-recovery/image47.png)
 
 #### 计算节点参数配置
 
 计算节点参数配置可以可视化的配置两个机房的计算节点server.xml参数
 
-![](assets/cross-idc-disaster-recovery/image49.png)
+![](assets/cross-idc-disaster-recovery/image48.png)
 
 - 计算节点下拉框显示中心机房与灾备机房的所有计算节点，默认将中心机房的主计算节点显示在最顶端
-
 - 通过计算节点下拉框的计算节点列表来进行计算节点参数配置页面的切换
 
 **（一）参数同步：**
@@ -845,7 +845,7 @@ mysql> start slave;
 
 > !!!NOTE
 > 
-> `haMode:灾备模式`、`idcId:机房ID`、`idcNodeHost:对应机房主计算节点信息`、`ServerId:集群节点编号`、`clusterHost:节点所在IP`、`hsaState:计算节点高可用模式下的主备角色配置`、`HaNodeHost：计算节点高可用模式下对应的当前主计算节点连接信息`总共七个参数不支持同步修改。
+> 【haMode:灾备模式】、【idcId:机房ID】、【idcNodeHost:对应机房主计算节点信息】、【ServerId:集群节点编号】、【clusterHost:节点所在IP】、【hsaState:计算节点高可用模式下的主备角色配置】、【HaNodeHost：计算节点高可用模式下对应的当前主计算节点连接信息】总共七个参数不支持同步修改。
 
 **(二)节点故障：**
 
@@ -870,9 +870,7 @@ mysql> start slave;
 注意事项：
 
 - 当灾备机房为当前备机房时，灾备机房主配置库故障后，计算节点会将灾备机房的主从配置库级联置为不可用状态。
-
 - 当灾备机房为当前备机房时，启用的从配置库时需要确认当前主配置库为可用状态，否则无法启用从配置库，即启用从配置库前必须先启用主配置库
-
 - 若要启用两个机房中任一一个配置库，需要保证当前机房内与机房间的复制状态都正常。若任一一条复制状态存在异常，动态加载会成功但有告警信息，则如下：
 
 ![](assets/cross-idc-disaster-recovery/image55.png)
@@ -883,9 +881,9 @@ mysql> start slave;
 
 ![](assets/cross-idc-disaster-recovery/image56.png)
 
-- 增加灾备机房配置库配置信息，包括灾备机房主从配置库地址以及对应的用户名和密码。中心机房与灾备机房指机房类型，不随机房状态而改变。
+增加灾备机房配置库配置信息，包括灾备机房主从配置库地址以及对应的用户名和密码。中心机房与灾备机房指机房类型，不随机房状态而改变。
 
-- 两个机房的所有计算节点都需要在server.xml中配置中心机房和灾备机房配置库信息。
+两个机房的所有计算节点都需要在server.xml中配置中心机房和灾备机房配置库信息。
 
 (没有标识机房类型的配置库参数代表中心机房的配置库参数)
 
@@ -908,30 +906,32 @@ mysql> start slave;
 
 灾备模式下，无论使用高可用还是单节点的计算节点模式，都遵从对中心机房将该参数设置为2，对灾备机房将该参数设置为3；如果是多计算节点模式，中心机房该参数设置为4，灾备机房该参数设置为5。
 
-示例：
+中心机房：
 
 ```xml
-<!--中心机房-->
 <property name="haMode">2</property><!--高可用模式，0:HA,1:集群,2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房-->
+```
 
-<!--灾备机房-->
+灾备机房
+
+```xml
 <property name="haMode">3</property><!--高可用模式，0:HA,1:集群,2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房 -->
 ```
 
 3. 增加机房ID与另一个机房计算节点信息
 
-- 灾备模式下，需要配置参数idcId和idcNodeHost
+灾备模式下，需要配置参数idcId和idcNodeHost
 
-- idcId(机房ID)：用户需要设置一个ID值来唯一的标识机房类型，目前默认设置为1表示中心机房，设置为2表示灾备机房
+idcId(机房ID)：用户需要设置一个ID值来唯一的标识机房类型，目前默认设置为1表示中心机房，设置为2表示灾备机房
 
-- idcNodeHost(另一个机房计算节点信息)：填写另一个机房的所有计算节点连接信息，配置格式为：IP:PORT
+idcNodeHost(另一个机房计算节点信息)：填写另一个机房的所有计算节点连接信息，配置格式为：IP:PORT
 
-> 例如中心机房主计算节点连接信息为192.168.220.213:3325，备计算节点连接信息为192.168.220.214:3325；灾备机房主计算节点连接信息为192.168.220.217:3325，备计算节点连接信息为192.168.220.218:3325，则在灾备机房的server.xml中，参数idcNodeHost应配置示例如下：
+例如中心机房主计算节点连接信息为192.168.220.213:3325，备计算节点连接信息为192.168.220.214:3325；灾备机房主计算节点连接信息为192.168.220.217:3325，备计算节点连接信息为192.168.220.218:3325，则在灾备机房的server.xml中，参数idcNodeHost应配置示例如下：
 
-灾备机房主计算节点：
+灾备机房的主计算节点：
 
 ```xml
-<property name="idcId">2</property><!--机房ID, 1:中心机房，2:灾备机房(ID of DC, 1:master center, 2:DR center) -->
+<property name="idcId">1</property><!--机房ID, 1:中心机房，2:灾备机房(ID of DC, 1:master center, 2:DR center) -->
 <property name="idcNodeHost">192.168.220.213:3325,192.168.220.214:3325</property><!--另一个机房计算节点信息(Computer node info in the other IDC)-->
 ```
 
@@ -952,7 +952,7 @@ mysql> start slave;
 
 1. 增加配置库的可视化监控
 
-- 配置库组件始终显示在主拓扑的最左侧。
+配置库组件始终显示在主拓扑的最左侧。
 
 ![](assets/cross-idc-disaster-recovery/image57.png)
 
@@ -960,69 +960,69 @@ mysql> start slave;
 
 ![](assets/cross-idc-disaster-recovery/image58.png)
 
-- ![](assets/cross-idc-disaster-recovery/image59.png)为无状态图标，该图标连接一个或两个配置库![](assets/cross-idc-disaster-recovery/image60.png)，分别表示单节点配置库和双主配置库。在单机房模式下，若连接三个及以上的配置库，则代表MGR模式的配置库。当所有配置库不可用时，![](assets/cross-idc-disaster-recovery/image59.png)会显示为橙色。
+![](assets/cross-idc-disaster-recovery/image59.png)为无状态图标，该图标连接一个或两个配置库![](assets/cross-idc-disaster-recovery/image60.png)，分别表示单节点配置库和双主配置库。在单机房模式下，若连接三个及以上的配置库，则代表MGR模式的配置库。当所有配置库不可用时，![](assets/cross-idc-disaster-recovery/image59.png)会显示为橙色。
 
-- 与存储节点类似，配置库图标为红色代表存在故障，鼠标移入红色图标可显示故障原因；橙色代表存在复制状态异常，鼠标移入橙色图标可显示复制异常原因。
+与存储节点类似，配置库图标为红色代表存在故障，鼠标移入红色图标可显示故障原因；橙色代表存在复制状态异常，鼠标移入橙色图标可显示复制异常原因。
 
-- 配置库上显示"复制时延"的监控信息。与存储节点类似，复制时延可以在"设置 ---> 拓扑图报警设置"中的配置库模块下设置复制时延的报警阈值。若当前复制时延超过报警阈值，则"复制时延"悬浮信息会标黄并用向上箭头表示。
+配置库上显示"复制时延"的监控信息。与存储节点类似，复制时延可以在"设置 ---> 拓扑图报警设置"中的配置库模块下设置复制时延的报警阈值。若当前复制时延超过报警阈值，则"复制时延"悬浮信息会标黄并用向上箭头表示。
 
 ![](assets/cross-idc-disaster-recovery/image61.png)
 
 2. 历史信息面板增加配置库监控信息
 
-- 增加warning级别监控信息：配置库复制状态异常和配置库复制时延超过阈值
+增加warning级别监控信息：配置库复制状态异常和配置库复制时延超过阈值
 
 3. 历史信息面板增加机房切换信息
 
-- 若发生机房切换，主拓扑的历史信息面板中，info、warning和error三种信息级别下都会出现一条历史信息，报告机房发生切换。
+若发生机房切换，主拓扑的历史信息面板中，info、warning和error三种信息级别下都会出现一条历史信息，报告机房发生切换。
 
-- 例如发生中心机房切换至灾备机房时，报告机房切换信息为：2019-11-22 12:23:32 机房发生切换，以下历史信息为中心机房信息。
+例如发生中心机房切换至灾备机房时，报告机房切换信息为：2019-11-22 12:23:32 机房发生切换，以下历史信息为中心机房信息。
 
-- 机房切换的信息可以作为历史信息的分割线。此例中，在机房切换信息以前的历史信息都为中心机房历史信息，切换信息以后的为灾备机房历史信息。
+机房切换的信息可以作为历史信息的分割线。此例中，在机房切换信息以前的历史信息都为中心机房历史信息，切换信息以后的为灾备机房历史信息。
 
 ![](assets/cross-idc-disaster-recovery/image62.png)
 
 **（二）灾备拓扑：**
 
-- 在主拓扑或2.5D主拓扑页面，点击【![](assets/cross-idc-disaster-recovery/image63.png)】切换至灾备拓扑，若再次点击则回切至主拓扑或2.5D主拓扑页面。
+在主拓扑或2.5D主拓扑页面，点击【![](assets/cross-idc-disaster-recovery/image63.png)】切换至灾备拓扑，若再次点击则回切至主拓扑或2.5D主拓扑页面。
 
-- ![](assets/cross-idc-disaster-recovery/image63.png)的角标代表，在灾备拓扑中，灾备机房中的当前为error状态且未修复的组件个数，也就是历史信息面板中当前存在仍未被修复的error信息数，包括实际无法连接的组件数以及两个机房之间的存储节点或配置库复制状态异常。
+![](assets/cross-idc-disaster-recovery/image63.png)的角标代表，在灾备拓扑中，灾备机房中的当前为error状态且未修复的组件个数，也就是历史信息面板中当前存在仍未被修复的error信息数，包括实际无法连接的组件数以及两个机房之间的存储节点或配置库复制状态异常。
 
 ![](assets/cross-idc-disaster-recovery/image64.png)
 
-> 若中心机房故障，灾备机房切换为当前主机房，则主拓扑此时显示为灾备机房拓扑图，灾备拓扑的角标仍会显示灾备机房当前error数。
+若中心机房故障，灾备机房切换为当前主机房，则主拓扑此时显示为灾备机房拓扑图，灾备拓扑的角标仍会显示灾备机房当前error数。
 
-- 灾备拓扑中从左到右共有六层组件，从左到右1-3层依次表示中心机房的计算节点、数据节点（配置库）和存储节点（配置库）；4-6层依次表示灾备机房的存储节点（配置库）、数据节点（配置库）和计算节点
+灾备拓扑中从左到右共有六层组件，从左到右1-3层依次表示中心机房的计算节点、数据节点（配置库）和存储节点（配置库）；4-6层依次表示灾备机房的存储节点（配置库）、数据节点（配置库）和计算节点
 
 ![](assets/cross-idc-disaster-recovery/image65.png)
 
-- 一个机房内部的连线代表含义与主拓扑一致。若灾备机房主配置库或主存储节点服务异常，则灾备机房的对应数据节点下的所有存储节点也置为红色不可用状态且连线为灰色。
+一个机房内部的连线代表含义与主拓扑一致。若灾备机房主配置库或主存储节点服务异常，则灾备机房的对应数据节点下的所有存储节点也置为红色不可用状态且连线为灰色。
 
 ![](assets/cross-idc-disaster-recovery/image66.png)
 
-> 图为灾备机房配置库服务异常
+W图为灾备机房配置库服务异常
 
-- 两个机房之间的连线，即中心机房当前主存储节点和灾备机房当前主存储节点之间的连线表示灾备状态。若灾备机房状态异常，则机房之间连线为灰色
+W两个机房之间的连线，即中心机房当前主存储节点和灾备机房当前主存储节点之间的连线表示灾备状态。若灾备机房状态异常，则机房之间连线为灰色
 
 ![](assets/cross-idc-disaster-recovery/image67.png)
 
-> 图为灾备机房配置库灾备关系复制异常
+图为灾备机房配置库灾备关系复制异常
 
-- 中心机房和灾备机房中存在复制时延的存储节点会显示复制时延的监控信息，若复制时延为0，则不显示。复制时延与主拓扑一样，都在"设置 ---> 拓扑图报警设置"中的配置库或存储节点模块下设置报警阈值。
+中心机房和灾备机房中存在复制时延的存储节点会显示复制时延的监控信息，若复制时延为0，则不显示。复制时延与主拓扑一样，都在"设置 ---> 拓扑图报警设置"中的配置库或存储节点模块下设置报警阈值。
 
-- 灾备机房的当前主计算节点，会显示灾备时延的监控信息。配置库和存储节点的灾备时延统一在灾备拓扑页面的【![](assets/cross-idc-disaster-recovery/image68.png)】中设置报警阈值。
+灾备机房的当前主计算节点，会显示灾备时延的监控信息。配置库和存储节点的灾备时延统一在灾备拓扑页面的【![](assets/cross-idc-disaster-recovery/image68.png)】中设置报警阈值。
 
 ![](assets/cross-idc-disaster-recovery/image69.png)
 
-- 配置库和存储节点显示顺序从上到下依次为：配置库始终显示在最上方、存储节点故障（红色）、存储节点预警（黄色）、复制时延或灾备时延出现预警的存储节点，正常节点显示最下方。
+配置库和存储节点显示顺序从上到下依次为：配置库始终显示在最上方、存储节点故障（红色）、存储节点预警（黄色）、复制时延或灾备时延出现预警的存储节点，正常节点显示最下方。
 
-- 若中心机房故障，灾备机房切换为当前主机房，则灾备拓扑中，中心机房的组件（计算节点、配置库和存储节点）都为红色不可用状态，连线为灰色；灾备机房组件按实际运行状态显示。
+若中心机房故障，灾备机房切换为当前主机房，则灾备拓扑中，中心机房的组件（计算节点、配置库和存储节点）都为红色不可用状态，连线为灰色；灾备机房组件按实际运行状态显示。
 
-> 此时不再检测中心机房主存储节点到灾备机房主存储节点之间的灾备状态，故不显示灾备状态的连线。
+此时不再检测中心机房主存储节点到灾备机房主存储节点之间的灾备状态，故不显示灾备状态的连线。
 
 ![](assets/cross-idc-disaster-recovery/image70.png)
 
-- 若为多计算节点集群模式下的灾备架构，则界面显示示例图如下，其功能同主备模式类同：
+若为多计算节点集群模式下的灾备架构，则界面显示示例图如下，其功能同主备模式类同：
 
 ![](assets/cross-idc-disaster-recovery/image71.png)
 
@@ -1086,11 +1086,8 @@ mysql> start slave;
 页面说明：
 
 - 中心机房主计算节点服务器需要ping中心机房除自身外的所有服务器以及灾备机房的所有服务器，所以中心机房的主计算节点服务器分别放置在上图拓扑图区域的中心机房与灾备机房内（如上图标记1）；
-
 - 跨机房网络质量拓扑图只显示：中心机房计算节点服务器（包括主备计算节点）、灾备机房计算节点服务器（包括主备计算节点）中心机房配置库服务器、中心机房存储节点服务器、灾备机房配置库服务器、灾备机房存储节点服务器；
-
 - 如果出现服务程序共用服务器时，按照单机房网络中描述的优先级划分服务器角色；
-
 - 跨机房间的网络复制关系需根据中心机房与灾备机房存储节点主备搭建的复制关系进行网络质量链路连接（如上图标记2）；
 
 机房切换说明：
@@ -1146,19 +1143,15 @@ mysql> start slave;
 选择逻辑库维度或存储节点维度时：
 
 - 若选择单个机房，则将该机房内所选数据节点下的存储节点与该数据节点下的主存储节点比较数据是否一致。与单机房模式下的主备一致性逻辑相同。
-
 - 若同时选择两个机房，则将所选两个机房的数据节点下的存储节点都与当前主机房对应数据节点下的主存储节点比较数据是否一致。
-
-> 例如，**逻辑库**维度下，选择检测逻辑库logicdb01，该逻辑库关联中心机房和灾备机房的dn_01，则点击【发起检测】后，将中心机房dn_01下的当前主存储节点（ds_01）与两个机房dn_01下的所有存储节点（ds_01、ds_02、ds_03、ds_04）分别比较数据是否一致。
+  例如，**逻辑库**维度下，选择检测逻辑库logicdb01，该逻辑库关联中心机房和灾备机房的dn_01，则点击【发起检测】后，将中心机房dn_01下的当前主存储节点（ds_01）与两个机房dn_01下的所有存储节点（ds_01、ds_02、ds_03、ds_04）分别比较数据是否一致。
 
 **（二）增加配置库维度：**
 
 ![](assets/cross-idc-disaster-recovery/image85.png)
 
 - 选择配置库维度后，选择要检测的配置库地址，并填写并发数（默认为2）
-
 - 点击【发起检测】，检测所选的配置库与当前主机房的主配置库的数据一致性。
-
 - 点击【检测结果】查看检测结果详情。若存在不一致，则检测结果中将显示在哪个配置库上对哪一张配置库表的不一致详情。
 
 ![](assets/cross-idc-disaster-recovery/image86.jpeg)
@@ -1181,7 +1174,7 @@ mysql> start slave;
 
 存储节点信息监控中，对于【复制延迟】和【存储节点复制状态】，除了提醒当前主机房内部存储节点异常情况，还增加提醒中心机房当前主存储节点和灾备机房当前主存储节点之间的灾备延迟和灾备状态异常。
 
-**阈值设置**：
+**阈值设置：**
 
 - 复制延迟仍然对应"设置 -> 拓扑图报警设置"中存储节点模块下的复制时延
 
@@ -1195,10 +1188,9 @@ mysql> start slave;
 
 增加配置库信息监控中，提醒当前主机房内配置库之间以及两个机房的主配置库之间的复制延迟和复制异常情况
 
-**阈值设置**：
+**阈值设置：**
 
 - 复制延迟对应"设置 -> 拓扑图报警设置"中配置库模块下的复制时延
-
 - 灾备延迟对应"监控 -> [智能逻辑拓扑](#智能逻辑拓扑)"中灾备拓扑的灾备时延设置
 
 ![](assets/cross-idc-disaster-recovery/image69.png)
@@ -1284,7 +1276,7 @@ Query OK, 1 row affected (5 min 4.35 sec)
 
 灾备机房的主计算节点一旦执行online_dr该命令，将发生机房级别的计算节点服务切换，灾备机房的主计算节点将提供服务，其他情况参考[跨机房故障](#跨机房故障)相关章节详细说明。同时，灾备机房计算节点日志输出如下标记，代表灾备机房服务开始启动并启动成功：
 
-```
+```log
 2019-12-12 19:50:47.257 [INFO] [MANAGER] [$NIOExecutor-1-0] cn.hotpu.hotdb.manager.ManagerQueryHandler(178) - online_dr by [thread=$NIOExecutor-1-0,id=8514,user=root,host=192.168.220.183,port=3325,localport=13838,schema=null]
 2019-12-12 19:50:47.258 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.HotdbServer(2111) - DR online start
 ......
@@ -1303,7 +1295,7 @@ Query OK, 1 row affected (0.01 sec)
 ```
 
 > !!!WARNING
->  <!--特别注意-->
+> 
 > 发生机房级别的切换且当人工在灾备主计算节点上执行进行online_dr命令后，需要同时在灾备备计算节点上执行enable_online命令，可以保证灾备机房的主计算节点故障后能自动切换到灾备机房的备计算节点。否则可能会导致灾备机房主计算节点服务故障时，无法自动切换至灾备机房的备计算节点。如果是多计算节点集群模式，则需要在灾备机房的主计算节点执行online_dr命令，才能保证灾备机房计算几点集群可以主动切换成功。
 
 如果直接在灾备机房的备计算节点上执行online_dr命令，则也会发生机房切换，且服务端口（3323）会在当前执行灾备服务启动命令的一方开启。此时需要额外注意keepalived服务的VIP与服务端口是否在同一台服务器上。
@@ -1476,21 +1468,21 @@ hc01与hc02之间搭建双主复制关系；hc01与hc03之间搭建主备关系�
 
 中心机房出现故障成功切换至灾备机房后，若原中心机房数据无法恢复，必须放弃原灾备模式下中心机房、灾备机房的监控信息，重新添加单计算节点集群模式才能保证管理平台可正常监控当前主机房集群运行情况。否则会存留一些垃圾数据影响当前机房监控状态。必须进行的操作步骤如下：
 
-第1步、备份当前正在提供服务的管理平台对应的配置库数据，以及计算节点对应的配置库数据，以便误操作后恢复所用；
+第1步：备份当前正在提供服务的管理平台对应的配置库数据，以及计算节点对应的配置库数据，以便误操作后恢复所用；
 
-第2步、通过管理平台管理员界面的[集群管理](#集群管理)->"计算节点集群"页面删除原灾备模式的集群组；
+第2步：通过管理平台管理员界面的[集群管理](#集群管理)->"计算节点集群"页面删除原灾备模式的集群组；
 
 ![](assets/cross-idc-disaster-recovery/image100.png)
 
-第3步、依旧通过[集群管理](#集群管理)->"计算节点集群"页面的【集群添加】操作，单独添加当前灾备切换后的新计算节点集群，并配置灾备切换后的配置库信息（默认只要计算节点管理端口当前可连接，此处无需手动再做配置）。
+第3步：依旧通过[集群管理](#集群管理)->"计算节点集群"页面的【集群添加】操作，单独添加当前灾备切换后的新计算节点集群，并配置灾备切换后的配置库信息（默认只要计算节点管理端口当前可连接，此处无需手动再做配置）。
 
 ![](assets/cross-idc-disaster-recovery/image101.png)
 
-第4步、为普通用户添加新集群组的管理权限
+第4步：为普通用户添加新集群组的管理权限
 
-第5步、普通用户角色登录管理平台，选择新添加的集群组进入
+第5步：普通用户角色登录管理平台，选择新添加的集群组进入
 
-第6步、进入[配置](#配置)->[计算节点参数配置](#计算节点参数配置)页面按如下标红所示，修改相关配置参数：集群模式选择主备，机房ID选择中心机房（此处为[场景二](#场景二原中心机房作为当前灾备机房)做铺垫），配置库连接信息按实际当前配置库信息填写并保存；
+第6步：进入[配置](#配置)->[计算节点参数配置](#计算节点参数配置)页面按如下标红所示，修改相关配置参数：集群模式选择主备，机房ID选择中心机房（此处为[场景二](#场景二原中心机房作为当前灾备机房)做铺垫），配置库连接信息按实际当前配置库信息填写并保存；
 
 ![](assets/cross-idc-disaster-recovery/image102.png)
 
@@ -1498,19 +1490,19 @@ hc01与hc02之间搭建双主复制关系；hc01与hc03之间搭建主备关系�
 
 ![](assets/cross-idc-disaster-recovery/image104.png)
 
-第7步、进入[配置](#配置)->[节点管理](#节点管理)页面删除原中心机房存留数据（可选择按IP搜索，也可选择按不可用状态搜索，但需要注意不要误删当前主计算节点集群所用数据）
+第7步：进入[配置](#配置)->[节点管理](#节点管理)页面删除原中心机房存留数据（可选择按IP搜索，也可选择按不可用状态搜索，但需要注意不要误删当前主计算节点集群所用数据）
 
 ![](assets/cross-idc-disaster-recovery/image105.png)
 
 ![](assets/cross-idc-disaster-recovery/image106.png)
 
-第8步、进入当前主机房主配置库，将hotdb_datasource 表内所有的机房ID都更换为1（1代表中心机房，在不开启灾备情况下，无实际意义）
+第8步：进入当前主机房主配置库，将hotdb_datasource 表内所有的机房ID都更换为1（1代表中心机房，在不开启灾备情况下，无实际意义）
 
-```
+```sql
 update hotdb_datasource set idc_id=1;
 ```
 
-第9步、进入当前主机房主配置库，检查hotdb_config_info表的结果，确认当前k列为hotdb_master_config_status的一行数据其v值为1（该行数据代表当前主配置库是否可用，发生机房级别灾备切换后不会将该行数据做更新，此处仅确认即可，以保证可以正常读取当前配置库信息），若不为1，将该行数据更新为1；
+第9步：进入当前主机房主配置库，检查hotdb_config_info表的结果，确认当前k列为hotdb_master_config_status的一行数据其v值为1（该行数据代表当前主配置库是否可用，发生机房级别灾备切换后不会将该行数据做更新，此处仅确认即可，以保证可以正常读取当前配置库信息），若不为1，将该行数据更新为1；
 
 ```
 root@localhost:hotdb_config 5.7.25-log 07:47:19> select * From hotdb_config_info where k='hotdb_master_config_status' ;
@@ -1522,17 +1514,17 @@ root@localhost:hotdb_config 5.7.25-log 07:47:19> select * From hotdb_config_info
 1 row in set (0.00 sec)
 ```
 
-第10步、执行动态加载；
+第10步：执行动态加载；
 
-第11步、检查当前计算节点、配置库、存储节点服务状态是否符合当前实际情况。
+第11步：检查当前计算节点、配置库、存储节点服务状态是否符合当前实际情况。
 
 ##### 场景二：原中心机房作为当前灾备机房
 
 原灾备机房提升为当前的中心机房后，当原中心机房组件可以恢复时，考虑将原中心机房作为当前的灾备机房，必须在[场景一](#场景一废弃原中心机房)操作完毕的基础上，手动人工进行本章节描述的后续配置修改操作，操作步骤如下（注意一定是基于场景一的描述）：
 
-第1步、备份当前正在提供服务的管理平台对应的配置库数据，以及计算节点对应的配置库数据，以便误操作恢复时所用（尽量不要与前面的备份文件冲突）。第2步、检查原中心机房计算节点服务进程、keepalived进程是否存在，若存在可直接全部关闭（若为多计算节点集群模式，则可以无需关注keepalived，均有LVS控制），不会对当前正在提供服务的计算节点服务造成影响；主要为避免对该计算节点误操作，带来不必要的运维成本。
+第1步：备份当前正在提供服务的管理平台对应的配置库数据，以及计算节点对应的配置库数据，以便误操作恢复时所用（尽量不要与前面的备份文件冲突）。第2步：检查原中心机房计算节点服务进程、keepalived进程是否存在，若存在可直接全部关闭（若为多计算节点集群模式，则可以无需关注keepalived，均有LVS控制），不会对当前正在提供服务的计算节点服务造成影响；主要为避免对该计算节点误操作，带来不必要的运维成本。
 
-第3步、搭建当前中心机房与原中心机房的配置库、存储节点复制关系，将复制链路互换。互换过程中参考操作步骤如下：
+第3步：搭建当前中心机房与原中心机房的配置库、存储节点复制关系，将复制链路互换。互换过程中参考操作步骤如下：
 
 - 发生灾备切换后，原灾备机房服务启动成为当前主机房时，正常情况下会自动根据当前主机房存储节点角色配置搭建双主复制关系，配置库默认均搭建双主复制关系，此处无需特殊处理；即ds03与ds04、hc03与hc04均为双主复制；
 
@@ -1544,11 +1536,9 @@ root@localhost:hotdb_config 5.7.25-log 07:47:19> select * From hotdb_config_info
 
 - 将原中心机房内部的存储节点、配置库搭建主从复制关系，即ds01和ds02为主从复制，ds02为从机；hc01和hc02为主从复制，hc02为从机。注意：保险起见，建议搭建复制关系之前，源数据建议从原中心机房主存储节点ds01、配置库hc01中导出再导入ds02、hc02，再搭建复制关系。
 
-- 若开启半同步复制，则根据需要手动修改当前主机房主存储节点、主配置库的rpl_semi_sync_master_wait_for_slave_count值到正确的个数，与其真实从机个数匹配，参考设置语句：
+- 若开启半同步复制，则根据需要手动修改当前主机房主存储节点、主配置库的rpl_semi_sync_master_wait_for_slave_count值到正确的个数，与其真实从机个数匹配，参考设置语句：`set global rpl_semi_sync_master_wait_for_slave_count=XXX`;
 
-set global rpl_semi_sync_master_wait_for_slave_count=XXX;
-
-第4步、修改原中心机房和当前主机房配置文件server.xml 为新状态的灾备模式配置，参考如下：
+第4步：修改原中心机房和当前主机房配置文件server.xml 为新状态的灾备模式配置，参考如下：
 
 **当前主机房主计算节点：**
 
@@ -1590,7 +1580,7 @@ set global rpl_semi_sync_master_wait_for_slave_count=XXX;
 <property name="idcId">**2**</property><!-- 机房ID, 1:中心机房，2:灾备机房(ID of IDC, 1:Biz IDC, 2:DR IDC) -->
 ```
 
-第5步、登录当前主机房主配置库，将业务机房（即中心机房）配置库是否可用情况置为1（发生机房级别灾备切换后，计算节点会自动将中心机房配置库状态标记为不可用，此处需将其启用，才能保证动态加载后，计算节点能按当前最新的配置读取正确的配置库信息），以及按实际情况检查该表记录的其他配置库状态是否与实际可用状态一致：
+第5步：登录当前主机房主配置库，将业务机房（即中心机房）配置库是否可用情况置为1（发生机房级别灾备切换后，计算节点会自动将中心机房配置库状态标记为不可用，此处需将其启用，才能保证动态加载后，计算节点能按当前最新的配置读取正确的配置库信息），以及按实际情况检查该表记录的其他配置库状态是否与实际可用状态一致：
 
 **更新当前业务机房（即中心机房）配置库可用状态：**
 
@@ -1601,7 +1591,7 @@ update hotdb_config_info set v='1' where k='hotdb_biz_idc_config_ok' or k='hotdb
 **查询其他配置库可用状态：**
 
 ```
-select * From hotdb_config_info limit 1,5;
+select * from hotdb_config_info limit 1,5;
 +-----------------------------------+---+------------------------------------------------------------------------------------------+
 | k                                 | v | description                                                                              |
 +-----------------------------------+---+------------------------------------------------------------------------------------------+
@@ -1610,28 +1600,30 @@ select * From hotdb_config_info limit 1,5;
 | hotdb_dr_idc_master_config_status | 1 | 灾备机房主配置库状态(Master configuration database status in DR IDC)                     |
 | hotdb_dr_idc_slave_config_ok      | 1 | 灾备机房从配置库是否可用(standby configuration database in DR IDC ok or not)             |
 | hotdb_master_config_status        | 1 | 主配置库状态(Master configuration database status)                                       |
-
++-----------------------------------+---+------------------------------------------------------------------------------------------+
 ```
 
-第6步、启动原中心机房计算节点主备服务（keepalived可以暂时无需启动，后续发生机房级别故障切换后，恢复服务时再启动）。
+第6步：启动原中心机房计算节点主备服务（keepalived可以暂时无需启动，后续发生机房级别故障切换后，恢复服务时再启动）。
 
-第7步、管理员账户登录管理平台，至[集群管理](#集群管理)->"计算节点集群"页面将灾备模式开启，并配置原中心机房计算节点为当前灾备机房计算节点。测试通过后保存。
+第7步：管理员账户登录管理平台，至[集群管理](#集群管理)->"计算节点集群"页面将灾备模式开启，并配置原中心机房计算节点为当前灾备机房计算节点。测试通过后保存。
 
 ![](assets/cross-idc-disaster-recovery/image107.png)
 
 ![](assets/cross-idc-disaster-recovery/image108.png)
 
-第8步、普通账户登录管理平台，选择新添加的灾备集群。
+第8步：普通账户登录管理平台，选择新添加的灾备集群。
 
-第9步、至[配置](#配置)-> [节点管理](#节点管理)页面添加灾备机房数据节点、存储节点。![](assets/cross-idc-disaster-recovery/image109.png)
+第9步：至[配置](#配置)-> [节点管理](#节点管理)页面添加灾备机房数据节点、存储节点。
+
+![](assets/cross-idc-disaster-recovery/image109.png)
 
 ![](assets/cross-idc-disaster-recovery/image110.png)
 
-第10步、检查当前主机房复制关系以及灾备关系复制状态是否异常， 可以通过[节点管理](#节点管理)以及[配置校验](#配置校验)页面分别查看存储节点、配置库的各项复制状态是否正常。
+第10步：检查当前主机房复制关系以及灾备关系复制状态是否异常， 可以通过[节点管理](#节点管理)以及[配置校验](#配置校验)页面分别查看存储节点、配置库的各项复制状态是否正常。
 
-第11步、动态加载
+第11步：动态加载
 
-第12步、检查拓扑图及各项监控指标是否正常，以及通过当前主机房计算节点查看管理端show @@heartbeat命令出来的结果心跳是否均已在监控状态。
+第12步：检查拓扑图及各项监控指标是否正常，以及通过当前主机房计算节点查看管理端`show @@heartbeat`命令出来的结果心跳是否均已在监控状态。
 
 ##### 场景三：原中心机房服务切回角色不变
 
@@ -1639,13 +1631,13 @@ select * From hotdb_config_info limit 1,5;
 
 - **计算节点可停机的情况下**
 
-第1步、停止当前正在提供服务的管理平台、所有计算节点服务、keepalived服务（需要注意不论哪个机房类型，均应先停备计算节点对应的keepalived服务、备计算节点服务，再停止主keepalived服务、计算节点服务）。
+第1步：停止当前正在提供服务的管理平台、所有计算节点服务、keepalived服务（需要注意不论哪个机房类型，均应先停备计算节点对应的keepalived服务、备计算节点服务，再停止主keepalived服务、计算节点服务）。
 
-第2步、等待当前中心机房存储节点复制追上，清理所有原中心机房、灾备机房存储节点、配置库复制关系。
+第2步：等待当前中心机房存储节点复制追上，清理所有原中心机房、灾备机房存储节点、配置库复制关系。
 
-第3步、从当前中心机房主存储节点数据导出数据，以该数据为准，按正常的中心机房与灾备机房的复制关系要求，重新搭建原中心机房存储节点至灾备机房存储节点的复制关系和灾备关系。即中心机房故障切换至灾备机房后，灾备机房成为当前主机房，复制关系为：ds01与ds02互为双主，ds03与ds04互为双主，ds03为当前主存储节点。当原中心机房恢复后，并保证其角色不发生互换，现需要按正规的主从复制搭建流程，以ds03的数据为准将复制关系还原为： ds01与ds02 互为双主，ds01与ds03互为主从（ds03为从机），ds03与ds04互为主从（ds04为从机）。所有节点复制关系均需要重建，配置库复制关系亦同。
+第3步：从当前中心机房主存储节点数据导出数据，以该数据为准，按正常的中心机房与灾备机房的复制关系要求，重新搭建原中心机房存储节点至灾备机房存储节点的复制关系和灾备关系。即中心机房故障切换至灾备机房后，灾备机房成为当前主机房，复制关系为：ds01与ds02互为双主，ds03与ds04互为双主，ds03为当前主存储节点。当原中心机房恢复后，并保证其角色不发生互换，现需要按正规的主从复制搭建流程，以ds03的数据为准将复制关系还原为： ds01与ds02 互为双主，ds01与ds03互为主从（ds03为从机），ds03与ds04互为主从（ds04为从机）。所有节点复制关系均需要重建，配置库复制关系亦同。
 
-第4步、确认存储节点、配置库复制关系无异常后，在主配置库中（此时应该是ds01）执行如下语句将业务机房（即中心机房）配置库是否可用情况置为1，以及按实际情况检查该表记录的其他配置库状态是否与实际可用状态一致：
+第4步：确认存储节点、配置库复制关系无异常后，在主配置库中（此时应该是ds01）执行如下语句将业务机房（即中心机房）配置库是否可用情况置为1，以及按实际情况检查该表记录的其他配置库状态是否与实际可用状态一致：
 
 **更新当前业务机房（即中心机房）配置库可用状态：**
 
@@ -1662,12 +1654,11 @@ select * From hotdb_config_info limit 1,5;
 +-----------------------------------+---+------------------------------------------------------------------------------------------+
 | hotdb_biz_idc_config_ok           | 1 | 业务机房配置库是否可用(configuration database in Biz IDC ok or not)                      |
 | hotdb_dr_idc_config_ok            | 1 | 灾备机房配置库是否可用(configuration database in DR IDC ok or not)                       |
-
 ```
 
-第5步、前4步操作无误后，按正常流程启动原中心机房和灾备机房计算节点、keepalived服务；此时对于前端应用而言，中心机房已正式切回，机房角色状态无变化；
+第5步：前4步操作无误后，按正常流程启动原中心机房和灾备机房计算节点、keepalived服务；此时对于前端应用而言，中心机房已正式切回，机房角色状态无变化；
 
-第6步、启动管理平台，检查复制关系、拓扑图状态是否正常；
+第6步：启动管理平台，检查复制关系、拓扑图状态是否正常；
 
 - **计算节点不可停机的情况下**
 
@@ -1677,11 +1668,11 @@ select * From hotdb_config_info limit 1,5;
 
 前面章节描述的操作中，一旦发生机房切换，就必须将出现故障的机房历史监控数据丢弃，实际在使用过程中，只要中心机房数据可以恢复，可能用户并不想丢弃当前已经存在的集群组信息，但可以保证机房切换。此时必须人工对配置库数据进行修改，并将配置文件、存储节点复制关系进行重建，才能完成角色互换。参考步骤如下：
 
-第1步、在[前提说明](#前提说明)的环境下，发生了机房级别切换，HotDB-03、HotDB-04为当前主机房主备计算节点，原中心机房数据 ds01、ds02、hc01、hc02故障可恢复。此时先保证原中心机房主备计算节点服务关闭，即HotDB-01、HotDB-02服务为关闭状态；
+第1步：在[前提说明](#前提说明)的环境下，发生了机房级别切换，HotDB-03、HotDB-04为当前主机房主备计算节点，原中心机房数据 ds01、ds02、hc01、hc02故障可恢复。此时先保证原中心机房主备计算节点服务关闭，即HotDB-01、HotDB-02服务为关闭状态；
 
-第2步、备份当前正在提供服务的管理平台对应的配置库数据，以及计算节点对应的配置库数据，以便误操作恢复时所用（尽量不要与前面的备份文件冲突）。第3步、检查原中心机房计算节点服务进程、keepalived进程是否存在，若存在可直接全部关闭，不会对当前正在提供服务的计算节点服务造成影响；主要为避免对该计算节点误操作，带来不必要的运维成本。
+第2步：备份当前正在提供服务的管理平台对应的配置库数据，以及计算节点对应的配置库数据，以便误操作恢复时所用（尽量不要与前面的备份文件冲突）。第3步：检查原中心机房计算节点服务进程、keepalived进程是否存在，若存在可直接全部关闭，不会对当前正在提供服务的计算节点服务造成影响；主要为避免对该计算节点误操作，带来不必要的运维成本。
 
-第4步、搭建当前中心机房与原中心机房的配置库、存储节点复制关系，将复制链路互换。互换过程中参考操作步骤如下：
+第4步：搭建当前中心机房与原中心机房的配置库、存储节点复制关系，将复制链路互换。互换过程中参考操作步骤如下：
 
 - 发生灾备切换后，原灾备机房服务启动成为当前主机房时，正常情况下会自动根据当前主机房存储节点角色配置搭建双主复制关系，配置库默认均搭建双主复制关系，此处无需特殊处理；即ds03与ds04、hc03与hc04均为双主复制；
 
@@ -1693,11 +1684,9 @@ select * From hotdb_config_info limit 1,5;
 
 - 将原中心机房内部的存储节点、配置库搭建主从复制关系，即ds01和ds02为主从复制，ds02为从机；hc01和hc02为主从复制，hc02为从机。注意：保险起见，建议搭建复制关系之前，源数据是从原中心机房主存储节点ds01、配置库hc01中导出再导入ds02、hc02，再搭建复制关系。
 
-- 若开启半同步复制，则根据须要手动修改当前主机房主存储节点、主配置库的rpl_semi_sync_master_wait_for_slave_count值到正确的个数，与其真实从机个数匹配，参考设置语句：
+- 若开启半同步复制，则根据须要手动修改当前主机房主存储节点、主配置库的rpl_semi_sync_master_wait_for_slave_count值到正确的个数，与其真实从机个数匹配，参考设置语句：`set global rpl_semi_sync_master_wait_for_slave_count=XXX;`
 
-set global rpl_semi_sync_master_wait_for_slave_count=XXX;
-
-第5步、修改原中心机房和当前主机房配置文件server.xml 为新状态下的灾备模式配置，参考如下：
+第5步：修改原中心机房和当前主机房配置文件server.xml 为新状态下的灾备模式配置，参考如下：
 
 **当前主机房主计算节点：**
 
@@ -1743,14 +1732,14 @@ set global rpl_semi_sync_master_wait_for_slave_count=XXX;
 <property name="idcId">**2**</property><!-- 机房ID, 1:中心机房，2:灾备机房(ID of IDC, 1:Biz IDC, 2:DR IDC) -->
 ```
 
-第6步、登录当前主机房主配置库，将业务机房配置库是否可用情况置为1，并交换机房ID：
+第6步：登录当前主机房主配置库，将业务机房配置库是否可用情况置为1，并交换机房ID：
 
 ```sql
 update hotdb_config_info set v='1' where k='hotdb_biz_idc_config_ok' or k='hotdb_master_config_status';
 update hotdb_datasource t1 join hotdb_datasource t2 on(t1.idc_id=1 and t2.idc_id=2) set t1.idc_id=t2.idc_id,t2.idc_id=t1.idc_id;
 ```
 
-第7步、登录管理平台配置库执行如下SQL ，将历史机房ID进行互换（注意将group_id进行替换，与管理平台集群管理页面ID一致）：
+第7步：登录管理平台配置库执行如下SQL ，将历史机房ID进行互换（注意将group_id进行替换，与管理平台集群管理页面ID一致）：
 
 ```sql
 UPDATE hotdb_info t1 JOIN hotdb_info t2 ON (t1.group_id = ? and t2.group_id = ? and t1.room_type=1 and t2.room_type=2) SET t1.room_type = t2.room_type,t2.room_type=t1.room_type;
@@ -1765,15 +1754,15 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 
 ![](assets/cross-idc-disaster-recovery/image111.png)
 
-第8步、登录管理平台，将原中心机房（现灾备机房）因机房自动置为不可用存储节点进行启用：
+第8步：登录管理平台，将原中心机房（现灾备机房）因机房自动置为不可用存储节点进行启用：
 
 ![](assets/cross-idc-disaster-recovery/image112.png)
 
-第9步、检查当前主机房复制关系以及灾备关系复制状态是否异常， 可以通过[节点管理](#节点管理)以及[配置校验](#配置校验)页面分别查看存储节点、配置库的各项复制状态是否正常。
+第9步：检查当前主机房复制关系以及灾备关系复制状态是否异常， 可以通过[节点管理](#节点管理)以及[配置校验](#配置校验)页面分别查看存储节点、配置库的各项复制状态是否正常。
 
-第10步、动态加载
+第10步：动态加载
 
-第12步、检查拓扑图及各项监控指标是否正常，以及通过当前主机房计算节点查看管理端`show @@heartbeat`命令出来的结果心跳是否均已在监控状态，且`show @@configurl`、`show @@datanode `均已显示机房角色进行了互换。示例：
+第12步：检查拓扑图及各项监控指标是否正常，以及通过当前主机房计算节点查看管理端`show @@heartbeat`命令出来的结果心跳是否均已在监控状态，且`show @@configurl`、`show @@datanode `均已显示机房角色进行了互换。示例：
 
 ![](assets/cross-idc-disaster-recovery/image113.png)
 
@@ -1915,7 +1904,7 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 
 - 机房发生切换或正在提供服务的计算节点offline ,则当前与之相关的后端连接也会关闭，相关日志记录信息可参考：
 
-```
+```log
 2019-12-14 19:08:00.978 [WARN] [CONNECTION] [$NIOREACTOR-2-RW] cn.hotpu.hotdb.net.NIOSocketWR(181) - exception(stream closed) in reading backend connection: [id:196,nodeId:47 192.168.220.181:3309/db2531 status:1,charset:utf8mb4] id=931
 threadId=5801 isAuthenticated=true responseHandler=null isNetFull=false bufferInFullNet=false lastUsedTime=1576321520613 tookTime=1576321520605 sendingData=false inFlowControl=false maybeSlow=false heavyRowEof=false inFieldPacket=false
 needSyncAutocommit=false syncAutocommitValue=true usingReadBuffer=false usingWriteBuffer=false readBuffer=java.nio.DirectByteBuffer[pos=0 lim=16384 cap=16384] writeBuffer=null writeQueue=0 host=192.168.220.181 port=3309 localPort=22248
@@ -1926,14 +1915,14 @@ readData=1576321520613 lastWritten=184 inner=false toBeClosed=false isClosed=fal
 
 - 服务端口被关闭日志标记：
 
-```
+```log
 2019-12-14 19:07:56.610 [INFO] [MANAGER] [$NIOExecutor-0-2] cn.hotpu.hotdb.manager.response.Offline(66) - received offline command from:[thread=$NIOExecutor-0-2,id=1056,user=root,host=192.168.220.181,port=3325,localport=16928,schema=null]
 2019-12-14 19:07:56.612 [INFO] [MANAGER] [Labor-10] cn.hotpu.hotdb.HotdbServer(2149) - MANAGER offline start
 ```
 
 - 灾备机房服务开始启动日志标记：
 
-```
+```log
 2019-12-14 19:07:56.552 [INFO] [MANAGER] [Labor-26] cn.hotpu.hotdb.HotdbServer(2115) - DR online start
 ```
 
@@ -1957,15 +1946,18 @@ readData=1576321520613 lastWritten=184 inner=false toBeClosed=false isClosed=fal
 
 如果待搭建复制关系的新实例和旧主实例的GTID功能都是打开的，即gtid_mode为on，时可参考如下方式搭建主从复制：
 
-第1步、检查导出数据所用的目录剩余可用磁盘空间是否足够，必须保证数据所用的目录剩余空间大于当前查询出需要用到空间的1.5倍+10GB。当前数据所需空间大小参考SQL：select sum(data_length) from information_schema.tables（单位：字节b）。
+第1步：检查导出数据所用的目录剩余可用磁盘空间是否足够，必须保证数据所用的目录剩余空间大于当前查询出需要用到空间的1.5倍+10GB。当前数据所需空间大小参考SQL：select sum(data_length) from information_schema.tables（单位：字节b）。
 
-第2步、使用如下参数导出旧主实例数据：
+第2步：使用如下参数导出旧主实例数据：
 
-```
+```bash
 mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > 不重名文件 ;echo $?
+```
 
-示例：mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup > backup_data.sql ;echo $?
+示例：
 
+```bash
+mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup > backup_data.sql ;echo $?
 mysqldump: [Warning] Using a password on the command line interface can be insecure.
 ```
 
@@ -1975,44 +1967,52 @@ mysqldump: [Warning] Using a password on the command line interface can be insec
 > 
 > 采取如上方式导出导入数据，默认会设置了`SET @@SESSION.SQL_LOG_BIN= 0;`，因此中心机房主实例与灾备机房的复制关系， 和灾备机房本身的复制关系搭建一定要保证千万不能采取先搭好灾备机房间的复制，再导数据的方式，必须将主实例数据先导出，再导入目标新实例之后搭建复制关系。
 
-第3步、文件导出后，检查文件内容是否可用。将文件SCP至即将作为从机的新实例所在的服务器。SCP之前检查新实例的数据目录剩余磁盘空间是否足够，要求目标数据目录剩余磁盘空间大于导出的文件大小的2.5倍+10GB。检查新实例数据目录的命令可参考：
+第3步：文件导出后，检查文件内容是否可用。将文件SCP至即将作为从机的新实例所在的服务器。SCP之前检查新实例的数据目录剩余磁盘空间是否足够，要求目标数据目录剩余磁盘空间大于导出的文件大小的2.5倍+10GB。检查新实例数据目录的命令可参考：
 
 ```sql
 show global variables like 'datadir'
 ```
 
-第4步、文件传输成功后，可以根据需要选择删除原主实例上的导出文件。
+第4步：文件传输成功后，可以根据需要选择删除原主实例上的导出文件。
 
-第5步、使用如下命令导入文件
+第5步：使用如下命令导入文件
 
 ```
 mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < 不重名文件 ;echo $?
-示例：[root@hotdb-220-182 \~]\## mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup < /data/mysql/mysqldata3306/backup_data.sql ;echo $?
+```
+
+示例：
+
+```bash
+[root@hotdb-220-182 ~]# mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup < /data/mysql/mysqldata3306/backup_data.sql ;echo $?
 mysql: [Warning] Using a password on the command line interface can be insecure.
 ```
 
 命令不报错，`$?`返回值为0（出现`mysql: [Warning] Using a password on the command line interface can be insecure.`这个是正常）。
 
-第6步、执行如下命令刷新权限，注意刷新后，如果重新连接实例，则连接的用户名密码，和旧主实例相同。
+第6步：执行如下命令刷新权限，注意刷新后，如果重新连接实例，则连接的用户名密码，和旧主实例相同。
 
 ```sql
 FLUSH NO_WRITE_TO_BINLOG PRIVILEGES;
 ```
 
-第7步、可以考虑为所有表执行以下语句，
+第7步：可以考虑为所有表执行以下语句，
 
 ```sql
 ANALYZE NO_WRITE_TO_BINLOG TABLE xxx;
 ```
 
-第8步、根据需要删除新实例数据目录下的原数据备份文件。
+第8步：根据需要删除新实例数据目录下的原数据备份文件。
 
-第9步、使用GTID的方式搭建复制关系
+第9步：使用GTID的方式搭建复制关系
 
 ```sql
 change master to master_host = 'xxx',master_user='xxx',master_password='xxx', master_port=xxx,master_auto_position=1;
+```
 
 # 示例：
+
+```sql
 change master to master_host = '192.168.220.181',master_user='repl',master_password='repl', master_port=3306,master_auto_position=1;
 ```
 
@@ -2021,32 +2021,36 @@ change master to master_host = '192.168.220.181',master_user='repl',master_passw
 > !!!NOTE
 > 
 > 如果计算节点集群开启灾备模式，要求所有存储节点均开启GTID，此处介绍，仅为了解所用，实际与灾备模式的运维工作无直接关联关系。
+> 
+> 如果待搭建复制关系的新实例和旧主实例的gtid功能都是关闭的或有其中一方关闭，此时搭建复制关系只能通过binlog复制位置的方式搭建。主流程与[开启GTID](#开启gtid)过程相同，但第2步：第5步：第9步涉及的数据导入、导出、搭建复制关系与之有差异：
 
-如果待搭建复制关系的新实例和旧主实例的gtid功能都是关闭的或有其中一方关闭，此时搭建复制关系只能通过binlog复制位置的方式搭建。主流程与[开启GTID](#开启gtid)过程相同，但第2步、第5步、第9步涉及的数据导入、导出、搭建复制关系与之有差异：
-
-第2步、导出数据参考命令：
+第2步：导出数据参考命令：
 
 ```bash
 mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --loose-set-gtid-purged=off --master-data=2 --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > 不重名文件 ;echo $?
 ```
 
-第5步、导入数据参考命令：
+第5步：导入数据参考命令：
 
 ```bash
 mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < 不重名文件 ;echo $?
 ```
 
-第9步、搭建复制关系参考命令：
+第9步：搭建复制关系参考命令：
 
 ```bash
 change master to master_host = 'xxx',master_user='xxx',master_password='xxx', MASTER_LOG_FILE='mysql-bin.xxx', MASTER_LOG_POS=xxx;
 ```
 
-其中：MASTER_LOG_FILE='mysql-bin.xxx', MASTER_LOG_POS=xxx;的位置为第2步数据导出时得到的位置，可以通过：head -c 4096 不重名文件 | grep -i 'change master'获得。如果有多个新实例需要搭建主从关系，而且存在二级从的关系，需要在数据导入完毕后，执行任何写入操作前，在二级从对应的主机上执行show master status获取binlog位置，不能直接拿导出位置进行复制关系搭建。
+> !!!NOTE
+> 
+> `MASTER_LOG_FILE='mysql-bin.xxx', MASTER_LOG_POS=xxx;`的位置为第2步数据导出时得到的位置，可以通过：head -c 4096 不重名文件 | grep -i 'change master'获得。如果有多个新实例需要搭建主从关系，而且存在二级从的关系，需要在数据导入完毕后，执行任何写入操作前，在二级从对应的主机上执行show master status获取binlog位置，不能直接拿导出位置进行复制关系搭建。
 
 ### 什么情况下必须放弃原机房数据
 
 若发生机房级别的切换，则需要注意在以下情况下，必须废弃原中心机房的数据：
 
-人工判断存在部分数据未同步到原灾备机房（当前主机房）时，因数据以原灾备机房（当前主机房）为准，未同步的数据不可再重新同步。如果需要重建原中心机房，则需要将原中心机房的数据删除后再从当前主机房中导出数据，再做后续机房恢复操作，否则会导致业务上的混乱（注意，使用半同步复制依旧可能出现这样的情况，但这样的数据是发出了commit但没有收到ok的事务，业务不能简单认为这样的事务一定没提交或者一定提交了，必须通过实际查询数据判断并决策业务处理方式）。
+人工判断存在部分数据未同步到原灾备机房（当前主机房）时，因数据以原灾备机房（当前主机房）为准，未同步的数据不可再重新同步。
+
+如果需要重建原中心机房，则需要将原中心机房的数据删除后再从当前主机房中导出数据，再做后续机房恢复操作，否则会导致业务上的混乱（注意，使用半同步复制依旧可能出现这样的情况，但这样的数据是发出了commit但没有收到ok的事务，业务不能简单认为这样的事务一定没提交或者一定提交了，必须通过实际查询数据判断并决策业务处理方式）。
 

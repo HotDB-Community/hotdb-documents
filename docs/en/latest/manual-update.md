@@ -780,7 +780,7 @@ High availability switch is required when compute node is upgraded. To ensure th
 
 - Configuration check is normal. You can check whether ConfigDB configuration is correct in the menu "Configuration->Configuration Check" in management platform
 
-- Compute node memory information is consistent with ConfigDB. You can execute the command reload @@config through "dynamic loading" function of management platform or logging in to manager port (3325 by default) to ensure the consistency of the information
+- Compute node memory information is consistent with ConfigDB. You can execute the command `reload @@config` through "dynamic loading" function of management platform or logging in to manager port (3325 by default) to ensure the consistency of the information
 
 **5. Keepalived is running normally**
 
@@ -1228,7 +1228,7 @@ Version package is replaced and corresponding configuration file content is upgr
 
 ##### Start compute node service
 
-Compute node service program is started in no particular order, and can be started successively and then log in to any compute node manager port (3325 by default) and execute the command "show @@cluster" to inquire the running status and role information of compute node in current cluster.
+Compute node service program is started in no particular order, and can be started successively and then log in to any compute node manager port (3325 by default) and execute the command `show @@cluster` to inquire the running status and role information of compute node in current cluster.
 
 ### Multi-node cluster upgrade without service stopped
 
@@ -1252,7 +1252,7 @@ Upgrade without service stopped of multi-node cluster mode shall meet the follow
 
 Upgrading secondary compute node in cluster will cause interruption of client connection on the secondary compute node; upgrading primary compute node will cause interruption not only of client connection, but also of some transactions in progress. It is suggested to upgrade in production environment during the low peak of operation.
 
-**Special Instructions:** primary and secondary are the roles of current compute node displayed when executing command "show @@cluster" in manager port (3325 by default). The secondary1 and secondary2 below represent the compute nodes with secondary attribute in three compute node clusters, whose numbers at the end are in no particular order and can represent any secondary compute node.
+**Special Instructions:** primary and secondary are the roles of current compute node displayed when executing command `show @@cluster` in manager port (3325 by default). The secondary1 and secondary2 below represent the compute nodes with secondary attribute in three compute node clusters, whose numbers at the end are in no particular order and can represent any secondary compute node.
 
 #### ConfigDB Upgrade
 
