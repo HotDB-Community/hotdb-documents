@@ -157,8 +157,8 @@
 | 10153 | `ER_QUERY_FAILED` | 后端查询失败 | 2.5.1 |
 | 10154 | `ER_PWD_DECRYPT_FAILED` | 密码解密失败 | 2.5.1 |
 | 10155 | `ER_SET_SYSCONF_FAILED` | 设置系统参数失败 | 2.5.1 |
-| 10156 | `ER_SHOW_SERVER_EXCEPTION` | show @@server异常 | 2.5.1 |
-| 10157 | `ER_SHOW_SERVER_USAGE_EXCEPTION` | show @@ServerSourceUsage异常 | 2.5.1 |
+| 10156 | `ER_SHOW_SERVER_EXCEPTION` | `show @@server`异常 | 2.5.1 |
+| 10157 | `ER_SHOW_SERVER_USAGE_EXCEPTION` | `show @@ServerSourceUsage`异常 | 2.5.1 |
 | 10158 | `ER_DS_SWITCH_FAILED` | 数据源手动切换失败 | 2.5.1 |
 | 10159 | `ER_TRANSFER_CHECK_FAILED` | 一键迁库检查失败 | 2.5.1 |
 | 10160 | `ER_UNKNOWN_TRANSFER_HISTORY` | 未知的一键迁库历史记录 | 2.5.1 |

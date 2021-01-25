@@ -57,11 +57,11 @@
   * [X] `docs/zh/latest/intelligent-inspection.md` L F
 * `idc`
   * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` F
-  * [X] `docs/zh/latest/visual-idc.md` L F
+  * [X] `docs/zh/latest/visual-idc.md` L F C
 * `appendix`
-  * [X] `docs/zh/latest/glossary.md` F
-  * [X] `docs/zh/latest/parameters.md` F
-  * [X] `docs/zh/latest/error-codes.md` F
+  * [X] `docs/zh/latest/glossary.md` F C
+  * [X] `docs/zh/latest/parameters.md` F C
+  * [X] `docs/zh/latest/error-codes.md` F C
 
 英文文档（截止时间：2021-01-14 15:00:21）
 
@@ -86,7 +86,7 @@
   * [ ] `docs/en/latest/intelligent-inspection.md`
 * `idc`
   * [ ] `docs/en/latest/cross-idc-disaster-recovery.md` D
-  * [ ] `docs/en/latest/visual-idc.md`
+  * [X] `docs/en/latest/visual-idc.md` C
 * `appendix`
   * [X] `docs/en/latest/glossary.md` C
   * [X] `docs/en/latest/parameters.md` C
