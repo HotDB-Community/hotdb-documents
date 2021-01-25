@@ -17,11 +17,11 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 中心机房服务端口和管理端口连接正常，灾备机房管理端口连接正常时。[切换为主机房](#切换为主机房)入口：
 
-![](assets/visual-idc/image3.png)
+![](assets/visual-idc/image1.png)
 
 仅灾备机房管理端口可连时，集群名称橙色标记。[切换为主机房](#切换为主机房)入口：
 
-![](assets/visual-idc/image4.png)
+![](assets/visual-idc/image2.png)
 
 #### 灾备机房为当前主机房
 
@@ -31,28 +31,28 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 当灾备机房为当前主机房且灾备机房的服务端口和管理端口连接正常时，中心机房提供[修复机房](#修复机房)按钮入口：
 
-![](assets/visual-idc/image5.png)
+![](assets/visual-idc/image3.png)
 
 ### 移除机房入口
 
 中心机房为当前主机房，且中心机房服务端口和管理端口连接正常，灾备机房提供[移除机房](#移除机房)按钮入口：
 
-![](assets/visual-idc/image6.png)
+![](assets/visual-idc/image4.png)
 
 灾备机房为当前主机房，且灾备机房服务端口和管理端口连接正常，中心机房提供[移除机房](#移除机房)按钮入口：
 
-![](assets/visual-idc/image7.png)
+![](assets/visual-idc/image5.png)
 
 ### 其它说明
 
 当HotDB Server 版本高于2.5.6 （包含）且开启灾备模式时，展开更多集群部署信息时，【修复机房】【移除机房】【切换】【重建】按钮均显示小图标，鼠标悬停图标显示按钮信息。
 
-- 修复机房图标：![](assets/visual-idc/image8.png)
-- 移除机房图标：![](assets/visual-idc/image9.png)
-- 切换(机房内)图标：![](assets/visual-idc/image10.png)
-- 重建(机房内)图标：![](assets/visual-idc/image11.png)
+- 修复机房图标：![](assets/visual-idc/image6.png)
+- 移除机房图标：![](assets/visual-idc/image7.png)
+- 切换(机房内)图标：![](assets/visual-idc/image8.png)
+- 重建(机房内)图标：![](assets/visual-idc/image9.png)
 
-![](assets/visual-idc/image12.png)
+![](assets/visual-idc/image10.png)
 
 ## 切换为主机房
 
@@ -64,7 +64,7 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 集群信息确认页面包含计算节点集群信息确认、计算节点集群备份信息确认、机房切换结果确认。
 
-![](assets/visual-idc/image13.png)
+![](assets/visual-idc/image11.png)
 
 **计算节点集群信息确认**
 
@@ -76,7 +76,9 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 **计算节点集群备份信息确认**
 
-计算节点集群备份信息确认模块默认全部勾选备份项，也可自行选择备份项，且至少选择一项后，【下一步】按钮才正常开放允许点击进入下一步骤![](assets/visual-idc/image14.png)
+计算节点集群备份信息确认模块默认全部勾选备份项，也可自行选择备份项，且至少选择一项后，【下一步】按钮才正常开放允许点击进入下一步骤
+
+![](assets/visual-idc/image12.png)
 
 **机房切换结果确认**
 
@@ -86,7 +88,7 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 对机房切换前，集群运行状态、各项配置信息、及节点的复制延迟、复制关系等做全面检测，以保证在机房切换后的计算节点、存储节点的正常运行及数据的准确性。切换前的数据备份则保证在机房切换失败的情况下数据不会丢失。
 
-![](assets/visual-idc/image15.png)
+![](assets/visual-idc/image13.png)
 
 **页面按钮说明**
 
@@ -97,49 +99,49 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 切换前要求所有检测项都通过才能进行下一步骤，否则必须人工介入解决不通过项的异常问题
 
-1.中心机房的计算节点高可用状态异常
+1. 中心机房的计算节点高可用状态异常
 
-![](assets/visual-idc/image16.png)
+![](assets/visual-idc/image14.png)
 
-2.中心机房存储节点不可用
+2. 中心机房存储节点不可用
 
-![](assets/visual-idc/image17.png)
+![](assets/visual-idc/image15.png)
 
 3. 存储节点灾备关系异常
 
-![](assets/visual-idc/image18.png)
+![](assets/visual-idc/image16.png)
 
-4.24小时内未对所有数据做主备一致性检测和全局一致性检测
+4. 24小时内未对所有数据做主备一致性检测和全局一致性检测
 
-![](assets/visual-idc/image19.png)
+![](assets/visual-idc/image17.png)
 
-切换前数据备份模块主要是将上一步中选择的备份项进行数据备份，数据存放在当前管理平台hotdb-management/databak/集群编号/备份时间戳目录下
+切换前数据备份模块主要是将上一步中选择的备份项进行数据备份，数据存放在当前管理平台`hotdb-management/databak/集群编号/备份时间戳`目录下
 
 #### 中心机房处理策略选择
 
-主要有三种切换策略，分别是保留当前中心机房并交换角色使其成为灾备机房、删除当前中心机房，将灾备机房作为单机房模式进行管理、仅将当前主机房切换至灾备机房，切换后再做决策。默认勾选第一种切换策略：
+主要有三种切换策略：
 
-![](assets/visual-idc/image20.png)
+1. 保留当前中心机房并交换角色使其成为灾备机房
+2. 删除当前中心机房，将灾备机房作为单机房模式进行管理
+3. 仅将当前主机房切换至灾备机房，切换后再做决策
 
-> !!!IMPORTANT
-> 
-> 1. 保留当前中心机房并交换角色使其成为灾备机房，即交换中心机房和灾备机房
-> 2. 删除当前中心机房，将灾备机房作为单机房模式进行管理，即退化成单机房模式
-> 3. 仅将当前主机房切换至灾备机房，切换后再做决策，即仅切换到灾备机房
+默认勾选第一种切换策略。
+
+![](assets/visual-idc/image18.png)
 
 #### 正式切换机房
 
 正式切换机房前需再次确认，且根据选择策略显示
 
-![](assets/visual-idc/image21.png)
+![](assets/visual-idc/image19.png)
 
 正式切换机房对必要条件的再次检测，在该步骤检测过程中，可以点击退出按钮退出切换为主机房任务，对必要条件再次检测步骤结束后无法退出
 
-![](assets/visual-idc/image22.png)
+![](assets/visual-idc/image20.png)
 
 正式切换机房页面处于检测阶段中途退出的切换主机房任务，在24小时内均可以接着上一次的切换任务继续进行，也可以取消上一次任务，发起新任务（当接着上次任务继续进行时，页面跳转至上次执行到的位置继续执行，当取消上一次任务时，发起新的任务，忽略上次的未完成的执行结果）
 
-![](assets/visual-idc/image23.png)
+![](assets/visual-idc/image21.png)
 
 对在切换机房过程中检测的异常，可根据具体异常信息人工介入处理
 
@@ -147,15 +149,15 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 1. 保留中心机房并交换角色
 
-![](assets/visual-idc/image24.png)
+![](assets/visual-idc/image22.png)
 
 2. 删除中心机房
 
-![](assets/visual-idc/image25.png)
+![](assets/visual-idc/image23.png)
 
 3. 仅将当前主机房切换至灾备机房
 
-![](assets/visual-idc/image26.png)
+![](assets/visual-idc/image24.png)
 
 #### 完成切换
 
@@ -163,15 +165,15 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 1. 保留中心机房并交换角色
 
-![](assets/visual-idc/image27.png)
+![](assets/visual-idc/image25.png)
 
 2. 删除中心机房
 
-![](assets/visual-idc/image28.png)
+![](assets/visual-idc/image26.png)
 
 3. 仅将当前主机房切换至灾备机房
 
-![](assets/visual-idc/image29.png)
+![](assets/visual-idc/image27.png)
 
 ### 中心机房服务端口连接异常
 
@@ -179,7 +181,7 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 当中心机房服务端口连接异常时，集群信息确认页面的计算节点的服务状态对应变更，其他与中心机房服务端口连接正常页面一致
 
-![](assets/visual-idc/image30.png)
+![](assets/visual-idc/image28.png)
 
 #### 切换前预检测及数据备份
 
@@ -189,7 +191,7 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 数据备份与中心机房服务正常的情况一致
 
-![](assets/visual-idc/image31.png)
+![](assets/visual-idc/image29.png)
 
 #### 中心机房处理策略选择
 
@@ -197,21 +199,31 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 中心机房服务无法连接时，切换后可将原中心机房进行修复
 
-![](assets/visual-idc/image32.png)
+![](assets/visual-idc/image30.png)
 
 #### 正式切换机房
 
 正式切换机房前需再次确认，根据选择策略显示
 
-![](assets/visual-idc/image33.png)
+![](assets/visual-idc/image31.png)
 
 正式切换机房会对必要条件再次检测，在该步骤检测过程中，可以点击退出按钮退出切换为主机房任务，对必要条件的再次检测步骤结束后无法退出
 
-![](assets/visual-idc/image34.png)
+![](assets/visual-idc/image32.png)
 
 对在切换过程中出现的异常，可根据具体异常信息人工介入处理
 
 不同的切换策略，对应的切换流程也不相同
+
+1. 删除中心机房
+
+![](assets/visual-idc/image33.png)
+
+2. 仅将当前主机房切换至灾备机房
+
+![](assets/visual-idc/image34.png)
+
+#### 完成切换
 
 1. 删除中心机房
 
@@ -220,16 +232,6 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 2. 仅将当前主机房切换至灾备机房
 
 ![](assets/visual-idc/image36.png)
-
-#### 完成切换
-
-1. 删除中心机房
-
-![](assets/visual-idc/image28.png)
-
-2. 仅将当前主机房切换至灾备机房
-
-![](assets/visual-idc/image37.png)
 
 ### 其他说明
 
@@ -245,11 +247,11 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 修复机房需保证当前主机房的计算节点服务正常，被修复机房的计算节点无论服务端口还是管理端口是否连接异常均可修复
 
-![](assets/visual-idc/image38.png)
+![](assets/visual-idc/image37.png)
 
 ### 中心机房修复策略选择
 
-![](assets/visual-idc/image39.png)
+![](assets/visual-idc/image38.png)
 
 页面共提供两种修复机房的修复策略，默认选择第一种
 
@@ -257,27 +259,27 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 计算节点集群备份信息确认至少需勾选一项进行备份，否则不能进入下一步
 
-![](assets/visual-idc/image40.png)
+![](assets/visual-idc/image39.png)
 
 ### 修复前预检测及数据备份
 
 修复机房前，对集群运行状态、各项配置信息、及节点的复制延迟、复制关系等做全面检测，以保证机房修复正常执行
 
-![](assets/visual-idc/image41.png)
+![](assets/visual-idc/image40.png)
 
 对检测出的异常信息，可根据具体异常信息人工介入处理，不影响机房修复的步骤（一般橙色提示）可忽略直接执行下一步
 
-![](assets/visual-idc/image42.png)
+![](assets/visual-idc/image41.png)
 
 ### 中心机房修复策略执行
 
 正式执行修复机房前再次确认，根据选择策略显示
 
-![](assets/visual-idc/image43.png)
+![](assets/visual-idc/image42.png)
 
 正式修复机房对必要条件的再次检测，在该步骤检测过程中，可以点击退出按钮退出修复机房任务，对必要条件的再次检测流程结束后无法退出
 
-![](assets/visual-idc/image44.png)
+![](assets/visual-idc/image43.png)
 
 对在修复机房过程中检测出的的异常，可根据具体异常信息人工介入处理
 
@@ -285,17 +287,19 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 1. 交换角色
 
-![](assets/visual-idc/image45.png)
+![](assets/visual-idc/image44.png)
 
 2. 保留当前角色并回切
 
-![](assets/visual-idc/image46.png)![](assets/visual-idc/image47.png)
+![](assets/visual-idc/image45.png)
+
+![](assets/visual-idc/image46.png)
 
 ### 修复完成
 
 修复机房完成后当前备机房可选择执行切换主机房任务
 
-![](assets/visual-idc/image48.png)
+![](assets/visual-idc/image47.png)
 
 ### 其他说明
 
@@ -307,37 +311,37 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 ### 移除中心机房
 
-灾备机房为当前主机房且服务端口和管理端口连接正常时，可移除中心机房，将灾备机房作为单机房运行，中心机房与灾备机房的server.xml进行互换，然后更新server.xml为单机房模式
+灾备机房为当前主机房且服务端口和管理端口连接正常时，可移除中心机房，将灾备机房作为单机房运行，中心机房与灾备机房的`server.xml`进行互换，然后更新`server.xml`为单机房模式
 
 移除机房需要再次确认，点击"确认"按钮进入移除机房流程，点击"取消"按钮返回计算节点集群页面
 
-![](assets/visual-idc/image49.png)
+![](assets/visual-idc/image48.png)
 
 移除机房会对当前主机房进行两次动态加载，点击"是"继续移除机房，点击"否"则取消移除机房任务，页面3秒即逝提示"移除机房任务取消"
 
-![](assets/visual-idc/image50.png)
+![](assets/visual-idc/image49.png)
 
 动态加载失败则弹窗提示，机房暂无法移除
 
-![](assets/visual-idc/image51.png)
+![](assets/visual-idc/image50.png)
 
 移除机房准备工作完成，再次确认是否移除中心机房，点击"是"则正式开始移除机房且页面loading状态显示，点击"否"则取消移除机房任务，页面3秒即逝提示"移除机房任务取消"
 
-![](assets/visual-idc/image52.png)
+![](assets/visual-idc/image51.png)
 
 若移除机房失败，则显示具体失败原因，且配置回退
 
-![](assets/visual-idc/image53.png)
+![](assets/visual-idc/image52.png)
 
 移除成功后，页面3秒即逝提示"移除成功"集群信息刷新为单机房模式
 
-![](assets/visual-idc/image54.png)
+![](assets/visual-idc/image53.png)
 
 ### 移除灾备机房
 
-中心机房为当前主机房且服务端口和管理端口连接正常时，可移除灾备机房，将中心机房作为单机房运行，移除灾备机房会更新server.xml为单机房模式
+中心机房为当前主机房且服务端口和管理端口连接正常时，可移除灾备机房，将中心机房作为单机房运行，移除灾备机房会更新`server.xml`为单机房模式
 
-移除灾备机房的流程中，中心机房与灾备机房的server.xml不需要进行互换，而是直接更新，其他流程和移除中心机房一致
+移除灾备机房的流程中，中心机房与灾备机房的`server.xml`不需要进行互换，而是直接更新，其他流程和移除中心机房一致
 
 ### 其他说明
 
@@ -351,7 +355,7 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 切换主机房、修复机房、移除机房、切换（机房内）、重建（机房内）执行任务都会记录到计算节点集群- ->历史记录
 
-![](assets/visual-idc/image55.png)
+![](assets/visual-idc/image54.png)
 
 历史记录可通过计算节点名称、操作用户、访问IP、执行内容、执行状态来搜索对应的历史记录信息，其中计算节点名称、操作用户、访问IP为手动输入并支持模糊搜索，按执行内容和执行状态为对应的下拉框选项
 
@@ -363,7 +367,7 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 执行状态记录任务执行的具体状态，鼠标指针悬停可显示具体状态，包含执行成功、进行中...、中途退出、执行失败（标注失败原因）
 
-![](assets/visual-idc/image56.png)
+![](assets/visual-idc/image55.png)
 
 操作列：只有执行内容为切换主机房和修复机房显示详情和删除图标按钮，其他执行内容只显示删除图标按钮
 
@@ -388,7 +392,7 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 - 当前计算节点集群可进行[切换为主机房](#切换为主机房)相关操作；
 - 当前集群没有正在进行的切换机房任务；
 
-![](assets/visual-idc/image3.png)
+![](assets/visual-idc/image1.png)
 
 ### 中心机房服务正常情况下
 
@@ -400,7 +404,7 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 ![](assets/visual-idc/image60.png)
 
-- 此步骤分为计算节点集群信息确认、计算节点集群备份信息确认和机房切换结果确认三个模块；
+此步骤分为计算节点集群信息确认、计算节点集群备份信息确认和机房切换结果确认三个模块；
 
 计算节点集群信息确认模块展示当前集群的最新信息和服务状态；
 
@@ -418,7 +422,7 @@ HotDB Server计算节点和管理平台在2.5.3.1及以上版本支持了跨机�
 
 切换前预检测模块主要是对当前集群各机房的检测项进行检测；
 
-切换前数据备份模块主要是将上一步中选择的备份项进行数据备份，数据存放在当前管理平台hotdb-management/databak/集群编号/备份时间戳目录下；
+切换前数据备份模块主要是将上一步中选择的备份项进行数据备份，数据存放在当前管理平台`hotdb-management/databak/集群编号/备份时间戳`目录下；
 
 此步骤要求所有检测项都通过检测才能进行下一步骤，否则必须人工介入解决不通过项的异常问题；
 
