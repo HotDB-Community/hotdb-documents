@@ -703,7 +703,6 @@ HA计算节点部署示意图
 
 > !!!INFO
 > 
->
 > - 配置文件中的haNodeHost为主计算节点的IP+管理端口，只需在备计算节点上配置该参数即可。
 > - 启动主备服务时，如果haState的角色为master则会开启服务端口（3323）、管理端口（3325）；如果是 Backup 角色，则只会开启管理端口（3325）。
 > - 当master服务故障后，keepalived 检测到服务不可用，会自动切换 vip 到 backup 所在的服务器，并启用 backup 的服务端口（3323），保证服务不中断。
@@ -937,7 +936,6 @@ sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
 
 > !!!NOTE
 > 
->
 > - 安装NDB SQL指定服务器时间同步地址时使用的时间同步参数需要与上一次安装计算节点时保持一致，即当时使用的是`ntpdate-server-ip`还是`ntpdate-server-host`参数，两次必须一致
 > - 时间同步地址参数值需与上一次安装计算节点时使用的时间同步地址一致，如果集群内已有NTP服务则参数值应该是NTP服务所在服务器的IP地址。
 
