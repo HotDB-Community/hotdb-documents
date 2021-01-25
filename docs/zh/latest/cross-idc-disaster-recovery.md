@@ -39,11 +39,13 @@
 
 ### 数据传输架构
 
-![](assets/cross-idc-disaster-recovery/image2.png)
+![](assets/cross-idc-disaster-recovery/image1.png)
 
-- 用户通过中心机房主计算节点的服务端口执行业务SQL操作，计算节点对SQL语句进行解析，根据分片规则判断下发到各个数据节点对应的主存储节点上执行。
-- 此时通过MySQL主从复制功能，将中心机房的各个主存储节点的数据分别同步到灾备机房对应的各个主存储节点中。
-- 若灾备机房存在其他从存储节点，则根据灾备机房内部的MySQL主从复制关系同步到灾备机房其他从存储节点，由此完成跨机房数据同步。
+用户通过中心机房主计算节点的服务端口执行业务SQL操作，计算节点对SQL语句进行解析，根据分片规则判断下发到各个数据节点对应的主存储节点上执行。
+
+此时通过MySQL主从复制功能，将中心机房的各个主存储节点的数据分别同步到灾备机房对应的各个主存储节点中。
+
+若灾备机房存在其他从存储节点，则根据灾备机房内部的MySQL主从复制关系同步到灾备机房其他从存储节点，由此完成跨机房数据同步。
 
 ## 安装部署
 
@@ -59,9 +61,9 @@
 
 **推荐配置：**
 
-硬件环境配置推荐参考《分布式事务数据库产品HotDB Server硬件配置推荐---热璞数据库》
+硬件环境配置推荐参考[硬件配置推荐](hardware-config-recommendation.md)文档。
 
-集群运行环境配置要求与推荐参考《分布式事务数据库HotDB Server-【集群环境要求说明】》
+集群运行环境配置要求与推荐参考[集群环境要求说明](cluster-environment-requirement.md)文档。
 
 ### 功能前提须知
 
@@ -75,7 +77,7 @@
 
 此小节将以如下主备计算节点模式的部署架构为例进行部署相关功能说明：
 
-![](assets/cross-idc-disaster-recovery/image3.png)
+![](assets/cross-idc-disaster-recovery/image2.png)
 
 各组件对应的实际连接信息，列表列举如下，部分截图内容需与之对应：
 
@@ -90,13 +92,12 @@
 | 灾备机房 | 计算节点 | 主 | HotDB-03 | 192.168.220.188_3323_3325 |
 |   |   | 备 | HotDB-04 | 192.168.220.189_3323_3325 |
 |   | 存储节点 | 主 | ds03 | 192.168.220.188_3307 |
-|   |   | 双主备 | ds04 | 192.168.220.189_3307 （配置为双主，实际复制关系搭建为主从） |
+|   |   | 双主备 | ds04 | 192.168.220.189_3307<br>（配置为双主，实际复制关系搭建为主从） |
 |   | 配置库 | 主 | hc03 | 192.168.220.188_3306 |
-|   |   | 双主备 | hc04 | 192.168.220.189_3306 （配置为双主，实际复制关系搭建为主从） |
+|   |   | 双主备 | hc04 | 192.168.220.189_3306<br>（配置为双主，实际复制关系搭建为主从） |
 
 > !!!NOTE
 > 
->
 > - 真实场景部署时，不建议将计算节点、存储节点部署在相同的服务器上，本次是为了方便演示。
 > - 真实部署环境过程中，数据节点、存储节点个数根据实际需要进行规划，此处为方便演示，仅做单数据节点部署。
 
@@ -104,7 +105,7 @@
 
 自动部署可以通过管理平台提供的集群部署功能完成。按灾备模式部署的集群部署功能是以一套计算节点集群中的一个机房为单位进行，一次部署最少需要包含：计算节点、配置库、keepalived（主备节点模式需要安装），其他组件：存储节点、NTPD可根据需要安装。
 
-此小节仅详细描述自动部署时，开启灾备模式后，相较于单机房模式，需要特殊注意的地方，其他自动部署相关内容请参考《分布式事务数据库HotDB Server【安装部署】功能使用手册》。
+此小节仅详细描述自动部署时，开启灾备模式后，相较于单机房模式，需要特殊注意的地方，其他自动部署相关内容请参考[安装部署](install-and-deploy.md)文档。
 
 #### 部署一套新灾备环境
 
@@ -115,7 +116,7 @@
 1. 通过管理用户登录管理平台后，进入"集群管理 -> 计算节点集群"，点击【集群部署】按钮进入集群部署功能页面。
 2. 选择要部署的计算节点模式后，点击开启【按灾备模式部署】，选择【机房类型】为【中心机房】，点击【参数配置】进入集群部署参数配置页面。
 
-![](assets/cross-idc-disaster-recovery/image4.png)
+![](assets/cross-idc-disaster-recovery/image3.png)
 
 **（二）参数配置：**
 
@@ -126,36 +127,36 @@
 - 存储节点和配置库的更多参数中，默认开启GTID和半同步复制，且GTID不允许关闭；
 - 新增【时区设置】模块，增加配置操作系统的时区，以保证部署的组件时区与操作系统时区一致。可填写/usr/share/zoneinfo/系统目录下的有效时区，默认为Asia/Shanghai。
 
-![](assets/cross-idc-disaster-recovery/image5.png)
+![](assets/cross-idc-disaster-recovery/image4.png)
 
 因此，中心机房参数配置参考如下（[部署架构](#部署架构)）：
 
-![](assets/cross-idc-disaster-recovery/image6.png)
+![](assets/cross-idc-disaster-recovery/image5.png)
 
-![](assets/cross-idc-disaster-recovery/image7.png)
+![](assets/cross-idc-disaster-recovery/image6.png)
 
 **（三）开始部署：**
 
 1. 点击【检查并保存】，校验配置参数的合法性和完整性，并发送检测脚本到目标服务器上验证是否符合集群部署的硬件要求，不符合要求时会弹窗提示。开始部署前的集群都需要通过【检测并保存】才能进入安装。
 2. 管理平台检查无误后，点击【开始部署】进入安装进程。
 
-![](assets/cross-idc-disaster-recovery/image8.png)
+![](assets/cross-idc-disaster-recovery/image7.png)
 
 管理平台的安装部署进程中增加步骤【搭建灾备关系】，但在部署中心机房时，此步骤中不做额外操作。故部署中心机房的安装流程与单机房模式下的部署一个集群相同。
 
-![](assets/cross-idc-disaster-recovery/image9.png)
+![](assets/cross-idc-disaster-recovery/image8.png)
 
 **（四）集群管理：**
 
 仅部署完成中心机房后，若没有部署或添加灾备机房，开启对此集群的监控后，此中心机房可视为一个单机房模式下的计算节点集群，皆按照单机房模式进行管理。
 
-![](assets/cross-idc-disaster-recovery/image10.png)
+![](assets/cross-idc-disaster-recovery/image9.png)
 
-![](assets/cross-idc-disaster-recovery/image11.png)
+![](assets/cross-idc-disaster-recovery/image10.png)
 
 即，中心机房部署完成后，在集群管理页面进去该机房计算节点详情页面，可以看到此时，该集群的灾备模式为关闭状态。
 
-![](assets/cross-idc-disaster-recovery/image12.png)
+![](assets/cross-idc-disaster-recovery/image11.png)
 
 此时可以选择通过集群部署功能部署对应灾备机房，也可以手动部署完成灾备机房后，在集群便捷点击【开启灾备模式】，将灾备机房信息添加至该集群管理页面。
 
@@ -170,25 +171,25 @@
 > 
 > 建议在中心机房业务低峰期部署灾备机房，否则可能会影响搭建灾备关系时的数据迁移时间。
 
-![](assets/cross-idc-disaster-recovery/image13.png)
+![](assets/cross-idc-disaster-recovery/image12.png)
 
 **（二）参数配置：**{#灾备机房参数配置}
 
 灾备机房参数配置与中心机房大致相同，但需要注意的是一些参数设置会强制要求与中心机房保持一致，即管理平台自动获取中心机房相关参数设置并自动填充后不允许修改，参数列举如下：
 
 - 计算节点、配置库和存储节点的版本必须与中心机房保持一致；
-- 配置库和存储节点的【更多参数】中的参数`--character-set-server`、`--collation-server`、--innodb-buffer-pool-size-mb 必须与中心机房保持一致；
+- 配置库和存储节点的【更多参数】中的参数`--character-set-server`、`--collation-server`、`--innodb-buffer-pool-size-mb`必须与中心机房保持一致；
 - 灾备机房将默认自动生成n个中心机房已有数据节点，且节点生成信息与中心机房一致（在此例子中，即自动生成一个名为dn_01的双主类型的数据节点）。可选择其他存储节点类型，点击【生成】重新生成，但数据节点个数和名称必须与中心机房保持一致；
 
-![](assets/cross-idc-disaster-recovery/image14.png)
+![](assets/cross-idc-disaster-recovery/image13.png)
 
 - 时间同步地址和操作系统时区必须与中心机房保持一致。
 
 因此，灾备机房参数配置参考如下（此处可回顾前文提到的[部署架构](#部署架构)，再做参数填写）：
 
-![](assets/cross-idc-disaster-recovery/image15.png)
+![](assets/cross-idc-disaster-recovery/image14.png)
 
-![](assets/cross-idc-disaster-recovery/image16.png)
+![](assets/cross-idc-disaster-recovery/image15.png)
 
 **（三）开始部署：**
 
@@ -200,19 +201,19 @@
 > 
 > 因涉及数据导入，故若中心机房存储节点数据量较大，可能会存在等待时间较长的情况。
 
-![](assets/cross-idc-disaster-recovery/image17.png)
+![](assets/cross-idc-disaster-recovery/image16.png)
 
 ##### 集群管理
 
 灾备机房安装部署成功后，在集群管理页面就可以看到一个开启灾备模式且有两套机房的计算节点集群。
 
-![](assets/cross-idc-disaster-recovery/image18.png)
+![](assets/cross-idc-disaster-recovery/image17.png)
 
-- 机房类型分为中心机房和灾备机房。根据机房状态，在机房类型旁用![](assets/cross-idc-disaster-recovery/image19.png)图标表示该机房类型为当前主机房；
+- 机房类型分为中心机房和灾备机房。根据机房状态，在机房类型旁用![](assets/cross-idc-disaster-recovery/image18.png)图标表示该机房类型为当前主机房；
 - 两个机房拥有各自的组件配置信息和部署信息，其中当前备机房不提供【切换】和【重建】的入口，即当前备机房不允许手动切换计算节点；
 - 一个集群中的两个机房暂不提供分开停止监控或开启监控，用户权限也将两个机房视作一个集群，统一管理；
 
-![](assets/cross-idc-disaster-recovery/image20.png)
+![](assets/cross-idc-disaster-recovery/image19.png)
 
 - 若删除开启灾备模式的集群，则将同时删除中心机房和灾备机房；
 - 在计算节点集群编辑页面，若【开启灾备模式】为开启状态，则不允许关闭；若为关闭状态， 则允许开启，并将已有集群信息作为中心机房配置信息，并可以为其添加灾备机房的配置信息。
@@ -223,33 +224,37 @@
 
 1. 多计算节点模式的灾备环境部署，必须保证计算节点版本高于（包含）2.5.6，且在集群部署入口处选择"多节点"。在此基础上，可部署灾备模式的中心机房、灾备机房。
 
-![](assets/cross-idc-disaster-recovery/image21.png)
+![](assets/cross-idc-disaster-recovery/image20.png)
 
 2. 多计算节点集群也需要先部署中心机房之后，再部署灾备机房。
+
 3. 中心机房、灾备机房内的多计算节点集群其配置同普通多计算节点集群模式部署需要填写的部署信息一致。
+
 4. 通过管理平台自动部署的过程中，程序默认会按照中心机房、灾备机房的信息进行server.xml的配置，其中关联的配置项包括：
 
 **中心机房集群模式单独修改项：**
 
+```
 haMode配置为4，即集群模式中心机房
-
 idcId配置为1，即中心机房
-
 idcNodeHost配置为灾备机房的计算节点信息：主机名（IP）+管理端口，英文逗号间隔，示例：192.168.220.112:3325,192.168.220.113:3325,192.168.220.114:3325
-
-同一机房的集群内clusterName必须一致但中心机房与灾备机房不能一致，故中心机房可默认配置为：HotDB-Cluster-idc1-groupID)，（groupID为平台集群组ID，为了区别同一台服务器部署多套集群的情况）。
-
-**灾备机房集群模式单独修改项：**
-
-<haMode配置为5，即集群模式灾备机房>
-
-idcID配置为2，即灾备机房
-
-idcNodeHost配置为中心机房的计算节点信息：主机名（IP）+管理端口，英文逗号间隔，示例：192.168.210.86:3325,192.168.210.87:3325,192.168.210.88:3325
+```
 
 > !!!NOTE
 > 
-> 同一机房的集群内clusterName必须一致但中心机房与灾备机房不能一致。通过平台部署其默认配置为：HotDB-Cluster-idc1/idc2-groupID,（groupID为平台集群组ID，为了区别同一台服务器部署多套集群的情况）
+> 同一机房的集群内clusterName必须一致但中心机房与灾备机房不能一致，故中心机房可默认配置为：HotDB-Cluster-idc1-groupID（groupID为平台集群组ID，为了区别同一台服务器部署多套集群的情况）。
+
+**灾备机房集群模式单独修改项：**
+
+```
+haMode配置为5，即集群模式灾备机房
+idcID配置为2，即灾备机房
+idcNodeHost配置为中心机房的计算节点信息：主机名（IP）+管理端口，英文逗号间隔，示例：192.168.210.86:3325,192.168.210.87:3325,192.168.210.88:3325
+```
+
+> !!!NOTE
+> 
+> 同一机房的集群内clusterName必须一致但中心机房与灾备机房不能一致。通过平台部署其默认配置为：HotDB-Cluster-idc1/idc2-groupID（groupID为平台集群组ID，为了区别同一台服务器部署多套集群的情况）。
 
 除了上述描述的特殊修改项以外，灾备模式下的多计算节点集群部署还需注意：
 
@@ -264,7 +269,7 @@ idcNodeHost配置为中心机房的计算节点信息：主机名（IP）+管理
 
 正常部署完成后的多计算节点集群信息，在列表中信息展示示例如下：
 
-![](assets/cross-idc-di aster-recovery/image22.png)
+![](assets/cross-idc-diaster-recovery/image21.png)
 
 #### 在已运行的集群基础上部署灾备环境
 
@@ -286,7 +291,7 @@ idcNodeHost配置为中心机房的计算节点信息：主机名（IP）+管理
 
 #### 部署一套新灾备环境
 
-灾备环境的部署，中心机房、灾备机房各组件部署流程同单机房模式部署流程一致，可参考《分布式事务数据库HotDB Server【安装部署】功能使用手册》手动部署章节，注意需保证两边机房的数据节点个数相同，名称一一对应。此处主要讲述中心机房和灾备机房各基础组件部署完成后，配置方面需做的修改。
+灾备环境的部署，中心机房、灾备机房各组件部署流程同单机房模式部署流程一致，可参考[安装部署](install-and-deploy.md)文档的[手动部署](install-and-deploy.md#手动部署)章节，注意需保证两边机房的数据节点个数相同，名称一一对应。此处主要讲述中心机房和灾备机房各基础组件部署完成后，配置方面需做的修改。
 
 ##### 计算节点参数配置修改
 
@@ -337,8 +342,8 @@ idcNodeHost配置为中心机房的计算节点信息：主机名（IP）+管理
 | 中心机房 | 配置库 | 主 | hc01 | 192.168.220.186_3306 |
 |   |   | 双主备 | hc02 | 192.168.220.187_3306 |
 | 灾备机房 | 配置库 | 主 | hc03 | 192.168.220.188_3306 |
-|   |   | 双主备 | hc04 | 192.168.220.189_3306 |
-|   |   | （实际为主从复制关系） |   |   |
+|   |   | 双主备<br>（实际为主从复制关系） | hc04 | 192.168.220.189_3306 |
+|   |   |  |   |   |
 
 配置库实质上是一个标准的MySQL实例，故在此部署架构下，配置库搭建顺序应为：
 
@@ -356,21 +361,26 @@ idcNodeHost配置为中心机房的计算节点信息：主机名（IP）+管理
 > 
 > 更多要求及更详细主从复制搭建步骤可查看"[主从复制搭建建议步骤](#主从复制搭建建议步骤)"相关章节，此章节描述为不考虑额外其他因素影响条件下进行的基础操作。
 
-```
 在192.168.220.186_3306实例上执行：
+
+```
 mysql> change master to master_host='192.168.220.187',master_user='repl',master_password='repl',Master_Port=3306,master_auto_position=1;
 mysql> start slave;
+```
 
 在192.168.220.187_3306实例上执行：
+
+```
 mysql> change master to master_host='192.168.220.186',master_user='repl',master_password='repl',Master_Port=3306,master_auto_position=1;
 mysql> start slave;
 ```
 
 此时在220.186和220.187上分别执行show slave status可以看到 Master_Host的关系互为双主，且Slave_IO_Running和Slave_SQL_Running状态正常，例如：
 
-```
 在192.168.220.186_3306实例上执行：
-mysql> show slave status\\G
+
+```
+mysql> show slave status\G
 *************************** 1. row ***************************
 Slave_IO_State: Waiting for master to send event
 Master_Host: 192.168.220.187
@@ -397,16 +407,18 @@ mysql> start slave;
 
 4. 搭建服务器220.188和220.189 MySQL实例之间的主从复制关系。
 
-```
 在192.168.220.189_3306实例上执行：
+
+```
 mysql> change master to master_host='192.168.220.188',master_user='repl',master_password='repl',Master_Port=3306,master_auto_position=1;
 mysql> start slave;
 ```
 
 5. 将配置库数据导入到中心机房主配置库192.168.220.186_3306。
 
-```
 在192.168.220.186服务器上执行：
+
+```
 root> mysql -uroot -S /data/mysql/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hotdb-server/conf/hotdb_config.sql
 ```
 
@@ -443,7 +455,6 @@ mysql> show tables;
 
 > !!!NOTE
 > 
->
 > 1. 在多节点模式下，需添加集群通信端口的配置，若计算节点分布在不同服务器且通信端口一致，则可填写一个端口即可（默认3326），若集群模式下计算节点均部署在同一台或多台服务器上，且端口不同，则需要使用英文逗号将通信端口进行间隔，例如：3326,3327,3328。且该通信端口的顺序需要同其对应的计算节点添加的顺序一一对应。否则在保存校验时会拒绝保存并提醒"计算节点在同一服务器上，通信端口必须与计算节点个数匹配且不能重复"。
 > 2. 若集群多计算节点均部署在同一台服务器上时，其通信端口+服务端口+管理端口均要彼此唯一，不能存在相同的端口组合。
 
@@ -471,14 +482,15 @@ mysql> show tables;
 
 连接异常示例图
 
-- 相对于单机房模式下的四项检测项都增加机房标识，可以清楚标示出是哪个机房连接异常；
-- 增加配置库的灾备状态检测，包括两项：
+相对于单机房模式下的四项检测项都增加机房标识，可以清楚标示出是哪个机房连接异常；
+
+增加配置库的灾备状态检测，包括两项：
 - 配置库复制状态：检测两个机房内部双主（主从）配置库的复制关系是否正常以及两个机房主配置库之间的灾备关系是否正常。若两个机房主配置库之间的灾备关系异常，则不再检测机房内部的配置库复制状态。
 - 元数据一致：两个机房中所有配置库与中心机房当前主配置库的数据是否一致。
 
 ![](assets/cross-idc-disaster-recovery/image29.png)
 
-- 若中心机房故障后，灾备机房切换为当前主机房，此处的【测试】仍会以集群配置状态检测，即检测中心机房的端口连接状态、以当前主机房的当前主配置库为标准检测与其他所有配置库的数据一致性、检测机房内部与机房之间的复制状态等。
+若中心机房故障后，灾备机房切换为当前主机房，此处的【测试】仍会以集群配置状态检测，即检测中心机房的端口连接状态、以当前主机房的当前主配置库为标准检测与其他所有配置库的数据一致性、检测机房内部与机房之间的复制状态等。
 
 ##### 各机房存储节点添加
 
@@ -507,23 +519,39 @@ mysql> show tables;
 | 中心机房 | 配置库 | 主 | hc01 | 192.168.220.186_3306 |
 |   |   | 双主 | hc02 | 192.168.220.187_3306 |
 | 灾备机房 | 配置库 | 主 | hc03 | 192.168.220.188_3306 |
-|   |   | 双主（实际为主从复制关系） | hc04 | 192.168.220.189_3306 |
+|   |   | 双主<br>（实际为主从复制关系） | hc04 | 192.168.220.189_3306 |
 
 **详细步骤列举如下：**
 
-1. 默认此时中心机房配置库双主复制状态正常且数据一致，以及已在灾备机房的服务器上安装好了MySQL实例且配置参数中开启GTID。注意：更多要求及更详细主从复制搭建步骤可查看"[主从复制搭建建议步骤](#主从复制搭建建议步骤)"相关章节，此章节描述为不考虑额外其他因素影响条件下进行的基础操作。
+1. 默认此时中心机房配置库双主复制状态正常且数据一致，以及已在灾备机房的服务器上安装好了MySQL实例且配置参数中开启GTID。
+
+> !!!NOTE
+> 
+> 更多要求及更详细主从复制搭建步骤可查看"[主从复制搭建建议步骤](#主从复制搭建建议步骤)"相关章节，此章节描述为不考虑额外其他因素影响条件下进行的基础操作。
 
 2. 将220.186_3306 MySQL实例中的数据导入到220.188_3306 MySQL实例中。
 
-```
 在192.168.220.186服务器上执行：
-root> mysqldump --no-defaults -uroot --socket=/data/mysql/mysqldata3306/sock/mysql.sock --no-tablespaces --default-character-set=utf8mb4 --all-databases --set-gtid-purged --single-transaction --events --routines --triggers --hex-blob >/usr/local/config_data.sql ;echo \$?
-导入的sql文件用scp命令传输到192.168.220.188：
-root> scp /usr/local/config_data.sql <root@192.168.220.188:/usr/local/>
-在192.168.220.188服务器上执行：
-root> mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=192.168.220.188 --port=3306 --uroot -proot < config_data.sql;echo \$?
-0 //若返回结果为0则数据已经导入成功：
+
 ```
+root> mysqldump --no-defaults -uroot --socket=/data/mysql/mysqldata3306/sock/mysql.sock --no-tablespaces --default-character-set=utf8mb4 --all-databases --set-gtid-purged --single-transaction --events --routines --triggers --hex-blob >/usr/local/config_data.sql ;echo $?
+```
+
+若返回结果为0则数据已经导出成功。
+
+导入的sql文件用scp命令传输到192.168.220.188：
+
+```
+root> scp /usr/local/config_data.sql <root@192.168.220.188:/usr/local/>
+```
+
+在192.168.220.188服务器上执行：
+
+```
+root> mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=192.168.220.188 --port=3306 --uroot -proot < config_data.sql;echo $?
+```
+
+若返回结果为0则数据已经导入成功。
 
 此时可以查看到，中心机房主配置库数据已经导入成功：
 
@@ -543,28 +571,42 @@ mysql> show tables;
 
 3. 搭建服务器220.186和220.188 MySQL实例之间的主从复制关系（灾备关系）。
 
-```
 在192.168.220.188_3306实例上执行：
+
+```
 mysql> change master to master_host='192.168.220.186',master_user='repl',master_password='repl',Master_Port=3306,master_auto_position=1;
 mysql> start slave;
 ```
 
 4. 将220.188_3306 MySQL实例中的数据导入到220.189_3306 MySQL实例中。
 
-```
 在192.168.220.188服务器上执行：
-root> mysqldump --no-defaults -uroot --socket=/data/mysql/mysqldata3306/sock/mysql.sock --no-tablespaces --default-character-set=utf8mb4 --all-databases --set-gtid-purged --single-transaction --events --routines --triggers --hex-blob >/usr/local/config_data.sql ;echo \$?
-将导入的sql文件用scp命令传输到192.168.220.189：
-root> scp /usr/local/config_data.sql <root@192.168.220.189:/usr/local/>
-在192.168.220.189服务器上执行：
-root> mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=192.168.220.189 --port=3306 --uroot -proot < config_data.sql;echo \$?
-0 //若返回结果为0则数据已经导入成功：
+
 ```
+root> mysqldump --no-defaults -uroot --socket=/data/mysql/mysqldata3306/sock/mysql.sock --no-tablespaces --default-character-set=utf8mb4 --all-databases --set-gtid-purged --single-transaction --events --routines --triggers --hex-blob >/usr/local/config_data.sql ;echo $?
+```
+
+若返回结果为0则数据已经导出成功。
+
+将导入的sql文件用scp命令传输到192.168.220.189：
+
+```
+root> scp /usr/local/config_data.sql <root@192.168.220.189:/usr/local/>
+```
+
+在192.168.220.189服务器上执行：
+
+```
+root> mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=192.168.220.189 --port=3306 --uroot -proot < config_data.sql;echo $?
+```
+
+若返回结果为0则数据已经导入成功。
 
 5. 搭建服务器220.188和220.189 MySQL实例之间的主从复制关系。
 
-```
 在192.168.220.189_3306实例上执行：
+
+```
 mysql> change master to master_host='192.168.220.188',master_user='repl',master_password='repl',Master_Port=3306,master_auto_position=1;
 mysql> start slave;
 ```
@@ -593,7 +635,7 @@ mysql> start slave;
 
 ## 管理平台相关功能说明
 
-此章节需要结合文档《分布式事务数据库HotDB Server【管理平台】功能使用手册》一起阅读。此章节仅描述管理平台管理的计算节点集群组开启灾备模式之后的功能使用说明，区别于普通未开启灾备模式的情况。同时，未特殊提及的功能页面均默认显示为当前主机房相关信息、控制当前主机房的状态。
+此章节需要结合[管理平台](hotdb-management.md)文档一起阅读。此章节仅描述管理平台管理的计算节点集群组开启灾备模式之后的功能使用说明，区别于普通未开启灾备模式的情况。同时，未特殊提及的功能页面均默认显示为当前主机房相关信息、控制当前主机房的状态。
 
 ### 计算节点集群选择
 
@@ -665,12 +707,12 @@ mysql> start slave;
 
 灾备状态分为异常、未知、正常、搭建中和搭建失败，详情如下：
 
-* **空：**中心机房的数据节点不显示灾备状态，
-* **正常：**可以正常show slave status查看复制状态正常（ Slave_IO_Running: YES，Slave_SQL_Running: YES）且与灾备要求的主从关系一致
-* **异常：**复制状态异常（ Slave_IO_Running: NO或者Slave_SQL_Running: NO）
-* **未知：**存储节点无法连接、存储节点权限不足、检测超时（超时时间1min）、节点之间非主从复制关系（没有搭建复制，或者复制关系搭建错误）
-* **搭建失败：**表示主从搭建过程中存在检测失败或搭建失败，鼠标移入"搭建失败"字样将提示具体失败信息
-* **搭建中：**表示当前正在主从搭建任务，如果后台运行搭建完成刷新页面将显示正常或搭建失败
+- **空：**中心机房的数据节点不显示灾备状态，
+- **正常：**可以正常show slave status查看复制状态正常（ Slave_IO_Running: YES，Slave_SQL_Running: YES）且与灾备要求的主从关系一致
+- **异常：**复制状态异常（ Slave_IO_Running: NO或者Slave_SQL_Running: NO）
+- **未知：**存储节点无法连接、存储节点权限不足、检测超时（超时时间1min）、节点之间非主从复制关系（没有搭建复制，或者复制关系搭建错误）
+- **搭建失败：**表示主从搭建过程中存在检测失败或搭建失败，鼠标移入"搭建失败"字样将提示具体失败信息
+- **搭建中：**表示当前正在主从搭建任务，如果后台运行搭建完成刷新页面将显示正常或搭建失败
 
 若中心机房故障后切换至灾备机房，计算节点会删除中心机房原主存储节点与灾备机房原主存储节点之间的复制状态，此时灾备状态将显示为**未知**。
 
@@ -688,8 +730,9 @@ mysql> start slave;
 
 **（二）页面功能说明**
 
-- 当前备机房的存储节点无【切换】按钮，即中心机房或灾备机房作为当前备机房时，管理平台不提供存储节点手动切换入口。
-- 用户可以删除单个或批量删除存储节点及数据节点，但不允许单独删除与中心机房对应的灾备机房数据节点。若删除中心机房数据节点时，则会将对应的灾备机房数据节点一同删除。
+当前备机房的存储节点无【切换】按钮，即中心机房或灾备机房作为当前备机房时，管理平台不提供存储节点手动切换入口。
+
+用户可以删除单个或批量删除存储节点及数据节点，但不允许单独删除与中心机房对应的灾备机房数据节点。若删除中心机房数据节点时，则会将对应的灾备机房数据节点一同删除。
 
 ##### 添加节点
 
@@ -735,7 +778,7 @@ mysql> start slave;
 
 **（一）搭建须知：**
 
-（仅说明灾备机房的不同，详细的搭建须知与步骤请参考《分布式事务数据库HotDB Server【管理平台】功能使用手册》）
+（仅说明灾备机房的不同，详细的搭建须知与步骤请参考[管理平台](hotdb-management.md)文档）
 
 - 选择搭建的存储节点不能配置或存在多主的复制关系。若要搭建灾备关系，要求：灾备机房的主存储节点不是一个已搭建的复制关系中的备库；灾备机房的备存储节点若存在已搭建的复制关系，则只能是与主存储节点的复制关系。
 
@@ -743,11 +786,11 @@ mysql> start slave;
 
 **（二）其他说明：**
 
-- 搭建过程中的报错信息统一增加机房类型，标识不满足要求的存储节点属于哪个机房。
+搭建过程中的报错信息统一增加机房类型，标识不满足要求的存储节点属于哪个机房。
 
 ![](assets/cross-idc-disaster-recovery/image44.png)
 
-- 若中心机房故障，灾备机房切换成为当前主机房，灾备关系的主从搭建将不提供搭建
+若中心机房故障，灾备机房切换成为当前主机房，灾备关系的主从搭建将不提供搭建。
 
 ##### 切换规则
 
@@ -776,15 +819,10 @@ mysql> start slave;
 ![](assets/cross-idc-disaster-recovery/image47.png)
 
 - 与存储节点相关校验的报错信息中增加机房类型，可以明确标识是哪个机房的存储节点校验不通过，由此排查问题。
-
 - 校验项【存储节点连接正常】修改为warning级别的校验。例如，中心机房或灾备机房任意一个存储节点连接异常，会在配置校验中出现warning提醒，但不影响动态加载。当中心机房或灾备机房故障且作为当前备机房时，此校验项仍会检测两个机房内的所有存储节点是否连接正常，但不影响动态加载。
-
 - 若该存储节点导致中心机房和灾备机房对应数据节点下无可用节点，如中心机房dn_01和灾备机房dn_01下都无可用节点，则会在配置校验中校验项【一个数据节点下必须要有可用的存储节点】中出现error提醒，动态加载将不成功。例如，若灾备机房某个数据节点下所有存储节点都连接异常，只要中心机房对应的数据节点下仍有可用存储节点，则动态加载会成功，但配置校验中有warning提醒。
-
 - 在【存储节点表配置】中增加一项erorr级别的校验项：中心机房与灾备机房数据节点逻辑架构一致，即要求中心机房与灾备机房的数据节点个数一致，名称一一对应。
-
 - 在【配置库】中，【配置库连接正常】修改为warning级别的校验，与【存储节点连接正常】类似，检测两个机房内的所有配置库是否连接正常。
-
 - 在【配置库】中增加一项warning级别的校验项：配置库之间复制状态正常，即单个机房内部配置库复制状态和两个机房主配置库之间的复制状态是否正常。
 
 ![](assets/cross-idc-disaster-recovery/image48.png)
@@ -1215,7 +1253,6 @@ mysql> start slave;
 
 > !!!NOTE
 > 
->
 > - 若当前配置的中心机房不是当前主机房以及当前中心机房管理端口无法连接，则无法进行升级。
 > - 若中心机房计算节点为主备节点模式，页面会显示"升级后是否回切"，选择"是"，则升级完毕后回切到原来的主计算节点（升级过程中会执行主备高可用切换）。
 > - 若灾备机房计算节点为主备节点模式，则无论是否升级成功，升级后将只启动主计算节点管理端口，即不启动备计算节点管理端口或keepalived组件。
@@ -1248,7 +1285,7 @@ Query OK, 1 row affected (5 min 4.35 sec)
 灾备机房的主计算节点一旦执行online_dr该命令，将发生机房级别的计算节点服务切换，灾备机房的主计算节点将提供服务，其他情况参考[跨机房故障](#跨机房故障)相关章节详细说明。同时，灾备机房计算节点日志输出如下标记，代表灾备机房服务开始启动并启动成功：
 
 ```
-2019-12-12 19:50:47.257 [INFO] [MANAGER] [\$NIOExecutor-1-0] cn.hotpu.hotdb.manager.ManagerQueryHandler(178) - online_dr by [thread=\$NIOExecutor-1-0,id=8514,user=root,host=192.168.220.183,port=3325,localport=13838,schema=null]
+2019-12-12 19:50:47.257 [INFO] [MANAGER] [$NIOExecutor-1-0] cn.hotpu.hotdb.manager.ManagerQueryHandler(178) - online_dr by [thread=$NIOExecutor-1-0,id=8514,user=root,host=192.168.220.183,port=3325,localport=13838,schema=null]
 2019-12-12 19:50:47.258 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.HotdbServer(2111) - DR online start
 ......
 2019-12-12 19:50:50.587 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.HotdbServer(2142) - DR online end
@@ -1324,7 +1361,6 @@ hc01与hc02之间搭建双主复制关系；hc01与hc03之间搭建主备关系�
 
 > !!!NOTE
 > 
->
 > - 同一组具有灾备关系的存储节点其数据节点名称相同；
 > - 灾备机房的存储节点、配置库默认仅搭建主库到双主备库的复制关系，不搭建回路，与实际双主备库角色区分开；
 > - 真实场景部署时，不建议将计算节点、存储节点部署在相同的服务器上，本次仅为后续方便演示。
@@ -1752,19 +1788,19 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 示例1：配置库复制位置日志提醒
 
 ```
-2019-12-14 19:07:58.317 [INFO] [INNER] [\$I-NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:-4,nodeId:-1 192.168.220.183:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2) change master to master_standby([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2).
+2019-12-14 19:07:58.317 [INFO] [INNER] [$I-NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:-4,nodeId:-1 192.168.220.183:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2) change master to master_standby([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8], Executed_Gtid_Set:46906d49-0b87-11ea-91a0-525400e2c4b6:1-2015,f629710f-0c19-11ea-bff2-525400edf2d2:1-3524,fc61739a-0c19-11ea-b887-5254007e6b1d:1-2).
 ```
 
 示例2：存储节点复制位置
 
 ```
-2019-12-14 19:08:00.546 [INFO] [INNER] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:192,nodeId:46 192.168.220.183:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3) change master to master_standby([id:193,nodeId:46 192.168.220.184:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3).
+2019-12-14 19:08:00.546 [INFO] [INNER] [$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(351) - master([id:192,nodeId:46 192.168.220.183:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3) change master to master_standby([id:193,nodeId:46 192.168.220.184:3308/db2531 status:1,charset:utf8mb4], Executed_Gtid_Set:4a12db23-0c1a-11ea-a751-525400edf2d2:1-3524,a53b2400-0b87-11ea-b97e-525400e2c4b6:1-3).
 ```
 
 示例3：从机GTID比主机多
 
 ```
-2019-12-14 19:08:00.546 [WARN] [INNER] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(329) - Slave([id:189,nodeId:45 192.168.220.184:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1,7afdc35d-0b87-11ea-91a3-52540073fb81:1) is **greater than** master([id:188,nodeId:45 192.168.220.183:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1).
+2019-12-14 19:08:00.546 [WARN] [INNER] [$NIOREACTOR-2-RW] cn.hotpu.hotdb.mysql.nio.handler.ChangeIDCDatasourceReplByConfig(329) - Slave([id:189,nodeId:45 192.168.220.184:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1,7afdc35d-0b87-11ea-91a3-52540073fb81:1) is **greater than** master([id:188,nodeId:45 192.168.220.183:3307/db2531 status:1,charset:utf8mb4])'s Executed_Gtid_Set(1e81d24b-0c1a-11ea-b34f-525400edf2d2:1-3518,70ee41d5-0b87-11ea-85cd-525400e2c4b6:1).
 ```
 
 示例4：半同步复制状态监测
@@ -1858,7 +1894,7 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 - 存储节点从机半同步复制状态降级（可能RPO导致不为0）：
 
 ```
-2019-12-10 12:17:00.630 [WARN] [TIMER] [\$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - DR_IDC's datasource: -5([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8])'s RPL_SEMI_SYNC_SLAVE_STATUS is OFF
+2019-12-10 12:17:00.630 [WARN] [TIMER] [$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - DR_IDC's datasource: -5([id:-5,nodeId:-1 192.168.220.184:3306/hotdb_config status:1,charset:utf8])'s RPL_SEMI_SYNC_SLAVE_STATUS is OFF
 ```
 
 - 存储节点从机半同步复制设置等待从机返回ack个数与与实际个数不一致（可能导致RPO不为0）：
@@ -1868,19 +1904,19 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 ![](assets/cross-idc-disaster-recovery/image122.png)
 
 ```
-2019-12-10 12:16:00.634 [WARN] [TIMER] [\$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - datasource: 169([id:169,nodeId:43 192.168.220.181:3307/db2531 status:1,charset:utf8mb4])'s RPL_SEMI_SYNC_MASTER_WAIT_FOR_SLAVE_COUNT=2, real slave count=1
+2019-12-10 12:16:00.634 [WARN] [TIMER] [$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - datasource: 169([id:169,nodeId:43 192.168.220.181:3307/db2531 status:1,charset:utf8mb4])'s RPL_SEMI_SYNC_MASTER_WAIT_FOR_SLAVE_COUNT=2, real slave count=1
 ```
 
 - 实际存储节点或配置库复制关系与实际配置不一致
 
 ```
-2019-12-14 19:08:00.426 [WARN] [INNER] [\$NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.InitSlaveStatusHandler(99) - Datasource: 188's master datasource: 192.168.220.183:3307 not in datanode: 45
+2019-12-14 19:08:00.426 [WARN] [INNER] [$NIOREACTOR-3-RW] cn.hotpu.hotdb.mysql.nio.handler.InitSlaveStatusHandler(99) - Datasource: 188's master datasource: 192.168.220.183:3307 not in datanode: 45
 ```
 
 - 机房发生切换或正在提供服务的计算节点offline ,则当前与之相关的后端连接也会关闭，相关日志记录信息可参考：
 
 ```
-2019-12-14 19:08:00.978 [WARN] [CONNECTION] [\$NIOREACTOR-2-RW] cn.hotpu.hotdb.net.NIOSocketWR(181) - exception(stream closed) in reading backend connection: [id:196,nodeId:47 192.168.220.181:3309/db2531 status:1,charset:utf8mb4] id=931
+2019-12-14 19:08:00.978 [WARN] [CONNECTION] [$NIOREACTOR-2-RW] cn.hotpu.hotdb.net.NIOSocketWR(181) - exception(stream closed) in reading backend connection: [id:196,nodeId:47 192.168.220.181:3309/db2531 status:1,charset:utf8mb4] id=931
 threadId=5801 isAuthenticated=true responseHandler=null isNetFull=false bufferInFullNet=false lastUsedTime=1576321520613 tookTime=1576321520605 sendingData=false inFlowControl=false maybeSlow=false heavyRowEof=false inFieldPacket=false
 needSyncAutocommit=false syncAutocommitValue=true usingReadBuffer=false usingWriteBuffer=false readBuffer=java.nio.DirectByteBuffer[pos=0 lim=16384 cap=16384] writeBuffer=null writeQueue=0 host=192.168.220.181 port=3309 localPort=22248
 connectionVars=[dsCharset=utf8mb4 autocommit=true savepointChecked=false txIsolation=2 charsetIndex=45 characterSetClient=utf8mb4 characterSetResults=utf8mb4 characterSetConnection=utf8mb4 collationConnection=utf8mb4_general_ci foreignK
@@ -1891,7 +1927,7 @@ readData=1576321520613 lastWritten=184 inner=false toBeClosed=false isClosed=fal
 - 服务端口被关闭日志标记：
 
 ```
-2019-12-14 19:07:56.610 [INFO] [MANAGER] [\$NIOExecutor-0-2] cn.hotpu.hotdb.manager.response.Offline(66) - received offline command from:[thread=\$NIOExecutor-0-2,id=1056,user=root,host=192.168.220.181,port=3325,localport=16928,schema=null]
+2019-12-14 19:07:56.610 [INFO] [MANAGER] [$NIOExecutor-0-2] cn.hotpu.hotdb.manager.response.Offline(66) - received offline command from:[thread=$NIOExecutor-0-2,id=1056,user=root,host=192.168.220.181,port=3325,localport=16928,schema=null]
 2019-12-14 19:07:56.612 [INFO] [MANAGER] [Labor-10] cn.hotpu.hotdb.HotdbServer(2149) - MANAGER offline start
 ```
 
@@ -1926,9 +1962,9 @@ readData=1576321520613 lastWritten=184 inner=false toBeClosed=false isClosed=fal
 第2步、使用如下参数导出旧主实例数据：
 
 ```
-mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > 不重名文件 ;echo \$?
+mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > 不重名文件 ;echo $?
 
-示例：mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup > backup_data.sql ;echo \$?
+示例：mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --set-gtid-purged --events --routines --triggers --hex-blob --no-tablespaces --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup > backup_data.sql ;echo $?
 
 mysqldump: [Warning] Using a password on the command line interface can be insecure.
 ```
@@ -1950,8 +1986,8 @@ show global variables like 'datadir'
 第5步、使用如下命令导入文件
 
 ```
-mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < 不重名文件 ;echo \$?
-示例：[root@hotdb-220-182 \~]\## mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup < /data/mysql/mysqldata3306/backup_data.sql ;echo \$?
+mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < 不重名文件 ;echo $?
+示例：[root@hotdb-220-182 \~]\## mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=127.0.0.1 --port=3306 --user=dbbackup -pdbbackup < /data/mysql/mysqldata3306/backup_data.sql ;echo $?
 mysql: [Warning] Using a password on the command line interface can be insecure.
 ```
 
@@ -1991,13 +2027,13 @@ change master to master_host = '192.168.220.181',master_user='repl',master_passw
 第2步、导出数据参考命令：
 
 ```bash
-mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --loose-set-gtid-purged=off --master-data=2 --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > 不重名文件 ;echo \$?
+mysqldump --no-defaults --all-databases --default-character-set=utf8mb4 --single-transaction --loose-set-gtid-purged=off --master-data=2 --events --routines --triggers --hex-blob --no-tablespaces --host=xxx --port=xxx --user=xxx -pxxx > 不重名文件 ;echo $?
 ```
 
 第5步、导入数据参考命令：
 
 ```bash
-mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < 不重名文件 ;echo \$?
+mysql --no-defaults --default-character-set=utf8mb4 --binary-mode --disable-reconnect --host=xxx --port=xxx --user=xxx -pxxx < 不重名文件 ;echo $?
 ```
 
 第9步、搭建复制关系参考命令：

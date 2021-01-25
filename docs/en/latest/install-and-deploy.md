@@ -185,7 +185,6 @@ kill 19833
 
 > !!!TIP
 > 
->
 > - In case of abnormal start, view the compute node log `hotdb.log` under the installable directory `logs`. Execute the log view command: `tail -f /usr/local/hotdb/hotdb-server/logs/hotdb.log`.
 > - If the server is unauthorized, or the installed compute node service is unauthorized, both of which could result in start failure of compute node service.
 
@@ -694,7 +693,6 @@ Modification of the server.xml configuration on standby compute node192.168.200.
 
 > !!!INFO
 > 
->
 > - haNodeHost in the configuration file is the master compute node's IP+management port, and such parameter only needs to be configured on standby compute node.
 > - When starting master/standby server, if haState plays as the master, service port (3323) and management port (3325) will be started; if it plays as the Backup, only management port (3325) will be started.
 > - At the time of master server failure, if keepalived detects that the service is not available, it will automatically switch vip to the backup server, and start the backup service port (3323), to guarantee service without interruption.
@@ -927,7 +925,6 @@ sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
 
 > !!!NOTE
 > 
->
 > - The time synchronization parameters used for installing time synchronization address of NDB SQL specified server shall be consistent with those used for previous installation of compute node. That is, whether `ntpdate-server-ip` or `ntpdate-server-host` is used shall be consistent for both times
 > - The time synchronization parameters used for installing time synchronization address shall be consistent with those used for previous installation of compute node. If there is NTP service in cluster, then the parameter value shall be IP address of NIP server.
 
