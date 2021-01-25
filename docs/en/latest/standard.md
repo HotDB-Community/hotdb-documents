@@ -615,7 +615,7 @@ HotDB Server provides the customer a set of information monitoring, statistics a
 
 #### Management port command
 
-The user could log in to management port (default port: 3325) to use show @@help command to view the supported management port command and corresponding role.
+The user could log in to management port (default port: 3325) to use `show @@help` command to view the supported management port command and corresponding role.
 
 ```
 root> mysql -uroot -proot -P3325 -h192.168.200.201
@@ -660,9 +660,9 @@ mysql> show @@datasource;
 ...more contents are omitted, and you could log in to view...
 ```
 
-The content behind `show @@command` is a table name, for example in the previous instance, "show @@datasource;", datasource is a table name.
+The content behind `show @@command` is a table name, for example in the previous instance, `show @@datasource`, datasource is a table name.
 
-The user could also make DESC operation of the table name behind show @@ command, to view meanings of various fields in this table, such as viewing the meaning of various fields in data source information:
+The user could also make DESC operation of the table name behind `show @@command`, to view meanings of various fields in this table, such as viewing the meaning of various fields in data source information:
 
 ```
 mysql> desc datasource;
@@ -740,9 +740,9 @@ Then, when HotDB Server compute node is enabled, it will establish 32 back-end c
 
 At this time, if there is a 2048 Concurrent Pressurizing Scenario to impose pressure to compute node, it will be found that there are insufficient available connections in the connection pool, and the compute node will automatically increase the connections with data source, and the Max Connections could be up to 4200.
 
-After Pressurizing, these connections will not be destroyed immediately. Instead, they will wait until examination by Idle Examination Period: if Idle (that is the management port show @@backend is marked as Idle) connections are bigger than 512, then the connections shall be destroyed to 512; if smaller than 512, they will be kept intact;
+After Pressurizing, these connections will not be destroyed immediately. Instead, they will wait until examination by Idle Examination Period: if Idle (that is the management port `show @@backend` is marked as Idle) connections are bigger than 512, then the connections shall be destroyed to 512; if smaller than 512, they will be kept intact;
 
-If to make Idle Connections back to Initial Connections, then during running process of compute node, you could rebuild connection pool by referring to rebuild connection pool rebuild @@pool related chapters in *Distributed Transactional Database HotDB Server [management port Command] Function Manual*, then Initial Connections status shall be recovered.
+If to make Idle Connections back to Initial Connections, then during running process of compute node, you could rebuild connection pool by referring to rebuild connection pool `rebuild @@pool` related chapters in *Distributed Transactional Database HotDB Server [management port Command] Function Manual*, then Initial Connections status shall be recovered.
 
 ### Limit on use of disk space
 
@@ -760,7 +760,7 @@ Error-level logs recorded by compute node logs are as follow, and when End Sessi
 
 Compute node could make Online Reload of configuration information without re-enabling the service. For the parameters which could take effect immediately via [Reload](#Reload) function, please refer to [Instruction on use of compute node parameters](#_计算节点参数使用说明_2).
 
-There are two Reload methods, one is to log in to [[management port (3325)]{.ul}](#management-port-information-monitoring) to execute: reload @@config command; the other is to log in to management platform, click [Reload](#Reload) button on top right corner of the menu bar, and reload the new configuration items to the compute node for use. As shown in the following figure:
+There are two Reload methods, one is to log in to [[management port (3325)]{.ul}](#management-port-information-monitoring) to execute: `reload @@config` command; the other is to log in to management platform, click [Reload](#Reload) button on top right corner of the menu bar, and reload the new configuration items to the compute node for use. As shown in the following figure:
 
 ![](assets/standard/image29.png)
 
@@ -780,7 +780,7 @@ In case of inaccurate configuration items, modify correspondingly according to t
 
 ![](assets/standard/image32.png)
 
-When executing reload @@config command to reload via compute node management port, Config Checking will be conducted first as well by default, and successful reload is allowed only after the checking passed.
+When executing `reload @@config` command to reload via compute node management port, Config Checking will be conducted first as well by default, and successful reload is allowed only after the checking passed.
 
 ### Deadlock Check
 
@@ -1343,7 +1343,7 @@ HotDB Server provides Master/Slave Data Source Consistency Detection function in
 
 Master/slave data consistency detection, could check whether table structure of various tables in Active Master and Standby Slave is the same or not, whether the table data is consistent or not, and whether the master/slave has delay or not. When there is a few data inconsistency in table data between Active Master and Standby Slave, Master/slave data consistency detection could locate the Primary Key value of the inconsistent data line.
 
-Log in to [management port (3325 Port)](#management-port-information-monitoring) of the compute node to execute show @@masterslaveconsistency command, thus it could be viewed whether the table is consistent on Active Master and Standby Slave:
+Log in to [management port (3325 Port)](#management-port-information-monitoring) of the compute node to execute `show @@masterslaveconsistency` command, thus it could be viewed whether the table is consistent on Active Master and Standby Slave:
 
 ```
 mysql> show @@masterslaveconsistency;
@@ -2549,7 +2549,7 @@ sh hotdbinstall_v*.sh --dry-run=no --install-keepalived=backup --keepalived-vip-
 
 ![](assets/standard/image101.png)
 
-5. Execute reload @@ config at managemtn end of HotDB_01 to make the remaining compute nodes become the master compute nodes in HA mode.
+5. Execute `reload @@config` at management port end of HotDB_01 to make the remaining compute nodes become the master compute nodes in HA mode.
 
 ![](assets/standard/image102.png)
 
@@ -5411,7 +5411,7 @@ Notes on REVOKE:
 +--------------------+---------------------------------+--------------------+-------------------------------------------------------------------------------------------+
 |                    | SET @@session.                 | Not support        | 　                                                                                        |
 +--------------------+---------------------------------+--------------------+-------------------------------------------------------------------------------------------+
-|                    | SET @@                          | Not support        | 　                                                                                        |
+|                    | SET @@                         | Not support        | 　                                                                                        |
 +--------------------+---------------------------------+--------------------+-------------------------------------------------------------------------------------------+
 |                    | SET ROLE                        | Forbidden          | Compute node does not support new role function of MySQL8.0                               |
 +--------------------+---------------------------------+--------------------+-------------------------------------------------------------------------------------------+

@@ -386,7 +386,7 @@ time left: 89 days 22 hours 55 minutes 48 seconds.
 
 #### 许可证过期
 
-计算节点启动后，默认5分钟检测一次许可证状态。当许可证过期时，计算节点服务不会立刻停止，但会限制节点数为0，3325端口不允许执行reload @@config，3323端口不允许执行任意SQL，同时日志文件hotdb.log中也会间隔5分钟输出一次许可证过期警告信息，如下所示：
+计算节点启动后，默认5分钟检测一次许可证状态。当许可证过期时，计算节点服务不会立刻停止，但会限制节点数为0，3325端口不允许执行`reload @@config`，3323端口不允许执行任意SQL，同时日志文件hotdb.log中也会间隔5分钟输出一次许可证过期警告信息，如下所示：
 
 ```
 2020-12-15 00:02:52.113 [ERROR] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(163) - no matched license detected. Datanode limit to 0.

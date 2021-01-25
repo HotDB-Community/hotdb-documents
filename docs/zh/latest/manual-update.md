@@ -570,7 +570,7 @@ vrrp_instance VI_1 {
 
 配置校验正常通过，可在管理平台中"配置->配置校验"菜单中检测配置库配置是否正确
 
-计算节点内存信息与配置库保持一致，可通过管理平台"动态加载"功能或登录管理端口（默认3325）执行reload @@config命令确保两者信息一致
+计算节点内存信息与配置库保持一致，可通过管理平台"动态加载"功能或登录管理端口（默认3325）执行`reload @@config`命令确保两者信息一致
 
 5. **Keepalived程序运行正常**
 
@@ -943,7 +943,7 @@ sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 ##### 启动计算节点服务
 
-计算节点服务程序启动不分先后顺序，可依次启动完成后登录任一计算节点管理端口（默认3325）执行"show @@cluster"命令查询当前集群中计算节点运行状态与角色信息。
+计算节点服务程序启动不分先后顺序，可依次启动完成后登录任一计算节点管理端口（默认3325）执行`show @@cluster`命令查询当前集群中计算节点运行状态与角色信息。
 
 ### 多节点集群模式不停机升级
 
@@ -965,7 +965,7 @@ sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 > !!!IMPORTANT
 > 
-> primary与secondary是计算节点在管理端口（默认3325）中执行"show @@cluster"命令显示的当前计算节点的角色。以下secondary1与secondary2代指三个计算节点集群中secondary属性的计算节点，末尾的数字标识不分先后顺序，可代指任一secondary计算节点。
+> primary与secondary是计算节点在管理端口（默认3325）中执行`show @@cluster`命令显示的当前计算节点的角色。以下secondary1与secondary2代指三个计算节点集群中secondary属性的计算节点，末尾的数字标识不分先后顺序，可代指任一secondary计算节点。
 
 #### 配置库升级
 

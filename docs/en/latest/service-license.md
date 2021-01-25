@@ -339,7 +339,7 @@ When you get the official license file, you should keep the file properly to avo
 
 #### License expiration
 
-After the compute node is started, the license status will be detected once every 5 minutes by default. When the license is expired, the compute node service will not stop immediately, however the number of nodes will be limited to 0, and reload @@config will not be allowed for execution, and the license expiration warning will be output once every 5 minutes by the hotdb.log.
+After the compute node is started, the license status will be detected once every 5 minutes by default. When the license is expired, the compute node service will not stop immediately, however the number of nodes will be limited to 0, and `reload @@config` will not be allowed for execution, and the license expiration warning will be output once every 5 minutes by the hotdb.log.
 
 ```log
 2020-12-15 00:02:52.113 [ERROR] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(163) - no matched license detected. Datanode limit to 0.
