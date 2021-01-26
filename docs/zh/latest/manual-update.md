@@ -10,7 +10,7 @@
 
 管理平台升级到V2.5.3以下版本时目前只支持通过手动的方式进行，若升级到V2.5.3以及上版本时支持半自动化升级（手动替换包与更新配置文件，程序自动升级配置库）。当升级到V2.5.6版本及以上时，还需要额外对jdk进行升级。
 
-### 配置库升级
+### 配置库升级{#管理平台.配置库升级}
 
 部分版本升级时无配置库SQL变更（例如：同版本号中不同日期的版本更新升级），上述场景无需关注配置库升级模块。
 
@@ -18,8 +18,8 @@
 
 登录管理平台服务器执行停止服务命令：
 
-```
-#sh /usr/local/hotdb/hotdb-management/bin/hotdb_management stop
+```bash
+sh /usr/local/hotdb/hotdb-management/bin/hotdb_management stop
 ```
 
 #### 备份配置库数据
@@ -28,7 +28,7 @@
 
 **使用mysqldump备份配置库数据**
 
-```
+```bash
 mysqldump -S /data/mysql/mysqldata3316/sock/mysql.sock --set-gtid-purged=off ---single-transaction --master-data=1 --databases hotdb_cloud_config --default-character-set=utf8 -uroot > /usr/local/hotdb/hotdb_cloud_config_2.5.3_20190815.sql
 ```
 
@@ -42,15 +42,13 @@ mysqldump -S /data/mysql/mysqldata3316/sock/mysql.sock --set-gtid-purged=off ---
 
 1. 登录管理平台配置库
 
-```
+```bash
 mysql -uhotdb_cloud -p -P3306 -Dhotdb_cloud_config -h127.0.0.1
 ```
 
 2. 将升级内容复制到配置库中执行
 
-```
-根据具体升级脚本内容，执行变更SQL语句
-```
+根据具体升级脚本内容，执行变更SQL语句。
 
 > !Important
 > 
@@ -65,28 +63,25 @@ mysql -uhotdb_cloud -p -P3306 -Dhotdb_cloud_config -h127.0.0.1
 **问题与处理方法**
 
 1. 配置库升级SQL执行出现语法报错。
-
-- 将执行的SQL报错信息保存，同时提供升级配置库的相关信息包括但不限于：配置库当前版本与升级目标版本、执行的升级SQL语句、配置库备份文件等，全部一起发送给产品供应商分析解决。
-- 使用上一步骤备份的文件将配置库恢复，恢复期间请停止管理平台服务程序。
-
+    - 将执行的SQL报错信息保存，同时提供升级配置库的相关信息包括但不限于：配置库当前版本与升级目标版本、执行的升级SQL语句、配置库备份文件等，全部一起发送给产品供应商分析解决。
+    - 使用上一步骤备份的文件将配置库恢复，恢复期间请停止管理平台服务程序。
 2. 非SQL语法错误的异常情况
-
-- 根据错误提示，分析错误原因并解决。
-- 使用上一步骤备份的文件将配置库恢复，恢复期间请停止管理平台服务程序。
-- 问题修复且配置库恢复成功后，重新执行升级操作。
+    - 根据错误提示，分析错误原因并解决。
+    - 使用上一步骤备份的文件将配置库恢复，恢复期间请停止管理平台服务程序。
+    - 问题修复且配置库恢复成功后，重新执行升级操作。
 
 ### 替换程序包
 
 #### 备份管理平台目录
 
-```
+```bash
 cd /usr/local/hotdb/
 mv hotdb-management hotdb_management_249
 ```
 
 #### 上传并解新版本包
 
-```
+```bash
 # 上传新版本包
 # 可使用rz命令或ftp文件传输工具上传新版本包
 
@@ -109,19 +104,23 @@ restorecon -R /usr/local/hotdb/hotdb-management
 ```bash
 cd /usr/local/hotdb/hotdb-management/conf/
 vi application.properties
+```
 
------------------------------------配置内容-----------------------------------------
-## http port
+配置内容：
+
+```properties
+# http port
 server.port=3324
 ## ssl socket port
 server.backup.port=3322
-## hotdb management database settings
+# hotdb management database settings
 spring.datasource.url=jdbc:mysql://192.168.210.30:3307/hotdb_cloud_config_253?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&connectTimeout=3000&socketTimeout=3600000
 spring.datasource.username=hotdb_cloud
 spring.datasource.password=hotdb_cloud
 spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 ......（此处省略部分参数，具体以实际application.properties为准）
-## tomcat connection pool specific settingshotdb.config.sqlFirewall.interceptType=0:/u8BEF/u64CD/u4F5C,1:SQL/u6CE8/u5165,2:/u4E0D/u826F/u64CD/u4F5C,3:/u8BEF/u8BBE/u7F6Ehotdb.server.log.days=14
+# tomcat connection pool specific settings
+hotdb.config.sqlFirewall.interceptType=0:\u8BEF\u64CD\u4F5C,1:SQL\u6CE8\u5165,2:\u4E0D\u826F\u64CD\u4F5C,3:\u8BEF\u8BBE\u7F6E
 ```
 
 ### 升级JDK版本
@@ -132,9 +131,9 @@ spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 
 #### 上传并解压OpenJDK8安装包
 
-```
+```bash
 # 上传OpenJDK8安装包
-可使用rz命令或ftp文件传输工具上传OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz安装包，该安装包可联系热璞数据库索要
+# 可使用rz命令或ftp文件传输工具上传OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz安装包，该安装包可联系热璞数据库索要
 
 # 解压安装包
 mkdir -p /usr/local/jdk8
@@ -143,9 +142,9 @@ tar -xvf OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz -C /usr/local/jdk8
 
 #### 修改启动脚本
 
-对启动脚本bin/hotdb_management脚本只需调整一下2处：
+对启动脚本`bin/hotdb_management`脚本只需调整一下2处：
 
-```
+```bash
 ----------------------------------原配置内容----------------------------------------
 JAVA_BIN=$shellPath/../../jdk/bin/java
 JAVA_VERSION="1.7.0_80"
@@ -170,7 +169,7 @@ sh hotdb_management start
 
 管理平台日志报错，服务无法启动
 
-- 将新版本目录重命名，并将旧目录重新命名为hotdb-management。
+- 将新版本目录重命名，并将旧目录重新命名为`hotdb-management`。
 - 使用上一步骤备份的配置库文件将配置库恢复。
 - 重新启动旧版本管理平台服务。
 - 分析启动失败的问题，解决后再按照上述步骤重新升级。
@@ -185,19 +184,19 @@ sh hotdb_management start
 
 若计算节点版本由低版本升级到V2.5.5（包含）以下版本时，可跳过这一步，默认JDK版本均为1.7；
 
-若计算节点版本由低版本升级到V2.5.6（包含）以上版本时，需要对JDK版本进行升级至1.8，具体操作步骤请参考管理平台[升级JDK版本](#升级jdk版本)，同时也需要对启动脚本bin/hotdb_server文件中"JAVA_BIN"、"JAVA_VERSION"进行修改。
+若计算节点版本由低版本升级到V2.5.6（包含）以上版本时，需要对JDK版本进行升级至1.8，具体操作步骤请参考管理平台[升级JDK版本](#升级jdk版本)，同时也需要对启动脚本`bin/hotdb_server`文件中`JAVA_BIN`、`JAVA_VERSION`进行修改。
 
 #### 升级新版许可证
 
 若计算节点版本由低版本升级到V2.5.5（包含）以下版本时，可跳过这一步，默认许可证无变化；
 
-若计算节点版本由低版本升级到V2.5.6（包含）以上版本时，计算节点许可证升级为官方自研许可证，原程序包内keys/目录下许可证将无法使用，直接废弃；新版本包内keys/目录下默认存放90天、16节点试用版许可证，启动计算节点时自动激活。**若发现当前已有的节点数大于默认试用版的节点数**，则需要在升级之前参考《分布式事务数据库HotDB Server【服务授权】功能使用手册》V2.5.6 版本以上的文档进行机器码获取及许可证更新操作，否则可能导致计算节点服务无法正常启用。
+若计算节点版本由低版本升级到V2.5.6（包含）以上版本时，计算节点许可证升级为官方自研许可证，原程序包内`keys`目录下许可证将无法使用，直接废弃；新版本包内`keys`目录下默认存放90天、16节点试用版许可证，启动计算节点时自动激活。**若发现当前已有的节点数大于默认试用版的节点数**，则需要在升级之前参考[服务授权](service-license.md)文档（2.5.6版本以上）进行机器码获取及许可证更新操作，否则可能导致计算节点服务无法正常启用。
 
 ### 单节点集群模式升级
 
 #### 停止计算节点服务
 
-```
+```bash
 # 登录计算节点服务器执行停止服务命令：
 cd /usr/local/hotdb/hotdb-server/bin
 sh hotdb_server stop
@@ -211,22 +210,22 @@ sh hotdb_server stop
 
 **升级操作：**
 
-计算节点配置库升级与管理平台配置库升级步骤一致，备份配置库、执行升级SQL、升级异常情况处理等操作说明请参考管理平台[配置库升级说明](#配置库升级)。
+计算节点配置库升级与管理平台配置库升级步骤一致，备份配置库、执行升级SQL、升级异常情况处理等操作说明请参考[管理平台配置库升级说明](#管理平台.配置库升级)。
 
 #### 替换程序包
 
 ##### 备份计算节点目录
 
-```
+```bash
 cd /usr/local/hotdb/
 mv hotdb-server hotdb_server_253
 ```
 
 ##### 上传并解压新版本包
 
-```
+```bash
 # 上传新版本包
-可使用rz命令或ftp文件传输工具上传新版本包
+# 可使用rz命令或ftp文件传输工具上传新版本包
 
 # 解压新版本包
 tar -xvf hotdb-server-2.5.4-ga-20190812.tar.gz -C /usr/local/hotdb
@@ -242,7 +241,7 @@ restorecon -R /usr/local/hotdb/hotdb-server
 
 若升级前的计算节点版本大于等于V2.5.3需要注意，之前备份的计算节点目录中是否包含NDB SQL服务（以ndbsql开头的目录）。若存在则需要将之前备份的计算节点目录中的NDB SQL目录重新拷贝到升级后的计算节点目录中。
 
-```
+```bash
 # 进入之前备份的计算节点目录下
 cd /usr/local/hotdb/hotdb_server_253
 
@@ -265,47 +264,50 @@ cp -rp /usr/local/hotdb/hotdb_server_253/ndbsql* /usr/local/hotdb/hotdb-server/
 
 ##### server.xml配置文件{#单节点更新server.xml配置文件}
 
-建议打开备份的计算节点目录中的server.xml配置文件，对照着将变更的参数值同步更新至新版本目录下的配置文件中。
+建议打开备份的计算节点目录中的`server.xml`配置文件，对照着将变更的参数值同步更新至新版本目录下的配置文件中。
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-server/conf/
 vi server.xml
+```
 
------------------------------------配置内容-----------------------------------------
+配置内容：
 
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hotdb:server SYSTEM "server.dtd">
 <hotdb:server xmlns:hotdb="http://cn.hotpu/">
-<system>
-<property name="url">jdbc:mysql://192.168.210.30:3307/hotdb_config_test253</property><!-- 主配置库地址，需指定配置库服务所在的真实IP地址 -->
-<property name="username">hotdb_config</property><!-- 主配置库用户名 -->
-<property name="password">hotdb_config</property><!-- 主配置库密码 -->
-<property name="bakUrl">jdbc:mysql://192.168.210.30:3307/hotdb_config_test253</property><!-- 从配置库地址，需指定配置库服务所在的真实IP地址 -->
-<property name="bakUsername">hotdb_config</property><!-- 从配置库用户名 -->
-<property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
-<property name="configMGR">false</property><!-- 配置库是否使用MGR -->
-<property name="bak1Url"></property><!-- MGR配置库地址(如配置库使用MGR,必须配置此项)，需指定配置库服务所在的真实IP地址 -->
-<property name="bak1Username"></property><!-- MGR配置库用户名(如配置库使用MGR,必须配置此项) -->
-<property name="bak1Password"></property><!-- MGR配置库密码(如配置库使用MGR,必须配置此项) -->
-<property name="haMode">1</property><!-- 高可用模式：0：主备；1：集群 -->
-<property name="serverId">1</property><!-- 集群节点编号1-N（节点数)，集群内唯一且N<=集群中节点总数 -->
-<property name="clusterName">HotDB-Cluster30</property><!-- 集群组名称 -->
-<property name="clusterSize">3</property><!-- 集群中节点总数 -->
-<property name="clusterNetwork">192.168.210.0/24</property><!-- 集群所在网段 -->
-<property name="clusterHost">192.168.210.30</property><!-- 本节点所在IP -->
-<property name="clusterPort">3326</property><!-- 集群通信端口 -->
-<property name="haState">master</property><!-- HA角色，主节点：master，备节点：backup (集群模式下，此项无效） -->
-<property name="haNodeHost"></property><!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325） -->
-<property name="serverPort">3323</property><!-- 服务端口 -->
-<property name="managerPort">3325</property><!-- 管理端口 -->
-<property name="processors">16</property><!-- 处理器数 -->
-......（此处省略部分参数，具体以实际server.xml为准）
+  <system>
+    <property name="url">jdbc:mysql://192.168.210.30:3307/hotdb_config_test253</property><!-- 主配置库地址，需指定配置库服务所在的真实IP地址 -->
+    <property name="username">hotdb_config</property><!-- 主配置库用户名 -->
+    <property name="password">hotdb_config</property><!-- 主配置库密码 -->
+    <property name="bakUrl">jdbc:mysql://192.168.210.30:3307/hotdb_config_test253</property><!-- 从配置库地址，需指定配置库服务所在的真实IP地址 -->
+    <property name="bakUsername">hotdb_config</property><!-- 从配置库用户名 -->
+    <property name="bakPassword">hotdb_config</property><!-- 从配置库密码 -->
+    <property name="configMGR">false</property><!-- 配置库是否使用MGR -->
+    <property name="bak1Url"></property><!-- MGR配置库地址(如配置库使用MGR,必须配置此项)，需指定配置库服务所在的真实IP地址 -->
+    <property name="bak1Username"></property><!-- MGR配置库用户名(如配置库使用MGR,必须配置此项) -->
+    <property name="bak1Password"></property><!-- MGR配置库密码(如配置库使用MGR,必须配置此项) -->
+    <property name="haMode">1</property><!-- 高可用模式：0：主备；1：集群 -->
+    <property name="serverId">1</property><!-- 集群节点编号1-N（节点数)，集群内唯一且N<=集群中节点总数 -->
+    <property name="clusterName">HotDB-Cluster30</property><!-- 集群组名称 -->
+    <property name="clusterSize">3</property><!-- 集群中节点总数 -->
+    <property name="clusterNetwork">192.168.210.0/24</property><!-- 集群所在网段 -->
+    <property name="clusterHost">192.168.210.30</property><!-- 本节点所在IP -->
+    <property name="clusterPort">3326</property><!-- 集群通信端口 -->
+    <property name="haState">master</property><!-- HA角色，主节点：master，备节点：backup (集群模式下，此项无效） -->
+    <property name="haNodeHost"></property><!-- HA角色，其他节点IP:PORT （主备模式下使用，PORT表示管理端口，例：192.168.200.2:3325） -->
+    <property name="serverPort">3323</property><!-- 服务端口 -->
+    <property name="managerPort">3325</property><!-- 管理端口 -->
+    <property name="processors">16</property><!-- 处理器数 -->
+    ......（此处省略部分参数，具体以实际server.xml为准）
+</system>
 </hotdb:server>
 ```
 
-##### 计算节点启动脚本
+##### 计算节点启动脚本{#单节点更新计算节点启动脚本}
 
-建议打开备份的计算节点bin/目录下的hotdb_server脚本，对照着将变更的参数值同步更新至新版本目录下的脚本文件中。
+建议打开备份的计算节点`bin`目录下的`hotdb_server`脚本，对照着将变更的参数值同步更新至新版本目录下的脚本文件中。
 
 ```bash
 #!/bin/sh
@@ -333,13 +335,13 @@ HOTDB_CLASSPATH="$HOTDB_HOME/conf:$HOTDB_HOME/lib/classes"
 
 ##### 其他配置文件
 
-除server.xml与计算节点启动脚本需要与旧版本中计算节点配置文件设置的值保持同步外，还需关注conf/目录下log4j2.xml的相关参数设置是否有变更。
+除`server.xml`与计算节点启动脚本需要与旧版本中计算节点配置文件设置的值保持同步外，还需关注`conf`目录下`log4j2.xml`的相关参数设置是否有变更。
 
 #### 启动计算节点与启动异常处理
 
 ##### 启动计算节点服务
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-server/bin
 sh hotdb_server start
 ```
@@ -361,11 +363,11 @@ sh hotdb_server start
 
 #### 配置库升级
 
-计算节点配置库升级与管理平台配置库升级步骤一致，区别在于执行的升级SQL内容与连接的配置库地址不同。具体操作步骤请参考管理平台[配置库升级说明](#配置库升级)。
+计算节点配置库升级与管理平台配置库升级步骤一致，区别在于执行的升级SQL内容与连接的配置库地址不同。具体操作步骤请参考[管理平台配置库升级说明](#管理平台.配置库升级)。
 
 #### 停止计算节点与keepalived服务
 
-```
+```bash
 # 停止备keepalived服务
 service keepalived stop
 
@@ -393,7 +395,7 @@ sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 先启动主计算节点服务，**待计算节点服务完全启动成功**（服务端口与管理端口都可正常连接）后再启动主计算节点keepalived服务。
 
-```
+```bash
 # 启动主计算节点服务
 cd /usr/local/hotdb/hotdb-server/bin
 sh hotdb_server start
@@ -419,9 +421,9 @@ service keepalived start
 
 主备节点集群模式选择不停机升级要求必须满足以下前提才能进行，否则只能在[停机条件下对计算节点版本进行升级](#主备节点集群模式停机升级)操作。
 
-- 计算节点配置库的升级SQL中不包含任何"alter table"修改已有字段（修改增加字段长度或范围的除外）的语句。
-- 计算节点配置库的升级SQL中不包含任何"drop table"的语句。
-- 计算节点配置库的升级SQL中不包含任何"update/delete"已有数据的语句。
+- 计算节点配置库的升级SQL中不包含任何`alter table`修改已有字段（修改增加字段长度或范围的除外）的语句。
+- 计算节点配置库的升级SQL中不包含任何`drop table`的语句。
+- 计算节点配置库的升级SQL中不包含任何`update/delete`已有数据的语句。
 
 #### 高可用切换检查
 
@@ -429,24 +431,22 @@ service keepalived start
 
 ##### 高可用切换检查项
 
-1. **主备计算节点服务正常**
+**（一）主备计算节点服务正常**
 
-**要求：**当前主计算节点服务端口（默认3323）正常开放，管理端口（默认3325）正常开放，当前备
+**要求：**当前主计算节点服务端口（默认3323）正常开放，管理端口（默认3325）正常开放，当前备计算节点服务端口状态关闭，管理端口正常开放。
 
-计算节点服务端口状态关闭，管理端口正常开放。
-
-2. **主备计算节点配置文件server.xml配置正确**
+**（二）主备计算节点配置文件server.xml配置正确**
 
 **当前主计算节点server.xml配置**
 
-```
+```xml
 <property name="haState">master</property>< HA 角色，主节点：master，备节点：backup>
 <property name="haNodeHost"></property><HA 角色，其他节点 IP:PORT>
 ```
 
 **当前备计算节点server.xml配置**
 
-```
+```xml
 <property name="haState">backup</property>< HA 角色，主节点：master，备节点：backup>
 <property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
 ```
@@ -455,7 +455,7 @@ service keepalived start
 > 
 > 上述IP地址需填写当前主计算节点所在服务器IP地址，端口号为当前主计算节点管理端口
 
-3. **主备keepalived配置文件keepalived.conf配置正确**
+**（三）主备keepalived配置文件keepalived.conf配置正确**
 
 **当前主计算节点keepalived.conf配置**
 
@@ -566,48 +566,47 @@ vrrp_instance VI_1 {
 }
 ```
 
-4. **配置校验正常**
+**（四）配置校验正常**
 
 配置校验正常通过，可在管理平台中"配置->配置校验"菜单中检测配置库配置是否正确
 
 计算节点内存信息与配置库保持一致，可通过管理平台"动态加载"功能或登录管理端口（默认3325）执行`reload @@config`命令确保两者信息一致
 
-5. **Keepalived程序运行正常**
+**（五）Keepalived程序运行正常**
 
 主备keepalived程序运行正常，可在主备计算节点服务器中通过`service keepalived status`命令查询
 
-6. **Keepalived的VIP在当前主计算节点上**
+**（六）Keepalived的VIP在当前主计算节点上**
 
-在当前主计算节点服务器上执行"ip addr"显示内容包含keepalived配置的虚拟IP地址
+在当前主计算节点服务器上执行`ip addr`显示内容包含keepalived配置的虚拟IP地址
 
 #### 配置库升级
 
-计算节点配置库升级与管理平台配置库升级步骤一致，区别在于执行的升级SQL内容与连接的配置库地址不同。具体操作步骤请参考管理平台[配置库升级说明](#配置库升级)。
+计算节点配置库升级与管理平台配置库升级步骤一致，区别在于执行的升级SQL内容与连接的配置库地址不同。具体操作步骤请参考[管理平台配置库升级说明](#管理平台.配置库升级)。
 
 #### 备计算节点升级
 
 ##### 停止备计算节点服务
 
-```
+```bash
 # 登录备计算节点服务器执行停止服务命令：
 sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 ```
 
 ##### 备份备计算节点目录
 
-```
+```bash
 cd /usr/local/hotdb/
 mv hotdb-server hotdb_server_249
 ```
 
 ##### 上传并解压新版本包
 
-```
+```bash
 # 上传新版本包
 # 可使用rz命令或ftp文件传输工具上传新版本包
 
 # 解压新版本包
-
 tar -xvf hotdb-server-2.4.9-ga-20190812.tar.gz -C /usr/local/hotdb
 
 # 为hotdb用户赋予文件夹权限
@@ -627,37 +626,35 @@ restorecon -R /usr/local/hotdb/hotdb-server
 
 建议打开旧计算节点目录中的server.xml配置文件，对照着将变更的参数值同步更新至新版本目录下的配置文件中。
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-server/conf/
 vi server.xml
 ```
 
 > !Note
 > 
-> 参考修改内容此处不再赘述，可查看单节点集群模式升级中[更新server.xml配置文件](#单节点更新server.xml配置文件)说明。
+> 参考修改内容此处不再赘述，可查看[单节点集群模式升级中更新server.xml配置文件](#单节点更新server.xml配置文件)说明。
 
 ##### 计算节点启动脚本
 
 建议打开备份的计算节点bin/目录下的hotdb_server脚本，对照着将变更的参数值同步更新至新版本目录下的脚本文件中。
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-server/bin/
 vi hotdb_server
-
------------------------------------配置内容-----------------------------------------
 ```
 
 > !Note
 > 
-> 参考修改内容此处不再赘述，可查看单节点集群模式升级中更新[计算节点启动脚本](#计算节点启动脚本)说明。
+> 参考修改内容此处不再赘述，可查看[单节点集群模式升级中更新计算节点启动脚本](#单节点更新计算节点启动脚本)说明。
 
 ##### 其他配置文件
 
-除server.xml与计算节点启动脚本需要与旧版本中计算节点配置文件设置的值保持同步外，还需关注conf/目录下log4j2.xml的相关参数设置是否有变更。
+除`server.xml`与计算节点启动脚本需要与旧版本中计算节点配置文件设置的值保持同步外，还需关注`conf`目录下`log4j2.xml`的相关参数设置是否有变更。
 
 ##### 启动备计算节点服务
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-server/bin
 sh hotdb_server start
 ```
@@ -670,7 +667,7 @@ sh hotdb_server start
 
 ##### 停止主计算节点服务
 
-```
+```bash
 # 登录主计算节点服务器执行停止服务命令：
 cd /usr/local/hotdb/hotdb-server/bin
 sh hotdb_server stop
@@ -688,14 +685,14 @@ sh hotdb_server stop
 
 ##### 备份主计算节点目录
 
-```
+```bash
 cd /usr/local/hotdb/
 mv hotdb-server hotdb-server_249
 ```
 
 ##### 上传并解压新版本包
 
-```
+```bash
 # 上传新版本包
 # 可使用rz命令或ftp文件传输工具上传新版本包
 
@@ -717,59 +714,53 @@ restorecon -R /usr/local/hotdb/hotdb-server
 
 ##### server.xml配置文件
 
-建议打开旧计算节点目录中的server.xml配置文件，对照着将变更的参数值同步更新至新版本目录下的配置文件中。
+建议打开旧计算节点目录中的`server.xml`配置文件，对照着将变更的参数值同步更新至新版本目录下的配置文件中。
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-server/conf/
 vi server.xml
-
------------------------------------配置内容-----------------------------------------
 ```
 
 > !Note
 > 
-> 参考修改内容此处不再赘述，可查看单节点集群模式升级中[更新server.xml配置文件](#单节点更新server.xml配置文件)说明。
+> 参考修改内容此处不再赘述，可查看[单节点集群模式升级中更新server.xml配置文件](#单节点更新server.xml配置文件)说明。
 
 ##### 计算节点启动脚本
 
 建议打开备份的计算节点bin/目录下的hotdb_server脚本，对照着将变更的参数值同步更新至新版本目录下的脚本文件中。
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-server/bin/
 vi hotdb_server
-
------------------------------------配置内容-----------------------------------------
 ```
 
 > !Note
 > 
-> 参考修改内容此处不再赘述，可查看单节点集群模式升级中更新[计算节点启动脚本](#计算节点启动脚本)说明。
+> 参考修改内容此处不再赘述，可查看[单节点集群模式升级中更新计算节点启动脚本](#单节点更新计算节点启动脚本)说明。
 
 ##### 其他配置文件
 
-除server.xml与计算节点启动脚本需要与旧版本中计算节点配置文件设置的值保持同步外，还需关注conf/目录下log4j2.xml的相关参数设置是否有变更。
+除`server.xml`与计算节点启动脚本需要与旧版本中计算节点配置文件设置的值保持同步外，还需关注`conf`目录下`log4j2.xml`的相关参数设置是否有变更。
 
 ##### 手动执行高可用环境重建
 
 为保证当前备计算节点启动正常，需进行手动执行高可用环境重建操作。若使用的管理平台为V2.4.8及以上版本时可使用"高可用重建"功能替代以下操作。
 
-> !Info
+> !Note
 > 
-> 以下操作说明使用的"当前备"为计算节点服务器没有VIP（keepalived虚拟IP）的计算节点，
+> 以下操作说明使用的"当前备"为计算节点服务器没有VIP（keepalived虚拟IP）的计算节点，"当前主"为VIP所在的计算节点。可在主备计算节点服务器上执行"ip addr"命令查看当前VIP漂移位置，以确定当前计算节点的主备状态。
 
-"当前主"为VIP所在的计算节点。可在主备计算节点服务器上执行"ip addr"命令查看当前VIP漂移位置，以确定当前计算节点的主备状态。
+**（一）停止当前备（无VIP）keepalived服务**
 
-1. **停止当前备（无VIP）keepalived服务**
-
-```
+```bash
 service keepalived stop
 ```
 
-2. **当前主（有VIP）计算节点server.xml与keepalived.conf修改**
+**（二）当前主（有VIP）计算节点server.xml与keepalived.conf修改**
 
 **当前主（有VIP）计算节点server.xml配置修改**
 
-```
+```xml
 <property name="haState">master</property>< HA 角色，主节点：master，备节点：backup><property name="haNodeHost"></property><HA 角色，其他节点 IP:PORT>
 ```
 
@@ -820,19 +811,17 @@ vrrp_instance VI_1 {
   virtual_ipaddress {
     192.168.200.140/24 dev eth1 label eth1:1
   }
-  notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-  k_hotdb_process.sh master_notify_master"
-  notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/chec
-  k_hotdb_process.sh master_notify_backup"
+  notify_master "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_master"
+  notify_backup "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
   notify_fault "/bin/bash /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh master_notify_backup"
 }
 ```
 
-3. **当前备（无VIP）计算节点server.xml与keepalived.conf修改**
+**（三）当前备（无VIP）计算节点server.xml与keepalived.conf修改**
 
 **当前备计算节点server.xml配置**
 
-```
+```xml
 <property name="haState">backup</property>< HA 角色，主节点：master，备节点：backup>
 <property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
 ```
@@ -894,15 +883,16 @@ vrrp_instance VI_1 {
 }
 ```
 
-4. **当前主（有VIP）keepalived服务执行配置重新加载**
+**（四）当前主（有VIP）keepalived服务执行配置重新加载**
 
-# service keepalived reload
+```bash
+service keepalived reload
+```
 
 ##### 启动当前备（无VIP）计算节点服务与keepalived
 
-```
+```bash
 # 启动计算节点服务
-
 cd /usr/local/hotdb/hotdb-server/bin
 sh hotdb_server start
 
@@ -922,7 +912,7 @@ service keepalived start
 
 ##### 停止计算节点服务
 
-```
+```bash
 # 停止secondary1计算节点服务
 sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
@@ -935,7 +925,7 @@ sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 ##### 升级配置库
 
-计算节点配置库升级与管理平台配置库升级步骤一致，区别在于执行的升级SQL内容与连接的配置库地址不同。具体操作步骤请参考管理平台[配置库升级说明](#配置库升级)。
+计算节点配置库升级与管理平台配置库升级步骤一致，区别在于执行的升级SQL内容与连接的配置库地址不同。具体操作步骤请参考[管理平台配置库升级说明](#管理平台.配置库升级)。
 
 ##### 替换升级包与更新配置文件
 
@@ -969,7 +959,7 @@ sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 #### 配置库升级
 
-计算节点配置库升级与管理平台配置库升级步骤一致，区别在于执行的升级SQL内容与连接的配置库地址不同。具体操作步骤请参考管理平台[配置库升级说明](#配置库升级)。
+计算节点配置库升级与管理平台配置库升级步骤一致，区别在于执行的升级SQL内容与连接的配置库地址不同。具体操作步骤请参考[管理平台配置库升级说明](#管理平台.配置库升级)。
 
 #### Secondary1计算节点升级
 
@@ -983,7 +973,7 @@ sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 ##### 停止primary计算节点服务
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-server/bin
 sh hotdb_server stop
 ```
@@ -1034,21 +1024,21 @@ sh hotdb_server stop
 
 停止备份程序服务前，请确认当前管理平台中没有未完成的备份任务，否则可能导致备份任务的异常中断。
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-backup/bin
 sh hotdb_backup stop
 ```
 
 ### 备份旧备份程序目录
 
-```
+```bash
 cd /usr/local/hotdb/
 mv hotdb-backup/ hotdb-backup_1.0
 ```
 
 ### 上传并解压新版本包
 
-```
+```bash
 # 上传新版本包
 # 可使用rz命令或ftp文件传输工具上传新版本包
 
@@ -1064,7 +1054,7 @@ restorecon -R /usr/local/hotdb/hotdb-backup
 
 ### 启动服务
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-backup/bin
 sh hotdb_backup start -h 192.168.220.104 -p 3322
 ```
@@ -1085,21 +1075,21 @@ sh hotdb_backup start -h 192.168.220.104 -p 3322
 
 停止监听程序服务前，请确认当前计算节点是否有正在进行SQL操作，否则可能存在事务损失。
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-listener/bin
 sh hotdb_listener stop
 ```
 
 ### 备份旧备份程序目录
 
-```
+```bash
 cd /usr/local/hotdb/
 mv hotdb-listener/ hotdb-listener_1.0
 ```
 
 ### 上传并解压新版本包
 
-```
+```bash
 # 上传新版本包
 # 可使用rz命令或ftp文件传输工具上传新版本包
 
@@ -1119,9 +1109,11 @@ restorecon -R /usr/local/hotdb/hotdb-listener
 # 修改管理端口配置文件同服务停止前一致，默认3330
 cd /usr/local/hotdb/hotdb-listener/conf
 vi config.properties
+```
 
-# host=0.0.0.0
-# port=3330
+```properties
+post=0.0.0.0
+port=3330
 ```
 
 ### 启动服务
