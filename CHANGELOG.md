@@ -44,7 +44,7 @@
   * [X] `docs/zh/latest/quick-start-guide.md` F
   * [ ] `docs/zh/latest/basic-operations.md` T
 * `install-deploy-update`
-  * [X] `docs/zh/latest/install-and-deploy.md` F
+  * [X] `docs/zh/latest/install-and-deploy.md` F C
   * [X] `docs/zh/latest/service-license.md` F
   * [X] `docs/zh/latest/manual-update.md` F
   * [X] `docs/zh/latest/cluster-environment-requirement.md` F
@@ -73,7 +73,7 @@
   * [X] `docs/en/latest/quick-start-guide.md`
   * [ ] `docs/en/latest/basic-operations.md` T
 * `install-deploy-update`
-  * [X] `docs/en/latest/install-and-deploy.md`
+  * [X] `docs/en/latest/install-and-deploy.md` C
   * [X] `docs/en/latest/service-license.md`
   * [X] `docs/en/latest/manual-update.md`
   * [X] `docs/en/latest/cluster-environment-requirement.md`

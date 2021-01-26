@@ -16,7 +16,8 @@ Cluster HA (master/stanby) deployment architecture diagram
 
 Cluster load-balancing deployment architecture diagram
 
-> NOTE
+> !Note
+> 
 > Please refer to "Figure 1-1 Cluster HA (master/standby) deployment architecture diagram" for cluster single-node deployment architecture diagram, in addition to that there are no "HotDB Server (standby), VIP" in single node, and the rest is consistent with that of HA diagram.
 
 ### Environment description
@@ -157,8 +158,8 @@ Modify parameter information:
 <property name="url">jdbc:mysql://192.168.200.1:3306/hotdb_config</property><!-- configDB address -->
 <property name="username">hotdb_config</property><!-- configDB username -->
 <property name="password">hotdb_config</property><!-- configDB password -->
-<property name="service port">3323</property><!-- service port -->
-<property name="management port">3325</property><!-- management port -->
+<property name="serviceport">3323</property><!-- service port -->
+<property name="managementport">3325</property><!-- management port -->
 ```
 
 > !Note
@@ -203,7 +204,7 @@ tar -zxvf hotdb-management-2.x.x-xxx.tar.gz
 
 2. **Import management platform configDB table structure**
 
-Management platform configDB and compute node configDB could share one MySQL instance, which is not recommended in production environment. Management platform configDB table structure is under its installation directory /doc, and before using the Import Configuration command, the account "hotdb_cloud" of management platform connection to configDB shall be created in configDB first.
+Management platform configDB and compute node configDB could share one MySQL instance, which is not recommended in production environment. Management platform configDB table structure is under its installation directory `doc`, and before using the Import Configuration command, the account `hotdb_cloud` of management platform connection to configDB shall be created in configDB first.
 
 ```sql
 # Create hotdb_cloud account
@@ -218,7 +219,7 @@ mysql -uroot --socket=/data/mysqldata3306/sock/mysql.sock < /usr/local/hotdb/hot
 
 3. **Modify management platform configuration file**
 
-The modified configuration file is "application.properties" under the management platform installation directory /conf, and it mainly modifies the connection information, port number of management platform toward configDB and language setting (the default port number and language could be directly used if no special requirements).
+The modified configuration file is `application.properties` under the management platform installation directory `conf`, and it mainly modifies the connection information, port number of management platform toward configDB and language setting (the default port number and language could be directly used if no special requirements).
 
 Edit configuration file:
 
@@ -245,7 +246,7 @@ language=English/Chinese
 
 4. **Start and stop management platform**
 
-The management platform startup script "hotdb_management" is under its installation directory /bin. Management platform service could be started or stopped merely by executing the following commands.
+The management platform startup script `hotdb_management` is under its installation directory `bin`. Management platform service could be started or stopped merely by executing the following commands.
 
 ```bash
 # Enter startup script directory
@@ -325,7 +326,7 @@ user = root
 log = /data/multi.log
 
 [mysqld]
-# ***********************************common parameters******************************
+#***********************************common parameters******************************
 basedir=/usr
 skip-federated
 skip-blackhole
@@ -360,21 +361,21 @@ max_heap_table_size=1G
 tmp_table_size=2M
 sort_buffer_size=8M
 max_length_for_sort_data=16k
-join_buffer_size=4M# bka
-read_rnd_buffer_size=8M# mrr
+join_buffer_size=4M #bka
+read_rnd_buffer_size=8M #mrr
 table_open_cache=1024
 table_open_cache_instances=16
 query_cache_type=0
 query_cache_size=0
-# query_cache_limit=1M
-# ******************************* Logs related settings ***************************
-# general_log
+#query_cache_limit=1M
+#******************************* Logs related settings ***************************
+#general_log
 general_log_file=/data/mysqldata3306/log/general.log
 log-error=/data/mysqldata3306/log/error.log
 long_query_time=1
 slow_query_log
 slow_query_log_file=/data/mysqldata3306/log/slow-query.log
-# log_queries_not_using_indexes
+#log_queries_not_using_indexes
 log_warnings = 2
 log-bin-index=/data/mysqldata3306/binlog/mysql-bin.index
 log-bin=/data/mysqldata3306/binlog/mysql-bin
@@ -386,9 +387,9 @@ binlog-format=MIXED
 binlog-checksum=CRC32
 sync_binlog=0
 expire_logs_days=10
-# ******************************* Replication related settings *********************
+#******************************* Replication related settings *********************
 server-id= 3306
-# skip-slave-start
+#skip-slave-start
 log_slave_updates=1
 log_bin_trust_function_creators=1
 auto_increment_increment=1
@@ -396,7 +397,7 @@ auto_increment_offset=1
 allow-suspicious-udfs
 innodb_support_xa=1
 sysdate-is-now
-# ******************************* MyISAM Specific options ***************************
+#******************************* MyISAM Specific options ***************************
 key_buffer_size=8M
 bulk_insert_buffer_size=16M
 myisam_sort_buffer_size=64M
@@ -404,9 +405,9 @@ myisam_max_sort_file_size=10G
 myisam_repair_threads=1
 myisam-recover-options=default
 read_buffer_size=1M
-# ***************************** INNODB Specific options ****************************
+#***************************** INNODB Specific options ****************************
 innodb_use_sys_malloc=1
-# innodb_additional_mem_pool_size=32M
+#innodb_additional_mem_pool_size=32M
 innodb_buffer_pool_size=4G
 innodb_buffer_pool_instances=2
 innodb_max_dirty_pages_pct=40
@@ -465,9 +466,9 @@ interactive-timeout
 
 5. **Create MySQL directory**
 
-According to directory parameters of my.cnf configuration file, create MySQL data directory, and set owner user of the data directory.
+According to directory parameters of `my.cnf` configuration file, create MySQL data directory, and set owner user of the data directory.
 
-```sql
+```bash
 mkdir -p /data/mysqldata3306
 mkdir -p /data/mysqldata3306/mydata
 mkdir -p /data/mysqldata3306/binlog
@@ -482,7 +483,7 @@ chown -R mysql:mysql /data/mysqldata3306
 
 6. **Initialize database**
 
-Execute mysql_install_db to initialize the system database to specified directory.
+Execute `mysql_install_db` to initialize the system database to specified directory.
 
 ```bash
 mysql_install_db --defaults-file=/etc/my.cnf --user=mysql --datadir=/data/mysqldata3306/mydata
@@ -492,18 +493,19 @@ mysql_install_db --defaults-file=/etc/my.cnf --user=mysql --datadir=/data/mysqld
 
 Use startup script of mysql to start the database.
 
+```bash
+# Start MySQL service**
+/etc/rc.d/init.d/mysql start
+
+# se netsat command to detect whether MySQL is successfully started or not**
+netstat -npl |grep mysql
 ```
-**Start MySQL service**
 
-# /etc/rc.d/init.d/mysql start
+The startup is successful if there is command output.
 
-**Use netsat command to detect whether MySQL is successfully started or not**
-
-# netstat -npl |grep mysql
-
-# The startup is successful if there is command output
-# Notice: Please modify the root user password timely after installation.
-```
+> !Note
+> 
+> Please modify the root user password timely after installation.
 
 ##### Data Source
 
@@ -523,9 +525,11 @@ create user 'hotdb_datasource'@'%' identified by 'hotdb_datasource';
 
 # Grant user privilege
 GRANT select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,create temporary tables,alter routine,execute,event ON *.* TO 'hotdb_datasource'@'%';
-
-# Note: when the MySQL version of data source is greater than or equal to 8.0, one more privilege"xa_recover_admin"is added.
 ```
+
+> !Note
+> 
+> when the MySQL version of data source is greater than or equal to 8.0, one more privilege `xa_recover_admin` is added.
 
 **Backup user:**
 
@@ -544,7 +548,6 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,process,referen
 HotDB Backup is a distributed transactional database backup tool independently developed by Shanghai Hotpu Networks Technology Co.,Ltd. It is generally deployed on data source server of the cluster, and listens to the data backup request from the management platform. A data source server needs only one HotDB Backup to be deployed.
 
 > !Note
->  <!--Notice for use-->
 >
 > - Only data backup of MySQL 5.6 and above versions is supported.
 > - The binlog must be enabled for the backed-up data source instance.
@@ -701,7 +704,7 @@ Modification of the server.xml configuration on standby compute node192.168.200.
 
 1. **Install keepalived**
 
-keepalived could be installed either by means of yum, or by downloading installation tar package from keepalived official website <https://www.keepalived.org/download.html>.
+keepalived could be installed either by means of yum, or by downloading installation tar package from [keepalived official website](https://www.keepalived.org/download.html).
 
 ```bash
 # Install keepalived by means of yum (execute keepalived installation command on master/standby compute node service)
@@ -841,7 +844,7 @@ vrrp_instance VI_1 {
 - Priority: the one with high-priority is the master
 - virtual_ipaddress: bound vip of instance (vip shall be in the same network segment with the compute node ip)
 - Label: give a virtual name to local NIC for binding virtual NIC IP, for example, bind the virtual NIC eth0:1 to the local NIC eth0
-- Script: the script path judging whether the service is normal or not, is generally stored under /bin directory of HotDB Server, for example: /usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh, this script could check whether the master/standby service process of HotDB Server exists or not, and whether the 3323 port and 3325 port of the master/standby HotDB Server are in normal status or not.
+- Script: the script path judging whether the service is normal or not, is generally stored under /bin directory of HotDB Server, for example: `/usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh`, this script could check whether the master/standby service process of HotDB Server exists or not, and whether the 3323 port and 3325 port of the master/standby HotDB Server are in normal status or not.
 
 3. **Start instruction**
 
@@ -873,7 +876,7 @@ sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
 
 ##### Description of high availability switch
 
-In case of failure with the compute node service on the host 192.168.200.190 server, if the detection script (vrrp_scripts) detects that the master service port of the compute node is unaccesible or hacheck fails for more than 3 consecutive times, then the master keepalived priority will be adjusted automatically to 90 (weight-10), after the keepalived on the backup 192.168.200.191 server receives vrrp package inferior to its own priority (priority on 192.168.200.191 is 95), it will switch to master state, and preempt the vip (192.168.200.140), meanwhile, after entering master state, it will execute notify_master script, have access to backup server 3325 port, execute online command, and start and initialize standby compute node service port, and if compute node of 192.168.200.191 starts successfully, it will continue to provide service after successful master/standby switching. As shown in the following figure:
+In case of failure with the compute node service on the host 192.168.200.190 server, if the detection script (`vrrp_scripts`) detects that the master service port of the compute node is unaccesible or `hacheck` fails for more than 3 consecutive times, then the master keepalived priority will be adjusted automatically to 90 (weight-10), after the keepalived on the backup 192.168.200.191 server receives vrrp package inferior to its own priority (priority on 192.168.200.191 is 95), it will switch to master state, and preempt the vip (192.168.200.140), meanwhile, after entering master state, it will execute notify_master script, have access to backup server 3325 port, execute `online` command, and start and initialize standby compute node service port, and if compute node of 192.168.200.191 starts successfully, it will continue to provide service after successful master/standby switching. As shown in the following figure:
 
 ![](assets/install-and-deploy/image7.png)
 
@@ -893,13 +896,13 @@ NDB SQL service could be used to assist the compute node in completing calculati
 
 - NDB SQL service matches to compute node service one by one, that is, if every compute node server needs NDB SQL service support, this service program shall be deployed.
 - The version of the compute node corresponding to NDB SQL service must be V2.5.2 and above, otherwise, NDB SQL service is not supported.
-- One-time follow deployment is recommended for NDB SQL service and compute node. If NDB SQL service needs to be added to the existing compute note, strict attention shall be paid to: parameter transfer problems of --install-ntpd, --ntpdate-server-ip, --ntpdate-server-host, which shall be consistent with the synchronization time configuration of the current deployed cluster.
+- One-time follow deployment is recommended for NDB SQL service and compute node. If NDB SQL service needs to be added to the existing compute note, strict attention shall be paid to: parameter transfer problems of `--install-ntpd`, `--ntpdate-server-ip`, `--ntpdate-server-host`, which shall be consistent with the synchronization time configuration of the current deployed cluster.
 
 2. **Description of simultaneous deployment process of compute node and NDB SQL**
 
 Now, take master/standby cluster for example to illustrate installation of compute node and NDB SQL service by script, and the detailed steps are as follows:
 
-- Log in each compute node server, enter clickOnce deployment resource bundle directory Install_Package to execute the installation command.
+- Log in each compute node server, enter clickOnce deployment resource bundle directory `Install_Package` to execute the installation command.
 
 - Log in to the master compute node server, and enter clickOnce deployment default installation directory to execute:
 
@@ -954,7 +957,7 @@ HotDB Listener is compiled by JDK1.7.0_80, and the requirements for the operatin
 
 ##### Unzip installation package of one click deployment
 
-Upload the installation package of one-click deployment auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz (2.5.5 is the version number, and different versions correspond to different numbers. Remember to replace the number synchronously.) to the data source server directory /usr/local/hotdb, and execute the following command:
+Upload the installation package of one-click deployment `auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz` (2.5.5 is the version number, and different versions correspond to different numbers. Remember to replace the number synchronously.) to the data source server directory `/usr/local/hotdb`, and execute the following command:
 
 ```bash
 cd /usr/local/hotdb
@@ -963,11 +966,11 @@ tar -zxvf auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz
 
 ##### Installation of Listener
 
-The installation package of one click deployment is built in Listener installation package. Install Listener in the directory /usr/local/hotdb by executing the following command:
+The installation package of one click deployment is built in Listener installation package. Install Listener in the directory `/usr/local/hotdb` by executing the following command:
 
 ```bash
 cd /usr/local/hotdb/Install_Package
-tar -zxvf hotdb-listener-0.0.1-alpha-20200420-linux.tar.gz -C /usr/loca l/hotdb/
+tar -zxvf hotdb-listener-0.0.1-alpha-20200420-linux.tar.gz -C /usr/local/hotdb/
 ```
 
 ##### Configuration of Listener
@@ -996,7 +999,7 @@ The default value of host is 0.0.0.0, which does not need to be modified; the de
 
 Start the Listener by executing the following command:
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-listener/bin
 sh hotdb_listener start
 ```
@@ -1122,9 +1125,9 @@ Cluster is divided into three modes: single node, master/standby node and multip
   ![](assets/install-and-deploy/image13.png)
 
   1. Master/standby node mode cluster requires filling in configuration information of 2 servers.
-  2. Virtual_ipaddress of Keepalived (hereinafter referred to as VIP) is required to be the address not occupied by server or other applications and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24.
-  3. The virtual_router_id value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
-  4. Gateway device name of master/standby Keepalived server is the NIC device name of Keepalived server, and the name must be accurately filled in, and the format is NIC name + :1 for example: "eth0:1". (gateway device name could be viewed via "ip a" command)
+  2. Virtual_ipaddress of Keepalived (hereinafter referred to as VIP) is required to be the address not occupied by server or other applications and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: `192.168.200.120/24`.
+  3. The `virtual_router_id` value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
+  4. Gateway device name of master/standby Keepalived server is the NIC device name of Keepalived server, and the name must be accurately filled in, and the format is NIC name + :1 for example: `eth0:1`. (gateway device name could be viewed via `ip a` command)
 
 - Multi-node: multi-node mode is also known as load-balancing, which is an architecture mode controlling distribution of traffic to multiple compute nodes in the cluster via LVS component or other load-balancing components. There shall be no less than 3 or no more than 9 compute nodes in the multi-node mode.
 
@@ -1133,16 +1136,16 @@ Cluster is divided into three modes: single node, master/standby node and multip
   ![](assets/install-and-deploy/image15.png)
 
   1. In multi-node mode, the number of compute nodes is 3 by default, and the version of compute node must be 2.5.
-  2. The cluster network segment is the network segment of the server where the compute node is installed, and the format is: network segment+Subnet Mask length, for example: 192.168.200.0/24.
+  2. The cluster network segment is the network segment of the server where the compute node is installed, and the format is: network segment+Subnet Mask length, for example: `192.168.200.0/24`.
   3. Communication port is the port used by various compute nodes in the cluster for communication, and it is 3326 by default. Modification is not recommended without special requirements.
   4. LVS is a component realizing load balance in multi-node mode, and it could also close \[Install] to select other load-balancing methods to substitute LVS.
-  5. LVS_vip is the vitual IP address configured in LVS component (hereinafter referred to as VIP), and it's required to be the address not occupied by server or other applications and on the same network segment with compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24.
-  6. virtual_router_id value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
-  7. lvs_net_interface_name is the NIC name of LVS component server, and the name must be accurately filled in, and the format is NIC name + :2 for example: "eth0:2". (gateway device name could be viewed via "ip a" command).
+  5. `LVS_vip` is the vitual IP address configured in LVS component (hereinafter referred to as VIP), and it's required to be the address not occupied by server or other applications and on the same network segment with compute node server. The format is VIP+Subnet Mask length, for example: `192.168.200.120/24`.
+  6. `virtual_router_id` value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
+  7. lvs_net_interface_name is the NIC name of LVS component server, and the name must be accurately filled in, and the format is NIC name + :2 for example: `eth0:2`. (gateway device name could be viewed via `ip a` command).
 
 ###### Configuration of cluster deployment parameters
 
-1) **Compute node parameters**
+**(1) Compute node parameters**
 
 Parameter configuration of compute nodes will be introduced with compute node cluster mode as multi-node for instance.
 
@@ -1151,17 +1154,17 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 1. There shall be three compute nodes by default, and there shall be no less than three or no more than seven when setting.
 2. Cluster name will be generated automatically, and the format is: Group+four-digit random number, which could be modified as the case may be.
 3. Whether NDB SQL service needs to be installed or not could be viewed as the case may be, if yes, it's required that the version of compute node must be greater than or equal to V2.5.2.
-4. Cluster network segment is the network segment scope of the server where the compute node is, and the format is: network segment+Subnet Mask length, for example: 192.168.200.0/24
+4. Cluster network segment is the network segment scope of the server where the compute node is, and the format is: network segment+Subnet Mask length, for example: `192.168.200.0/24`
 5. Communication port is the port used by various compute nodes in the cluster for communication, and it is 3326 by default. Modification is not recommended without special requirements.
 6. Compute node name will be generated automatically, and the format is: compute node+serial No., which could be modified as the case may be.
 7. The login mode is the connecting mode of management platform connecting to the deployment target server; login by "password" shall be used by default. And if using "Password-free" mode, it's required that there shall be password-free channel between the management platform server and the target deployment server, and the specific implementation mode shall be referred to [Description of implementing password-free login](#description-of-implementing-password-free-login).
-8. When the "Login Mode" is "password", the SSH information of the target server to be connected needing to be input shall include: SSH user, SSH password. The port number is 22 by default, which shall not be modified without special requirement.
+8. When the "Login Mode" is "password", the SSH information of the target server to be connected needing to be input shall include: SSH user, SSH password. The port number is `22` by default, which shall not be modified without special requirement.
 9. Heap memory is 4G by default, when the setup is bigger than 8G, it will be prompted to open "G1 garbage collector". Input range of the parameter is \[1-64] G.
 10. Direct memory is 24G by default, the input range of parameters is \[1-64] G.
-11. Service port and management port are "3323, 3325" by default, which could be used directly without special requirement. In case of successful modification and installation, corresponding parameters of server.xml configuration file of compute node will also be modified synchronously.
+11. Service port and management port are `3323, 3325` by default, which could be used directly without special requirement. In case of successful modification and installation, corresponding parameters of `server.xml` configuration file of compute node will also be modified synchronously.
 12. Whether the target server is normally connected or not could be tested or whether the SSH information input is available or not could be judged by clicking \[Test Connection].
 
-13) **ConfigDB parameters**
+**(2) ConfigDB parameters**
 
 ![](assets/install-and-deploy/image17.png)
 
@@ -1170,21 +1173,21 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 1. Selectable modes of the installed configDB instance are: single database, standby master and MGR, and MGR mode is taken for instance.
 2. configDB version will change due to the mode, and the version must be 5.7 if MGR mode is selected, and MySQL instance version of 5.6 or 5.7 could be selected if other modes are selected.
 3. When MGR mode is selected, there shall be three editable instances under MGR mode by default, which shall be no less than three or no more than nine when editing. There is no quantitative limitation if other modes are selected.
-4. Create high-privilege user switch, and the switch is open by default, that is, after successful installation of configDB MySQL instance, there will generate a "hotdb_root" account by default, and such account owns all privileges of MySQL instance.
-5. The instance port number is 3306 by default, which could be modified independently as the case may be.
+4. Create high-privilege user switch, and the switch is open by default, that is, after successful installation of configDB MySQL instance, there will generate a `hotdb_root` account by default, and such account owns all privileges of MySQL instance.
+5. The instance port number is `3306` by default, which could be modified independently as the case may be.
 6. The parameters "disk device name" and "data directory" are optional, and if they are null, the program will assign a null value for "disk device name" and the default value "/data" for "data directory" automatically. As for detailed description of the parameters, please refer to " [Description of cluster deployment script parameters](#description-of-script-parameters)".
 7. \[More Parameters] could set more optional parameters for the current deployed MySQL instance, and when the input box of the parameter is null, the Installation Script will make self-computation and processing and assign default value, and modification is not recommended without special requirement. If needing to make the modified parameters applicable to other deployed configDB instance, the option "Synchronize more parameters to other configDB instances" shall be checked.
 
-8) **LVS parameters**
+**(3) LVS parameters**
 
 ![](assets/install-and-deploy/image19.png)
 
-1. Cluster deployment does not support installation of LVS related components, and if Not Install is selected, the LVS configuration parameters do not need to be filled in
-2. The IP filled in for "LVS_vip" is required to be the one not occupied by server or other application and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24
-3. "virtual_router_id value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
-4. Master/standby "lvs_net_interface_name" is the gateway device name of the LVS server, and such name must be consistent with the one displayed on the real server (it could be viewed via ip a command), and the format is: gateway device name + ":2", for example: "eth0:2".
+1. Cluster deployment does not support installation of LVS related components, and if Not Install is selected, the LVS configuration parameters do not need to be filled in.
+2. The IP filled in for "LVS_vip" is required to be the one not occupied by server or other application and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: `192.168.200.120/24`.
+3. `virtual_router_id` value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
+4. Master/standby `lvs_net_interface_name` is the gateway device name of the LVS server, and such name must be consistent with the one displayed on the real server (it could be viewed via `ip a` command), and the format is: gateway device name + ":2", for example: `eth0:2`.
 
-5) **Data source parameters**
+**(4) Data source parameters**
 
 ![](assets/install-and-deploy/image20.png)
 
@@ -1209,7 +1212,7 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 13. A line of data source configuration records could be added or deleted by clicking "Add" or "Delete" in operation.
 14. If there are too many Data Sources, "Import" mode may be considered for making configuration. Before import, download the template first, and then fill in the configuration information as instructed on the template, and then import into the management platform upon completion. In case of fill-in error, the program will display import failure and detailed failure information.
 
-15) **Time synchronization parameter setting**
+**(5) Time synchronization parameter setting**
 
 ![](assets/install-and-deploy/image24.png)
 
@@ -1258,10 +1261,8 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 ![](assets/install-and-deploy/image32.png)
 
 1. Click \[Start Deployment] to enter the Installation Process.
-
-- For the cluster which fails the checking, when clicking \[Start Deployment], it will be prompted that deployment is not allowed.
-
-- For the cluster which passes the checking, if the installation package on any server in the cluster is damaged during \[Start Deployment], that is, it is detected that the current MD5 value of the installation package is inconsistent with the original MD5 value, the pop-up window will also prompt:
+    - For the cluster which fails the checking, when clicking \[Start Deployment], it will be prompted that deployment is not allowed.
+    - For the cluster which passes the checking, if the installation package on any server in the cluster is damaged during \[Start Deployment], that is, it is detected that the current MD5 value of the installation package is inconsistent with the original MD5 value, the pop-up window will also prompt:
 
 ![](assets/install-and-deploy/image33.png)
 
@@ -1280,12 +1281,11 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 ![](assets/install-and-deploy/image35.png)
 
 1. For the successfully deployed cluster, monitoring will be opened automatically on "Cluster Management" page, and running state information of the components will be displayed in the "Cluster Deployment Information" columns.
-
 2. Click \[Deployment Topology] button to enter the deployment topology page, it could be seen that all icons on the topology have become full line ones.
 
 ###### Instance password modification
 
-For the deployed cluster, both the installed configDB and the Data Source instances could generate some accounts automatically. The details are as follow: configDB instance generates hotdb_config, dbbackup, repl, hotdb_root (depends on whether opening the switch of Creating high-privilege account or not); Data Source instance generates hotdb_datasource, dbbackup, repl and hotdb_root (depends on whether opening the Creating high-privilege account or not).
+For the deployed cluster, both the installed configDB and the Data Source instances could generate some accounts automatically. The details are as follow: configDB instance generates `hotdb_config`, `dbbackup`, `repl`, `hotdb_root` (depends on whether opening the switch of Creating high-privilege account or not); Data Source instance generates `hotdb_datasource`, `dbbackup`, `repl` and `hotdb_root` (depends on whether opening the Creating high-privilege account or not).
 
 Since the password and account No. of the generated account are consistent, therefore, it's recommended **modifying the instance password immediately after completing the deployment,** in order to improve safety of the cluster.
 
@@ -1294,13 +1294,9 @@ Since the password and account No. of the generated account are consistent, ther
 ![](assets/install-and-deploy/image37.png)
 
 1. Modification of instance password is divided into two parts: modification of configDB instance password, and modification of Data Source instance password.
-
 2. You can modify user passwords one by one by clicking the \[Password Modification] button in the Action Bar or in batches by clicking \[clickOnce Modification of Password] button.
-
 3. Modification of user passwords in batches is divided and displayed by user roles, for example, if modifying the password of repl account in configDB instance, then the repl account passwords in all instances of configDB will be modified synchronously. So does the Data Source.
-
-4. For instances with replication relation, modification of one user password will cause modification of passwords of all instances with replication relation. For example, for Data Source instances with MGR relation (192.168.210.81:3311, 192.168.210.82:3311, 192.168.210.83:3311), if modifying the hotdb_root user password on 192.168.210.81:3311 instance to admin, the program will modify the hotdb_root user passwords of the other two instances to admin.
-
+4. For instances with replication relation, modification of one user password will cause modification of passwords of all instances with replication relation. For example, for Data Source instances with MGR relation (`192.168.210.81:3311`, `192.168.210.82:3311`, `192.168.210.83:3311`), if modifying the hotdb_root user password on `192.168.210.81:3311` instance to `admin`, the program will modify the `hotdb_root` user passwords of the other two instances to `admin`.
 5. After submitting password modification, the instance password modification page will make page loading, and please don't refresh the page or conduct other operations at this time.
 
 #### Single Component Deployment
@@ -1323,7 +1319,7 @@ Single Component Deployment is a function in management platform, and before use
 
 > !Info
 > 
-> Deployment of a master/standby mode cluster will be illustrated via [Single Component Deployment](#single-component-deployment) this time. Keepalived virtual address (VIP) uses "192.168.200.112"; master/standby compute node server is installed on "192.168.200.45 and 192.168.200.46" servers respectively. Meanwhile, 4 Data Source MySQL instances are installed respectively on servers "192.168.200.47 and 192.168.200.48".
+> Deployment of a master/standby mode cluster will be illustrated via [Single Component Deployment](#single-component-deployment) this time. Keepalived virtual address (VIP) uses `192.168.200.112`; master/standby compute node server is installed on `192.168.200.45` and `192.168.200.46` servers respectively. Meanwhile, 4 Data Source MySQL instances are installed respectively on servers `192.168.200.47` and `192.168.200.48`.
 
 ###### Add deployment task
 
@@ -1337,88 +1333,63 @@ After logging in to the management platform via admin user, select "Compute Node
 
 ![](assets/install-and-deploy/image40.png)
 
-1. When the server role is selected "Compute Node", the "software installation information and configuration information" will check "Compute node service, Keepalived, configDB MySQL Instance and NTPD Server" automatically by default. This role is selected for guiding installation only, and has no influence on actual installation, and the user could also select other components according to actual conditions.
-
-2. The target deployment server could be logged in via "Password and Password-free" modes, if Password-free mode is used, password-free channel between the servers shall be manually established in advance, referring to "[Description of implementing password-free login](#description-of-implementing-password-free-login)" for details. If "Password" mode is used, SSH connection username and password shall be input.
-
+1. When the server role select [Compute Node](#compute-node), the "software installation information and configuration information" will check "Compute node service, Keepalived, configDB MySQL Instance and NTPD Server" automatically by default. This role is selected for guiding installation only, and has no influence on actual installation, and the user could also select other components according to actual conditions.
+2. The target deployment server could be logged in via "Password and Password-free" modes, if Password-free mode is used, password-free channel between the servers shall be manually established in advance, referring to [Description of implementing password-free login](#description-of-implementing-password-free-login) for details. If "Password" mode is used, SSH connection username and password shall be input.
 3. By clicking \[Test Connection], whether the management platform server and the target deployment server could be of normal connection could be tested.
-
 4. When logging in by password mode, in order to gaurantee SSH information safety, the management platform will save it for 24 h only, after that, in case of needing reconnection to the target server, click \[Edit] for re-saving.
 
 ![](assets/install-and-deploy/image41.png)
 
 1. Available versions for compute node are "2.4 and 2.5"；2.4 represents the compute node installed with 2.4.X version, and the specific version No. shall be subjected to that provided in the installation package. The user could select according to actual condition.
-
 2. Master/standby selection of compute node shall be made according to actual condition of the current planning. In the master/standby mode, there needs to be a master compute node service and a standby compute node service.
-
 3. The service port and management port are "3323, 3325" by default, and the default value could be used directly without special requirements.
-
 4. If compute node and configDB are installed on the same server, the configDB related information could use the default value directly, but the configDB address IP shall be filled in actual value; if the compute node and configDB are on different servers, then the configDB information shall be modified according to actual condition.
-
 5. The heap memory and direct memory are "4G and 24G" by default, and the user could also adjust according to actual condition, but the input scope shall not exceed \[1-64] G. When the heap memory exceeds 8G, it's recommended opening the G1 Garbage Collector.
 
 ![](assets/install-and-deploy/image42.png)
 
 1. For master/standby mode cluster, Keepalived component must be installed on compute node server, otherwise, compute node cannot build high availability.
-
-2. Keepalived's virtual_ip address (hereinafter referred to as VIP) is required to be the one not occupied by intranet server or other applications and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: 192.168.200.120/24. In this place, we shall fill in the VIP address "192.168.200.112/24" planned previously.
-
-3. virtual_router_id value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
-
-4. keepalived_net_interface_name is the NIC name of the Keepalived server; the name must be accurately filled in, and the format is NIC name + `:1`, for example: `eth0:1`. (gateway device name could be viewed via `ip a` command).
+2. Keepalived's virtual_ip address (hereinafter referred to as VIP) is required to be the one not occupied by intranet server or other applications and on the same network segment with the compute node server. The format is VIP+Subnet Mask length, for example: `192.168.200.120/24`. In this place, we shall fill in the VIP address `192.168.200.112/24` planned previously.
+3. `virtual_router_id` value could be selected from \[1-255] independently, but this value is required to be unique in the network segment used by the cluster, that is, it shall not conflict with the value selected for other application services.
+4. `keepalived_net_interface_name` is the NIC name of the Keepalived server; the name must be accurately filled in, and the format is NIC name + :1, for example: `eth0:1`. (gateway device name could be viewed via `ip a` command).
 
 ![](assets/install-and-deploy/image43.png)
 
 1. configDB MySQL instance and the compute node could be installed either on the same server or on separate servers. They are installed on the same server by default.
-
 2. The version is the version No. of configDB MySQL instance, which could be "5.6 or 5.7".
-
 3. "MySQL instance port" shall be paid attention to in MySQL installation parameters, which is 3306 by default, and if the default value is occupied, the port shall be modified.
-
 4. Other parameters could use the default value directly without special requirement, and for the null input box, the program will make automatic computation according to the server condition and provide default value.
-
 5. If configDB and Data Source are installed on the same server, then configDB parameter configuration could modify "MySQL instance port" parameter only, while other more parameters could be set in Data Source only. (Reason: a server could set one MySQL parameter only)
 
 ![](assets/install-and-deploy/image44.png)
 
 1. When master compute node service is installed in server, "NTPD server" will check Install automatically; if there has been NTP time server already, the Install checked shall be cancelled.
-
 2. Every target deployment server requires specified time synchronization address.
-
-- If NTPD server is installed on the server, then the server time synchronization address is recommended filling in Alibaba Cloud time synchronization address "182.92.12.11"
-
-- If NTPD server is not installed on the server, then the server time synchronization address shall be specified as the address of the intranet server installed with NTPD server
-
+    - If NTPD server is installed on the server, then the server time synchronization address is recommended filling in Alibaba Cloud time synchronization address "182.92.12.11"
+    - If NTPD server is not installed on the server, then the server time synchronization address shall be specified as the address of the intranet server installed with NTPD server
 3. Click \[Save the Information] will save the configuration information for later installation, while clicking \[Start Installation] will enter the installation progress directly.
 
 ![](assets/install-and-deploy/image45.png)
 
 1. At the time of initial installation, the one-click installation deployment package and the corresponding MD5 value file of the management platform server shall be uploaded to the target deployment server, therefore, \[Upload] must be clicked. Please refer to the last item of "[Function use instruction on cluster deployment](#function-use-instruction)" for description of storing resource bundle in management platform server.
-
-- If the installation package is damaged in the process of uploading, it will be detected that the current MD5 value of the installation package is inconsistent with its corresponding MD5 value during \[Confirm to Upload], and the pop-up window will prompt:
-
-![](assets/install-and-deploy/image46.png)
-
-2. If to manually upload the one-click installation package and the corresponding MD5 value file to the target server /usr/local/hotdb manually or has uploaded the package resources already, click \[Start installation directly] to skip the action of uploading installation package. However, the integrity of the package should be guaranteed when the package is uploaded manually.
+    - If the installation package is damaged in the process of uploading, it will be detected that the current MD5 value of the installation package is inconsistent with its corresponding MD5 value during \[Confirm to Upload], and the pop-up window will prompt:
+      ![](assets/install-and-deploy/image46.png)
+2. If to manually upload the one-click installation package and the corresponding MD5 value file to the target server `/usr/local/hotdb` manually or has uploaded the package resources already, click \[Start installation directly] to skip the action of uploading installation package. However, the integrity of the package should be guaranteed when the package is uploaded manually.
 
 ![](assets/install-and-deploy/image47.png)
 
-1. After entering the installation progress, there will be real-time output of installation log and installation result on the bottom of the page. The installation log "hotdbinstall.log" is under "/usr/local/hotdb/ Install_Package" directory of the target server.
-
+1. After entering the installation progress, there will be real-time output of installation log and installation result on the bottom of the page. The installation log `hotdbinstall.log` is under `/usr/local/hotdb/Install_Package` directory of the target server.
 2. In case of error information during the installation process, it will be marked in red, while the warning information will be marked in orange. Error information means failure of the installation task this time, and re-installation shall be made after making modification according to the prompt information.
-
-3. Successful installation could be judged according to whether there is: "hotdbinstall finished without error, but you should check if there is any warnings" on the installation log, and could also be judged according to the installation result on the right.
+3. Successful installation could be judged according to whether there is: `hotdbinstall finished without error, but you should check if there is any warnings` on the installation log, and could also be judged according to the installation result on the right.
 
 ![](assets/install-and-deploy/image48.png)
 
 1. The installation task in progress could be placed in the background, and then continue to add new installation tasks, and after completing the installation tasks, the installation status of the components could be viewed by refreshing the page.
-
 2. The saved or installed tasks could be "cloned", clicking \[Clone] could copy all configuration parameters of the task to a new deployment task, which could reduce repeated configurations appropriately.
 
 ![](assets/install-and-deploy/image49.png)
 
 1. Installation of standby compute node could be conducted via the installation task of master compute node before clone, and then "Hostname", "Compute Node Role" and other parameters shall be modified. Other parameters shall be modified according to actual condition.
-
 2. Attention: when installing standby compute node, "NTPD Server" does not need to be checked. You only need to fill in the "server time synchronization address" as master compute node server IP address or refer to the IP address of the installed intranet NTPD server.
 
 ###### Deploy data source instance
@@ -1426,22 +1397,16 @@ After logging in to the management platform via admin user, select "Compute Node
 ![](assets/install-and-deploy/image50.png)
 
 1. Select the "Server Role" as Data Source server, and fill in SSH information of target installation server of Data Source.
-
 2. According to the role, the installation component will check "Data Source MySQL instance, Data Source HotDB Listener, Data Source HotDB Backup" automatically.
-
-3. The default port of the data source Listener is 3330, which can be adjusted by yourself. If you do not want to install a Listener, please uncheck it manually. Unchecking "Install listener" will be taken as an example in the following content.
-
-4. According to deployment requirement, four Data Source MySQL instances shall be installed in 192.168.200.48, therefore, the "number of instances" shall select four.
-
-5. Server time synchronization address shall be filled in the master compute node server IP (192.168.200.45).
+3. The default port of the data source Listener is `3330`, which can be adjusted by yourself. If you do not want to install a Listener, please uncheck it manually. Unchecking "Install listener" will be taken as an example in the following content.
+4. According to deployment requirement, four Data Source MySQL instances shall be installed in `192.168.200.48`, therefore, the "number of instances" shall select four.
+5. Server time synchronization address shall be filled in the master compute node server IP (`192.168.200.45`).
 
 ![](assets/install-and-deploy/image51.png)
 
 1. Click \[Start Installation] and upload the installation package and the corresponding MD5 value file to target delpoyment server of Data Source.
-
 2. Real-time installation progress could be viewed via log.
-
-3. Clone the deployment task of Data Source to "192.168.200.48" via the \[Clone] button, and modify the SSH information, then installation could be started.
+3. Clone the deployment task of Data Source to `192.168.200.48` via the \[Clone] button, and modify the SSH information, then installation could be started.
 
 ##### High availability build of Single Component Deployment
 
@@ -1451,20 +1416,13 @@ High availability rebuild could provide high availability automatic build servic
 
 ![](assets/install-and-deploy/image52.png)
 
-1. Click \[High Availability Build] button to enter the high availability build page, and then in the "Compute Node High Availability Build" module, by clicking \[Add], the configuration window of adding compute node high availability will be popped up.
-
-![](assets/install-and-deploy/image53.png)
-
+1. Click \[High Availability Build] button to enter the high availability build page, and then in the [Compute Node High Availability Build](#compute-node-high-availability-build) module, by clicking \[Add], the configuration window of adding compute node high availability will be popped up.
+    ![](assets/install-and-deploy/image53.png)
 1. In the pop-up window, selecting "High Availability" means building HA high availability relation for compute nodes, and selecting "Single Instance" means that the compute node is single node.
-
 2. Cluster name is the name of the cluster where master/standby compute node is, which could be customized but shall not be repeated with the existing cluster name.
-
 3. Master is master compute node, if the previous master compute node is successfully installed but is not built, then the drop-down box will show it.
-
 4. Backup is standby compute node, if "single instance" is selected on the top, then Backup does not need to be selected.
-
 5. Master Name and Backup Name are remark name of compute node, which could be customized but shall not be repeated with the existing compute node name.
-
 6. Clicking \[Save] means starting to build high availability relation for master/standby compute node.
 
 ![](assets/install-and-deploy/image54.png)
@@ -1476,15 +1434,10 @@ High availability rebuild could provide high availability automatic build servic
 ![](assets/install-and-deploy/image56.png)
 
 1. Click \[Batch Add] button in "node high availability build" module, if the compute node high availability is not constructed or free of build history record, then clicking \[Batch Build] will prompt "Please build a compute node cluster first" (because Data Source High Availability Build needs to select the belonging compute node cluster).
-
 2. Adding Data Source High Availability Configuration needs to select the "Compute Node Cluster" first, and the newly cosntructed compute node cluster could be selected.
-
 3. Node name is the Data Node Name (dataNode) to which Data Source belongs, which could be customized but shall not be repeated with the existing Data Node Name.
-
 4. Replication mode refers to the existence mode of the Data Source under the same Data Node, at present three replication modes are supported: "single database, master/slave and master-master".
-
 5. When adding multiple node high availability records, new configuration record could be added by clicking "+".
-
 6. After completing the Node High Availability Configuration, clicking \[Start Construct] will automatically build high availability replication relation for Data Source.
 
 ![](assets/install-and-deploy/image57.png)
@@ -1498,7 +1451,6 @@ High availability rebuild could provide high availability automatic build servic
 ![](assets/install-and-deploy/image59.png)
 
 1. Select the installed configDB instance, and select its belonging cluster, and click \[Build] button to start the build.
-
 2. Upon completion of build, the program will modify the configDB address with sandby master relation to server.xml file.
 
 ![](assets/install-and-deploy/image60.png)
@@ -1514,17 +1466,13 @@ Startup program mainly provides clickOnce start service for the cluster with com
 ![](assets/install-and-deploy/image62.png)
 
 1. Startup Program page will display records of all servers successfully installed on the Deployment Task page, and make merge display of the servers built with master/standby according to history records of high availability build.
-
 2. The components needing start could be selected by checking, while un-checking means not start.
-
 3. The first group of records are the clusters with Compute Node High Availability Build record, and when starting, if turning on the "Automatically Generate Basis Configuration" switch, the clickOnce Startup Program will write the Compute Node Cluster, Data Node, Data Source and record information generated by defualt into configDB of the management platform, and the user could view directly after logging in to the management platform without re-adding the configuration.
-
 4. The second and the third groups are clusters without Compute Node High Availability Build records, and there will be no configuration information generated when starting (because there is no compute node cluster to which the configuration belongs, therefore, information cannot be generated, and **the user shall manually add to management platform after start**).
 
 ![](assets/install-and-deploy/image63.png)
 
 1. If Data Source [HotDB Backup](#hotdb-backup) is contained in the Start item, then there will be pop-up window of "Start Parameter Setting", asking the user to specify the management platform IP address at the time of HotDB Backup Start.
-
 2. "HotDB Backup IP" is the IP address of the server of the HotDB Backup to be started, "management platform IP address" is the associated management platform IP address at the time of HotDB Backup start (the management platform IP address currently used could be selected).
 
 ![](assets/install-and-deploy/image64.png)
@@ -1546,9 +1494,7 @@ If compute node has been installed, but NDB SQL server needs to be added in late
 ![](assets/install-and-deploy/image65.png)
 
 - Fill in the server address and SSH connection information of the compute node.
-
 - Check NDB SQL server, and pay attention to the prompt in red.
-
 - Fill in the value consistent with the specified time synchronization address at the time of Compute Node Installation
 
 #### Description of implementing password-free login
@@ -1558,20 +1504,13 @@ Password-free login requires password-free channel established between two serve
 Take password-free connection between 192.168.190.186 and 192.168.190.187 for instance
 
 1. Execute ssh-keygen on the server of 192.168.190.186, press Enter button for 3 consecutive times, generate public key and private key, among which id_rsa is private key and id_rsa_pub is public key, and the private key and public key files newly generated upon command could be viewed under /root/.ssh directory.
-
-![](assets/install-and-deploy/image66.png)
-
+    ![](assets/install-and-deploy/image66.png)
 2. Input IP of ssh-copy-id target server, and then input password of the target server, thus the public key could be sent to the target server
-
-![](assets/install-and-deploy/image67.png)
-
+    ![](assets/install-and-deploy/image67.png)
 3. View the public key file "authorized_key" sent from 192.168.190.186 server on 192.168.190.187 server
-
-![](assets/install-and-deploy/image68.png)
-
+    ![](assets/install-and-deploy/image68.png)
 4. Test whether successful login could be made directly from 192.168.190.186 server ssh to 192.168.190.187 server without inputting password.
-
-![](assets/install-and-deploy/image69.png)
+    ![](assets/install-and-deploy/image69.png)
 
 #### Description of deployment script
 
@@ -1581,57 +1520,57 @@ Without using management platform, you could also install directly using Install
 
 | Parameter name | Description of parameter |
 |-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dry-run | Check only with no Modification. You can choose "yes" or "no", among which "no" is the default option. |
-| hotdb-version | Specify major version No. of HotDB. You can choose "2.3", "2.4" and "zabbix", among which "2.4" is the default option. |
-| install-hotdb-server | Install HotDB-server or not. You can choose "yes" or "no", among which "no" is the default option. |
-| install-ndbsql | Install NDB SQL or not. You can choose "yes" or "no", among which "no" is the default option. |
-| install-hotdb-listener | Install HotDB-listener or not. You can choose "yes" or "no"，among which "no" is the default option. |
-| --listener-heap-mem-size-gb | If specified, it will help modify the heap memory in HotDB Listener startup script from 4G to specified value, with no Modification by default |
-| --listener-max-direct-mem-size-gb | If specified, it will help modify the direct memory in HotDB Listener startup script from 24G to specified value, with no Modification by default |
-| hotdb-use-g1 | If specified, it will help modify the hotdb startup script to using G1 Garbage Collector, with no Modification by default |
-| hotdb-heap-mem-size-gb | If specified, it will help modify the heap memory in hotdb startup script from 4G to specified value, with no Modification by default |
-| hotdb-max-direct-mem-size-gb | If specified, it will help modify the direct memory in hotdb startup script from 24G to specified value, with no Modification by default |
-| install-hotdb-server-management | Install HotDB-server-management or not. You can choose "yes" or "no", among which "no" is the default option. |
-| install-hotdb-backup | Install HotDB-backup or not. You can choose "yes" or "no", among which "no" is the default option. |
-| mysql-version | Specify major version No. of MySQL. You can choose "5.6" and "5.7", among which "5.6" is the default option. |
-| mysql-port-list | Specify list of the MySQL data source ports to be installed, separate by comma, in ascending order, for example: "3306,3307,3308,3309", null by default |
-| hotdb-config-port | Specify list of configDB ports to be installed, which cannot conflict with the MySQL data source ports, null by default |
-| hotdb-config-init | Initialize hotdb_configDB in the specified instance of hotdb-config-port or not. You can choose "yes" or "no", among which yes is for installing HotDB-server, and no is for not installing HotDB-server by default. |
-| mysql-data-diskname | Specify the name of the disk device used for MySQL data directory, if the device is neither mounted nor formatted, it will be automatically formatted and mounted to the data directory, null by default |
-| mysql-data-rootdir | Specify the root directory of MySQL data directory to be used, "/data" by default, and it must be absolute path |
-| rename-datadir-before-initdb | Specify whether to rename the potential old data directory or not before initializing the database, "yes" by default |
-| server-id-perfix | Specify the prefix for server-id, which is required to be the number smaller than 429496, and automatically computed by default, but absolutely no conflict is not guaranteed |
-| character-set-server | Specify the Character Set. You can choose "latin1", "gbk", "utf8", and "utf8mb4", among which "utf8mb4" is the default option. |
-| collation-server | Specify the Proofreading Set. "latin1_swedish_ci" "latin1_bin" "gbk_chinese_ci" "gbk_bin" "utf8_general_ci","utf8_bin" "utf8mb4_general_ci" "utf8mb4_bin" are optional, and the default value is the default proofreading set of the character set configured |
-| innodb-buffer-pool-size-mb | The innodb-buffer-pool-size with MB as the unit is computed automatically by default |
-| innodb-log-file-size-mb | The innodb-log-file-size with MB as the unit, is computed automatically by default |
-| innodb-data-file-size-mb | The ibdata file with MB as the unit is "4096" by default |
-| innodb-io-capacity | Specify the size of innodb-io-capacity, which is computed automatically by default |
-| innodb-flush-log-at-trx-commit | Specify innodb-flush-log-at-trx-commit setting, "2" by default |
-| sync-binlog | Specify sync-binlog setting, "10" by default |
-| binlog-format | Specify binlog-format setting, "MIXED" and "ROW" are optional, "MIXED" by default |
-| gtid-mode | Enable gtid or not, "on" and "off" are optional, "on" by default |
-| rpl-semi-sync-enabled | Start semi-synchronous replication or not, "on" and "off" are optional, "on" by default |
-| mgr-group-name-list | MySQL port number:MGR group's UUID:list of MGR local port number, separate by comma, and if this parameter is provided, MGR will open for corresponding port, for example "3306:540c2b46-5d73-11e8-ad9b-00a0c9000000:33060,3308:5f5c1e2d-5d73-11e8-ad9b-00a0c9000000:33080", null by default. (Notice: the MySQL instance to be created still needs to be specified in mysql-port-list and hotdb-config-port) |
-| mgr-group-local-ip | Local IP address bound by MGR local port, which is automatically computed by default |
-| mgr-group-seeds-list | MySQL port number:MGR group member's IP:port comma-separated list, separate by slash, and if this parameter is provided, this value will be added to corresponding port of my.cnf file, null by default, for example "3306:192.168.200.101:33060,192.168.200.102:33060,192.168.200.103:33060/3308:192.168.200.101:33080,192.168.200.102:33080,192.168.200.103:33080" |
-| creat-hotdbroot-in-mysql | Create hotdb_root user in MySQL or not, the user owns all privileges, and could connect from optional position, password as hotdb_root by default, "yes" and "no" are optional, "no" by default |
-| install-keepalived | Install keepalived or not, "master", "backup" and "no" are optional, "no" by default |
-| keepalived-vip-with-perfix | If specified, it will help substitute the vip in keepalive configuration from 192.168.200.140/24 to the value, no Modification by default |
-| keepalived-virtual-router-id | If specified, it will help substitute the virtual-router-id in keepalive configuration from 151 to the value, no Modification by default |
-| keepalived-net-interface-name | If specified, it will help substitute the vip device name in keepalive configuration from eth0:1 to the value, no Modification by default |
-| install-lvs | Install lvs server or not, "master", "backup" and "no" are optional, "no" by default |
-| lvs-vip-with-perfix | If specified, it will help substitute the vip in lvs configuration from 192.168.56.203/24 to the value, no Modification by default |
-| lvs-port | If specified, it will help substitute the Listening Port in lvs configuration from 3306 to the value, no Modify by default, and the port shall be the same with the data service port of HotDB cluster |
-| lvs-virtual-router-id | If specified, it will help substitute the virtual-router-id in lvs configuration from 51 to the value, no Modification by default |
-| lvs-net-interface-name | If specified, it will help substitute the vip device name in lvs configuration from eth1:2 to the value, no Modification by default |
-| lvs-real-server-list | Lvs back-end HotDB server IP:data service port:management port list, separate by comma, for example "192.168.0.1:3323:3325,192.168.0.2:4323:4325", null by default |
-| lvs-real-server-user | Username used by the management port of lvs physical checkup script connection back-end HotDB server, "root" by default |
-| lvs-real-server-password | Password used by the management port of lvs physical checkup script connection back-end HotDB server, "root" by default |
-| lvs-real-server-startup-type | When as realserver of lvs, configuration mode of relevant adjustments of the server, "no", "config" and "service" are optional, "no" by default |
-| install-ntpd | Install ntpd or not, "yes" and "no" are optional, if HotDB is installed, then yes by default, otherwise no by default. Notice: there shall be only one ntpd in a HotDB cluster; HotDB standby shall synchronize time with the HotDB host. If there is ntp source in the intranet, then ntpd may not be installed. |
-| ntpdate-server-ip | Configure ip address of time synchronization, either parameter or ntpdate-server-host must be specified, and only one of them shall be specified. If ntpd is installed, the time source beyond the HotDB cluster must be specified; if ntpd is not installed, server address of the internal ntpd service of HotDB cluster shall be specified (if the host HotDB is installed ntpd server), or intranet ntpd server address, then outer-net address shall not be selected. |
-| ntpdate-server-host | Configure host address of time synchronization, which is allowed to be domain name or ip, script will make no processing or checkup of the parameter, and it needs to rely on the caller to guarantee accuracy, either the parameter or ntpdate-server-ip must be specified and only one of them shall be specified. If ntpd is installed, the time source beyond the HotDB cluster must be specified; if ntpd is not installed, server address of the internal ntpd service of HotDB cluster shall be specified (if the host HotDB is installed ntpd server), or intranet ntpd server address, then outer-net address shall not be selected. |
+| `dry-run` | Check only with no Modification. You can choose "yes" or "no", among which "no" is the default option. |
+| `hotdb-version` | Specify major version No. of HotDB. You can choose "2.3", "2.4" and "zabbix", among which "2.4" is the default option. |
+| `install-hotdb-server` | Install HotDB-server or not. You can choose "yes" or "no", among which "no" is the default option. |
+| `install-ndbsql` | Install NDB SQL or not. You can choose "yes" or "no", among which "no" is the default option. |
+| `install-hotdb-listener` | Install HotDB-listener or not. You can choose "yes" or "no"，among which "no" is the default option. |
+| `--listener-heap-mem-size-gb` | If specified, it will help modify the heap memory in HotDB Listener startup script from 4G to specified value, with no Modification by default |
+| `--listener-max-direct-mem-size-gb` | If specified, it will help modify the direct memory in HotDB Listener startup script from 24G to specified value, with no Modification by default |
+| `hotdb-use-g1` | If specified, it will help modify the hotdb startup script to using G1 Garbage Collector, with no Modification by default |
+| `hotdb-heap-mem-size-gb` | If specified, it will help modify the heap memory in hotdb startup script from 4G to specified value, with no Modification by default |
+| `hotdb-max-direct-mem-size-gb` | If specified, it will help modify the direct memory in hotdb startup script from 24G to specified value, with no Modification by default |
+| `install-hotdb-server-management` | Install HotDB-server-management or not. You can choose "yes" or "no", among which "no" is the default option. |
+| `install-hotdb-backup` | Install HotDB-backup or not. You can choose "yes" or "no", among which "no" is the default option. |
+| `mysql-version` | Specify major version No. of MySQL. You can choose "5.6" and "5.7", among which "5.6" is the default option. |
+| `mysql-port-list` | Specify list of the MySQL data source ports to be installed, separate by comma, in ascending order, for example: "3306,3307,3308,3309", null by default |
+| `hotdb-config-port` | Specify list of configDB ports to be installed, which cannot conflict with the MySQL data source ports, null by default |
+| `hotdb-config-init` | Initialize hotdb_configDB in the specified instance of hotdb-config-port or not. You can choose "yes" or "no", among which yes is for installing HotDB-server, and no is for not installing HotDB-server by default. |
+| `mysql-data-diskname` | Specify the name of the disk device used for MySQL data directory, if the device is neither mounted nor formatted, it will be automatically formatted and mounted to the data directory, null by default |
+| `mysql-data-rootdir` | Specify the root directory of MySQL data directory to be used, "/data" by default, and it must be absolute path |
+| `rename-datadir-before-initdb` | Specify whether to rename the potential old data directory or not before initializing the database, "yes" by default |
+| `server-id-perfix` | Specify the prefix for server-id, which is required to be the number smaller than 429496, and automatically computed by default, but absolutely no conflict is not guaranteed |
+| `character-set-server` | Specify the Character Set. You can choose "latin1", "gbk", "utf8", and "utf8mb4", among which "utf8mb4" is the default option. |
+| `collation-server` | Specify the Proofreading Set. "latin1_swedish_ci" "latin1_bin" "gbk_chinese_ci" "gbk_bin" "utf8_general_ci","utf8_bin" "utf8mb4_general_ci" "utf8mb4_bin" are optional, and the default value is the default proofreading set of the character set configured |
+| `innodb-buffer-pool-size-mb` | The innodb-buffer-pool-size with MB as the unit is computed automatically by default |
+| `innodb-log-file-size-mb` | The innodb-log-file-size with MB as the unit, is computed automatically by default |
+| `innodb-data-file-size-mb` | The ibdata file with MB as the unit is "4096" by default |
+| `innodb-io-capacity` | Specify the size of innodb-io-capacity, which is computed automatically by default |
+| `innodb-flush-log-at-trx-commit` | Specify innodb-flush-log-at-trx-commit setting, "2" by default |
+| `sync-binlog` | Specify sync-binlog setting, "10" by default |
+| `binlog-format` | Specify binlog-format setting, "MIXED" and "ROW" are optional, "MIXED" by default |
+| `gtid-mode` | Enable gtid or not, "on" and "off" are optional, "on" by default |
+| `rpl-semi-sync-enabled` | Start semi-synchronous replication or not, "on" and "off" are optional, "on" by default |
+| `mgr-group-name-list` | MySQL port number:MGR group's UUID:list of MGR local port number, separate by comma, and if this parameter is provided, MGR will open for corresponding port, for example "3306:540c2b46-5d73-11e8-ad9b-00a0c9000000:33060,3308:5f5c1e2d-5d73-11e8-ad9b-00a0c9000000:33080", null by default. (Notice: the MySQL instance to be created still needs to be specified in mysql-port-list and hotdb-config-port) |
+| `mgr-group-local-ip` | Local IP address bound by MGR local port, which is automatically computed by default |
+| `mgr-group-seeds-list` | MySQL port number:MGR group member's IP:port comma-separated list, separate by slash, and if this parameter is provided, this value will be added to corresponding port of my.cnf file, null by default, for example "3306:192.168.200.101:33060,192.168.200.102:33060,192.168.200.103:33060/3308:192.168.200.101:33080,192.168.200.102:33080,192.168.200.103:33080" |
+| `creat-hotdbroot-in-mysql` | Create hotdb_root user in MySQL or not, the user owns all privileges, and could connect from optional position, password as hotdb_root by default, "yes" and "no" are optional, "no" by default |
+| `install-keepalived` | Install keepalived or not, "master", "backup" and "no" are optional, "no" by default |
+| `keepalived-vip-with-perfix` | If specified, it will help substitute the vip in keepalive configuration from 192.168.200.140/24 to the value, no Modification by default |
+| `keepalived-virtual-router-id` | If specified, it will help substitute the virtual-router-id in keepalive configuration from 151 to the value, no Modification by default |
+| `keepalived-net-interface-name` | If specified, it will help substitute the vip device name in keepalive configuration from eth0:1 to the value, no Modification by default |
+| `install-lvs` | Install lvs server or not, "master", "backup" and "no" are optional, "no" by default |
+| `lvs-vip-with-perfix` | If specified, it will help substitute the vip in lvs configuration from 192.168.56.203/24 to the value, no Modification by default |
+| `lvs-port` | If specified, it will help substitute the Listening Port in lvs configuration from 3306 to the value, no Modify by default, and the port shall be the same with the data service port of HotDB cluster |
+| `lvs-virtual-router-id` | If specified, it will help substitute the virtual-router-id in lvs configuration from 51 to the value, no Modification by default |
+| `lvs-net-interface-name` | If specified, it will help substitute the vip device name in lvs configuration from eth1:2 to the value, no Modification by default |
+| `lvs-real-server-list` | Lvs back-end HotDB server IP:data service port:management port list, separate by comma, for example "192.168.0.1:3323:3325,192.168.0.2:4323:4325", null by default |
+| `lvs-real-server-user` | Username used by the management port of lvs physical checkup script connection back-end HotDB server, "root" by default |
+| `lvs-real-server-password` | Password used by the management port of lvs physical checkup script connection back-end HotDB server, "root" by default |
+| `lvs-real-server-startup-type` | When as realserver of lvs, configuration mode of relevant adjustments of the server, "no", "config" and "service" are optional, "no" by default |
+| `install-ntpd` | Install ntpd or not, "yes" and "no" are optional, if HotDB is installed, then yes by default, otherwise no by default. Notice: there shall be only one ntpd in a HotDB cluster; HotDB standby shall synchronize time with the HotDB host. If there is ntp source in the intranet, then ntpd may not be installed. |
+| `ntpdate-server-ip` | Configure ip address of time synchronization, either parameter or ntpdate-server-host must be specified, and only one of them shall be specified. If ntpd is installed, the time source beyond the HotDB cluster must be specified; if ntpd is not installed, server address of the internal ntpd service of HotDB cluster shall be specified (if the host HotDB is installed ntpd server), or intranet ntpd server address, then outer-net address shall not be selected. |
+| `ntpdate-server-host` | Configure host address of time synchronization, which is allowed to be domain name or ip, script will make no processing or checkup of the parameter, and it needs to rely on the caller to guarantee accuracy, either the parameter or ntpdate-server-ip must be specified and only one of them shall be specified. If ntpd is installed, the time source beyond the HotDB cluster must be specified; if ntpd is not installed, server address of the internal ntpd service of HotDB cluster shall be specified (if the host HotDB is installed ntpd server), or intranet ntpd server address, then outer-net address shall not be selected. |
 
 ##### Instruction on use of parameters
 
@@ -1656,7 +1595,7 @@ sh -x hotdbinstall_v*.sh --hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-
 
 ##### Other descriptions of script
 
-Since the clickOnce Deployment and Installation Script at present requires tunescript, and NIC related hardware parameters will be modified in tunescript, which may result in temporary loss of NIC response or interior restart of NIC. It's known that under the environment of Bond configured, short-time network interruption may be caused due to that the operating system response or interchanger response is not quick enough, thus resulting in SSH terminal disconnection or HotDB interruption, part of which could be relieved through shortening the Bond configuration parameter miimon=100.
+Since the clickOnce Deployment and Installation Script at present requires tunescript, and NIC related hardware parameters will be modified in tunescript, which may result in temporary loss of NIC response or interior restart of NIC. It's known that under the environment of Bond configured, short-time network interruption may be caused due to that the operating system response or interchanger response is not quick enough, thus resulting in SSH terminal disconnection or HotDB interruption, part of which could be relieved through shortening the Bond configuration parameter `miimon=100`.
 
 Before installation, it's recommended closing the built-in firewall and selinux functions of the server (selinux restart is effective).
 
