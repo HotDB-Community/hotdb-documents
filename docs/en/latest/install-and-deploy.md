@@ -63,7 +63,7 @@ Descriptions of teaching environment of single-node deployment and the deploymen
 | ConfigDB | 1 |
 | Data Source | 4 |
 
-> !!!NOTE
+> !Note
 > 
 > For description of the component name, refer to the [Glossary](glossary.md) document.
 
@@ -161,7 +161,7 @@ Modify parameter information:
 <property name="management port">3325</property><!-- management port -->
 ```
 
-> !!!NOTE
+> !Note
 > 
 > If configDB and compute node are installed on the same server, then the configDB IP address in the server.xml still requires specific IP address and can't be substituted by 127.0.0.1.
 
@@ -183,7 +183,7 @@ kill 19833
 # or: sh hotdb_server stop
 ```
 
-> !!!TIP
+> !Tip
 > 
 > - In case of abnormal start, view the compute node log `hotdb.log` under the installable directory `logs`. Execute the log view command: `tail -f /usr/local/hotdb/hotdb-server/logs/hotdb.log`.
 > - If the server is unauthorized, or the installed compute node service is unauthorized, both of which could result in start failure of compute node service.
@@ -267,7 +267,7 @@ kill 6595
 
 ConfigDB is actually a standard MySQL instance, and it is mainly used for storing relevant configuration information for compute node or management platform. At present, configDB is supported to run in three forms: single database, master/standby and MGR.
 
-> !!!TIP
+> !Tip
 > 
 > A MySQL instance with port number 3306 will be as configDB by means of RPM in the following. Refer to official installation instruction of MySQL for installation by other means.
 
@@ -509,7 +509,7 @@ Use startup script of mysql to start the database.
 
 Data Source is a standard MySQL instance in nature, and it is used for storing underlying transaction data of the whole set of clusters. The number of installations and the building of replication relation depend on the actual business scenarios.
 
-> !!!TIP
+> !Tip
 > 
 > Please refer to description of [ConfigDB](#configdb) for manual installation process of data source. [Single Component Deployment](#single-component-deployment) of [Cluster Deployment](#cluster-deployment) on the management platform are suggested for batch installation of data source.
 
@@ -543,7 +543,7 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,process,referen
 
 HotDB Backup is a distributed transactional database backup tool independently developed by Shanghai Hotpu Networks Technology Co.,Ltd. It is generally deployed on data source server of the cluster, and listens to the data backup request from the management platform. A data source server needs only one HotDB Backup to be deployed.
 
-> !!!NOTE
+> !Note
 >  <!--Notice for use-->
 >
 > - Only data backup of MySQL 5.6 and above versions is supported.
@@ -642,11 +642,11 @@ Descriptions of master/standby node cluster deployment teaching environment and 
 | ConfigDB | 1 |
 | Data Source | 4 |
 
-> !!!NOTE
+> !Note
 > 
 > For description of the component name, refer to the [Glossary](glossary.md) document.
 
-> !!!INFO
+> !Info
 > 
 > This chapter mainly introduces compute node server.xml configuration, Keepalived installation and configuration, start instruction, high availability switch, etc. under HA cluster mode. Installation steps of compute node, management platform, configDB and Data Source will not be repeated in this chapter, and please refer to [Single Node Cluster Deployment](#single-node-cluster-deployment) in the previous chapter for details.
 
@@ -661,7 +661,7 @@ Descriptions of master/standby node cluster deployment teaching environment and 
 
 HA compute node deployment diagram
 
-> !!!NOTE
+> !Note
 > 
 > The master/standby compute node servers are then installed with keepalived program respectively, and the VIP used is: 192.168.200.140
 
@@ -691,7 +691,7 @@ Modification of the server.xml configuration on standby compute node192.168.200.
 <property name="VIP">192.168.200.140</property><virtual IP address>
 ```
 
-> !!!INFO
+> !Info
 > 
 > - haNodeHost in the configuration file is the master compute node's IP+management port, and such parameter only needs to be configured on standby compute node.
 > - When starting master/standby server, if haState plays as the master, service port (3323) and management port (3325) will be started; if it plays as the Backup, only management port (3325) will be started.
@@ -829,7 +829,7 @@ vrrp_instance VI_1 {
 }
 ```
 
-> !!!NOTE
+> !Note
 > 
 > Relevant configuration of master/standby keepalived could also be made referring to keepalived.conf.master and keepalived.conf.backup under compute node installation directory /conf. The red area shall be modified according to actual information, while the other areas shall be keep default setting for other configurations.
 
@@ -923,7 +923,7 @@ Log in to compute node server, and enter rclickOnce deployment resource bundle d
 sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
 ```
 
-> !!!NOTE
+> !Note
 > 
 > - The time synchronization parameters used for installing time synchronization address of NDB SQL specified server shall be consistent with those used for previous installation of compute node. That is, whether `ntpdate-server-ip` or `ntpdate-server-host` is used shall be consistent for both times
 > - The time synchronization parameters used for installing time synchronization address shall be consistent with those used for previous installation of compute node. If there is NTP service in cluster, then the parameter value shall be IP address of NIP server.
@@ -950,7 +950,7 @@ NDB SQL service does not need to be separately started or stopped. It could be s
 
 HotDB Listener is a pluggable component of compute node. When enabled, it can solve the problem of performance linear expansion in the strong consistency mode of cluster. To use the Listener, the following requirements shall be met: the compute node is in multi-node cluster mode and XA is enabled, the Listener is successfully deployed on the data source server and the parameter enableListener is enabled. This chapter only describe how to manually deploy the Listener. For one-click deployment, please refer to the corresponding chapter of [automatic deployment](#automatic-deployment).
 
-HotDB Listener is compiled by JDK1.7.0_ 80, and the requirements for the operating system and Java environment are consistent with the HotDB Server. Currently, only IPV4 is supported.
+HotDB Listener is compiled by JDK1.7.0_80, and the requirements for the operating system and Java environment are consistent with the HotDB Server. Currently, only IPV4 is supported.
 
 ##### Unzip installation package of one click deployment
 
@@ -1095,7 +1095,7 @@ After successful opening the page , log in to the account to admin user interfac
 
 ##### Description of cluster deployment function
 
-> !!!INFO
+> !Info
 > 
 > **Multiple-node** cluster deployment is taken for instance this time, to illustrate complete process and corresponding descriptions during cluster deployment.
 
@@ -1217,7 +1217,7 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 2. NTP service program is installed on the server of the master compute node or the multiple nodes by default. If there has been available NTP service in the cluster already, the installation could be cancelled.
 3. The other server time synchronization addresses in the cluster refer to the compute node server address installed with NTP server by default. If the compute node has no NTP server installed, then the time synchronization address of the other servers shall be consistent with that of the compute node server.
 
-> !!!TIP
+> !Tip
 > 
 > In the actual scenario, in addition to the clock synchronization configuration of software, you also need to pay attention to whether the hardware clock is synchronized. You can use hwlock to check (generally, there is a greater possibility of difference in the virtual machine environment).
 
@@ -1231,7 +1231,7 @@ Parameter configuration of compute nodes will be introduced with compute node cl
 
 2. Check and Save: click \[Check and Save] button, the program will check the legality and integrity of the configuration parameters, and send the installation deployment package and the corresponding MD5 value file to the target server to verify whether it meets requirement for cluster deployment, and if not, there will be pop-up prompt. **All clusters could be installed only after passing the \[Check and Save] before deployment starts**.
 
-> !!!NOTE
+> !Note
 > 
 > if the installation package is damaged or changed in the process of downloading or sending, it will be detected that the current MD5 value of the installation package is inconsistent with the original MD5 value during **\[Check and Save]**, and the pop-up window will prompt "The integrity check of the one-click deployment package failed. Please check manually", as shown in the figure below:
 
@@ -1321,7 +1321,7 @@ Single Component Deployment is a function in management platform, and before use
 
 ##### Single Component Deployment
 
-> !!!INFO
+> !Info
 > 
 > Deployment of a master/standby mode cluster will be illustrated via [Single Component Deployment](#single-component-deployment) this time. Keepalived virtual address (VIP) uses "192.168.200.112"; master/standby compute node server is installed on "192.168.200.45 and 192.168.200.46" servers respectively. Meanwhile, 4 Data Source MySQL instances are installed respectively on servers "192.168.200.47 and 192.168.200.48".
 
