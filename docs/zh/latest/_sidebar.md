@@ -7,7 +7,7 @@
   * [快速上手指南](quick-start-guide.md)
   <!--* [基本操作](basic-operations.md)-->
 * **安装、部署和升级**
-  * [安装部署](install-and-deploy.md)
+  * [安装部署](installation-and-deployment.md)
   * [服务授权](service-license.md)
   * [手动升级](manual-update.md)
   * [集群环境要求说明](cluster-environment-requirement.md)

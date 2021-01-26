@@ -7430,7 +7430,7 @@ haState与haNodeHost属于配套参数。
 
 单计算节点服务可忽略该参数。
 
-详细使用方法可参考[安装部署](install-and-deploy.md)文档。
+详细使用方法可参考[安装部署](installation-and-deployment.md)文档。
 
 高可用模式主节点示例：
 

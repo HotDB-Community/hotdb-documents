@@ -46,7 +46,7 @@ HotDB Management is a B/S structure management and control product. The bottom l
 
 ### Access mode
 
-Manual deployment of HotDB Management is required before use. For detailed deployment instructions, please read the [Install And Deploy](install-and-deploy.md)
+Manual deployment of HotDB Management is required before use. For detailed deployment instructions, please read the [Installation and Deployment](installation-and-deployment.md)
 
 For deployed and launched HotDB Management, the access address can be entered in the browser for login access.
 
@@ -248,7 +248,7 @@ The cluster management page displays the compute node clusters deployed or added
 
 **Function button description:**
 
-- Deploy Cluster: Deploy a complete set of compute node clusters from 0. For details, please refer to the [Install And Deploy](install-and-deploy.md) document.
+- Deploy Cluster: Deploy a complete set of compute node clusters from 0. For details, please refer to the [Installation and Deployment](installation-and-deployment.md) document.
 
 - Add Cluster: Manually add compute node cluster (the compute node has been deployed offline) information of HotDB Management
 
@@ -413,7 +413,7 @@ With DR mode enabled, the visualized IDC switching drill can be performed in the
 
 ### Single Component Deployment
 
-Single Component Deployment provides HotDB Management users with the function of installing and deploying a single component, which makes up for the defect that a component cannot be installed separately in cluster deployment function. For specific function description and operation steps, please refer to the [Install And Deploy](install-and-deploy.md) document.
+Single Component Deployment provides HotDB Management users with the function of installing and deploying a single component, which makes up for the defect that a component cannot be installed separately in cluster deployment function. For specific function description and operation steps, please refer to the [Installation and Deployment](installation-and-deployment.md) document.
 
 ### Deployment environment examination
 
@@ -2281,7 +2281,7 @@ Config metadata refers to compute node configDB data and configuration files. Ho
 
 **Remote Replication Mode**: Supporting both SCP and RSYNC. If RSYNC replication mode is selected, it needs to install RSYNC tools on all compute node servers and remote servers in advance.
 
-**Sign in without password**: If a remote server is connected through Sign in without password, all compute node servers are required to establish a password-free channel with the remote server. For the establishment of password-free channel, refer to the [Password-free Channel Description](install-and-deploy.md#description-of-implementing-password-free-login) chapter of the [Install And Deploy](install-and-deploy.md) document.
+**Sign in without password**: If a remote server is connected through Sign in without password, all compute node servers are required to establish a password-free channel with the remote server. For the establishment of password-free channel, refer to the [Password-free Channel Description](installation-and-deployment.md#description-of-implementing-password-free-login) chapter of the [Installation and Deployment](installation-and-deployment.md) document.
 
 **Remote Hostname**: IP address of the remote server
 
@@ -2537,7 +2537,7 @@ Click the \[Add Server] button to add a server outside the cluster.
 
 ![](assets/hotdb-management/image228.png)
 
-- Login Method: Password and Sign in without password. If "Sign in without password" is selected, it needs to be set in advance. For details, refer to the [Instructions for Sign in without Password](install-and-deploy.md#description-of-implementing-password-free-login) chapter of the [Install And Deploy](install-and-deploy.md) document.
+- Login Method: Password and Sign in without password. If "Sign in without password" is selected, it needs to be set in advance. For details, refer to the [Instructions for Sign in without Password](installation-and-deployment.md#description-of-implementing-password-free-login) chapter of the [Installation and Deployment](installation-and-deployment.md) document.
 
 - Hostname: Server ip.
 
@@ -3825,7 +3825,7 @@ MySQL's own mysqldump tool exports multiple tables in turn through a single-thre
 
 #### Installation description
 
-To use the data backup function of HotDB Management, it needs to install the HotDB Backup program on the server where the backed-up data source reside. For the installation and deployment of HotDB Backup, please refer to the [backup program deployment](install-and-deploy.md#description-of-implementing-password-free-login) chapter of [Install And Deploy](install-and-deploy.md) document.
+To use the data backup function of HotDB Management, it needs to install the HotDB Backup program on the server where the backed-up data source reside. For the installation and deployment of HotDB Backup, please refer to the [backup program deployment](installation-and-deployment.md#description-of-implementing-password-free-login) chapter of [Installation and Deployment](installation-and-deployment.md) document.
 
 #### Manual backup
 

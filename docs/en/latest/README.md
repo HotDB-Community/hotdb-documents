@@ -22,9 +22,9 @@ HotDB Server is a relational distributed transactional database product which re
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
-<div class="readme-toc-col-title">Install, Deploy and Update</div>
+<div class="readme-toc-col-title">Installation, Deployment and Update</div>
 
-* [Install and Deploy](install-and-deploy.md)
+* [Installation and Deployment](installation-and-deployment.md)
 * [Service License](service-license.md)
 * [Manual Update](manual-update.md)
 
