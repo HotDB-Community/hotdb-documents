@@ -2,7 +2,7 @@
 
 ## Distributed Transactional Database HotDB Server - Cluster Configuration Reference
 
-> !!!INFO
+> !Info
 >
 > It is required that cluster environment includes server hardware configuration, operating system, and software deployment. Before or after deployment installation, please check whether the following items meet the requirements of using distributed transaction data cluster. If the following requirements are not met, unpredictable exceptions to cluster operation may occur and the cluster may not perform the best performance.
 

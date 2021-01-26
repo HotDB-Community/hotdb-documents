@@ -96,7 +96,7 @@ The actual connection information corresponding to each component is listed as f
 |   | ConfigDB | Master | hc03 | 192.168.220.188_3306 |
 |   |   | Standby Master | hc04 | 192.168.220.189_3306<br>(Configured as master-master, however the actual replication relation is set up as master-slave) |
 
-> !!!NOTE
+> !Note
 >
 > - When deploying in a real scenario, it is not recommended to deploy the compute nodes and data sources on the same server. This time is only for the convenience of subsequent explanations.
 > - In the real deployment environment, the number of data nodes and data sources should be planned according to the actual needs. For the convenience of explanation, only single data node deployment is made here.
@@ -113,7 +113,7 @@ This section only describes in detail what should be paid attention to in the au
 
 **(1) Select the deployment mode:**
 
-1. Log in to the management platform as the management user, enter "Cluster Management - > Compute Node Cluster", and click the \[Cluster Deployment] button to enter the cluster deployment function page.
+1. Log in to the management platform as the management user, enter "Cluster Management -> Compute Node Cluster", and click the \[Cluster Deployment] button to enter the cluster deployment function page.
 2. Choose the compute node mode, click to enable "deploy by DR mode", choose "master center" in "IDC type" and click \[Parameter Configuration] to enter the cluster deployment parameter configuration page.
 
 ![](assets/cross-idc-disaster-recovery/image3.png)
@@ -167,7 +167,7 @@ At this time, you can either deploy the corresponding DR center through the clus
 1. After the master center is deployed, click the \[Cluster Deployment] button again.
 2. Similar to the master center deployment, after choosing the compute node mode, click to enable "Deploy by DR mode", choose [DR center](#dr-center) in "IDC type" and the corresponding "Cluster name of the master center", i.e., the master center cluster that is newly deployed.
 
-> !!!NOTE
+> !Note
 >
 > It is recommended to deploy the DR center at the low peak of the master center business, otherwise it may affect the data migration time when setting up the disaster recovery replication.
 
@@ -197,7 +197,7 @@ The parameter configuration of the DR center reference is as follows ( [Deployme
 2. In step "Generate basic configuration", configuration of the DR center will be updated to ConfigDB and server.xml of the master center synchronously and take effect after dynamic loading.
 3. In step "Set up disaster recovery replication", data of the master center ConfigDB and data source will be migrated to the DR center ConfigDB and data source, and the disaster recovery replication will be set up between the ConfigDB and data source of the two IDCs.
 
-> !!!NOTE
+> !Note
 >
 > Due to the data import, you may wait a long time if the master center data source has a large data amount.
 
@@ -240,7 +240,7 @@ idcld is set to 1, that is, the master center
 idcNodeHost is set to the compute node information of the DR center: host name (IP) + service port, separated by English commas, for example: 192.168.220.112:3325,192.168.220.113:3325,192.168.220.114:3325
 ```
 
-> !!!NOTE
+> !Note
 >
 > the clusterName in the cluster of the same IDC must be consistent, but the master center and the DR center cannot be consistent. Therefore, the master center can be configured as HotDB-Cluster-idc1-groupID by default (groupID is the platform cluster group ID, in order to distinguish the deployment of multiple clusters on the same server).
 
@@ -252,7 +252,7 @@ idcld is set to 2, that is, the DR center
 idcNodeHost is set to the compute node information of the master center: host name (IP) + service port, separated by English commas, for example: 192.168.210.86:3325,192.168.210.87:3325,192.168.210.88:3325
 ```
 
-> !!!NOTE
+> !Note
 >
 > The clusterName in the cluster of the same IDC must be consistent, but the master center and the DR center cannot be consistent. Through platform deployment, the default configuration is: HotDB-Cluster-idc1/idc2-groupID (groupID is the platform cluster group ID, in order to distinguish the deployment of multiple clusters on the same server)
 
@@ -357,7 +357,7 @@ The detailed steps are as follows:
 1. By default, MySQL instances are installed on these four servers and GTID is enabled in the configuration parameters.
 2. Set up a master-master replication relation between the MySQL instances of servers 220.186 and 220.187.
 
-> !!!NOTE
+> !Note
 >
 > For more requirements and more detailed master-slave replication setup steps, please refer to the relevant chapters in the "[Recommended steps for replication setup](#recommended-steps-for-replication-setup)". This section describes the basic operations performed without considering the influence of other factors.
 
@@ -453,7 +453,7 @@ Click "Enable DR mode", and fill in two sets of compute node information of the 
 
 ![](assets/cross-idc-disaster-recovery/image22.png)
 
-> !!!NOTE
+> !Note
 >
 > 1. In the multi-node mode, you need to add the configuration of cluster communication ports. If the compute nodes are distributed on different servers and the communication ports are consistent, you can fill in only one port (3326 by default). If the compute nodes are deployed on the same or multiple servers with different ports, you can use English commas to separate the communication ports, for example, 3326,3327,3328, and the order of the communication ports should correspond to the order of adding the compute nodes. Otherwise, when saving the verification, it will refuse to save and remind "the compute nodes are on the same server, the communication ports must match the compute nodes in numbers and cannot be repeated.".
 > 2. If multiple compute nodes in the cluster are deployed on the same server, the communication port+ service port+ management port should be unique to each other, and there can't be the same port combination.
@@ -526,7 +526,7 @@ When deploying a DR center on the basis of a running cluster, the steps of setti
 
 1. By default, the master-master replication status of the ConfigDB in the master center is normal and the data is consistent at this time, and MySQL instance has been installed on the server in the DR center with GTID enabled in the configuration parameters.
 
-> !!!NOTE
+> !Note
 >
 > for more requirements and more detailed master-slave replication setup steps, please refer to the relevant chapters in the "[Recommended steps for replication setup](#recommended-steps-for-replication-setup)". This section describes the basic operations performed without considering the influence of other factors.
 
@@ -721,7 +721,7 @@ If the master center fails and is switched to the DR center, the compute node wi
 
 The master/slave status function of the master center is the same as that of the single-IDC mode, which is displayed according to the configuration.
 
-> !!!NOTE
+> !Note
 >
 > The DR center needs to set up disaster recovery relations and multi-source replication is not allowed. When the DR center is the current standby center, if the data node type is master-master, the actual master-slave relation should be master-salve. At this time, the master-slave status only checks whether the master-slave replication is normal. When the DR center is switched to be the current active center, if the data node type is master-master, the master-slave status will display the detection results of master-master replication status.
 
@@ -851,7 +851,7 @@ If you check "Automatically synchronize to other compute nodes", the modified or
 
 ![](assets/cross-idc-disaster-recovery/image49.png)
 
-> !!!NOTE
+> !Note
 >
 > The six parameters \[DR Mode], \[HA role], \[HA role, other node IP: PORT], \[IDC ID], \[The other IDC compute node information] and \[keepalived virtual IP] do not support the modification synchronization.
 
@@ -1246,7 +1246,7 @@ After the upgrade is complete, you can view the detailed update logs:
 
 ![](assets/cross-idc-disaster-recovery/image96.png)
 
-> !!!NOTE
+> !Note
 >
 > - If the currently configured master center is not the current active center and the current master center management port cannot be connected, the upgrade cannot be performed.
 > - If the compute node in the master center is in the master/slave mode, the page will display "whether to switch back after the upgrade". Select "Yes" to switch back to the former master compute node after the upgrade (the master/slave high availability switch will be performed during the upgrade).
@@ -1297,7 +1297,7 @@ root@192.168.220.184:(none) 8.0.15-HotDB-2.5.3.1 08:22:27> online;
 Query OK, 1 row affected (0.01 sec)
 ```
 
-> !!!WARNING
+> !Warning
 >
 > After the IDC-level failure and the online_dr command is manually executed in the master compute node of DR center, the enable_online command needs to be executed in the slave compute node of the DR center at the same time to ensure that the master compute node of the DR center can automatically switch to the slave compute node of the DR center after failure. Otherwise, the master compute node of the DR center may not be able to switch to the slave compute node of the DR center after failure. If it is multi-node cluster mode, it needs to execute the online_dr command in the primary compute node of the DR center, to ensure that the successful switching in the compute node clusters in the DR center.
 
@@ -1354,7 +1354,7 @@ The actual connection information corresponding to each component is listed as f
 |   | ConfigDB | Master | hc03 | 192.168.220.183_3306 |
 |   |   | Master-master | hc04 | 192.168.220.184_3306 |
 
-> !!!NOTE
+> !Note
 >
 > - The data node names of the same group of data sources with disaster recovery relations are the same;
 > - By default, the data sources and ConfigDBs of the DR center are only set up with the replication relation from the master to the standby master, and do not set up a return circuit, which is different from the role of the actual standby master;
@@ -1394,7 +1394,7 @@ Click \[Switch] button corresponding to the master center on the "Node Managemen
 
 ![](assets/cross-idc-disaster-recovery/image99.png)
 
-> !!!NOTE
+> !Note
 >
 > If the switched data source of the master center is with a master-slave replication relation, the master data source of the former master center will be set unavailable after manual switching. It is required to set up a replication relation in the master center between the data source and the master data source, and to ensure the catching up with replication, thus the dynamic loading can be switched back to the former master data source in the master center, and the disaster recovery relation will be reset automatically without manual intervention. That is, when ds01 and ds02 are in a master-slave relation instead of a master-master relation, ds01 is manually switched to ds02 (slave only), and ds01 is set as unavailable. When ds01 is enabled, only if ds01 has a replication relation with ds02, ds01 is the slave of ds02, and there is no replication latency and other effects can the dynamic loading be successful and ds01 be enabled.
 
@@ -1971,7 +1971,7 @@ mysqldump: [Warning] Using a password on the command line interface can be insec
 
 If the return value is 0 and the export command does not report an error, it means the data is exported successfully. (This is normal: mysqldump: `[Warning] Using a password on the command line interface can be insecure.`)
 
-> !!!NOTE
+> !Note
 >
 > By adopting the above method to export data, `SET @@SESSION.SQL_LOG_BIN = 0;` is added by default. Therefore, you must make sure that you do not setup DR replication first and then import data to the master in DR center when setting up the replication relation between master instances in the master center and DR center, and the replication relation in the DR center itself. (Wrongly believing that data will synchronize to the slave in DR center). You have to set up replication relations after importing data correctly into each instance.
 
@@ -2026,7 +2026,7 @@ change master to master_host = '192.168.220.181',master_user='repl',master_passw
 
 #### Set up replication relations when GTID is disabled
 
-> !!!NOTE
+> !Note
 >
 > If the DR mode is enabled for the compute node cluster, all data sources are required to have GTID turned on. The introduction here is only for reference. There is no direct correlation in the actual maintenance of the DR mode.
 >
@@ -2050,7 +2050,7 @@ Step 9: set up replication refers to:
 change master to master_host = 'xxx',master_user='xxx',master_password='xxx', MASTER_LOG_FILE='mysql-bin.xxx', MASTER_LOG_POS=xxx;
 ```
 
-> !!!NOTE
+> !Note
 >
 > `MASTER_LOG_FILE = 'mysql-bin.xxx', MASTER_LOG_POS = xxx;` This position is the position obtained when the data was exported in step 2, which can be obtained by: *head -c 4096 file without duplicate name | grep -I 'change master'*. If there are multiple new instances that need to set up a master-slave replication and there is a multipe levels of slaves relation, you need to execute *show master status* on the corresponding master to obtain the binlog position after the data is imported and before performing any write operations. You cannot directly take the export position to set up a replication relation.
 

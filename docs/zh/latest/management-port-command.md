@@ -125,7 +125,7 @@ show @@clientquery;
 | `other` | 其它操作次数 | `LONG/[number]` |
 | `all` | 总和 | `LONG/[number]` |
 
-> !!!NOTE
+> !Note
 > 
 > other统计的是当前客户端执行DDL语句的次数
 
@@ -347,7 +347,7 @@ show @@heartbeat;
 | `last_active_time` | 最新心跳成功时间 | `DATETIME/[yyyy-MM-dd HH:mm:ss]` |
 | `stop` | 心跳是否停止 | `BOOLEAN/[true/false]` |
 
-> !!!NOTE
+> !Note
 > 
 > dn为-1代表配置库
 
@@ -510,7 +510,7 @@ show @@operation_dn;
 | `other` | 对`[table]`表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
 | `all` | 对以上操作的统计 | `LONG/[number]` |
 
-> !!!NOTE
+> !Note
 > 
 > 与全局表相关的操作量根据操作类型分别计数：SELECT仅统计一个节点，INSERT、UPDATE、DELETE操作统计所有节点
 
@@ -1138,11 +1138,11 @@ show @@usbkey;
 | `exception_count` | 累计检测抛出异常次数 | `INT/[number]` |
 | `comment` | 备注信息 | `STRING` |
 
-> !!!NOTE
+> !Note
 > 
 > `left_time=0`代表永久或作废；
 
-> !!!NOTE
+> !Note
 > 
 > `usbkey_check_stuck=1`代表检测到线程被卡住。当检测到线程被卡住或累计检测抛出异常次数超过10000时，提示：
 
@@ -1380,7 +1380,7 @@ onlinemodifyrule cpd_test. zx_cvset_signin_result=4,id:1,2:24:1000:T3:7:0;
 
 分片方案变更所采用的`functionid`可在配置库的`hotdb_function`表里查看。![](assets/management-port-command/image70.png)
 
-> !!!IMPORTANT
+> !Important
 > 
 > - 执行的变更分片规则需要的`functionid`已经存在于配置库的`hotdb_function`表中；
 > - 使用将要变更的分片规则，需要保证指定的数据节点数目要与`function_id`对应的数据节点数一致；
@@ -1846,7 +1846,7 @@ Query OK, 0 rows affected (0.00 sec)
 dbremapping @@add@db01:logic_db;
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若为同名的物理库添加映射关系到不同逻辑库，将会覆盖之前的映射关系。允许不同的物理库添加映射关系到相同的逻辑库。
 
@@ -1896,7 +1896,7 @@ onlineddl "[DDLSTATEMENT]";
 mysql> onlineddl "alter table mytb add column cl1 varchar(90) default '1'";
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 在线修改表结构时，各分片上的数据表结构需要一致，并且需要修改的数据表有唯一索引。
 

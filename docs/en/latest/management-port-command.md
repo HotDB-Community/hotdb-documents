@@ -246,19 +246,19 @@ mysql> show @@database;
 +-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
 |                 |                                                                                                | Failover: failover                 |
 +-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| last_failover_ | start time of last failover                                                                    | STRING/[yyyy-MM-dd HH:mm:ss.SSS] |
+| last_failover_| start time of last failover                                                                    | STRING/[yyyy-MM-dd HH:mm:ss.SSS] |
 |                 |                                                                                                |                                    |
 | start_time      |                                                                                                |                                    |
 +-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| last_failover_ | duration of last failover (ms)                                                                 | STRING/[number]                  |
+| last_failover_| duration of last failover (ms)                                                                 | STRING/[number]                  |
 |                 |                                                                                                |                                    |
 | duration        |                                                                                                |                                    |
 +-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| last_failover_ | reason for last failover                                                                       | STRING                             |
+| last_failover_| reason for last failover                                                                       | STRING                             |
 |                 |                                                                                                |                                    |
 | reason          |                                                                                                |                                    |
 +-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| last_failover_ | information of last failover                                                                   | STRING                             |
+| last_failover_| information of last failover                                                                   | STRING                             |
 |                 |                                                                                                |                                    |
 | info            |                                                                                                |                                    |
 +-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
@@ -326,17 +326,17 @@ mysql> show @@globaltableconsistency;
 +---------------------------+---------------------------------------------------------------------------------------+----------------------+
 | result                    | detection result                                                                      | STRING               |
 +---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| less_half_dn_lost_and_   | the number of lines with less than half nodes lost and with data on the first node    | INT/[number]       |
+| less_half_dn_lost_and_  | the number of lines with less than half nodes lost and with data on the first node    | INT/[number]       |
 |                           |                                                                                       |                      |
 | first_dn_exsitdata_count  |                                                                                       |                      |
 +---------------------------+---------------------------------------------------------------------------------------+----------------------+
 | repair                    | restoring state                                                                       | STRING               |
 +---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| less_half_dn_lost_and_   | the number of lines with less than half nodes lost and without data on the first node | INT/[number]       |
+| less_half_dn_lost_and_  | the number of lines with less than half nodes lost and without data on the first node | INT/[number]       |
 |                           |                                                                                       |                      |
 | first_dn_nodata_count     |                                                                                       |                      |
 +---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| greater_half_dn_lost_    | the number of lines with more than half nodes lost                                    | INT/[number]       |
+| greater_half_dn_lost_   | the number of lines with more than half nodes lost                                    | INT/[number]       |
 |                           |                                                                                       |                      |
 | count                     |                                                                                       |                      |
 +---------------------------+---------------------------------------------------------------------------------------+----------------------+
@@ -1153,7 +1153,7 @@ mysql> show @@usbkey;
 +-----------------+--------------------------------------------------------+----------------------------------+
 | last_check_time | ending time of last detection                          | STRING/[ yyyy-MM-dd HH:mm:sss] |
 +-----------------+--------------------------------------------------------+----------------------------------+
-| usbkey_check_  | whether detection of USB_KEY is stuck                  | 0: not stuck                     |
+| usbkey_check_ | whether detection of USB_KEY is stuck                  | 0: not stuck                     |
 |                 |                                                        |                                  |
 | stuck           |                                                        |                                  |
 +-----------------+--------------------------------------------------------+----------------------------------+

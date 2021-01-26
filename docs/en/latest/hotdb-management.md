@@ -17,7 +17,7 @@ This chapter will briefly introduce the newly added or optimized functions in Ho
 - Optimize the function of [Config Checking](#config-checking), add checking item of whether to configure switching functions, and give warnings for the data nodes with replication relations that are not configured with switching functions;
 - Add the identification of whether the data of data sources are consistent on the data nodes in the [Logic Topological Graph](#logic-topological-graph);
 - Optimize the [high availability switching](#masterslave-switch) function of data source, and do compatibility processing for master_delay replication latency. Add "switching" button, you can cancel the switching task halfway via the button;
-- The [Topological Graph Alert Setting](#periodical-plan) is compatible with master_ delay configuration to make it within the alert range. Besides, add "Reset" button to the Topological Graph Alert Setting and Monitoring Panel Setting to restore the default configuration;
+- The [Topological Graph Alert Setting](#periodical-plan) is compatible with master_delay configuration to make it within the alert range. Besides, add "Reset" button to the Topological Graph Alert Setting and Monitoring Panel Setting to restore the default configuration;
 - Optimize the page of [Compute Node Cluster Management](#compute-node-cluster) to unfold/hide more deployment info and improve the page access rate;
 - Optimize the function of [data unique constraint detection](#data-unique-constraint-detection) to make it compatible with prefix unique index;
 - Set the entrance for data sharding route periodical detection plan, data unique constraint periodical detection plan in the [Periodical Plan](#periodical-detection-setting) of the management platform;
@@ -177,7 +177,7 @@ Adding a platform user needs to fill in two parts of content information: User B
 
 **Reset Password**: The users can reset the password when forgetting the login password. The password can be reset with the "Reset Password" button in the operation column via the "User Management" interface, or by clicking "Reset Password" on the "Edit User Information" page.
 
-**Change Password**: User password change will be required when the users first log into HotDB Management. Later change can be operated in "Personal Information - > Modify User Information" in the upper right corner of the page.
+**Change Password**: User password change will be required when the users first log into HotDB Management. Later change can be operated in "Personal Information -> Modify User Information" in the upper right corner of the page.
 
 ### Login history
 
@@ -1386,7 +1386,7 @@ The node management menu mainly provides users with the management of data sourc
 
 If the DR mode is enabled, please refer to the chapter [Node management](#Node%20management) in the [Distributed Transactional Database HotDB Server - Cross-IDC Disaster Recovery Function Specification](../Distributed%20Transactional%20Database%20HotDB%20Server%20-%20Cross-IDC%20Disaster%20Recovery%20Function%20Specification.docx) for the node management function display and operation explanations
 
-**Function Entry**: Click [Configuration](#Configuration) - > "Node Management" on the management platform page
+**Function Entry**: Click [Configuration](#Configuration) -> "Node Management" on the management platform page
 
 ![](assets/hotdb-management/image140.png)
 
@@ -1396,7 +1396,7 @@ DNID: Data node ID
 
 **Data Node Name**: Click on the button in the Data Node Name to link to the "Data Node Management" page
 
-**Data Source_ Hostname**: Address of the server where the data source is located
+**Data Source_Hostname**: Address of the server where the data source is located
 
 **Data Source_Port:** Data source MySQL instance port
 
@@ -2408,7 +2408,7 @@ Click the [Add Users] button to enter the Add User information page. There are t
 
 - "Username" and "Password" are the database account information used when logging into the compute node. "Username" shall not be repeated and in Chinese. "Password"shall meet the requirements.
 
-- "Host" is an optional item. When it is null, it is "%" by default. That is, any IP can be connected. When the white list constraint is currently enabled, and Host User is beyond IP range set by "Security - > White List", the White List will prevail.
+- "Host" is an optional item. When it is null, it is "%" by default. That is, any IP can be connected. When the white list constraint is currently enabled, and Host User is beyond IP range set by "Security -> White List", the White List will prevail.
 
 - "Max User Connections" is an optional item. When it is null, it is "0" by default. That is, user connections are not limited. For the maximum connections for all users, the "Front-end Max Connections" will prevail.
 
@@ -2626,7 +2626,7 @@ The front-end application layer is the front-end application client that connect
 
 - Data node information: "Failover Time" is the time consumed from the active master fails and the standby slave starts to wait for catching up with and then the connection is switched to the standby slave when the standby slave starts to provide the normal service. This parameter is displayed only when the switch is successful. If the replication is normal or the switch fails or the active master is restored during the switch, the parameter displays "- -" instead of the time. The switch time is displayed in ms, s, min and h. The time is displayed in min when it exceeds s.
 
-- Data node information: "Master/slave Data Consistency" when the node type is master-master, master/slave, or one master with multiple slaves, whether the data and objects on multiple data sources are consistent will be identified. There are three values: "--", "normal" and "abnormal", which are displayed according to the latest detection results of "Detection - > Master/slave Data Consistency Detection".
+- Data node information: "Master/slave Data Consistency" when the node type is master-master, master/slave, or one master with multiple slaves, whether the data and objects on multiple data sources are consistent will be identified. There are three values: "--", "normal" and "abnormal", which are displayed according to the latest detection results of "Detection -> Master/slave Data Consistency Detection".
 
 > 1) When the master/slave data consistency detection is not performed in the selected node, the master/slave data consistency will be shown as "--"
 
@@ -2726,7 +2726,7 @@ Physical topological graph mainly displays the relation between cluster componen
 
 ![](assets/hotdb-management/image238.png)
 
-Total servers: The total number of cluster servers (servers of associated cluster service programs) shown in the "Configuration - > Server" page list.
+Total servers: The total number of cluster servers (servers of associated cluster service programs) shown in the "Configuration -> Server" page list.
 
 Server health status: The statuses include Normal, Warning and Error which are displayed in green, orange and red respectively in the statistics. The server error causes include: the server SSH connection information is incorrect, the server network connection is abnormal, and the server cannot connect normally; the server warning cause is: the server resource usage parameter value reaches the threshold in "Setting - Monitoring Panel Setting - Compute Node/Other Server Resource Setting".
 
@@ -2912,7 +2912,7 @@ The page is divided into three parts: data node, data source and the data increm
 
 - Display of data node: Data node/ConfigDB name + prediction result. For the data node plate, move the cursor over the plate, you can view the hyperlink effect; click the plate, you can jump to the data node details page. For the ConfigDB plate, there is no special effect. The prediction result displayed is the data capacity of the selected prediction time.
 
-- Display of data source: IP_ Port_ Data source name. It displays all data sources under the data node and identifies the current active data source. If the number of data sources exceeds five, only five data sources will be displayed. Click ">> View more" to jump to the data node details page.
+- Display of data source: IP_Port_Data source name. It displays all data sources under the data node and identifies the current active data source. If the number of data sources exceeds five, only five data sources will be displayed. Click ">> View more" to jump to the data node details page.
 
 ![](assets/hotdb-management/image250.png)
 
@@ -3852,7 +3852,7 @@ To use the data backup function of HotDB Management, it needs to install the Hot
 
 - Local Backup Root Directory: It is the local directory of the server where each data source resides and backup file is stored. This directory needs to be created in advance on the server where each node resides, and the directory of each server shall be consistent. Otherwise, the backup fails and the backup failure message prompts: Failed to create backup directory.
 
-> !!!TIP
+> !Tip
 > 
 > when the data is backed up under different directories due to different hardware specifications and configuration methods of servers, you can use the soft link to unify the directories used for backup.
 
@@ -4672,7 +4672,7 @@ HOTDB Management supports the white list function which restricts hosts outside 
 
 - It needs to use [Reload](#Reload) to enable or disable the white list or to add, modify or delete white list information.
 
-- After adding a host that can access the compute node, the host outside the white list will be intercepted when connecting to the compute node. Interception records can be viewed in "Event - > Audit Log - > Safety Protection".
+- After adding a host that can access the compute node, the host outside the white list will be intercepted when connecting to the compute node. Interception records can be viewed in "Event -> Audit Log -> Safety Protection".
 
 **Special description:**
 
@@ -4692,7 +4692,7 @@ SQL Firewall currently only supports the interceptable SQL templates provided by
 
 A single or batch can be enabled or disabled through [Reload](#Reload). If the intercepted SQL is executed in the compute node after it takes effect, it will prompt "ERROR 10029 (HY000): You are using SQL Firewall, this sql isn't allowed".
 
-Currently, HotDB Management provides 31 interceptable SQL templates, and records of intercepted SQL can be viewed in "Event - > Audit Logs - > Safety Protection".
+Currently, HotDB Management provides 31 interceptable SQL templates, and records of intercepted SQL can be viewed in "Event -> Audit Logs -> Safety Protection".
 
 - In v.2.5.5 and above, an interception rule is added to the SQL firewall to support the interception of WHERE without sharding key, so as to improve the query efficiency of the system.
 
@@ -6044,7 +6044,7 @@ This function is the same as the "License Management" function in admin. For det
 
 Business data reporting provides annual reports of the cluster for users, which support the statistics of the business data of the cluster and support users to have a knowledge of the actual benefits from the cluster to the enterprise and the defects of the cluster operation.
 
-**Function entry:** enter the Business data reporting page through [Tool](#Tool) - > [Business data reporting](#Business%20data%20reporting) on the management platform, as shown in the following figure:
+**Function entry:** enter the Business data reporting page through [Tool](#Tool) -> [Business data reporting](#Business%20data%20reporting) on the management platform, as shown in the following figure:
 
 ![](assets/hotdb-management/image510.png)
 
@@ -6066,7 +6066,7 @@ When you reselect the time range for business data statistics, the page will aut
 
 The Cluster scale shows the number of servers and components in the cluster, which is displayed in combination of graphics and text. The text shows the specific statistics of the name and number of current components in the selected time range (displayed according to the selection drop-down box).
 
-**Server:** the number of servers in the current compute node cluster. The data is obtained through "configuration - > server".
+**Server:** the number of servers in the current compute node cluster. The data is obtained through "configuration -> server".
 
 **Compute node:** the total number of compute nodes in the current compute node cluster.
 

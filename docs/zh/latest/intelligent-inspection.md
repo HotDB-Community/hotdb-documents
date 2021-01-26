@@ -2,26 +2,26 @@
 
 为方便运维人员及时知晓数据库集群内部是否存在隐患或异常，在管理平台版本高于（包含）2.5.6时新增了智能巡检功能，通过该功能可以对计算节点集群进行日常数据库巡检工作，及时规避当前数据库服务在运行过程中存在的隐患问题。
 
-**功能入口：**管理平台普通角色登录，点击"工具"->[智能巡检](#智能巡检)，进入智能巡检页面。
+**功能入口：**管理平台普通角色登录，点击"工具"->"智能巡检"，进入智能巡检页面。
 
 ## 使用前提
 
 发起智能巡检，需要满足如下前提：
 
-- 当前用户拥有[智能巡检](#智能巡检)菜单权限
+- 当前用户拥有"智能巡检"菜单权限
 - 需要配置服务器SSH信息
 
 ## 功能介绍
 
 智能巡检主要包括：巡检结果报告、巡检指标设置、历史巡检记录三个TAB，默认展示巡检结果报告页，且显示最新一次的巡检结果。当无历史巡检结果时，提示："当前暂无任何巡检记录信息，您可以选择立即发起一次巡检任务"。
 
-![](assets/intelligent-inspection/image2.png)
+![](assets/intelligent-inspection/image1.png)
 
 ### 巡检结果报告
 
 #### 页面展示
 
-![](assets/intelligent-inspection/image3.png)
+![](assets/intelligent-inspection/image2.png)
 
 页面搜索选项，包括：按主机名模糊搜索、按巡检状态搜索
 
@@ -39,21 +39,21 @@
 
 #### 发起巡检
 
-**发起巡检**
+**（一）发起巡检**
 
-![](assets/intelligent-inspection/image4.png)
+![](assets/intelligent-inspection/image3.png)
 
 点击发起巡检，弹出巡检对象选择框
 
-**巡检对象选择**
+**（二）巡检对象选择**
 
-![](assets/intelligent-inspection/image5.png)
+![](assets/intelligent-inspection/image4.png)
 
 勾选需要发起巡检的对象，发起巡检（全选，可快速勾选所有巡检对象）
 
-**正在巡检**
+**（三）正在巡检**
 
-![](assets/intelligent-inspection/image6.png)
+![](assets/intelligent-inspection/image5.png)
 
 发起巡检后，会跳转至历史巡检记录页面，并显示当前正在巡检的任务
 
@@ -61,9 +61,9 @@
 
 当前有正在进行巡检任务时，无法继续发起新的巡检（基于当前组）
 
-**巡检完成**
+**（四）巡检完成**
 
-![](assets/intelligent-inspection/image7.png)
+![](assets/intelligent-inspection/image6.png)
 
 巡检完成后，『任务状态』会更新为巡检完成
 
@@ -73,9 +73,9 @@
 
 巡检完成后，会在`hotdb-management/data/Inspection`目录下生成巡检过程中产生的结果文件和巡检报告
 
-**取消巡检**
+**（五）取消巡检**
 
-![](assets/intelligent-inspection/image8.png)
+![](assets/intelligent-inspection/image7.png)
 
 点击强制取消，可取消当前正在巡检的任务
 
@@ -85,13 +85,13 @@
 
 取消后的巡检任务，不会在hotdb-management/data/Inspection目录下生成文件
 
-![](assets/intelligent-inspection/image9.png)
+![](assets/intelligent-inspection/image8.png)
 
 #### 定时计划
 
 除手动发起巡检任务外，也可以通过添加定时任务自动执行检测。点击『定时计划』可管理当前的定时计划任务。
 
-![](assets/intelligent-inspection/image10.png)
+![](assets/intelligent-inspection/image9.png)
 
 定时计划最多只能加六条，可按照检测周期选择"每月"、"每季度"、"每年"
 
@@ -103,7 +103,7 @@
 
 #### 导出报告
 
-![](assets/intelligent-inspection/image11.png)
+![](assets/intelligent-inspection/image10.png)
 
 点击"导出完整巡检报告-仅导出异常或警告数据"，下载的报告只包含警告和异常巡检项
 
@@ -119,7 +119,7 @@
 
 #### 页面展示
 
-![](assets/intelligent-inspection/image12.png)
+![](assets/intelligent-inspection/image11.png)
 
 显示所有巡检类目的指标，可根据巡检类目模糊匹配搜索
 
@@ -129,7 +129,7 @@
 
 #### 服务器软硬件配置
 
-![](assets/intelligent-inspection/image13.png)
+![](assets/intelligent-inspection/image12.png)
 
 服务器软硬件配置，存在可配置指标的巡检类目分别为：
 
@@ -143,7 +143,7 @@
 
 #### 服务器资源使用率
 
-![](assets/intelligent-inspection/image14.png)
+![](assets/intelligent-inspection/image13.png)
 
 服务器软资源使用率，存在可配置指标的巡检类目分别为：
 
@@ -169,7 +169,7 @@
 
 #### 服务器硬件可靠性
 
-![](assets/intelligent-inspection/image15.png)
+![](assets/intelligent-inspection/image14.png)
 
 服务器软资源使用率，存在可配置指标的巡检类目分别为：
 
@@ -188,7 +188,7 @@
 
 #### 计算节点运行状态和统计信息
 
-![](assets/intelligent-inspection/image16.png)
+![](assets/intelligent-inspection/image15.png)
 
 计算节点运行状态和统计信息，存在可配置指标的巡检类目分别为：
 
@@ -237,9 +237,10 @@ QPS、前端连接总数、后端连接总数、前端进流量速率、前端�
 
 #### 存储节点运行状态和统计信息
 
-![](assets/intelligent-inspection/image17.png)
+![](assets/intelligent-inspection/image16.png)
 
-- 存储节点运行状态和统计信息，存在可配置指标的巡检类目分别为：
+存储节点运行状态和统计信息，存在可配置指标的巡检类目分别为：
+
 - QPS
 - 连接数
 - 复制时延
@@ -265,7 +266,7 @@ QPS、连接数、复制时延
 
 #### 数据校验与检测
 
-![](assets/intelligent-inspection/image18.png)
+![](assets/intelligent-inspection/image17.png)
 
 数据校验与检测，存在可配置指标的巡检类目分别为：
 
@@ -295,7 +296,7 @@ QPS、连接数、复制时延
 
 #### 其他
 
-![](assets/intelligent-inspection/image19.png)
+![](assets/intelligent-inspection/image18.png)
 
 其他，存在可配置指标的巡检类目分别为：
 
@@ -334,19 +335,19 @@ QPS、连接数、复制时延
 
 **（一）发起批量修改**
 
-![](assets/intelligent-inspection/image20.png)
+![](assets/intelligent-inspection/image19.png)
 
 勾选需要修改的巡检类目，点击"【批量操作】->【批量修改】"
 
 **（二）批量填写并保存**
 
-![](assets/intelligent-inspection/image21.png)
+![](assets/intelligent-inspection/image20.png)
 
 批量修改，巡检类目对应的巡检结果匹配规则、巡检结果匹配标准按系统默认值显示，可进行调整
 
 #### 批量重置
 
-![](assets/intelligent-inspection/image22.png)
+![](assets/intelligent-inspection/image21.png)
 
 勾选需要重置的巡检类目，点击"【批量操作】->【批量重置】"
 
@@ -356,7 +357,7 @@ QPS、连接数、复制时延
 
 #### 页面展示
 
-![](assets/intelligent-inspection/image23.png)
+![](assets/intelligent-inspection/image22.png)
 
 显示所有历史巡检任务
 
@@ -366,7 +367,7 @@ QPS、连接数、复制时延
 
 #### 查看详情
 
-![](assets/intelligent-inspection/image24.png)
+![](assets/intelligent-inspection/image23.png)
 
 点击巡检任务列表"【操作】->【详情】"按钮，进入巡检详情页
 
@@ -374,11 +375,11 @@ QPS、连接数、复制时延
 
 点击"返回"按钮，可返回至[历史巡检记录](#历史巡检记录)页面
 
-![](assets/intelligent-inspection/image25.png)
+![](assets/intelligent-inspection/image24.png)
 
 #### 删除任务
 
-![](assets/intelligent-inspection/image26.png)
+![](assets/intelligent-inspection/image25.png)
 
 点击巡检任务列表"【操作】->【删除】"按钮，删除巡检任务
 
@@ -386,23 +387,23 @@ QPS、连接数、复制时延
 
 #### 下载报告
 
-![](assets/intelligent-inspection/image27.png)
+![](assets/intelligent-inspection/image26.png)
 
 点击巡检任务列表"【操作】->【下载】"按钮，下载巡检报告
 
-下载操作同[巡检结果报告](#巡检结果报告)-> "导出完整巡检报告"操作一致
+下载操作同"巡检结果报告" -> "导出完整巡检报告"操作一致
 
 #### 批量删除
 
 **（一）发起批量删除**
 
-![](assets/intelligent-inspection/image28.png)
+![](assets/intelligent-inspection/image27.png)
 
 进入"智能巡检->历史巡检记录"页面，点击"删除巡检记录"
 
 **（二）选择巡检记录删除时间段**
 
-![](assets/intelligent-inspection/image29.png)
+![](assets/intelligent-inspection/image28.png)
 
 默认选中"三个月之前"，可选择"删除全部"、"自定义时间段"
 
@@ -434,7 +435,7 @@ QPS、连接数、复制时延
 
 ##### 服务器软硬件配置
 
-![](assets/intelligent-inspection/image30.png)
+![](assets/intelligent-inspection/image29.png)
 
 进入"历史巡检记录->详情->服务器软硬件配置"TAB，查看巡检报告
 
@@ -462,23 +463,22 @@ QPS、连接数、复制时延
 
 若没有权限查看文件，则巡检结果提示权限不足
 
-> !!!NOTE
+> !Note
 > 
 > 以上未说明的都只做展示，不与巡检指标匹配
 
 ##### 服务器资源使用率
 
-![](assets/intelligent-inspection/image31.png)
+![](assets/intelligent-inspection/image30.png)
 
 进入"历史巡检记录->详情->服务器资源使用率"TAB页，查看巡检报告
 
-各巡检类目当前值：取对应监控脚本的实时值
-
-各巡检类目平均值、最高峰值、最低峰值：取对应监控脚本半小时之内的值
+- 各巡检类目当前值：取对应监控脚本的实时值
+- 各巡检类目平均值、最高峰值、最低峰值：取对应监控脚本半小时之内的值
 
 ##### 服务器硬件可靠性
 
-![](assets/intelligent-inspection/image32.png)
+![](assets/intelligent-inspection/image31.png)
 
 - 进入"历史巡检记录->详情->服务器硬件可靠性"TAB页，查看巡检报告
 
@@ -576,7 +576,7 @@ QPS、连接数、复制时延
 
 ##### 计算节点运行状态和统计信息
 
-![](assets/intelligent-inspection/image33.png)
+![](assets/intelligent-inspection/image32.png)
 
 进入"历史巡检记录->详情->计算节点运行状态和统计信息"TAB页查看
 
@@ -584,29 +584,29 @@ QPS、连接数、复制时延
 
 按许可证授权信息显示许可证授权剩余时间和授权节点数
 
-**堆内存**：
+**堆内存：**
 
 - 配置值：从`show @@server`中获取`max_memory`
 - 当前值：从`show @@server`中获取`used_memory`
 
-**直接内存**：
+**直接内存：**
 
 - 配置值：从`show @@server`中获取`max_direct_memory`
 - 当前值：从`show @@server`中获取`used_direct_memory`
 
-**吞吐量的QPS和TPS**：
+**吞吐量的QPS和TPS：**
 
 - 当前值：跟随"监控->监控面板"记录的当前值
 - 最高峰值：跟随管理员首页原有数据展示
 - 平均值（半小时内）：以距离巡检开始时间前半小时以内的监控数据作为采集标准
 
-**前端连接总数和后端连接总数**：
+**前端连接总数和后端连接总数：**
 
 - 当前值：同"监控->智能逻辑拓扑"处采集的数据一致
 - 最高峰值：跟随管理员首页原有计算节点峰值数据展示
 - 平均值：以距离巡检开始时间前半小时以内的监控数据作为采集标准，与监控面板数据同步，仅展示
 
-**前端进流量速率、前端出流量速率、后端进流量速率、后端出流量速率、堆内存使用率和直接内存使用率**：
+**前端进流量速率、前端出流量速率、后端进流量速率、后端出流量速率、堆内存使用率和直接内存使用率：**
 
 同"监控->智能逻辑拓扑"处采集的数据一致
 
@@ -648,7 +648,7 @@ QPS、连接数、复制时延
 
 ##### 存储节点运行状态和统计信息
 
-![](assets/intelligent-inspection/image34.png)
+![](assets/intelligent-inspection/image33.png)
 
 进入"历史巡检记录->详情->存储节点运行状态和统计信息"TAB页查看
 
@@ -698,7 +698,7 @@ QPS、连接数、复制时延
 
 ##### 数据校验与检测
 
-![](assets/intelligent-inspection/image35.png)
+![](assets/intelligent-inspection/image34.png)
 
 进入"历史巡检记录->详情->数据校验与检测"TAB页查看
 
@@ -746,7 +746,7 @@ QPS、连接数、复制时延
 
 ##### 其他
 
-![](assets/intelligent-inspection/image36.png)
+![](assets/intelligent-inspection/image35.png)
 
 进入"历史巡检记录->详情->其他"TAB页查看
 
@@ -754,23 +754,22 @@ QPS、连接数、复制时延
 
 管理角色下进入"工具->平台配置数据管理"页面
 
-- **可用状态**：查看管理平台配置库的连接状态是否正常
-- **主从复制状态和主从复制时延**：管理平台配置库为主从或双主模式时，配置库之间的主从复制状态和时延
-- **备份与还原**：备份的是当前管理平台的配置库和配置文件
+- **可用状态：**查看管理平台配置库的连接状态是否正常
+- **主从复制状态和主从复制时延：**管理平台配置库为主从或双主模式时，配置库之间的主从复制状态和时延
+- **备份与还原：**备份的是当前管理平台的配置库和配置文件
 
 当管理平台配置库为单实例模式时，可用状态巡检结果为可用，主从复制状态和主从复制时延的巡检结果都提示"平台配置库为单实例模式"
 
 **平台通知信息统计**
 
-- **事件通知**：分等级统计上一次巡检到本次巡检管理平台总计报告了多少次事件通知消息。
-- **邮件通知**：分邮件通知类型统计上一次巡检到本次巡检管理平台总计发出了多少次邮件提醒消息
+- **事件通知：**分等级统计上一次巡检到本次巡检管理平台总计报告了多少次事件通知消息。
+- **邮件通知：**分邮件通知类型统计上一次巡检到本次巡检管理平台总计发出了多少次邮件提醒消息
 
 **平台定时任务执行情况信息统计**
 
 对管理平台执行的各种检测类型的定时任务的情况进个汇总展示，包括"设置->定时检测设置"页面和"检测"菜单下相关子菜单所有的定时检测计划的执行情况
 
-- **操作审计日志统计**：统计上一次巡检到当前巡检中途的审计日志条数，包括平台操作、安全防护和管理端口操作总共3类
-- **通知策略、定时检测设置、拓扑图报警设置、监控面板设置、通知设置和审计日志设置**：在"事件->通知策略"页面进行通知策略的设置，在"设置"菜单下进行其他几项的设置
-- **平台日志**：人工检查管理平台日志`hotdb-management.log`,查看上一次巡检到本次巡检之间是否有WARN或者ERROR级别的平台日志出现
-- **GC情况统计**：使用命令`jstat -gc [pid] 1s 10` (pid为管理平台的进程ID)拿到结果
-
+- **操作审计日志统计：**统计上一次巡检到当前巡检中途的审计日志条数，包括平台操作、安全防护和管理端口操作总共3类
+- **通知策略、定时检测设置、拓扑图报警设置、监控面板设置、通知设置和审计日志设置：**在"事件->通知策略"页面进行通知策略的设置，在"设置"菜单下进行其他几项的设置
+- **平台日志：**人工检查管理平台日志`hotdb-management.log`,查看上一次巡检到本次巡检之间是否有WARN或者ERROR级别的平台日志出现
+- **GC情况统计：**使用命令`jstat -gc [pid] 1s 10` (pid为管理平台的进程ID)拿到结果

@@ -251,7 +251,7 @@ GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,ALTER,PROCESS,REFERENCES,SUP
 set session sql_log_bin=1;
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 如果存储节点是MySQL8.0版本，授权语句需要增加XA_RECOVER_ADMIN权限。
 
@@ -281,7 +281,7 @@ show databases;
 
 登录管理平台页面，选择"配置"->"数据库用户管理"，选择root用户，并点击"编辑"按钮。跳转到"编辑用户权限"页面，在下拉框中勾选创建好的逻辑库"test"，点击"保存"，权限赋予成功。
 
-> !!!NOTE
+> !Note
 > 
 > 管理平台安装后，系统默认创建一个平台用户root（密码root）。
 > 
@@ -839,7 +839,7 @@ mysql> delete from customer where dnid=13 and id=4;
 ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting transaction
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 由于MySQL5.7及以上版本，事务中出现死锁回滚后，不会立即开启新事务。参考官方BUG链接：<https://bugs.mysql.com/bug.php?id=98133>。HotDB Server针对上述BUG做了兼容处理：对锁超时、死锁检测、后端连接断开，MySQL5.7及以上版本会根据前端连接autocommit判断是否要开启新事务。
 
@@ -899,7 +899,7 @@ ERROR 1064 (HY000): Intercepted by sql firewall, because: not allowed to execute
 2019-10-14 15:41:42.246 [INFO] **[UNUSUALSQL]** [$NIOExecutor-1-2] cn.hotpu.hotdb.route.RouteService(415) - ERROR 10029:not pass sql firewall [frontend:[thread=$NIOExecutor-1-2,id=1433,user=root,host=192.168.210.225,port=3323,localport=64658,schema=DBY]; backend:null; frontend_sql:null; backend_sql:null] [DBY.count]=33
 ```
 
-> !!!NOTE
+> !Note
 > 
 > MySQL错误码解释可参考官方文档：<https://dev.mysql.com/doc/refman/8.0/en/server-error-reference.html>
 
@@ -997,7 +997,7 @@ mysql_ssl_rsa_setup --datadir=/usr/local/crt/
 
 服务端(HotDB)需要的秘钥有：ca.pem、server-cert.pem、server-key.pem；
 
-> !!!NOTE
+> !Note
 > 
 > MySQL自带命令生成的证书无法进行CA认证，参考链接：<https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html>
 
@@ -1135,7 +1135,7 @@ jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/u
 
 ![](assets/standard/image48.png)
 
-> !!!NOTE
+> !Note
 > 
 > 对于某些版本的Navicat可能在勾选验证CA证书名后无法连接，比如提示错误："2026 SSL connection error: ASN: bad other signature confirmation"，这可能是该版本的动态链接库不兼容，需要将其目录下的`libmysql.dll`替换为MySQL Workbench中的同名文件，或者更新到更高的版本，参考[链接](https://www.heidisql.com/forum.php?t=19494)。
 
@@ -1159,7 +1159,7 @@ HotDB Server支持mysqldump功能，用法同MySQL一样。
 --no-defaults --no-tablespaces --complete-insert --default-character-set=utf8mb4 --hex-blob --master-data=2 --no-create-db --set-gtid-purged=OFF --single-transaction --skip-add-locks --skip-disable-keys --skip-triggers --skip-tz-utc [--replace|--insert-ignore] [--no-create-info|--no-data] [--where=xxx] --databases xxx
 ```
 
-> !!!NOTE
+> !Note
 > 
 > `default-character-set`参数的值请根据实际情况填写，例如utf8或utf8mb4等。
 
@@ -1179,7 +1179,7 @@ HotDB Server支持mysqldump功能，用法同MySQL一样。
 mysqlbinlog -R -h主机名 -P端口号 -v --base64-output=decode-rows --skip-gtids --to-last-log --stop-never --database=数据库名 --start-position=binlog起始位置 binlog文件名 | mysql -u用户名 -p密码 -h服务器 -P服务端口 -c --show-warnings=false
 ```
 
-> !!!NOTE
+> !Note
 > 
 > `--to-last-log`可替换为`--stop-position`，指定binlog终止位置而非执行到最新的binlog位置。此命令需要跟远程连接的MySQL实例同版本。
 
@@ -1201,7 +1201,7 @@ mysqlbinlog -R -h 192.168.200.77 -P3306 -v --base64-output=decode-rows --skip-gt
 
 此小节将展示如何在实际应用场景中，结合mysqldump的完整备份与mysqlbinlog的增量备份，将数据从源端单机MySQL中迁移到HotDB Server中。
 
-> !!!NOTE
+> !Note
 > 
 > 整个操作过程中，不建议在数据迁移的源端或计算节点执行任何的DDL、参数变更等等非常规的操作动作。由于单线程操作且受网络延迟制约，此方式追数据的执行速度会慢于MySQL复制的执行速度，因此不保证计算节点的执行速度能够满足实时追上的要求，有可能存在数据延迟不断增大的现象，此时需要寻找业务低谷重试，或者另外规划方案。
 
@@ -1546,7 +1546,7 @@ mysql> insert into test values(null,1);
 +-----+-----+
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 自增序列2模式可保证全局唯一且长时间范围看是大致正向增长，不保证自增连续性；
 > 对于自增序列的字段类型范围计算节点也可以感知，超过范围计算节点行为同MySQL一致；
@@ -1585,7 +1585,7 @@ Can't reset XA in reloading, please restart the hotdb to enable XA
 - XA事务的完整支持serializable、repeatable read、read committed，暂不支持read uncommitted，但当前端隔离级别设置为read committed时，需参考参数[allowRCWithoutReadConsistentInXA](#allowrcwithoutreadconsistentinxa)说明， 注意避免读写强一致性的问题。
 - 开启XA模式，使用HINT后，因计算节点无法控制HINT语句修改的内容，后续跟这个连接相关的任何操作计算节点都不再控制隔离级别的正确性。
 
-> !!!IMPORTANT
+> !Important
 > 
 > XA模式下：参照SQL99标准，beginstart transaction会立即开启一个事务。也即在XA模式打开的情况下，beginstart transaction将等同于start transaction with consistent snapshot。
 
@@ -1601,7 +1601,7 @@ Can't reset XA in reloading, please restart the hotdb to enable XA
 
 ![](assets/standard/image50.png)
 
-> !!!IMPORTANT
+> !Important
 > 
 > ![](assets/standard/image51.png)
 > 
@@ -1675,7 +1675,7 @@ HotDB Server 2.5.3将全局唯一约束优化精确到表级别，默认为所�
 
 ![](assets/standard/image52.png)
 
-> !!!NOTE
+> !Note
 > 
 > 开启该功能后，可能对SQL语句INSERT、UPDATE、DELETE的执行效率有较大影响，可能导致SQL操作延迟增大；还可能导致锁等待和死锁的情况增加。请酌情考虑后注意取舍。
 
@@ -1812,7 +1812,7 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 
 故障切换后，会暂停原主从之间IO线程，并对原主库每分钟进行一次心跳检测直到原主库恢复正常。原主库恢复正常后，对比原主库的binlog位置，检测原从库（现主库）是否存在切换前没有获取到的事务，若存在，开启此参数则自动重置主从复制关系。若不存在未接收的事务，则重新开启IO线程并不再做任何处理。
 
-> !!!NOTE
+> !Note
 > 
 > - 检测是否有未接收的事务的前提是主从库都需要开启GTID，否则此参数开启时，故障切换完成会自动重置主从复制关系。
 > - 若原主库在心跳检测时重试超过10080次，仍然为不可用状态，此时，参数为开启状态，也会自动重置主从复制关系。
@@ -2130,7 +2130,7 @@ inet6 fe80::1aa9:5ff:fe1b:fa8/64 scope link
 valid_lft forever preferred_lft forever
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若通过管理平台手动切换，切换成功的会修改server.xml中的（haState、haNodeHost）的配置，将主备的信息互换，故障切换不会修改配置。
 
@@ -2627,7 +2627,7 @@ HotDB Server读写分离对应用研发者和数据库管理员完全透明，�
 <property name="weightForSlaveRWSplit">50</property><!-- 从机读比例，默认50（百分比）,为0时代表该参数无效-->
 ```
 
-> !!!INFO
+> !Info
 > 
 > - 读写分离策略strategyForRWSplit参数为0时读写操作都在主存储节点，也即关闭读写分离。
 > - 读写分离策略strategyForRWSplit参数设置为1时，代表可分离的读请求发往所有可用存储节点（包含主存储节点），写操作与不可分离的读请求在主存储节点上进行。
@@ -2636,7 +2636,7 @@ HotDB Server读写分离对应用研发者和数据库管理员完全透明，�
 >   strategyForRWSplit参数为2时数据节点上的所有可分离的读任务会自动均分至该数据节点下的所有备存储节点上，若无备存储节点则由主存储节点全部承担。
 - 读写分离策略strategyForRWSplit参数为3时，代表事务（非XA模式）中发生写前的读请求与自动提交的读请求发往可用的备存储节点。其余请求在主存储节点上进行。
 
-> !!!NOTE
+> !Note
 > 
 > 在未使用HINT做读写分离的情况下， "可分离的读请求"主要指：自动提交的读请求与显式只读事务中的读请求。其余读请求均为"不可分离的读请求"。例如非自动提交事务中的读请求。
 
@@ -2760,7 +2760,7 @@ DNID只适用于SELECT，UPDATE，DELETE的简单单表语句；并且，DNID只
 /*!hotdb:dnid = dnid_value*/ 要执行的SQL
 ```
 
-> !!!NOTE
+> !Note
 > 
 > dnid_value的值为某个数据节点的ID号。用户可以替换dnid_value的值来指定具体的分片节点。
 
@@ -2798,7 +2798,7 @@ hotdb> show hotdb datasources where datasource_id like '22';
 /*!hotdb:dsid=nobinlog:datasource_id*/要执行的SQL
 ```
 
-> !!!NOTE
+> !Note
 > 
 > datasource_id的值为某个存储节点的ID，可以指定多个节点用英文","隔开。此语法不会将执行的语句记入存储节点二进制日志文件binlog中，若使用不当，可能存在导致双主数据不一致、GTID位置错乱的情况，使用时需谨慎。
 
@@ -2835,7 +2835,7 @@ hotdb> /*!hotdb:dsid=nobinlog:22*/show variables like 'wait_timeout';
 /*!hotdb:dsid=nobinlog:all*/要执行的SQL
 ```
 
-> !!!NOTE
+> !Note
 > 
 > all为所有存储节点(包括灾备模式下灾备机房存储节点)，此语法不会将执行的语句记入二进制日志文件binlog中。
 
@@ -2877,7 +2877,7 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 /*!hotdb:dsid=datasource_id*/要执行的SQL
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 此语法会将执行的语句记入对应存储节点的二进制日志文件binlog中。同时操作具有复制关系的存储节点时需要谨慎处理，以免导致主从复制同步异常。
 
@@ -2887,11 +2887,11 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 /*!hotdb:dsid=all*/要执行的SQL
 ```
 
-> !!!NOTE
+> !Note
 > 
 > all为所有存储节点(包括灾备模式下灾备机房存储节点)，此语法会将执行的语句记入二进制日志文件binlog中，同时写binlog可能存在导致具有复制关系的存储节点复制异常、GTID位置错乱的情况，使用时需谨慎。
 
-> !!!NOTE
+> !Note
 > 
 > 若多个存储节点分布在同实例上，使用HINT中datasource_id也需单独指定存储节点执行。
 
@@ -2903,7 +2903,7 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 /!hotdb:table = table_name:column_value*/ 要执行的SQL
 ```
 
-> !!!NOTE
+> !Note
 > 
 > table_name即某个分片表的表名；column_value即该表上分片字段某个值。用户可以替换table_name的值指定相应的拆分规则，通过替换column_value的值来指定使用该分片字段的值对应的分片节点。
 
@@ -3125,7 +3125,7 @@ mysql> show @@onlineddl;
 +--------------+-------------------------------------------------------------------------------+----------+---------+
 ```
 
-> !!!IMPORTANT
+> !Important
 > 
 > onlineddl 语句不是执行下去就代表DDL完成， 返回了"Query OK, 0 rows affected "仅代表DDL语句可以执行， 如果想看是否执行完成，要查看 show @@onlineddl中progress 显示的进度。show @@onlineddl结果为空时，代表所有DDL执行完毕且当前无其他DDL任务，如果中途因为网络或其他异常DDL中断，会回滚整个DDL。
 
@@ -4249,7 +4249,7 @@ CREATE DATABASE 在计算节点使用时对应为创建逻辑库的功能，语�
 CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name [create_option] ... [DEFAULT DATANODE 'datanodeid']
 ```
 
-> !!!INFO
+> !Info
 > 
 > ```sql
 > create_option: [DEFAULT] { CHARACTER SET [=] charset_name | COLLATE [=] collation_name }
@@ -4271,7 +4271,7 @@ create database if not exists zjj_d3 default datanode '1,4';
 
 ![](assets/standard/image110.png)
 
-> !!!NOTE
+> !Note
 > 
 > 指定字符集校对集时，会给出warning提示，因对于计算节点来说设置库级别字符集校对集实际无效，都是跟随存储节点本身默认的配置来识别的。
 
@@ -4472,7 +4472,7 @@ ON priv_level TO 'user_name'@'host_name'[,'user_name'@'host_name'] ...
 [WITH MAX_USER_CONNECTIONS con_num]
 ```
 
-> !!!INFO
+> !Info
 > 
 > 可授权的权限类型priv_type 包括：SELECT、 UPDATE、 DELETE、 INSERT 、CREATE 、DROP 、ALTER 、FILE 、 SUPER
 
@@ -5653,7 +5653,7 @@ $NIOExecutor有0到7，表示当前processor=8，对应的pool_size为4，表示
 cat /proc/cpuinfo| grep "processor"| wc -l
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 计算节点在刚刚启动时并不会生成所有线程，而是用多少创建多少，因此执行show @@threadpool;命令，可能会显示如下图：
 
@@ -6726,7 +6726,7 @@ mysql> show @@datasource;
 +----+----+-----------------------+------+--------+-------------+------+--------------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 存储节点流控是计算节点内部控制算法。
 
@@ -6781,7 +6781,7 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 2018-05-29 16:32:52.924 [WARN] [HEARTBEAT] [HeartbeatTimer] a(-1) -- Datasource:-1 128.0.0.1:3306/hotdb_config time out! Last packet sent at:2018-05-29 04:32:49:886...省略...
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若当前存储节点为数据节点最后一个存储节点，存储节点不会置为不可用。且会尝试一直连接；若为纯备存储节点，即使心跳失败次数已经超过阈值，只要心跳检测时能够连接存储节点成功就不标记为不可用。
 
@@ -6878,7 +6878,7 @@ mysql> show @@datasource;
 13 rows in set (0.00 sec)
 ```
 
-> !!!NOTE
+> !Note
 > 
 > listener_status为1，代表Listener可用；listener_status为0，代表Listener不可用
 
@@ -7480,11 +7480,11 @@ Show processlist中的flow control为lock状态，等待下一批执行。
 +-----+----------------------+----------------------+----------+---------+------+--------------+-----------------------------------------------------------------------+
 | Id  | User                 | Host                 | db       | Command | Time | State        | Info                                                                  |
 +-----+----------------------+----------------------+----------+---------+------+--------------+-----------------------------------------------------------------------+
-| 150 | _HotDB_Cluster_USER_ | 192.168.210.31:51428 | TEST_LGG | Query   | 0    | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
-| 126 | _HotDB_Cluster_USER_ | 192.168.210.31:51412 | TEST_LGG | Query   | 0    | Flow control | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
-| 222 | _HotDB_Cluster_USER_ | 192.168.210.32:16636 | TEST_LGG | Query   | 0    | optimizing   | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
-| 174 | _HotDB_Cluster_USER_ | 192.168.210.32:16604 | TEST_LGG | Query   | 0    | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
-| 129 | _HotDB_Cluster_USER_ | 192.168.210.31:51414 | TEST_LGG | Query   | 0    | Flow control | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
+| 150 | _HotDB_Cluster_USER_| 192.168.210.31:51428 | TEST_LGG | Query   | 0    | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
+| 126 | _HotDB_Cluster_USER_| 192.168.210.31:51412 | TEST_LGG | Query   | 0    | Flow control | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
+| 222 | _HotDB_Cluster_USER_| 192.168.210.32:16636 | TEST_LGG | Query   | 0    | optimizing   | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
+| 174 | _HotDB_Cluster_USER_| 192.168.210.32:16604 | TEST_LGG | Query   | 0    | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
+| 129 | _HotDB_Cluster_USER_| 192.168.210.31:51414 | TEST_LGG | Query   | 0    | Flow control | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...省略 |
 ...省略更多...
 
 mysql> show @@debug;
@@ -7694,7 +7694,7 @@ mysql> select b.* from customer_auto_1 a join customer_auto_3 b on a.id=b.id whe
 ...省略更多...
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 参数值仅作举例说明，不做实际参考。
 
@@ -8738,7 +8738,7 @@ server.xml中recordAuditlog参数如下配置：
 
 recordAuditlog参数用于控制是否记录管理端操作信息，开启的情况可通过管理平台中的事件->审计日志查看管理端操作记录。
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8785,7 +8785,7 @@ mysql> SELECT * FROM account a JOIN borrower b;
 2018-05-22 16:17:11.607 [INFO] [CROSSDNJOIN] [$NIOExecutor-6-2] JoinVisitor(4947) -- SELECT * FROM account a JOIN borrower b
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8825,7 +8825,7 @@ mysql> create table abc(id int);
 2018-05-23 14:23:52.698 [INFO] [DDL] [$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int)
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8861,7 +8861,7 @@ recordDeadLockSQL日志中记录引发死锁的语句：
 2018-05-23 14:54:30.865 [INFO] [DEADLOCK] [$NIOREACTOR-1-RW] am(-1) -- sql: INSERT INTO table2000 VALUES (3); error response from MySQLConnection [node=4, id=277, threadId=133815, state=borrowed, close=false, autocommit=false, host=192.168.220.102, port=3309, database=db249, localPort=15332, isClose:false, toBeClose:false], err: Lock wait timeout exceeded; try restarting transaction, code: 1205
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8896,7 +8896,7 @@ recordHotDBErrors日志中记录计算节点返回的错误信息。
 2018-06-04 10:43:07.316 [INFO] [HOTDBERROR] [$NIOExecutor-3-0] ServerConnection(155) -- sql: create table a001(id int), err: [CREATE] command denied to user 'jzl' to logic database 'TEST_JZL'
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8934,7 +8934,7 @@ create table abc(id int);
 2018-05-23 14:23:52.698 [INFO] [DDL] [$NIOExecutor-6-2] ServerConnection(123) -- sql: create table abc(id int)
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -8976,7 +8976,7 @@ mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM 
 2018-05-23 14:05:14.922 [INFO] [LIMITOFFSETWITHOUTORDERBY] [$NIOExecutor-2-3] BaseSession(97) - sql: SELECT A.`Balance`, A.`Branch_name`, A.`Account_number`, A.`account_date` FROM account AS a WHERE a.Branch_name IN (UNHEX('4272696768746F6E'), UNHEX('4272696768746F6E'), UNHEX('526564776F6F64'), UNHEX('50657272797269646765'), UNHEX('50657272797269646765'), UNHEX('526564776F6f64'), NULL) LIMIT 1 , 3
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9017,7 +9017,7 @@ mysql> select form;
 2018-05-23 14:38:55.843 [INFO] [MYSQLERROR] [$NIOREACTOR-7-RW] MySQLConnection(56) -- sql: select form, error response from MySQLConnection [node=4, id=223, threadId=118551, state=borrowed, close=false, autocommit=true, host=192.168.220.103, port=3309, database=db249, localPort=27007, isClose:false, toBeClose:false], err: Unknown column 'form' in 'field list', code: 1054
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9061,7 +9061,7 @@ mysql> update account set Account_number="$!''##";
 2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!''##', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9143,7 +9143,7 @@ crc: 321944166562
 1 row in set (0.00 sec)
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9178,7 +9178,7 @@ server.xml的recordSqlAuditlog参数默认false：
 {"affected_rows":"0","command":"CREATE TABLE `t_sharding_01` (n`id` int(10) NOT NULL AUTO_INCREMENT,n`name` varchar(50) NOT NULL,n`age` int(3),nPRIMARY KEY (`id`)n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4","connection_id":"44","end_time":"2020-04-27 14:58:34.769","failed_reason":"","host":"127.0.0.1","ip":"127.0.0.1","log_id":"9524067900080128","logic_db":"CXD_DB","matched_rows":"0","port":"3323","query_rows":"0","sql_subtype":"CREATE","sql_type":"DDL","status":"1","time":"2020-04-27 14:58:34.736","user":"cxd@%"}
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 日志输出为json格式，特殊字符如双引号采用进行转义，json中部分key代表的含义如下：
 
@@ -9229,7 +9229,7 @@ recordSQLIntercepted记录被拦截的SQL语句，拦截的语句配置在中间
 2018-06-01 14:17:45.669 [INFO] [SQLINTERCEPTED] [$NIOExecutor-1-2] g(-1) -- sql: DELETE FROM sql_intercept_tab, user:zy, ip: 192.168.200.45, db: TEST_JZL, intercepted by filewall: not allowed to execute delete without where expression
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9284,7 +9284,7 @@ mysql> insert into vtab001 values(1,'aaa');
 2018-06-01 14:09:47.139 [INFO] [SQLKEYCONFLICT] [$NIOREACTOR-1-RW] MySQLConnection(65) -- sql: insert into vtab001 values(1,'aaa'), error response from MySQLConnection [node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false], err: Duplicate entry '1' for key 'PRIMARY', CODE: 1062
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9323,7 +9323,7 @@ mysql> SELECT * FROM;
 2018-05-22 16:12:42.686 [INFO] [SQLSYNTAXERROR] [$NIOExecutor-6-3] ServerConnection(671) - SELECT * FROM
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9372,7 +9372,7 @@ mysql> select * into vtab001_bak from vtab001;
 2018-05-22 14:19:54.395 [INFO] [SQLUNSUPPORTED] [$NIOExecutor-6-2] ServerConnection(110) -- sql: select * into vtab001_bak from vtab001
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9413,7 +9413,7 @@ mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM 
 2018-05-23 13:56:11.714 [INFO] [SUBQUERY] [$NIOExecutor-6-0] SubqueryExecutor(169) -- select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b )
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9454,7 +9454,7 @@ mysql> SELECT * FROM trends UNION SELECT * from trends_uint;
 2018-05-23 13:30:27.156 [INFO] [UNION] [$NIOREACTOR-5-RW] UnionExecutor(162) - SELECT * FROM trends UNION SELECT * from trends_uint
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 若开启参数，仍无法在日志文件中查看相应记录，可检查log4j文件中是否配置正确，详情请参考[log4j日志类型](#log4j的日志类型)。
 
@@ -9907,7 +9907,7 @@ mysql> select * from ss;
 - True状态：故障切换优先通过从库同步速度来确定切换的优先级，具体由Master_Log_File和Read_Master_Log_Pos位置决定，优先取同步速度最快的切换，若所有从机Read_Master_Log_Pos位置相同，则再根据设置的优先级匹配。
 - False状态：根据用户的故障切换规则进行切换。
 
-> !!!NOTE
+> !Note
 > 
 > 手动切换操作不受该参数控制。
 
@@ -10193,7 +10193,7 @@ mysql> show @@unusualsqlcount;
 +--------------+-------------+-------+
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 1. 计数器细化到表级别，针对表级别的每个错误号都有个计数器进行统计
 > 2. 日志路径：`/usr/local/hotdb/hotdb-server/logs/extra/unusualsql/hotdb-unusualsql.log`
@@ -10346,7 +10346,7 @@ root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 1 row in set (0.03 sec)
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 当没有配置此参数时：所有存储节点的最低版本号低于或等于计算节点支持的最高版本号时，对外显示所有存储节点中最低的版本号；存储节点的版本号超过计算节点支持的最高版本号时，对外显示计算节点最高支持的协议版本的一个完整版本号，当前最高支持到8.0.15。当配置了此参数时，这个参数会改变对外显示的版本号。
 
@@ -10405,7 +10405,7 @@ Server version: 5.7.23 hotpu
 ......
 ```
 
-> !!!NOTE
+> !Note
 > 
 > 连接后的status结果及客户端连接计算节点时的提示信息均会同步按照版本备注信息显示。例如：
 
@@ -10612,7 +10612,7 @@ mysql> show @@latency;
 2018-06-08 16:19:22.864 [INFO] [FAILOVER] [Labor-1852] bh(-1) -- switch datasource:6 for datanode:6 successfully by Manager.
 ```
 
-> !!!IMPORTANT
+> !Important
 > 
 >  在计算节点版本高于2.5.6 （包含）调整了master_delay对切换的影响，waitForSlaveInFailover参数（高可用切换是否等待从机追上复制）开启，当切换时检测到有master_delay的延时设置，会自动在追复制前取消，切换成功后恢复延时复制的设置。若取消master_delay后的复制延迟仍大于10s，则不允许切换，master_delay也会恢复之前设置的值。
 

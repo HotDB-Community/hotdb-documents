@@ -251,7 +251,7 @@ Note:
 
 If MySQL version of the Data Source is 8.0 and above, authorization statements need to be added with XA_RECOVER_ADMIN privilege.
 
-hotdb_ Datasource account is the only account for HotDB to connect to each MySQL instance, through which all added platform users can connect to MySQL instances. Operations of users of each platform are only on front-end business connection and user access control.
+hotdb_Datasource account is the only account for HotDB to connect to each MySQL instance, through which all added platform users can connect to MySQL instances. Operations of users of each platform are only on front-end business connection and user access control.
 
 Generally, the database created by create database in MySQL is called "LogicDB", while it is called "database" or "certain sharding database" in distributed transactional database system for it is where the data is actually saved.
 
@@ -1471,7 +1471,7 @@ mysql> select * from test order by id;
 +----+------+
 ```
 
-> !!!TIP
+> !Tip
 > 
 > The prefetch interval of the auto-incremental sequence is [1,100]
 
@@ -1494,7 +1494,7 @@ mysql> select * from test order by id;
 +-----+------+
 ```
 
-> !!!NOTE
+> !Note
 > 
 > the prefetch interval of the auto-incremental sequence is [101,200]
 
@@ -1521,7 +1521,7 @@ mysql> select * from test order by id;
 +-----+------+
 ```
 
-> !!!NOTE
+> !Note
 > 
 > the prefetch interval of the auto-incremental sequence is [201,300]
 
@@ -1625,9 +1625,9 @@ When the compute node version is 2.5.6 and above, if the front end is disconnect
 
 ![](assets/standard/image50.png)
 
-disconnect_ reason: reasons for disconnection, such as kill, TCP disconnection (program err:java.io.IOException: Connection reset by peer), SQL execution timeout (stream closed, read return -1), idle timeout, etc.
+disconnect_reason: reasons for disconnection, such as kill, TCP disconnection (program err:java.io.IOException: Connection reset by peer), SQL execution timeout (stream closed, read return -1), idle timeout, etc.
 
-trx_ state: the transaction status of disconnection, including:
+trx_state: the transaction status of disconnection, including:
 
 1. ROLLBACKED_BY_HOTDB: in a transaction and the transaction is rolled back by the compute node (when the transaction is not commited automatically, the application program does not issue the commit command or lose the commit command halfway);
 
@@ -2275,7 +2275,7 @@ Verify whether the Listener service is enabled or not: execute show @@datasource
 
 This method is suitable for adding Listener configuration based on existing data nodes.
 
-On the node management page, take dn_ 26 as an example:
+On the node management page, take dn_26 as an example:
 
 ![](assets/standard/image80.png)
 
@@ -2388,15 +2388,15 @@ service keepalived start
 
 1. server.xml of compute node（HotDB_01/HotDB_02/HotDB_03）is adjusted according to relevant [parameters](#parameter-introduction)，as in the following figure:
 
-For HotDB_ 01 parameters, refer to the configuration of selected area:
+For HotDB_01 parameters, refer to the configuration of selected area:
 
 ![](assets/standard/image85.png)
 
-For HotDB_ 02 parameters, refer to the configuration of selected area:
+For HotDB_02 parameters, refer to the configuration of selected area:
 
 ![](assets/standard/image86.png)
 
-For HotDB_ 03 parameters, refer to the configuration of selected area:
+For HotDB_03 parameters, refer to the configuration of selected area:
 
 ![](assets/standard/image87.png)
 
@@ -2515,13 +2515,13 @@ This section mainly describes the operation of reducing a cluster that normally 
 
 **Step 1: disablethe standby compute node service**
 
-Disable the compute node services of HotDB_ 02 and HotDB_ 03. This process will trigger cluster election. If there is a pressure measurement task at this time, it will flash off and return to normal in a few seconds.
+Disable the compute node services of HotDB_02 and HotDB_03. This process will trigger cluster election. If there is a pressure measurement task at this time, it will flash off and return to normal in a few seconds.
 
 ![](assets/standard/image98.png)
 
 **Step 2: deploy keepalived and adjust the compute node configuration**
 
-1. HotDB_ 01、HotDB_ 02 servers are respectively deployed with master and slave keepalived (the corresponding VIP can be the same with and VIP of LVS, but virtual_ router_ id cannot be the same)
+1. HotDB_01、HotDB_02 servers are respectively deployed with master and slave keepalived (the corresponding VIP can be the same with and VIP of LVS, but virtual_router_id cannot be the same)
 
 **HotDB_01 server execution script**：
 
@@ -2795,7 +2795,7 @@ This statement will be executed on database node 1. The user could, via "Data No
 
 - **Use DSID (data source ID) in HINT:**
 
-HINT statement supports the specified datasource_id to skip the compute node and send the statement directly to the data source. You can view the data source datasource_ id through the service port command.
+HINT statement supports the specified datasource_id to skip the compute node and send the statement directly to the data source. You can view the data source datasource_id through the service port command.
 
 Syntax：SHOW [full] HOTDB ｛datasources｝ [LIKE 'pattern' | WHERE expr]
 
@@ -5288,7 +5288,7 @@ priv_type includes：SELECT、 UPDATE、 DELETE、 INSERT 、CREATE 、DROP 、A
 
 You can use [ALL [PRIVILEGES]](https://dev.mysql.com/doc/refman/5.6/en/privileges-provided.html# priv_all) to give users all privileges (including super privilege), which is the same as MySQL.
 
-priv_ Level includes: *  | *.*  | db_name.*  |db_name.tbl_name  | tbl_name  |
+priv_Level includes: *  | *.*  | db_name.*  |db_name.tbl_name  | tbl_name  |
 
 *: represents all tables in the current database (which can only be executed after "use" the LogicDB); * *: represents all tables in all databases; db_name.*: represents all tables in a certain database, db_name specifies the database name; db_name.tbl_name: a certain table in a certain database, db_name, database name, tbl_name: represents a table, tbl_name specifies the name of the table (which can only be executed after "use" the LogicDB).
 
@@ -5872,7 +5872,7 @@ mysql> create table test02(id not null auto_increment Primary Key,a char(8),b de
 
 ![](assets/standard/image131.png)
 
-- For Sharding Table automatically created, selection sequence of sharding key is: Primary Key Field -> Unique Key Field ->the 1^st^ Integer Field (BIGINT, INT, MEDIUMINT, SMALLINT, TINYINT) - >after taking the Integer Field, take the Character String Type Field (CHAR, VARCHAR ), and in case of no appropriate one after taking all types above, a Field will be randomly selected as the Sharding Key by default.
+- For Sharding Table automatically created, selection sequence of sharding key is: Primary Key Field -> Unique Key Field ->the 1^st^ Integer Field (BIGINT, INT, MEDIUMINT, SMALLINT, TINYINT) ->after taking the Integer Field, take the Character String Type Field (CHAR, VARCHAR ), and in case of no appropriate one after taking all types above, a Field will be randomly selected as the Sharding Key by default.
 
 Notice: This function is only recommended to be used when contacting customer for the first time, and is not recommended for formal delivery and online, and Sharding shall be made according to the practical transaction scenarios;
 
@@ -8766,15 +8766,15 @@ You could view the remaining concurrencies available at present from the managem
 
 +------+----------------------+----------------------+------+---------+------+-------+------+
 
-| 150 | _HotDB_Cluster_USER_ | 192.168.210.31:51428 | TEST_LGG | Query | 0 | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
+| 150 | _HotDB_Cluster_USER_| 192.168.210.31:51428 | TEST_LGG | Query | 0 | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
 
-| 126 | _HotDB_Cluster_USER_ | 192.168.210.31:51412 | TEST_LGG | Query | 0 | **Flow control** | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
+| 126 | _HotDB_Cluster_USER_| 192.168.210.31:51412 | TEST_LGG | Query | 0 | **Flow control** | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
 
-| 222 | _HotDB_Cluster_USER_ | 192.168.210.32:16636 | TEST_LGG | Query | 0 | optimizing | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
+| 222 | _HotDB_Cluster_USER_| 192.168.210.32:16636 | TEST_LGG | Query | 0 | optimizing | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
 
-| 174 | _HotDB_Cluster_USER_ | 192.168.210.32:16604 | TEST_LGG | Query | 0 | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
+| 174 | _HotDB_Cluster_USER_| 192.168.210.32:16604 | TEST_LGG | Query | 0 | Sending data | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
 
-| 129 | _HotDB_Cluster_USER_ | 192.168.210.31:51414 | TEST_LGG | Query | 0 | **Flow control** | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
+| 129 | _HotDB_Cluster_USER_| 192.168.210.31:51414 | TEST_LGG | Query | 0 | **Flow control** | select a.*,b.x from customer_auto_1 a join customer_auto_2 on ...Omitted |
 
 ...More are omitted...
 
@@ -9518,8 +9518,8 @@ Min Compatible Version           2.4.9
 | **Role of parameter:** |   |
 | pingPeriod parameter is 3600 by default, Unit: s, which is mainly used to control ping check period. It's by default to ping a round of IP address of all servers connected with the HotDB Server per hour, for example, client server, configDB server, data source server, etc. Min 300s (that is 5mins) could be configured to trigger a round of check. If the previous round of check is not completed in an hour, then this round of check shall be abandoned directly. |   |
 | In the detection process, for a certain IP address, the program will automatically use 10 packets (64 byte), 10 packets (65000 byte), which are pinged every 1 second. When the network quality is found to be failed, the interval of ping will be shortened to once per minute, and the criteria of failure judgment are as follows: |   |
-| - | If 64-byte packets in the same IDC are not all lost, when the average delay is greater than 1 ms or the max delay is greater than 2 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log。 If 65000-byte packets are not all lost, when the average delay is greater than 3 ms, or the max delay is greater than 5 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log table. |
-| - | If 64-byte packets across the IDCs are not all lost, when the average delay is greater than 10 ms or the max delay is greater than 20 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log。 If 65000-byte packets are not all lost, when the average delay is greater than 15 ms, or the max delay is greater than 30 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb_ ping_ log table. |
+| - | If 64-byte packets in the same IDC are not all lost, when the average delay is greater than 1 ms or the max delay is greater than 2 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb_ping_log。 If 65000-byte packets are not all lost, when the average delay is greater than 3 ms, or the max delay is greater than 5 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb_ping_log table. |
+| - | If 64-byte packets across the IDCs are not all lost, when the average delay is greater than 10 ms or the max delay is greater than 20 ms, or there is a packet loss, the time, ping type, average delay, max delay and packet loss rate will be recorded into the ConfigDB hotdb_ping_log。 If 65000-byte packets are not all lost, when the average delay is greater than 15 ms, or the max delay is greater than 30 ms, or there is packet loss, the time, ping type, average delay, max delay, packet loss rate will be recorded into the ConfigDB hotdb_ping_log table. |
 | #### prefetchBatchInit |   |
 | **Description of parameter:** |   |
 
@@ -9919,21 +9919,21 @@ Min Compatible Version           2.5.5
 | For example, execute DDL on the server of compute node and view the log output. |
 | {"affected_rows":"0","command":"CREATE TABLE `t_sharding_01` (\\n`id` int(10) NOT NULL AUTO_INCREMENT,\\n`name` varchar(50) NOT NULL,\\n`age` int(3),\\nPRIMARY KEY (`id`)\\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4","connection_id":"44","end_time":"2020-04-27 14:58:34.769","failed_reason":"","host":"127.0.0.1","ip":"127.0.0.1","log_id":"9524067900080128","logic_db":"CXD_DB","matched_rows":"0","port":"3323","query_rows":"0","sql_subtype":"CREATE","sql_type":"DDL","status":"1","time":"2020-04-27 14:58:34.736","user":"cxd@%"} |
 | Note: the log is output in the format of json. Special characters such as double quotation marks are escaped with . The meaning of some keys in json is as follows: |
-| sql_ type: the type of SQL currently executed, including DDL/DML/DQL/OTHER. |
-| sql_ subtype: the subtype of SQL currently executed, among which DDL includes CREARE/ALTER/DROP/TUNCATE/RENAME; DQL includes SELECT; DML includes UPDATE/DELETE/INSERT/REPLACE/LOAD; OTHER includes SET/PREPARE/TRANSACTION/SHOW. |
+| sql_type: the type of SQL currently executed, including DDL/DML/DQL/OTHER. |
+| sql_subtype: the subtype of SQL currently executed, among which DDL includes CREARE/ALTER/DROP/TUNCATE/RENAME; DQL includes SELECT; DML includes UPDATE/DELETE/INSERT/REPLACE/LOAD; OTHER includes SET/PREPARE/TRANSACTION/SHOW. |
 | ip: the IP address of the client executing SQL. |
 | time: time to execute SQL. |
 | user: the user (including the host name) who connects to the compute node and executes SQL |
 | host: connects to the host value specified by the compute node. |
-| logic_ db: connects to the LogicDB used by the compute node to execute SQL. |
-| connection_ id: the front-end connection ID used to execute SQL. |
+| logic_db: connects to the LogicDB used by the compute node to execute SQL. |
+| connection_id: the front-end connection ID used to execute SQL. |
 | command: the statement that specifically executes SQL (the original SQL statement). |
-| query_ rows: the number of data rows returned (mainly reflected in the SELECT operation). |
-| affected_ rows: the number of rows affected by SQL execution. |
-| matched_ rows: the number of rows matched by SQL execution. |
+| query_rows: the number of data rows returned (mainly reflected in the SELECT operation). |
+| affected_rows: the number of rows affected by SQL execution. |
+| matched_rows: the number of rows matched by SQL execution. |
 | status: whether the SQL execution status is success or failure. 0 is for failure and 1 is for success. |
-| failed_ reason: the reason why SQL execution failed. |
-| end_ time: end time of SQL execution. |
+| failed_reason: the reason why SQL execution failed. |
+| end_time: end time of SQL execution. |
 | #### recordSQLIntercepted |
 | **Description of parameter:** |
 
