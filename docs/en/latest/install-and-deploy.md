@@ -107,7 +107,9 @@ The service authorization of compute node requires the installation of the drive
 
 Check the installation of glibc on the server: (it is normal to output glibc version info)
 
-## rpm -q glibc |egrep 'glibc.*i.86.*'
+```bash
+rpm -q glibc |egrep 'glibc.*i.86.*'
+```
 
 2. **Install ConfigDB**
 
