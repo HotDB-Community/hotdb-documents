@@ -24,7 +24,7 @@ HotDB Server是一款实现数据容量和性能横向扩展的交易关系型�
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
 <div class="readme-toc-col-title">安装、部署和升级</div>
 
-* [安装部署](install-and-deploy.md)
+* [安装部署](installation-and-deployment.md)
 * [服务授权](service-license.md)
 * [手动升级](manual-update.md)
 

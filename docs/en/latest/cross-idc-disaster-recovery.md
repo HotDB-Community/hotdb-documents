@@ -105,7 +105,7 @@ The actual connection information corresponding to each component is listed as f
 
 Automatic deployment can be achieved through the cluster deployment function provided by the management platform. The cluster deployment function in the DR mode is performed orderly in the master center and the DR center of compute node clusters as. One deployment at least requires: compute node, ConfigDB, keepalived (required in master/slave node mode), and other components: data source, NTPD should be planned and installed according to the actual needs.
 
-This section only describes in detail what should be paid attention to in the automatic deployment when the DR mode, not single-IDC mode, is enabled. For other automatic deployment related contents, please refer to the [Install And Deploy](install-and-deploy.md) document.
+This section only describes in detail what should be paid attention to in the automatic deployment when the DR mode, not single-IDC mode, is enabled. For other automatic deployment related contents, please refer to the [Installation and Deployment](installation-and-deployment.md) document.
 
 #### Deploy a new set of disaster recovery environment
 
@@ -291,7 +291,7 @@ The cluster deployment function of management platform is able to deploy DR cent
 
 #### Deploy a new set of disaster recovery environment
 
-When deploying the disaster recovery environment, the deployment process of components in master center and DR center are the same as deployment process in single-IDC mode. Please refer to the [Manual Deployment](install-and-deploy.md#manual-deployment) chapter of the [Install And Deploy](install-and-deploy.md) document. It needs extra attention that the number of data nodes in both IDCs should be the same, and the names should correspond one by one. The content below is masterly about the required configuration modification after deployment of the basic components of master center and DR center.
+When deploying the disaster recovery environment, the deployment process of components in master center and DR center are the same as deployment process in single-IDC mode. Please refer to the [Manual Deployment](installation-and-deployment.md#manual-deployment) chapter of the [Installation and Deployment](installation-and-deployment.md) document. It needs extra attention that the number of data nodes in both IDCs should be the same, and the names should correspond one by one. The content below is masterly about the required configuration modification after deployment of the basic components of master center and DR center.
 
 ##### Parameter configuration modification
 

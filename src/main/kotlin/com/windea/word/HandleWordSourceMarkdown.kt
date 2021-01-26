@@ -9,12 +9,12 @@ import java.util.concurrent.*
 import kotlin.system.*
 
 private val data = mapOf(
-	"install-and-deploy.md" to mapOf("firstTitle" to "# 部署环境"),
+	"installation-and-deployment.md" to mapOf("firstTitle" to "# 部署环境"),
 	"glossary.md" to mapOf("firstTitle" to "# 常用名词")
 )
 private val executor = Executors.newCachedThreadPool()
 
-//zh/latest install-and-deploy.md
+//zh/latest installation-and-deployment.md
 //zh/latest glossary.md
 //en/latest glossary.md
 

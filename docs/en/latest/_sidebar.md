@@ -6,8 +6,8 @@
 * **Quick Start**
   * [Quick Start Guide](quick-start-guide.md)
   <!--* [Basic Operations](basic-operations.md)-->
-* **Install, Deploy and Update**
-  * [Install and Deploy](install-and-deploy.md)
+* **Installation, Deployment and Update**
+  * [Installation and Deployment](installation-and-deployment.md)
   * [Service License](service-license.md)
   * [Manual Update](manual-update.md)
   * [Cluster Environment Requirement](cluster-environment-requirement.md)
