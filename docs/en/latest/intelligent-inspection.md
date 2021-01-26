@@ -740,9 +740,9 @@ Data backup with all LogicDBs as a unit. You can view the details on "Management
  
 It is the ConfigDBs and configuration files of the current compute node that are backed up. You can view the backup details on the "Configuration > Cluster data backup & restore" page.
 
-**Configuration consistency check in memory:**
- 
-Check whether the current configuration in memory is consistent with the configuration marked in the running table of the configuration library
+**Consistency detection of the configuration in memory：**
+
+Detect whether the configuration in current memory is consistent with the configuration marked in the running table of the ConfigDB.
 
 ##### Others
 

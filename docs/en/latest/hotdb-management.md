@@ -22,9 +22,9 @@ This chapter will briefly introduce the newly added or optimized functions in Ho
 - Optimize the function of [data unique constraint detection](#data-unique-constraint-detection) to make it compatible with prefix unique index;
 - Set the entrance for data sharding route periodical detection plan, data unique constraint periodical detection plan in the [Periodical Plan](#periodical-detection-setting) of the management platform;
 - Optimize the [user privilege](#database-user-management) table page, so that the privilege info of LogicDB can be directly seen on the page;
-- Optimize the function of [OEM Management](#_OEM_management_1), remove the original menu, and access it by hyperlink (also applicable to v.2.5.5);
+- Optimize the function of [OEM Management](#oem-management), remove the original menu, and access it by hyperlink (also applicable to v.2.5.5);
 - Enhance the password strength of [database users](#database-user-management) (the password of database users shall be no less than 8 digits and must be composed of numbers and letters).
-- 增加管理[平台服务授权管理](#_管理平台许可证)功能，可限制可用计算节点集群组数和每组计算节点可用计算节点个数。
+- Add the function of [platform license management](#license-management), to limit the number of cluster groups of available compute nodes and the number of available compute nodes for each group of compute nodes.
 
 ## Preface
 
@@ -42,7 +42,7 @@ HotDB Management contains many special terms. Please read the *Distributed Trans
 
 HotDB Management is a B/S structure management and control product. The bottom layer connects compute nodes of the distributed transactional database by JDBC mode to provide configuration, monitoring and O&M services for compute nod_es. It connects HotDB Management ConfigDB by JDBC mode, and connects distributed transactional database backup program by TCP/IP mode. The function data interaction of browser is transmitted by JSON mode, and the business logic support is provided by HotDB Management service layer.
 
-![](assets/hotdb-management/image2.png)
+![](assets/hotdb-management/image1.png)
 
 ### Access mode
 
@@ -54,11 +54,11 @@ For deployed and launched HotDB Management, the access address can be entered in
 
 **Access address format**: http:// HotDB Management Server IP: Access port /login.html
 
-Example: <http://192.168.200.201:3324/login.html>
+Example: `http://192.168.200.201:3324/login.html`
 
 HotDB Management login page appears after successful connection.
 
-![](assets/hotdb-management/image3.png)
+![](assets/hotdb-management/image2.png)
 
 **Login user**: The initial login can use the default built-in management user (**account: admin password: admin**) of HotDB Management to enter the management interface.
 
@@ -66,28 +66,31 @@ HotDB Management login page appears after successful connection.
 
 The admin index page mainly provides the manager user with a global perspective to view the managed cluster basic data, running data, peak data, statistics and configuration data, etc.
 
-![](assets/hotdb-management/image4.png)
+![](assets/hotdb-management/image3.png)
 
 ### Cluster switching
 
-![](assets/hotdb-management/image5.jpeg)
+![](assets/hotdb-management/image4.jpeg)
 
-- The manager user can view the basic data of all compute node clusters with "monitoring enabled" on the index page
-- You can switch to the corresponding page of cluster by clicking the tabs of different cluster names. When there are more than 3 clusters displayed, you can click the left and right buttons to turn pages of the remaining clusters.
+The manager user can view the basic data of all compute node clusters with "monitoring enabled" on the index page.
+
+You can switch to the corresponding page of cluster by clicking the tabs of different cluster names. When there are more than 3 clusters displayed, you can click the left and right buttons to turn pages of the remaining clusters.
 
 ### Basic data
 
-![](assets/hotdb-management/image6.png)
+![](assets/hotdb-management/image5.png)
 
-- The basic data includes the cluster configuration and license information, etc.
-- Note:
-  - The table quantity is the total quantity of all created and not created tables in the current cluster.
-  - If the license information type is permanent, the remaining available time is not displayed. If it is a beta version and the remaining time is less than 7 days, an alert will be given in red.
-  - Authorizations include the number of available data nodes and the number of available LogicDBs, among which the limit of number of ConfigDBs is added in v.2.5.6 and above.
+The basic data includes the cluster configuration and license information, etc.
+
+> !Note
+> 
+> - The table quantity is the total quantity of all created and not created tables in the current cluster.
+> - If the license information type is permanent, the remaining available time is not displayed. If it is a beta version and the remaining time is less than 7 days, an alert will be given in red.
+> - Authorizations include the number of available data nodes and the number of available LogicDBs, among which the limit of number of ConfigDBs is added in v.2.5.6 and above.
 
 ### Statistics
 
-![](assets/hotdb-management/image7.png)
+![](assets/hotdb-management/image6.png)
 
 - Statistics includes total data amount, client throughput, back-end throughput and client connection. For the data acquisition of the total data amount, client throughput and back-end throughput, please refer to the corresponding content on [the home page of general users](#overview-of-data-amount-and-throughput).
 - Total data volume: the value is the total data volume of the current cluster, and the pie chart on the left is the proportion of data volume of TOP10 LogicDB.
@@ -97,7 +100,7 @@ The admin index page mainly provides the manager user with a global perspective 
 
 ### Peak data
 
-![](assets/hotdb-management/image8.png)
+![](assets/hotdb-management/image7.png)
 
 - On the index page, you can view the cluster peak data within 24 hours and within 30 minutes, mainly with two objects: compute node and data source, and three dimensions: connections, QPS and TPS.
 - Peak data includes the highest peak data and the time point within the selected time range. If there are multiple peak data, the latest peak data will be taken.
@@ -107,7 +110,7 @@ The admin index page mainly provides the manager user with a global perspective 
 
 ### Running data
 
-![](assets/hotdb-management/image9.png)
+![](assets/hotdb-management/image8.png)
 
 - Under the running data, cluster starting time, cluster running time, failover times (cumulative), failure recovery time (cumulative), cluster availability, slow SQL are consistent with [the home page of general users](#home).
 - The compute node status shows the number of compute nodes running normally (the connection of the management port is normal) and abnormally in the current cluster. Green is for the normal compute nodes; red and blue are for the abnormal compute nodes, among which red will be displayed when the number of exceptions is greater than 0, and blue when there is no exception.
@@ -116,7 +119,7 @@ The admin index page mainly provides the manager user with a global perspective 
 
 ### Configuration data
 
-![](assets/hotdb-management/image10.png)
+![](assets/hotdb-management/image9.png)
 
 - Configuration data mainly shows the configuration of some key parameters including management platform, compute node and data source.
 - For the parameter configuration display of the management platform, please refer to the corresponding parameter explanation on [the home page of general users](#cluster-security). When the management platform parameters are not enabled, the page will alert with red font, and if not all of them are enabled, the page will alert with orange font.
@@ -3853,7 +3856,7 @@ To use the data backup function of HotDB Management, it needs to install the Hot
 - Local Backup Root Directory: It is the local directory of the server where each data source resides and backup file is stored. This directory needs to be created in advance on the server where each node resides, and the directory of each server shall be consistent. Otherwise, the backup fails and the backup failure message prompts: Failed to create backup directory.
 
 > !Tip
-> 
+>
 > when the data is backed up under different directories due to different hardware specifications and configuration methods of servers, you can use the soft link to unify the directories used for backup.
 
 - Compression Method: It is used to control whether the backup file is compressed, with options of No Compression, ZLIB Flow Compression, and LZ4 Compression. LZ4 compression is to first output the file and then call the system compression operation command.

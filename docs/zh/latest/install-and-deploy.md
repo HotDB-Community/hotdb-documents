@@ -205,7 +205,7 @@ tar -zxvf hotdb-management-2.x.x-xxx.tar.gz
 
 2. **导入管理平台配置库表结构**
 
-管理平台配置库可与计算节点配置库共用一个MySQL实例，但生产环境中不建议共用。管理平台配置库表结构在其安装目录doc下，使用导入配置命令前需要先在配置库中创建管理平台连接配置库的账户`hotdb_cloud`。
+管理平台配置库可与计算节点配置库共用一个MySQL实例，但生产环境中不建议共用。管理平台配置库表结构在其安装目录`doc`下，使用导入配置命令前需要先在配置库中创建管理平台连接配置库的账户`hotdb_cloud`。
 
 ```sql
 # 创建hotdb_cloud账户
@@ -247,7 +247,7 @@ language=English/Chinese
 
 4. **启动与停止管理平台**
 
-管理平台的启动脚本hotdb_management其安装目录bin下。执行下列命令即可启动或停止管理平台服务。
+管理平台的启动脚本`hotdb_management`位于其安装目录`bin`下。执行下列命令即可启动或停止管理平台服务。
 
 ```bash
 # 进入启动脚本目录
@@ -327,7 +327,7 @@ user = root
 log = /data/multi.log
 
 [mysqld]
-#***********************************common parameters******************************
+# ***********************************common parameters******************************
 basedir=/usr
 skip-federated
 skip-blackhole
@@ -467,7 +467,7 @@ interactive-timeout
 
 5. **创建MySQL目录**
 
-根据my.cnf配置文件的目录参数，创建MySQL数据目录，并设置数据目录的所有者用户。
+根据`my.cnf`配置文件的目录参数，创建MySQL数据目录，并设置数据目录的所有者用户。
 
 ```bash
 mkdir -p /data/mysqldata3306
@@ -484,7 +484,7 @@ chown -R mysql:mysql /data/mysqldata3306
 
 6. **初始化数据库**
 
-执行mysql_install_db初始系统数据库到指定目录。
+执行`mysql_install_db`初始系统数据库到指定目录。
 
 ```bash
 mysql_install_db --defaults-file=/etc/my.cnf --user=mysql --datadir=/data/mysqldata3306/mydata
@@ -500,10 +500,13 @@ mysql_install_db --defaults-file=/etc/my.cnf --user=mysql --datadir=/data/mysqld
 
 # 使用netstat命令检测MySQL是否启动成功
 netstat -npl |grep mysql
-
-# 命令有输出即代表启动成功
-# 注意：安装完成后请及时修改root用户密码
 ```
+
+命令有输出即代表启动成功。
+
+> !Note
+> 
+> 安装完成后请及时修改root用户密码
 
 ##### 存储节点
 
@@ -532,9 +535,11 @@ create database db01;
 
 # 用户赋权
 #GRANT select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,create temporary tables,alter routine,execute,event ON *.* TO 'hotdb_datasource'@'%';
-
-# 注意：当存储节点的MySQL版本大于等于8.0时，需要多加一个权限"xa_recover_admin"
 ```
+
+> !Note
+> 
+> 当存储节点的MySQL版本大于等于8.0时，需要多加一个权限`xa_recover_admin`。
 
 **备份用户：**
 
@@ -553,7 +558,6 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,process,referen
 备份程序（HotDB Backup）为热璞数据库自主研发的分布式数据库备份工具。通常部署在集群的存储节点服务器上，监听来自管理平台的数据备份请求。一台存储节点服务器只需部署一个备份程序即可。
 
 > !Note
->  <!--使用须知-->
 >
 > - 仅支持备份MySQL 5.6及以上版本的数据。
 > - 被备份的存储节点实例必须开启binlog。
@@ -615,8 +619,8 @@ INFO: HotDB-backup service not running.
 
 查看HotDB-Backup日志
 
-```
-#cat logs/hotdb_backup.log
+```bash
+cat logs/hotdb_backup.log
 ```
 
 HotDB Backup常见日志
@@ -850,7 +854,7 @@ vrrp_instance VI_1 {
 - priority：优先级，优先级高的为 master
 - virtual_ipaddress：instance 绑定的 vip（vip 需与计算节点所在的ip 同网段）
 - Label：给本地网卡起一个虚拟名称，用于绑定虚拟网卡 IP ，例如把虚拟网卡 eth0:1 绑定到本地网卡 eth0 上
-- Script：判断服务是否正常的脚本路径，通常存放在 HotDB Server 的 bin目录下， 例如：/usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh，该脚本可检查 HotDB Serve 主备服务的进程是否存在，主备 HotDB Serve 的 3323端口和 3325 端口的状态是否正常
+- Script：判断服务是否正常的脚本路径，通常存放在 HotDB Server 的 bin目录下， 例如：`/usr/local/hotdb/hotdb-server/bin/check_hotdb_process.sh`，该脚本可检查 HotDB Serve 主备服务的进程是否存在，主备 HotDB Serve 的 3323端口和 3325 端口的状态是否正常
 
 3. **启动说明**
 
@@ -866,24 +870,23 @@ service keepalived start
 sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
 ```
 
-`ip a`可查看当前主的keepalived VIP是已绑定成功
+命令`ip a`可查看当前主的keepalived VIP是已绑定成功
 
 ![](assets/install-and-deploy/image6.png)
 
 主计算节点服务启动完**等待20秒**后再启动备（192.168.200.191）的keepalived，keepalived启动完成后**等待10秒**再启动备计算节点服务
 
-```
+```bash
 # 启动备keepalived服务
-#service keepalived start
+service keepalived start
 
 # 启动备计算节点服务
-
 sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start
 ```
 
 ##### 高可用切换说明
 
-当主机192.168.200.190服务上的计算节点服务故障时，检测脚本(vrrp_scripts)检测到计算节点主服务端口不可访问或 hacheck 连续失败超过 3 次时，主keepalived优先级会进行自动调整，变成 90(weight -10)，备机 192.168.200.191服务上的 keepalived 收到比自己优先级低的 vrrp 包(192.168.200.191 上优先级为 95)后，将切换到 master 状态，抢占 vip(192.168.200.140)，同时在进入 master 状态后，执行 notify_master 脚本，访问备服务 3325 端口执行online 命令启动并初始化备计算节点服务端口，若 192.168.200.191 的计算节点启动成功，则主备切换成功后继续提供服务。如下图：
+当主机192.168.200.190服务上的计算节点服务故障时，检测脚本(`vrrp_scripts`)检测到计算节点主服务端口不可访问或 `hacheck` 连续失败超过 3 次时，主keepalived优先级会进行自动调整，变成 90(weight -10)，备机 192.168.200.191服务上的 keepalived 收到比自己优先级低的 vrrp 包(192.168.200.191 上优先级为 95)后，将切换到 master 状态，抢占 vip(192.168.200.140)，同时在进入 master 状态后，执行 notify_master 脚本，访问备服务 3325 端口执行`online`命令启动并初始化备计算节点服务端口，若 192.168.200.191 的计算节点启动成功，则主备切换成功后继续提供服务。如下图：
 
 ![](assets/install-and-deploy/image7.png)
 
@@ -903,13 +906,13 @@ NDB SQL服务可用于在分布式环境下帮助计算节点完成相对复杂�
 
 - NDB SQL服务与计算节点服务是一一对应的，即每台计算节点所在服务器如果需要使用NDB SQL服务支持都需部署该服务程序。
 - 与NDB SQL服务对应的计算节点版本必须是V2.5.2及以上版本，否则不支持NDB SQL服务
-- 推荐NDB SQL服务与计算节点一次性跟随部署，若目前已有计算节点需要追加NDB SQL服务则需要严格注意：--install-ntpd、--ntpdate-server-ip、--ntpdate-server-host传参问题，需要同当前部署的集群同步时间配置一致。
+- 推荐NDB SQL服务与计算节点一次性跟随部署，若目前已有计算节点需要追加NDB SQL服务则需要严格注意：`--install-ntpd`、`--ntpdate-server-ip`、`--ntpdate-server-host`传参问题，需要同当前部署的集群同步时间配置一致。
 
 2. **计算节点与NDB SQL一同部署过程说明**
 
 当前以主备模式集群为例演示使用脚本安装计算节点与NDB SQL服务，具体步骤说明如下：
 
-- 登录每台计算节点服务器，进入一键部署资源包目录Install_Package下执行安装命令。
+- 登录每台计算节点服务器，进入一键部署资源包目录`Install_Package`下执行安装命令。
 
 - 登录主计算节点服务器，进入一键部署默认安装目录执行：
 
@@ -920,7 +923,7 @@ sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --instal
 - 登录备计算节点服务器，进入一键部署默认安装目录执行：
 
 ```bash
-sh hotdbinstal_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --ntpdate-server-host=主计算节点服务器IP地址
+sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --install-ndbsql=yes --ntpdate-server-host=<IP address of master compute node server>
 ```
 
 3. **单独部署NDB SQL过程说明**
@@ -964,7 +967,7 @@ HotDB Listener由JDK1.7.0_80进行编译，对操作系统和Java环境的要求
 
 ##### 解压一键部署安装包
 
-将一键部署安装包auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz（2.5.5为版本号，不同版本其编号不同，注意同步替换）上传至存储节点服务器/usr/local/hotdb目录下，执行下列命令解压：
+将一键部署安装包`auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz`（2.5.5为版本号，不同版本其编号不同，注意同步替换）上传至存储节点服务器`/usr/local/hotdb`目录下，执行下列命令解压：
 
 ```bash
 cd /usr/local/hotdb
@@ -973,18 +976,18 @@ tar -zxvf auto_hotdbinstall_HotDB2.5.5_v1.0_20200422.tar.gz
 
 ##### 安装Listener
 
-一键部署安装包内置Listener安装包。执行下列命令，将Listener安装在/usr/local/hotdb目录下：
+一键部署安装包内置Listener安装包。执行下列命令，将Listener安装在`/usr/local/hotdb`目录下：
 
-```
+```bash
 cd /usr/local/hotdb/Install_Package
-#tar -zxvf hotdb-listener-0.0.1-alpha-20200420-linux.tar.gz -C /usr/local/hotdb/
+tar -zxvf hotdb-listener-0.0.1-alpha-20200420-linux.tar.gz -C /usr/local/hotdb/
 ```
 
 ##### 配置Listener
 
 在启动之前，先根据服务器可用内存空间，调整Listener的堆内存大小。
 
-```
+```bash
 cd /usr/local/hotdb/hotdb-listener/bin
 vi hotdb_listener
 ```
@@ -1022,9 +1025,11 @@ sh hotdb_listener
 # HotDB-Listener start : sh hotdb_listener start
 # HotDB-Listener stop : sh hotdb_listener stop
 # HotDB-Listener restart : sh hotdb_listener restart
+```
 
-# 启动完毕，可切换到logs目录查看日志输出，可查看到Listener的相关信息。
+启动完毕，可切换到logs目录查看日志输出，可查看到Listener的相关信息。
 
+```bash
 tailf listener.log
 # 2020-05-25 12:09:54.089 [INFO] [INIT] [main] cn.hotpu.hotdb.ListenerServer(158) - Listener-Manager start listening on host 0.0.0.0 port 3330
 ```
@@ -1059,7 +1064,7 @@ tailf listener.log
   - `usr/local/hotdb`
 - 一键部署安装包下载过程中可能存在一些损坏，此时进行部署可能导致部署出错。故在管理平台版本为2.5.6.1（包含）版本以上，增加了完整性校验功能，对上传的安装包进行MD5值校验。即在上传部署安装包时，需同步上传当前安装包对应的MD5值文件至服务器相同目录下，如下图：
 
-![](assets/install-and-deploy/image10.png)
+![](assets/install-and-deploy/image9.png)
 
 ##### 部署管理平台
 
@@ -1105,48 +1110,48 @@ sh /usr/local/hotdb/hotdb-management/bin/hotdb_management start
 
 > !Info
 > 
-> 本次以"多节点"模式的集群部署为例，展示集群部署中的完整过程以及对应说明。
+> 本次以**多节点**模式的集群部署为例，展示集群部署中的完整过程以及对应说明。
 
 ###### 添加集群部署任务
 
 admin用户登录管理平台后进入"集群管理->计算节点集群"，点击【集群部署】按钮进入集群部署功能页面。
 
-![](assets/install-and-deploy/image11.png)
+![](assets/install-and-deploy/image10.png)
 
 ###### 选择部署的集群模式
 
 集群分为单节点、主备节点、多节点三种模式，选择好集群模式后点击【参数配置】按钮进入集群部署参数配置页面。
 
-![](assets/install-and-deploy/image12.png)
+![](assets/install-and-deploy/image11.png)
 
 **集群模式说明：**
 
 - 单节点：单节点指整个集群中只有一个计算节点的集群模式。无需安装Keepalived或LVS等高可用组件。
 
-  ![](assets/install-and-deploy/image13.png)
+  ![](assets/install-and-deploy/image12.png)
 
 - 主备节点：主备模式也称HA模式，即通过Keepalived组件进行高可用搭建的集群模式。在集群中存在主、备两个计算节点。
 
-  ![](assets/install-and-deploy/image14.png)
+  ![](assets/install-and-deploy/image13.png)
 
   1. 主备节点模式的集群，需要填写2台服务器的配置信息。
-  2. Keepalived的virtual_ipaddress（简称VIP）要求为没有被服务器或其他应用所占用且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：192.168.200.120/24。
-  3. virtual_router_id的值可自行在范围【1-255】选定一个值，但该值要求在集群使用的网段内是唯一的，即不与其他应用服务选择的值冲突。
-  4. 主备Keepalived服务器网关设备名称是Keepalived所在服务器的网卡设备名称，该名称必须填写正确，格式为网卡名称+ :1 例："eth0:1"。（网关设备名称可通过"ip a"命令查看）
+  2. Keepalived的virtual_ipaddress（简称VIP）要求为没有被服务器或其他应用所占用且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：`192.168.200.120/24`。
+  3. `virtual_router_id`的值可自行在范围【1-255】选定一个值，但该值要求在集群使用的网段内是唯一的，即不与其他应用服务选择的值冲突。
+  4. 主备Keepalived服务器网关设备名称是Keepalived所在服务器的网卡设备名称，该名称必须填写正确，格式为网卡名称+ :1，例：`eth0:1`。（网关设备名称可通过`ip a`命令查看
 
 - 多节点：多节点模式也叫作负载均衡模式，是通过LVS组件或其他负载均衡组件来控制分发业务流量到集群中的多个计算节点上的一种架构模式。多节点模式中计算节点个数不能低于3个或超过9个。
 
+  ![](assets/install-and-deploy/image14.png)
+
   ![](assets/install-and-deploy/image15.png)
 
-  ![](assets/install-and-deploy/image16.png)
-
   1. 多节点模式中，计算节点个数默认为3个，且计算节点版本必须为2.5。
-  2. 集群网段为计算节点安装服务器所在网段，格式为：网段+子网掩码长度，例：192.168.200.0/24。
+  2. 集群网段为计算节点安装服务器所在网段，格式为：网段+子网掩码长度，例：`192.168.200.0/24`。
   3. 通信端口为集群内各计算节点进行通信时所用端口，默认为3326.无特殊要求时不建议修改。
   4. LVS是多节点模式中实现负载均衡的组件，也可以关闭【安装】选择其他负载均衡方式代替LVS。
-  5. LVS_vip为LVS组件中所配置的虚拟IP地址（简称VIP），要求必须为没有被服务器或其他应用所占用且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：192.168.200.120/24。
-  6. virtual_router_id的值可自行在范围【1-255】选定一个值，但该值要求在集群使用的网段内是唯一的，即不与其他应用服务选择的值冲突。
-  7. lvs_net_interface_name是LVS组件所在服务器的网卡名称，该名称必须填写正确，格式为网卡名称+ :2 例："eth0:2"。（网关设备名称可通过"ip a"命令查看）。
+  5. `LVS_vip`为LVS组件中所配置的虚拟IP地址（简称VIP），要求必须为没有被服务器或其他应用所占用且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：`192.168.200.120/24`。
+  6. `virtual_router_id`的值可自行在范围【1-255】选定一个值，但该值要求在集群使用的网段内是唯一的，即不与其他应用服务选择的值冲突。
+  7. `lvs_net_interface_name`是LVS组件所在服务器的网卡名称，该名称必须填写正确，格式为网卡名称+ :2 例：`eth0:2`。（网关设备名称可通过`ip a`命令查看）。
 
 ###### 集群部署参数配置
 
@@ -1154,54 +1159,47 @@ admin用户登录管理平台后进入"集群管理->计算节点集群"，点�
 
 以下将以计算节点集群模式为多节点为例介绍计算节点的参数配置。
 
-![](assets/install-and-deploy/image17.png)
+![](assets/install-and-deploy/image16.png)
 
 1. 计算节点个数默认为3，设置时不能小于3或大于7个。
 2. 集群名称会自动生成，格式为：Group+四位随机数，可根据实际情况修改。
 3. 可根据实际需要查看是否要安装NDB SQL服务，如果安装则要求计算节点版本必须大于等于V2.5.2。
-4. 集群网段为计算节点所在服务器的网段范围，格式为：网段+子网掩码长度，例：192.168.200.0/24。
-5. 通信端口为集群内各计算节点进行通信时所用端口，默认为3326，无特殊要求不建议修改。
+4. 集群网段为计算节点所在服务器的网段范围，格式为：网段+子网掩码长度，例：`192.168.200.0/24`。
+5. 通信端口为集群内各计算节点进行通信时所用端口，默认为`3326`，无特殊要求不建议修改。
 6. 计算节点名称会自动生成，格式为：计算节点+编号,可根据实际情况修改。
 7. 登录方式为管理平台连接部署目标服务器的方式，默认使用"密码"方式登录，如果使用"免密"方式则要求管理平台服务器与目标部署服务器之间需要打通免密通道，具体实现方式可参照"[实现免密登录说明](#实现免密登录说明)"。
-8. 当"登录方式"为"密码"方式时需要输入连接目标服务器的SSH信息包括：SSH用户、SSH密码。端口号默认为22，无特殊要求一般无需修改。
+8. 当"登录方式"为"密码"方式时需要输入连接目标服务器的SSH信息包括：SSH用户、SSH密码。端口号默认为`22`，无特殊要求一般无需修改。
 9. 堆内存默认为4G，当设置大于8G时，会提示要求开启"G1垃圾回收器"。该参数输入范围【1-64】G。
 10. 直接内存默认为24G，参数输入范围【1-64】G。
-11. 服务端口与管理端口默认为"3323,3325"，无特殊要求可直接使用默认值。若修改且安装成功后计算节点的server.xml配置文件对应参数也会同步修改。
+11. 服务端口与管理端口默认为`3323,3325`，无特殊要求可直接使用默认值。若修改且安装成功后计算节点的`server.xml`配置文件对应参数也会同步修改。
 12. 点击【测试连接】可测试目标服务器的连接是否正常，判断输入的SSH信息是否可用。
 
 **（二）配置库参数**
 
+![](assets/install-and-deploy/image17.png)
+
 ![](assets/install-and-deploy/image18.png)
 
-![](assets/install-and-deploy/image19.png)
-
 1. 安装的配置库实例可选择模式有：单库、双主、MGR，以选择MGR模式为例。
-
 2. 配置库版本会因模式而变动，选择MGR模式时版本必须为5.7，选择其他模 式时可选择5.6或5.7的MySQL实例版本。
-
 3. 选择MGR模式时可编辑MGR模式下的实例数量，默认3个，编辑时不能少于3个或大于9个。选择其他模式则无数量限制。
-
-4. 创建高权限用户开关，开关默认打开即配置库MySQL实例安装成功后会默认生成一个"hotdb_root"的账户，该账户拥有MySQL实例的所有权限。
-
-5. 实例端口号默认为3306，可根据实际情况自行修改。
-
+4. 创建高权限用户开关，开关默认打开即配置库MySQL实例安装成功后会默认生成一个`hotdb_root`的账户，该账户拥有MySQL实例的所有权限。
+5. 实例端口号默认为`3306`，可根据实际情况自行修改。
 6. "磁盘设备名称"与"数据目录"参数为选填项，为空时程序会自动为"磁盘设备名称"赋予空值，"数据目录"赋予默认值"/data"。关于参数详细说明，可参照"[集群部署脚本参数说明](#部署脚本说明)"。
-
 7. 【更多参数】可为当前部署的MySQL实例设置更多选项参数，当参数的输入框为空时安装脚本会自行计算处理并给予默认值，无特殊要求时不建议修改。若需要使修改的参数适用到其他部署的配置库实例上可勾选"更多参数同步到其他配置库实例中"选项。
 
 **（三）LVS参数**
 
-![](assets/install-and-deploy/image20.png)
+![](assets/install-and-deploy/image19.png)
 
-1. 集群部署支持不安装LVS相关组件，当选择到不安装时，则不需要填写LVS配置参数
-
-2. "LVS_vip"填写的IP，要求必须为没有被服务器或其他应用所占用的且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：192.168.200.120/24
-
-3. "virtual_router_id的值可自行在范围【1-255】选定一个值，但该值必须在集群使用的网段内是唯一的，即没有与其他服务程序选取的值冲突。
-
-4. 主备lvs_net_interface_name是LVS所在服务器的网关设备名称，该名称必须与实际服务器上显示的一致（可通过 ip a命令查看）,格式为：网关设备名称+ ":2" 例如："eth0:2"。
+1. 集群部署支持不安装LVS相关组件，当选择到不安装时，则不需要填写LVS配置参数。
+2. `LVS_vip`填写的IP，要求必须为没有被服务器或其他应用所占用的且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：`192.168.200.120/24`。
+3. `virtual_router_id`的值可自行在范围【1-255】选定一个值，但该值必须在集群使用的网段内是唯一的，即没有与其他服务程序选取的值冲突。
+4. 主备`lvs_net_interface_name`是LVS所在服务器的网关设备名称，该名称必须与实际服务器上显示的一致（可通过`ip a`命令查看）,格式为：网关设备名称+ ":2" 例如：`eth0:2`。
 
 **（四）存储节点参数**
+
+![](assets/install-and-deploy/image20.png)
 
 ![](assets/install-and-deploy/image21.png)
 
@@ -1209,91 +1207,74 @@ admin用户登录管理平台后进入"集群管理->计算节点集群"，点�
 
 ![](assets/install-and-deploy/image23.png)
 
-![](assets/install-and-deploy/image24.png)
-
 1. 存储节点的版本可选择"5.6、5.7"，默认为5.7。
-
 2. 节点个数为集群中的数据节点个数，设置时不能超过128。
-
 3. 节点类型为数据节点下关联的存储节点复制关系类型包含：单库、主从、双主、MGR。
-
 4. 点击【生成】按钮可快速按照选填写的参数生成存储节点配置信息。
-
 5. "创建高权限用户"请参照配置库该处说明。
-
 6. "节点名称"为数据节点名称，默认根据"节点个数"自动生成，用户可自行修改。
-
 7. "存储节点类型"默认根据选择的"节点类型"进行生成。例："节点类型"为"主从"，则在每个数据节点下分别生成一个"主库"、一个"从库"类型的存储节点记录。
-
 8. "安装监听程序"开关默认打开，即在存储节点所在服务器上安装HotDB Listener组件。安装监听程序可用于解决计算节点集群模式的性能线性扩展问题。若用户暂不使用监听程序，可手动关闭。
-
 9. "监听端口"即监听程序启动端口，默认值为3330，可手动修改。一个存储节点服务器上部署一个监听程序需要配置一个未被占用的端口作监听端口。一个存储节点服务器下仅支持通过集群部署部署一个监听程序，即同一个主机名只能对应配置同一个监听端口。若关闭"安装监听程序"，会联级置灰"监听端口"，不可编辑。
-
 10. "监听程序服务端口"即计算节点通过监听程序连接存储节点的端口，默认值为4001，若一个监听程序需要监听多个存储节点，则需要为其分别填写不同的服务端口。若关闭"安装监听程序"，会联级置灰"监听程序服务端口"，不可编辑。
-
 11. "安装备份程序"开关默认打开，即在存储节点所在服务器上安装HotDB Backup备份程序。
-
 12. "关联管理平台IP"，默认填充当前执行集群部署任务的管理平台地址。该地址为备份程序启动时需要指定所服务的管理平台地址。
-
 13. 点击操作中的"增加"、"删除"可新增或去除一行存储节点配置记录。
-
 14. 存储节点数量过多时可考虑使用"导入"方式进行配置。导入前须先下载模板，再按照模板说明进行填写配置信息，完成后再导入管理平台中。若填写有误时，程序会显示导入失败与失败详细信息。
 
 **（五）时间同步参数设置**
 
-![](assets/install-and-deploy/image25.png)
+![](assets/install-and-deploy/image24.png)
 
 1. 时间同步主要是为集群所有服务器指定NTP时间服务地址，保证集群中的服务器时间保持一致。
-
 2. 默认在主计算节点或多节点中的第一个计算节点所在服务器上安装NTP服务程序。若集群中已有可用的NTP服务，则可取消安装。
-
 3. 集群中其他服务器时间同步地址默认指向已安装有NTP服务器的计算节点服务器地址，若计算节点不安装NTP服务器则其他服务器与计算节点服务器所指向的时间同步地址保持一致。
 
-Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外，还需要关注硬件时钟是否同步，可使用hwclock查看（一般在虚拟机环境中存在差异的可能性较大）。
+> !Tip
+> 
+> 在实际应用场景中，除了软件方面的时钟同步配置以外，还需要关注硬件时钟是否同步，可使用hwclock查看（一般在虚拟机环境中存在差异的可能性较大）。
 
 ###### 参数校验并保存
 
+![](assets/install-and-deploy/image25.png)
+
 ![](assets/install-and-deploy/image26.png)
 
-![](assets/install-and-deploy/image27.png)
-
 1. 仅保存：点击【仅保存】按钮，程序不会验证配置参数输入的合法性和完整性，仅校验必填项是否已填写。
-
-2. 检查并保存：点击【检查并保存】按钮，程序会校验配置参数的合法性和完整性，并推送一键部署安装包和对应的MD5值文件到目标服务器上以验证是否符合集群部署的要求，不符合要求时会弹窗提示。开始部署前的集群都必须通过【检查并保存】才能进入安装环节。
+2. 
+3. 检查并保存：点击【检查并保存】按钮，程序会校验配置参数的合法性和完整性，并推送一键部署安装包和对应的MD5值文件到目标服务器上以验证是否符合集群部署的要求，不符合要求时会弹窗提示。开始部署前的集群都必须通过【检查并保存】才能进入安装环节。
 
 > !Note
 > 
 > 若安装包在下载或推送过程中发生了损坏、变更，在"检查并保存"时会检测到安装包当前的MD5值和原对应的MD5值不一致，会弹窗提示"一键部署包完整性校验失败，请人工介入"，如下图：
 
-![](assets/install-and-deploy/image28.png)
+![](assets/install-and-deploy/image27.png)
 
 3. 若集群配置参数检测未通过，需要根据报错情况进行相应的修改，然后再进行校验。
 
 4. 如果因为服务器硬件配置不满足要求导致未通过检测的，建议先将配置参数通过【仅保存】按钮先保存下来，然后根据提示调整目标服务器的硬件配置或更换目标服务器，然后再进行校验。
 
-![](assets/install-and-deploy/image29.png)
+![](assets/install-and-deploy/image28.png)
 
 5. 已保存但未开始安装的集群在"集群管理"页面显示时是未开启监控的，且集群部署信息各栏信息显示"已配置"字样。
 
-![](assets/install-and-deploy/image30.png)
+![](assets/install-and-deploy/image29.png)
 
 6. 已保存但未开始安装的集群，通过"部署拓扑"按钮进入后，显示如上图所示。虚线图标代表已配置好但未开始安装的组件。
 
 ###### 开始部署
 
+![](assets/install-and-deploy/image30.png)
+
 ![](assets/install-and-deploy/image31.png)
 
 ![](assets/install-and-deploy/image32.png)
 
-![](assets/install-and-deploy/image33.png)
-
 1. 点击【开始部署】进入安装进程
+    - 若未通过校验的集群点击【开始部署】则提示不允许进入部署
+    - 通过"检查并保存"的集群，若在【开始部署】时计算节点集群中任一服务器上的安装包发生了损坏，即检测到安装包当前的MD5值和原MD5值不一致，也会弹窗提示：
 
-- 若未通过校验的集群点击【开始部署】则提示不允许进入部署
-
-- 通过"检查并保存"的集群，若在【开始部署】时计算节点集群中任一服务器上的安装包发生了损坏，即检测到安装包当前的MD5值和原MD5值不一致，也会弹窗提示：
-
-![](assets/install-and-deploy/image34.png)
+![](assets/install-and-deploy/image33.png)
 
 2. 通过部署进度条查看当前部署状态。
 
@@ -1305,37 +1286,32 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 
 ###### 部署完成
 
+![](assets/install-and-deploy/image34.png)
+
 ![](assets/install-and-deploy/image35.png)
 
-![](assets/install-and-deploy/image36.png)
-
 1. 部署成功的集群在"集群管理"页面中会自动开启监控，"集群部署信息"各栏显示各组件的运行状态信息。
-
 2. 点击【部署拓扑】按钮进入部署拓扑图页面可查看到拓扑图中的图标都变成实线。
 
 ###### 实例密码修改
 
-已部署完成的集群安装的配置库与存储节点实例都会自动生成一些账户。具体如下：配置库实例生成 hotdb_config、dbbackup、repl、hotdb_root(视是否开启创建高权限账户开关而定)；存储节点实例生成hotdb_datasource、dbbackup、repl、hotdb_root(视是否开启创建高权限账户而定)。
+已部署完成的集群安装的配置库与存储节点实例都会自动生成一些账户。具体如下：配置库实例生成`hotdb_config`、`dbbackup`、`repl`、`hotdb_root`(视是否开启创建高权限账户开关而定)；存储节点实例生成`hotdb_datasource`、`dbbackup`、`repl`、`hotdb_root`(视是否开启创建高权限账户而定)。
 
 因为生成的账户的密码与账号一致，所以**建议部署完成后立即进行实例密码修改**，以提升集群的安全性。
 
+![](assets/install-and-deploy/image36.png)
+
 ![](assets/install-and-deploy/image37.png)
 
-![](assets/install-and-deploy/image38.png)
-
 1. 实例密码修改分为：配置库实例密码修改、存储节点实例密码修改两部分。
-
 2. 可通过点击操作栏中【密码修改】按钮进行单个用户密码修改，也可以通过【一键修改密码】按钮批量修改用户密码。
-
 3. 批量修改用户密码是按照用户角色进行划分显示，例如配置库实例中对repl账户修改密码，则配置库所有实例中的repl账户密码都同步修改。存储节点也如此。
-
-4. 对于具有复制关系的实例，修改用户的密码会将与其有复制关系的实例的用密码一同修改，例如具有MGR关系的存储节点实例（192.168.210.81：3311，192.168.210.82：3311，192.168.210.83：3311），修改192.168.210.81：3311实例上的hotdb_root用户密码为admin，程序会将另外两个实例的hotdb_root用户修改为admin。
-
+4. 对于具有复制关系的实例，修改用户的密码会将与其有复制关系的实例的用密码一同修改，例如具有MGR关系的存储节点实例（`192.168.210.81:3311`，`192.168.210.82:3311`，`192.168.210.83:3311`），修改`192.168.210.81:3311`实例上的`hotdb_root`用户密码为`admin`，程序会将另外两个实例的h`otdb_root`用户修改为`admin`。
 5. 提交密码修改后实例密码修改页面会进行页面加载，此时请勿刷新页面或进行其他操作。
 
 #### 单机部署
 
-单机部署功能可以为用户在已有集群中继续添加新的组件。此外它也可以从零开始部署一套新的集群，因为除安装功能以外它还提供高可用搭建、一键启动等功能，但相对"[集群部署](#集群部署功能说明)"功能来说[单机部署](#单机部署)更适合部署单个组件。
+单机部署功能可以为用户在已有集群中继续添加新的组件。此外它也可以从零开始部署一套新的集群，因为除安装功能以外它还提供高可用搭建、一键启动等功能，但相对[集群部署](#集群部署功能说明)功能来说[单机部署](#单机部署)更适合部署单个组件。
 
 ##### 术语说明
 
@@ -1353,125 +1329,95 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 
 > !Info
 > 
-> 本次将通过[单机部署](#单机部署)功能为大家展示部署一个主备模式的集群。Keepalived虚拟地址（VIP）使用"192.168.200.112"；主备计算节点服务分别安装在"192.168.200.45、192.168.200.46"服务器上。同时在服务器"192.168.200.47、192.168.200.48"中各安装4个存储节点MySQL实例。
+> 本次将通过[单机部署](#单机部署)功能为大家展示部署一个主备模式的集群。Keepalived虚拟地址（VIP）使用`192.168.200.112`；主备计算节点服务分别安装在`192.168.200.45`、`192.168.200.46`服务器上。同时在服务器`192.168.200.47`、`192.168.200.48`中各安装4个存储节点MySQL实例。
 
 ###### 添加部署任务
 
 通过admin用户登录到管理平台后，选择"计算节点集群->单机部署"点击【添加部署任务】
 
-![](assets/install-and-deploy/image39.png)
+![](assets/install-and-deploy/image38.png)
 
 ###### 部署计算节点与配置库
 
+![](assets/install-and-deploy/image39.png)
+
 ![](assets/install-and-deploy/image40.png)
+
+1. 服务器角色选择[计算节点](#计算节点)时，"软件安装信息及配置信息"中默认自动勾选"计算节点服务、Keepalived、配置库MySQL实例、NTPD服务"。该角色选择只为引导安装对实际安装不会产生影响，用户也可根据实际情况选择其他组件。
+2. 目标部署服务器可通过"密码、免密"两种方式登录，若使用免密则需要提前手动建立服务器间的免密通道，具体参见[实现免密登录说明](#实现免密登录说明)。使用"密码"方式登录则需要输入SSH连接用户名与密码。
+3. 点击【测试连接】可测试管理平台服务器与目标部署服务器间是否正常可连接。
+4. 使用密码方式登录时，为了保障SSH信息安全管理平台只会保存24小时，过期后若需要重新连接目标服务器则需要点击【编辑】重新保存。
 
 ![](assets/install-and-deploy/image41.png)
 
-1. 服务器角色选择[计算节点](#计算节点)时，"软件安装信息及配置信息"中默认自动勾选"计算节点服务、Keepalived、配置库MySQL实例、NTPD服务"。该角色选择只为引导安装对实际安装不会产生影响，用户也可根据实际情况选择其他组件。
-
-2. 目标部署服务器可通过"密码、免密"两种方式登录，若使用免密则需要提前手动建立服务器间的免密通道，具体参见"[实现免密登录说明](#实现免密登录说明)"。使用"密码"方式登录则需要输入SSH连接用户名与密码。
-
-3. 点击【测试连接】可测试管理平台服务器与目标部署服务器间是否正常可连接。
-
-4. 使用密码方式登录时，为了保障SSH信息安全管理平台只会保存24小时，过期后若需要重新连接目标服务器则需要点击【编辑】重新保存。
+1. 计算节点可选择版本有"2.4、2.5"，2.4代表安装2.4.X版本的计算节点，具体版本号需以安装包内提供的为准。用户可根据实际情况进行选择。
+2. 计算节点的主备选择需要根据当前规划的实际情况，主备模式中需要有一个主计算节点服务，一个备计算节点服务。
+3. 服务端口与管理端口默认为"3323、3325"，如无特殊要求可直接使用默认值。
+4. 若计算节点与配置库安装在同一台服务器，则配置库相关信息可以直接使用默认值但配置库地址IP需要填写实际值；若计算节点与配置库不在同一台服务器，则配置库信息需要根据实际情况做修改。
+5. 堆内存与直接内存默认为"4G、24G"，用户也可以根据实际情况进行调整但输入范围不得超过【1-64】G。当堆内存大于8G时，建议打开G1垃圾回收器。
 
 ![](assets/install-and-deploy/image42.png)
 
-1. 计算节点可选择版本有"2.4、2.5"，2.4代表安装2.4.X版本的计算节点，具体版本号需以安装包内提供的为准。用户可根据实际情况进行选择。
-
-2. 计算节点的主备选择需要根据当前规划的实际情况，主备模式中需要有一个主计算节点服务，一个备计算节点服务。
-
-3. 服务端口与管理端口默认为"3323、3325"，如无特殊要求可直接使用默认值。
-
-4. 若计算节点与配置库安装在同一台服务器，则配置库相关信息可以直接使用默认值但配置库地址IP需要填写实际值；若计算节点与配置库不在同一台服务器，则配置库信息需要根据实际情况做修改。
-
-5. 堆内存与直接内存默认为"4G、24G"，用户也可以根据实际情况进行调整但输入范围不得超过【1-64】G。当堆内存大于8G时，建议打开G1垃圾回收器。
+1. 主备模式的集群，在计算节点服务器上必须安装Keepalived组件，否则计算节点无法搭建高可用。
+2. Keepalived的`virtual_ipaddress`（简称VIP）要求为没有被内网服务器或其他应用所占用且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：192.168.200.120/24。此处我们填写之前规划的VIP地址`192.168.200.112/24`。
+3. `virtual_router_id`的值可自行在范围【1-255】选定一个值，但该值必须在集群使用的网段内是唯一的，即未与其他服务程序选取的值产生冲突。
+4. `keepalived_net_interface_name`是Keepalived所在服务器的网卡名称，该名称必须填写正确，格式为网卡名称+ :1 例：`eth0:1`。（网关设备名称可通过`ip a`命令查看）。
 
 ![](assets/install-and-deploy/image43.png)
 
-1. 主备模式的集群，在计算节点服务器上必须安装Keepalived组件，否则计算节点无法搭建高可用。
-
-2. Keepalived的virtual_ipaddress（简称VIP）要求为没有被内网服务器或其他应用所占用且和计算节点服务器在相同网段上。格式为VIP+子网掩码长度，例：192.168.200.120/24。此处我们填写之前规划的VIP地址"192.168.200.112/24"。
-
-3. virtual_router_id的值可自行在范围【1-255】选定一个值，但该值必须在集群使用的网段内是唯一的，即未与其他服务程序选取的值产生冲突。
-
-4. keepalived_net_interface_name是Keepalived所在服务器的网卡名称，该名称必须填写正确，格式为网卡名称+ :1 例："eth0:1"。（网关设备名称可通过"ip a"命令查看）。
+1. 配置库MySQL实例可与计算节点安装在同一台服务器上，也可以分开安装。默认与计算节点安装在一台服务器上。
+2. 版本为配置库MySQL实例的版本号，可选择"5.6、5.7"。
+3. MySQL安装参数中需要关注"MySQL实例端口"，默认3306，若该默认值被占用需要修改端口。
+4. 其他参数如无特殊要求可直接使用默认值，为空的输入框程序会根据服务器情况自动计算并给出默认值。
+5. 若同一台服务器上同时安装配置库与存储节点，则配置库参数配置只能修改 "MySQL实例端口"参数，其他更多参数只能在存储节点中设置。（原因：一台服务器只能设置一份MySQL参数）
 
 ![](assets/install-and-deploy/image44.png)
 
-1. 配置库MySQL实例可与计算节点安装在同一台服务器上，也可以分开安装。默认与计算节点安装在一台服务器上。
-
-2. 版本为配置库MySQL实例的版本号，可选择"5.6、5.7"。
-
-3. MySQL安装参数中需要关注"MySQL实例端口"，默认3306，若该默认值被占用需要修改端口。
-
-4. 其他参数如无特殊要求可直接使用默认值，为空的输入框程序会根据服务器情况自动计算并给出默认值。
-
-5. 若同一台服务器上同时安装配置库与存储节点，则配置库参数配置只能修改 "MySQL实例端口"参数，其他更多参数只能在存储节点中设置。（原因：一台服务器只能设置一份MySQL参数）
+1. 当服务器中安装了主计算节点服务时，"NTPD服务"会自动勾选安装，若已有NTP时间服务器，此处可去除勾选安装。
+2. 每台目标部署服务器都需要指定时间同步地址。
+    - 若该服务器上安装NTPD服务则服务器时间同步地址建议填写阿里云时间同步地址"182.92.12.11"
+    - 若该服务器上未安装NTPD服务则服务器时间同步地址应当指定为内网中已安装NTPD服务的服务器地址
+3. 点击【保存信息】则将配置信息保存可供后期安装、点击【开始安装】则直接进入安装进程。
 
 ![](assets/install-and-deploy/image45.png)
 
-1. 当服务器中安装了主计算节点服务时，"NTPD服务"会自动勾选安装，若已有NTP时间服务器，此处可去除勾选安装。
-
-2. 每台目标部署服务器都需要指定时间同步地址。
-
-- 若该服务器上安装NTPD服务则服务器时间同步地址建议填写阿里云时间同步地址"182.92.12.11"
-
-- 若该服务器上未安装NTPD服务则服务器时间同步地址应当指定为内网中已安装NTPD服务的服务器地址
-
-3. 点击【保存信息】则将配置信息保存可供后期安装、点击【开始安装】则直接进入安装进程。
-
-![](assets/install-and-deploy/image46.png)
-
 1. 首次安装时需要将一键部署安装包和其对应的MD5值文件从管理平台服务器上传至目标部署服务器，所以必须点击【确定上传】。关于管理平台服务器存放资源包说明请参照"[集群部署的功能使用须知](#功能使用须知)"最后一条
-
-- 若安装包在上传过程中发生了损坏，在"确定上传"时会检测到安装包当前的MD5值和其对应的MD5值不一致，会跳出弹窗提示：
+    - 若安装包在上传过程中发生了损坏，在"确定上传"时会检测到安装包当前的MD5值和其对应的MD5值不一致，会跳出弹窗提示：
+      ![](assets/install-and-deploy/image46.png)
+2. 若手动将一键部署安装包和其对应的MD5值文件上传至目标服务器`/usr/local/hotdb`中或之前已完成包资源上传，则可点击【开始安装】跳过上传安装包的动作，但手动上传包需保证包的完整性`
 
 ![](assets/install-and-deploy/image47.png)
 
-2. 若手动将一键部署安装包和其对应的MD5值文件上传至目标服务器/usr/local/hotdb中或之前已完成包资源上传，则可点击【开始安装】跳过上传安装包的动作，但手动上传包需保证包的完整性
+1. 进入安装进程后，页面底部会实时输出安装日志与安装结果。安装日志`hotdbinstall.log`在目标服务器`/usr/local/hotdb/Install_Package`目录下。
+2. 安装过程中如果有error信息会用红色字体标识，warning信息用橙色标识。出现error信息则意味着此次安装任务失败，需要根据提示信息进行修改再尝试安装。
+3. 成功安装完成可以根据安装日志是否出现：`hotdbinstall finished without error, but you should check if there is any warnings`字样判断。也可以根据右侧安装结果判断。
 
 ![](assets/install-and-deploy/image48.png)
-
-1. 进入安装进程后，页面底部会实时输出安装日志与安装结果。安装日志"hotdbinstall.log"在目标服务器"/usr/local/hotdb/ Install_Package"目录下。
-
-2. 安装过程中如果有error信息会用红色字体标识，warning信息用橙色标识。出现error信息则意味着此次安装任务失败，需要根据提示信息进行修改再尝试安装。
-
-3. 成功安装完成可以根据安装日志是否出现："hotdbinstall finished without error, but you should check if there is any warnings"字样判断。也可以根据右侧安装结果判断。
-
-![](assets/install-and-deploy/image49.png)
 
 1. 正在安装的任务可放至后台运行，继续添加新的安装任务，待安装任务完成后刷新页面即可看到安装的组件完成状态。
 
 2. 已保存或已安装的任务都可以进行"克隆"，点击【克隆】即将该任务的所有配置参数复制到一个新的部署任务中，可适当减少重复配置。
 
-![](assets/install-and-deploy/image50.png)
+![](assets/install-and-deploy/image49.png)
 
 1. 备计算节点的安装可通过克隆之前主计算节点的安装任务，然后修改"主机名"、"计算节点角色"等参数。其他参数视实际情况进行修改。
-
 2. 注意安装备计算节点时无需勾选"NTPD服务"只需将"服务器时间同步地址"填写成主计算节点服务器IP地址即可或指向内网中已安装NTPD服务的IP地址。
 
 ###### 部署存储节点实例
 
-![](assets/install-and-deploy/image51.png)
+![](assets/install-and-deploy/image50.png)
 
 1. 选择"服务器角色"为存储节点服务器，并填写存储节点的目标安装服务器SSH信息。
-
 2. 根据角色，安装组件将自动勾选"存储节点MySQL实例、存储节点监听程序、存储节点备份程序"。
+3. 存储节点监听程序默认端口为`3330`，可自行调整。若不安装监听程序，可手动取消勾选。后续以取消勾选安装监听程序为示例。
+4. 根据部署要求在`192.168.200.48`中安装4个存储节点MySQL实例，所以"实例数"选择4。
+5. 服务器时间同步地址填写主计算节点服务器IP（`192.168.200.45`）。
 
-3. 存储节点监听程序默认端口为3330，可自行调整。若不安装监听程序，可手动取消勾选。后续以取消勾选安装监听程序为示例。
-
-4. 根据部署要求在192.168.200.48中安装4个存储节点MySQL实例，所以"实例数"选择4。
-
-5. 服务器时间同步地址填写主计算节点服务器IP（192.168.200.45）。
-
-![](assets/install-and-deploy/image48.png)
+![](assets/install-and-deploy/image51.png)
 
 1. 点击【开始安装】并上传安装包及其对应的MD5值文件至存储节点目标部署服务器中。
-
 2. 可查看日志安装的实时进度。
-
-3. 通过【克隆】按钮将部署存储节点的任务克隆到"192.168.200.48"中，修改SSH信息即可进入安装。
+3. 通过【克隆】按钮将部署存储节点的任务克隆到`192.168.200.48`中，修改SSH信息即可进入安装。
 
 ##### 单机部署高可用搭建
 
@@ -1482,9 +1428,7 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 ![](assets/install-and-deploy/image52.png)
 
 1. 点击【高可用搭建】按钮进入高可用搭建页面，在[计算节点高可用搭建](#计算节点高可用搭建)模块点击【添加】可弹出添加计算节点高可用的配置窗口。
-
-![](assets/install-and-deploy/image53.png)
-
+    ![](assets/install-and-deploy/image53.png)
 2. 弹窗中选择"高可用"则为计算节点搭建HA高可用关系，若选择"单实例"则表示计算节点为单节点模式。
 3. 集群名称为主备计算节点所在集群的名称，此处可自定义命名但不允许与已有集群名称重复。
 4. Master为主计算节点，若之前主计算节点安装成功且未经过搭建的则下拉框会显示出来。
@@ -1501,15 +1445,10 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 ![](assets/install-and-deploy/image56.png)
 
 1. 点击"节点高可用搭建"模块中【批量添加】按钮，若计算节点高可用未搭建或没有搭建的历史记录，则点击【批量搭建】会提示"请先搭建一个计算节点集群"（因为存储节点高可用搭建需要选择所属哪个计算节点集群）。
-
 2. 添加存储节点高可用配置需要先选择"计算节点集群"，可选择刚搭建好的计算节点集群。
-
 3. 节点名称为存储节点所属的数据节点名称（dataNode）,可自定义命名但不能与已有数据节点重名。
-
 4. 复制模式指在同一数据节点下的存储节点以何种方式存在，目前支持数据节点下的存储节点可以为"单库、主从、双主"三种复制形式。
-
 5. 添加多条节点高可用记录时，点击"+"即可新增配置记录。
-
 6. 填写好节点高可用配置后，点击【开始搭建】则自动为存储节点搭建高可用复制关系。
 
 ![](assets/install-and-deploy/image57.png)
@@ -1523,7 +1462,6 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 ![](assets/install-and-deploy/image59.png)
 
 1. 选择已安装好的配置库实例，并选择所属集群，点击【搭建】按钮开始搭建。
-
 2. 搭建完成后，程序会将具有双主关系的配置库地址修改到server.xml文件中。
 
 ![](assets/install-and-deploy/image60.png)
@@ -1541,17 +1479,13 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 ![](assets/install-and-deploy/image63.png)
 
 1. 启动程序页面显示部署任务页面中所有安装成功的服务器记录，同时根据高可用搭建历史记录对已搭建主备的服务器做合并显示。
-
 2. 勾选可选择需要启动的组件，去除勾选则不进行启动。
-
 3. 第一组记录为具有计算节点高可用搭建记录的集群，进行启动时若打开"自动生成基础配置"开关则一键启动程序会将计算节点集群、数据节点、存储节点以及默认生成的记录信息写入管理平台的配置库中，用户登录管理平台后便可直接查看无需重新添加配置。
-
 4. 第二、三组为无计算节点高可用搭建记录的集群，进行启动时不会生成任何配置信息（因为没有配置所属的计算节点集群，所以无法生成信息，**启动好后需用户手动添加**到管理平台内）。
 
 ![](assets/install-and-deploy/image64.png)
 
 1. 若启动项中包含存储节点备份程序即"HotDB Backup"，则会有"启动参数设置"的弹窗让用户指定备份程序启动时关联的管理平台IP地址。
-
 2. "备份程序IP"为需要启动的备份程序所在服务器IP地址，"管理平台IP地址"为备份程序启动时关联的管理平台IP地址（可选择当前正在使用的管理平台IP地址）。
 
 ![](assets/install-and-deploy/image65.png)
@@ -1565,9 +1499,7 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 **使用须知：**
 
 - 使用单机部署功能为已有计算节点单独安装NDB SQL需满足集群中的计算节点是通过线下手动方式进行部署的，而未使用集群部署或单机部署功能。
-
 - 若计算节点是通过集群部署或单机部署方式进行部署的，后期需要追加NDB SQL功能目前只能通过[线下手动安装](#ndb-sql服务)的方式进行。
-
 - NDB SQL必须与计算节点安装在同一台服务器上且计算节点版本不低于V 2.5.2。
 
 **操作步骤：**
@@ -1575,9 +1507,7 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 ![](assets/install-and-deploy/image66.png)
 
 - 填写计算节点的服务器地址以及SSH连接信息。
-
 - 勾选NDB SQL服务，并注意红色字体提示。
-
 - 填写与计算节点安装时指定的时间同步地址一致的值
 
 #### 实现免密登录说明
@@ -1586,21 +1516,14 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 
 以192.168.190.186与192.168.190.187实现免密连接为例
 
-1. 在192.168.190.186的服务器上执行ssh-keygen,连续按3次回车，完成生成公钥和私钥,其中id_rsa为私钥，id_rsa_pub为公钥，到/root/.ssh目录下可看到刚刚命令生成的私钥和公钥文件。
-
-![](assets/install-and-deploy/image67.png)
-
+1. 在192.168.190.186的服务器上执行`ssh-keygen`,连续按3次回车，完成生成公钥和私钥,其中id_rsa为私钥，id_rsa_pub为公钥，到/root/.ssh目录下可看到刚刚命令生成的私钥和公钥文件。
+    ![](assets/install-and-deploy/image67.png)
 2. 输入ssh-copy-id目标服务器的IP，再输入目标服务器的密码，就可以将公钥传到目标服务器
-
-![](assets/install-and-deploy/image68.png)
-
+    ![](assets/install-and-deploy/image68.png)
 3. 在192.168.190.187服务器上查看从192.168.190.186服务器上传送过来的公钥文件"authorized_key"。
-
-![](assets/install-and-deploy/image69.png)
-
+    ![](assets/install-and-deploy/image69.png)
 4. 测试不需要输入密码直接从192.168.190.186服务器ssh 到192.168.190.187服务器是否能够成功登录。
-
-![](assets/install-and-deploy/image70.png)
+    ![](assets/install-and-deploy/image70.png)
 
 #### 部署脚本说明
 
@@ -1610,85 +1533,82 @@ Tips: 在实际应用场景中，除了软件方面的时钟同步配置以外�
 
 | 参数名称 | 参数说明 |
 |-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dry-run | 只做检查，不做任何修改，可选范围"yes" "no"，默认"no" |
-| hotdb-version | 指定HotDB大版本号，可选范围"2.3" "2.4" "zabbix"，默认"2.4" |
-| install-hotdb-server | 是否安装HotDB-server，可选范围"yes" "no"，默认"no" |
-| install-ndbsql | 是否安装ndbsql，可选范围"yes" "no"，默认"no" |
-| install-hotdb-listener | 是否安装HotDB-listener，可选范围"yes" "no"，默认"no" |
-| --listener-heap-mem-size-gb | 如果指定，会帮助将HotDB Listener启动脚本中堆内存大小由4G修改为指定值，默认不修改 |
-| --listener-max-direct-mem-size-gb | 如果指定，会帮助将HotDB Listener启动脚本中直接内存大小由24G修改为指定值，默认不修改 |
-| hotdb-use-g1 | 如果指定，会帮助将hotdb启动脚本修改为使用G1垃圾回收器，默认不修改 |
-| hotdb-heap-mem-size-gb | 如果指定，会帮助将hotdb启动脚本中堆内存大小由4G修改为指定值，默认不修改 |
-| hotdb-max-direct-mem-size-gb | 如果指定，会帮助将hotdb启动脚本中直接内存大小由24G修改为指定值，默认不修改 |
-| install-hotdb-server-management | 是否安装HotDB-server-management，可选范围"yes" "no"，默认"no" |
-| install-hotdb-backup | 是否安装HotDB-backup，可选范围"yes" "no"，默认"no" |
-| mysql-version | 指定MySQL大版本号，可选范围"5.6" "5.7"，默认"5.6" |
-| mysql-port-list | 指定要安装的MySQL数据源端口列表，逗号分隔，要求递增顺序排列，示例："3306,3307,3308,3309"，默认为空 |
-| hotdb-config-port | 指定要安装的配置库端口列表，不可以和MySQL数据源端口冲突，默认为空 |
-| hotdb-config-init | 是否要在hotdb-config-port指定的实例初始化hotdb_config库，可选范围"yes" "no"，默认安装HotDB-server时为yes，不安装HotDB-server时为no。 |
-| mysql-data-diskname | 指定用于MySQL数据目录的磁盘设备名称，如果该设备没有挂载，且没有被格式化过，将自动格式化此设备并挂载到数据目录，默认为空 |
-| mysql-data-rootdir | 指定要使用的MySQL数据目录根目录，默认"/data"，必须是绝对路径 |
-| rename-datadir-before-initdb | 指定在初始化数据库前，是否重命名可能存在的旧数据目录，默认为"yes" |
-| server-id-perfix | 指定server-id使用的前缀，要求为小于429496的数字，默认自动计算，但不保证绝对无冲突 |
-| character-set-server | 指定字符集，可选范围"latin1" "gbk" "utf8" "utf8mb4"，默认"utf8mb4" |
-| collation-server | 指定校对集，可选范围"latin1_swedish_ci" "latin1_bin" "gbk_chinese_ci" "gbk_bin" "utf8_general_ci","utf8_bin" "utf8mb4_general_ci" "utf8mb4_bin"，默认值为配置的字符集的默认校对集 |
-| innodb-buffer-pool-size-mb | 单位为MB的innodb-buffer-pool-size大小，默认自动计算 |
-| innodb-log-file-size-mb | 单位为MB的innodb-log-file-size大小，默认自动计算 |
-| innodb-data-file-size-mb | 单位为MB的ibdata文件大小，默认"4096" |
-| innodb-io-capacity | 指定innodb-io-capacity的大小，默认自动计算 |
-| innodb-flush-log-at-trx-commit | 指定innodb-flush-log-at-trx-commit设置，默认"2" |
-| sync-binlog | 指定sync-binlog的设置，默认"10" |
-| binlog-format | 指定binlog-format的设置，可选范围"MIXED" "ROW"，默认"MIXED" |
-| gtid-mode | 是否启用gtid，可选范围"on" "off"，默认"on" |
-| rpl-semi-sync-enabled | 是否启动半同步复制，可选范围"on" "off"，默认"on" |
-| mgr-group-name-list | MySQL端口号:MGR组UUID:MGR本地端口号列表，逗号分隔，如果提供该参数，将为对应端口打开MGR，例如"3306:540c2b46-5d73-11e8-ad9b-00a0c9000000:33060,3308:5f5c1e2d-5d73-11e8-ad9b-00a0c9000000:33080"，默认为空。（注意，仍然需要在mysql-port-list、hotdb-config-port中指定欲创建的MySQL实例） |
-| mgr-group-local-ip | MGR本地端口绑定的本地IP地址，默认自动计算。 |
-| mgr-group-seeds-list | MySQL端口号:MGR组成员IP:端口逗号分隔列表，斜杠分隔，如果提供该参数，将在my.cnf文件中对应端口添加该值，默认为空，例如"3306:192.168.200.101:33060,192.168.200.102:33060,192.168.200.103:33060/3308:192.168.200.101:33080,192.168.200.102:33080,192.168.200.103:33080" |
-| creat-hotdbroot-in-mysql | 是否在MySQL中创建hotdb_root用户，用户拥有所有权限，并且可以从任意位置连接，默认密码hotdb_root，可选范围"yes" "no"，默认"no" |
-| install-keepalived | 是否安装keepalive，可选范围"master" "backup" "no"，默认"no" |
-| keepalived-vip-with-perfix | 如果指定，会帮助将keepalive配置中的vip由192.168.200.140/24替换为该值，默认不修改 |
-| keepalived-virtual-router-id | 如果指定，会帮助将keepalive配置中的virtual-router-id由151替换为该值，默认不修改 |
-| keepalived-net-interface-name | 如果指定，会帮助将keepalive配置中的vip设备名称由eth0:1替换为该值，默认不修改 |
-| install-lvs | 是否安装lvs服务端，可选范围"master" "backup" "no"，默认"no" |
-| lvs-vip-with-perfix | 如果指定，会帮助将lvs配置中的vip由192.168.56.203/24替换为该值，默认不修改 |
-| lvs-port | 如果指定，会帮助将lvs配置中的监听端口由3306替换为该值，默认不修改，端口需要和HotDB集群的数据服务端口相同 |
-| lvs-virtual-router-id | 如果指定，会帮助将lvs配置中的virtual-router-id由51替换为该值，默认不修改 |
-| lvs-net-interface-name | 如果指定，会帮助将lvs配置中的vip设备名称由eth1:2替换为该值，默认不修改 |
-| lvs-real-server-list | lvs后端HotDB服务器IP:数据服务端口:管理端口列表，逗号分隔，例如"192.168.0.1:3323:3325,192.168.0.2:4323:4325"，默认为空 |
-| lvs-real-server-user | lvs健康检查脚本连接后端HotDB服务器管理端口使用的用户名，默认"root" |
-| lvs-real-server-password | lvs健康检查脚本连接后端HotDB服务器管理端口使用的用密码，默认"root" |
-| lvs-real-server-startup-type | 作为lvs的realserver时，服务器相关调整的配置方式，可选范围"no" "config" "service" 默认"no" |
-| install-ntpd | 是否安装ntpd，可选范围"yes" "no"，如果安装HotDB，则默认安装ntpd，否则默认不安装。注意，一个HotDB集群里面，应当只有一个ntpd；HotDB备机应当向HotDB主机同步时间。如果内网有ntp源，则不必安装ntpd。 |
-| ntpdate-server-ip | 配置时间同步的ip地址，该参数与ntpdate-server-host必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。 |
-| ntpdate-server-host | 配置时间同步的主机地址，允许为域名或ip，脚本不会对该参数做任何处理与检查，需要依赖调用者保证正确性，该参数与ntpdate-server-ip必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。 |
+| `dry-run` | 只做检查，不做任何修改，可选范围"yes" "no"，默认"no" |
+| `hotdb-version` | 指定HotDB大版本号，可选范围"2.3" "2.4" "zabbix"，默认"2.4" |
+| `install-hotdb-server` | 是否安装HotDB-server，可选范围"yes" "no"，默认"no" |
+| `install-ndbsql` | 是否安装ndbsql，可选范围"yes" "no"，默认"no" |
+| `install-hotdb-listener` | 是否安装HotDB-listener，可选范围"yes" "no"，默认"no" |
+| `--listener-heap-mem-size-gb` | 如果指定，会帮助将HotDB Listener启动脚本中堆内存大小由4G修改为指定值，默认不修改 |
+| `--listener-max-direct-mem-size-gb` | 如果指定，会帮助将HotDB Listener启动脚本中直接内存大小由24G修改为指定值，默认不修改 |
+| `hotdb-use-g1` | 如果指定，会帮助将hotdb启动脚本修改为使用G1垃圾回收器，默认不修改 |
+| `hotdb-heap-mem-size-gb` | 如果指定，会帮助将hotdb启动脚本中堆内存大小由4G修改为指定值，默认不修改 |
+| `hotdb-max-direct-mem-size-gb` | 如果指定，会帮助将hotdb启动脚本中直接内存大小由24G修改为指定值，默认不修改 |
+| `install-hotdb-server-management` | 是否安装HotDB-server-management，可选范围"yes" "no"，默认"no" |
+| `install-hotdb-backup` | 是否安装HotDB-backup，可选范围"yes" "no"，默认"no" |
+| `mysql-version` | 指定MySQL大版本号，可选范围"5.6" "5.7"，默认"5.6" |
+| `mysql-port-list` | 指定要安装的MySQL数据源端口列表，逗号分隔，要求递增顺序排列，示例："3306,3307,3308,3309"，默认为空 |
+| `hotdb-config-port` | 指定要安装的配置库端口列表，不可以和MySQL数据源端口冲突，默认为空 |
+| `hotdb-config-init` | 是否要在hotdb-config-port指定的实例初始化hotdb_config库，可选范围"yes" "no"，默认安装HotDB-server时为yes，不安装HotDB-server时为no。 |
+| `mysql-data-diskname` | 指定用于MySQL数据目录的磁盘设备名称，如果该设备没有挂载，且没有被格式化过，将自动格式化此设备并挂载到数据目录，默认为空 |
+| `mysql-data-rootdir` | 指定要使用的MySQL数据目录根目录，默认"/data"，必须是绝对路径 |
+| `rename-datadir-before-initdb` | 指定在初始化数据库前，是否重命名可能存在的旧数据目录，默认为"yes" |
+| `server-id-perfix` | 指定server-id使用的前缀，要求为小于429496的数字，默认自动计算，但不保证绝对无冲突 |
+| `character-set-server` | 指定字符集，可选范围"latin1" "gbk" "utf8" "utf8mb4"，默认"utf8mb4" |
+| `collation-server` | 指定校对集，可选范围"latin1_swedish_ci" "latin1_bin" "gbk_chinese_ci" "gbk_bin" "utf8_general_ci","utf8_bin" "utf8mb4_general_ci" "utf8mb4_bin"，默认值为配置的字符集的默认校对集 |
+| `innodb-buffer-pool-size-mb` | 单位为MB的innodb-buffer-pool-size大小，默认自动计算 |
+| `innodb-log-file-size-mb` | 单位为MB的innodb-log-file-size大小，默认自动计算 |
+| `innodb-data-file-size-mb` | 单位为MB的ibdata文件大小，默认"4096" |
+| `innodb-io-capacity` | 指定innodb-io-capacity的大小，默认自动计算 |
+| `innodb-flush-log-at-trx-commit` | 指定innodb-flush-log-at-trx-commit设置，默认"2" |
+| `sync-binlog` | 指定sync-binlog的设置，默认"10" |
+| `binlog-format` | 指定binlog-format的设置，可选范围"MIXED" "ROW"，默认"MIXED" |
+| `gtid-mode` | 是否启用gtid，可选范围"on" "off"，默认"on" |
+| `rpl-semi-sync-enabled` | 是否启动半同步复制，可选范围"on" "off"，默认"on" |
+| `mgr-group-name-list` | MySQL端口号:MGR组UUID:MGR本地端口号列表，逗号分隔，如果提供该参数，将为对应端口打开MGR，例如"3306:540c2b46-5d73-11e8-ad9b-00a0c9000000:33060,3308:5f5c1e2d-5d73-11e8-ad9b-00a0c9000000:33080"，默认为空。（注意，仍然需要在mysql-port-list、hotdb-config-port中指定欲创建的MySQL实例） |
+| `mgr-group-local-ip` | MGR本地端口绑定的本地IP地址，默认自动计算。 |
+| `mgr-group-seeds-list` | MySQL端口号:MGR组成员IP:端口逗号分隔列表，斜杠分隔，如果提供该参数，将在my.cnf文件中对应端口添加该值，默认为空，例如"3306:192.168.200.101:33060,192.168.200.102:33060,192.168.200.103:33060/3308:192.168.200.101:33080,192.168.200.102:33080,192.168.200.103:33080" |
+| `creat-hotdbroot-in-mysql` | 是否在MySQL中创建hotdb_root用户，用户拥有所有权限，并且可以从任意位置连接，默认密码hotdb_root，可选范围"yes" "no"，默认"no" |
+| `install-keepalived` | 是否安装keepalive，可选范围"master" "backup" "no"，默认"no" |
+| `keepalived-vip-with-perfix` | 如果指定，会帮助将keepalive配置中的vip由192.168.200.140/24替换为该值，默认不修改 |
+| `keepalived-virtual-router-id` | 如果指定，会帮助将keepalive配置中的virtual-router-id由151替换为该值，默认不修改 |
+| `keepalived-net-interface-name` | 如果指定，会帮助将keepalive配置中的vip设备名称由eth0:1替换为该值，默认不修改 |
+| `install-lvs` | 是否安装lvs服务端，可选范围"master" "backup" "no"，默认"no" |
+| `lvs-vip-with-perfix` | 如果指定，会帮助将lvs配置中的vip由192.168.56.203/24替换为该值，默认不修改 |
+| `lvs-port` | 如果指定，会帮助将lvs配置中的监听端口由3306替换为该值，默认不修改，端口需要和HotDB集群的数据服务端口相同 |
+| `lvs-virtual-router-id` | 如果指定，会帮助将lvs配置中的virtual-router-id由51替换为该值，默认不修改 |
+| `lvs-net-interface-name` | 如果指定，会帮助将lvs配置中的vip设备名称由eth1:2替换为该值，默认不修改 |
+| `lvs-real-server-list` | lvs后端HotDB服务器IP:数据服务端口:管理端口列表，逗号分隔，例如"192.168.0.1:3323:3325,192.168.0.2:4323:4325"，默认为空 |
+| `lvs-real-server-user` | lvs健康检查脚本连接后端HotDB服务器管理端口使用的用户名，默认"root" |
+| `lvs-real-server-password` | lvs健康检查脚本连接后端HotDB服务器管理端口使用的用密码，默认"root" |
+| `lvs-real-server-startup-type` | 作为lvs的realserver时，服务器相关调整的配置方式，可选范围"no" "config" "service" 默认"no" |
+| `install-ntpd` | 是否安装ntpd，可选范围"yes" "no"，如果安装HotDB，则默认安装ntpd，否则默认不安装。注意，一个HotDB集群里面，应当只有一个ntpd；HotDB备机应当向HotDB主机同步时间。如果内网有ntp源，则不必安装ntpd。 |
+| `ntpdate-server-ip` | 配置时间同步的ip地址，该参数与ntpdate-server-host必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。 |
+| `ntpdate-server-host` | 配置时间同步的主机地址，允许为域名或ip，脚本不会对该参数做任何处理与检查，需要依赖调用者保证正确性，该参数与ntpdate-server-ip必须指定其中一个且只能指定其中一个。如果本机安装ntpd，则应当指定为HotDB集群外的时间源；如果本机不安装ntpd，则应当指定为HotDB集群内部的ntpd服务所在的服务器地址（如果主HotDB安装了ntpd服务的话），或内网中的ntpd服务器地址，不应该选择外网地址。 |
 
 ##### 参数使用说明
 
 参数的组合使用：参数名=值+空格+参数名=值 ，例如：
 
 ```
---hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192
-.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+--hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
 ```
 
 脚本安装存储节点监听程序：
 
 ```
---hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192
-.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --install-hotdb-listener=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+--hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.7 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --install-hotdb-listener=yes --hotdb-version=2.5 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
 ```
 
 运行脚本使用方法：
 
-```
+```bash
 sh -x 脚本名称.sh+空格+参数串
-sh -x hotdbinstall_v*.sh --hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1
---ntpdate-server-ip=192.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.6 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.4 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
+sh -x hotdbinstall_v*.sh --hotdb-heap-mem-size-gb=1 --hotdb-max-direct-mem-size-gb=1 --ntpdate-server-ip=192.168.200.140 --rpl-semi-sync-enabled=on --mysql-version=5.6 --hotdb-config-port=3316 --install-ntpd=yes --install-hotdb-server=yes --hotdb-version=2.4 --install-hotdb-backup=yes --mysql-port-list=3307,3308 --install-hotdb-server-management=yes
 ```
 
 ##### 脚本其他说明
 
-1. 因当前一键部署安装脚本需要执行tune脚本，tune脚本中会修改网卡相关硬件参数，可能导致网卡短暂失去响应或网卡内部重启。已知在配置了Bond的环境下，可能因为操作系统响应不够快或交换机响应不够快，导致短时间内的网络连接中断，进而导致SSH终端断连或HotDB连接中断，部分情况可通过缩短Bond 配置参数miimon=100缓解。
+因当前一键部署安装脚本需要执行tune脚本，tune脚本中会修改网卡相关硬件参数，可能导致网卡短暂失去响应或网卡内部重启。已知在配置了Bond的环境下，可能因为操作系统响应不够快或交换机响应不够快，导致短时间内的网络连接中断，进而导致SSH终端断连或HotDB连接中断，部分情况可通过缩短Bond 配置参数`miimon=100`缓解。
 
-2. 安装前建议关闭服务器自带的防火墙与selinux功能（selinux重启生效）。
+安装前建议关闭服务器自带的防火墙与selinux功能（selinux重启生效）。
 
