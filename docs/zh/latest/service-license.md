@@ -15,9 +15,8 @@
 ```
 [root@hotdb_171_221 keys]# cd /usr/local/hotdb/hotdb-management/keys
 [root@hotdb_171_221 keys]# ll
-
 total 4
--rw-r--r--. 1 root root 1313 Dec 25 17:57 management-license**
+-rw-r--r--. 1 root root 1313 Dec 25 17:57 management-license
 ```
 
 #### 激活试用许可证
@@ -47,14 +46,14 @@ customer info: hotdb.com
 
 以上各列其含义分别为：
 
-* `file` - 授权文件名
-* `serial number` - 授权文件序列号
-* `type` - 授权类型，示例：OFFICIAL（正式版）、TRAIL（试用版）
-* `num of available compute node cluster groups` - 可用计算节点集群组数，为0表示不做任何限制
-* `num of compute nodes available in each cluster` - 每组集群可用的计算节点个数，为0表示不做任何限制
-* `module limit` - 模块限制，默认为0
-* `create time` - 创建时间
-* `customer info` - 用户信息备注
+- `file` - 授权文件名
+- `serial number` - 授权文件序列号
+- `type` - 授权类型，示例：OFFICIAL（正式版）、TRAIL（试用版）
+- `num of available compute node cluster groups` - 可用计算节点集群组数，为0表示不做任何限制
+- `num of compute nodes available in each cluster` - 每组集群可用的计算节点个数，为0表示不做任何限制
+- `module limit` - 模块限制，默认为0
+- `create time` - 创建时间
+- `customer info` - 用户信息备注
 
 若提示：`ERROR: LICENSE TAMPERED!`，一般表示授权被篡改、无法使用。
 
@@ -73,7 +72,6 @@ customer info: hotdb.com
 ```
 [root@hotdb_171_221 utils]# cd /usr/local/hotdb/hotdb-management/utils
 [root@hotdb_171_221 utils]# ll
-
 total 144
 -rw-r--r--. 1 hotdb hotdb 145748 Nov 25 10:43 hotdb_management_license.jar
 
@@ -82,7 +80,6 @@ trying to generate fingerprint on Linux amd64
 The fingerprint file was successfully generated in ./management-fingerprint-2020-12-28-10-17-08
 
 [root@hotdb_171_221 utils]# ll
-
 total 148
 -rw-r--r--. 1 hotdb hotdb 145748 Nov 25 10:43 hotdb_management_license.jar
 -rw-r--r--. 1 root root 1025 Dec 28 10:17 management-fingerprint-2020-12-28-10-17-08
@@ -108,10 +105,8 @@ total 148
 
 ```
 [root@hotdb_171_221 keys]# java -jar ../utils/hotdb_management_license.jar -l management-license-official-2020-12-23-15-40-55
-
 License info of file management-license-official-2020-12-23-15-40-55:
 LICENSE VERIFIED.
-
 ======================== Management License ========================
 file: management-license-official-2020-12-23-15-40-55
 serial number: OFFICIAL-4-9-0-3441650625331880732
@@ -133,9 +128,7 @@ customer info: poc_license_for_bank_of_256test
 
 ```
 [root@hotdb_171_221 keys]# java -jar ../utils/hotdb_management_license.jar -i
-
 The License currently in use is:
-
 ======================== Management License ========================
 file: management-license-official-2020-12-23-15-40-55
 serial number: OFFICIAL-4-9-0-3441650625331880732
@@ -147,8 +140,8 @@ create time: 2020-12-23
 customer info: poc_license_for_bank_of_256test
 ```
 
-* 如果是试用许可证，查看许可证信息时可见`type: TRAIL`
-* 如果是正式许可证，查看许可证信息时可见`type: OFFICIAL`
+- 如果是试用许可证，查看许可证信息时可见`type: TRAIL`
+- 如果是正式许可证，查看许可证信息时可见`type: OFFICIAL`
 
 ### 注意事项
 
@@ -172,18 +165,17 @@ customer info: poc_license_for_bank_of_256test
 
 HotDB计算节点能正常提供服务，需要使用热璞数据库正规的授权许可证进行激活。从HotDB Server V2.5.6版本起，计算节点启用新自研的加密许可证授权管理功能，本文档基于新自研的加密许可证授权功能进行说明。若您使用的计算节点版本低于（不包含）V2.5.6时，仍旧参考历史与其配套的服务授权使用说明文档进行操作。
 
-新自研加密许可证只有软锁，没有硬锁。软锁又分为"正式软锁许可证（简称为正式许可证）"与[试用许可证](#试用许可证)，正式许可证可以控制有效期、节点数、逻辑库数，且唯一机器指纹对应唯一正式软锁；试用许可证无需机器指纹即可在任意机器上激活，可控制节点数、逻辑库数，且有效期永久。目前仅允许使用一次试用许可证，若要更新需申请正式许可证。
+新自研加密许可证只有软锁，没有硬锁。软锁又分为"[正式软锁许可证](#正式许可证)（简称为正式许可证）"与[试用许可证](#试用许可证)，正式许可证可以控制有效期、节点数、逻辑库数，且唯一机器指纹对应唯一正式软锁；试用许可证无需机器指纹即可在任意机器上激活，可控制节点数、逻辑库数，且有效期永久。目前仅允许使用一次试用许可证，若要更新需申请正式许可证。
 
 当服务器上同时存在试用许可证和正式许可证时，优先使用授权节点数更多的许可证；若授权节点数相同，优先使用授权逻辑库数更多的许可证；若授权逻辑库数相同，优先使用授权有效期更长的许可证。
 
 ### 试用许可证
 
-若使用一键部署安装计算节点，在hotdb-server/keys目录下默认附带一个具有16个节点，2个逻辑库的试用许可证，文件名为license-trail，如下所示：
+若使用一键部署安装计算节点，在`hotdb-server/keys`目录下默认附带一个具有16个节点，2个逻辑库的试用许可证，文件名为`license-trail`，如下所示：
 
 ```
 [root@localhost keys]# cd /usr/local/hotdb/hotdb-server/keys
 [root@localhost keys]# ll
-
 total 4
 -rw-r--r-- 1 root root 1369 Aug 6 16:21 **license-trail**
 ```
@@ -197,11 +189,9 @@ total 4
 若需要查看试用许可证详细信息，可在`hotdb-server/keys`目录下执行以下命令：
 
 ```
-[root@localhost keys]# **java -jar ../utils/hotdb_license.jar -l license-trail**
-
+[root@localhost keys]# java -jar ../utils/hotdb_license.jar -l license-trail
 License info of file license-trail:
 LICENSE VERIFIED.
-
 ======================== HotDB License ========================
 file: license-trail
 serial number: TRAIL-64-0-1609344000000-8283391465276724534
@@ -216,25 +206,9 @@ time left: 89 days 23 hours 58 minutes 51 seconds.
 customer info: hotdb.com
 ```
 
-以上各列其含义分别为：
-
-* file - 授权文件名
-* serial number - 授权文件序列号
-* type - 授权类型，分为 EXPIRATION（有效）、PERPETUAL（永久）、TRAIL（试用）
-* datanode limit - 数据节点数限制
-* module limit - 模块限制（当前暂未做功能，可暂时忽略）
-* logicdb limit - 可用逻辑库数限制，为0表示不限制
-* create time - 创建时间
-* effective time - 可用开始时间
-* expire time - 可用截止时间，注意，此处可能是非日期形式，EXPIRED 代表授权过期、NOT ACTIVATED YET尚未激活、NEVER代表永久
-* time left - 剩余可用时间
-* customer info - 用户信息备注
-
-若提示：ERROR: LICENSE TAMPERED! 一般表示授权被篡改、无法使用。
-
 或者在计算节点启动后，`hotdb.log`日志文件中会输出许可证信息，如下所示：
 
-```
+```log
 2020-12-25 16:38:03.860 [INFO] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.W(310) - Thanks for choosing HotDB. Datanode limit to: 16, logic database limit to: 2
 ```
 
@@ -242,7 +216,6 @@ customer info: hotdb.com
 
 ```
 root@127.0.0.1:(none) 8.0.15 01:46:08> show @@usbkey\G
-
 *************************** 1. row ***************************
 left_time: 0
 usbkey_status: 1
@@ -270,12 +243,10 @@ comment: NULL
 
 ```
 [root@localhost utils]# java -jar hotdb_license.jar -f
-
 trying to generate fingerprint on Linux amd64
 The fingerprint file was successfully generated in ./fingerprint-2020-09-15-14-41-53
 
 [root@localhost utils]# ll
-
 total 136
 -rw-r--r-- 1 root root 2049 Sep 15 14:41 fingerprint-2020-09-15-14-41-53
 -rw-r--r-- 1 root root 98165 Aug 25 14:43 hotdb_license.jar
@@ -300,10 +271,8 @@ total 136
 
 ```
 [root@localhost keys]# java -jar ../utils/hotdb_license.jar -l license-expiration-2020-09-15-14-53-39
-
 License info of file license-expiration-2020-09-15-14-53-39:
 LICENSE VERIFIED.
-
 ======================== HotDB License ========================
 file: license-expiration-2020-09-15-14-53-39
 serial number: EXPIRATION-64-0-1600704000000-4148973046739213858
@@ -318,9 +287,9 @@ time left: 6 days 9 hours 5 minutes 8 seconds.
 customer info: license_for_test
 ```
 
-或者在计算节点启动后，hotdb.log日志文件中会输出许可证信息，如下所示：
+或者在计算节点启动后，`hotdb.log`日志文件中会输出许可证信息，如下所示：
 
-```
+```log
 2020-09-15 15:00:03.706 [INFO] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(262) - Thanks for chooising HotDB.
 2020-09-15 15:00:03.710 [INFO] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(269) - HotDB license expire time: 2020-09-22, datanode limit to: 64, logic database limit to: 20
 2020-09-15 15:00:03.710 [INFO] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(274) - HotDB trial expires in 6 days 8 hours 59 minutes 56 seconds.
@@ -330,7 +299,6 @@ customer info: license_for_test
 
 ```
 root@127.0.0.1:(none) 5.7.22 03:00:56> show @@usbkey\G
-
 *************************** 1. row ***************************
 left_time: 550796
 usbkey_status: 1
@@ -352,9 +320,7 @@ comment: NULL
 
 ```
 [root@localhost keys]# java -jar ../utils/hotdb_license.jar -i
-
 The License currently in use is:
-
 ======================== HotDB License ========================
 file: license-trail
 serial number: TRAIL-64-0-1609344000000-8283391465276724534
@@ -388,7 +354,7 @@ time left: 89 days 22 hours 55 minutes 48 seconds.
 
 计算节点启动后，默认5分钟检测一次许可证状态。当许可证过期时，计算节点服务不会立刻停止，但会限制节点数为0，3325端口不允许执行`reload @@config`，3323端口不允许执行任意SQL，同时日志文件hotdb.log中也会间隔5分钟输出一次许可证过期警告信息，如下所示：
 
-```
+```log
 2020-12-15 00:02:52.113 [ERROR] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(163) - no matched license detected. Datanode limit to 0.
 2020-12-15 00:02:52.114 [ERROR] [AUTHORITY] [checker-1] cn.hotpu.hotdb.a(5540) - Number of Datanodes Exceeded Maximum Size Limit. expect:4 limit:0
 ```
@@ -397,13 +363,12 @@ time left: 89 days 22 hours 55 minutes 48 seconds.
 
 ```
 root@127.0.0.1:(none) 5.7.22 12:06:55> reload @@config;
-
 ERROR 10190 (HY000): Reload config failure, Number of Datanodes Exceeded Maximum Size Limit. For more details, please check the log
 ```
 
 当许可证过期后，人为手动重启计算节点服务，此时服务将无法启动，报无可用许可证，如下所示：
 
-```
+```log
 2020-12-15 00:10:47.388 [ERROR] [AUTHORITY] [checker-1] cn.hotpu.hotdb.util.V(158) - no available matched license detected. we will shutdown now.
 2020-12-15 00:10:47.389 [INFO] [EXIT[ FLOW ]] [ShutdownHook] cn.hotpu.hotdb.c(770) - begin to exit...
 ```
@@ -412,19 +377,18 @@ ERROR 10190 (HY000): Reload config failure, Number of Datanodes Exceeded Maximum
 
 #### 许可证授权功能超过限制
 
-当计算节点重启时，若许可证授权节点数、逻辑库数小于当前配置的数据节点数、逻辑库数。则计算节点会启动成功，但无法正常使用，会提示Wrong HotDB Config，直到更新了可用授权或修改配置且被计算节点识别为止（间隔5分钟定时任务识别或修改当前配置的节点数/逻辑库数动态加载）。
+当计算节点重启时，若许可证授权节点数、逻辑库数小于当前配置的数据节点数、逻辑库数。则计算节点会启动成功，但无法正常使用，会提示`Wrong HotDB Config`，直到更新了可用授权或修改配置且被计算节点识别为止（间隔5分钟定时任务识别或修改当前配置的节点数/逻辑库数动态加载）。
 
 授权逻辑库数超过已有配置限制提醒示例：
 
 ```
 root> show databases;
-
 ERROR 10161 (HY000): Wrong HotDB Config, due to: Number of Logic Database Exceeded Maximum Size Limit. expect:3 limit:2
 ```
 
 日志提醒示例：
 
-```
+```log
 2020-12-22 14:13:06.231 [ERROR] [AUTHORITY] [checker-1] cn.hotpu.hotdb.a(5844) - Number of Logic Database Exceeded Maximum Size Limit. expect:3 limit:2
 ```
 
@@ -432,7 +396,6 @@ ERROR 10161 (HY000): Wrong HotDB Config, due to: Number of Logic Database Exceed
 
 ```
 root> reload @@config;
-
 ERROR 10190 (HY000): Reload config failure, Number of Logic Database Exceeded Maximum Size Limit. For more details, please check the log
 ```
 

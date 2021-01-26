@@ -45,7 +45,7 @@
   * [ ] `docs/zh/latest/basic-operations.md` T
 * `install-deploy-update`
   * [X] `docs/zh/latest/install-and-deploy.md` F C
-  * [X] `docs/zh/latest/service-license.md` F
+  * [X] `docs/zh/latest/service-license.md` F C
   * [X] `docs/zh/latest/manual-update.md` F
   * [X] `docs/zh/latest/cluster-environment-requirement.md` F
   * [X] `docs/zh/latest/hardware-config-recommendation.md` F
@@ -74,7 +74,7 @@
   * [ ] `docs/en/latest/basic-operations.md` T
 * `install-deploy-update`
   * [X] `docs/en/latest/install-and-deploy.md` C
-  * [X] `docs/en/latest/service-license.md`
+  * [X] `docs/en/latest/service-license.md` C
   * [X] `docs/en/latest/manual-update.md`
   * [X] `docs/en/latest/cluster-environment-requirement.md`
   * [X] `docs/en/latest/hardware-config-recommendation.md`
