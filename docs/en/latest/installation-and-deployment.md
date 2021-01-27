@@ -521,6 +521,15 @@ Data Source is a standard MySQL instance in nature, and it is used for storing u
 
 For the data source manually deployed and installed, it is required to create a database user for the compute node to connect to the data source instance.
 
+**Database:** 
+
+the data source is determined by IP + instance port + database. Therefore, the database name needs to be filled in for the data source configured on the management platform. For the manually installed data source instances, users need to create databases manually to facilitate later addition to the management platform for cluster use.
+
+```bash
+# Create a database in a data source instance
+create database db01;
+```
+
 ```sql
 # Create a database user
 create user 'hotdb_datasource'@'%' identified by 'hotdb_datasource';
