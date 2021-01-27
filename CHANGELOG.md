@@ -80,7 +80,7 @@
   * [X] `docs/en/latest/hardware-config-recommendation.md`
 * `hotdb-server`
   * [ ] `docs/en/latest/standard.md` D
-  * [ ] `docs/en/latest/management-port-command.md` D
+  * [X] `docs/en/latest/management-port-command.md` D
 * `hotdb-management`
   * [ ] `docs/en/latest/hotdm-management.md`
   * [X] `docs/en/latest/intelligent-inspection.md` C

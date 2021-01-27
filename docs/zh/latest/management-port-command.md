@@ -734,7 +734,7 @@ show @@tableinfo_db;
 
 该命令用于查看以数据节点为单位的表的数据信息，仅统计当前使用存储节点的表信息。例如：
 
-```
+```sql
 show @@tableinfo_dn;
 ```
 
@@ -752,7 +752,7 @@ show @@tableinfo_dn;
 
 该命令用于显示以存储节点为单位的表的数据信息，包含当前所有存储节点信息（不可用存储节点也统计在内）。例如：
 
-```
+```sql
 show @@tableinfo_ds;
 ```
 
@@ -987,7 +987,7 @@ show backupmasterdelay [DNID];
 
 例如：
 
-```
+```sql
 show @@config_master_status;
 ```
 
