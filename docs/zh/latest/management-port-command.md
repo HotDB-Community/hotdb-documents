@@ -39,7 +39,7 @@ select * from backend where MYSQLID=198865;
 
 或使用HINT语法：
 
-```
+```sql
 /*!hotdb:dnid=all*/select * from information_schema.processlist where info!='NULL' and id=198865;
 ```
 
@@ -374,7 +374,7 @@ show @@latency;
 | `dn` | 数据节点id | `INT/[number]` |
 | `info` | 当前存储节点路径 | `STRING/[ip]:[port]/[database]` |
 | `backup_info` | 备库存储节点路径 | `STRING/[ip]:[port]/[database]` |
-| `latency` | 如可用则显示同步延迟（ms）；如不可用或存储节点被暂停显示"STOPPED"；如无同步延迟，则显示"ERROR! Check your replication."；如同步延迟无效，则显示"ERROR! Check your replication.(datasource may have just switched)" | `STRING/[number] ms,"STOPPED", "ERROR! Check your replication.", "ERROR! Check your replication.(datasource may have just switched)"` |
+| `latency` | 如可用则显示同步延迟（ms）；如不可用或存储节点被暂停显示`"STOPPED"`；如无同步延迟，则显示`"ERROR! Check your replication."`；如同步延迟无效，则显示`"ERROR! Check your replication.(datasource may have just switched)"` | `STRING/[number] ms`, `"STOPPED"`, `"ERROR! Check your replication."`, `"ERROR! Check your replication.(datasource may have just switched)"` |
 
 #### `show @@longtransaction` - 显示长事务信息
 
@@ -423,7 +423,7 @@ show @@masterslaveconsistency;
 | `db` | 逻辑库名 | `STRING/[database]` |
 | `table` | 表名 | `STRING/[table]` |
 | `dn` | 数据节点名称 | `STRING` |
-| `result` | 是否一致 | `STRING/["YES","NO" ,"UNKNOWN"]` |
+| `result` | 是否一致 | `STRING/["YES","NO","UNKNOWN"]` |
 | `info` | 一致性结果 | `STRING` |
 
 #### `show @@operation` - 显示详细的命令执行统计情况
@@ -456,12 +456,12 @@ select * from operation where `TABLE` like '%tid%';
 | `port` | 存储节点的端口 | `INT/[number]` |
 | `db` | 物理库 | `STRING/[database]` |
 | `table` | 表名 | `STRING/[table]` |
-| `select` | 对`[table]`表select操作次数 | `LONG/[number]` |
-| `insert` | 对`[table]`表insert操作次数 | `LONG/[number]` |
-| `update` | 对`[table]`表insert操作次数 | `LONG/[number]` |
-| `delete` | 对`[table]`表delete操作次数 | `LONG/[number]` |
-| `replace` | 对`[table]`表replace操作次数 | `LONG/[number]` |
-| `other` | 对`[table]`表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
+| `select` | 对\[table]表select操作次数 | `LONG/[number]` |
+| `insert` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| `update` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| `delete` | 对\[table]表delete操作次数 | `LONG/[number]` |
+| `replace` | 对\[table]表replace操作次数 | `LONG/[number]` |
+| `other` | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
 | `all` | 对以上操作的统计 | `LONG/[number]` |
 
 #### `show @@operation_db` - 显示逻辑库为单位的命令执行情况
@@ -479,12 +479,12 @@ show @@operation_db;
 | 列名 | 说明 | 值类型/范围 |
 |-----------|--------------------------------|---------------------|
 | `db` | 逻辑库名 | `STRING/[database]` |
-| `select` | 对`[table]`表select操作次数 | `LONG/[number]` |
-| `insert` | 对`[table]`表insert操作次数 | `LONG/[number]` |
-| `update` | 对`[table]`表insert操作次数 | `LONG/[number]` |
-| `delete` | 对`[table]`表delete操作次数 | `LONG/[number]` |
-| `replace` | 对`[table]`表replace操作次数 | `LONG/[number]` |
-| `other` | 对`[table]`表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
+| `select` | 对\[table]表select操作次数 | `LONG/[number]` |
+| `insert` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| `update` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| `delete` | 对\[table]表delete操作次数 | `LONG/[number]` |
+| `replace` | 对\[table]表replace操作次数 | `LONG/[number]` |
+| `other` | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
 | `all` | 对以上操作的统计 | `LONG/[number]` |
 
 #### `show @@operation_dn` - 显示数据节点为单位的命令执行情况
@@ -502,12 +502,12 @@ show @@operation_dn;
 | 列名 | 说明 | 值类型/范围 |
 |-----------|--------------------------------|-----------------|
 | `dn` | 数据库节点id | `INT/[number]` |
-| `select` | 对`[table]`表select操作次数 | `LONG/[number]` |
-| `insert` | 对`[table]`表insert操作次数 | `LONG/[number]` |
-| `update` | 对`[table]`表insert操作次数 | `LONG/[number]` |
-| `delete` | 对`[table]`表delete操作次数 | `LONG/[number]` |
-| `replace` | 对`[table]`表replace操作次数 | `LONG/[number]` |
-| `other` | 对`[table]`表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
+| `select` | 对\[table]表select操作次数 | `LONG/[number]` |
+| `insert` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| `update` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| `delete` | 对\[table]表delete操作次数 | `LONG/[number]` |
+| `replace` | 对\[table]表replace操作次数 | `LONG/[number]` |
+| `other` | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
 | `all` | 对以上操作的统计 | `LONG/[number]` |
 
 > !Note
@@ -532,12 +532,12 @@ show @@operation_ds;
 | `host` | 存储节点所在主机IP | `STRING/[IP]` |
 | `port` | 存储节点的端口 | `INT/[number]` |
 | `db` | 物理库 | `STRING/[database]` |
-| `select` | 对`[table]`表select操作次数 | `LONG/[number]` |
-| `insert` | 对`[table]`表insert操作次数 | `LONG/[number]` |
-| `update` | 对`[table]`表insert操作次数 | `LONG/[number]` |
-| `delete` | 对`[table]`表delete操作次数 | `LONG/[number]` |
-| `replace` | 对`[table]`表replace操作次数 | `LONG/[number]` |
-| `other` | 对`[table]`表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
+| `select` | 对\[table]表select操作次数 | `LONG/[number]` |
+| `insert` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| `update` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| `delete` | 对\[table]表delete操作次数 | `LONG/[number]` |
+| `replace` | 对\[table]表replace操作次数 | `LONG/[number]` |
+| `other` | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
 | `all` | 对以上操作的统计 | `LONG/[number]` |
 
 #### `show @@operation_table` - 显示表为单位的命令执行情况
@@ -555,12 +555,12 @@ show @@operation_table;
 | 列名 | 说明 | 值类型/范围 |
 |-----------|--------------------------------|------------------|
 | `table` | 表名 | `STRING/[table]` |
-| `select` | 对`[table]`表select操作次数 | `LONG/[number]` |
-| `insert` | 对`[table]`表insert操作次数 | `LONG/[number]` |
-| `update` | 对`[table]`表insert操作次数 | `LONG/[number]` |
-| `delete` | 对`[table]`表delete操作次数 | `LONG/[number]` |
-| `replace` | 对`[table]`表replace操作次数 | `LONG/[number]` |
-| `other` | 对`[table]`表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
+| `select` | 对\[table]表select操作次数 | `LONG/[number]` |
+| `insert` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| `update` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| `delete` | 对\[table]表delete操作次数 | `LONG/[number]` |
+| `replace` | 对\[table]表replace操作次数 | `LONG/[number]` |
+| `other` | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
 | `all` | 对以上操作的统计 | `LONG/[number]` |
 
 #### `show @@processor` - 显示处理线程信息
@@ -645,11 +645,11 @@ show @@query_tb;
 |----------|------------------------------------------------|---------------------|
 | `schema` | 逻辑库 | `STRING/[database]` |
 | `table` | 表名 | `STRING/[table]` |
-| `select` | 对逻辑库`[schema]`下的`[table]`表的select操作的次数 | `LONG/[number]` |
-| `insert` | 对逻辑库`[schema]`下的`[table]`表的insert操作的次数 | `LONG/[number]` |
-| `update` | 对逻辑库`[schema]`下的`[table]`表的update操作的次数 | `LONG/[number]` |
-| `delete` | 对逻辑库`[schema]`下的`[table]`表的delete操作的次数 | `LONG/[number]` |
-| `other` | 对逻辑库`[schema]`下的`[table]`表的其它操作的次数（执行DDL语句的次数） | `LONG/[number]` |
+| `select` | 对逻辑库`[schema]`下的\[table]表的select操作的次数 | `LONG/[number]` |
+| `insert` | 对逻辑库`[schema]`下的\[table]表的insert操作的次数 | `LONG/[number]` |
+| `update` | 对逻辑库`[schema]`下的\[table]表的update操作的次数 | `LONG/[number]` |
+| `delete` | 对逻辑库`[schema]`下的\[table]表的delete操作的次数 | `LONG/[number]` |
+| `other` | 对逻辑库`[schema]`下的\[table]表的其它操作的次数（执行DDL语句的次数） | `LONG/[number]` |
 | `all` | 对以上操作的统计 | `LONG/[number]` |
 
 #### `show @@session` - 显示当前会话信息
@@ -727,8 +727,8 @@ show @@tableinfo_db;
 | 列名 | 说明 | 值类型/范围 |
 |---------------|-----------------------|---------------------|
 | `db` | 逻辑库名 | `STRING/[database]` |
-| `table_rows` | 对`[table]`表select操作次数 | `LONG/[number]` |
-| `data_length` | 对`[table]`表insert操作次数 | `LONG/[number]` |
+| `table_rows` | 对\[table]表select操作次数 | `LONG/[number]` |
+| `data_length` | 对\[table]表insert操作次数 | `LONG/[number]` |
 
 #### `show @@tableinfo_dn` - 显示数据节点为单位的表数据信息
 
@@ -745,8 +745,8 @@ show @@tableinfo_dn;
 | 列名 | 说明 | 值类型/范围 |
 |---------------|-----------------------|-----------------|
 | `dn` | 数据节点id | `INT/[number]` |
-| `table_rows` | 对`[table]`表select操作次数 | `LONG/[number]` |
-| `data_length` | 对`[table]`表insert操作次数 | `LONG/[number]` |
+| `table_rows` | 对\[table]表select操作次数 | `LONG/[number]` |
+| `data_length` | 对\[table]表insert操作次数 | `LONG/[number]` |
 
 #### `show @@tableinfo_ds` - 显示存储节点为单位的表数据信息
 
@@ -763,8 +763,8 @@ show @@tableinfo_ds;
 | 列名 | 说明 | 值类型/范围 |
 |---------------|-----------------------|-----------------|
 | `ds` | 数据源id | `INT/[number]` |
-| `table_rows` | 对`[table]`表select操作次数 | `LONG/[number]` |
-| `data_length` | 对`[table]`表insert操作次数 | `LONG/[number]` |
+| `table_rows` | 对\[table]表select操作次数 | `LONG/[number]` |
+| `data_length` | 对\[table]表insert操作次数 | `LONG/[number]` |
 
 #### `show @@tableinfo_table` - 显示表级的表数据信息
 
@@ -781,8 +781,8 @@ show @@tableinfo_table;
 | 列名 | 说明 | 值类型/范围 |
 |---------------|-----------------------|------------------|
 | `table` | 表名 | `STRING/[table]` |
-| `table_rows` | 对`[table]`表select操作次数 | `LONG/[number]` |
-| `data_length` | 对`[table]`表insert操作次数 | `LONG/[number]` |
+| `table_rows` | 对\[table]表select操作次数 | `LONG/[number]` |
+| `data_length` | 对\[table]表insert操作次数 | `LONG/[number]` |
 
 #### `show @@threadpool` - 显示线程池状态
 

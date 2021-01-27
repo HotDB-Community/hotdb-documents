@@ -52,7 +52,7 @@ For deployed and launched HotDB Management, the access address can be entered in
 
 **Browser requirements**: Chrome 49 or Firefox 61 and above is recommended.
 
-**Access address format**: http:// HotDB Management Server IP: Access port /login.html
+**Access address format**: `http:// HotDB Management Server IP: Access port /login.html`
 
 Example: `http://192.168.200.201:3324/login.html`
 
@@ -146,7 +146,7 @@ The user management table is the platform user record that has been added by the
 - Comment: displays the comments entered by users when adding or editing.
 - Operation: "Disable", "Enable", "Reset password", "Edit" and "Delete" operations of users can be performed. The admin user cannot perform "Disable" and "Delete".
 
-![](assets/hotdb-management/image11.png)
+![](assets/hotdb-management/image10.png)
 
 ### Add user information
 
@@ -166,7 +166,7 @@ Adding a platform user needs to fill in two parts of content information: User B
 - There are two kinds of compute node cluster privileges: **access** and **control**. Users assigned with "access privileges" can only query after entering the cluster. All operations that affect the data will trigger a prompt of "insufficient privileges". Users assigned with "control privileges" automatically have "access privileges" and can perform all operations on the cluster.
 - you can enter "comments" on the adding and editing page. It is not required.
 
-![](assets/hotdb-management/image12.png)
+![](assets/hotdb-management/image11.png)
 
 **User Menu Privilege**: The menu privileges for users when they enter the cluster management through accessing the general user interface can be configured.
 
@@ -174,7 +174,7 @@ Adding a platform user needs to fill in two parts of content information: User B
 
 - If HotDB Management has been upgraded, the menu privileges of historical platform users need to be checked to see whether the menu privileges in the new version need to be assigned. **Currently, due to the menu function security problem, the new function menu privileges in the new version will not be assigned to historical users by default, and need to be added by the users.**
 
-![](assets/hotdb-management/image13.png)
+![](assets/hotdb-management/image12.png)
 
 ### User password
 
@@ -188,9 +188,9 @@ The login history displays the history of login and logout of the management pla
 
 **Function entry:** User Management > Login history
 
-![](assets/hotdb-management/image14.png)
+![](assets/hotdb-management/image13.png)
 
-![](assets/hotdb-management/image15.png)
+![](assets/hotdb-management/image14.png)
 
 - "Logout time" of the current online user is empty.
 
@@ -244,7 +244,7 @@ The cluster management page displays the compute node clusters deployed or added
 
 - Buttons of \[Switch the active center], \[Remove the IDC], \[Repair the IDC] can be seen in the cluster with DR mode enabled and conditions satisfied. You can refer to the [Visual IDC](visual-idc.md) document.
 
-![](assets/hotdb-management/image16.png)
+![](assets/hotdb-management/image15.png)
 
 **Function button description:**
 
@@ -266,7 +266,7 @@ Because the compute node clusters manually deployed by some users offline need t
 
 Click \[Add Cluster] on the cluster management page to enter the "Add Compute Node Cluster" page.
 
-![](assets/hotdb-management/image17.png)
+![](assets/hotdb-management/image16.png)
 
 **Filling instructions:**
 
@@ -288,9 +288,9 @@ Click \[Add Cluster] on the cluster management page to enter the "Add Compute No
 3. The fields without red * may not be filled in, but when **the compute node cluster is in the master/slave mode**, users are recommended to fill in these parameter values because they may be used for high availability rebuilding and high availability switch later.
 4. After filling in the compute node name, test whether the compute node can be connected via the \[Test] button. The connection exception and successful connection are shown in the following figure:
 
-![](assets/hotdb-management/image18.png)
+![](assets/hotdb-management/image17.png)
 
-![](assets/hotdb-management/image19.png)
+![](assets/hotdb-management/image18.png)
 
 Note: for more notes on DR mode and multi-node mode, you can refer to the supporting documents including [Installation and Deployment](install-and-deployment.md), [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md).
 
@@ -298,7 +298,7 @@ Note: for more notes on DR mode and multi-node mode, you can refer to the suppor
 
 In the master/slave mode cluster, if the cluster meets the high availability switch conditions, click the \[Switch] button in the "Cluster Operation" column of cluster record to manually perform the Master/Slave switching operation of compute node.
 
-![](assets/hotdb-management/image20.png)
+![](assets/hotdb-management/image19.png)
 
 **High availability switch operation instructions**
 
@@ -306,7 +306,7 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 
 (I) **Confirmation of SSH and configuration file location**
 
-![](assets/hotdb-management/image21.png)
+![](assets/hotdb-management/image20.png)
 
 - This step mainly confirms whether the SSH connection information and configuration file (server. XML and keepalived. conf) storage address of master/slave compute node configuration is filled in correctly.
 - SSH login mode may choose Login with User Password or Sign in without Password, the information will be saved after successful connection, and the information will not be saved if one-time login is chosen.
@@ -319,14 +319,14 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 
 (II) **Pre-inspection of switching**
 
-![](assets/hotdb-management/image22.png)
+![](assets/hotdb-management/image21.png)
 
 - Click \[Start Detection] to check whether the current cluster high availability environment meets the requirements before high availability switch.
 - This step requires all detection items to pass the test before proceeding to the next step. Otherwise, it is necessary to manually intervene to solve the abnormal problem of the failed item.
 
 (III) **High-availability switch**
 
-![](assets/hotdb-management/image23.png)
+![](assets/hotdb-management/image22.png)
 
 - This step is a high availability switch execution step. The high availability switch is successful only when all execution items are completed normally.
 - The slave compute node randomly will be set before switch (no setting for below V2.4.8). After the switch is successful, the setting will be canceled automatically.
@@ -335,7 +335,7 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 
 (IV) **Switch complete**
 
-![](assets/hotdb-management/image24.png)
+![](assets/hotdb-management/image23.png)
 
 - Reaching this step means that the high availability switch has been completed. The current VIP drift position and the opening and closing of master/slave compute node service port can be viewed.
 
@@ -343,7 +343,7 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 
 The master/slave mode clusters identify the master/slave role mainly through the server.xml and keepalived.conf configuration files. The high availability switch only allows the switch from the Master role to the Slave role. After the failover or manual switch of compute node, in order to ensure the compute node can be smoothly switched back in the next failure, high availability reconstruction must be performed to ensure correct master/slave compute node configuration.
 
-![](assets/hotdb-management/image25.png)
+![](assets/hotdb-management/image24.png)
 
 The master/slave mode cluster not meeting the high availability switch condition displays the \[Rebuilding] button in the "Cluster Operation" bar. At the same time, the cluster name will display an alert with a yellow background.
 
@@ -351,9 +351,9 @@ The master/slave mode cluster not meeting the high availability switch condition
 
 Click the \[Rebuilding] button to enter the high availability reconstruction process. The process is divided into four steps: Confirmation of SSH and Configuration File Location, Environmental Rebuild Inspection, Rebuild the High Availability Environment, and Rebuild Complete.
 
-(I) **Test of SSH and configuration file location**
+**(I) Test of SSH and configuration file location**
 
-![](assets/hotdb-management/image26.png)
+![](assets/hotdb-management/image25.png)
 
 Before configuration test, attention shall be paid to the following points:
 
@@ -365,9 +365,9 @@ Before configuration test, attention shall be paid to the following points:
 - The configuration file directory shall be consistent with the real service directory, otherwise the connection test will fail.
 - Enter the correct configuration information, the connection test will be successful and the corresponding configuration will be saved to the compute node cluster synchronously. Click \[Next Step] to enter the environment reconstruction detection page. If the current page information does not pass the test, the operation button for the next step cannot be triggered.
 
-(II) **Environment rebuild inspection**
+**(II) Environment rebuild inspection**
 
-![](assets/hotdb-management/image27.png)
+![](assets/hotdb-management/image26.png)
 
 Attentions shall be paid when clicking \[Start Detection]:
 
@@ -377,9 +377,9 @@ Attentions shall be paid when clicking \[Start Detection]:
 
 - When the detection is completed, click \[Next Step] to enter the high availability environment reconstruction page. If the current page information fails the detection, the \[Next Step] button cannot be triggered.
 
-(III) **Rebuild the high availability environment**
+**(III) Rebuild the high availability environment**
 
-![](assets/hotdb-management/image28.png)
+![](assets/hotdb-management/image27.png)
 
 The reconstruction is mainly to modify the relevant configuration information as follows:
 
@@ -387,7 +387,7 @@ The reconstruction is mainly to modify the relevant configuration information as
 
 - Modify the master/slave keepalived configuration files. The keepalived configuration file modification points are as follows:
 
-![](assets/hotdb-management/image29.png)
+![](assets/hotdb-management/image28.png)
 
 Notes for high availability reconstruction:
 
@@ -397,9 +397,9 @@ Notes for high availability reconstruction:
 
 - When the reconstruction is completed, click \[Next Step] to enter the high availability environment reconstruction page. If the current page information is not completed or the execution fails, the \[Next Step] button cannot be triggered.
 
-(IV) **Rebuild complete**
+**(IV) Rebuild complete**
 
-![](assets/hotdb-management/image30.png)
+![](assets/hotdb-management/image29.png)
 
 - When the high availability reconstruction is completed, the master/slave compute node services are running normally. Click \[Immediate Switch] and manually perform the High Availability Switch operation to complete the reconstruction page.
 
@@ -464,7 +464,7 @@ Deployment grade Examination is a set of operation environment examination grade
 
 **Examination panel:**
 
-![](assets/hotdb-management/image31.png)
+![](assets/hotdb-management/image30.png)
 
 **Examination panel content description**
 
@@ -492,7 +492,7 @@ Click \[Environment Examination] button on the deployment environment examinatio
 
 **Examination report detail:**
 
-A successful examination task will generate a examination report. Click ![](assets/hotdb-management/image32.png) detail button in the task record operation column to access the "Examination report detail page".
+A successful examination task will generate a examination report. Click ![](assets/hotdb-management/image31.png) detail button in the task record operation column to access the "Examination report detail page".
 
 **Examination report description**
 
@@ -510,7 +510,7 @@ Prompt: unqualified and warning examination items inform users of the risks that
 
 Evaluation criteria: the program evaluation criteria for judging whether an item passes the detection
 
-![](assets/hotdb-management/image33.png)
+![](assets/hotdb-management/image32.png)
 
 **Note:**
 
@@ -524,7 +524,7 @@ This function is used to view and manage the master-slave relation of the instan
 
 **Function Entry**: Login Management User Interface -> Instance Management
 
-![](assets/hotdb-management/image34.png)
+![](assets/hotdb-management/image33.png)
 
 The instance management information displays a record in the form of a MySQL instance, and performs operations such as "Remove Master", "Add Slave", and "Setup High-privilege User" of specific MySQL instances.
 
@@ -532,11 +532,11 @@ The instance management information displays a record in the form of a MySQL ins
 
 - **Add Master**: Click \[Add Master] to add a slave to this instance and set this instance as a host when performing a "change master" operation on the slave. When selecting a slave, only instances without master can be selected and instances have been configured with master shall first remove the Master.
 
-![](assets/hotdb-management/image35.png)
+![](assets/hotdb-management/image34.png)
 
 - Setup High-privileges User: Mainly used for users configured with "change master/slave" privileges to perform "Remove Master" and "Add Slave" operations. High-privilege users need to have "super, replication slave, replication client, create user, reload" privileges. If the data source does not have these privileges, they need to be added to the instance.
 
-![](assets/hotdb-management/image36.png)
+![](assets/hotdb-management/image35.png)
 
 Click the \[Replication] button to replicate and add the SQL statement of high-privilege user to the instance for execution.
 
@@ -552,7 +552,7 @@ The operation of all manager users on the management platform can be viewed. The
 
 **Function Entry**: Login Management User Interface->Audit Logs->Manager Operation
 
-![](assets/hotdb-management/image37.png)
+![](assets/hotdb-management/image36.png)
 
 **List information description:**
 
@@ -576,13 +576,13 @@ The operations of all general users on the management platform can be viewed. Th
 
 **Function Entry**: Login Management User Interface->Audit Logs->General User Operation
 
-![](assets/hotdb-management/image38.png)
+![](assets/hotdb-management/image37.png)
 
 #### Platform operation
 
 The operations of all general users on the management platform can be viewed. The operation type specifically recorded can be viewed in the operation type drop-down box on the page. Access IP and operation content input boxes support fuzzy query. If the compute node group is selected, only the operation records of the selected compute node group are displayed, and all compute node groups are displayed by default.
 
-![](assets/hotdb-management/image39.png)
+![](assets/hotdb-management/image38.png)
 
 **List information description:**
 
@@ -599,7 +599,7 @@ The operations of all general users on the management platform can be viewed. Th
 
 The operation logs related to security protection performed by all general users can be viewed. The operation type specifically recorded can be viewed in the operation type drop-down box on the page. Access IP and Intercept Details input boxes support fuzzy query. If the compute node group is selected, only the operation records of the selected compute node group are displayed, and all compute node groups are displayed by default. A specific compute node can be selected, and all compute nodes are selected by default.
 
-![](assets/hotdb-management/image40.png)
+![](assets/hotdb-management/image39.png)
 
 **List information description:**
 
@@ -617,7 +617,7 @@ The operation logs related to security protection performed by all general users
 
 The operation records of all general users on the management port can be viewed. The operation type specifically recorded can be viewed in the operation type drop-down box on the page. Access IP and Intercept Details input boxes support fuzzy query. If the compute node group is selected, only the operation records of the selected compute node group are displayed, and a specific compute node can also be selected. All compute nodes are selected by default.
 
-![](assets/hotdb-management/image41.png)
+![](assets/hotdb-management/image40.png)
 
 **List information description:**
 
@@ -643,31 +643,31 @@ Provide users with operations such as platform license, compute node license, up
 
 - "License Management" in the [Tool](#tool) menu under admin role.
 
-![](assets/hotdb-management/image42.png)
+![](assets/hotdb-management/image41.png)
 
 - The "license management" hyperlink in the "certified" menu of management platform.
 
-![](assets/hotdb-management/image43.png)
+![](assets/hotdb-management/image42.png)
 
 ##### Generate fingerprint
 
 - Enter the license management page, select \[Generate license] for operation type, select \[Platform license] for license type, and click \[Generate].
 
-![](assets/hotdb-management/image44.png)
+![](assets/hotdb-management/image43.png)
 
 - Click the \[Download Fingerprint File] hyperlink to download the fingerprint file (the fingerprint file is saved under the directory hotdb-management/keys by default, and the format is: management-fingerprint-year-month-day-hour-minute-second).
 
 - Fill in the information of the applicant and license properties (not required), and copy the application information.
 
+![](assets/hotdb-management/image44.png)
+
+- Click the default address hyperlink of supplier（[service@hotdb.com](service@hotdb.com)）, and call the local mailbox.
+
 ![](assets/hotdb-management/image45.png)
-
-- Click the default address hyperlink of supplier（<service@hotdb.com>）, and call the local mailbox.
-
-![](assets/hotdb-management/image46.png)
 
 - Paste the application information to the email, upload the fingerprint file to the email attachment and send it to the supplier to obtain the new license file.
 
-![](assets/hotdb-management/image47.png)
+![](assets/hotdb-management/image46.png)
 
 ##### Update license
 
@@ -675,17 +675,17 @@ Provide users with operations such as platform license, compute node license, up
 
 - Click \[Update] to update the license, and then refresh the page to make the new license take effect.
 
-![](assets/hotdb-management/image48.png)
+![](assets/hotdb-management/image47.png)
 
 - When the name of the newly uploaded license file is consistent with that of the currently used license file, click \[Update], it will prompt that license file already exists and whether to replace it. Click \[Confirm to replace] to replace the existing license file and enter the Update process.
 
-![](assets/hotdb-management/image49.png)
+![](assets/hotdb-management/image48.png)
 
 ##### Obtain existing license information
 
 Enter the license management page, select \[Obtain the existing license information] for operation type, select \[Platform license] for license type, and click \[Acquire] to obtain the existing license information.
 
-![](assets/hotdb-management/image50.png)
+![](assets/hotdb-management/image49.png)
 
 The license information is as follows:
 
