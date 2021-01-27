@@ -2,397 +2,363 @@
 
 ## New commands in V2.5.6
 
-- [show backupmasterdelay [DNID]](#show-backupmasterdelay-dnid-show-masterslave-replication-delay-of-specified-data-node) -show master/slave replication delay of specified data node[DNID]
-
-- [disable_election](#disable_election-disable-election-in-cluster) -disable election in cluster
-
-- [enable_election](#enable_election-enable-election-in-cluster)-enable election in cluster
-
-- [disable_non_query_command](#disable_non_query_command-only-allow-query-command) -only allow query command
-
-- [enable_non_query_command](#enable_non_query_command-allow-non-query-command) -allow non-query command
-
-- [offline_to_dr](#offline_to_dr-execute-offline-and-online-is-not-allowed) -execute offline and online is not allowed
-
-- [exchangeconfig](#exchangeconfig-exchange-configuration-of-idc) -exchange configuration of IDC
-
-- [exchangememoryconfig](#exchangememoryconfig-exchange-configuration-in-memory) -exchange configuration in memory
-
-- [online_dr_check](#online_dr_check-check-idc-switching) -check IDC switching
-
-- [online_dr_process](#online_dr_process-show-idc-switching-process) -show IDC switching process
-
-- [check @@datasource_config_new](#check-datasource_config_new-check-mysql-parameter-configuration-information) -check MySQL parameter configuration information
-
-- [reset @@dberrorcount](#reset-dberrorcount-clear-all-the-error-messages-of-logicdbs) -clear all the error messages of LogicDBs
+- [show backupmasterdelay [DNID]](#show-backupmasterdelay) - show master/slave replication delay of specified data node
+- [disable_election](#disable_election) -disable election in cluster
+- [enable_election](#enable_election)-enable election in cluster
+- [disable_non_query_command](#disable_non_query_command) -only allow query command
+- [enable_non_query_command](#enable_non_query_command) -allow non-query command
+- [offline_to_dr](#offline_to_dr) -execute offline and online is not allowed
+- [exchangeconfig](#exchangeconfig) -exchange configuration of IDC
+- [exchangememoryconfig](#exchangememoryconfig) -exchange configuration in memory
+- [online_dr_check](#online_dr_check) -check IDC switching
+- [online_dr_process](#online_dr_process) -show IDC switching process
+- [check @@datasource_config_new](#check-datasource_config_new) -check MySQL parameter configuration information
+- [reset @@dberrorcount](#reset-dberrorcount) -clear all the error messages of LogicDBs
 
 ## Data Detection Statement
 
 ### HotDB Server statistics
 
-#### show @@backend -- show backend connection
+#### `show @@backend` - show backend connection
 
 This command is used to view the connection between HotDB Server and data source. For example:
 
-mysql> show @@backend;
+```sql
+show @@backend;
+```
 
 ![](assets/management-port-command/image3.png)
 
 Or query backend as you query a normal table:
 
-mysql> select * from backend where MYSQLID=198865;
+```sql
+select * from backend where MYSQLID=198865;
+```
 
 ![](assets/management-port-command/image4.png)
 
 Or use HINT statement:
 
-mysql> /*!hotdb:dnid=all*/select * from information_schema.processlist where info!='NULL' and id=198865;
+```sql
+/*!hotdb:dnid=all*/select * from information_schema.processlist where info!='NULL' and id=198865;
+```
 
 ![](assets/management-port-command/image5.png)
 
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-|-------------|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| processor | The processor | STRING/["Processor"number] |
-| id | Backend connection id | LONG/[number] |
-| mysqlid | Corresponding MySQL connection id | LONG/[number] |
-| dnid | Data node id | INT/[number] |
-| host | Host information | STRING/[host:port] |
-| schema | Database name | STRING/[database] |
-| lport | Local port | INT/[number] |
-| net_in | Bytes received | LONG/[number] |
-| net_out | Bytes sent | LONG/[number] |
-| up_time | Uptime (s) | LONG/[number] |
-| state | Connection status | connecting: the process of actively connecting to the server. A socket setup request is initiated, but not successful yet |
+|--------------|-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `processor` | The processor | `STRING/[processor number]` |
+| `id` | Backend connection id | `LONG/[number]` |
+| `mysqlid` | Corresponding MySQL connection id | `LONG/[number]` |
+| `dnid` | Data node id | `INT/[number]` |
+| `host` | Host information | `STRING/[host:port]` |
+| `schema` | Database name | `STRING/[database]` |
+| `lport` | Local port | `INT/[number]` |
+| `net_in` | Bytes received | `LONG/[number]` |
+| `net_out` | Bytes sent | `LONG/[number]` |
+| `up_time` | Uptime (s) | `LONG/[number]` |
+| `state` | Connection status | `connecting`: the process of actively connecting to the server. A socket setup request is initiated, but not successful yet |
 |   |   | authenticating: handshake authentication process |
-|   |   | idle: idle available status |
-|   |   | borrowed: borrowed status: in the presence of a transaction scenario, even if the backend does not execute sql, the connection will still be held until commit and rollback are committed. |
-|   |   | running: a request is sent, and in the status of waiting for response or processing the response |
-|   |   | closed: connection is closed |
-| send_queue | size of send queue | INT/[number] |
-| iso_level | transaction isolation level | 0: read uncommitted |
-|   |   | 1: read committed |
-|   |   | 2: repeatable read |
-|   |   | 3: serializable |
-| autocommit | autocommit or not | BOOLEAN/[true/false] |
-| closed | closed or not | BOOLEAN/[true/false] |
-| version | connection pool version number | INT/[number] |
-| charset | result charset | STRING/[charset] |
-| comment | comment | heartbeat: connection used by heartbeat |
-|   |   | latency check: connection used by latency detection |
-|   |   | idle: connection for idle status |
-|   |   | querying: connection for executing query |
+|   |   | `idle` -  idle available status |
+|   |   | `borrowed` -  borrowed status: in the presence of a transaction scenario, even if the backend does not execute sql, the connection will still be held until commit and rollback are committed. |
+|   |   | `running` - a request is sent, and in the status of waiting for response or processing the response |
+|   |   | `closed` - connection is closed |
+| `send_queue` | size of send queue | `INT/[number]` |
+| `iso_level` | transaction isolation level | `0` - read uncommitted |
+|   |   | `1` - read committed |
+|   |   | `2` - repeatable read |
+|   |   | `3` - serializable |
+| `autocommit` | autocommit or not | `BOOLEAN/[true/false]` |
+| `closed` | closed or not | `BOOLEAN/[true/false]` |
+| `version` | connection pool version number | `INT/[number]` |
+| `charset` | result charset | `STRING/[charset]` |
+| `comment` | comment | `heartbeat` -  heartbeat: connection used by heartbeat |
+|   |   | `latency check` - connection used by latency detection |
+|   |   | `idle` -  connection for idle status |
+|   |   | `querying` - connection for executing query |
 
-#### show @@bufferpool - Show the status of bufferpool
+
+#### `show @@bufferpool` - Show the status of bufferpool
 
 This command is used to view the status of bufferpool. For example:
 
-mysql> show @@bufferpool;
+```sql
+show @@bufferpool;
+```
 
 ![](assets/management-port-command/image6.png)
 
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-|---------------------|----------------------------------------------------|----------------------------------------------------------------------------|
-| thread | thread name | STRING/ ["$NIOREACTOR-"[number]"-RW", "$NIOExecutor-"[number]"-" [number]] |
-| pool_size | bufferpool size | INT/[number] |
-| local_allocate_opts | The count of buffer requests of local cache thread | LONG /[number] |
-| queue_recycle_opts | The count of buffer recycles of local cache thread | LONG/[number] |
-| other_allocate_opts | The count of buffer requests of other threads | INT/[number] |
-| other_recycle_opts | The count of buffer recycles of other threads | INT/[number] |
+|-----------------------|----------------------------------------------------|------------------------------------------------------------------------------|
+| `thread` | thread name | `STRING/ ["$NIOREACTOR-"[number]"-RW", "$NIOExecutor-"[number]"-" [number]]` |
+| `pool_size` | bufferpool size | `INT/[number]` |
+| `local_allocate_opts` | The count of buffer requests of local cache thread | `LONG/[number]` |
+| `queue_recycle_opts` | The count of buffer recycles of local cache thread | `LONG/[number]` |
+| `other_allocate_opts` | The count of buffer requests of other threads | `INT/[number]` |
+| `other_recycle_opts` | The count of buffer recycles of other threads | `INT/[number]` |
 
-#### show @@clientquery - statistics of current client query
+#### `show @@clientquery` - statistics of current client query
 
 This command is used to show the statistics of current client query. For example:
 
-mysql> show @@clientquery;
+```sql
+show @@clientquery;
+```
 
 ![](assets/management-port-command/image7.jpeg)
 
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-|-------------|-------------------------------|-------------------|
-| client | client information | STRING/[host] |
-| db | LogicDB name | STRING/[database] |
-| select | The count of query | LONG /[number] |
-| insert | The count of insert | LONG /[number] |
-| update | The count of update | LONG /[number] |
-| delete | The count of delete | LONG /[number] |
-| other | The count of other operations | LONG /[number] |
-| all | all | LONG/[number] |
+|-------------|-------------------------------|---------------------|
+| `client` | client information | `STRING/[host]` |
+| `db` | LogicDB name | `STRING/[database]` |
+| `select` | The count of query | `LONG/[number]` |
+| `insert` | The count of insert | `LONG/[number]` |
+| `update` | The count of update | `LONG/[number]` |
+| `delete` | The count of delete | `LONG/[number]` |
+| `other` | The count of other operations | `LONG/[number]` |
+| `all` | all | `LONG/[number]` |
 
-Note: other counts the DDL statements executed by current client
+> !Note
+>
+> other counts the DDL statements executed by current client
 
-#### show @@cluster -- Show cluster member information
+#### `show @@cluster` - Show cluster member information
 
 This command is used to view current cluster member status. This command is only used to view cluster member status, and has no reference value for single node and master/slave node. For example:
 
-mysql> show @@cluster;
+```sql
+show @@cluster;
+```
 
 ![](assets/management-port-command/image8.png)
 
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-|--------------|------------------------------|------------------|
-| status | member status | STRING |
-| host | member host | STRING/[host] |
-| port | cluster communication port | INTEGER/[port] |
-| server_port | cluster node server port | INTEGER/[port] |
-| manager_port | cluster node Management Port | INTEGER/[port] |
+|----------------|------------------------------|------------------|
+| `status` | member status | `STRING` |
+| `host` | member host | `STRING/[host]` |
+| `port` | cluster communication port | `INTEGER/[port]` |
+| `server_port` | cluster node server port | `INTEGER/[port]` |
+| `manager_port` | cluster node Management Port | `INTEGER/[port]` |
 
-#### show @@connection -- show frontend connection
+#### `show @@connection` - show frontend connection
 
 This command is used to obtain the frontend connection of HotDB Server. For example:
 
-mysql> show @@connection;
+```sql
+show @@connection;
+```
 
 ![](assets/management-port-command/image9.png)
 
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-|-------------|------------------------------|----------------------------|
-| processor | processor name | STRING/["Processor"number] |
-| id | frontend connection id | LONG/[number] |
-| host | client information | STRING/[host:port] |
-| dstport | target port number | INT/[number] |
-| schema | target database name | STRING/[database] |
-| charset | charset | STRING/[charset] |
-| net_in | bytes received | LONG/[number] |
-| net_out | bytes sent | LONG/[number] |
-| up_time | uptime (s) | INT/[number] |
-| recv_buffer | size of receive queue (byte) | LONG/[number] |
-| send_queue | size of send queue (byte) | LONG/[number] |
-| iso_level | transaction isolation level | 0: read uncommitted |
-|   |   | 1: read committed |
-|   |   | 2: repeatable read |
-|   |   | 3: serializable |
-| autocommit | autocommit or not | BOOLEAN/[true/false] |
+|---------------|------------------------------|------------------------------|
+| `processor` | processor name | `STRING/["Processor"number]` |
+| `id` | frontend connection id | `LONG/[number]` |
+| `host` | client information | `STRING/[host:port]` |
+| `dstport` | target port number | `INT/[number]` |
+| `schema` | target database name | `STRING/[database]` |
+| `charset` | charset | `STRING/[charset]` |
+| `net_in` | bytes received | `LONG/[number]` |
+| `net_out` | bytes sent | `LONG/[number]` |
+| `up_time` | uptime (s) | `INT/[number]` |
+| `recv_buffer` | size of receive queue (byte) | `LONG/[number]` |
+| `send_queue` | size of send queue (byte) | `LONG/[number]` |
+| `iso_level` | transaction isolation level | `0` - read uncommitted |
+|   |   | `1` - read committed |
+|   |   | `2` - repeatable read |
+|   |   | `3` - serializable |
+| `autocommit` | autocommit or not | `BOOLEAN/[true/false]` |
 
-#### show @@connection_statistics -- Show current live frontend connection statistics
+#### `show @@connection_statistics` - Show current live frontend connection statistics
 
 This command is used to obtain current live frontend connection statistics of HotDB Server. For example:
 
-mysql> show @@connection_statistics;
+```sql
+show @@connection_statistics;
+```
 
 ![](assets/management-port-command/image10.png)
 
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-|-----------------|--------------------------------------------|-------------------|
-| id | connection id | INTEGER/[number] |
-| client_addr | client ip address | STRING/[host] |
-| port | client connection port | INTEGER/[number] |
-| logicdb | LogicDB used | STRING/[database] |
-| username | username | STRING |
-| host | host matched with client | STRING |
-| connect_time | connection establishment time | STRING/[date] |
-| close_time | current connection time | STRING/[date] |
-| operation_count | The count of operations of this connection | INTEGER/[number] |
+|-------------------|--------------------------------------------|---------------------|
+| `id` | connection id | `INTEGER/[number]` |
+| `client_addr` | client ip address | `STRING/[host]` |
+| `port` | client connection port | `INTEGER/[number]` |
+| `logicdb` | LogicDB used | `STRING/[database]` |
+| `username` | username | `STRING` |
+| `host` | host matched with client | `STRING` |
+| `connect_time` | connection establishment time | `STRING/[date]` |
+| `close_time` | current connection time | `STRING/[date]` |
+| `operation_count` | The count of operations of this connection | `INTEGER/[number]` |
 
-#### show @@database -- show current available LogicDB information
+#### `show @@database` - show current available LogicDB information
 
 This command is used to show current available LogicDB information, which is equivalent to the command show databases under the MySQL. For example:
 
-mysql> show @@database;
+```sql
+show @@database;
+```
 
 ![](assets/management-port-command/image11.png)
 
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-|-------------|-------------|-------------------|
-| database | LogicDB | STRING/[database] |
+|-------------|-------------|---------------------|
+| `database` | LogicDB | `STRING/[database]` |
 
-#### show @@datanode - show data node information
+#### `show @@datanode` - show data node information
 
 This command is used to show the node information of current database. For example:
 
-mysql> show @@database;
+```sql
+show @@datasource;
+```
 
 ![](assets/management-port-command/image12.png)
 
 **Fields and their description are contained in the result:**
 
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| **Column Name** | **Description**                                                                                | **Value Type/Range**               |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| dn              | data node number (the command restart @@heartbeat can be sued to restore heartbeat detection) | INT/[number]                     |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| ds              | current data source information                                                                | STRING/[host:port/database]      |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| ds_id           | current data source id                                                                         | INT/[number]                     |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| type            | current data source type                                                                       | 1: Active Master                   |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-|                 |                                                                                                | 2: Master/Slave                    |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-|                 |                                                                                                | 3: Standby Slave                   |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-|                 |                                                                                                | 4：MGR                             |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| active          | active connections                                                                             | INT/[number]                     |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| idle            | idle connections                                                                               | INT/[number]                     |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| size            | all connections                                                                                | INT/[number]                     |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| state           | node status                                                                                    | normal: normal                     |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-|                 |                                                                                                | Failover: failover                 |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| last_failover_| start time of last failover                                                                    | STRING/[yyyy-MM-dd HH:mm:ss.SSS] |
-|                 |                                                                                                |                                    |
-| start_time      |                                                                                                |                                    |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| last_failover_| duration of last failover (ms)                                                                 | STRING/[number]                  |
-|                 |                                                                                                |                                    |
-| duration        |                                                                                                |                                    |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| last_failover_| reason for last failover                                                                       | STRING                             |
-|                 |                                                                                                |                                    |
-| reason          |                                                                                                |                                    |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| last_failover_| information of last failover                                                                   | STRING                             |
-|                 |                                                                                                |                                    |
-| info            |                                                                                                |                                    |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-| negotiation     | MGR node negotiation status                                                                    | OK: normal                         |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-|                 |                                                                                                | ERROR: abnormal                    |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
-|                 |                                                                                                | NULL: non-MGR                      |
-+-----------------+------------------------------------------------------------------------------------------------+------------------------------------+
+| Column Name | Description | Value Type/Range |
+|----------------------------|-------------------------------------------------------------------------------------------------|------------------------------------|
+| `dn` | data node number (the command `restart @@heartbeat` can be sued to restore heartbeat detection) | `INT/[number]` |
+| `ds` | current data source information | `STRING/[host:port/database]` |
+| `ds_id` | current data source id | `INT/[number]` |
+| `type` | current data source type | `1` - Active Master |
+|   |   | `2` - Master/Slave |
+|   |   | `3` - Standby Slave |
+|   |   | `4` - MGR |
+| `active` | active connections | `INT/[number]` |
+| `idle` | idle connections | `INT/[number]` |
+| `size` | all connections | `INT/[number]` |
+| `state` | node status | `normal` - normal |
+|   |   | `failover` - failover |
+| `last_failover_start_time` | start time of last failover | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
+| `last_failover_duration` | duration of last failover (ms) | `STRING/[number]` |
+| `last_failover_reason` | reason for last failover | `STRING` |
+| `last_failover_info` | information of last failover | `STRING` |
+| `negotiation` | MGR node negotiation status | `OK` - normal |
+|   |   | `ERROR` - abnormal |
+|   |   | `NULL` - non-MGR |
 
-#### show @@datasource -- show data source information
+#### `show @@datasource` - show data source information
 
 This command is used to view configuration information and status of current data source. For example:
 
-mysql> show @@datasource;
+```sql
+show @@datasource;
+```
 
 ![](assets/management-port-command/image13.png)
 
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-|--------------------|-----------------------------------------------------------------------------------------------|------------------------------|
-| dn | data node number (the command restart @@heartbeat can be used to restore heartbeat detection) | INT/[number] |
-| ds | current data source information | STRING/[host:port/database] |
-| type | current data source type | 1: Active Master |
-|   |   | 2: Master/Slave |
-|   |   | 3: Standby Slave |
-|   |   | 4：MGR |
-| status | data source status | 0: unavailable |
-|   |   | 1: available |
-|   |   | 2: last data source abnormal |
-| host | host address | STRING/[IP] |
-| port | host port | STRING /[port] |
-| schema | database name | STRING/[database] |
-| active | active connections | INT/[number] |
-| idle | idle connections | INT/[number] |
-| size | all connections | INT/[number] |
-| unavailable_reason | reasons for unavailable data source | STRING |
-| flow_control | The count of remaining available | INT/[number] |
+|----------------------|-----------------------------------------------------------------------------------------------|---------------------------------|
+| `dn` | data node number (the command restart @@heartbeat can be used to restore heartbeat detection) | `INT/[number]` |
+| `ds` | current data source information | `STRING/[host:port/database]` |
+| `type` | current data source type | `1` - Active Master |
+|   |   | `2` - Master/Slave |
+|   |   | `3` - Standby Slave |
+|   |   | `4` - MGR |
+| `status` | data source status | `0` - unavailable |
+|   |   | `1` - available |
+|   |   | `2` - last data source abnormal |
+| `host` | host address | `STRING/[IP]` |
+| `port` | host port | `STRING/[port]` |
+| `schema` | database name | `STRING/[database]` |
+| `active` | active connections | `INT/[number]` |
+| `idle` | idle connections | `INT/[number]` |
+| `size` | all connections | `INT/[number]` |
+| `unavailable_reason` | reasons for unavailable data source | `STRING` |
+| `flow_control` | The count of remaining available | `INT/[number]` |
 
-#### show @@globaltableconsistency --global table consistency detection
+#### `show @@globaltableconsistency` - global table consistency detection
 
 This command is used to detect the consistency of global table. For example:
 
-mysql> show @@globaltableconsistency;
+```sql
+show @@globaltableconsistency;
+```
 
 ![](assets/management-port-command/image14.png)
 
 **Fields and their description are contained in the result:**
 
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| **Column Name**           | **Description**                                                                       | **Value Type/Range** |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| db                        | LogicDB name                                                                          | STRING/[database]  |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| table                     | global table name                                                                     | STRING/[host:port/  |
-|                           |                                                                                       |                      |
-|                           |                                                                                       | database]           |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| status                    | status                                                                                | 0: undetectable      |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-|                           |                                                                                       | 1: consistency       |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-|                           |                                                                                       | -1: inconsistency    |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| result                    | detection result                                                                      | STRING               |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| less_half_dn_lost_and_  | the number of lines with less than half nodes lost and with data on the first node    | INT/[number]       |
-|                           |                                                                                       |                      |
-| first_dn_exsitdata_count  |                                                                                       |                      |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| repair                    | restoring state                                                                       | STRING               |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| less_half_dn_lost_and_  | the number of lines with less than half nodes lost and without data on the first node | INT/[number]       |
-|                           |                                                                                       |                      |
-| first_dn_nodata_count     |                                                                                       |                      |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| greater_half_dn_lost_   | the number of lines with more than half nodes lost                                    | INT/[number]       |
-|                           |                                                                                       |                      |
-| count                     |                                                                                       |                      |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| only_one_dn_not_lost_row  | the number of lines with only one node not lost                                       | INT/[number]       |
-|                           |                                                                                       |                      |
-| _count                   |                                                                                       |                      |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| inconsist_row_count       | the number of lines with more than one node inconsistent                              | INT/[number]       |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| only_one_dn_inconsist_row | the number of lines with only one node inconsistent and none lost                     | INT/[number]       |
-|                           |                                                                                       |                      |
-| _count                   |                                                                                       |                      |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| inconsist_and_lost_count  | the number of lines with nodes inconsisntent and lost                                 | INT/[number]       |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
-| version                   | detection version                                                                     | INT/[number]       |
-+---------------------------+---------------------------------------------------------------------------------------+----------------------+
+| Column Name | Description | Value Type/Range |
+|--------------------------------------------------|---------------------------------------------------------------------------------------|-------------------------------|
+| `db` | LogicDB name | `STRING/[database]` |
+| `table` | global table name | `STRING/[host:port/database]` |
+| `status` | status | `0` - undetectable |
+|   |   | `1` - consistency |
+|   |   | `-1` - inconsistency |
+| `result` | detection result | `STRING` |
+| `less_half_dn_lost_and_first_dn_exsitdata_count` | the number of lines with less than half nodes lost and with data on the first node | `INT/[number]` |
+| `repair` | restoring state | STRING |
+| `less_half_dn_lost_and_first_dn_nodata_count` | the number of lines with less than half nodes lost and without data on the first node | `INT/[number]` |
+| `greater_half_dn_lost_count` | the number of lines with more than half nodes lost | `INT/[number]` |
+| `only_one_dn_not_lost_row_count` | the number of lines with only one node not lost | `INT/[number]` |
+| `inconsist_row_count` | the number of lines with more than one node inconsistent | `INT/[number]` |
+| `only_one_dn_inconsist_row_count` | the number of lines with only one node inconsistent and none lost | `INT/[number]` |
+| `inconsist_and_lost_count` | the number of lines with nodes inconsisntent and lost | `INT/[number]` |
+| `version` | detection version | `INT/[number]` |
 
-#### show @@heartbeat -- show backend heartbeat status
+#### `show @@heartbeat` - show backend heartbeat status
 
 The command is used to report the heartbeat status. For example:
 
-mysql> show @@heartbeat;
+```sql
+show @@heartbeat;
+```
 
 ![](assets/management-port-command/image15.png)
 
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
-|------------------|-------------------------------------------------------------------|------------------------------------------------------|
-| dn | data node id | INT/[number] |
-| ds_id | data source id | INT/[number] |
-| ds_type | data source type | STRING/[master/slave] |
-| host | host address | STRING/[ip] |
-| port | host port | INT/[port] |
-| db | database name | STRING/[database] |
-| retry | number of retries | INT/[number] |
-| status | heartbeat status | checking: checking |
-|   |   | idle: heartbeat detection is normally started |
-|   |   | stopped: stopped |
-|   |   | paused: heartbeat detection is paused |
-|   |   | unknown: heartbeat detection function is not started |
-| period | heartbeat period | INT/[number] |
-| execute_time | average heartbeat response time of recent 10s, 1min and 5min (ms) | STRING/[number],[number],[number] |
-| last_active_time | lastest heartbeat success time | DATETIME/[yyyy-MM-dd HH:mm:ss] |
-| stop | heartbeat stops or not | BOOLEAN/[true/false] |
+|--------------------|-------------------------------------------------------------------|---------------------------------------------------------|
+| `dn` | data node id | `INT/[number]` |
+| `ds_id` | data source id | `INT/[number]` |
+| `ds_type` | data source type | `STRING/[master/slave]` |
+| `host` | host address | `STRING/[ip]` |
+| `port` | host port | `INT/[port]` |
+| `db` | database name | `STRING/[database]` |
+| `retry` | number of retries | `INT/[number]` |
+| `status` | heartbeat status | `checking` - checking |
+|   |   | `idle` - heartbeat detection is normally started |
+|   |   | `stopped` - stopped |
+|   |   | `paused` - heartbeat detection is paused |
+|   |   | `unknown` - heartbeat detection function is not started |
+| `period` | heartbeat period | `INT/[number]` |
+| `execute_time` | average heartbeat response time of recent 10s, 1min and 5min (ms) | `STRING/[number],[number],[number]` |
+| `last_active_time` | lastest heartbeat success time | `DATETIME/[yyyy-MM-dd HH:mm:ss]` |
+| `stop` | heartbeat stops or not | `BOOLEAN/[true/false]` |
 
-Note: dn=-1 means configdb
+> !Note
+>
+> dn=-1 means configdb
 
-#### show @@latency -- show the synchronization latency
+#### `show @@latency` - show the synchronization latency
 
 This command is used to view whether there is latency of master/slave database synchronization (the value can be shown only when the failover rule needs to be、 configured). When there is latency of master/slave data, for example, when you set the SQL_DELAY time of standby slave:
 
 ![](assets/management-port-command/image16.png)
 
-mysql> show @@latency;
+```sql
+show @@latency;
+```
 
 ![](assets/management-port-command/image17.png)
 
@@ -404,36 +370,43 @@ If there is no latency, it shows:
 
 | Column Name | Description | Value Type/Range |
 |-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| dn | data node id | INT/[number] |
-| info | current data source path | STRING/[ip]:[port]/[database] |
-| backup_info | slave data source path | STRING/[ip]:[port]/[database] |
-| latency | If it is available, it shows synchronization latency (ms); if it is unavailable or the data source is stopped, it shows "STOPPED"; if there is not synchronization latency, it shows "ERROR! Check your replication."; if the synchronization latency is invalid, it shows "ERROR! Check your replication.(datasource may have just switched)" | STRING/[number] ms,"STOPPED", "ERROR! Check your replication.", "ERROR! Check your replication.(datasource may have just switched)" |
+| `dn` | data node id | `INT/[number]` |
+| `info` | current data source path | `STRING/[ip]:[port]/[database]` |
+| `backup_info` | slave data source path | `STRING/[ip]:[port]/[database]` |
+| `latency` | If it is available, it shows synchronization latency (ms); if it is unavailable or the data source is stopped, it shows `"STOPPED"`; if there is not synchronization latency, it shows `"ERROR! Check your replication."`; if the synchronization latency is invalid, it shows `"ERROR! Check your replication.(datasource may have just switched)"` | `STRING/[number] ms`, `"STOPPED"`, `"ERROR! Check your replication."`, `"ERROR! Check your replication.(datasource may have just switched)"` |
 
-#### show @@longtransaction -- show long transaction information
+#### `show @@longtransaction` - show long transaction information
 
 This command is used to view the information of long transaction. For example:
 
-mysql> show @@longtransaction;
+```sql
+show @@longtransaction;
+```
+
 
 ![](assets/management-port-command/image19.png)
 
 The long transaction is judged based on: transactions executed for more than 10s are all long transactions. Refer to the rules:
 
+```sql
 select trx_id, trx_started from information_schema.innodb_trx where trx_started<=date_sub(now(),interval 10 second);
+```
 
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
 |-------------|----------------|------------------|
-| host | host address | STRING/[IP] |
-| port | host port | INT/[PORT] |
-| trx_id | transaction id | STRING/[number] |
+| `host` | host address | `STRING/[IP]` |
+| `port` | host port | `INT/[PORT]` |
+| `trx_id` | transaction id | `STRING/[number]` |
 
-#### show @@masterslaveconsistency -- master/slave data consistency detection
+#### `show @@masterslaveconsistency` - master/slave data consistency detection
 
 This command is used to show the consistency of tables in active master and standby slave. For example:
 
-mysql> show @@masterslaveconsistency;
+```sql
+show @@masterslaveconsistency;
+```
 
 ![](assets/management-port-command/image20.png)
 
@@ -441,33 +414,34 @@ The above result shows that the master/salve data of DN_06 node is inconsistent.
 
 ![](assets/management-port-command/image21.png)
 
-and:
-
-The above result shows that the CC table in the LogicDB LGG has no index defined, and consistency cannot be detected; DML_A_JWY table structure is inconsistent.
+and the above result shows that the CC table in the LogicDB LGG has no index defined, and consistency cannot be detected; DML_A_JWY table structure is inconsistent.
 
 **Fields and their description are contained in the result:**
 
 | Column Name | Description | Value Type/Range |
 |-------------|--------------------|--------------------------------|
-| db | LogicDB name | STRING/[database] |
-| table | table name | STRING/[table] |
-| dn | data node name | STRING |
-| result | consistent or not | STRING/["YES","NO" ,"UNKNOWN"] |
-| info | consistency result | STRING |
+| `db` | LogicDB name | `STRING/[database]` |
+| `table` | table name | `STRING/[table]` |
+| `dn` | data node name | `STRING` |
+| `result` | consistent or not | `STRING/["YES","NO","UNKNOWN"]` |
+| `info` | consistency result | `STRING` |
 
-#### show @@operation -- show detailed command execution statistics
+#### `show @@operation` - show detailed command execution statistics
 
 This command is used to show the data source actually used, and statistics of backend command execution. For example, frontend insert execution:
 
-mysql> insert into tid values(10),(2);
-
-mysql> insert into tid values(1677870),(233333333);
+```sql
+insert into tid values(10),(2);
+insert into tid values(1677870),(233333333);
+```
 
 ![](assets/management-port-command/image22.png)
 
 The query result shows the current execution of backend for data source table:
 
-mysql> select * from operation where `TABLE` like '%tid%';
+```sql
+select * from operation where `TABLE` like '%tid%';
+```
 
 ![](assets/management-port-command/image23.png)
 
@@ -475,26 +449,28 @@ mysql> select * from operation where `TABLE` like '%tid%';
 
 | Column Name | Description | Value Type/Range |
 |-------------|-----------------------------------------------------------------------------------|-------------------|
-| schema | LogicDB name | STRING/[database] |
-| dn | data node id | INT/[number] |
-| ds | data source id | INT/[number] |
-| host | data source host ip | STRING/[IP] |
-| port | data source port | INT/[number] |
-| db | database | STRING/[database] |
-| table | table name | STRING/[table] |
-| select | The count of SELECT the [table] | LONG/[number] |
-| insert | The count of INSERT the [table] | LONG /[number] |
-| update | The count of INSERT the [table] | LONG /[number] |
-| delete | The count of DELETE the [table] | LONG /[number] |
-| replace | The count of REPLACE the [table] | LONG /[number] |
-| other | The count of other operations for [table] (The count of executing DDL statements) | LONG /[number] |
-| all | Statistics of the above operations | LONG /[number] |
+| `schema` | LogicDB name | `STRING/[database]` |
+| `dn` | data node id | `INT/[number]` |
+| `ds` | data source id | `INT/[number]` |
+| `host` | data source host ip | `STRING/[IP]` |
+| `port` | data source port | `INT/[number]` |
+| `db` | database | `STRING/[database]` |
+| `table` | table name | `STRING/[table]` |
+| `select` | The count of SELECT the \[table] | `LONG/[number]` |
+| `insert` | The count of INSERT the \[table] | `LONG/[number]` |
+| `update` | The count of INSERT the \[table] | `LONG/[number]` |
+| `delete` | The count of DELETE the \[table] | `LONG/[number]` |
+| `replace` | The count of REPLACE the \[table] | `LONG/[number]` |
+| `other` | The count of other operations for \[table] (The count of executing DDL statements) | `LONG/[number]` |
+| `all` | Statistics of the above operations | `LONG/[number]` |
 
-#### show @@operation_db -- show command execution with LogicDB as unit
+#### `show @@operation_db` - show command execution with LogicDB as unit
 
 This command is used to show statistics of command execution with LogicDB as unit. For example:
 
-mysql> show @@operation_db;
+```sql
+show @@operation_db;
+```
 
 ![](assets/management-port-command/image24.png)
 
@@ -502,20 +478,22 @@ mysql> show @@operation_db;
 
 | Column Name | Description | Value Type/Range |
 |-------------|---------------------------------------------------------------------------------------------|-------------------|
-| db | LogicDB name | STRING/[database] |
-| select | The count of SELECT the [table] | LONG /[number] |
-| insert | The count of INSERT the [table] | LONG /[number] |
-| update | The count of INSERT the [table] | LONG /[number] |
-| delete | The count of DELETE the [table] | LONG /[number] |
-| replace | The count of REPLACE the [table] | LONG /[number] |
-| other | The count of other operations for the table [table] (The count of executing DDL statements) | LONG /[number] |
-| all | Statistics of the above operations | LONG /[number] |
+| `db` | LogicDB name | `STRING/[database]` |
+| `select` | The count of SELECT the \[table] | `LONG/[number]` |
+| `insert` | The count of INSERT the \[table] | `LONG/[number]` |
+| `update` | The count of INSERT the \[table] | `LONG/[number]` |
+| `delete` | The count of DELETE the \[table] | `LONG/[number]` |
+| `replace` | The count of REPLACE the \[table] | `LONG/[number]` |
+| `other` | The count of other operations for the table \[table] (The count of executing DDL statements) | `LONG/[number]` |
+| `all` | Statistics of the above operations | `LONG/[number]` |
 
 #### show @@operation_dn -- show the command execution with data node as unit
 
 This command is used to show the command execution statistis with data node as unit. For example:
 
-mysql> show @@operation_dn;
+```sql
+show @@operation_dn;
+```
 
 ![](assets/management-port-command/image25.jpeg)
 
@@ -523,60 +501,53 @@ mysql> show @@operation_dn;
 
 | Column Name | Description | Value Type/Range |
 |-------------|--------------------------------------------------------------------------------------------|------------------|
-| dn | database node id | INT/[number] |
-| select | The count of SELECT the [table] | LONG/[number] |
-| insert | The count of INSERT the [table] | LONG/[number] |
-| update | The count of INSERT the [table] | LONG/[number] |
-| delete | The count of DELETE the [table] | LONG /[number] |
-| replace | The count of REPLACE the [table] | LONG /[number] |
-| other | The count of other operations for the table [table] (The count of executing DDL statement) | LONG /[number] |
-| all | Statistics of the above operations | LONG/[number] |
+| `dn` | database node id | `INT/[number]` |
+| `select` | The count of SELECT the \[table] | `LONG/[number]` |
+| `insert` | The count of INSERT the \[table] | `LONG/[number]` |
+| `update` | The count of INSERT the \[table] | `LONG/[number]` |
+| `delete` | The count of DELETE the \[table] | `LONG/[number]` |
+| `replace` | The count of REPLACE the \[table] | `LONG/[number]` |
+| `other` | The count of other operations for the table \[table] (The count of executing DDL statement) | `LONG/[number]` |
+| `all` | Statistics of the above operations | `LONG/[number]` |
 
-Note: the operations related to global table are separately counted according to operation types: only one node is counted for SELECT, all nodes are counted for INSERT, UPDATE and DELETE
+> Note
+> 
+> the operations related to global table are separately counted according to operation types: only one node is counted for SELECT, all nodes are counted for INSERT, UPDATE and DELETE
 
-#### show @@operation_ds -- show command execution with data source as unit
+#### `show @@operation_ds` - show command execution with data source as unit
 
 This command is used to show the statistics of command execution with data source as unit. For example:
 
-mysql> show @@operation_ds;
+```sql
+show @@operation_ds;
+```
 
 ![](assets/management-port-command/image26.jpeg)
 
 **Fields and their description are contained in the result:**
 
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| **Column Name** | **Description**                                                                               | **/**                |
-|                 |                                                                                               |                      |
-|                 |                                                                                               | **Value Type/Range** |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| ds              | data source id                                                                                | INT/[number]       |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| host            | data source host ip                                                                           | STRING/[IP]        |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| port            | data source port                                                                              | INT/[number]       |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| db              | database                                                                                      | STRING/[database]  |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| select          | The count of SELECT the [table]                                                             | LONG /[number]     |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| insert          | The count of INSERT the [table]                                                             | LONG /[number]     |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| update          | The count of INSERT the [table]                                                             | LONG /[number]     |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| delete          | The count of DELETE the [table]                                                             | LONG /[number]     |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| replace         | The count of REPLACE the [table]                                                            | LONG /[number]     |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| other           | The count of other operations for the table [table] (The count of executing DDL statements) | LONG /[number]     |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
-| all             | Statistics of the above operations                                                            | LONG /[number]     |
-+-----------------+-----------------------------------------------------------------------------------------------+----------------------+
 
-#### show @@operation_table -- show the command execution with table as unit
+| Column Name | Description | Value Type/Range |
+|-------------|----------------------------------------------------------------------------------------------|-------------------|
+| `ds` | data source id | `INT/[number]` |
+| `host` | data source host ip | `STRING/[IP]` |
+| `port` | data source port | `INT/[number]` |
+| `db` | database | `STRING/[database]` |
+| `select` | The count of SELECT the \[table] | `LONG/[number]` |
+| `insert` | The count of INSERT the \[table] | `LONG/[number]` |
+| `update` | The count of INSERT the \[table] | `LONG/[number]` |
+| `delete` | The count of DELETE the \[table] | `LONG/[number]` |
+| `replace` | The count of REPLACE the \[table] | `LONG/[number]` |
+| `other` | The count of other operations for the table \[table] (The count of executing DDL statements) | `LONG/[number]` |
+| `all` | Statistics of the above operations | `LONG/[number]` |
+
+#### `show @@operation_table` - show the command execution with table as unit
 
 This command is used to show the command execution statistics with LogicDB as unit. For example:
 
-mysql> show @@operation_table;
+```sql
+show @@operation_table;
+```
 
 ![](assets/management-port-command/image27.png)
 
@@ -584,20 +555,22 @@ mysql> show @@operation_table;
 
 | Column Name | Description | Value Type/Range |
 |-------------|-----------------------------------------------------------------------------------|------------------|
-| table | table name | STRING/[table] |
-| select | The count of SELECT the [table] | LONG /[number] |
-| insert | The count of INSERT the [table] | LONG /[number] |
-| update | The count of INSERT the [table] | LONG /[number] |
-| delete | The count of DELETE the [table] | LONG /[number] |
-| replace | The count of REPLACE the [table] | LONG /[number] |
-| other | The count of other operations for [table] (The count of executing DDL statements) | LONG /[number] |
-| all | Statistics of the above operations | LONG /[number] |
+| `table` | table name | `STRING/[table]` |
+| `select` | The count of SELECT the \[table] | `LONG/[number]` |
+| `insert` | The count of INSERT the \[table] | `LONG/[number]` |
+| `update` | The count of INSERT the \[table] | `LONG/[number]` |
+| `delete` | The count of DELETE the \[table] | `LONG/[number]` |
+| `replace` | The count of REPLACE the \[table] | `LONG/[number]` |
+| `other` | The count of other operations for \[table] (The count of executing DDL statements) | `LONG/[number]` |
+| `all` | Statistics of the above operations | `LONG/[number]` |
 
-#### show @@processor-- show thread processing information
+#### `show @@processor` - show thread processing information
 
 This command is used to view the thread processing information. For example:
 
-mysql> show @@processor;
+```sql
+show @@processor;
+```
 
 ![](assets/management-port-command/image28.png)
 
@@ -605,20 +578,22 @@ mysql> show @@processor;
 
 | Column Name | Description | Value Type/Range |
 |-----------------|------------------------|--------------------------|
-| name | processor name | STRING/[Processornumber] |
-| front_net_in | fronend received bytes | LONG/[number] |
-| front_net_out | frontend sent bytes | LONG/[number] |
-| backend_net_in | backend received bytes | LONG/[number] |
-| backend_net_out | backend sent bytes | LONG/[number] |
-| frontends | frontend connections | LONG /[number] |
-| backends | backend connections | LONG /[number] |
-| w_queue | write queue size | LONG /[number] |
+| `name` | processor name | `STRING/[Processornumber]` |
+| `front_net_in` | fronend received bytes | `LONG/[number]` |
+| `front_net_out` | frontend sent bytes | `LONG/[number]` |
+| `backend_net_in` | backend received bytes | `LONG/[number]` |
+| `backend_net_out` | backend sent bytes | `LONG/[number]` |
+| `frontends` | frontend connections | `LONG/[number]` |
+| `backends` | backend connections | `LONG/[number]` |
+| `w_queue` | write queue size | `LONG/[number]` |
 
 #### show @@query -- show frontend query statistics
 
 This command is used to show the statistics of frontend command (excluding the Management Port). For example:
 
-mysql> show @@query;
+```sql
+show @@query;
+```
 
 ![](assets/management-port-command/image29.jpeg)
 
@@ -626,18 +601,20 @@ mysql> show @@query;
 
 | Column Name | Description | Value Type/Range |
 |-------------|----------------------------------------------------------------------------------------------|------------------|
-| select | The count of calling SELECT of this service | LONG /[number] |
-| insert | The count of calling INSERT of this service | LONG /[number] |
-| update | The count of calling UPDATE of this service | LONG /[number] |
-| delete | The count of calling DELETE of this service | LONG /[number] |
-| other | The count of calling other operations of this service (The count of executing DDL statement) | LONG /[number] |
-| all | Statistics of the above operations | LONG /[number] |
+| `select` | The count of calling SELECT of this service | `LONG/[number]` |
+| `insert` | The count of calling INSERT of this service | `LONG/[number]` |
+| `update` | The count of calling UPDATE of this service | `LONG/[number]` |
+| `delete` | The count of calling DELETE of this service | `LONG/[number]` |
+| `other` | The count of calling other operations of this service (The count of executing DDL statement) | `LONG/[number]` |
+| `all` | Statistics of the above operations | `LONG/[number]` |
 
-#### show @@query_db -- show LogicDB frontend query statistics
+#### `show @@query_db` - show LogicDB frontend query statistics
 
 This command is used to show statistics of command execution of each LogicDB. For example:
 
-mysql> show @@query_db;
+```sql
+show @@query_db;
+```
 
 ![](assets/management-port-command/image30.jpeg)
 
@@ -645,19 +622,21 @@ mysql> show @@query_db;
 
 | Column Name | Description | Value Type/Range |
 |-------------|-----------------------------------------------------------------------------------------------|-------------------|
-| schema | LogicDB | STRING/[database] |
-| select | The count of SELECT the LogicDB [schema] | LONG /[number] |
-| insert | The count of INSERT the LogicDB [schema] | LONG /[number] |
-| update | The count of UPDATE the LogicDB [schema] | LONG /[number] |
-| delete | The count of DELETE the LogicDB [schema] | LONG /[number] |
-| other | The count of other operations for the LogicDB [schema] (The count of executing DDL statement) | LONG /[number] |
-| all | Statistics of the above operations | LONG /[number] |
+| `schema` | LogicDB | `STRING/[database]` |
+| `select` | The count of SELECT the LogicDB [schema] | `LONG/[number]` |
+| `insert` | The count of INSERT the LogicDB [schema] | `LONG/[number]` |
+| `update` | The count of UPDATE the LogicDB [schema] | `LONG/[number]` |
+| `delete` | The count of DELETE the LogicDB [schema] | `LONG/[number]` |
+| `other` | The count of other operations for the LogicDB [schema] (The count of executing DDL statement) | `LONG/[number]` |
+| `all` | Statistics of the above operations | `LONG/[number]` |
 
-#### show @@query_tb -- show table-level frontend query statistics
+#### `show @@query_tb` - show table-level frontend query statistics
 
 This command is used to show statistics of command execution of each data table. For example:
 
-mysql> show @@query_tb;
+```sql
+show @@query_tb;
+```
 
 ![](assets/management-port-command/image31.jpeg)
 
@@ -665,20 +644,22 @@ mysql> show @@query_tb;
 
 | Column Name | Description | Value Type/Range |
 |-------------|-----------------------------------------------------------------------------------------------------------------|-------------------|
-| schema | LogicDB | STRING/[database] |
-| table | table name | STRING/[table] |
-| select | The count of SELECT the [table] under the LogicDB [schema] | LONG /[number] |
-| insert | The count of INSERT the [table] under the LogicDB [schema] | LONG /[number] |
-| update | The count of UPDATE the [table] under the LogicDB [schema] | LONG /[number] |
-| delete | The count of DELETE the [table] under the LogicDB [schema] | LONG /[number] |
-| other | The count of other operations for the [table] under the LogicDB [schema] (The count of executing DDL statement) | LONG /[number] |
-| all | Statistics of the above operations | LONG /[number] |
+| `schema` | LogicDB | `STRING/[database]` |
+| `table` | table name | `STRING/[table]` |
+| `select` | The count of SELECT the \[table] under the LogicDB [schema] | `LONG/[number]` |
+| `insert` | The count of INSERT the \[table] under the LogicDB [schema] | `LONG/[number]` |
+| `update` | The count of UPDATE the \[table] under the LogicDB [schema] | `LONG/[number]` |
+| `delete` | The count of DELETE the \[table] under the LogicDB [schema] | `LONG/[number]` |
+| `other` | The count of other operations for the \[table] under the LogicDB [schema] (The count of executing DDL statement) | `LONG/[number]` |
+| `all` | Statistics of the above operations | `LONG/[number]` |
 
 #### show @@session -- show current session information
 
 This command is used to show current session information. For example:
 
-mysql> show @@session;
+```sql
+show @@session;
+```
 
 ![](assets/management-port-command/image32.png)
 
@@ -686,31 +667,33 @@ mysql> show @@session;
 
 | Column Name | Description | Value Type/Range |
 |--------------------|---------------------------------------------|----------------------------------|
-| id | current session id | INT/[number] |
-| running | SQL is in progress or not | BOOLEAN/[TRUE/FALSE] |
-| trx_started | transaction start time | STRING/[yyyy-MM-dd HH:mm:ss.SSS] |
-| trx_time | transaction duration (s) | INT/[number] |
-| trx_query | last executed SQL | STRING/[SQL] |
-| bk_count | total backend connections | INT/[number] |
-| bk_dnid | backend connection node id | INT/[number] |
-| bk_dsid | backend connection data source id | INT/[number] |
-| bk_id | backend connection id | INT/[number] |
-| bk_mysqlid | backend connection MySQL ID | INT/[number] |
-| bk_state | backend connection status | STRING |
-| bk_closed | backend connection is closed or not | BOOLEAN/[TRUE/FALSE] |
-| bk_autocommit | backend connection is autocommitted or not | BOOLEAN/[TRUE/FALSE] |
-| bk_host | backend connection Host | STRING/[host] |
-| bk_port | backend connection port | INT/[port] |
-| bk_db | backend connection database name | STRING/[DATABASE] |
-| bk_query | the last executed SQL of backend connection | STRING/[SQL] |
-| bk_last_read_time | the last read time of backend connection | STRING/[yyyy-MM-dd HH:mm:ss.SSS] |
-| bk_last_write_time | the last write time of backend connection | STRING/[yyyy-MM-dd HH:mm:ss.SSS] |
+| `id` | current session id | `INT/[number]` |
+| `running` | SQL is in progress or not | `BOOLEAN/[TRUE/FALSE]` |
+| `trx_started` | transaction start time | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
+| `trx_time` | transaction duration (s) | `INT/[number]` |
+| `trx_query` | last executed SQL | `STRING/[SQL]` |
+| `bk_count` | total backend connections | `INT/[number]` |
+| `bk_dnid` | backend connection node id | `INT/[number]` |
+| `bk_dsid` | backend connection data source id | `INT/[number]` |
+| `bk_id` | backend connection id | `INT/[number]` |
+| `bk_mysqlid` | backend connection MySQL ID | `INT/[number]` |
+| `bk_state` | backend connection status | `STRING` |
+| `bk_closed` | backend connection is closed or not | `BOOLEAN/[TRUE/FALSE]` |
+| `bk_autocommit` | backend connection is autocommitted or not | `BOOLEAN/[TRUE/FALSE]` |
+| `bk_host` | backend connection Host | `STRING/[host]` |
+| `bk_port` | backend connection port | `INT/[port]` |
+| `bk_db` | backend connection database name | `STRING/[DATABASE]` |
+| `bk_query` | the last executed SQL of backend connection | `STRING/[SQL]` |
+| `bk_last_read_time` | the last read time of backend connection | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
+| `bk_last_write_time` | the last write time of backend connection | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
 
-#### show @@tableinfo -- show table data information
+#### `show @@tableinfo` - show table data information
 
 This command is used to view the data information of each data table. For example:
 
-mysql> show @@tableinfo;
+```sql
+show @@tableinfo;
+```
 
 ![](assets/management-port-command/image33.png)
 
@@ -718,23 +701,25 @@ mysql> show @@tableinfo;
 
 | Column Name | Description | Value Type/Range |
 |-------------|---------------------|-------------------|
-| schema | LogicDB | STRING/[database] |
-| dn | data node id | INT/[number] |
-| ds | data source id | INT/[number] |
-| host | data source host ip | STRING/[IP] |
-| port | data source port | INT/[PORT] |
-| db | database | STRING/[database] |
-| table | database name | STRING/[number] |
-| table_type | table type | 0: Global table |
-|   |   | 1: Sharding table |
-| table_rows | database rows | INT/[number] |
-| data_length | data length (byte) | LONG/[number] |
+| `schema` | LogicDB | `STRING/[database]` |
+| `dn` | data node id | `INT/[number]` |
+| `ds` | data source id | `INT/[number]` |
+| `host` | data source host ip | `STRING/[IP]` |
+| `port` | data source port | `INT/[PORT]` |
+| `db` | database | `STRING/[database]` |
+| `table` | database name | `STRING/[number]` |
+| `table_type` | table type | `0` - Global table |
+|   |   | `1` - Sharding table |
+| `table_rows` | database rows | `INT/[number]` |
+| `data_length` | data length (byte) | `LONG/[number]` |
 
-#### show @@tableinfo_db -- show data information of table with LogicDB as unit
+#### `show @@tableinfo_db` - show data information of table with LogicDB as unit
 
 This command is used to view the data information of table with LogicDB as unit. For example:
 
-mysql> show @@tableinfo_db;
+```sql
+show @@tableinfo_db;
+```
 
 ![](assets/management-port-command/image34.jpeg)
 
@@ -742,9 +727,9 @@ mysql> show @@tableinfo_db;
 
 | Column Name | Description | Value Type/Range |
 |-------------|--------------------|-------------------|
-| db | LogicDB name | STRING/[database] |
-| table_rows | database rows | INT/[number] |
-| data_length | data length (byte) | LONG /[number] |
+| `db` | LogicDB name | `STRING/[database]` |
+| `table_rows` | database rows | `INT/[number]` |
+| `data_length` | data length (byte) | `LONG/[number]` |
 
 #### show @@tableinfo_dn -- show data information of table with data node as unit
 
@@ -760,7 +745,7 @@ mysql> show @@tableinfo_dn
 |-------------|--------------------|------------------|
 | dn | data node id | INT/[number] |
 | table_rows | database rows | INT/[number] |
-| data_length | data length (byte) | LONG /[number] |
+| data_length | data length (byte) | LONG/[number] |
 
 #### show @@tableinfo_ds -- show data information of table with data source as unit
 
@@ -776,7 +761,7 @@ mysql> show @@tableinfo_ds
 |-------------|--------------------|------------------|
 | ds | data source id | INT/[number] |
 | table_rows | database rows | INT/[number] |
-| data_length | data length (byte) | LONG /[number] |
+| data_length | data length (byte) | LONG/[number] |
 
 #### show @@tableinfo_table -- show table data information with table level
 
@@ -792,7 +777,7 @@ mysql> show @@tableinfo_table;
 |-------------|--------------------|------------------|
 | table | table name | STRING/[table] |
 | table_rows | database rows | INT/[number] |
-| data_length | data length (byte) | LONG /[number] |
+| data_length | data length (byte) | LONG/[number] |
 
 #### show @@threadpool -- show status of threadpool
 
@@ -959,7 +944,7 @@ For another example:
 | function_id | sharding type ID | INTEGER |
 | auto_generated | whether it is the configuration auto-generated in HotDB or not (1: auto-generated, other: non-auto-generated) | INTEGER |
 
-#### show backupmasterdelay [DNID]-- show master/slave replication delay of specified data node
+#### show backupmasterdelay \[DNID]-- show master/slave replication delay of specified data node{#show-backupmasterdelay}
 
 The command is used to view the master/slave replication delay of specified data node[DNID], the statement is:
 
@@ -1071,7 +1056,7 @@ mysql> show @@serversourceusage;
 | Column Name | Description | Value Type/Range |
 |--------------|------------------------------|------------------------------|
 | used_memory | used memory (MB) | STRING/[number] |
-| total_memory | total memory (MB) | STRING /[number] |
+| total_memory | total memory (MB) | STRING/[number] |
 | disk | usage of disk | STRING/[path number,...] |
 | cpu_load | CPU load | FLOAT/[float] |
 | cpu_usage | CPU usage rate | STRING/[number,number,...] |
@@ -1528,7 +1513,7 @@ MAX_ALLOWED_PACKET
 
 Please refer to the chapter MySQL Server Parameter Check in Distributed Transaction Database HotDB Server-V2.5.2 [Standard] Function Manual V1.0 for the detailed use methods and requirements.
 
-### check @@datasource_config_new -- Check MySQL parameter configuration information
+### check @@datasource_config_new -- Check MySQL parameter configuration information{#check-datasource_config_new}
 
 The function of this command is similar to check @@datasource_config. The difference is:
 
@@ -1744,7 +1729,7 @@ Query OK, 1 row affected (0.00 sec)
 
 The commands described in this chapter only need to be known by users. They are mainly used for interactive judgment between the management platform and the compute node service in the process of IDC switching. In daily use, manual call of these commands is forbidden.
 
-### disable_election -- Disable election in cluster
+### disable_election -- Disable election in cluster{#disable_election}
 
 mysql> disable_election;
 
@@ -1752,13 +1737,13 @@ Query OK, 1 row affected (0.01 sec)
 
 Generally used when switching the IDC in the DR mode, this command is used to disable election in the internal cluster of the IDC that is providing services, so as to avoid the occurrence of IDC switching and possible affect on the final result of the IDC switching.
 
-### enable_election -- Enable election in cluster
+### enable_election -- Enable election in cluster{#enable_election}
 
 mysql> enable_election;
 
 Query OK, 1 row affected (0.01 sec)
 
-### disable_non_query_command -- Only allow query command
+### disable_non_query_command -- Only allow query command{#disable_non_query_command}
 
 mysql> disable_non_query_command;
 
@@ -1766,37 +1751,37 @@ Query OK, 1 row affected (0.01 sec)
 
 This command is the internal command when switching the IDC in the DR mode. Once called, the instance of the compute node will only allow query command, and non-query command will be released after the switching is successful.
 
-### enable_non_query_command -- Allow non-query command
+### enable_non_query_command -- Allow non-query command{#enable_non_query_command}
 
 mysql> enable_non_query_command;
 
 Query OK, 1 row affected (0.01 sec)
 
-### offline_to_dr -- Execute offline and online is not allowed
+### offline_to_dr -- Execute offline and online is not allowed{#offline_to_dr}
 
 mysql> offline_to_dr;
 
 Query OK, 1 row affected (0.01 sec)
 
-### exchangeconfig -- Exchange configuration of IDC
+### exchangeconfig -- Exchange configuration of IDC{#exchangeconfig}
 
 mysql> exchangeconfig;
 
 Query OK, 1 row affected (0.01 sec)
 
-### exchangememoryconfig -- Exchange configuration in memory
+### exchangememoryconfig -- Exchange configuration in memory{#exchangememoryconfig}
 
 mysql> exchangememoryconfig;
 
 Query OK, 1 row affected (0.01 sec)
 
-### online_dr_check -- Check IDC switching
+### online_dr_check -- Check IDC switching{#online_dr_check}
 
 mysql> online_dr_check;
 
 Query OK, 1 row affected (0.01 sec)
 
-### online_dr_process -- Show IDC switching process
+### online_dr_process -- Show IDC switching process{#online_dr_process}
 
 This command is used to view the progress of IDC switching in the DR mode, for example:
 
@@ -1811,7 +1796,7 @@ This command is used to view the progress of IDC switching in the DR mode, for e
 | error_code | Error code status, 1 is finished, 0 is unfinished | INTEGER |
 | status | Status, 1 is finished, 0 is unfinished | INTEGER |
 
-### reset dberrorcount -- Clear all the error messages of LogicDBs
+### reset dberrorcount -- Clear all the error messages of LogicDBs{#reset-dberrorcount}
 
 mysql> reset dberrorcount;
 
