@@ -6,7 +6,6 @@ window.addEventListener("message", function(e) {
     const data = {scrollWidth: window.document.body.scrollWidth, scrollHeight: window.document.body.scrollHeight}
     e.source.postMessage(data, e.origin)
     console.log(data)
-    return data
   }
 }, false)
 
