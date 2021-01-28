@@ -1,14 +1,5 @@
 const repositoryUrl = "https://github.com/HotDB-Community/hotdb-documents"
 
-//使用postMessage方法传递scrollHeight和scrollWidth
-window.addEventListener("message", function(e) {
-  if(e.data === "scrollSize") {
-    const data = {scrollWidth: window.document.body.scrollWidth, scrollHeight: window.document.body.scrollHeight}
-    e.source.postMessage(data, e.origin)
-    console.log(data)
-  }
-}, false)
-
 window.$docsify = {
   name: "HotDB Documents",
   nameLink: {
