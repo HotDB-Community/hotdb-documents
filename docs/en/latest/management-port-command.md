@@ -2,7 +2,7 @@
 
 ## New commands in V2.5.6
 
-- [show backupmasterdelay [DNID]](#show-backupmasterdelay) - show master/slave replication delay of specified data node
+- [show backupmasterdelay](#show-backupmasterdelay) - show master/slave replication delay of specified data node
 - [disable_election](#disable_election) -disable election in cluster
 - [enable_election](#enable_election)-enable election in cluster
 - [disable_non_query_command](#disable_non_query_command) -only allow query command
@@ -383,7 +383,6 @@ This command is used to view the information of long transaction. For example:
 show @@longtransaction;
 ```
 
-
 ![](assets/management-port-command/image19.png)
 
 The long transaction is judged based on: transactions executed for more than 10s are all long transactions. Refer to the rules:
@@ -425,6 +424,7 @@ and the above result shows that the CC table in the LogicDB LGG has no index def
 | `dn` | data node name | `STRING` |
 | `result` | consistent or not | `STRING/["YES","NO","UNKNOWN"]` |
 | `info` | consistency result | `STRING` |
+
 #### `show @@operation` - show detailed command execution statistics
 
 This command is used to show the data source actually used, and statistics of backend command execution. For example, frontend insert execution:
@@ -524,7 +524,6 @@ show @@operation_ds;
 ![](assets/management-port-command/image26.jpeg)
 
 **Fields and their description are contained in the result:**
-
 
 | Column Name | Description | Value Type/Range |
 |-------------|----------------------------------------------------------------------------------------------|---------------------|
@@ -1063,9 +1062,7 @@ show @@serversourceusage;
 
 #### `show @@systemconfig_memory` - memory parameters of current compute node
 
-This command is used to view the memory parameters usage of the current compute node.
-
-For example:
+This command is used to view the memory parameters usage of the current compute node.For example:
 
 ```sql
 show @@systemconfig_memory;
@@ -1086,7 +1083,6 @@ This command is used to view the current time, for example:
 ```sql
 show @@time_current;
 ```
-
 
 ![](assets/management-port-command/image56.png)
 
@@ -1149,7 +1145,9 @@ show @@usbkey;
 > 
 > `usbkey_check_stuck=1` means that thread is checked to be stuck. When the thread is checked to be stuck or the total times of last throwed exception in detection exceeds 1000, it prompts:
 
+```
 It is recommended to restart the HotDB server during the low peak period of business
+```
 
 #### `show @@version` - show USB-KEY status
 
@@ -1230,7 +1228,7 @@ show @@onlineddl;
 | `speed` | speed (row/ms) | `LONG/[number]` |
 | `table` | table mane | `STRING/[table]` |
 | `type` | change type | `LONG/[number]` |
-`
+
 #### `show @@tableindex`-- show index structure of tables
 
 This command is used to show the index structure of each data table. For example:
@@ -1257,11 +1255,8 @@ show @@tableindex;
 This section introduces the command of online modifying sharding plan in Management Port, with the following steps:
 
 - Step one, check the modification plan ([onlinemodificationrulecheck](#onlinemodificationrulecheck))
-
 - Step two, modify the sharding plan ([onlinemodificationrule](#onlinemodificationrule))
-
 - Step three, view the modification progress ([onlinemodificationruleprogress](#onlinemodificationruleprogress))
-
 - Whether to continue the modification ([onlinemodificationrulecontinue](#onlinemodificationrulecontinue)). Cancelling the current ongoing task ([onlinemodificationrulecancel](#onlinemodificationrulecancel)) is an optional operation item and can be executed according to actual situation
 
 The above steps shall be carried out in sequence, or the result may not be successful.
@@ -1368,8 +1363,7 @@ onlinemodificationrule db.tablename=functionid,rulecol:datanodes: source table h
 | `batch row` | limit the read/write row size in data replication phase each time |
 | `replication interval` | The interval time of read/write row each time (T3: 3 times of SQL execution time, I0.3: fixed time 0.3s) |
 | `waiting timeout` | The time of waiting for user to handle the data inconsistency caused by the modification. If the user does not confirm it over the set time, the modification task will automatically fail, set range \[1,30] |
-| `pause data replication period` | The data replication of the modificaiton task is automatically paused in the set time range, and the time interval is separated by commas. For example: |
-|   | 0700-2210,0300-0559 |
+| `pause data replication period` | The data replication of the modificaiton task is automatically paused in the set time range, and the time interval is separated by commas. For example: 0700-2210,0300-0559 |
 
 As shown below: cpd_test is LogicDB, zx_cvset_signin_result is table name, 4 is functionid, id is sharding key, \[1,2] is data node, 24 means source table will be deleted after 24 hours, 1000 is batch row, T3 is 3 times of SQL execution time, 7 means waiting timeout of 7 days, 0 means not set period of pause data replication
 
@@ -1387,19 +1381,14 @@ The functionid used for sharding plan modification can be viewed in the table ho
 
 ![](assets/management-port-command/image70.png)
 
-Special instructions:
-
-- The functionid required for sharding rule modifiction has already existed in the table hotdb_function in configdb;
-
-- When using the sharding rule to be modified, we must ensure that the number of data nodes specified is consistent with that of data nodes in function_id;
-
-- The source table must have master key or unique key, no trigger and no foreign key constraint, or the modification result may be incorrect;
-
-- If the parameter of source table handling is 0 when in modification, then the historical table will be preserved in the table information, and the naming format is: "source table name + roYYMMDDHHMMSS";
-
-- If the modification of sharding rule of a table in the same batch fails, then the modification of all tables in this batch will fail;
-
-- The sever cannot be restarted when executing this command, or the modification may fail, but the original table may be preserved.
+> !Important
+> 
+> - The functionid required for sharding rule modifiction has already existed in the table hotdb_function in configdb;
+> - When using the sharding rule to be modified, we must ensure that the number of data nodes specified is consistent with that of data nodes in function_id;
+> - The source table must have master key or unique key, no trigger and no foreign key constraint, or the modification result may be incorrect;
+> - If the parameter of source table handling is 0 when in modification, then the historical table will be preserved in the table information, and the naming format is: "source table name + roYYMMDDHHMMSS";
+> - If the modification of sharding rule of a table in the same batch fails, then the modification of all tables in this batch will fail;
+> - The sever cannot be restarted when executing this command, or the modification may fail, but the original table may be preserved.
 
 #### onlinemodificationruleprogress
 
@@ -1443,7 +1432,9 @@ If the state returns to waitting, the user needs to confirm whether to continue 
 
 When the state of sharding plan modification progress is WAITTING, and the returned data is inconsistent, this command can be used to continue the modification, as shown below:
 
+```sql
 onlinemodificationrulecontinue db.tablename;
+```
 
 **fields and their description are contained in the command:**
 
@@ -1464,7 +1455,9 @@ Ignoring these inconsistent data may lead to data errors, as shown below: some d
 
 This command is used to cancel the current ongoing task:
 
+```sql
 onlinemodificationrulecancle db.tablename;
+```
 
 If the modification of a table in the same batch is cancelled, then the modification of sharding plan of all tables in this batch will be cancelled, as shown below:
 
@@ -1493,33 +1486,22 @@ check @@datasource_config;
 
 The parameters or configuration below require that all data sources shall be consistent and conform to the parameter configuration standard:
 
+```
 The time difference between data source and HOTDB is less than 3s
-
-Read-only
-
-Read-only
-
-Completion_type must be NO_CHAN
-
-Div_precision_increment
-
-Div_precision_increment
-
-Innodb_rollback_on_timeout must be ON
-
-Autocommit
-
-Tx_isolation
-
-MAX_ALLOWED_PACKET
+read-only
+completion_type must be NO_CHAN
+div_precision_increment
+innodb_rollback_on_timeout must be on
+autocommit
+tx_isolation
+max_allowed_packet
+```
 
 Please refer to the MySQL Server Parameter chapter in the [Standard](standard.md) document  the detailed use methods and requirements.
 
 ### `check @@datasource_config_new` - Check MySQL parameter configuration information{#check-datasource_config_new}
 
-The function of this command is similar to check @@datasource_config. The difference is:
-
-`check @@datasource_config_new` is to read and check data node information from the non-running table without recording the check status history.
+The function of this command is similar to check @@datasource_config. The difference is: `check @@datasource_config_new` is to read and check data node information from the non-running table without recording the check status history.
 
 ```sql
 check @@datasource_config_new;
@@ -1608,6 +1590,13 @@ online;
 ![](assets/management-port-command/image84.png)
 
 In a complete and normal HotDB Server high availability environment, if we manually send the command online to slave compute node, the slave compute node may start up 3323, and send the command offline to master compute node, and then the master compute node server port 3323 will be closed. But in the current state, the vip of keepalived will not drift (because master compute port 3325 is still available), then the compute node data service may become unavailable virtually. Therefore, if users manually operate the online of slave compute node without knowing clearly the operation mode of hign availability system or the existence of this defect, there may be a high risk of business failure!
+
+When the DR mode is enabled, the master and slave compute nodes in the DR center are standby before IDC switching, with only the management end (port 3325 by default) providing services. Therefore, the online command is disabled for master and slave compute nodes in the DR center before IDC switching. In order to distinguish from the master center, when executing the online command, it will prompt as follows:
+
+```
+mysql> online;
+ERROR 10192 (HY000): access denied. online is not allowed in a DR HotDB Server.
+```
 
 ### `online_dr` - switch the IDC
 
@@ -1730,8 +1719,8 @@ Query OK, 1 row affected (0.00 sec)
 
 This command is used to switch the data source of the specified data node to the next standby data source. The statement is:
 
-```
-mysql> switch @@datasource [datanode_id];
+```sql
+switch @@datasource [datanode_id];
 ```
 
 For example:
@@ -1744,66 +1733,60 @@ mysql> stop @@heartbeat 1:-1;
 Query OK, 1 row affected (0.00 sec)# Control statements related to IDC switching in DR mode
 ```
 
+## Control statements related to IDC switching in DR mode
+
 The commands described in this chapter only need to be known by users. They are mainly used for interactive judgment between the management platform and the compute node service in the process of IDC switching. In daily use, manual call of these commands is forbidden.
 
 ### `disable_election` - Disable election in cluster{#disable_election}
 
-```
-mysql> disable_election;
-Query OK, 1 row affected (0.01 sec)
+```sql
+ disable_election;
 ```
 
 Generally used when switching the IDC in the DR mode, this command is used to disable election in the internal cluster of the IDC that is providing services, so as to avoid the occurrence of IDC switching and possible affect on the final result of the IDC switching.
 
 ### `enable_election` - Enable election in cluster{#enable_election}
 
-```
-mysql> enable_election;
-Query OK, 1 row affected (0.01 sec)
+```sql
+enable_election;
 ```
 
 ### `disable_non_query_command` - Only allow query command{#disable_non_query_command}
 
-```
-mysql> disable_non_query_command;
-Query OK, 1 row affected (0.01 sec)
+```sql
+disable_non_query_command;
 ```
 
 This command is the internal command when switching the IDC in the DR mode. Once called, the instance of the compute node will only allow query command, and non-query command will be released after the switching is successful.
 
 ### `enable_non_query_command` - Allow non-query command{#enable_non_query_command}
 
-```
-mysql> enable_non_query_command;
-Query OK, 1 row affected (0.01 sec)
+```sql
+enable_non_query_command;
 ```
 
 ### `offline_to_dr` - Execute offline and online is not allowed{#offline_to_dr}
 
-```
-mysql> offline_to_dr;
-Query OK, 1 row affected (0.01 sec)
+```sql
+offline_to_dr;
 ```
 
 ### `exchangeconfig` - Exchange configuration of IDC{#exchangeconfig}
 
-```
-mysql> exchangeconfig;
-Query OK, 1 row affected (0.01 sec)
+```sql
+exchangeconfig;
 ```
 
 ### `exchangememoryconfig` - Exchange configuration in memory{#exchangememoryconfig}
 
-```
-mysql> exchangememoryconfig;
-Query OK, 1 row affected (0.01 sec)
+```sql
+exchangememoryconfig;
 ```
 
 ### `online_dr_check` - Check IDC switching{#online_dr_check}
 
-```
-mysql> online_dr_check;
-Query OK, 1 row affected (0.01 sec)
+```sql
+online_dr_check;
 ```
 
 ### `online_dr_process` - Show IDC switching process{#online_dr_process}
@@ -1823,9 +1806,8 @@ This command is used to view the progress of IDC switching in the DR mode, for e
 
 ### `reset dberrorcount` - Clear all the error messages of LogicDBs{#reset-dberrorcount}
 
-```
-mysql> reset dberrorcount;
-Query OK, 1 row affected (0.01 sec)
+```sql
+reset dberrorcount;
 ```
 
 ## Function Processing Statement
@@ -1834,22 +1816,20 @@ Query OK, 1 row affected (0.01 sec)
 
 This command is used to add the database mapping relation. The statement is:
 
-```
-mysql> dbremapping @@add@[database_name]:[database_name],[database_name]:[database_name]...;
+```sql
+dbremapping @@add@[database_name]:[database_name],[database_name]:[database_name]...;
 ```
 
 For example:
 
-```
-mysql> dbremapping @@add@db01:logic_db01,db02:logic_db02;
-# Add multiple mapping relations
-Query OK, 0 rows affected (0.00 sec)
+```sql
+dbremapping @@add@db01:logic_db01,db02:logic_db02; # Add multiple mapping relations
 ```
 
 Add mapping relations from the database db01 to the LogicDB logic_db, so that executing the SQL statement USE db01 is equivalent to executing USE logic_db:
 
-```
-mysql> dbremapping @@add@db01:logic_db;
+```sql
+dbremapping @@add@db01:logic_db;
 ```
 
 > !Note
@@ -1902,7 +1882,9 @@ For example:
 mysql> onlineddl "alter table mytb add column cl1 varchar(90) default '1'";
 ```
 
-Note: when online modifying table structure, the data table structures on each sharding shall be consistent, and the data table to be modified has unique index.
+> !Note
+> 
+> when online modifying table structure, the data table structures on each sharding shall be consistent, and the data table to be modified has unique index.
 
 ### `file @@list` - Obtain the files under the conf directory and its final modification time
 
@@ -1924,9 +1906,8 @@ mysql> file @@list;
 
 HOLD COMMIT is executed in the monitoring window of the command line of HotDB Server, and the commit of transaction in server port will be HOLD (including the transaction commit and normal autocommit). For example, when autocommitting the transaction type:
 
-```
-mysql> hold commit;
-Query OK, 1 row affected (0.02 sec)
+```sql
+hold commit;
 ```
 
 ![](assets/management-port-command/image88.png)
@@ -1935,9 +1916,8 @@ Query OK, 1 row affected (0.02 sec)
 
 HOLD DDL is executed in the monitoring window of the command line of HotDB Server, and the execution of related DDL statement in server port will be temporarily HOLD. For example:
 
-```
-mysql> hold ddl;
-Query OK, 1 row affected (0.02 sec)
+```sql
+hold ddl;
 ```
 
 ![](assets/management-port-command/image89.png)
@@ -1946,9 +1926,8 @@ Query OK, 1 row affected (0.02 sec)
 
 After execution of [hold commit](#hold-commit), release HOLD status with this command, and transaction is committed successfully. For example:
 
-```
-mysql> releasehold commit;
-Query OK, 1 row affected (0.00 sec)
+```sql
+releasehold commit;
 ```
 
 ![](assets/management-port-command/image90.png)
@@ -1957,9 +1936,8 @@ Query OK, 1 row affected (0.00 sec)
 
 After execution of [hold ddl](#hold-ddl), release HOLD status with this command, and statement is executed successfully. For example:
 
-```
-mysql> releasehold ddl;
-Query OK, 1 row affected (0.00 sec)
+```sql
+releasehold ddl;
 ```
 
 ![](assets/management-port-command/image91.png)
@@ -1972,15 +1950,14 @@ For global unique constraint related contents, please refer to the [Standard](st
 
 This command is used to check whether the historical data of unique constraint key of the specified table is unique. The statement is:
 
-```
-mysql> check @@history_unique [db_name.tb_name];
+```sql
+check @@history_unique [db_name.tb_name];
 ```
 
 1. Table name is not specified: check all tables with global unique constraint, whether the historical data of their unique constrain key is unique. If it is unique, an empty set will be returned:
 
-```
-mysql> check @@history_unique;
-Empty set (0.01 sec)
+```sql
+check @@history_unique;
 ```
 
 If there is a small amount of inconsistent data, inconsistent values will be prompted:
@@ -1992,7 +1969,11 @@ mysql> check @@history_unique;
 +---------+---------+----------------------------------------------+
 | DB1 | test1 | duplicate data in unique constraint: ID1:[2] |
 +---------+---------+----------------------------------------------+
+```
+
 If there is a large number of inconsistent data, with more than 2048 characters in length, you will be prompted to download files for check:
+
+```
 mysql> check @@history_unique;
 +---------+---------+-------------------------------------------------------------------------------------------------------------------+
 | ZJJ_DB1 | UCON1 | duplicate data in unique constraint, for more information,please download: ZJJ_DB1_UCON1_duplicates_1561353006576 |
@@ -2027,16 +2008,15 @@ mysql> unique @@create;
 ```
 
 - If the secondary index is successfully created, then the result is success;
-
 - If the global unique constraint of this table is in off state, then the result is fail, and the information is shown: global_unique is turned off;
-
 - If the historical data is unique, but the secondary index fails to be created, then the result is fail, and the information error is shown;
-
 - If the historical data is not unique, then the result is fail, and inconsistent result and the command [check @@history_unique](#check-history_unique---check-the-uniqueness-of-historical-data-of-unique-key) are shown.
 
 2. Table name is specified: check whether the historical data of unique constraint key of the specified table is unique. For example:
 
+```sql
 unique @@create db01.table01,db01.table02,db01.table03
+```
 
 If this command contains the table whose secondary index has been created, the existing secondary index will be deleted and a new one will be created after the command is executed.
 
@@ -2044,8 +2024,8 @@ If this command contains the table whose secondary index has been created, the e
 
 This command is used to delete the secondary index of the specified table. The statement is:
 
-```
-mysql> unique @@drop [db_name.tb_name];
+```sql
+unique @@drop [db_name.tb_name];
 ```
 
 For example:
@@ -2062,6 +2042,29 @@ mysql> unique @@drop HOTDB_SERVER_253.beyond1,HOTDB_SERVER_253.test1,HOTDB_SERVE
 ```
 
 - If the secondary index is deleted successfully, then the result is success;
-
 - If the secondary index fails to be deleted, then the result is fail and the error information is shown.
 
+#### `unique @@valid` - 检测全局唯一表索引表是否创建
+
+This command is used to check whether the global unique table index table is created. The statement is:
+
+```sql
+unique @@valid [db_name.tb_name];
+```
+
+For example:
+
+```
+mysql> unique @@valid zjj_db1.ll1,zjj_db1.kk1;
+
++---------+---------+--------+
+| db_name | tb_name | result |
++---------+---------+--------+
+| ZJJ_DB1 | LL1     | 0      |
+| ZJJ_DB1 | KK1     | 1      |
++---------+---------+--------+                    
+```
+
+If the global unique table index table has been created, the result is 1;
+
+If the global unique table index table is not created, the result is 0. In this case, it is recommended to execute `unique @@create db.tb` manually to create an index table for this table separately.Otherwise, when `unique @@create` is executed again, all unique constraint index tables will be deleted and reinitialized, which may take a long time.

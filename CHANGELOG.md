@@ -51,7 +51,7 @@
   * [X] `docs/zh/latest/hardware-config-recommendation.md` F
 * `hotdb-server`
   * [X] `docs/zh/latest/standard.md` F
-  * [X] `docs/zh/latest/management-port-command.md` L M F
+  * [X] `docs/zh/latest/management-port-command.md` L M F C
 * `hotdb-management`
   * [X] `docs/zh/latest/hotdm-management.md` F
   * [X] `docs/zh/latest/intelligent-inspection.md` L F C
@@ -80,7 +80,7 @@
   * [X] `docs/en/latest/hardware-config-recommendation.md`
 * `hotdb-server`
   * [ ] `docs/en/latest/standard.md` D
-  * [X] `docs/en/latest/management-port-command.md` D
+  * [X] `docs/en/latest/management-port-command.md`  C
 * `hotdb-management`
   * [ ] `docs/en/latest/hotdm-management.md`
   * [X] `docs/en/latest/intelligent-inspection.md` C
