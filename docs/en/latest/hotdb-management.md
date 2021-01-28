@@ -155,7 +155,7 @@ Adding a platform user needs to fill in two parts of content information: User B
 **User Basic Information**: including user account name, user role, compute node cluster privilege, etc.
 
 - At present, there are no specific restrictions on user names, except that they cannot be duplicated with existing names.
-- The default password of newly added user is [service_hotdb@hotdb.com](http://service_hotdb@hotdb.com). When first logging into the management platform through the new account, the user will be required to change the password.
+- The default password of newly added user is `service_hotdb@hotdb.com`. When first logging into the management platform through the new account, the user will be required to change the password.
 - Added users need to be assigned with specific roles, which are general users by default. The difference between the two types of roles is as follows:
 
 **General user**: can only manage compute node clusters with existing privileges in the general user interface.
@@ -171,14 +171,13 @@ Adding a platform user needs to fill in two parts of content information: User B
 **User Menu Privilege**: The menu privileges for users when they enter the cluster management through accessing the general user interface can be configured.
 
 - When there is no special requirement, all menu privileges are granted by default. If it needs to mask the menu of a user, directly remove the checked item from the menu.
-
 - If HotDB Management has been upgraded, the menu privileges of historical platform users need to be checked to see whether the menu privileges in the new version need to be assigned. **Currently, due to the menu function security problem, the new function menu privileges in the new version will not be assigned to historical users by default, and need to be added by the users.**
 
 ![](assets/hotdb-management/image12.png)
 
 ### User password
 
-**Reset Password**: The users can reset the password when forgetting the login password. The password can be reset with the "Reset Password" button in the operation column via the "User Management" interface, or by clicking "Reset Password" on the "Edit User Information" page.
+**Reset Password**: The users can reset the password when forgetting the login password. The password can be reset with the "Reset Password" button in the operation column via the "[User Management](user-management.md)" interface, or by clicking "Reset Password" on the "Edit User Information" page.
 
 **Change Password**: User password change will be required when the users first log into HotDB Management. Later change can be operated in "Personal Information -> Modify User Information" in the upper right corner of the page.
 
@@ -193,11 +192,8 @@ The login history displays the history of login and logout of the management pla
 ![](assets/hotdb-management/image14.png)
 
 - "Logout time" of the current online user is empty.
-
 - The login history of all users will not be accumulated. A single login and logout is a record, in which a single "online time" is recorded. The user login history can record the user login within 6 months at most.
-
 - Fuzzy search by username and login IP is supported.
-
 - Operations such as "Log out", "Automatic exit after timeout" and "Automatic exit after resetting password" during the login will be sensed and recorded by the management platform.
 
 ## Cluster management
@@ -213,51 +209,35 @@ The cluster management page displays the compute node clusters deployed or added
 **List field description:**
 
 - Cluster Name: The cluster name of a group of compute nodes, which can be used to distinguish with other compute node clusters. The name is unique throughout HotDB Management. Click the cluster name to enter the "Edit Compute Node Cluster" page.
-
-**Cluster name color description**: Red indicates that the HotDB Management has stopped monitoring the cluster; yellow indicates that the cluster high availability environment in master/slave mode needs to be rebuilt; and blue indicates that HotDB Management normally opens the cluster under monitoring.
-
 - Cluster Mode: At present, the compute node cluster modes which are supported include the single node, master/slave node and multi-node modes. For details, please refer to the [Glossary](glossary.md) document. The version number of compute node is shown at the bottom of the mode.
-
 - Component Name: The compute node name is used to represent the difference between different compute nodes in the cluster. If the server SSH information is configured for compute nodes in the cluster in the master/slave node mode, the current Keepalived Virtual IP (VIP) mark will be displayed next to the name to facilitate users to quickly understand the location of master compute node in the current cluster.
 
+>!Tip
+> 
+> **Cluster name color description**: Red indicates that the HotDB Management has stopped monitoring the cluster; yellow indicates that the cluster high availability environment in master/slave mode needs to be rebuilt; and blue indicates that HotDB Management normally opens the cluster under monitoring.
+
 - IP Address: It refers to the server IP deployed by the compute node.
-
 - Service Port: It refers to the port for compute nodes to provide data service to the outside world, which can be modified in the server.xml configuration file.
-
 - Management Port: It refers to the port for compute nodes to provide monitoring management queries to the outside world, which can be modified in the server.xml configuration file.
-
 - Type: The compute node cluster in the master/slave mode can identify the master/slave role of compute nodes. This field has little meaning in single-node and multi-node clusters.
-
 - Compute Node: This field belongs to the cluster deployment information and mainly displays the current running status of compute node service program. If the compute node cluster is not deployed by the current management platform, this field is displayed as NULL.
-
 - High Available Components: This field mainly displays the running status of Keepalived components in the cluster in the master/slave node mode. The LVS virtual IP address (VIP) is displayed when the running status of LVS component is displayed in the multi-node mode cluster. If the compute node cluster is not deployed by the current management platform, this field is displayed as NULL.
-
 - ConfigDB: It displays the running status of configDB used by the compute node cluster. If the compute node cluster is not deployed by the current management platform, this field is displayed as NULL.
-
 - NTPD Time Service: It displays the running status of NTPD Time Service installed on the compute node cluster.
-
 - Data Source: It displays the running status of all data sources in the compute node cluster.
-
-- Deployment Environment Grade: The compute node cluster that successfully performed the "Deployment Environment Examination" function will display the latest examination grade.
-
+- Deployment Environment Grade: The compute node cluster that successfully performed the "[Deployment Environment Examination](#deployment-environment-examination)" function will display the latest examination grade.
 - Cluster Operation: If the cluster is added by the "Cluster Deployment" function on the current management platform, the \[Deployment Topology] button will be displayed in the cluster operation bar. Click to view the component topology framework of the deployed cluster; if the cluster mode is "Master/Slave Node", the operation column will display the \[Rebuilding] or \[Switch] button according to whether the current high availability rebuilding environment of the cluster meets the switching conditions.
-
 - Buttons of \[Switch the active center], \[Remove the IDC], \[Repair the IDC] can be seen in the cluster with DR mode enabled and conditions satisfied. You can refer to the [Visual IDC](visual-idc.md) document.
 
 ![](assets/hotdb-management/image15.png)
 
 **Function button description:**
 
-- Deploy Cluster: Deploy a complete set of compute node clusters from 0. For details, please refer to the [Installation and Deployment](installation-and-deployment.md) document.
-
+- Deploy Cluster: Deploy a complete set of compute node clusters from 0. For details, please refer to the [Installation and Deployment](installation-and-deployment.md) document
 - Add Cluster: Manually add compute node cluster (the compute node has been deployed offline) information of HotDB Management
-
 - More->Start Monitoring: Restart the monitoring of compute node clusters whose monitoring has been stopped (the cluster name is displayed on a red background)
-
 - More->Stop Monitoring: If the monitoring of compute node clusters under monitoring is stopped, HotDB Management will stop monitoring the cluster status. The cluster not under monitoring cannot be viewed by the user when logging into the general user role page.
-
 - More->Delete Cluster: Delete the managed compute node cluster on the page.
-
 - More->IDC Switching Drill: you can refer to the [Visual IDC](visual-idc.md) document.
 
 #### Add cluster
@@ -272,27 +252,41 @@ Click \[Add Cluster] on the cluster management page to enter the "Add Compute No
 
 **(I) Cluster information**
 
-- Select the cluster mode of the deployed cluster, and the input parameters of different modes are different.
-- The cluster name cannot be duplicated with the current existing compute node cluster name.
-- The cluster network segment appears as the network segment to which the compute node belongs when the "Cluster Mode" is "Multi-Node". The format is: IP/subnet mask length, for example, 192.168.200.0/24. This parameter can be viewed or modified in server.xml.
-- The communication port appears as the port used for communication between multiple compute nodes in the deployed cluster only when the "Cluster Mode" is "Multi-Node". This parameter can be viewed or modified in server.xml.
-- "Set ConfigDB Manually" is not checked by default and is not required to be filled in. Only when the added compute node cannot connect to the management port (usually 3325), the user needs to manually specify the configDB address.
-- Set ConfigDB Manually specifies that configDB needs to select the configDB replication mode and the configDB address needs to be filled in according to the given example. The configDB username and configDB password refer to the account and password connecting configDB instance.
+Select the cluster mode of the deployed cluster, and the input parameters of different modes are different.
 
-**Note**: Any configDB in the replication mode strongly requires that the configDB connection address in server.xml shall be consistent with the IP address of the server where the actual configDB is located. It cannot be configured as 127.0.0.1 or localhost, so as mainly to prevent the risk of misjudging the actual address when the management platform obtains multiple configDB addresses in case that the management platform and the compute node service are not on the same service..
+The cluster name cannot be duplicated with the current existing compute node cluster name.
+
+The cluster network segment appears as the network segment to which the compute node belongs when the "Cluster Mode" is "Multi-Node". The format is: IP/subnet mask length, for example, 192.168.200.0/24. This parameter can be viewed or modified in server.xml.
+
+The communication port appears as the port used for communication between multiple compute nodes in the deployed cluster only when the "Cluster Mode" is "Multi-Node". This parameter can be viewed or modified in server.xml.
+
+"Set ConfigDB Manually" is not checked by default and is not required to be filled in. Only when the added compute node cannot connect to the management port (usually 3325), the user needs to manually specify the configDB address.
+
+Set ConfigDB Manually specifies that configDB needs to select the configDB replication mode and the configDB address needs to be filled in according to the given example. The configDB username and configDB password refer to the account and password connecting configDB instance.
+
+> !Note
+> 
+> Any configDB in the replication mode strongly requires that the configDB connection address in server.xml shall be consistent with the IP address of the server where the actual configDB is located. It cannot be configured as 127.0.0.1 or localhost, so as mainly to prevent the risk of misjudging the actual address when the management platform obtains multiple configDB addresses in case that the management platform and the compute node service are not on the same service..
 
 **(II) Compute node**
 
-1. Different "Cluster Mode" displays different compute node records need to be configured. The "Single Node" mode only needs to configure one record. The "Master/Slave Node" mode needs to configure one master record and one slave record. The "Multi-Node" mode needs to configure at least three records, up to nine records.
-2. The fields with red * must be filled in, including: compute node name, hostname, username, password, service port and management port
-3. The fields without red * may not be filled in, but when **the compute node cluster is in the master/slave mode**, users are recommended to fill in these parameter values because they may be used for high availability rebuilding and high availability switch later.
-4. After filling in the compute node name, test whether the compute node can be connected via the \[Test] button. The connection exception and successful connection are shown in the following figure:
+Different "Cluster Mode" displays different compute node records need to be configured. The "Single Node" mode only needs to configure one record. The "Master/Slave Node" mode needs to configure one master record and one slave record. The "Multi-Node" mode needs to configure at least three records, up to nine records.
+
+The fields with red \* must be filled in, including: compute node name, hostname, username, password, service port and management port
+
+The fields without red \* may not be filled in, but when **the compute node cluster is in the master/slave mode**, users are recommended to fill in these parameter values because they may be used for high availability rebuilding and high availability switch later.
+
+After filling in the compute node name, test whether the compute node can be connected via the \[Test] button. The connection exception and successful connection are shown in the following figure:
 
 ![](assets/hotdb-management/image17.png)
 
 ![](assets/hotdb-management/image18.png)
 
-Note: for more notes on DR mode and multi-node mode, you can refer to the supporting documents including [Installation and Deployment](install-and-deployment.md), [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md).
+When the number of existing compute node clusters (including those with stopped monitoring and normal monitoring) has reached the number of available compute node clusters authorized by the platform license, if you click \[Add Cluster] on the cluster management page, it will prompt: `"Add is not allowed because the number of available compute node cluster groups authorized by the platform is exceeded."`
+
+> !Note
+> 
+> for more notes on DR mode and multi-node mode, you can refer to the supporting documents including [Installation and Deployment](install-and-deployment.md), [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md).
 
 #### High availability switch
 
@@ -304,7 +298,7 @@ In the master/slave mode cluster, if the cluster meets the high availability swi
 
 High availability switch mainly includes four steps: Confirmation of SSH and Configuration File Location, Pre-inspection of Switching, High-availability Switching, and Switching Complete. It is not allowed to proceed to the next step when the previous step is not completed, and the completion of all steps represents the success of high availability switch.
 
-(I) **Confirmation of SSH and configuration file location**
+**(I) Confirmation of SSH and configuration file location**
 
 ![](assets/hotdb-management/image20.png)
 
@@ -317,14 +311,14 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 - If the SSH information and the configuration file address of compute node are configured in "Add Cluster", the page information will be displayed automatically. It only needs to click \[Connection Test] to verify the information correctness.
 - Only when SSH information and configuration file address pass the test, the \[Next Step] button can be clicked normally to proceed to the next step.
 
-(II) **Pre-inspection of switching**
+**(II) Pre-inspection of switching**
 
 ![](assets/hotdb-management/image21.png)
 
 - Click \[Start Detection] to check whether the current cluster high availability environment meets the requirements before high availability switch.
 - This step requires all detection items to pass the test before proceeding to the next step. Otherwise, it is necessary to manually intervene to solve the abnormal problem of the failed item.
 
-(III) **High-availability switch**
+**(III) High-availability switch**
 
 ![](assets/hotdb-management/image22.png)
 
@@ -357,7 +351,7 @@ Click the \[Rebuilding] button to enter the high availability reconstruction pro
 
 Before configuration test, attention shall be paid to the following points:
 
-- If the SSH login information or configuration file information has been configured in Add Cluster, the high availability environment reconstruction page will fill in the relevant information by default.
+- If the SSH login information or configuration file information has been configured in [Add Cluster](#add-cluster), the high availability environment reconstruction page will fill in the relevant information by default.
 - SSH login mode may choose Login with User Password or Sign in without Password; the information will be saved after successful connection, and the information will not be saved if one-time login is chosen.
 - The current logged-in user must have the read-write access privilege of master/slave configuration files.
 - If the SSH Sign in without Password mode is chosen, the server where the distributed transactional database platform is located must set the public key of the account started and copy it to the server to be accessed. (Note: The user who can sign in without password must be consistent with the server user who starts the management platform currently).
@@ -372,9 +366,7 @@ Before configuration test, attention shall be paid to the following points:
 Attentions shall be paid when clicking \[Start Detection]:
 
 - The detection will be stopped if any item fails, and the cause of detection failure can be located and processed according to the failure error information.
-
 - Config Checking mainly checks whether the configuration is reasonable and whether the configuration used in the memory is consistent with that in the configDB. If an inconsistency is detected, it can be processed by reloading, which is a feasible but not unique method.
-
 - When the detection is completed, click \[Next Step] to enter the high availability environment reconstruction page. If the current page information fails the detection, the \[Next Step] button cannot be triggered.
 
 **(III) Rebuild the high availability environment**
@@ -384,7 +376,6 @@ Attentions shall be paid when clicking \[Start Detection]:
 The reconstruction is mainly to modify the relevant configuration information as follows:
 
 - Modify the (haState, haNodeHost) role information in the master/slave compute node server.xml
-
 - Modify the master/slave keepalived configuration files. The keepalived configuration file modification points are as follows:
 
 ![](assets/hotdb-management/image28.png)
@@ -392,16 +383,14 @@ The reconstruction is mainly to modify the relevant configuration information as
 Notes for high availability reconstruction:
 
 - Click \[Start Execution]. The execution will be stopped if any item fails, and the cause of execution failure can be located and processed according to the failure error information.
-
 - For the modification of server.xml configuration by the reconstruction process, if the actual deployed environment management network and the running network are separate, the haNodeHost configuration may have incorrectness risks, in which case manual intervention is needed because the server connection IP is currently used.
-
 - When the reconstruction is completed, click \[Next Step] to enter the high availability environment reconstruction page. If the current page information is not completed or the execution fails, the \[Next Step] button cannot be triggered.
 
 **(IV) Rebuild complete**
 
 ![](assets/hotdb-management/image29.png)
 
-- When the high availability reconstruction is completed, the master/slave compute node services are running normally. Click \[Immediate Switch] and manually perform the High Availability Switch operation to complete the reconstruction page.
+- When the high availability reconstruction is completed, the master/slave compute node services are running normally. Click \[Immediate Switch] and manually perform the [High Availability Switch](high-availability-switch) operation to complete the reconstruction page.
 
 #### Switching, removal and repair of IDC
 
@@ -471,9 +460,7 @@ Deployment grade Examination is a set of operation environment examination grade
 The examination panel displays an overview of cluster reports that have been successfully examined recently.
 
 - **Score**: The left score ball is the total examination score. Scores are obtained from the examination results of cluster examination items. The total score is 100. If the corresponding examination item in examination does not meet the evaluation criteria, the score of this item will be deducted. If the examination item meets the evaluation criteria, no score will be deducted or added. When the total score is deducted or the score deducted is greater than 100, the examination score is 0.
-
 - **Examination item**: The examination item is the number of items needing examination in the compute node cluster examination. Different modes of compute node clusters or different replication modes of MySQL data sources will affect the number of examination items. Unqualified items in the figure above are items not meeting the evaluation criteria. Warning items are items that do not involve deduction but need attention in physical examination, and qualified items are items meeting the evaluation criteria.
-
 - **Radar chart**: Radar chart displays the deduction in five dimensions in examination. The less points deducted in the dimension, the closer the highlighted part is to the edge of radar chart, which indicates a good examination result in the dimension. Move the mouse cursor cursor into the radar chart to view the detailed deductions in each dimension and the percentage of total examination item score in the dimension.
 
 **Start environment examination:**
@@ -483,12 +470,12 @@ Click \[Environment Examination] button on the deployment environment examinatio
 **Pre-detection item**
 
 1. All servers in the cluster are configured with available SSH information and the user is root or is configured with sudo operation privilege.
-
 2. All related component programs in the cluster run normally
-
 3. The cluster is configured with at least one data node and one logicDB
 
-**Note**: The status detection of all related component programs in the cluster depends on a 2-minute periodic detection task, so there may be a 2-minute detection error between the current detection status and the actual component status.
+> !Note
+> 
+> The status detection of all related component programs in the cluster depends on a 2-minute periodic detection task, so there may be a 2-minute detection error between the current detection status and the actual component status.
 
 **Examination report detail:**
 
@@ -498,23 +485,18 @@ A successful examination task will generate a examination report. Click ![](asse
 
 The examination report defaults to display unqualified and warning examination items. Click different dimensions to expand the detailed examination item information of the dimension. The red and orange dots that appear in each dimension heading represent unqualified and warning examination items in the dimension. Each tab in the dimension is a specific examination item in the dimension. The red and orange markings in the upper right corner of the Tab represent the same meaning with that of the above dots.
 
-Examination item: specific examination item in the dimension
-
-Examination result: the examination results of examination items include Unqualified, Warning and Qualified
-
-Deduction: the actual deduction of the examination item
-
-Exception object: instances of servers or applications not meeting the evaluation criteria of examination items
-
-Prompt: unqualified and warning examination items inform users of the risks that exist or suggestions
-
-Evaluation criteria: the program evaluation criteria for judging whether an item passes the detection
+- Examination item: specific examination item in the dimension
+- Examination result: the examination results of examination items include Unqualified, Warning and Qualified
+- Deduction: the actual deduction of the examination item
+- Exception object: instances of servers or applications not meeting the evaluation criteria of examination items
+- Prompt: unqualified and warning examination items inform users of the risks that exist or suggestions
+- Evaluation criteria: the program evaluation criteria for judging whether an item passes the detection
 
 ![](assets/hotdb-management/image32.png)
 
-**Note:**
-
-The deployment environment examination function has no requirement for HotDB Server version. However, when the Server version used for examination is below 2.5.3, the "10 s performance test" and "master/slave or MGR configDB data consistency" examination items are not supported.
+> !Note
+>
+> The deployment environment examination function has no requirement for HotDB Server version. However, when the Server version used for examination is below 2.5.3, the "10 s performance test" and "master/slave or MGR configDB data consistency" examination items are not supported.
 
 ## Instance management
 
@@ -534,13 +516,13 @@ The instance management information displays a record in the form of a MySQL ins
 
 ![](assets/hotdb-management/image34.png)
 
-- Setup High-privileges User: Mainly used for users configured with "change master/slave" privileges to perform "Remove Master" and "Add Slave" operations. High-privilege users need to have "super, replication slave, replication client, create user, reload" privileges. If the data source does not have these privileges, they need to be added to the instance.
+- **Setup High-privileges User**: Mainly used for users configured with "change master/slave" privileges to perform "Remove Master" and "Add Slave" operations. High-privilege users need to have "super, replication slave, replication client, create user, reload" privileges. If the data source does not have these privileges, they need to be added to the instance.
 
 ![](assets/hotdb-management/image35.png)
 
 Click the \[Replication] button to replicate and add the SQL statement of high-privilege user to the instance for execution.
 
-"Master/Slave Replication Username" and "Master/Slave Replication Password" are users created automatically when a master/slave relation is created for an instance by a high-privilege user. By default, the "hotdb_repl" replication user with password of "hotdb_repl" and only the "replication slave" privilege is created. Users can also customize the username and password for the created replication user.
+"Master/Slave Replication Username" and "Master/Slave Replication Password" are users created automatically when a master/slave relation is created for an instance by a high-privilege user. By default, the `hotdb_repl` replication user with password of `hotdb_repl` and only the `replication slave, replication client` privilege is created. Users can also customize the username and password for the created replication user.
 
 ## Audit logs
 
@@ -557,17 +539,11 @@ The operation of all manager users on the management platform can be viewed. The
 **List information description:**
 
 - Username: The user used to login to the management platform.
-
 - Access IP: The local IP used to login to the management platform. It supports fuzzy query.
-
 - Operation Type: All supported types are displayed in the drop-down box. After checking the checkbox, only logs of the selected operation type are displayed.
-
 - Operation Content: Record the user's real operation and important parameters, and support fuzzy query.
-
 - Input Parameter: More detailed user operation logs for easy analysis of user operations.
-
 - Operation Time: Record the actual operation time, and support the selection of time range to display log records. The time range of record here is determined by the default retention days in the settings.
-
 - Operation Result: Record the actual operation results. Log records can be filtered by the operation results.
 
 ### General user operation
@@ -611,7 +587,9 @@ The operation logs related to security protection performed by all general users
 - Operation Time: Record the actual operation time, and support the selection of time range to display log records. The time range of record here is determined by the default retention days in the settings.
 - Operation Result: Record the actual operation results. Log records can be filtered by the operation results.
 
-**Note**: If the compute node version is below V2.5.0, the page does not display the security audit log record.
+> !Note
+> 
+> If the compute node version is below V2.5.0, the page does not display the security audit log record.
 
 #### Management port operation
 
@@ -629,7 +607,9 @@ The operation records of all general users on the management port can be viewed.
 - Operation Time: Record the actual operation time, and support the selection of time range to display log records. The time range of record here is determined by the default retention days in the settings.
 - Operation Result: Record the actual operation results. Log records can be filtered by the operation results.
 
-**Note**: If the compute node version is below V2.5.0, the page does not display the management port operation audit log record.
+> !Note
+> 
+> If the compute node version is below V2.5.0, the page does not display the management port operation audit log record.
 
 ## Tool
 
@@ -645,7 +625,7 @@ Provide users with operations such as platform license, compute node license, up
 
 ![](assets/hotdb-management/image41.png)
 
-- The "license management" hyperlink in the "certified" menu of management platform.
+- The "[license management](#license-management)" hyperlink in the "certified" menu of management platform.
 
 ![](assets/hotdb-management/image42.png)
 
@@ -710,11 +690,15 @@ When there are multiple license files in the management platform, the license ma
 
 Connect to the ConfigDB of management platform, and configure SQL for the first time as follows:
 
+```sql
 insert into hotdb_setting values('emailAddress',1,'your_email@xx.cn',1,1);
+```
 
 The SQL configuration is changed as follows:
 
+```sql
 update `hotdb_setting` set `value` ='new_email@xx.cn' where `key`='emailAddress';
+```
 
 **(2) Notes on updating platform license**
 
@@ -728,29 +712,29 @@ update `hotdb_setting` set `value` ='new_email@xx.cn' where `key`='emailAddress'
 
 **(3) Restrictions of platform license on single-IDC deployment**
 
-- If the number of existing compute node clusters (including those with stopped monitoring and normal monitoring) has reached the number of available compute node cluster groups authorized by the platform license, the user has enabled the "Automatically generate basic configuration" and the started list includes clusters recorded in the high availability setup of compute nodes, then click \[Enable with one click] on the single-IDC deployment page, and a pop-up window will be displayed: "It is not allowed to start and generate basic configuration because the number of available compute node cluster groups authorized by the platform is exceeded."
+If the number of existing compute node clusters (including those with stopped monitoring and normal monitoring) has reached the number of available compute node cluster groups authorized by the platform license, the user has enabled the "Automatically generate basic configuration" and the started list includes clusters recorded in the high availability setup of compute nodes, then click \[Enable with one click] on the single-IDC deployment page, and a pop-up window will be displayed: "It is not allowed to start and generate basic configuration because the number of available compute node cluster groups authorized by the platform is exceeded."
 
 ![](assets/hotdb-management/image53.png)
 
 **(4) Restrictions of platform license on cluster deployment**
 
-- In normal mode deployment, when the number of compute node cluster groups has reached the number of available compute node cluster groups authorized by the license, a prompt of 3s will be given when clicking \[Parameter configuration]: Cluster addition through parameter configuration is not allowed because the number of available compute node cluster groups authorized by the platform is exceeded.
+In normal mode deployment, when the number of compute node cluster groups has reached the number of available compute node cluster groups authorized by the license, a prompt of 3s will be given when clicking \[Parameter configuration]: Cluster addition through parameter configuration is not allowed because the number of available compute node cluster groups authorized by the platform is exceeded.
 
 ![](assets/hotdb-management/image54.png)
 
-- The deployment of the master center in the DR mode is the same as that in the ordinary mode. That is, when the number of the current compute node cluster groups has reached the license limit, the deployment of the master center will not be allowed.
-- Because the deployment of the DR center in the DR mode is in the same cluster group with the master center, the deployment of the DR center is not limited by the number of compute node cluster groups, but limited only by the number of available compute nodes in each group.
-- The deployment of DR center is limited by the number of available compute nodes in each cluster. When the number of remaining available compute nodes is less than the number of compute nodes in the DR center to be deployed, deployment is not allowed.
+The deployment of the master center in the DR mode is the same as that in the ordinary mode. That is, when the number of the current compute node cluster groups has reached the license limit, the deployment of the master center will not be allowed.
+Because the deployment of the DR center in the DR mode is in the same cluster group with the master center, the deployment of the DR center is not limited by the number of compute node cluster groups, but limited only by the number of available compute nodes in each group.
+The deployment of DR center is limited by the number of available compute nodes in each cluster. When the number of remaining available compute nodes is less than the number of compute nodes in the DR center to be deployed, deployment is not allowed.
 
 ![](assets/hotdb-management/image55.png)
 
 **(5) Restrictions of platform license on cluster editing**
 
-- When the number of compute nodes in the group has reached the number of available compute nodes in each cluster of the license limit, click \[Add compute nodes], it will prompt: Add is not allowed because the number of available compute nodes authorized by the platform is exceeded.
+When the number of compute nodes in the group has reached the number of available compute nodes in each cluster of the license limit, click \[Add compute nodes], it will prompt: Add is not allowed because the number of available compute nodes authorized by the platform is exceeded.
 
 ![](assets/hotdb-management/image56.png)
 
-- When DR mode is enabled on the Edit Compute Node Cluster page, if the number of compute nodes in the group exceeds the number of available compute nodes in each group limited by the license, the current cluster will not be saved when you click \[Save], and it will prompt: "Add is not allowed because the number of available compute nodes authorized by the platform is exceeded."
+When DR mode is enabled on the Edit Compute Node Cluster page, if the number of compute nodes in the group exceeds the number of available compute nodes in each group limited by the license, the current cluster will not be saved when you click \[Save], and it will prompt: "Add is not allowed because the number of available compute nodes authorized by the platform is exceeded."
 
 ![](assets/hotdb-management/image57.png)
 
@@ -853,9 +837,13 @@ update `hotdb_setting` set `value` ='new_email@xx.cn' where `key`='emailAddress'
 ![](assets/hotdb-management/image69.png)
 
 - The update record is primarily the user's update and authorization operation records of the compute node license and the platform license.
+
 - In update failure records, move the mouse cursor cursor into the failure mark to see the specific reason for failure.
+
 - The record can view the status information of the compute node license and the platform license before and after the update.
+
 - When the license update type is platform license, the column of compute node cluster displays "--";
+
 - The admin user can view all the update records, while the general user can only view the update records of the compute node cluster that he has visited.
 
 ### Platform configuration data management
@@ -908,31 +896,31 @@ After the switching of master-slave ConfigDB, the original slave ConfigDB will b
 
 ![](assets/hotdb-management/image72.png)
 
-**（2） Disable**
+**(2) Disable**
 
 Click "Disable", the availability status of the ConfigDB will be updated to "unavailable" and marked in red, the master-slave replication status will be "abnormal", and "Disable" will be updated to "Enable".
 
 ![](assets/hotdb-management/image73.png)
 
-**（3） Enable**
+**(3) Enable**
 
 Click "Enable", the availability status, master-slave replication status and operation button will be restored to the previous status.
 
 ![](assets/hotdb-management/image74.png)
 
-**Notes:**
-
-- In the single-node mode, there are no switching, disabling, deletion and other operations.
-
-- When the slave ConfigDB is unavailable, the switching operation will prompt that there is no available slave ConfigDB.
-
-- If the replication latency exceeds 10 seconds, it will prompt "the master-slave replication latency of the current ConfigDB exceeds 10 seconds, manual switch is not allowed.".
-
-![](assets/hotdb-management/image75.png)
-
-- When enabling the slave ConfigDB, if the data of the master and slave ConfigDBs are inconsistent, switch is not allowed.
-
-![](assets/hotdb-management/image76.png)
+> !Note
+> 
+> In the single-node mode, there are no switching, disabling, deletion and other operations.
+> 
+> When the slave ConfigDB is unavailable, the switching operation will prompt that there is no available slave ConfigDB.
+> 
+> If the replication latency exceeds 10 seconds, it will prompt "the master-slave replication latency of the current ConfigDB exceeds 10 seconds, manual switch is not allowed.".
+> 
+> ![](assets/hotdb-management/image75.png)
+> 
+> When enabling the slave ConfigDB, if the data of the master and slave ConfigDBs are inconsistent, switch is not allowed.
+> 
+> ![](assets/hotdb-management/image76.png)
 
 #### Platform configuration backup data
 
@@ -940,7 +928,7 @@ The function supports manual and scheduled backup for the platform ConfigDB and 
 
 ![](assets/hotdb-management/image77.png)
 
-**（1）Platform server connection configuration**
+**(1) Platform server connection configuration**
 
 ![](assets/hotdb-management/image78.png)
 
@@ -948,7 +936,7 @@ The function supports manual and scheduled backup for the platform ConfigDB and 
 
 - SSH supports password free and sudo mode. After the test connection is passed, the configuration is saved directly, and no filling will be required in the next time.
 
-**（2） Manual backup**
+**(2) Manual backup**
 
 For manual backup, ConfigDB and backup basic data only are selected by default. The format of backup file name is ManagementConfigDatabase+year+month+day+hour+minute+second+backup type. After selecting to backup ConfigDB or ConfigFile, the backup will generate the corresponding backup record.
 
@@ -978,7 +966,7 @@ When a manual or scheduled task is performed, the corresponding backup record wi
 
 ![](assets/hotdb-management/image83.png)
 
-**（1） Backup record**
+**(1) Backup record**
 
 Backup record includes: Data type, ConfigFile name, Backup range, Starting time, time consuming, Backup to remote simultaneously, backup status. After the backup succeeds, the ConfigDB backup file will be saved in the corresponding data/HotDB_Management_Backup of the management platform, and the ConfigFile will be saved in the /conf directory, as shown in the following figure:
 
@@ -988,27 +976,27 @@ During the backup, the backup status displays "backup in progress"; after the ba
 
 ![](assets/hotdb-management/image86.png)
 
-**（2） Backup restore**
+**(2) Backup restore**
 
 After the backup, find the corresponding record and click Restore to restore the backup.
 
-**Notes:**
+> !Note
+> 
+> During the restore, if you perform other operations on the management platform, it will prompt "Operations are not allowed temporarily because the management platform ConfigDB is being restored".
+>
+> When restoring, if the configuration library of the management platform is changed, you will be prompted that "the currently restored ConfigDB is inconsistent with the original ConfigDB. Are you sure to continue the restore?".
+>
+> ![](assets/hotdb-management/image87.png)
+> 
+> During the restore, if the backup file is deleted, the restore will fail and a prompt will be given "restore file does not exist".
 
-- During the restore, if you perform other operations on the management platform, it will prompt "Operations are not allowed temporarily because the management platform ConfigDB is being restored".
-
-- When restoring, if the configuration library of the management platform is changed, you will be prompted that "the currently restored ConfigDB is inconsistent with the original ConfigDB. Are you sure to continue the restore?".
-
-![](assets/hotdb-management/image87.png)
-
-- During the restore, if the backup file is deleted, the restore will fail and a prompt will be given "restore file does not exist".
-
-（3） Backup deletion
+**(3) Backup deletion**
 
 Click Delete to delete the backup record. After deletion, the corresponding backup files in the platform service program directory will also be deleted.
 
 #### Other instructions
 
-**（1）Notice alert**
+**(1) Notice alert**
 
 Click Notice on the top navigation bar and click the [Setting](#setting) button to enable or disable the notice alert of "platform ConfigDB status detection and platform configuration data backup detection".
 
@@ -1024,7 +1012,7 @@ Click Notice on the top navigation bar and click the [Setting](#setting) button 
 
 - With notice alert disabled, no reminders will be given if exception occurs.
 
-**（2） Email alert**
+**(2) Email alert**
 
 Check ConfigDB replication status and Replication delay, you will receive an email reminder when the ConfigDB status or replication status is abnormal.
 
@@ -1038,7 +1026,7 @@ Check ConfigDB replication status and Replication delay, you will receive an ema
 
 ![](assets/hotdb-management/image92.png)
 
-**（3） Cluster deployment**
+**(3) Cluster deployment**
 
 When the platform ConfigDB is in single-node mode, the switch "Do you want to add a slave for the existing platform ConfigDB" will be displayed on the cluster deployment parameter configuration page; if the current ConfigDB is already in standby master mode or master-slave mode, this switch will not be displayed.
 
@@ -1050,7 +1038,7 @@ When the platform ConfigDB is in single-node mode, the switch "Do you want to ad
 
 - If the management platform ConfigDB is deployed, the replication relations of the platform ConfigDB and whether it is built successfully will also be verified during the deployment process.
 
-**（4） Single-IDC deployment**
+**(4) Single-IDC deployment**
 
 For the single-IDC deployment, when selecting to deploy compute node or data source servers, the switch "Do you want to add a slave for the existing platform ConfigDB" will be displayed among the ConfigDB MySQL instance options. This option is only displayed when the platform ConfigDB is in single-node mode, and it is checked by default.
 
@@ -1124,29 +1112,29 @@ After selecting the cluster, the cluster will be automatically checked to see wh
 
 ![](assets/hotdb-management/image103.png)
 
-Note:
-
+> !Note
+>
 > It supports the version upgrade of the compute nodes with NDB services installed. During the upgrade process, the management platform automatically copies the NDB installation directory of the former compute node to the directory of new compute node version. After the upgrade, the NDB service remains the same as before. Note that in this process the NDB version will not be upgraded.
 >
 > During the upgrading, check whether the current version to be upgraded is greater than or equal to v2.5.6, and whether the version currently in use is less than v2.5.6. If so, there will be an upgrade entry for JDK version and authorization file.
 >
 > JDK version upgrade: manual upload by default. When "specify the storage directory of existing installation package" is checked, the default directory is /usr/local/hotdb/. Users can also specify the storage directory as needed. When the upgrade fails and rolls back, the upgraded JDK will not be cleaned up, because the JDK version can be compatible with the lower version of the compute node.
 >
-> 1) When the version of the uploaded update package is greater than or equal to 2.5.6 and the current version of is less than 2.5.6, if you click "start update" after the upload succeeds, a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade", and "JDK version upgrade option" will be given at the same time.
+> 1. When the version of the uploaded update package is greater than or equal to 2.5.6 and the current version of is less than 2.5.6, if you click "start update" after the upload succeeds, a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade", and "JDK version upgrade option" will be given at the same time.
 >
 > ![](assets/hotdb-management/image104.png)
 >
-> 2) If "manual upload" is selected for JDK version upgrade, when the uploaded file does not match "OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz", it will prompt that "the uploaded file does not meet the standard, please upload again". ![](assets/hotdb-management/image105.png)3) When the uploaded JDK file does not meet the standard, if you still click "Start Update", a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade".
+> 2. If "manual upload" is selected for JDK version upgrade, when the uploaded file does not match "OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz", it will prompt that "the uploaded file does not meet the standard, please upload again". ![](assets/hotdb-management/image105.png)3) When the uploaded JDK file does not meet the standard, if you still click "Start Update", a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade".
 >
 > ![](assets/hotdb-management/image106.png)
 >
-> 3) When "specify the storage directory of existing installation package" is selected for "JDK version upgrade", if no JDK upgrade matching file is found in the corresponding directory, click "Start Update", a 3s message will appear that "No matching file is found in the directory corresponding to JDK version upgrade, please fill in again".
+> 3. When "specify the storage directory of existing installation package" is selected for "JDK version upgrade", if no JDK upgrade matching file is found in the corresponding directory, click "Start Update", a 3s message will appear that "No matching file is found in the directory corresponding to JDK version upgrade, please fill in again".
 >
 > ![](assets/hotdb-management/image107.png)
 >
 > license file upgrade: the self-developed license starts to be used in v2.5.6, and the license file is in the keys directory by default. In upgrading, it is necessary to ensure that the authorization is available and the number of authorized nodes is not less than the number of existing nodes and the number of authorized ConfigDBs is not less than the number of existing ConfigDBs.
 >
-> 4) When the user uploads the authorization file, if it is invalid (that is, the new authorization is not available or the number of authorized nodes is less than the number of existing nodes，the number of authorized ConfigDBs is not less than the number of existing ConfigDBs), a warning will be given on the page "the authorization uploaded by the compute node is invalid, please re-upload available new authorization license file". ![](assets/hotdb-management/image108.png)when the uploaded update package, JDK version and license of the compute node are valid and available, the upgrade page is as follows
+> 4. When the user uploads the authorization file, if it is invalid (that is, the new authorization is not available or the number of authorized nodes is less than the number of existing nodes，the number of authorized ConfigDBs is not less than the number of existing ConfigDBs), a warning will be given on the page "the authorization uploaded by the compute node is invalid, please re-upload available new authorization license file". ![](assets/hotdb-management/image108.png)when the uploaded update package, JDK version and license of the compute node are valid and available, the upgrade page is as follows
 >
 > ![](assets/hotdb-management/image109.png)
 
@@ -1174,13 +1162,15 @@ Click \[Upload] to open the file selection window, and select the logo image.
 
 ![](assets/hotdb-management/image113.png)
 
-**Note:** the image is required to be no more than 1024KB and the suffix should be ".png/.jpg/.svg". With the image requirements met, the preview area will display the effect picture of the uploaded image, as shown in the following figure:
-
-![](assets/hotdb-management/image114.png)
-
-![](assets/hotdb-management/image115.png)
-
-The check box "Consistent with the login page" for the navigation bar logo and the browser tab logo is not checked by default. When it is checked, the Upload button will be grayed and cannot be operated, and the corresponding logo preview will display the same as the login page logo.
+> !Note
+>
+> the image is required to be no more than 1024KB and the suffix should be ".png/.jpg/.svg". With the image requirements met, the preview area will display the effect picture of the uploaded image, as shown in the following figure:
+> 
+> ![](assets/hotdb-management/image114.png)
+> 
+> ![](assets/hotdb-management/image115.png)
+> 
+> The check box "Consistent with the login page" for the navigation bar logo and the browser tab logo is not checked by default. When it is checked, the Upload button will be grayed and cannot be operated, and the corresponding logo preview will display the same as the login page logo.
 
 ![](assets/hotdb-management/image116.png)
 
@@ -1198,29 +1188,29 @@ Click Restore the defaults. After the setting takes effect, image files under th
 
 ### Login
 
-General users are created by the manager user in the "User Management" of the management interface, and the access mode is the same as that of the manager user.
+General users are created by the manager user in the "[User Management](#user-management)" of the management interface, and the access mode is the same as that of the manager user.
 
 ![](assets/hotdb-management/image119.png)
 
-For general users logging in for the first time, HotDB Management forces the password change and the initial password is ["hotdb@hotpu.cn"](mailto:) by default.
+For general users logging in for the first time, HotDB Management forces the password change and the initial password is `hotdb@hotpu.cn` by default.
 
 ### Cluster selection
 
 General users enter the Cluster Selection page after logging into HotDB Management successfully. If the DR mode is enabled, please refer to the chapter "Compute node cluster selection" in the [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md) document for the display and explanation of the cluster selection page.
 
-- The compute node cluster displayed is the compute node cluster with access or control privilege owned by the login user. Click on a specific cluster to enter the cluster for viewing and management operations. When the cluster compute node and configDB are running normally, the page icon is green (as shown below) and the cluster can be accessed normally.
+The compute node cluster displayed is the compute node cluster with access or control privilege owned by the login user. Click on a specific cluster to enter the cluster for viewing and management operations. When the cluster compute node and configDB are running normally, the page icon is green (as shown below) and the cluster can be accessed normally.
 
 ![](assets/hotdb-management/image120.png)
 
-- When the cluster slave compute node cannot be connected but the configDB is connected properly, the cluster slave compute node is red and abnormal.
+When the cluster slave compute node cannot be connected but the configDB is connected properly, the cluster slave compute node is red and abnormal.
 
 ![](assets/hotdb-management/image121.png)
 
-- When the configDB cannot be connected and the compute node is running normally, the bottom configDB connection will display an exception. When the configDB cannot be connected partially, move the mouse cursor to the "Partial Exception" to display the specific configDB connection exception information.
+When the configDB cannot be connected and the compute node is running normally, the bottom configDB connection will display an exception. When the configDB cannot be connected partially, move the mouse cursor to the "Partial Exception" to display the specific configDB connection exception information.
 
 ![](assets/hotdb-management/image122.png)
 
-- When all compute nodes in the cluster and the configDB cannot be connected, the cluster panel is displayed in red. When clicking on the cluster panel with the mouse, "Unable to connect" will be displayed and it is unable to enter the cluster.
+When all compute nodes in the cluster and the configDB cannot be connected, the cluster panel is displayed in red. When clicking on the cluster panel with the mouse, "Unable to connect" will be displayed and it is unable to enter the cluster.
 
 ![](assets/hotdb-management/image123.png)
 
@@ -1243,7 +1233,7 @@ HotDB Management displays real-time user-concerned information such as data volu
 
 ![](assets/hotdb-management/image126.png)
 
-- **Table**: The first row "Table Configuration" is the number of all tables on the "Table Configuration" page, and the second row "Definition Warning" is the number of tables detected to be abnormal in the "Table Structure＆Index Detection".
+- **Table**: The first row "Table Configuration" is the number of all tables on the [Table Configuration](#table-configuration) page, and the second row "Definition Warning" is the number of tables detected to be abnormal in the "Table Structure＆Index Detection".
 - **Optimization**: The first row "SQL Log" is the number of SQL records recorded in the [Slow Query Log Analysis](#slow-query-log-analysis) function of HotLog Management. The second row "Slow SQL" is the SQL marked with ![](assets/hotdb-management/image127.png) in the [Slow Query Log Analysis](#slow-query-log-analysis) function of HotLog Management. ("SQL Log" and "Slow SQL" are displayed are not enabled when the Slow Query Log Analysis does not enable SQL statistics)
 - **Backup**: The first row "Totals of Backup" is the number of all backup records in the "Backup Task" function of HotDB Management, and the second row "Failure Backup" is the number of task records with backup status as "Backup Failed".
 - **Log**: The first row "Cluster Log" is the total number of logs in the "Compute Node Log" function of HotDB Management. The second row "Unread" is the number of logs with status as "Unread" in the compute node log. When the number of logs is greater than 999, the page displays 999+.
