@@ -2,12 +2,11 @@ const repositoryUrl = "https://github.com/HotDB-Community/hotdb-documents"
 
 //使用postMessage方法传递scrollHeight和scrollWidth
 window.addEventListener("message", function(e) {
-  if(e.data === "scrollHeight") {
-    e.source.postMessage(window.document.body.scrollHeight, e.origin);
-  }else if(e.data === "scrollWidth"){
-    e.source.postMessage(window.document.body.scrollWidth,e.origin);
+  if(e.data === "scrollSize") {
+    const data = {scrollWidth: window.document.body.scrollWidth, scrollHeight: window.document.body.scrollHeight}
+    e.source.postMessage(data, e.origin)
   }
-}, false);
+}, false)
 
 window.$docsify = {
   name: "HotDB Documents",
@@ -52,42 +51,42 @@ window.$docsify = {
     crossChapterText: true
   },
   copyCode: {
-    buttonText : 'Copy Code',
-    errorText  : 'Error',
+    buttonText: 'Copy Code',
+    errorText: 'Error',
     successText: 'Copied'
   },
   "flexible-alerts": {
     style: 'callout', //flat, callout
     note: {
       label: {
-        "/zh/":"注意",
-        "/en/":"Note"
+        "/zh/": "注意",
+        "/en/": "Note"
       }
     },
     tip: {
       label: {
-        "/zh/":"提示",
-        "/en/":"Tip"
+        "/zh/": "提示",
+        "/en/": "Tip"
       }
     },
     warning: {
       label: {
-        "/zh/":"警告",
-        "/en/":"Warning"
+        "/zh/": "警告",
+        "/en/": "Warning"
       }
     },
     info: {
       label: {
-        "/zh/":"说明",
-        "/en/":"Information"
+        "/zh/": "说明",
+        "/en/": "Information"
       },
       icon: "fa fa-info-circle",
       className: "info"
     },
     important: {
       label: {
-        "/zh/":"特别说明",
-        "/en/":"Important Information"
+        "/zh/": "特别说明",
+        "/en/": "Important Information"
       },
       icon: "fa fa-info-circle",
       className: "important"
@@ -128,7 +127,7 @@ window.$docsify = {
     function(hook, vm) {
       //console.log(vm)
 
-      hook.init(function(){
+      hook.init(function() {
         redirectLocation()
       })
 
@@ -149,7 +148,7 @@ window.$docsify = {
         //添加topbar
         return createTopBar() + html
       })
-      hook.doneEach(function(){
+      hook.doneEach(function() {
         $(document).ready(function() {
           bindFootNote()
         })
@@ -188,10 +187,10 @@ const footNoteReferenceRegex = /^\[\^(\d+)]:\s*(.*)$/gm
 //解析markdown尾注，生成bootstrap4 tooltip
 function resolveFootNote(html) {
   const footNotes = {}
-  return html.replace(footNoteReferenceRegex,(s,p1,p2)=>{
+  return html.replace(footNoteReferenceRegex, (s, p1, p2) => {
     footNotes[p1] = p2
     return ""
-  }).replace(footNoteRegex,(s,p1)=>{
+  }).replace(footNoteRegex, (s, p1) => {
     return `<a href="javascript:void(0);" data-toggle="tooltip" title="${footNotes[p1]}">[${p1}]</a>`
   })
 }
