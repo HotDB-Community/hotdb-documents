@@ -113,7 +113,6 @@ show @@clientquery;
 
 **结果包含字段及其说明：**
 
-
 | 列名 | 说明 | 值类型/范围 |
 |----------|--------|---------------------|
 | `client` | 客户端信息 | `STRING/[host]` |
@@ -1347,7 +1346,7 @@ onlinemodifyrulecheck db.tablename [db.tablename...]
 
 此命令用于分片方案变更。执行该命令返回结果：OK或者MySQLException。
 
-```
+```sql
 onlinemodifyrule db.tablename=functionid,rulecol:datanodes:源表处理(小时:0为保留):批次行数(1000):复制间隔 (T3/I0.3):等待超时(天):暂停数据复制时段;
 ```
 
@@ -1378,7 +1377,9 @@ onlinemodifyrule cpd_test. zx_cvset_signin_result=4,id:1,2:24:1000:T3:7:0;
 
 ![](assets/management-port-command/image69.png)
 
-分片方案变更所采用的`functionid`可在配置库的`hotdb_function`表里查看。![](assets/management-port-command/image70.png)
+分片方案变更所采用的`functionid`可在配置库的`hotdb_function`表里查看。
+
+![](assets/management-port-command/image70.png)
 
 > !Important
 > 
@@ -1393,7 +1394,7 @@ onlinemodifyrule cpd_test. zx_cvset_signin_result=4,id:1,2:24:1000:T3:7:0;
 
 此命令用于查看分片方案变更进度，一个表会有一行数据，如下图所示：
 
-```
+```sql
 onlinemodifyruleprogress db.tablename[,db1.tablename1,..]
 ```
 
@@ -1431,7 +1432,7 @@ onlinemodifyruleprogress db.tablename[,db1.tablename1,..]
 
 当分片方案的变更进度 ，state状态是WAITTING，并且inconsitent返回数据不一致，可以用该命令继续执行变更，如下图所示：
 
-```
+```sql
 onlinemodifyrulecontinue db.tablename;
 ```
 
@@ -1454,7 +1455,7 @@ onlinemodifyrulecontinue db.tablename;
 
 此命令用于取消当前正在进行的任务：
 
-```
+```sql
 onlinemodifyrulecancle db.tablename;
 ```
 
@@ -1468,7 +1469,7 @@ onlinemodifyrulecancle db.tablename;
 
 该命令用于检查服务MySQL存储节点特定参数配置信息是否一致，若有参数与HotDB Server要求不同，执行命令后系统会有提示信息输出，例如：
 
-```
+```sql
 check @@datasource_config;
 ```
 
@@ -1487,13 +1488,13 @@ check @@datasource_config;
 
 ```
 存储节点与HOTDB时间差异低于3s
-Read-only
-Completion_type必须为NO_CHAN
-Div_precision_increment
-Innodb_rollback_on_timeout要求为ON
-Autocommit
-Tx_isolation
-MAX_ALLOWED_PACKET
+read-only
+completion_type必须为NO_CHAN
+div_precision_increment
+innodb_rollback_on_timeout要求为on
+autocommit
+tx_isolation
+max_allowed_packet
 ```
 
 详细使用方法及要求请参考[标准](standard.md)文档的MySQL服务端参数校验章节。
@@ -1559,7 +1560,6 @@ kill @@connection [id1,id2,id3...idn];
 
 ```
 mysql> kill @@connection 7;
-
 Query OK, 1 rows affected (0.00 sec)
 ```
 
@@ -1595,7 +1595,6 @@ online;
 
 ```
 mysql> online;
-
 ERROR 10192 (HY000): access denied. online is not allowed in a DR HotDB Server.
 ```
 
@@ -1633,9 +1632,9 @@ rebuild @@pool;
 
 该命令用于更新配置，例如更新server.xml文件及内存使用的配置，在命令行窗口输入该命令，可不用重启HotDB Server服务即进行配置参数更新，此命令与管理平台动态加载功能相同。运行结果参考如下：
 
-```sql
+```
 mysql> reload @@config; # 不是所有参数可以用这命令
-
+Query OK, 1 row affected (2.31 sec)
 Reload config success
 ```
 
@@ -1647,7 +1646,6 @@ Reload config success
 
 ```
 mysql> reload @@config;
-
 ...卡住无返回结果...
 ```
 
@@ -1655,9 +1653,7 @@ mysql> reload @@config;
 
 ```
 mysql> reset @@reloading;
-
 Query OK, 1 row affected (0.00 sec)
-
 Reset reloading success
 ```
 
@@ -1665,7 +1661,6 @@ Reset reloading success
 
 ```
 mysql> reload @@config;
-
 ERROR 1003 (HY000): Reload config failure, Reloading was set to false manually.
 ```
 
@@ -1717,11 +1712,9 @@ stop @@heartbeat [datanode_id:time(s)]
 
 ```
 mysql> stop @@heartbeat 1:60; # 将节点1暂停60秒
-
 Query OK, 1 row affected (0.01 sec)
 
 mysql> stop @@heartbeat 1:-1;
-
 Query OK, 1 row affected (0.00 sec)
 ```
 
@@ -1737,11 +1730,9 @@ switch @@datasource [datanode_id];
 
 ```
 mysql> stop @@heartbeat 1:60; # 将节点1暂停60秒
-
 Query OK, 1 row affected (0.01 sec)
 
 mysql> stop @@heartbeat 1:-1;
-
 Query OK, 1 row affected (0.00 sec)
 ```
 
@@ -1765,7 +1756,7 @@ enable_election;
 
 ### `disable_non_query_command` - 仅允许查询命令{#disable_non_query_command}
 
-```
+```sql
 disable_non_query_command;
 ```
 
@@ -1819,7 +1810,7 @@ online_dr_check;
 ### `reset @@dberrorcount` - 将所有逻辑库报错信息清空{#reset-dberrorcount}
 
 ```sql
-reset @@dberrorcount;
+reset dberrorcount;
 ```
 
 ## 功能处理语句
@@ -1834,15 +1825,13 @@ dbremapping @@add@[database_name]:[database_name],[database_name]:[database_name
 
 例如：
 
-```
-mysql> dbremapping @@add@db01:logic_db01,db02:logic_db02;  #添加多条映射关系
-
-Query OK, 0 rows affected (0.00 sec)
+```sql
+dbremapping @@add@db01:logic_db01,db02:logic_db02;  #添加多条映射关系
 ```
 
 增加数据库db01到逻辑库logic_db的映射关系，从而执行SQL语句USE db01相当于执行USE logic_db:
 
-```
+```sql
 dbremapping @@add@db01:logic_db;
 ```
 
@@ -1950,7 +1939,7 @@ releasehold commit;
 
 执行完[hold ddl](#hold-ddl)后，使用此命令解除HOLD状态，语句执行成功。例如：
 
-```
+```sql
 releasehold ddl;
 ```
 
@@ -1964,23 +1953,20 @@ releasehold ddl;
 
 该命令用于检测指定表的唯一约束键的历史数据是否唯一，语法：
 
-```
+```sql
 check @@history_unique [db_name.tb_name];
 ```
 
 1. 不指定表名：检测所有开启全局唯一约束的表，它们的唯一约束键历史数据是否唯一。若都唯一，则会返回空集：
 
-```
-mysql> check @@history_unique;
-
-Empty set (0.01 sec)
+```sql
+check @@history_unique;
 ```
 
 若存在少量不一致的数据，则会提示不一致值：
 
 ```
 mysql> check @@history_unique;
-
 +---------+---------+----------------------------------------------+
 | db_name | tb_name | messege                                      |
 +---------+---------+----------------------------------------------+
@@ -1992,7 +1978,6 @@ mysql> check @@history_unique;
 
 ```
 mysql> check @@history_unique;
-
 +---------+-------+-------------------------------------------------------------------------------------------------------------------+
 | ZJJ_DB1 | UCON1 | duplicate data in unique constraint, for more information,please download: ZJJ_DB1_UCON1_duplicates_1561353006576 |
 +---------+-------+-------------------------------------------------------------------------------------------------------------------+
@@ -2016,7 +2001,6 @@ unique @@create [db_name.tb_name];
 
 ```
 mysql> unique @@create;
-
 +------------------+-----------+---------+-----------------------------+
 | db_name          | tb_name   | result  | messege                     |
 +------------------+-----------+---------+-----------------------------+
@@ -2051,7 +2035,6 @@ unique @@drop [db_name.tb_name];
 
 ```
 mysql> unique @@drop HOTDB_SERVER_253.beyond1,HOTDB_SERVER_253.test1,HOTDB_SERVER_253.keevey01;
-
 +------------------+----------+---------+---------+
 | db_name          | tb_name  | result  | messege |
 +------------------+----------+---------+---------+
