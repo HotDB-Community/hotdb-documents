@@ -9,127 +9,131 @@
 | Top Title | Second Title | Third Title | Requirements |
 |------------------------------|----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | sever hardware configuration | CPU | CPU | 1 compute node ≥ 40 logic core<br>1 management platform ≥ 4 logic core<br>1 MySQL instance ≥ 8 logic core (including data source instance and configDB instance)<br>1 LVS instance ≥ 16 logic core (only for multi-node load balancing mode)<br>sever requirement: the total number of logic cores available is greater than the number of logic cores required by the installed programs of the server |
-|   | memory | memory | 1 compute node ≥ 30G<br>1 management platform ≥ 2G<br>1 ConfigDB MySQL instance ≥ 3G<br>1 data source MySQL instance ≥ 60G<br>1 LVS instance ≥ 6G (only for multi-node load balancing mode)<br>operation system ≥ 1G<br>requirements for all servers: the amount of memory is greater than that required by the installed programs |
-|   | disk space | disk space | 1 compute node ≥ 100G<br>1 management platform ≥ 10G<br>1 configDB MySQL instance ≥ 100G<br>1 data source MySQL instance ≥ 1000G<br>Operating system ≥ 60G<br>Requirement for disk space of server (LVS server in multi-mode load balancing mode excluded): the total disk space is greater than that required by the installed programs |
-|   | disk IO response | server disk IO response time | server: execute the disk IO response detection command `sar -d |egrep -i '^Average: '|awk 'BEGIN{p=0}{if ($(NF-2)>50) p=1;if ($(NF-1)>5) p=1;if ($NF>50) p=1}END{if (p==1) print "disk latency performance is low, or disk utilization is high"}'`，<br>not report: `disk latency performance is low, or disk utilization is high` or the command cannot be executed |
-|   | network quality | server network quality | server: execute the network quality detection command `ping -q -c 100 -s 65000 -i 0.01 the IP address of the detected server |awk '{if (index($3,"transmitted")>0) {for (i=1;i<=NF;i++) if(index($i,"%")) lost=$i};if (index($1,"rtt")>0) {split($(NF-1),a,"/");avg=a[2];max=a[3]}}END{if (lost!="0%" \|\| avg>3 \|\| max>5) print "network losted packet or latency is not good enough"}'`<br>not report: `network losted packet or latency is not good enough` or the command cannot be executed |
-|   | server properties | server non-virtual machine | server: execute the command: `dmesg \| grep "Hypervisor detected"`<br>the command is executed without error or output |
+| ^ | memory | memory | 1 compute node ≥ 30G<br>1 management platform ≥ 2G<br>1 ConfigDB MySQL instance ≥ 3G<br>1 data source MySQL instance ≥ 60G<br>1 LVS instance ≥ 6G (only for multi-node load balancing mode)<br>operation system ≥ 1G<br>requirements for all servers: the amount of memory is greater than that required by the installed programs |
+| ^ | disk space | disk space | 1 compute node ≥ 100G<br>1 management platform ≥ 10G<br>1 configDB MySQL instance ≥ 100G<br>1 data source MySQL instance ≥ 1000G<br>Operating system ≥ 60G<br>Requirement for disk space of server (LVS server in multi-mode load balancing mode excluded): the total disk space is greater than that required by the installed programs |
+| ^ | disk IO response | server disk IO response time | server: execute the disk IO response detection command `sar -d |egrep -i '^Average: '|awk 'BEGIN{p=0}{if ($(NF-2)>50) p=1;if ($(NF-1)>5) p=1;if ($NF>50) p=1}END{if (p==1) print "disk latency performance is low, or disk utilization is high"}'`，<br>not report: `disk latency performance is low, or disk utilization is high` or the command cannot be executed |
+| ^ | network quality | server network quality | server: execute the network quality detection command `ping -q -c 100 -s 65000 -i 0.01 the IP address of the detected server |awk '{if (index($3,"transmitted")>0) {for (i=1;i<=NF;i++) if(index($i,"%")) lost=$i};if (index($1,"rtt")>0) {split($(NF-1),a,"/");avg=a[2];max=a[3]}}END{if (lost!="0%" \|\| avg>3 \|\| max>5) print "network losted packet or latency is not good enough"}'`<br>not report: `network losted packet or latency is not good enough` or the command cannot be executed |
+| ^ | server properties | server non-virtual machine | server: execute the command: `dmesg \| grep "Hypervisor detected"`<br>the command is executed without error or output |
 | operating system | SSH connection | server SSH connection speed | server: establish the SSH connection and execute the command `echo HotDB`, the total time consumed is less than 1s |
-|   | can connect to the outer network | server can connect to the outer network | it is recommended that the server can normally connect to the outer network: `ping 114.114.114.114` |
-|   |   | server DNS configuration | the server is configured with right DNS: `ping www.baidu.com` |
-|   | yum | yum | the server is configured with the latest available yum source |
-|   | charset setting | charset setting | It is strongly recommended to set as UTF8 (execute `echo $LANG`, the return result is `en_US.UTF-8`,<br>and execute `echo $LC_ALL`, the return result is `en_US.UTF-8` or null) |
-|   | time zone | time zone | it is strongly recommended that the correct time zone be set: execute the command `ls -l /etc/localtime\|grep -i shanghai` and result will be output |
-|   | time synchronization | the time difference between management platform server and the outer network | execute command: `ntpdate -q ntp.aliyun.com 2>/dev/null\|tail -1\|awk '{print $(NF-1)}'`<br>the time difference between management platform server and the outer network is less than 3s |
-|   |   | the time difference between cluster servers and management platform servers | the time difference between other servers and management platform server is less than 2s |
-|   | firewall | firewall | setting is off |
-|   | selinux | selinux | setting is off |
-|   | limits.conf | server file handle count | execute the command `su username -c 'ulimit -n'`, and the return result is greater than 65534 |
-|   |   | server thread count | execute the command `su mysql -c 'ulimit -u'`, and the return result is greater than 1023 (specifically the server with MySQL instances installed) |
-|   | sysctl.conf | net.core.netdev_max_backlog | this parameter is set greater than 4095 |
-|   |   | net.ipv4.ip_local_port_range | execute `sysctl net.ipv4.ip_local_port_range`, return to the second number and minus the first number, the result is greater than 40000, and the sum of the two number is odd |
-|   |   | net.core.somaxconn, net.ipv4.tcp_max_syn_backlog | net.core.somaxconn>1000 and net.ipv4.tcp_max_syn_backlog>1000 |
-|   |   | net.ipv4.tcp_sack , <br>net.ipv4.tcp_fack , <br>net.ipv4.tcp_dsack , <br>net.ipv4.tcp_early_retrans | the four parameter values are all 0 |
-|   |   | net.ipv4.tcp_keepalive_time, <br>net.ipv4.tcp_keepalive_probes , <br>net.ipv4.tcp_keepalive_intvl | net.ipv4.tcp_keepalive_time is greater than 9 and less than 601<br>net.ipv4.tcp_keepalive_probes is greater than 1 and less than 6<br>net.ipv4.tcp_keepalive_intvl is greater than 1 and less than 61 |
-|   |   | net.ipv4.tcp_tw_recycle | net.ipv4.tcp_tw_recycle=1 |
-|   |   | net.ipv4.tcp_tw_reuse | net.ipv4.tcp_tw_reuse=1 |
-|   |   | vm.min_free_kbytes | vm.min_free_kbytes>10240 |
-|   |   | vm.swappiness | vm.swappiness=1 |
-|   | tune | tune deployment and execution | the compute node server requires tune deployment and normal execution |
-|   | timing schedule | status and autostart | enable timing schedule and set autostart for server |
+| ^ | can connect to the outer network | server can connect to the outer network | it is recommended that the server can normally connect to the outer network: `ping 114.114.114.114` |
+| ^ | ^ | server DNS configuration | the server is configured with right DNS: `ping www.baidu.com` |
+| ^ | yum | yum | the server is configured with the latest available yum source |
+| ^ | charset setting | charset setting | It is strongly recommended to set as UTF8 (execute `echo $LANG`, the return result is `en_US.UTF-8`,<br>and execute `echo $LC_ALL`, the return result is `en_US.UTF-8` or null) |
+| ^ | time zone | time zone | it is strongly recommended that the correct time zone be set: execute the command `ls -l /etc/localtime\|grep -i shanghai` and result will be output |
+| ^ | time synchronization | the time difference between management platform server and the outer network | execute command: `ntpdate -q ntp.aliyun.com 2>/dev/null\|tail -1\|awk '{print $(NF-1)}'`<br>the time difference between management platform server and the outer network is less than 3s |
+| ^ | ^ | the time difference between cluster servers and management platform servers | the time difference between other servers and management platform server is less than 2s |
+| ^ | firewall | firewall | setting is off |
+| ^ | selinux | selinux | setting is off |
+| ^ | limits.conf | server file handle count | execute the command `su username -c 'ulimit -n'`, and the return result is greater than 65534 |
+| ^ | ^ | server thread count | execute the command `su mysql -c 'ulimit -u'`, and the return result is greater than 1023 (specifically the server with MySQL instances installed) |
+| ^ | sysctl.conf | net.core.netdev_max_backlog | this parameter is set greater than 4095 |
+| ^ | ^ | net.ipv4.ip_local_port_range | execute `sysctl net.ipv4.ip_local_port_range`, return to the second number and minus the first number, the result is greater than 40000, and the sum of the two number is odd |
+| ^ | ^ | net.core.somaxconn<br>net.ipv4.tcp_max_syn_backlog | net.core.somaxconn>1000 and net.ipv4.tcp_max_syn_backlog>1000 |
+| ^ | ^ | net.ipv4.tcp_sack<br>net.ipv4.tcp_fack<br>net.ipv4.tcp_dsack<br>net.ipv4.tcp_early_retrans | the four parameter values are all 0 |
+| ^ | ^ | net.ipv4.tcp_keepalive_time<br>net.ipv4.tcp_keepalive_probes<br>net.ipv4.tcp_keepalive_intvl | net.ipv4.tcp_keepalive_time is greater than 9 and less than 601<br>net.ipv4.tcp_keepalive_probes is greater than 1 and less than 6<br>net.ipv4.tcp_keepalive_intvl is greater than 1 and less than 61 |
+| ^ | ^ | net.ipv4.tcp_tw_recycle | net.ipv4.tcp_tw_recycle=1 |
+| ^ | ^ | net.ipv4.tcp_tw_reuse | net.ipv4.tcp_tw_reuse=1 |
+| ^ | ^ | vm.min_free_kbytes | vm.min_free_kbytes>10240 |
+| ^ | ^ | vm.swappiness | vm.swappiness=1 |
+| ^ | tune | tune deployment and execution | the compute node server requires tune deployment and normal execution |
+| ^ | timing schedule | status and autostart | enable timing schedule and set autostart for server |
 | software deployment | JDK version | JDK version | the JDK version of compute node server shall be 1.7.0_80 and the JDK version of all compute node servers shall be consistent |
-|   | MySQL | MySQL version | the MySQL version of each server shall be consistent |
-|   |   | mysqld environment | the mysqld environment of each server shall be consistent |
-|   |   | MySQL server autostart | MySQL server autostart shall be set on the server where MySQL instance is installed |
-|   | backup program | backup program status | data source server: backup program has been installed and executed normally |
+| ^ | MySQL | MySQL version | the MySQL version of each server shall be consistent |
+| ^ | ^ | mysqld environment | the mysqld environment of each server shall be consistent |
+| ^ | ^ | MySQL server autostart | MySQL server autostart shall be set on the server where MySQL instance is installed |
+| ^ | backup program | backup program status | data source server: backup program has been installed and executed normally |
 | software configuration | MySQL connection | MySQL connection time | server installed with MySQL: connect MySQL instance and execute select 1, the total time shall be than 1s |
-|   | my.cnf | autocommit | this parameter of all MySQL instances in the cluster shall be consistent |
-|   |   | back_log | this parameter is set greater than 500 |
-|   |   | binlog_cache_size | this parameter is set greater than 65535 and less than 8388609 |
-|   |   | binlog_format | set to non-STATEMENT |
-|   |   | character_set_server | this parameter of all MySQL instances in the cluster is set the same and within the range of latin1, gbk, utf8, utf8mb4 |
-|   |   | character_set_database | all MySQL instances: character_set_database parameter value, character set from show create database xxx, character_set_server parameter value, and character_type parameter value configured in configdb table shall be consistent |
-|   |   | collation_server | all MySQL instances:<br>the same value is set for this parameter and within the range of latin1_swedish_ci, latin1_bin, gbk_chinese_ci, gbk_bin, utf8_general_ci, utf8_bin, utf8mb4_general_ci, utf8mb4_bin |
-|   |   | collation_database | all MySQL instances: the parameter values of collation_database and collation_server are consistent |
-|   |   | completion_type | the parameter value is NO_CHAIN |
-|   |   | div_precision_increment | the parameter value of all MySQL instances are consistent |
-|   |   | expire_logs_days | this parameter is greater than 1 and less than 30 |
-|   |   | explicit_defaults_for_timestamp | the parameter values of all MySQL instances are consistent |
-|   |   | general_log | this parameter is set as OFF |
-|   |   | group_concat_max_len | this parameter is set greater than 65535 and less than 67108865 |
-|   |   | innodb_buffer_pool_size | all MySQL instances: the parameter is greater than 34359738367 and the sum of parameter values of all MySQL instances in this server is less than 80% of the total memory of the server |
-|   |   | innodb_doublewrite | this parameter of all MySQL instances is set as ON |
-|   |   | innodb_flush_log_at_trx_commit | it is recommended that this parameter is set as 2 and uses semi-synchronous replication or MGR |
-|   |   | innodb_flush_method | it is recommended that the parameter be set as O_DIRECT |
-|   |   | innodb_io_capacity | this parameter is set greater than 99 and less than 10001 |
-|   |   | innodb_large_prefix | it is recommended that this parameter be set as ON |
-|   |   | innodb_log_file_size | this parameter is greater than 4294967295 and less than 68719476737 or greater than innodb_buffer_pool_size/8 and less than innodb_buffer_pool_size/2 |
-|   |   | innodb_open_files | the parameter is set greater than 1000 |
-|   |   | innodb_rollback_on_timeout | this parameter is set as ON |
-|   |   | innodb_support_xa | this parameter is set as ON |
-|   |   | interactive_timeout | all MySQL instances: the parameter is greater than the field value of house_keeping_sleep_time configured in configDB |
-|   |   | join_buffer_size | the parameter is greater than 1048575 and less than 67108865 |
-|   |   | log_bin | this parameter is set as ON |
-|   |   | long_query_time | the parameter configuration of all MySQL instances is consistent |
-|   |   | lower_case_table_names | this parameter is set as 1 |
-|   |   | max_connect_errors | this parameter is greater than 1000 |
-|   |   | max_connections | this parameter is greater than the field value of max_con of data source configured in configdb |
-|   |   | open_files_limit | the parameter value shall be greater than 10000 |
-|   |   | optimizer_switch | the parameter contains loosecan=off |
-|   |   | query_cache_type | this parameter is set as OFF |
-|   |   | read_buffer_size | the parameter is greater than 262143 and less than 67108865 |
-|   |   | read_only | the parameter on MySQL instances of master configdb and all master data sources is not ON |
-|   |   | read_rnd_buffer_size | the parameter is greater than 524287 and less than 67108865 |
-|   |   | rpl_semi_sync_master_enabled | if the parameter exists, it shall be ON |
-|   |   | rpl_semi_sync_slave_enabled | if the parameter exists, it shall be ON |
-|   |   | server_id | the parameter value of all MySQL instances is inconsistent |
-|   |   | server_uuid | the parameter value of all MySQL instances is inconsistent |
-|   |   | skip_name_resolve | it is recommended that this parameter be set as ON |
-|   |   | slave_skip_errors | this parameter is set as OFF |
-|   |   | slow_query_log | this parameter is set as ON |
-|   |   | sort_buffer_size | the parameter is greater than 1048575 and less than 67108865 |
-|   |   | sql_mode | this parameter does not contain ONLY_FULL_GROUP_BY |
-|   |   | sync_binlog | this parameter is greater than 2 (it is recommended that: the parameter value of sync_binlogall of all MySQL instances is set as 10 and use semi-synchronous replication or MGR) |
-|   |   | system_time_zone | this parameter configuration is consistent |
-|   |   | table_open_cache | the parameter is greater than 4000 and less than the parameter value of open_files_limit |
-|   |   | thread_cache_size | the parameter is greater than 64 and less than 1024 |
-|   |   | time_zone | the parameter configuration of all MySQL instances is consistent |
-|   |   | tmp_table_size | the parameter is greater than 262143 and less than 1073741825 |
-|   |   | tx_isolation | the parameter configuration of all MySQL instances is consistent |
-|   |   | version | the parameter of all MySQL instances is consistent |
-|   |   | version_comment | it is recommended that this parameter be MySQL Community Server (GPL) |
-|   |   | wait_timeout | this parameter is greater than the parameter value of house_keeping_sleep_time of data source configured in configdb |
-|   |   | rpl_semi_sync_master_status | if this parameter exists and slave is configured, this parameter shall be ON |
-|   |   | rpl_semi_sync_slave_status | if this parameter exists and master is configured, this parameter shall be ON |
-|   |   | sysdate-is-now | MySQL instances of version 5.5 and below uses `select sysdate(),sleep(1),sysdate();`<br>MySQL instances of above version 5.5 uses select sysdate(6),sleep(0.001),sysdate(6); for detection<br>the time of both columns are the same |
-|   | MySQ disk space | absolute path of data directory of MySQL instances | all MySQL instances: execute `show global variables like 'datadir'`; the return result is absolute path |
-|   |   | free disk space of data directory of all MySQL instances | the free disk space of data directory of all MySQL instances shall be greater than 200G |
-|   | MySQL high availability | high availability correct configuration | the data source under the same data node or a set of configdb meets any following condition: ① use the double 1 deployment (sync_binlog=1 and innodb_flush_log_at_trx_commit=1) and no switching rule is configured; ② enable semi-synchronous for master-slave/master-master /master-master & multi-salve architecture, and replication is normal and switching rule is configured; ③ mgr architecture and replication is normal and the number of online members is greater than 2 (2 excluded) |
-|   |   | high availability over configuration | the data source under the same data node or a set of configdb does not meet any of the following conditions: ① use double 1 deployment (sync_binlog=1 and innodb_flush_log_at_trx_commit=1) and configure switching rule and enable the semi-synchronous replication; ② use MGR replication and double 1 deployment (sync_binlog=1 and innodb_flush_log_at_trx_commit=1) |
-|   | MySQL user authority | replication user authority | MySQL instances of configdb with replication relations or data source: replication user authority is not lower than (replication slave,replication client) |
-|   |   | ConfigDB user authority | ConfigDB: connection user authority is not lower than<br>(select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload,lock tables,replication slave,replication client) |
-|   |   | data source connection user | data source: connection user authority is not lower than<br>(select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,execute,event)<br>note: data source connection user of MySQL8.0 and above shall also have xa_recover_admin authority |
-|   |   | data source backup user | （select,insert,update,delete,create,drop,index,alter,reload,process,references,super,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,event）<br>data source: backup user authority is not lower than<br>(select,insert,update,delete,create,drop,index,alter,reload,process,references,super,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,event) |
-|   | compute node high availability | compute node mode | compute node mode is master/slave mode or multi-node mode and management platform can normally access the IP address of compute node, VIP, compute node role |
-|   |   | server port of compute node can normally connect to management port | server port of each compute node (master/slave mode slave compute node excluded) can normally connect to management port |
-|   |   | normal VIP connection of compute node server port | master/slave mode or multi-node mode cluster can normally connect to server port of compute node through VIP |
-|   | server.xml | server.xml configuration file path | server.xml path configured on management platform is consistent with the path reported by hotdb-server, and management platform has the authority to read and write |
-|   |   | IP address of configdb in Server.xml | use the real IP address rather than 127.0.0.1 |
-|   |   | processors | it is required that the configuration parameter≥the number of logic core of the server divided by 8 and is less than or equal to the number of logic core |
-|   |   | processorExecutor | the parameter is less than 9 |
-|   |   | enableHeartbeat | the parameter is true |
-|   |   | heartbeatPeriod | the parameter is less than 11s and greater than heartbeatTimeoutMs, and the configuration of each compute node is consistent |
-|   |   | heartbeatTimeoutMs | the parameter is less than 5000 and configuration of each compute node is consistent |
-|   |   | enableLatencyCheck | the parameter is true and configuration of each compute node is consistent |
-|   |   | sqlTimeout | the parameter is less than 86400 and configuration of each compute node is consistent |
-|   |   | haNodeHost (only for master/slave mode) | this parameter of current slave compute node correctly configures the IP and management port of current master compute node |
-|   |   | enableXA (only for master/slave or multi-node mode) | the configuration of each compute node is consistent |
-|   |   | strategyForRWSplit | the configuration of each compute node is consistent<br>the parameter of each compute node is 0 |
-|   | compute node startup script | -Xms ，-Xmx | it is required that both parameters are consistent, and these two parameters of all compute nodes in the cluster are consistent |
-|   |   | -Xmx | this parameter is greater than or equal to 1G and less than or equal to 256G<br>open G1 when this parameter is greater than or equal to 8G |
-|   |   | MaxDirectMemorySize | this parameter is greater than 4G |
-|   | Listener port | compute node: service port, management port, cluster communication port (only for multi-node mode)<br>backup program: Listener port<br>MySQL instance (data source, configdb): Listener port<br>management platform: service port<br>（If https is turned on, https Listener port is still required.）<br>HotDB Listener ： Listener port | port range: greater than 1024 and less than the value of the first number found out in sysctl net.ipv4.ip_local_port_range in server |
-|   | ConfigDB | configuration check | pass configuration check detection |
-|   |   | master/slave or MGR configdb data consistency | the number, structure and data of tables of each configdb instance are consistent |
-|   |   | master/slave configdb is in normal replication status | replication status is normal and replication latency is less than 1s |
+| ^ | my.cnf | autocommit | this parameter of all MySQL instances in the cluster shall be consistent |
+| ^ | ^ | back_log | this parameter is set greater than 500 |
+| ^ | ^ | binlog_cache_size | this parameter is set greater than 65535 and less than 8388609 |
+| ^ | ^ | binlog_format | set to non-STATEMENT |
+| ^ | ^ | character_set_server | this parameter of all MySQL instances in the cluster is set the same and within the range of latin1, gbk, utf8, utf8mb4 |
+| ^ | ^ | character_set_database | all MySQL instances: character_set_database parameter value, character set from show create database xxx, character_set_server parameter value, and character_type parameter value configured in configdb table shall be consistent |
+| ^ | ^ | collation_server | all MySQL instances:<br>the same value is set for this parameter and within the range of latin1_swedish_ci, latin1_bin, gbk_chinese_ci, gbk_bin, utf8_general_ci, utf8_bin, utf8mb4_general_ci, utf8mb4_bin |
+| ^ | ^ | collation_database | all MySQL instances: the parameter values of collation_database and collation_server are consistent |
+| ^ | ^ | completion_type | the parameter value is NO_CHAIN |
+| ^ | ^ | div_precision_increment | the parameter value of all MySQL instances are consistent |
+| ^ | ^ | expire_logs_days | this parameter is greater than 1 and less than 30 |
+| ^ | ^ | explicit_defaults_for_timestamp | the parameter values of all MySQL instances are consistent |
+| ^ | ^ | general_log | this parameter is set as OFF |
+| ^ | ^ | group_concat_max_len | this parameter is set greater than 65535 and less than 67108865 |
+| ^ | ^ | innodb_buffer_pool_size | all MySQL instances: the parameter is greater than 34359738367 and the sum of parameter values of all MySQL instances in this server is less than 80% of the total memory of the server |
+| ^ | ^ | innodb_doublewrite | this parameter of all MySQL instances is set as ON |
+| ^ | ^ | innodb_flush_log_at_trx_commit | it is recommended that this parameter is set as 2 and uses semi-synchronous replication or MGR |
+| ^ | ^ | innodb_flush_method | it is recommended that the parameter be set as O_DIRECT |
+| ^ | ^ | innodb_io_capacity | this parameter is set greater than 99 and less than 10001 |
+| ^ | ^ | innodb_large_prefix | it is recommended that this parameter be set as ON |
+| ^ | ^ | innodb_log_file_size | this parameter is greater than 4294967295 and less than 68719476737 or greater than innodb_buffer_pool_size/8 and less than innodb_buffer_pool_size/2 |
+| ^ | ^ | innodb_open_files | the parameter is set greater than 1000 |
+| ^ | ^ | innodb_rollback_on_timeout | this parameter is set as ON |
+| ^ | ^ | innodb_support_xa | this parameter is set as ON |
+| ^ | ^ | interactive_timeout | all MySQL instances: the parameter is greater than the field value of house_keeping_sleep_time configured in configDB |
+| ^ | ^ | join_buffer_size | the parameter is greater than 1048575 and less than 67108865 |
+| ^ | ^ | log_bin | this parameter is set as ON |
+| ^ | ^ | long_query_time | the parameter configuration of all MySQL instances is consistent |
+| ^ | ^ | lower_case_table_names | this parameter is set as 1 |
+| ^ | ^ | max_connect_errors | this parameter is greater than 1000 |
+| ^ | ^ | max_connections | this parameter is greater than the field value of max_con of data source configured in configdb |
+| ^ | ^ | open_files_limit | the parameter value shall be greater than 10000 |
+| ^ | ^ | optimizer_switch | the parameter contains loosecan=off |
+| ^ | ^ | query_cache_type | this parameter is set as OFF |
+| ^ | ^ | read_buffer_size | the parameter is greater than 262143 and less than 67108865 |
+| ^ | ^ | read_only | the parameter on MySQL instances of master configdb and all master data sources is not ON |
+| ^ | ^ | read_rnd_buffer_size | the parameter is greater than 524287 and less than 67108865 |
+| ^ | ^ | rpl_semi_sync_master_enabled | if the parameter exists, it shall be ON |
+| ^ | ^ | rpl_semi_sync_slave_enabled | if the parameter exists, it shall be ON |
+| ^ | ^ | server_id | the parameter value of all MySQL instances is inconsistent |
+| ^ | ^ | server_uuid | the parameter value of all MySQL instances is inconsistent |
+| ^ | ^ | skip_name_resolve | it is recommended that this parameter be set as ON |
+| ^ | ^ | slave_skip_errors | this parameter is set as OFF |
+| ^ | ^ | slow_query_log | this parameter is set as ON |
+| ^ | ^ | sort_buffer_size | the parameter is greater than 1048575 and less than 67108865 |
+| ^ | ^ | sql_mode | this parameter does not contain ONLY_FULL_GROUP_BY |
+| ^ | ^ | sync_binlog | this parameter is greater than 2 (it is recommended that: the parameter value of sync_binlogall of all MySQL instances is set as 10 and use semi-synchronous replication or MGR) |
+| ^ | ^ | system_time_zone | this parameter configuration is consistent |
+| ^ | ^ | table_open_cache | the parameter is greater than 4000 and less than the parameter value of open_files_limit |
+| ^ | ^ | thread_cache_size | the parameter is greater than 64 and less than 1024 |
+| ^ | ^ | time_zone | the parameter configuration of all MySQL instances is consistent |
+| ^ | ^ | tmp_table_size | the parameter is greater than 262143 and less than 1073741825 |
+| ^ | ^ | tx_isolation | the parameter configuration of all MySQL instances is consistent |
+| ^ | ^ | version | the parameter of all MySQL instances is consistent |
+| ^ | ^ | version_comment | it is recommended that this parameter be MySQL Community Server (GPL) |
+| ^ | ^ | wait_timeout | this parameter is greater than the parameter value of house_keeping_sleep_time of data source configured in configdb |
+| ^ | ^ | rpl_semi_sync_master_status | if this parameter exists and slave is configured, this parameter shall be ON |
+| ^ | ^ | rpl_semi_sync_slave_status | if this parameter exists and master is configured, this parameter shall be ON |
+| ^ | ^ | sysdate-is-now | MySQL instances of version 5.5 and below uses `select sysdate(),sleep(1),sysdate();`<br>MySQL instances of above version 5.5 uses select sysdate(6),sleep(0.001),sysdate(6); for detection<br>the time of both columns are the same |
+| ^ | MySQ disk space | absolute path of data directory of MySQL instances | all MySQL instances: execute `show global variables like 'datadir'`; the return result is absolute path |
+| ^ | ^ | free disk space of data directory of all MySQL instances | the free disk space of data directory of all MySQL instances shall be greater than 200G |
+| ^ | MySQL high availability | high availability correct configuration | the data source under the same data node or a set of configdb meets any following condition: ① use the double 1 deployment (sync_binlog=1 and innodb_flush_log_at_trx_commit=1) and no switching rule is configured; ② enable semi-synchronous for master-slave/master-master /master-master & multi-salve architecture, and replication is normal and switching rule is configured; ③ mgr architecture and replication is normal and the number of online members is greater than 2 (2 excluded) |
+| ^ | ^ | high availability over configuration | the data source under the same data node or a set of configdb does not meet any of the following conditions: ① use double 1 deployment (sync_binlog=1 and innodb_flush_log_at_trx_commit=1) and configure switching rule and enable the semi-synchronous replication; ② use MGR replication and double 1 deployment (sync_binlog=1 and innodb_flush_log_at_trx_commit=1) |
+| ^ | MySQL user authority | replication user authority | MySQL instances of configdb with replication relations or data source: replication user authority is not lower than (replication slave,replication client) |
+| ^ | ^ | ConfigDB user authority | ConfigDB: connection user authority is not lower than<br>(select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload,lock tables,replication slave,replication client) |
+| ^ | ^ | data source connection user | data source: connection user authority is not lower than<br>(select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,execute,event)<br>note: data source connection user of MySQL8.0 and above shall also have xa_recover_admin authority |
+| ^ | ^ | data source backup user | （select,insert,update,delete,create,drop,index,alter,reload,process,references,super,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,event）<br>data source: backup user authority is not lower than<br>(select,insert,update,delete,create,drop,index,alter,reload,process,references,super,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,event) |
+| ^ | compute node high availability | compute node mode | compute node mode is master/slave mode or multi-node mode and management platform can normally access the IP address of compute node, VIP, compute node role |
+| ^ | ^ | server port of compute node can normally connect to management port | server port of each compute node (master/slave mode slave compute node excluded) can normally connect to management port |
+| ^ | ^ | normal VIP connection of compute node server port | master/slave mode or multi-node mode cluster can normally connect to server port of compute node through VIP |
+| ^ | server.xml | server.xml configuration file path | server.xml path configured on management platform is consistent with the path reported by hotdb-server, and management platform has the authority to read and write |
+| ^ | ^ | IP address of configdb in Server.xml | use the real IP address rather than 127.0.0.1 |
+| ^ | ^ | processors | it is required that the configuration parameter≥the number of logic core of the server divided by 8 and is less than or equal to the number of logic core |
+| ^ | ^ | processorExecutor | the parameter is less than 9 |
+| ^ | ^ | enableHeartbeat | the parameter is true |
+| ^ | ^ | heartbeatPeriod | the parameter is less than 11s and greater than heartbeatTimeoutMs, and the configuration of each compute node is consistent |
+| ^ | ^ | heartbeatTimeoutMs | the parameter is less than 5000 and configuration of each compute node is consistent |
+| ^ | ^ | enableLatencyCheck | the parameter is true and configuration of each compute node is consistent |
+| ^ | ^ | sqlTimeout | the parameter is less than 86400 and configuration of each compute node is consistent |
+| ^ | ^ | haNodeHost (only for master/slave mode) | this parameter of current slave compute node correctly configures the IP and management port of current master compute node |
+| ^ | ^ | enableXA (only for master/slave or multi-node mode) | the configuration of each compute node is consistent |
+| ^ | ^ | strategyForRWSplit | the configuration of each compute node is consistent<br>the parameter of each compute node is 0 |
+| ^ | compute node startup script | -Xms ，-Xmx | it is required that both parameters are consistent, and these two parameters of all compute nodes in the cluster are consistent |
+| ^ | ^ | -Xmx | this parameter is greater than or equal to 1G and less than or equal to 256G<br>open G1 when this parameter is greater than or equal to 8G |
+| ^ | ^ | MaxDirectMemorySize | this parameter is greater than 4G |
+| ^ | Listener port | compute node: service port, management port, cluster communication port (only for multi-node mode) | port range: greater than 1024 and less than the value of the first number found out in `sysctl net.ipv4.ip_local_port_range in server` |
+| ^ | ^ | backup program: Listener port | ^ |
+| ^ | ^ | MySQL instance (data source, configdb): Listener port | ^ |
+| ^ | ^ | management platform: service port (If https is turned on, https Listener port is still required） | ^ |
+| ^ | ^ | HotDB Listener ： Listener port | ^ |
+| ^ | ConfigDB | configuration check | pass configuration check detection |
+| ^ | ^ | master/slave or MGR configdb data consistency | the number, structure and data of tables of each configdb instance are consistent |
+| ^ | ^ | master/slave configdb is in normal replication status | replication status is normal and replication latency is less than 1s |
 

@@ -60,24 +60,24 @@ Or use HINT statement:
 | `net_out` | Bytes sent | `LONG/[number]` |
 | `up_time` | Uptime (s) | `LONG/[number]` |
 | `state` | Connection status | `connecting`: the process of actively connecting to the server. A socket setup request is initiated, but not successful yet |
-|   |   | authenticating: handshake authentication process |
-|   |   | `idle` -  idle available status |
-|   |   | `borrowed` -  borrowed status: in the presence of a transaction scenario, even if the backend does not execute sql, the connection will still be held until commit and rollback are committed. |
-|   |   | `running` - a request is sent, and in the status of waiting for response or processing the response |
-|   |   | `closed` - connection is closed |
+| ^ | ^ | authenticating: handshake authentication process |
+| ^ | ^ | `idle` -  idle available status |
+| ^ | ^ | `borrowed` -  borrowed status: in the presence of a transaction scenario, even if the backend does not execute sql, the connection will still be held until commit and rollback are committed. |
+| ^ | ^ | `running` - a request is sent, and in the status of waiting for response or processing the response |
+| ^ | ^ | `closed` - connection is closed |
 | `send_queue` | size of send queue | `INT/[number]` |
 | `iso_level` | transaction isolation level | `0` - read uncommitted |
-|   |   | `1` - read committed |
-|   |   | `2` - repeatable read |
-|   |   | `3` - serializable |
+| ^ | ^ | `1` - read committed |
+| ^ | ^ | `2` - repeatable read |
+| ^ | ^ | `3` - serializable |
 | `autocommit` | autocommit or not | `BOOLEAN/[true/false]` |
 | `closed` | closed or not | `BOOLEAN/[true/false]` |
 | `version` | connection pool version number | `INT/[number]` |
 | `charset` | result charset | `STRING/[charset]` |
 | `comment` | comment | `heartbeat` -  heartbeat: connection used by heartbeat |
-|   |   | `latency check` - connection used by latency detection |
-|   |   | `idle` -  connection for idle status |
-|   |   | `querying` - connection for executing query |
+| ^ | ^ | `latency check` - connection used by latency detection |
+| ^ | ^ | `idle` -  connection for idle status |
+| ^ | ^ | `querying` - connection for executing query |
 
 
 #### `show @@bufferpool` - Show the status of bufferpool
@@ -174,9 +174,9 @@ show @@connection;
 | `recv_buffer` | size of receive queue (byte) | `LONG/[number]` |
 | `send_queue` | size of send queue (byte) | `LONG/[number]` |
 | `iso_level` | transaction isolation level | `0` - read uncommitted |
-|   |   | `1` - read committed |
-|   |   | `2` - repeatable read |
-|   |   | `3` - serializable |
+| ^ | ^ | `1` - read committed |
+| ^ | ^ | `2` - repeatable read |
+| ^ | ^ | `3` - serializable |
 | `autocommit` | autocommit or not | `BOOLEAN/[true/false]` |
 
 #### `show @@connection_statistics` - Show current live frontend connection statistics
@@ -237,21 +237,21 @@ show @@datasource;
 | `ds` | current data source information | `STRING/[host:port/database]` |
 | `ds_id` | current data source id | `INT/[number]` |
 | `type` | current data source type | `1` - Active Master |
-|   |   | `2` - Master/Slave |
-|   |   | `3` - Standby Slave |
-|   |   | `4` - MGR |
+| ^ | ^ | `2` - Master/Slave |
+| ^ | ^ | `3` - Standby Slave |
+| ^ | ^ | `4` - MGR |
 | `active` | active connections | `INT/[number]` |
 | `idle` | idle connections | `INT/[number]` |
 | `size` | all connections | `INT/[number]` |
 | `state` | node status | `normal` - normal |
-|   |   | `failover` - failover |
+| ^ | ^ | `failover` - failover |
 | `last_failover_start_time` | start time of last failover | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
 | `last_failover_duration` | duration of last failover (ms) | `STRING/[number]` |
 | `last_failover_reason` | reason for last failover | `STRING` |
 | `last_failover_info` | information of last failover | `STRING` |
 | `negotiation` | MGR node negotiation status | `OK` - normal |
-|   |   | `ERROR` - abnormal |
-|   |   | `NULL` - non-MGR |
+| ^ | ^ | `ERROR` - abnormal |
+| ^ | ^ | `NULL` - non-MGR |
 
 #### `show @@datasource` - show data source information
 
@@ -270,12 +270,12 @@ show @@datasource;
 | `dn` | data node number (the command restart @@heartbeat can be used to restore heartbeat detection) | `INT/[number]` |
 | `ds` | current data source information | `STRING/[host:port/database]` |
 | `type` | current data source type | `1` - Active Master |
-|   |   | `2` - Master/Slave |
-|   |   | `3` - Standby Slave |
-|   |   | `4` - MGR |
+| ^ | ^ | `2` - Master/Slave |
+| ^ | ^ | `3` - Standby Slave |
+| ^ | ^ | `4` - MGR |
 | `status` | data source status | `0` - unavailable |
-|   |   | `1` - available |
-|   |   | `2` - last data source abnormal |
+| ^ | ^ | `1` - available |
+| ^ | ^ | `2` - last data source abnormal |
 | `host` | host address | `STRING/[IP]` |
 | `port` | host port | `STRING/[port]` |
 | `schema` | database name | `STRING/[database]` |
@@ -302,8 +302,8 @@ show @@globaltableconsistency;
 | `db` | LogicDB name | `STRING/[database]` |
 | `table` | global table name | `STRING/[host:port/database]` |
 | `status` | status | `0` - undetectable |
-|   |   | `1` - consistency |
-|   |   | `-1` - inconsistency |
+| ^ | ^ | `1` - consistency |
+| ^ | ^ | `-1` - inconsistency |
 | `result` | detection result | `STRING` |
 | `less_half_dn_lost_and_first_dn_exsitdata_count` | the number of lines with less than half nodes lost and with data on the first node | `INT/[number]` |
 | `repair` | restoring state | STRING |
@@ -337,10 +337,10 @@ show @@heartbeat;
 | `db` | database name | `STRING/[database]` |
 | `retry` | number of retries | `INT/[number]` |
 | `status` | heartbeat status | `checking` - checking |
-|   |   | `idle` - heartbeat detection is normally started |
-|   |   | `stopped` - stopped |
-|   |   | `paused` - heartbeat detection is paused |
-|   |   | `unknown` - heartbeat detection function is not started |
+| ^ | ^ | `idle` - heartbeat detection is normally started |
+| ^ | ^ | `stopped` - stopped |
+| ^ | ^ | `paused` - heartbeat detection is paused |
+| ^ | ^ | `unknown` - heartbeat detection function is not started |
 | `period` | heartbeat period | `INT/[number]` |
 | `execute_time` | average heartbeat response time of recent 10s, 1min and 5min (ms) | `STRING/[number],[number],[number]` |
 | `last_active_time` | lastest heartbeat success time | `DATETIME/[yyyy-MM-dd HH:mm:ss]` |
@@ -707,7 +707,7 @@ show @@tableinfo;
 | `db` | database | `STRING/[database]` |
 | `table` | database name | `STRING/[number]` |
 | `table_type` | table type | `0` - Global table |
-|   |   | `1` - Sharding table |
+| ^ | ^ | `1` - Sharding table |
 | `table_rows` | database rows | `INT/[number]` |
 | `data_length` | data length (byte) | `LONG/[number]` |
 
@@ -1030,9 +1030,9 @@ show @@server;
 | `reload_time` | Last re-load configuration time | `STRING/[yyyy-MM-dd hh:mm:ss]` |
 | `charset` | charset | `STRING/[charset]` |
 | `role` | the master/slave role | `MASTER` - master |
-|   |   | `BACKUP` - salve |
+| ^ | ^ | `BACKUP` - salve |
 | `status` | the status of HotDB | `ON` - on |
-|   |   | `OFF` 0: off |
+| ^ | ^ | `OFF` 0: off |
 | `mode` | the read/write mode of HotDB | `STRING/["READ-ONLY"，"READ-WRITE"]` |
 | `version` | the version of HotDB | `STRING/[number.number.numbernumber]` |
 
@@ -1124,14 +1124,14 @@ show @@usbkey;
 |-----------------|--------------------------------------------------------|-------------------------------|
 | `left_time` | left time (s) | `LONG/[number]` |
 | `usbkey_status` | USB_KEY status | `0` - abnormal |
-|   |   | `1` - normal |
+| ^ | ^ | `1` - normal |
 | `usbkey_type` | USB_KEY type | `1` - tentative |
-|   |   | `2` - terminable |
-|   |   | `3` - permanent |
+| ^ | ^ | `2` - terminable |
+| ^ | ^ | `3` - permanent |
 | `node_limit` | limit of node number | `INT/[number]` |
 | `last_check_time` | ending time of last detection | `STRING/[yyyy-MM-dd HH:mm:sss]` |
 | `usbkey_check_stuck` | whether detection of USB_KEY is stuck | `0` - not stuck |
-|   |   | `1` - stuck |
+| ^ | ^ | `1` - stuck |
 | `last_exception_time` | the time of last throwed exception in detection | `STRING/[yyyy-MM-dd HH:mm:sss]` |
 | `last_exception_info` | the information of last throwed exception in detection | `STRING` |
 | `exception_count` | the total times of last throwed exception in detection | `INT/[number]` |

@@ -84,17 +84,17 @@ The actual connection information corresponding to each component is listed as f
 | IDC Type | Component Type | Role | Code Name | Connection Information |
 |---------------|----------------|----------------|-----------|--------------------------------------------------------------------------------------------------------------------------|
 | Master Center | Compute Node | Master | HotDB-01 | 192.168.220.186_3323_3325 |
-|   |   | Slave | HotDB-02 | 192.168.220.187_3323_3325 |
-|   | Data Source | Master | ds01 | 192.168.220.186_3307 |
-|   |   | Standby Master | ds02 | 192.168.220.187_3307 |
-|   | ConfigDB | Master | hc01 | 192.168.220.186_3306 |
-|   |   | Standby Master | hc02 | 192.168.220.187_3306 |
+| ^ | ^ | Slave | HotDB-02 | 192.168.220.187_3323_3325 |
+| ^ | Data Source | Master | ds01 | 192.168.220.186_3307 |
+| ^ | ^ | Standby Master | ds02 | 192.168.220.187_3307 |
+| ^ | ConfigDB | Master | hc01 | 192.168.220.186_3306 |
+| ^ | ^ | Standby Master | hc02 | 192.168.220.187_3306 |
 | DR Center | Compute Node | Master | HotDB-03 | 192.168.220.188_3323_3325 |
-|   |   | Slave | HotDB-04 | 192.168.220.189_3323_3325 |
-|   | Data Source | Master | ds03 | 192.168.220.188_3307 |
-|   |   | Standby Master | ds04 | 192.168.220.189_3307<br>(Configured as master-master, however the actual replication relation is set up as master-slave) |
-|   | ConfigDB | Master | hc03 | 192.168.220.188_3306 |
-|   |   | Standby Master | hc04 | 192.168.220.189_3306<br>(Configured as master-master, however the actual replication relation is set up as master-slave) |
+| ^ | ^ | Slave | HotDB-04 | 192.168.220.189_3323_3325 |
+| ^ | Data Source | Master | ds03 | 192.168.220.188_3307 |
+| ^ | ^ | Standby Master | ds04 | 192.168.220.189_3307<br>(Configured as master-master, however the actual replication relation is set up as master-slave) |
+| ^ | ConfigDB | Master | hc03 | 192.168.220.188_3306 |
+| ^ | ^ | Standby Master | hc04 | 192.168.220.189_3306<br>(Configured as master-master, however the actual replication relation is set up as master-slave) |
 
 > !Note
 >
@@ -340,10 +340,9 @@ This section will introduce the setup of ConfigDB replication relations. The dep
 | IDC Type | Component Type | Role | Code Name | Connection Information |
 |---------------|----------------|----------------------------------------------------------------|-----------|------------------------|
 | Master Center | ConfigDB | Master | hc01 | 192.168.220.186_3306 |
-|   |   | Standby Master | hc02 | 192.168.220.187_3306 |
+| ^ | ^ | Standby Master | hc02 | 192.168.220.187_3306 |
 | DR Center | ConfigDB | Master | hc03 | 192.168.220.188_3306 |
-|   |   | Standby Master<br>(Actually master-slave replication relation) | hc04 | 192.168.220.189_3306 |
-|   |   |   |   |   |
+| ^ | ^ | Standby Master<br>(Actually master-slave replication relation) | hc04 | 192.168.220.189_3306 |
 
 The ConfigDB is essentially a standard MySQL instance, so under this deployment architecture, the order of setting up the ConfigDB should be:
 
@@ -518,9 +517,9 @@ When deploying a DR center on the basis of a running cluster, the steps of setti
 | IDC Type | Component Type | Role | Code Name | Connection Information |
 |---------------|----------------|----------------------------------------------------------------|-----------|------------------------|
 | Master Center | ConfigDB | Master | hc01 | 192.168.220.186_3306 |
-|   |   | Standby master | hc02 | 192.168.220.187_3306 |
+| ^ | ^ | Standby master | hc02 | 192.168.220.187_3306 |
 | DR Center | ConfigDB | Master | hc03 | 192.168.220.188_3306 |
-|   |   | Standby master<br>(Actually master-slave replication relation) | hc04 | 192.168.220.189_3306 |
+| ^ | ^ | Standby master<br>(Actually master-slave replication relation) | hc04 | 192.168.220.189_3306 |
 
 **The detailed steps are as follows:**
 
@@ -677,12 +676,12 @@ The deployment environment examination not only supports the current active cent
 | Examination Dimensions | Examination Items | Examination Details |
 |------------------------|-----------------------------------|------------------------------------------------------------------------------|
 | Software Configuration | High Availability of Compute Node | The compute node service port and management port can be normally connected. |
-|   |   | Connection to the compute node service port via VIP is normal. |
-|   |   | Compute Node Mode |
-|   | Basic function verification | Data Source High Availability Switch |
-|   |   | Compute Node High Availability Switch |
-|   |   | Backup Program |
-|   |   | 10s Performance Test |
+| ^ | ^ | Connection to the compute node service port via VIP is normal. |
+| ^ | ^ | Compute Node Mode |
+| ^ | Basic function verification | Data Source High Availability Switch |
+| ^ | ^ | Compute Node High Availability Switch |
+| ^ | ^ | Backup Program |
+| ^ | ^ | 10s Performance Test |
 
 ### Configuration
 
@@ -1342,17 +1341,17 @@ The actual connection information corresponding to each component is listed as f
 | IDC Type | Component Type | Role | Code Name | Connection Information |
 |---------------|----------------|---------------|-----------|---------------------------|
 | Master Center | Compute Node | Master | HotDB-01 | 192.168.220.181_3323_3325 |
-|   |   | Slave | HotDB-02 | 192.168.220.182_3323_3325 |
-|   | Data Source | Master | ds01 | 192.168.220.181_3307 |
-|   |   | Master-master | ds02 | 192.168.220.182_3307 |
-|   | ConfigDB | Master | hc01 | 192.168.220.181_3306 |
-|   |   | Master-master | hc02 | 192.168.220.182_3306 |
+| ^ | ^ | Slave | HotDB-02 | 192.168.220.182_3323_3325 |
+| ^ | Data Source | Master | ds01 | 192.168.220.181_3307 |
+| ^ | ^ | Master-master | ds02 | 192.168.220.182_3307 |
+| ^ | ConfigDB | Master | hc01 | 192.168.220.181_3306 |
+| ^ | ^ | Master-master | hc02 | 192.168.220.182_3306 |
 | DR Center | Compute Node | Master | HotDB-03 | 192.168.220.183_3323_3325 |
-|   |   | Master-master | HotDB-04 | 192.168.220.184_3323_3325 |
-|   | Data Source | Master | ds03 | 192.168.220.183_3307 |
-|   |   | Master-master | ds04 | 192.168.220.184_3307 |
-|   | ConfigDB | Master | hc03 | 192.168.220.183_3306 |
-|   |   | Master-master | hc04 | 192.168.220.184_3306 |
+| ^ | ^ | Master-master | HotDB-04 | 192.168.220.184_3323_3325 |
+| ^ | Data Source | Master | ds03 | 192.168.220.183_3307 |
+| ^ | ^ | Master-master | ds04 | 192.168.220.184_3307 |
+| ^ | ConfigDB | Master | hc03 | 192.168.220.183_3306 |
+| ^ | ^ | Master-master | hc04 | 192.168.220.184_3306 |
 
 > !Note
 >

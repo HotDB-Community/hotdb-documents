@@ -132,13 +132,13 @@ window.$docsify = {
         window.$docsify.fileUrl = `#/${vm.route.path}`
 
         //预处理markdown
-        return handleMarkdown(html)
+        return resolveFootNote(resolveAnchor(escapeCode(html)))
       })
       hook.afterEach(function(html) {
         //console.log(html)
-
+        
         //添加topbar
-        return createTopBar() + html
+        return createTopBar() + resolveRowSpanAndColSpan(html)
       })
       hook.doneEach(function() {
         $(document).ready(function() {
@@ -167,9 +167,13 @@ function redirectLocation() {
   }
 }
 
-//处理markdown
-function handleMarkdown(html) {
-  return resolveFootNote(resolveAnchor(html))
+const codeWithPipeCharRegex = /(`[^`\r\n]*\|[^`\r\n]*`)/g
+
+//需要转义内联代码中的管道符，需要将`ps -ef | grep java`转义为`ps -ef \| grep java`，docsify的bug
+function escapeCode(html){
+  return html.replace(codeWithPipeCharRegex,(s,c)=>{
+    return c.replaceAll("|","\\|")
+  })
 }
 
 const footNoteRegex = /\[\^(\d+)](?!: )/g
@@ -191,7 +195,7 @@ const anchorRegex = /{#([\w-]+)}/g
 
 //解析markdown锚点，绑定heading的id
 function resolveAnchor(html) {
-  return html.replace(anchorRegex, ":id=$1")
+  return html.replace(anchorRegex, " :id=$1")
 }
 
 function createTopBar() {
@@ -211,6 +215,15 @@ function createTopBar() {
           </a>
         </p>
       </div>`
+}
+
+const rowSpanOrColSpanRegex = /<td>([\^<])<\/td>/g
+
+//处理合并单元格的特殊语法
+function resolveRowSpanAndColSpan(html){
+  return html.replace(rowSpanOrColSpanRegex,(s,c)=>{
+     return c==="^" ? `<td class="rowspan"></td>`:`<td class="colspan"></td>>`
+  })  
 }
 
 //绑定footNote对应的tooltip

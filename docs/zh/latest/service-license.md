@@ -87,7 +87,7 @@ total 148
 
 #### 申请正式许可证
 
-将生成的机器指纹`management-fingerprint-2020-12-28-10-17-08`文件作为附件，发送授权申请邮件给热璞数据库（[service@hotdb.com](service@hotdb.com)），由热璞数据库相关对接人协助授权并回复正式许可证文件。
+将生成的机器指纹`management-fingerprint-2020-12-28-10-17-08`文件作为附件，发送授权申请邮件给热璞数据库（[service@hotdb.com](mailto:service@hotdb.com)），由热璞数据库相关对接人协助授权并回复正式许可证文件。
 
 #### 更新正式许可证
 

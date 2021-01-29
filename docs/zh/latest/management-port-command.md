@@ -60,24 +60,24 @@ select * from backend where MYSQLID=198865;
 | `net_out` | 发送的字节数 | `LONG/[number]` |
 | `up_time` | 启动时长（秒） | `LONG/[number]` |
 | `state` | 链路状态 | `connecting` - 主动去连接服务器的过程，发起了socket建立请求，还没有建立成功 |
-|   |   | `authenticating` - 握手认证过程 |
-|   |   | `idle` - 空闲可用状态 |
-|   |   | `borrowed` - 租用状态：存在事务场景下，即使后端没有执行sql，但连接会被保持，直到提交commit、rollback后才会释放 |
-|   |   | `running` - 发送了请求，等待应答或者正在处理应答的状态 |
-|   |   | `closed` - 链路关闭 |
+| ^ | ^ | `authenticating` - 握手认证过程 |
+| ^ | ^ | `idle` - 空闲可用状态 |
+| ^ | ^ | `borrowed` - 租用状态：存在事务场景下，即使后端没有执行sql，但连接会被保持，直到提交commit、rollback后才会释放 |
+| ^ | ^ | `running` - 发送了请求，等待应答或者正在处理应答的状态 |
+| ^ | ^ | `closed` - 链路关闭 |
 | `send_queue` | 发送队列大小 | `INT/[number]` |
 | `iso_level` | 事务隔离级别 | `0` - 读未提交 |
-|   |   | `1` - 读已提交 |
-|   |   | `2` - 可重复读 |
-|   |   | `3` - 可串行化 |
+| ^ | ^ | `1` - 读已提交 |
+| ^ | ^ | `2` - 可重复读 |
+| ^ | ^ | `3` - 可串行化 |
 | `autocommit` | 是否自动提交 | `BOOLEAN/[true/false]` |
 | `closed` | 是否已关闭 | `BOOLEAN/[true/false]` |
 | `version` | 连接池版本号 | `INT/[number]` |
 | `charset` | 结果字符集 | `STRING/[charset]` |
 | `comment` | 备注 | `heartbeat` - 心跳使用的连接 |
-|   |   | `latency check` - 延迟检测使用的连接 |
-|   |   | `idle` - 空闲状态的连接 |
-|   |   | `querying` - 正在执行查询的连接 |
+| ^ | ^ | `latency check` - 延迟检测使用的连接 |
+| ^ | ^ | `idle` - 空闲状态的连接 |
+| ^ | ^ | `querying` - 正在执行查询的连接 |
 
 
 #### `show @@bufferpool` - 显示缓冲池状态
@@ -174,9 +174,9 @@ show @@connection;
 | `recv_buffer` | 接收队列大小（字节） | `LONG/[number]` |
 | `send_queue` | 发送队列大小（字节） | `LONG/[number]` |
 | `iso_level` | 事务隔离级别 | `0` - 读未提交 |
-|   |   | `1` - 读已提交 |
-|   |   | `2` - 可重复读 |
-|   |   | `3` - 可串行化 |
+| ^ | ^ | `1` - 读已提交 |
+| ^ | ^ | `2` - 可重复读 |
+| ^ | ^ | `3` - 可串行化 |
 | `autocommit` | 是否自动提交 | `BOOLEAN/[true/false]` |
 
 #### `show @@connection_statistics` - 显示当前存活的前端连接信息
@@ -237,21 +237,21 @@ show @@datanode;
 | `ds` | 当前存储节点信息 | `STRING/[host:port/database]` |
 | `ds_id` | 当前存储节点号 | `INT/[number]` |
 | `type` | 当前存储节点类型 | `1` - 主库 |
-|   |   | `2` - 主从库 |
-|   |   | `3` - 从库 |
-|   |   | `4` - MGR |
+| ^ | ^ | `2` - 主从库 |
+| ^ | ^ | `3` - 从库 |
+| ^ | ^ | `4` - MGR |
 | `active` | 活动连接数 | `INT/[number]` |
 | `idle` | 空闲连接数 | `INT/[number]` |
 | `size` | 总连接数 | `INT/[number]` |
 | `state` | 节点状态 | `normal` - 正常 |
-|   |   | `failover` - 故障转移 |
+| ^ | ^ | `failover` - 故障转移 |
 | `last_failover_start_time` | 上一次故障切换开始时间 | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
 | `last_failover_duration` | 上一次故障切换持续时间(ms) | `STRING/[number]` |
 | `last_failover_reason` | 上一次故障切换原因 | `STRING` |
 | `last_failover_info` | 上一次故障切换信息 | `STRING` |
 | `negotiation` | MGR节点协商状态 | `OK` - 正常 |
-|   |   | `ERROR` - 异常 |
-|   |   | `NULL` - 非MGR |
+| ^ | ^ | `ERROR` - 异常 |
+| ^ | ^ | `NULL` - 非MGR |
 
 #### `show @@datasource` - 显示存储节点信息
 
@@ -270,12 +270,12 @@ show @@datasource;
 | `dn` | 数据节点号（可使用`restart @@heartbeat`指令进行恢复心跳检测） | `INT/[number]` |
 | `ds` | 当前存储节点信息 | `STRING/[host:port/database]` |
 | `type` | 当前存储节点类型 | `1` - 主库 |
-|   |   | `2` - 主从库 |
-|   |   | `3` - 从库 |
-|   |   | `4` - MGR |
+| ^ | ^ | `2` - 主从库 |
+| ^ | ^ | `3` - 从库 |
+| ^ | ^ | `4` - MGR |
 | `status` | 存储节点状态 | `0` - 不可用 |
-|   |   | `1` - 可用 |
-|   |   | `2` - 最后一个存储节点异常 |
+| ^ | ^ | `1` - 可用 |
+| ^ | ^ | `2` - 最后一个存储节点异常 |
 | `host` | 主机地址 | `STRING/[IP]` |
 | `port` | 主机端口 | `STRING /[port]` |
 | `schema` | 物理数据库名 | `STRING/[database]` |
@@ -302,8 +302,8 @@ show @@globaltableconsistency;
 | `db` | 逻辑库名 | `STRING/[database]` |
 | `table` | 全局表名 | `STRING/[host:port/database]` |
 | `status` | 状态 | `0` - 无法检测 |
-|   |   | `1` - 一致 |
-|   |   | `-1` - 不一致 |
+| ^ | ^ | `1` - 一致 |
+| ^ | ^ | `-1` - 不一致 |
 | `result` | 检测结果 | `STRING` |
 | `less_half_dn_lost_and_first_dn_exsitdata_count` | 小于二分之一节点缺失且第一节点有数据的行数 | `INT/[number]` |
 | `repair` | 恢复状态 | `STRING` |
@@ -337,10 +337,10 @@ show @@heartbeat;
 | `db` | 物理库名 | `STRING/[database]` |
 | `retry` | 重试次数 | `INT/[number]` |
 | `status` | 心跳状态 | `checking` - 校验中 |
-|   |   | `idle` - 正常开启心跳检测 |
-|   |   | `stopped` - 停止 |
-|   |   | `paused` - 暂停心跳检测 |
-|   |   | `unknown` - 心跳检测功能未开启 |
+| ^ | ^ | `idle` - 正常开启心跳检测 |
+| ^ | ^ | `stopped` - 停止 |
+| ^ | ^ | `paused` - 暂停心跳检测 |
+| ^ | ^ | `unknown` - 心跳检测功能未开启 |
 | `period` | 心跳周期 | `INT/[number]` |
 | `execute_time` | 最近10秒,1分钟,5分钟的心跳平均响应时间（毫秒） | `STRING/[number],[number],[number]` |
 | `last_active_time` | 最新心跳成功时间 | `DATETIME/[yyyy-MM-dd HH:mm:ss]` |
@@ -707,7 +707,7 @@ show @@tableinfo;
 | `db` | 物理库 | `STRING/[database]` |
 | `table` | 物理表表名 | `STRING/[number]` |
 | `table_type` | 表类型 | `0` - 全局表 |
-|   |   | `1` - 分片表 |
+| ^ | ^ | `1` - 分片表 |
 | `table_rows` | 物理表行数 | `INT/[number]` |
 | `data_length` | 数据长度(字节) | `LONG/[number]` |
 
@@ -1030,9 +1030,9 @@ show @@server;
 | `reload_time` | 上次重读配置时间 | `STRING/[yyyy-MM-dd hh:mm:ss]` |
 | `charset` | 字符集 | `STRING/[charset]` |
 | `role` | 主备角色 | `MASTER` - 主 |
-|   |   | `BACKUP` - 备 |
+| ^ | ^ | `BACKUP` - 备 |
 | `status` | HotDB状态 | `ON` - 开启 |
-|   |   | `OFF` - 关闭 |
+| ^ | ^ | `OFF` - 关闭 |
 | `mode` | HotDB读写模式 | `STRING/["READ-ONLY"，"READ-WRITE"]` |
 | `version` | HotDB版本号 | `STRING/[number.number.number.number]` |
 
@@ -1124,14 +1124,14 @@ show @@usbkey;
 |-----------------------|---------------|----------------------------------|
 | `left_time` | 剩余时间(s) | `LONG/[number]` |
 | `usbkey_status` | USB_KEY状态 | `0` - 异常 |
-|   |   | `1` - 正常 |
+| ^ | ^ | `1` - 正常 |
 | `usbkey_type` | USB_KEY类型 | `1` - 试用 |
-|   |   | `2` - 有期限 |
-|   |   | `3` - 永久 |
+| ^ | ^ | `2` - 有期限 |
+| ^ | ^ | `3` - 永久 |
 | `node_limit` | 节点数限制 | `INT/[number]` |
 | `last_check_time` | 上次检测结束时间 | `STRING/[ yyyy-MM-dd HH:mm:sss]` |
 | `usbkey_check_stuck` | USB_KEY检测是否卡住 | `0` - 未被卡住 |
-|   |   | `1` - 卡住 |
+| ^ | ^ | `1` - 卡住 |
 | `last_exception_time` | 上次检测抛出异常时间 | `STRING/[ yyyy-MM-dd HH:mm:sss]` |
 | `last_exception_info` | 上次检测抛出异常信息 | `STRING` |
 | `exception_count` | 累计检测抛出异常次数 | `INT/[number]` |
