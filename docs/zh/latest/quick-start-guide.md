@@ -13,7 +13,6 @@
 
 > !Info
 > 
-> 
 > 仅针对自动化部署进行说明，如需手动部署需要参考[安装部署](installation-and-deployment.md)文档。
 
 ### 硬件资源参考

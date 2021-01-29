@@ -129,3 +129,9 @@ pre > code {
 .alert.flat.important .title {
   color: #01354d
 }
+
+/*增大tooltip的宽度*/
+
+.tooltip{
+  width: 40em;
+}

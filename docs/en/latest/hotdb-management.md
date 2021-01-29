@@ -50,9 +50,9 @@ Manual deployment of HotDB Management is required before use. For detailed deplo
 
 For deployed and launched HotDB Management, the access address can be entered in the browser for login access.
 
-**Browser requirements**: Chrome 49 or Firefox 61 and above is recommended.
+**Browser requirements:** Chrome 49 or Firefox 61 and above is recommended.
 
-**Access address format**: `http:// HotDB Management Server IP: Access port /login.html`
+**Access address format:** `http:// HotDB Management Server IP: Access port /login.html`
 
 Example: `http://192.168.200.201:3324/login.html`
 
@@ -60,7 +60,7 @@ HotDB Management login page appears after successful connection.
 
 ![](assets/hotdb-management/image2.png)
 
-**Login user**: The initial login can use the default built-in management user (**account: admin password: admin**) of HotDB Management to enter the management interface.
+**Login user:** The initial login can use the default built-in management user (**account: admin password: admin**) of HotDB Management to enter the management interface.
 
 ## Admin index
 
@@ -152,15 +152,15 @@ The user management table is the platform user record that has been added by the
 
 Adding a platform user needs to fill in two parts of content information: User Basic Information and User Menu Privilege.
 
-**User Basic Information**: including user account name, user role, compute node cluster privilege, etc.
+**User Basic Information:** including user account name, user role, compute node cluster privilege, etc.
 
 - At present, there are no specific restrictions on user names, except that they cannot be duplicated with existing names.
 - The default password of newly added user is `service_hotdb@hotdb.com`. When first logging into the management platform through the new account, the user will be required to change the password.
 - Added users need to be assigned with specific roles, which are general users by default. The difference between the two types of roles is as follows:
 
-**General user**: can only manage compute node clusters with existing privileges in the general user interface.
+**General user:** can only manage compute node clusters with existing privileges in the general user interface.
 
-**Manage user**: can enter the management interface and manage compute node clusters with existing privileges in the general user interface. The interface views can be switched back and forth in the personal information drop-down box in the upper right corner.
+**Manage user:** can enter the management interface and manage compute node clusters with existing privileges in the general user interface. The interface views can be switched back and forth in the personal information drop-down box in the upper right corner.
 
 - Assigning compute node cluster privileges to users means that the users can see the cluster and enter the cluster for management after logging into the general user interface.
 - There are two kinds of compute node cluster privileges: **access** and **control**. Users assigned with "access privileges" can only query after entering the cluster. All operations that affect the data will trigger a prompt of "insufficient privileges". Users assigned with "control privileges" automatically have "access privileges" and can perform all operations on the cluster.
@@ -168,7 +168,7 @@ Adding a platform user needs to fill in two parts of content information: User B
 
 ![](assets/hotdb-management/image11.png)
 
-**User Menu Privilege**: The menu privileges for users when they enter the cluster management through accessing the general user interface can be configured.
+**User Menu Privilege:** The menu privileges for users when they enter the cluster management through accessing the general user interface can be configured.
 
 - When there is no special requirement, all menu privileges are granted by default. If it needs to mask the menu of a user, directly remove the checked item from the menu.
 - If HotDB Management has been upgraded, the menu privileges of historical platform users need to be checked to see whether the menu privileges in the new version need to be assigned. **Currently, due to the menu function security problem, the new function menu privileges in the new version will not be assigned to historical users by default, and need to be added by the users.**
@@ -177,9 +177,9 @@ Adding a platform user needs to fill in two parts of content information: User B
 
 ### User password
 
-**Reset Password**: The users can reset the password when forgetting the login password. The password can be reset with the "Reset Password" button in the operation column via the "[User Management](user-management.md)" interface, or by clicking "Reset Password" on the "Edit User Information" page.
+**Reset Password:** The users can reset the password when forgetting the login password. The password can be reset with the "Reset Password" button in the operation column via the "[User Management](user-management.md)" interface, or by clicking "Reset Password" on the "Edit User Information" page.
 
-**Change Password**: User password change will be required when the users first log into HotDB Management. Later change can be operated in "Personal Information -> Modify User Information" in the upper right corner of the page.
+**Change Password:** User password change will be required when the users first log into HotDB Management. Later change can be operated in "Personal Information -> Modify User Information" in the upper right corner of the page.
 
 ### Login history
 
@@ -214,7 +214,7 @@ The cluster management page displays the compute node clusters deployed or added
 
 >!Tip
 > 
-> **Cluster name color description**: Red indicates that the HotDB Management has stopped monitoring the cluster; yellow indicates that the cluster high availability environment in master/slave mode needs to be rebuilt; and blue indicates that HotDB Management normally opens the cluster under monitoring.
+> **Cluster name color description:** Red indicates that the HotDB Management has stopped monitoring the cluster; yellow indicates that the cluster high availability environment in master/slave mode needs to be rebuilt; and blue indicates that HotDB Management normally opens the cluster under monitoring.
 
 - IP Address: It refers to the server IP deployed by the compute node.
 - Service Port: It refers to the port for compute nodes to provide data service to the outside world, which can be modified in the server.xml configuration file.
@@ -408,48 +408,48 @@ Single Component Deployment provides HotDB Management users with the function of
 
 Deployment grade Examination is a set of operation environment examination grade functions tailored specifically for HotDB Server clusters. Users can use this function to evaluate the environment of clusters installed manually or deployed through the management platform. After the evaluation, it displays the results of nearly 140 examination sub-items of the whole cluster in five dimensions, and supports the export of examination result records.
 
-**Function Entry**: Login Management User Interface->Compute Node Cluster->Deployment Environment Examination
+**Function Entry:** Login Management User Interface->Compute Node Cluster->Deployment Environment Examination
 
 **Examination dimension:**
 
 | Examination dimension | Examination item |
 |-----------------------------|------------------------------------------|
 | Hardware resource | Server attribute |
-|   | Disk space |
-|   | Disk IO response time |
-|   | Memory |
-|   | CPU |
-|   | Network quality |
+| ^ | Disk space |
+| ^ | Disk IO response time |
+| ^ | Memory |
+| ^ | CPU |
+| ^ | Network quality |
 | Operation system | periodical scheduling |
-|   | sysctl.conf |
-|   | Time synchronization |
-|   | Can be connected to the external network |
-|   | Firewall and selinux |
-|   | yum |
-|   | Time zone |
-|   | tune |
-|   | limits.cnf |
-|   | Character set |
-|   | SSH connection |
+| ^ | sysctl.conf |
+| ^ | Time synchronization |
+| ^ | Can be connected to the external network |
+| ^ | Firewall and selinux |
+| ^ | yum |
+| ^ | Time zone |
+| ^ | tune |
+| ^ | limits.cnf |
+| ^ | Character set |
+| ^ | SSH connection |
 | Software deployment | Backup program |
-|   | MySQL client |
-|   | MySQL server |
-|   | Java environment |
+| ^ | MySQL client |
+| ^ | MySQL server |
+| ^ | Java environment |
 | Software configuration | MySQL connection |
-|   | MySQL high availability |
-|   | Compute node startup script |
-|   | ConfigDB |
-|   | MySQL disk space |
-|   | MySQL parameter configuration |
-|   | MySQL user privilege |
-|   | server.xml |
-|   | Compute node high availability |
-|   | Monitoring port |
+| ^ | MySQL high availability |
+| ^ | Compute node startup script |
+| ^ | ConfigDB |
+| ^ | MySQL disk space |
+| ^ | MySQL parameter configuration |
+| ^ | MySQL user privilege |
+| ^ | server.xml |
+| ^ | Compute node high availability |
+| ^ | Monitoring port |
 | Basic function verification | Data source high availability switch |
-|   | Compute node high availability switch |
-|   | LogicDB privilege |
-|   | Backup program |
-|   | 10 s performance test |
+| ^ | Compute node high availability switch |
+| ^ | LogicDB privilege |
+| ^ | Backup program |
+| ^ | 10 s performance test |
 
 **Examination panel:**
 
@@ -459,9 +459,9 @@ Deployment grade Examination is a set of operation environment examination grade
 
 The examination panel displays an overview of cluster reports that have been successfully examined recently.
 
-- **Score**: The left score ball is the total examination score. Scores are obtained from the examination results of cluster examination items. The total score is 100. If the corresponding examination item in examination does not meet the evaluation criteria, the score of this item will be deducted. If the examination item meets the evaluation criteria, no score will be deducted or added. When the total score is deducted or the score deducted is greater than 100, the examination score is 0.
-- **Examination item**: The examination item is the number of items needing examination in the compute node cluster examination. Different modes of compute node clusters or different replication modes of MySQL data sources will affect the number of examination items. Unqualified items in the figure above are items not meeting the evaluation criteria. Warning items are items that do not involve deduction but need attention in physical examination, and qualified items are items meeting the evaluation criteria.
-- **Radar chart**: Radar chart displays the deduction in five dimensions in examination. The less points deducted in the dimension, the closer the highlighted part is to the edge of radar chart, which indicates a good examination result in the dimension. Move the mouse cursor cursor into the radar chart to view the detailed deductions in each dimension and the percentage of total examination item score in the dimension.
+- **Score:** The left score ball is the total examination score. Scores are obtained from the examination results of cluster examination items. The total score is 100. If the corresponding examination item in examination does not meet the evaluation criteria, the score of this item will be deducted. If the examination item meets the evaluation criteria, no score will be deducted or added. When the total score is deducted or the score deducted is greater than 100, the examination score is 0.
+- **Examination item:** The examination item is the number of items needing examination in the compute node cluster examination. Different modes of compute node clusters or different replication modes of MySQL data sources will affect the number of examination items. Unqualified items in the figure above are items not meeting the evaluation criteria. Warning items are items that do not involve deduction but need attention in physical examination, and qualified items are items meeting the evaluation criteria.
+- **Radar chart:** Radar chart displays the deduction in five dimensions in examination. The less points deducted in the dimension, the closer the highlighted part is to the edge of radar chart, which indicates a good examination result in the dimension. Move the mouse cursor cursor into the radar chart to view the detailed deductions in each dimension and the percentage of total examination item score in the dimension.
 
 **Start environment examination:**
 
@@ -504,19 +504,19 @@ This function is used to view and manage the master-slave relation of the instan
 
 ### Instance management information
 
-**Function Entry**: Login Management User Interface -> Instance Management
+**Function Entry:** Login Management User Interface -> Instance Management
 
 ![](assets/hotdb-management/image33.png)
 
 The instance management information displays a record in the form of a MySQL instance, and performs operations such as "Remove Master", "Add Slave", and "Setup High-privilege User" of specific MySQL instances.
 
-- **Remove Master**: Click \[Remove Master] to stop the replication of this instance and perform the operation of clearing replication information (stop slave; reset slave all;).
+- **Remove Master:** Click \[Remove Master] to stop the replication of this instance and perform the operation of clearing replication information (stop slave; reset slave all;).
 
-- **Add Master**: Click \[Add Master] to add a slave to this instance and set this instance as a host when performing a "change master" operation on the slave. When selecting a slave, only instances without master can be selected and instances have been configured with master shall first remove the Master.
+- **Add Master:** Click \[Add Master] to add a slave to this instance and set this instance as a host when performing a "change master" operation on the slave. When selecting a slave, only instances without master can be selected and instances have been configured with master shall first remove the Master.
 
 ![](assets/hotdb-management/image34.png)
 
-- **Setup High-privileges User**: Mainly used for users configured with "change master/slave" privileges to perform "Remove Master" and "Add Slave" operations. High-privilege users need to have "super, replication slave, replication client, create user, reload" privileges. If the data source does not have these privileges, they need to be added to the instance.
+- **Setup High-privileges User:** Mainly used for users configured with "change master/slave" privileges to perform "Remove Master" and "Add Slave" operations. High-privilege users need to have "super, replication slave, replication client, create user, reload" privileges. If the data source does not have these privileges, they need to be added to the instance.
 
 ![](assets/hotdb-management/image35.png)
 
@@ -532,7 +532,7 @@ The audit logs of the management user interface is mainly used to view the HotDB
 
 The operation of all manager users on the management platform can be viewed. The type of operation can be viewed in the operation type drop-down box on the page. Access IP and operation content supports fuzzy query.
 
-**Function Entry**: Login Management User Interface->Audit Logs->Manager Operation
+**Function Entry:** Login Management User Interface->Audit Logs->Manager Operation
 
 ![](assets/hotdb-management/image36.png)
 
@@ -550,7 +550,7 @@ The operation of all manager users on the management platform can be viewed. The
 
 The operations of all general users on the management platform can be viewed. The log records of all compute node groups are displayed by default. Check the drop-down box to filter the log information of compute node groups can be viewed, including Platform Operation, Safety Protection and Management Port Operation, which are consistent with the view mode of general user login.
 
-**Function Entry**: Login Management User Interface->Audit Logs->General User Operation
+**Function Entry:** Login Management User Interface->Audit Logs->General User Operation
 
 ![](assets/hotdb-management/image37.png)
 
@@ -641,7 +641,7 @@ Provide users with operations such as platform license, compute node license, up
 
 ![](assets/hotdb-management/image44.png)
 
-- Click the default address hyperlink of supplier（[service@hotdb.com](service@hotdb.com)）, and call the local mailbox.
+- Click the default address hyperlink of supplier（[service@hotdb.com](mailto:service@hotdb.com)）, and call the local mailbox.
 
 ![](assets/hotdb-management/image45.png)
 
@@ -758,19 +758,19 @@ When DR mode is enabled on the Edit Compute Node Cluster page, if the number of 
 
 ![](assets/hotdb-management/image61.png)
 
-**Step 1**: select the \[Compute node license] for License Type;
+**Step 1:** select the \[Compute node license] for License Type;
 
-**Step 2**: select the \[Generate fingerprint] for Operation Type;
+**Step 2:** select the \[Generate fingerprint] for Operation Type;
 
-**Step 3**: select the \[Compute Node Cluster] and \[Hostname] to be operated and execute on all servers of all compute nodes in the cluster. Then fill in the SSH connection information of the corresponding server;
+**Step 3:** select the \[Compute Node Cluster] and \[Hostname] to be operated and execute on all servers of all compute nodes in the cluster. Then fill in the SSH connection information of the corresponding server;
 
-**Step 4**: click \[Connection Test] to check the availability of SSH information. Only through SSH connection test can follow-up operation be carried out;
+**Step 4:** click \[Connection Test] to check the availability of SSH information. Only through SSH connection test can follow-up operation be carried out;
 
-**Step 5**: click \[Generate] to generate the fingerprint;
+**Step 5:** click \[Generate] to generate the fingerprint;
 
-**Step 6**: after the fingerprint is generated successfully, the corresponding prompt will be output in the information column, and you can click \[Download Fingerprint File];
+**Step 6:** after the fingerprint is generated successfully, the corresponding prompt will be output in the information column, and you can click \[Download Fingerprint File];
 
-**Step 7**: if you want to apply for custom license information, you can fill in the information of the applicant and license properties (not required);
+**Step 7:** if you want to apply for custom license information, you can fill in the information of the applicant and license properties (not required);
 
 ![](assets/hotdb-management/image62.png)
 
@@ -784,35 +784,35 @@ When DR mode is enabled on the Edit Compute Node Cluster page, if the number of 
 
 ![](assets/hotdb-management/image64.png)
 
-**Step 1**: select the \[Compute node license] for License Type;
+**Step 1:** select the \[Compute node license] for License Type;
 
-**Step 2**: select the \[Update license] for Operation Type;
+**Step 2:** select the \[Update license] for Operation Type;
 
-**Step 3**: select the \[Compute Node Cluster] and \[Hostname] to be operated and execute on all servers of all compute nodes in the cluster. Then fill in the SSH connection information of the corresponding server;
+**Step 3:** select the \[Compute Node Cluster] and \[Hostname] to be operated and execute on all servers of all compute nodes in the cluster. Then fill in the SSH connection information of the corresponding server;
 
-**Step 4**: click \[Connection Test] to check the availability of SSH information. Only through SSH connection test can follow-up operation be carried out;
+**Step 4:** click \[Connection Test] to check the availability of SSH information. Only through SSH connection test can follow-up operation be carried out;
 
-**Step 5**: click \[Select] to select license file;
+**Step 5:** click \[Select] to select license file;
 
-**Step 6**: click \[Update] to check and update the license;
+**Step 6:** click \[Update] to check and update the license;
 
-**Step 7**: the corresponding update information will be output in the information column;
+**Step 7:** the corresponding update information will be output in the information column;
 
 ##### Obtain existing license information
 
 ![](assets/hotdb-management/image65.png)
 
-**Step 1**: select the \[Compute node license] for License Type;
+**Step 1:** select the \[Compute node license] for License Type;
 
-**Step 2**: select the \[Obtain existing license information] for Operation Type;
+**Step 2:** select the \[Obtain existing license information] for Operation Type;
 
-**Step 3**: select the \[Compute Node Cluster] and \[Hostname] to be operated and execute on all servers of all compute nodes in the cluster. Then fill in the SSH connection information of the corresponding server;
+**Step 3:** select the \[Compute Node Cluster] and \[Hostname] to be operated and execute on all servers of all compute nodes in the cluster. Then fill in the SSH connection information of the corresponding server;
 
-**Step 4**: click \[Connection Test] to check the availability of SSH information. Only through SSH connection test can follow-up operation be carried out;
+**Step 4:** click \[Connection Test] to check the availability of SSH information. Only through SSH connection test can follow-up operation be carried out;
 
-**Step 5**: click \[Acquire] to obtain existing license information;
+**Step 5:** click \[Acquire] to obtain existing license information;
 
-**Step 6**: after successful acquisition, the information all available licenses of the corresponding compute node will be output in the information column, among which the one marked in blue is the license currently being used;
+**Step 6:** after successful acquisition, the information all available licenses of the corresponding compute node will be output in the information column, among which the one marked in blue is the license currently being used;
 
 ##### Other instructions
 
@@ -1058,7 +1058,7 @@ After the single-IDC deployment, you can set up platform ConfigDB high availabil
 
 The upgrade center provides HotDB Management with the online upgrade function for compute node version. It satisfies the iteration of cross-version or minor version upgrade for single-node, master/slave, multi-node and DR mode cluster. At the same time, it can provide users with automatic rollback protection mechanism when exceptions occur during upgrade process. The program tries to ensure that the cluster is rolled back to the pre-upgrade status to reduce the impact on online services.
 
-**Function Entry**: Login Management User Interface -> "Upgrade Center" in the upper right corner of the page
+**Function Entry:** Login Management User Interface -> "Upgrade Center" in the upper right corner of the page
 
 ![](assets/hotdb-management/image96.png)
 
@@ -1233,28 +1233,28 @@ HotDB Management displays real-time user-concerned information such as data volu
 
 ![](assets/hotdb-management/image126.png)
 
-- **Table**: The first row "Table Configuration" is the number of all tables on the [Table Configuration](#table-configuration) page, and the second row "Definition Warning" is the number of tables detected to be abnormal in the "Table Structure＆Index Detection".
-- **Optimization**: The first row "SQL Log" is the number of SQL records recorded in the [Slow Query Log Analysis](#slow-query-log-analysis) function of HotLog Management. The second row "Slow SQL" is the SQL marked with ![](assets/hotdb-management/image127.png) in the [Slow Query Log Analysis](#slow-query-log-analysis) function of HotLog Management. ("SQL Log" and "Slow SQL" are displayed are not enabled when the Slow Query Log Analysis does not enable SQL statistics)
-- **Backup**: The first row "Totals of Backup" is the number of all backup records in the "Backup Task" function of HotDB Management, and the second row "Failure Backup" is the number of task records with backup status as "Backup Failed".
-- **Log**: The first row "Cluster Log" is the total number of logs in the "Compute Node Log" function of HotDB Management. The second row "Unread" is the number of logs with status as "Unread" in the compute node log. When the number of logs is greater than 999, the page displays 999+.
+- **Table:** The first row "Table Configuration" is the number of all tables on the [Table Configuration](#table-configuration) page, and the second row "Definition Warning" is the number of tables detected to be abnormal in the "Table Structure＆Index Detection".
+- **Optimization:** The first row "SQL Log" is the number of SQL records recorded in the [Slow Query Log Analysis](#slow-query-log-analysis) function of HotLog Management. The second row "Slow SQL" is the SQL marked with ![](assets/hotdb-management/image127.png) in the [Slow Query Log Analysis](#slow-query-log-analysis) function of HotLog Management. ("SQL Log" and "Slow SQL" are displayed are not enabled when the Slow Query Log Analysis does not enable SQL statistics)
+- **Backup:** The first row "Totals of Backup" is the number of all backup records in the "Backup Task" function of HotDB Management, and the second row "Failure Backup" is the number of task records with backup status as "Backup Failed".
+- **Log:** The first row "Cluster Log" is the total number of logs in the "Compute Node Log" function of HotDB Management. The second row "Unread" is the number of logs with status as "Unread" in the compute node log. When the number of logs is greater than 999, the page displays 999+.
 
 ### Data node throughput
 
 ![](assets/hotdb-management/image128.png)
 
-**Note**: Display the real-time throughput of all data nodes in the cluster. Throughput types include: SELECT/INSERT/UPDATE/DELETE/OTHER. Click on the title to jump to the "Data Node Throughput" report function page.
+**Note:** Display the real-time throughput of all data nodes in the cluster. Throughput types include: SELECT/INSERT/UPDATE/DELETE/OTHER. Click on the title to jump to the "Data Node Throughput" report function page.
 
 ### Event notice
 
 ![](assets/hotdb-management/image129.png)
 
-**Note**: The events are the history events with event warning mark in the upper right corner of HotDB Management. Click \[More] to link to "Historical Event" for more notice details.
+**Note:** The events are the history events with event warning mark in the upper right corner of HotDB Management. Click \[More] to link to "Historical Event" for more notice details.
 
 ### Cluster throughput
 
 ![](assets/hotdb-management/image130.png)
 
-**Note**: Display the number of transactions per second (TPS: Transactions Per Second) and the query per second (QPS: Query Per Second) in the cluster.
+**Note:** Display the number of transactions per second (TPS: Transactions Per Second) and the query per second (QPS: Query Per Second) in the cluster.
 
 - The "Cluster Throughput" displayed by clusters in multi-node mode is the sum of all compute nodes.
 - Extra-transaction TPS does not count SELECT operations, and intra-transaction SELECT/UPDATE/DELETE/INSERT will be counted.
@@ -1268,7 +1268,7 @@ HotDB Management displays real-time user-concerned information such as data volu
 
 ![](assets/hotdb-management/image131.png)
 
-**Note**: The client throughput is the operations (SELECT, INSERT, UPDATE, DELETE, OTHER) sent by front-end application to compute node
+**Note:** The client throughput is the operations (SELECT, INSERT, UPDATE, DELETE, OTHER) sent by front-end application to compute node
 
 - Display the client throughput data of all compute nodes in the cluster today, which is counted according to the natural day.
 - The page refreshing rate is 1 minute.
@@ -1279,7 +1279,7 @@ HotDB Management displays real-time user-concerned information such as data volu
 
 ![](assets/hotdb-management/image132.png)
 
-**Note**: The back-end throughput is the operations (SELECT, INSERT, UPDATE, DELETE, OTHER) sent by compute node to the underlying data node.
+**Note:** The back-end throughput is the operations (SELECT, INSERT, UPDATE, DELETE, OTHER) sent by compute node to the underlying data node.
 
 - Display the back-end throughput data of all compute nodes in the cluster today, which is counted according to the natural day.
 - The page refreshing rate is 1 minute.
@@ -1290,7 +1290,7 @@ HotDB Management displays real-time user-concerned information such as data volu
 
 ![](assets/hotdb-management/image133.png)
 
-**Note**: The new data amount today is a description of the change of business data volume in the cluster from 0 a.m. today to the current time. If it is negative, it means that the data amount is less than that at 0 a.m.
+**Note:** The new data amount today is a description of the change of business data volume in the cluster from 0 a.m. today to the current time. If it is negative, it means that the data amount is less than that at 0 a.m.
 
 - Page data is updated once every hour.
 - The data is cleared at 0 a.m. every day.
@@ -1301,7 +1301,7 @@ HotDB Management displays real-time user-concerned information such as data volu
 
 ![](assets/hotdb-management/image134.png)
 
-**Note**: Display the current total data amount of all data nodes in the cluster, that is, the sum of data amounts of all tables in the normal data source.
+**Note:** Display the current total data amount of all data nodes in the cluster, that is, the sum of data amounts of all tables in the normal data source.
 
 - Page data is updated once every hour.
 - Only the data amount of master data source in the current data node is obtained.
@@ -1311,13 +1311,13 @@ HotDB Management displays real-time user-concerned information such as data volu
 
 ![](assets/hotdb-management/image135.png)
 
-**Note**: It uses grading to reflect the sharing advantages and disadvantages of the sharding table in the cluster. When the compute node starts for less than 24 hours, the grade cannot be calculated and the page is not displayed. Click on the title to jump to the "Sharding Grade" details screen. The grade trend graph displays the changes of the recent sharding rationality grade, which can be viewed by day and by hour.
+**Note:** It uses grading to reflect the sharing advantages and disadvantages of the sharding table in the cluster. When the compute node starts for less than 24 hours, the grade cannot be calculated and the page is not displayed. Click on the title to jump to the "Sharding Grade" details screen. The grade trend graph displays the changes of the recent sharding rationality grade, which can be viewed by day and by hour.
 
 ### TOP 10 table today
 
 ![](assets/hotdb-management/image136.png)
 
-**Note**: Display the top 10 business tables with the largest change in daily data amount and the highest throughput in the cluster.
+**Note:** Display the top 10 business tables with the largest change in daily data amount and the highest throughput in the cluster.
 
 - TOP 10 data amount change is ranked by the absolute value of table data added or reduced.
 
@@ -1331,7 +1331,7 @@ HotDB Management displays real-time user-concerned information such as data volu
 
 ![](assets/hotdb-management/image137.png)
 
-**Note**: Display the operation frequency of the real-time front-end (sent by front-end application to compute node) and back-end (sent by compute node to data node) SELECT, INSERT, UPDATE and DELETE in times/s.
+**Note:** Display the operation frequency of the real-time front-end (sent by front-end application to compute node) and back-end (sent by compute node to data node) SELECT, INSERT, UPDATE and DELETE in times/s.
 
 - Page data refreshing frequency is 3 seconds.
 
@@ -1379,7 +1379,7 @@ The node management menu mainly provides users with the management of data sourc
 
 If the DR mode is enabled, please refer to the [Node management](cross-idc-disaster-recovery.md#node-management) chapter in the [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md) document for the node management function display and operation explanations
 
-**Function Entry**: Click [Configuration](#configuration) -> "Node Management" on the management platform page
+**Function Entry:** Click [Configuration](#configuration) -> "Node Management" on the management platform page
 
 ![](assets/hotdb-management/image140.png)
 
@@ -1387,9 +1387,9 @@ If the DR mode is enabled, please refer to the [Node management](cross-idc-disas
 
 DNID: Data node ID
 
-**Data Node Name**: Click on the button in the Data Node Name to link to the "Data Node Management" page
+**Data Node Name:** Click on the button in the Data Node Name to link to the "Data Node Management" page
 
-**Data Source_Hostname**: Address of the server where the data source is located
+**Data Source_Hostname:** Address of the server where the data source is located
 
 **Data Source_Port:** Data source MySQL instance port
 
@@ -1397,13 +1397,13 @@ DNID: Data node ID
 
 **Data Source_Type:** The roles of data source in data node include Active Master, Standby Slave, Standby Master and MGR.
 
-**Data Source_Status**: The data source statuses include availability and unavailability. The unavailability status is displayed in red font. The data source which is an Active Master and available is displayed in green font. The data source which is a Standby Slave or Standby Master and available is displayed in blue font. The data source available and whose listener fails to connect is displayed in orange font.
+**Data Source_Status:** The data source statuses include availability and unavailability. The unavailability status is displayed in red font. The data source which is an Active Master and available is displayed in green font. The data source which is a Standby Slave or Standby Master and available is displayed in blue font. The data source available and whose listener fails to connect is displayed in orange font.
 
-**Operation**: Including "Details", "Enable/Disable" and "Delete" from left to right
+**Operation:** Including "Details", "Enable/Disable" and "Delete" from left to right
 
 **Master/Slave Status:** The replication status between data sources in data node. Only data sources with master-master or master/slave replication relation will display the master/slave statuses as follows: Building Failed, Building, Abnormal, Unknown and Normal. For a detailed description of the status, please refer to the "Master/Slave Setup" chapter.
 
-**Master/Slave Switch**: The entry for manually performing the high availability switch operation of data source, which only appears in data sources with master-master or master/slave replication relation as with the master/slave status. The master/slave switch depends on the switching rule configured for the data node. For the specific switching rule configuration, please refer to the "Switching Rule" chapter.
+**Master/Slave Switch:** The entry for manually performing the high availability switch operation of data source, which only appears in data sources with master-master or master/slave replication relation as with the master/slave status. The master/slave switch depends on the switching rule configured for the data node. For the specific switching rule configuration, please refer to the "Switching Rule" chapter.
 
 #### Add data source group
 
@@ -1411,7 +1411,7 @@ Add Data Source Group allows to easily add or modify a set of data sources with 
 
 **Function Entry:** Click on [Configuration](#configuration) -> "Node Management" -> "Data Source Group" -> "Add Group" on the management platform page to enter the "Add Data Source Group" function page.
 
-**Function Description**: Check the parameter items that need to be used by the data source and have the same parameter values, and then set the parameter values of the checked parameter items. Click the "Save and Return" button to complete the addition of data source group.
+**Function Description:** Check the parameter items that need to be used by the data source and have the same parameter values, and then set the parameter values of the checked parameter items. Click the "Save and Return" button to complete the addition of data source group.
 
 **Parameter Description:**
 
@@ -1445,47 +1445,47 @@ Add Data Source Group allows to easily add or modify a set of data sources with 
 
 Add Node function allows to quickly configure data nodes, data sources and listeners for HotDB Server in the early stage and to configure data sources separately.
 
-**Function Entry**: Click on [Configuration](#configuration) -> "Node Management" -> "Add Node" on the management platform page to enter the "Add Node" function page.
+**Function Entry:** Click on [Configuration](#configuration) -> "Node Management" -> "Add Node" on the management platform page to enter the "Add Node" function page.
 
-**Example Description**: The Add Node function is displayed taking adding 4 data nodes (dn_01, dn_02, dn_03, dn_04) and 8 data sources (master-master: ds_01, ds_02, single database: ds_03, master/slave: ds_04, ds_05, MGR: ds_06, ds_07, ds_08) for example as follows.
+**Example Description:** The Add Node function is displayed taking adding 4 data nodes (dn_01, dn_02, dn_03, dn_04) and 8 data sources (master-master: ds_01, ds_02, single database: ds_03, master/slave: ds_04, ds_05, MGR: ds_06, ds_07, ds_08) for example as follows.
 
 ![](assets/hotdb-management/image142.png)
 
 **Generation of example data:**
 
-**Step 1**: Set the parameter value of data node number as 4, and other generated parameters adopt the page default values.
+**Step 1:** Set the parameter value of data node number as 4, and other generated parameters adopt the page default values.
 
-**Step 2**: Click the "Generate" button to generate the data into the list
+**Step 2:** Click the "Generate" button to generate the data into the list
 
-**Step 3**: Click the ![](assets/hotdb-management/image143.png) button in the "Operation" column to delete the excessive records generated in the dn_02 data node.
+**Step 3:** Click the ![](assets/hotdb-management/image143.png) button in the "Operation" column to delete the excessive records generated in the dn_02 data node.
 
-**Step 4**: Modify "Date Source Type" under dn_03 data node to "Standby Slave"
+**Step 4:** Modify "Date Source Type" under dn_03 data node to "Standby Slave"
 
-**Step 5**: Click the ![](assets/hotdb-management/image144.png) button in the "Operation" column of dn_04 data node record to add a record under dn_04.
+**Step 5:** Click the ![](assets/hotdb-management/image144.png) button in the "Operation" column of dn_04 data node record to add a record under dn_04.
 
-**Step 6**: Modify "Date Source Type" under three records of dn_04 to MGR
+**Step 6:** Modify "Date Source Type" under three records of dn_04 to MGR
 
 ![](assets/hotdb-management/image145.png)
 
 **Configure data source data:**
 
-**Step 1**: Use the previously added data source group and link it to each data source record
+**Step 1:** Use the previously added data source group and link it to each data source record
 
-**Step 2**: Remove the checked "Automatic Generation" and customize the data sources in turn, which shall not be the same. It is generally recommended to check "Automatic Generation"
+**Step 2:** Remove the checked "Automatic Generation" and customize the data sources in turn, which shall not be the same. It is generally recommended to check "Automatic Generation"
 
-**Step 3**: Fill in the hostname, port, connection user, connection password, database name, backup user and backup user password of data source (connection user and password are used for connecting the compute node with the data source which must be filled in; backup user and password are specially used for data source data backup which are recommended to be filled in though as optimal items)
+**Step 3:** Fill in the hostname, port, connection user, connection password, database name, backup user and backup user password of data source (connection user and password are used for connecting the compute node with the data source which must be filled in; backup user and password are specially used for data source data backup which are recommended to be filled in though as optimal items)
 
-**Step 4**: Enable "Automatic Master/Slave Setup". After adding the data source, the program automatically performs setup operation for data node process that needs to build the master/slave or master-master replication relation. If it is not enabled, the "Master/Slave Setup" function can be used for operation later.
+**Step 4:** Enable "Automatic Master/Slave Setup". After adding the data source, the program automatically performs setup operation for data node process that needs to build the master/slave or master-master replication relation. If it is not enabled, the "Master/Slave Setup" function can be used for operation later.
 
-**Step 5**: "Master Data Source" adopts the default value "Default". In case of the master-master with slave(s) or master-master with multi-slave relation of data node, the master data source to which the data source belongs can be specified here. The program automatically determines the master/slave relation by default.
+**Step 5:** "Master Data Source" adopts the default value "Default". In case of the master-master with slave(s) or master-master with multi-slave relation of data node, the master data source to which the data source belongs can be specified here. The program automatically determines the master/slave relation by default.
 
-**Step 6**: The parameters expanded by the "..." button in the "Operation" column are not modified by default. The parameters in the data source group or the system default values can be directly used. If there are special requirements, click to edit the internal parameters. (if the "Synchronize to other data sources which do not use groups" in more parameters is checked, more parameters of the data source modified can be applied to records of other data source which do not use groups)
+**Step 6:** The parameters expanded by the "..." button in the "Operation" column are not modified by default. The parameters in the data source group or the system default values can be directly used. If there are special requirements, click to edit the internal parameters. (if the "Synchronize to other data sources which do not use groups" in more parameters is checked, more parameters of the data source modified can be applied to records of other data source which do not use groups)
 
-**Step 7**: Click the "Connection Test" button to verify the availability of connection of the configured data source information. If the configured information is unavailable, the "Hostname", "Port", "Connection User", "Connection User Password" and "Database Name" input boxes of the corresponding data source will be identified. If it is detected that the data source is connectable but the database does not exist, it prompts whether to create database for the user, but the configured connection user shall have create privilege.
+**Step 7:** Click the "Connection Test" button to verify the availability of connection of the configured data source information. If the configured information is unavailable, the "Hostname", "Port", "Connection User", "Connection User Password" and "Database Name" input boxes of the corresponding data source will be identified. If it is detected that the data source is connectable but the database does not exist, it prompts whether to create database for the user, but the configured connection user shall have create privilege.
 
-**Backup user test**: The availability testing of backup users depends on the backup program (HotDB) on the server where the data source is located. If the server where the data source is located is not installed with the backup program or the backup program is not started, the availability of backup user cannot be detected and the "Connection Test" cannot be passed.
+**Backup user test:** The availability testing of backup users depends on the backup program (HotDB) on the server where the data source is located. If the server where the data source is located is not installed with the backup program or the backup program is not started, the availability of backup user cannot be detected and the "Connection Test" cannot be passed.
 
-**Step 8**: Click the "Save and Return" button to save the configured node data
+**Step 8:** Click the "Save and Return" button to save the configured node data
 
 ![](assets/hotdb-management/image146.png)
 
@@ -1493,7 +1493,7 @@ Add Node function allows to quickly configure data nodes, data sources and liste
 
 Master/Slave Setup function can set up a replication relation for a data source that has been configured but has not yet built a replication relation.
 
-**Function Entry**: Click [Configuration](#configuration) -> "Node Management" -> "High Availability Setting" -> "Master/Slave Setup" on the management platform page to enter the "Master/Slave Setup" function page.
+**Function Entry:** Click [Configuration](#configuration) -> "Node Management" -> "High Availability Setting" -> "Master/Slave Setup" on the management platform page to enter the "Master/Slave Setup" function page.
 
 ![](assets/hotdb-management/image147.png)
 
@@ -1521,21 +1521,21 @@ After entering the Master/Slave Setup page, it will automatically display the da
 
 **Master/slave setup process:**
 
-**Step 1**: Select the data node that needs to set up the replication relation and click "Start setup"
+**Step 1:** Select the data node that needs to set up the replication relation and click "Start setup"
 
-**Step 2**: Detect whether there are multiple target replication relations for the set data source (if any exist, the setup fails)
+**Step 2:** Detect whether there are multiple target replication relations for the set data source (if any exist, the setup fails)
 
-**Step 3**: Check whether the data source parameters are configured correctly and determine whether the replication mode is binlog or GTID (if the parameter checking fails, the setup fails).
+**Step 3:** Check whether the data source parameters are configured correctly and determine whether the replication mode is binlog or GTID (if the parameter checking fails, the setup fails).
 
-**Step 4**: Set up a replication account or try to use "repl" as a replication account (if the setup fails or the use of "repl" account fails, the pop-up window requires to manually specify the available replication account, and if the manually specified account is still invalid, the setup fails).
+**Step 4:** Set up a replication account or try to use "repl" as a replication account (if the setup fails or the use of "repl" account fails, the pop-up window requires to manually specify the available replication account, and if the manually specified account is still invalid, the setup fails).
 
-**Step 5**: Detect the data consistency of master/slave data source. If the GTID replication mode is adopted, it needs to determine whether there are GTID breakpoints (if the GTID breakpoints exist, the setup fails)
+**Step 5:** Detect the data consistency of master/slave data source. If the GTID replication mode is adopted, it needs to determine whether there are GTID breakpoints (if the GTID breakpoints exist, the setup fails)
 
-**Step 6**: Detect whether there is traffic flow on the data source (if the traffic flow exists, the setup fails)
+**Step 6:** Detect whether there is traffic flow on the data source (if the traffic flow exists, the setup fails)
 
-**Step 7**: replication relation setup
+**Step 7:** replication relation setup
 
-**Step 8**: Detect if there is a delay (if there is a delay, the specific delay information will be prompted, but the setup result will not be affected)
+**Step 8:** Detect if there is a delay (if there is a delay, the specific delay information will be prompted, but the setup result will not be affected)
 
 **Other description:**
 
@@ -1545,27 +1545,27 @@ After entering the Master/Slave Setup page, it will automatically display the da
 
 2. If the user enters other menu pages or exits the login in the setup process, the master/slave setup task will still run in the background. The setup can be viewed in the "Master/Slave Status" on the "Node Management" function page. The detailed master/slave status is as follows:
 
-- **Blank**: When the current data node has only one data source or is of MGR type, no status is displayed
+- **Blank:** When the current data node has only one data source or is of MGR type, no status is displayed
 
-- **Normal**: The master/slave replication status is normal viewed through display slave status ( Slave_IO_Running: YES, Slave_SQL_Running: YES) and is consistent with the master/slave relation configured for the data source under the current node.
+- **Normal:** The master/slave replication status is normal viewed through display slave status ( Slave_IO_Running: YES, Slave_SQL_Running: YES) and is consistent with the master/slave relation configured for the data source under the current node.
 
-- **Abnormal**: The master/slave replication status is abnormal (Slave_IO_Running: NO, Slave_SQL_Running: NO)
+- **Abnormal:** The master/slave replication status is abnormal (Slave_IO_Running: NO, Slave_SQL_Running: NO)
 
-- **Unknown**: Data source cannot be connected, data source privileges are insufficient, detection is periodical out (timeout time: 1 minute), and current node has no master/slave replication relation (no master/slave relation setup or wrong master/slave relation setup)
+- **Unknown:** Data source cannot be connected, data source privileges are insufficient, detection is periodical out (timeout time: 1 minute), and current node has no master/slave replication relation (no master/slave relation setup or wrong master/slave relation setup)
 
 - **Setup Failed:** There is a detection failure or setup failure during the master/slave setup process. Move the mouse cursor into the Setup Failure" to prompt the specific failure information.
 
-- **Setup**: The master/slave setup task is currently under way. If the setup is completed in the background, refresh the page to display normal or failed setup.
+- **Setup:** The master/slave setup task is currently under way. If the setup is completed in the background, refresh the page to display normal or failed setup.
 
 #### Switching rule
 
 Configuring switching rule provides users with a guarantee of high availability of data source. The compute node periodically checks the availability of data source. Once a data source failure is detected, the compute node automatically switches to the standby data source according to the configured switching rule to ensure the service stability and reliability. Users can also switch manually.
 
-**Function Entry**: Click [Configuration](#configuration) -> "Node Management" -> "High Availability Setting" -> "Switching Rule" on the management platform page to enter the "Data Node Switch Configuration" function page.
+**Function Entry:** Click [Configuration](#configuration) -> "Node Management" -> "High Availability Setting" -> "Switching Rule" on the management platform page to enter the "Data Node Switch Configuration" function page.
 
 ![](assets/hotdb-management/image150.png)
 
-**Function description**: Generally, when "Auto Adaptation of Switching Rule" is selected in "Add Node", the data source switching rule will be automatically configured by default. If the switching rule is not configured, click the "Add switching rule" button on the "switching rule" page to customize the rule or click the "Auto Adaptation" button to automatically adapt the switching rule.
+**Function description:** Generally, when "Auto Adaptation of Switching Rule" is selected in "Add Node", the data source switching rule will be automatically configured by default. If the switching rule is not configured, click the "Add switching rule" button on the "switching rule" page to customize the rule or click the "Auto Adaptation" button to automatically adapt the switching rule.
 
 **Add switching rule**
 
@@ -1607,11 +1607,11 @@ Configuring switching rule provides users with a guarantee of high availability 
 
 #### Heartbeat paused
 
-**Heartbeat**: Heartbeat is a strategy of HotDB Server to maintain high availability of data nodes. The compute node periodically sends heartbeat detection to the underlying data node at a certain frequency. If the data source normally feeds back the detection of compute node, the current state of data source is normal. If the data source does not send detection feedback to the compute node within the specified time and at the specified frequency, the data source status is considered by the compute node to be abnormal, and the data node high availability switch operation will be performed.
+**Heartbeat:** Heartbeat is a strategy of HotDB Server to maintain high availability of data nodes. The compute node periodically sends heartbeat detection to the underlying data node at a certain frequency. If the data source normally feeds back the detection of compute node, the current state of data source is normal. If the data source does not send detection feedback to the compute node within the specified time and at the specified frequency, the data source status is considered by the compute node to be abnormal, and the data node high availability switch operation will be performed.
 
-**Heartbeat paused**: When a data node needs special maintenance, it needs to pause the heartbeat detection from the compute node. The heartbeat paused function can be used to pause the data source heartbeat by the compute node in the set time period.
+**Heartbeat paused:** When a data node needs special maintenance, it needs to pause the heartbeat detection from the compute node. The heartbeat paused function can be used to pause the data source heartbeat by the compute node in the set time period.
 
-**Function Entry**: Click [Configuration](#configuration) -> "Node Management" -> "High Availability Setting" -> [Heartbeat paused](#heartbeat-paused) on the management platform page to enter the [Heartbeat paused](#heartbeat-paused) function page.
+**Function Entry:** Click [Configuration](#configuration) -> "Node Management" -> "High Availability Setting" -> [Heartbeat paused](#heartbeat-paused) on the management platform page to enter the [Heartbeat paused](#heartbeat-paused) function page.
 
 ![](assets/hotdb-management/image153.png)
 
@@ -1629,7 +1629,7 @@ Function operation instructions:
 
 For data nodes with multiple data sources and configured with switching rules, the master/slave switching of data node can be performed manually.
 
-**Function Entry**: Click [Configuration](#configuration) -> "Node Management" -> "Switch" -> on the management platform page.
+**Function Entry:** Click [Configuration](#configuration) -> "Node Management" -> "Switch" -> on the management platform page.
 
 **Instructions for use:**
 
@@ -1667,7 +1667,7 @@ For data nodes with multiple data sources and configured with switching rules, t
 
 Each data node has its own details page, where the user can manage the basic information of the data node, data source, and data node switching rules.
 
-**Function Entry**: Click [Configuration](#configuration) -> "Node Management" -> "![](assets/hotdb-management/image158.png)" -> on the management platform page.
+**Function Entry:** Click [Configuration](#configuration) -> "Node Management" -> "![](assets/hotdb-management/image158.png)" -> on the management platform page.
 
 **Function description:**
 
@@ -1695,11 +1695,11 @@ Each data node has its own details page, where the user can manage the basic inf
 
 Special maintenance for a data source can be operated by disabling the data source when required.
 
-**Function Entry**: Click [Configuration](#configuration) -> "Node Management" -> "![](assets/hotdb-management/image160.png)" -> on the management platform page.
+**Function Entry:** Click [Configuration](#configuration) -> "Node Management" -> "![](assets/hotdb-management/image160.png)" -> on the management platform page.
 
-**Function operation**: On the data source management page, click the "Disable" button to confirm, then the data source is disabled successfully, and the "Status" field on the node management page displays the corresponding data source unavailable. If the disabled master data source is reloaded, the data node switches to the standby data source.
+**Function operation:** On the data source management page, click the "Disable" button to confirm, then the data source is disabled successfully, and the "Status" field on the node management page displays the corresponding data source unavailable. If the disabled master data source is reloaded, the data node switches to the standby data source.
 
-**Note**: Data sources of the MGR type shall not be arbitrarily disabled, otherwise the data source switch will be abnormal.
+**Note:** Data sources of the MGR type shall not be arbitrarily disabled, otherwise the data source switch will be abnormal.
 
 ![](assets/hotdb-management/image161.png)
 
@@ -1707,7 +1707,7 @@ Special maintenance for a data source can be operated by disabling the data sour
 
 If the abnormal status of the data source is restored after the failure or manual marking of the data source as unavailable, the data source can be re-enabled on the management platform.
 
-**Function Entry**: Click [Configuration](#configuration) -> "Node Management" -> "![](assets/hotdb-management/image162.png)" -> on the management platform page.
+**Function Entry:** Click [Configuration](#configuration) -> "Node Management" -> "![](assets/hotdb-management/image162.png)" -> on the management platform page.
 
 **Function description:**
 
@@ -1723,9 +1723,9 @@ If the abnormal status of the data source is restored after the failure or manua
 
 ### LogicDB
 
-**Function description**: LogicDB is a database accessible by client program after connecting to compute node server, describing the collection of database tables, similar to a database seen after directly connecting to MySQL server.
+**Function description:** LogicDB is a database accessible by client program after connecting to compute node server, describing the collection of database tables, similar to a database seen after directly connecting to MySQL server.
 
-**Function Entry**: Click [Configuration](#configuration) -> [LogicDB](#logicdb) on the Distributed Transactional Database Platform page.
+**Function Entry:** Click [Configuration](#configuration) -> [LogicDB](#logicdb) on the Distributed Transactional Database Platform page.
 
 On the logicDB page, enter the logicDB name and click "Search" to search the corresponding information.
 
@@ -1733,7 +1733,7 @@ On the logicDB page, enter the logicDB name and click "Search" to search the cor
 
 #### Add LogicDB
 
-**Function Entry**: "Configuration -> LogicDB -> Add LogicDB"
+**Function Entry:** "Configuration -> LogicDB -> Add LogicDB"
 
 ![](assets/hotdb-management/image166.png)
 
@@ -1761,15 +1761,15 @@ Click "**√**", then the logicDB is edited successfully.
 
 ![](assets/hotdb-management/image170.png)
 
-**Description**: Deleting the logicDB will delete all tables under the logicDB that have not created the table structure, but if there is any table without "drop table" in the background, a pop-up window will prompt that the logicDB cannot be deleted.
+**Description:** Deleting the logicDB will delete all tables under the logicDB that have not created the table structure, but if there is any table without "drop table" in the background, a pop-up window will prompt that the logicDB cannot be deleted.
 
 ### Table configuration
 
-**Function description**: The management platform provides visual configuration of business tables for HotDB Server cluster. Generally, in order to create business tables under the service of connecting compute node 3323 ports, it is necessary to define the corresponding tables in the "Table Configuration" function of management platform first, and then reload them successfully to normally create and use the table structure.
+**Function description:** The management platform provides visual configuration of business tables for HotDB Server cluster. Generally, in order to create business tables under the service of connecting compute node 3323 ports, it is necessary to define the corresponding tables in the "Table Configuration" function of management platform first, and then reload them successfully to normally create and use the table structure.
 
-**Function Entry**: Click [Configuration](#configuration) -> "Table Configuration" on the Distributed Transactional Database Platform page.
+**Function Entry:** Click [Configuration](#configuration) -> "Table Configuration" on the Distributed Transactional Database Platform page.
 
-**Table Type**: Global Table, Child Table, Sharding Table and Vertical Sharding Table
+**Table Type:** Global Table, Child Table, Sharding Table and Vertical Sharding Table
 
 ![](assets/hotdb-management/image171.png)
 
@@ -1787,19 +1787,19 @@ Auto Sharding can add sharding tables of AUTO_CRC32 and AUTO_MOD types and AUTO_
 
 **Step 2:** Fill in the sharding key used by the sharding table
 
-**Step 3**: Check "Open Global Unique Constraint" by default. For a specific description of global unique constraint, please refer to the relevant chapter of [Standard](standard.md) document.
+**Step 3:** Check "Open Global Unique Constraint" by default. For a specific description of global unique constraint, please refer to the relevant chapter of [Standard](standard.md) document.
 
-**Step 4**: Select the sharding mode, which is Auto Sharding by default.
+**Step 4:** Select the sharding mode, which is Auto Sharding by default.
 
-**Step 5**: Select the sharding type as "AUTO_CRC32".
+**Step 5:** Select the sharding type as "AUTO_CRC32".
 
-**Step 6**: Select the data node of the sharding route of added sharding table ("All Data Node under this LogicDB" is checked by default and matches the data in "Default Sharding Key". If the "Default Sharding Key" column is not configured, the "Data Node" column data will be matched. If the "Data Node" column is NULL, it will prompt that "there is no relevant data node in the current LogicDB" when the LogicDB is selected).
+**Step 6:** Select the data node of the sharding route of added sharding table ("All Data Node under this LogicDB" is checked by default and matches the data in "Default Sharding Key". If the "Default Sharding Key" column is not configured, the "Data Node" column data will be matched. If the "Data Node" column is NULL, it will prompt that "there is no relevant data node in the current LogicDB" when the LogicDB is selected).
 
-**Step 7**: Please Fill in Table Name supports batching addition of table name, and the table can be spaced by line breaks, English commas and English space. If the tables added in batches use the same sharding key, only the table name can be added. If not, enter "table name: sharding key" in the input box to specify the table name, such as: test: id, test1:name.
+**Step 7:** Please Fill in Table Name supports batching addition of table name, and the table can be spaced by line breaks, English commas and English space. If the tables added in batches use the same sharding key, only the table name can be added. If not, enter "table name: sharding key" in the input box to specify the table name, such as: test: id, test1:name.
 
-**Step 8**: Click the "Generate Preview" button to view the table configuration to be added. It is not allowed to directly "Save" unpreviewed tables.
+**Step 8:** Click the "Generate Preview" button to view the table configuration to be added. It is not allowed to directly "Save" unpreviewed tables.
 
-**Step 9**: Click the "Save" button to add new table configuration to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
+**Step 9:** Click the "Save" button to add new table configuration to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
 
 ##### Add sharding table in Advanced Sharding mode:
 
@@ -1813,13 +1813,13 @@ Multiple tables with the same function can be added at one time.
 
 #### Add new child table
 
-**Child table**: The child table is an association table and a special set of sharding tables, including a parent table and at least one child table. The data node to which the child table data belongs is determined by the data node to which the parent table data belongs.
+**Child table:** The child table is an association table and a special set of sharding tables, including a parent table and at least one child table. The data node to which the child table data belongs is determined by the data node to which the parent table data belongs.
 
-**Use of child table**: When compute nodes do not support cross-node JOIN operations, compute nodes are designed with the pattern of parent-child tables to support cross-node JOIN operations. The storage location of child table records is based on the storage location of parent table records, which can effectively solve the efficiency and performance problems of JOIN operations across data nodes when the sharding fields are associated keys.
+**Use of child table:** When compute nodes do not support cross-node JOIN operations, compute nodes are designed with the pattern of parent-child tables to support cross-node JOIN operations. The storage location of child table records is based on the storage location of parent table records, which can effectively solve the efficiency and performance problems of JOIN operations across data nodes when the sharding fields are associated keys.
 
-**Suggestion for child table**: Currently, since compute node support cross-node JOIN operations, the pattern of parent-child tables will not be updated later, so child tables are not recommended
+**Suggestion for child table:** Currently, since compute node support cross-node JOIN operations, the pattern of parent-child tables will not be updated later, so child tables are not recommended
 
-**Mode to add child table**: Child tables can be added directly in the management platform or added under the parent table record on the table configuration page.
+**Mode to add child table:** Child tables can be added directly in the management platform or added under the parent table record on the table configuration page.
 
 **Add new child table directly:**
 
@@ -1839,13 +1839,13 @@ Add a child table under the parent table record on the table configuration page:
 
 3. Click on "**√**" to add the child table successfully.
 
-**Note**: If multiple child tables need to be added under the parent table, the Parent Table Association Field filled in must be consistent. No child table shall be added under the parent table with created table structure.
+**Note:** If multiple child tables need to be added under the parent table, the Parent Table Association Field filled in must be consistent. No child table shall be added under the parent table with created table structure.
 
 ![](assets/hotdb-management/image175.png)
 
 #### Edit table configuration
 
-**Function Entry**: Select [Configuration](#configuration) -> "Table Configuration" on the Distributed Transactional Database Platform page, and click the "Edit" button or click the table name to enter [Edit table configuration](#edit-table-configuration) page.
+**Function Entry:** Select [Configuration](#configuration) -> "Table Configuration" on the Distributed Transactional Database Platform page, and click the "Edit" button or click the table name to enter [Edit table configuration](#edit-table-configuration) page.
 
 Tables can be divided into two statuses: Created and Not Created. When table structure type is Not Created, the table name, logicDB, sharding key, sharding mode and data node can be changed by editing.
 
@@ -1871,9 +1871,9 @@ If the "Export Table Structure of Created Tables" is checked, the [Table structu
 
 #### Delete table
 
-**Function Entry**: Select [Configuration](#configuration) -> "Table Configuration" -> "Delete" on the Distributed Transactional Database Platform page.
+**Function Entry:** Select [Configuration](#configuration) -> "Table Configuration" -> "Delete" on the Distributed Transactional Database Platform page.
 
-**Function description**: Click the "Delete" button, then the pop-up box will prompt: "Confirm to Delete?". Click "Confirm" to delete the uncreated table successfully.
+**Function description:** Click the "Delete" button, then the pop-up box will prompt: "Confirm to Delete?". Click "Confirm" to delete the uncreated table successfully.
 
 ![](assets/hotdb-management/image180.png)
 
@@ -1889,15 +1889,19 @@ HotDB Server after V2.4.6 dropped HASH (including HASH23) and AUTO sharding func
 
 ![](assets/hotdb-management/image181.png)
 
-**Data migration description**: It is recommended migrating the table data to a new sharding function table if there are tables which historically cite HASH (including HASH23) and AUTO sharding functions in the system. Table data migration can be performed manually or using the sharding plan online modification command provided by the management port. For details, please refer to [Management Command](management-command.md) document.
+**Data migration description:** 
+
+It is recommended migrating the table data to a new sharding function table if there are tables which historically cite HASH (including HASH23) and AUTO sharding functions in the system. Table data migration can be performed manually or using the sharding plan online modification command provided by the management port. For details, please refer to [Management Command](management-command.md) document.
 
 ### Sharding function
 
 Sharding Function provides the route method and algorithm for horizontal splitting of tables. Currently, compute nodes support the following sharding function types: five advanced sharding types (ROUTE, RANGE, MATCH, SIMPLE_MOD, CRC32_MOD), and two auto sharding types (AUTO_MOD, AUTO_CRC32). Refer to the new chapters of sharding table for AUTO_MOD and AUTO_CRC32.
 
-**Function Entry**: Select [Configuration](#configuration) -> "Sharding Function" on the Distributed Transactional Database Platform page.
+**Function Entry:** 
 
-**Seven sharding types are described in detail as follows**:
+Select [Configuration](#configuration) -> [Sharding Function](#sharding-function) on the Distributed Transactional Database Platform page.
+
+**Seven sharding types are described in detail as follows:**
 
 ![](assets/hotdb-management/image182.png)
 
@@ -1913,19 +1917,19 @@ Adding sharding function with sharding type of MATCH is displayed taking the aut
 
 **Function demonstration:**
 
-**Step 1**: "Automatic Generation of Sharding Function Name" (automatic generation of function: existing sharding function maximum ID+1_sharding type name) is checked by default. It shall be unchecked in case of any custom name requirement.
+**Step 1:** "Automatic Generation of Sharding Function Name" (automatic generation of function: existing sharding function maximum ID+1_sharding type name) is checked by default. It shall be unchecked in case of any custom name requirement.
 
-**Step 2**: Select [MATCH](#match) for "Sharding Type"
+**Step 2:** Select [MATCH](#match) for "Sharding Type"
 
-**Step 3**: Select the default "Auto Setting" mode
+**Step 3:** Select the default "Auto Setting" mode
 
-**Step 4**: Select the data node to be used for sharding function
+**Step 4:** Select the data node to be used for sharding function
 
-**Step 5**: Check "For NULL Value, Distribute Route Node Automatically" and "For Blank String, Distribute Route Node Automatically" by default. That is, when the sharding key value of the inserted data is NULL or blank string, the program will automatically select the route data node.
+**Step 5:** Check "For NULL Value, Distribute Route Node Automatically" and "For Blank String, Distribute Route Node Automatically" by default. That is, when the sharding key value of the inserted data is NULL or blank string, the program will automatically select the route data node.
 
 In v.2.5.6 and above, "Match by Digit Number" is added (not checked by default) for some numerical scenario that requires prefix/infix/suffix for sharding. After checking and fill in the matching rule. According to the filling, the corresponding route rules will be generated automatically. The routing of data is based on the rules corresponding to "from left" or "from right", instead of full matching routing according to the original string.
 
-**For example:**
+**Example:**
 
 ![](assets/hotdb-management/image183.png)
 
@@ -1935,11 +1939,11 @@ When "Match by Digit Number" is checked, the digit number of the input value mus
 
 ![](assets/hotdb-management/image184.png)
 
-**Step 6**: Enter the value matching each data node, which can be spaced by line breaks, English commas or English space.
+**Step 6:** Enter the value matching each data node, which can be spaced by line breaks, English commas or English space.
 
-**Step 7**: Click "Preview" to view the effect of sharding function.
+**Step 7:** Click "Preview" to view the effect of sharding function.
 
-**Step 8**: Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
+**Step 8:** Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
 
 ![](assets/hotdb-management/image185.png)
 
@@ -1951,7 +1955,9 @@ Select "Automatic Generation of Sharding Function Name" by default, select MATCH
 
 ![](assets/hotdb-management/image186.png)
 
-Note: Manual setting of input values supports the input of multiple values which shall be spaced by English commas or English space
+> !Note
+> 
+> Manual setting of input values supports the input of multiple values which shall be spaced by English commas or English space
 
 #### RANGE
 
@@ -1961,25 +1967,25 @@ Adding sharding function with sharding type of RANGE is displayed taking the aut
 
 **Function demonstration:**
 
-**Step 1**: "Automatic Generation of Sharding Function Name" (automatic generation of function: existing sharding function maximum ID+1_sharding type name) is checked by default. It shall be unchecked in case of any custom name requirement.
+**Step 1:** "Automatic Generation of Sharding Function Name" (automatic generation of function: existing sharding function maximum ID+1_sharding type name) is checked by default. It shall be unchecked in case of any custom name requirement.
 
-**Step 2**: Select [RANGE](#range) for "Sharding Type"
+**Step 2:** Select [RANGE](#range) for "Sharding Type"
 
-**Step 3**: Select the default "Auto Setting" mode
+**Step 3:** Select the default "Auto Setting" mode
 
-**Step 4**: Select the data node to be used for sharding function
+**Step 4:** Select the data node to be used for sharding function
 
-**Step 5**: Check "For NULL Value, Distribute Route Node Automatically" by default. That is, when the sharding key value of the inserted data is NULL, the program will automatically select the route data node.
+**Step 5:** Check "For NULL Value, Distribute Route Node Automatically" by default. That is, when the sharding key value of the inserted data is NULL, the program will automatically select the route data node.
 
 When it is in 2.5.6 and above, "Automatically distribute route nodes to the maximum / minimum boundary value" is added (not checked by default). If checked, the maximum and minimum value boundary will be automatically generated according to the value range filled in by the user. For example, fill in 1-100 and check "Automatically distribute route nodes to the maximum / minimum boundary value", then the boundary data less than 1 and greater than 100 will be automatically sharded, so there is no need to worry that the boundary value cannot be routed.
 
-**Step 6**: The value range is the range of sharding key values (only integers are allowed)
+**Step 6:** The value range is the range of sharding key values (only integers are allowed)
 
-**Step 7**: Select the generated step length by default (step length calculation formula: larger value minus smaller value and divide the number of selected data nodes) and modify the default generated value if it needs to customize the step length.
+**Step 7:** Select the generated step length by default (step length calculation formula: larger value minus smaller value and divide the number of selected data nodes) and modify the default generated value if it needs to customize the step length.
 
-**Step 8**: Click the "Preview" button to view the sharding effect.
+**Step 8:** Click the "Preview" button to view the sharding effect.
 
-**Step 9**: Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
+**Step 9:** Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
 
 ![](assets/hotdb-management/image187.png)
 
@@ -1991,7 +1997,9 @@ Select "Automatic Generation of Sharding Function Name" by default, select RANGE
 
 ![](assets/hotdb-management/image188.png)
 
-Note: Manual setting of input values supports the input of multiple values which shall be spaced by English commas or English space. When it is in v.2.5.6 and above, "greater than" or "less than" is supported for the value range to distinguish the maximum and minimum value boundary.
+> Note: 
+> 
+> Manual setting of input values supports the input of multiple values which shall be spaced by English commas or English space. When it is in v.2.5.6 and above, "greater than" or "less than" is supported for the value range to distinguish the maximum and minimum value boundary.
 
 #### ROUTE
 
@@ -2001,37 +2009,39 @@ Adding sharding function with sharding type of RANGE is displayed taking the aut
 
 **Function demonstration:**
 
-**Step 1**: "Automatic Generation of Sharding Function Name" (automatic generation of function: existing sharding function maximum ID+1_sharding type name) is checked by default. It shall be unchecked in case of any custom name requirement.
+**Step 1:** "Automatic Generation of Sharding Function Name" (automatic generation of function: existing sharding function maximum ID+1_sharding type name) is checked by default. It shall be unchecked in case of any custom name requirement.
 
-**Step 2**: Select [ROUTE](#route) for "Sharding Type"
+**Step 2:** Select [ROUTE](#route) for "Sharding Type"
 
-**Step 3**: Select the default "Auto Setting" mode
+**Step 3:** Select the default "Auto Setting" mode
 
-**Step 4**: Select the data node to be used for sharding function
+**Step 4:** Select the data node to be used for sharding function
 
-**Step 5**: Check "For NULL Value, Distribute Route Node Automatically" by default. That is, when the sharding key value of the inserted data is NULL, the program will automatically select the route data node.
+**Step 5:** Check "For NULL Value, Distribute Route Node Automatically" by default. That is, when the sharding key value of the inserted data is NULL, the program will automatically select the route data node.
 
 The same as MATCH type. When it is v.2.5.6 and above, you can also select "Match by Digit Number" (not checked by default) and fill in the matching rule. According to the filling, the corresponding route rules will be generated automatically. Here the ROUTE type is suitable for some numerical scenario that requires prefix/infix/suffix for sharding. The routing of data is based on the rules corresponding to "from left" or "from right", instead of full matching routing according to the original string.
 
-**Step 6**: The value range is the range of sharding key values (only integers are allowed)
+**Step 6:** The value range is the range of sharding key values (only integers are allowed)
 
-**Step 7**: Select the generated step length by default and modify the default generated value if it needs to customize the step length.
+**Step 7:** Select the generated step length by default and modify the default generated value if it needs to customize the step length.
 
-**Step 8**: Click the "Preview" button to view the sharding effect.
+**Step 8:** Click the "Preview" button to view the sharding effect.
 
-**Step 9**: Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
+**Step 9:** Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
 
 ![](assets/hotdb-management/image189.png)
 
 ##### Add sharding function of ROUTE type in manual setting mode
 
-**Brief description of operation steps:**
+**Summary of operation steps:**
 
 Select "Automatic Generation of Sharding Function Name" by default, select ROUTE sharding type, set "Manul Setting" mode, check "Match by Digit Number" and fill the matching rule or not, select data nodes and matching values, click "+" to add records, and click "Save and Return".
 
 ![](assets/hotdb-management/image190.png)
 
-Note: Manual setting of input values supports the input of multiple values which shall be spaced by English commas or English space
+> !Note
+> 
+> Manual setting of input values supports the input of multiple values which shall be spaced by English commas or English space
 
 #### SIMPLE_MOD
 
@@ -2041,21 +2051,21 @@ Adding sharding function with sharding type of SIMPLE_MOD is displayed taking th
 
 **Function demonstration:**
 
-**Step 1**: "Automatic Generation of Sharding Function Name" (automatic generation of function: existing sharding function maximum ID+1_sharding type name) is checked by default. It shall be unchecked in case of any custom name requirement.
+**Step 1:** "Automatic Generation of Sharding Function Name" (automatic generation of function: existing sharding function maximum ID+1_sharding type name) is checked by default. It shall be unchecked in case of any custom name requirement.
 
-**Step 2**: Select [SIMPLE_MOD](#simple_mod) for "Sharding Type"
+**Step 2:** Select [SIMPLE_MOD](#simple_mod) for "Sharding Type"
 
-**Step 3**: Select the default "Auto Setting" mode
+**Step 3:** Select the default "Auto Setting" mode
 
-**Step 4**: Select the data node to be used for sharding function
+**Step 4:** Select the data node to be used for sharding function
 
-**Step 5**: Check "For NULL Value, Distribute Route Node Automatically" by default. That is, when the sharding key value of the inserted data is NULL, the program will automatically select the route data node.
+**Step 5:** Check "For NULL Value, Distribute Route Node Automatically" by default. That is, when the sharding key value of the inserted data is NULL, the program will automatically select the route data node.
 
-**Step 6**: Input the module value (positive integers only), which is a parameter of the reminder calculation between sharding key value and input module value. It is finally routed to the corresponding data node according to the obtained remainder.
+**Step 6:** Input the module value (positive integers only), which is a parameter of the reminder calculation between sharding key value and input module value. It is finally routed to the corresponding data node according to the obtained remainder.
 
-**Step 7**: Click the "Preview" button to view the sharding effect.
+**Step 7:** Click the "Preview" button to view the sharding effect.
 
-**Step 8**: Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
+**Step 8:** Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
 
 ![](assets/hotdb-management/image191.png)
 
@@ -2077,19 +2087,19 @@ Adding sharding function with sharding type of CRC32_MOD is displayed taking the
 
 **Function demonstration:**
 
-**Step 1**: "Automatic Generation of Sharding Function Name" (automatic generation of function: existing sharding function maximum ID+1_sharding type name) is checked by default. It shall be unchecked in case of any custom name requirement.
+**Step 1:** "Automatic Generation of Sharding Function Name" (automatic generation of function: existing sharding function maximum ID+1_sharding type name) is checked by default. It shall be unchecked in case of any custom name requirement.
 
-**Step 2**: Select [CRC32_MOD](#crc32_mod) for "Sharding Type"
+**Step 2:** Select [CRC32_MOD](#crc32_mod) for "Sharding Type"
 
-**Step 3**: Select the default "Auto Setting" mode
+**Step 3:** Select the default "Auto Setting" mode
 
-**Step 4**: Select the data node to be used for sharding function
+**Step 4:** Select the data node to be used for sharding function
 
-**Step 5**: Input the module value (positive integers only), which is a parameter of the reminder between sharding key value and input module value. It is finally routed to the corresponding data node according to the obtained remainder.
+**Step 5:** Input the module value (positive integers only), which is a parameter of the reminder between sharding key value and input module value. It is finally routed to the corresponding data node according to the obtained remainder.
 
-**Step 6**: Click the "Preview" button to view the sharding effect.
+**Step 6:** Click the "Preview" button to view the sharding effect.
 
-**Step 7**: Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
+**Step 7:** Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
 
 ![](assets/hotdb-management/image193.png)
 
@@ -2105,9 +2115,9 @@ Note: Manual setting of input values supports the input of multiple values which
 
 #### Edit sharding function
 
-**Function Entry**: Select [Configuration](#configuration) -> "Sharding Function" -> [Edit sharding function](#edit-sharding-function) on the Distributed Transactional Database Platform page.
+**Function Entry:** Select [Configuration](#configuration) -> "Sharding Function" -> [Edit sharding function](#edit-sharding-function) on the Distributed Transactional Database Platform page.
 
-**Function operation**: On the Edit sharding function page, change the Sharding Function Name, Sharding Type, Setting Mode, etc., and click "Save and Return" to edit the sharding function successfully.
+**Function operation:** On the Edit sharding function page, change the Sharding Function Name, Sharding Type, Setting Mode, etc., and click "Save and Return" to edit the sharding function successfully.
 
 ![](assets/hotdb-management/image195.png)
 
@@ -2127,19 +2137,19 @@ Note: Manual setting of input values supports the input of multiple values which
 
 #### Delete sharding function
 
-**Function Entry**: Select [Configuration](#configuration) -> "Sharding Function" -> on the Distributed Transactional Database Platform page, and click "Delete" on the Sharding Function page.
+**Function Entry:** Select [Configuration](#configuration) -> "Sharding Function" -> on the Distributed Transactional Database Platform page, and click "Delete" on the Sharding Function page.
 
-**Function description**: Click the "Delete" button and then a pop-up box will prompt: "Confirm to Delete?" Click "Confirm" to delete the sharding function successfully.
+**Function description:** Click the "Delete" button and then a pop-up box will prompt: "Confirm to Delete?" Click "Confirm" to delete the sharding function successfully.
 
 ![](assets/hotdb-management/image196.png)
 
-**Note**: The sharding function that has been cited by the table cannot be deleted.
+**Note:** The sharding function that has been cited by the table cannot be deleted.
 
 #### Replicate sharding function
 
-**Function Entry**: Select [Configuration](#configuration) -> "Sharding Function" -> "Replication![](assets/hotdb-management/image197.png)" on the Distributed Transactional Database Platform page.
+**Function Entry:** Select [Configuration](#configuration) -> "Sharding Function" -> "Replication![](assets/hotdb-management/image197.png)" on the Distributed Transactional Database Platform page.
 
-**Function description**: Click the "Replicate" button on the sharding function page to pop up the new sharding function name input box, enter the new function name and click "Confirm" to replicate the sharding function successfully.
+**Function description:** Click the "Replicate" button on the sharding function page to pop up the new sharding function name input box, enter the new function name and click "Confirm" to replicate the sharding function successfully.
 
 ![](assets/hotdb-management/image198.png)
 
@@ -2161,74 +2171,74 @@ Config checking mainly provides checking for the related configuration of comput
 
 DR mode explanation: when the DR mode is enabled, please refer to the [Config checking](cross-idc-disaster-recovery.md#configuration-checking) chapter in the [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md) document for the relevant logical explanations of configuration checking.
 
-**Function Entry**: Select [Configuration](#configuration) -> "Config Checking" on the Distributed Transactional Database Platform page.
+**Function Entry:** Select [Configuration](#configuration) -> "Config Checking" on the Distributed Transactional Database Platform page.
 
 ![](assets/hotdb-management/image200.png)
 
-**Operation description**: Click the \[Start Checking] button to directly Start Config checking. When all checking items are passed, the checking is successful and there is no problem with the current configuration. When an error is reported in the checking information, the user who fails the checking shall modify according to the checking failure prompt, and then perform Config checking.
+**Operation description:** Click the \[Start Checking] button to directly Start Config checking. When all checking items are passed, the checking is successful and there is no problem with the current configuration. When an error is reported in the checking information, the user who fails the checking shall modify according to the checking failure prompt, and then perform Config checking.
 
-**Checking tips**: Config checking failures are divided into ERROR (red font display) and WARNING (orange font display) generally. When ERROR level information appears, users need to modify and solve the related problems immediately, otherwise Reload cannot be performed. WARNING information indicates a failure to which attention shall be paid and which does not affect the operation of compute nodes.
+**Checking tips:** Config checking failures are divided into ERROR (red font display) and WARNING (orange font display) generally. When ERROR level information appears, users need to modify and solve the related problems immediately, otherwise Reload cannot be performed. WARNING information indicates a failure to which attention shall be paid and which does not affect the operation of compute nodes.
 
 ![](assets/hotdb-management/image201.png)
 
-**Config Checking Items**:
+**Config Checking Items:**
 
 | Type | Checking Content |
 |-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Data source table configuration | Data Node reference is normal |
-|   | Data Source database does not repeat |
-|   | Data Source cannot be connected |
-|   | A Data Node must contain available data source |
-|   | Data Node must contain Data Source |
-|   | One data node has only one Active Master |
-|   | One Data Node must contain a Data Source of Active Master type |
-|   | The character set of data source must be consistent |
-|   | Non-MGR Data Node cannot cite MGR type Data Source |
-|   | Data node cannot cite common master-slave data source |
-|   | ConfigDB cannot be added as data source |
-|   | Data source user and configDB user cannot share |
-|   | The logical architecture of compute nodes in the master center and the DR center is the same. |
+| ^ | Data Source database does not repeat |
+| ^ | Data Source cannot be connected |
+| ^ | A Data Node must contain available data source |
+| ^ | Data Node must contain Data Source |
+| ^ | One data node has only one Active Master |
+| ^ | One Data Node must contain a Data Source of Active Master type |
+| ^ | The character set of data source must be consistent |
+| ^ | Non-MGR Data Node cannot cite MGR type Data Source |
+| ^ | Data node cannot cite common master-slave data source |
+| ^ | ConfigDB cannot be added as data source |
+| ^ | Data source user and configDB user cannot share |
+| ^ | The logical architecture of compute nodes in the master center and the DR center is the same. |
 | Node switching rule table configuration | Data Source reference is normal |
-|   | Data Source and Data Node high availability source cannot be the same |
-|   | Data Source and Data Node high availability source must belong to the same data node |
+| ^ | Data Source and Data Node high availability source cannot be the same |
+| ^ | Data Source and Data Node high availability source must belong to the same data node |
 | LogicDB table configuration | Data Node reference is normal |
 | Sharding function parameter table configuration | Sharding function reference is normal |
-|   | Data Node reference is normal |
-|   | The column_value of RANGE or HASH route method must be in the form of an interval, such as: a:b, and a and b shall be numbers, a<=b |
-|   | The sharding parameter value range of HASH route method cannot contain negative numbers |
-|   | The sharding parameter value of automatic Sharding Route method shall be a positive integer |
-|   | The sharding parameter value of ROUTE route method shall be an integer |
-|   | Sharding function parameter is normal |
-|   | Sharding interval of RANGE or HASH shall have no overlap |
-|   | The column_value of SIMPLE_MOD or CRC32_MOD route method can be a number greater than or equal to 0 or an interval, such as: a:b, and a and b shall be numbers, a>=0, b>=0, a< =b |
-|   | The module value of SIMPLE_MOD or CRC32_MOD must be within 2-2147483647 |
-|   | SIMPLE_MOD or CRC32_MOD must be configured with module values |
-|   | The sharding parameter value interval of SIMPLE_MOD or CRC32_MOD shall have no overlap |
+| ^ | Data Node reference is normal |
+| ^ | The column_value of RANGE or HASH route method must be in the form of an interval, such as: a:b, and a and b shall be numbers, a<=b |
+| ^ | The sharding parameter value range of HASH route method cannot contain negative numbers |
+| ^ | The sharding parameter value of automatic Sharding Route method shall be a positive integer |
+| ^ | The sharding parameter value of ROUTE route method shall be an integer |
+| ^ | Sharding function parameter is normal |
+| ^ | Sharding interval of RANGE or HASH shall have no overlap |
+| ^ | The column_value of SIMPLE_MOD or CRC32_MOD route method can be a number greater than or equal to 0 or an interval, such as: a:b, and a and b shall be numbers, a>=0, b>=0, a< =b |
+| ^ | The module value of SIMPLE_MOD or CRC32_MOD must be within 2-2147483647 |
+| ^ | SIMPLE_MOD or CRC32_MOD must be configured with module values |
+| ^ | The sharding parameter value interval of SIMPLE_MOD or CRC32_MOD shall have no overlap |
 | Sharding function table configuration | Sharding function reference is normal |
 | Table Configuration | Global table is normal |
-|   | Sharding function reference is normal |
-|   | Data Node reference is normal |
-|   | LogicDB reference is normal |
-|   | Table name conflict detection is normal |
-|   | Global table node must contain all nodes of the logicDB it belongs to |
-|   | Association between table and data node is normal |
-|   | Sharding table sharding function association is normal |
-|   | Vertical sharding table belongs to only one node |
-|   | After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table. |
+| ^ | Sharding function reference is normal |
+| ^ | Data Node reference is normal |
+| ^ | LogicDB reference is normal |
+| ^ | Table name conflict detection is normal |
+| ^ | Global table node must contain all nodes of the logicDB it belongs to |
+| ^ | Association between table and data node is normal |
+| ^ | Sharding table sharding function association is normal |
+| ^ | Vertical sharding table belongs to only one node |
+| ^ | After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table. |
 | Child table configuration | Parent table reference is normal |
-|   | Parent table sharding type is normal |
-|   | Association between one parent table and multiple child tables is normal |
-|   | Relation between child table and parent table is normal |
-|   | Child table has no conflict with parent table name |
+| ^ | Parent table sharding type is normal |
+| ^ | Association between one parent table and multiple child tables is normal |
+| ^ | Relation between child table and parent table is normal |
+| ^ | Child table has no conflict with parent table name |
 | License management | Node number limitation checking passed |
-|   | LogicDB number limitation checking passed |
+| ^ | LogicDB number limitation checking passed |
 | Data source configuration | Data source configuration is correct |
-|   | Reload requirement: the replication latency between available master Data Source and original master Data Source cannot exceed 10s |
-|   | Reload requires that the replication status between available master data source and original master data source shall be normal |
+| ^ | Reload requirement: the replication latency between available master Data Source and original master Data Source cannot exceed 10s |
+| ^ | Reload requires that the replication status between available master data source and original master data source shall be normal |
 | ConfigDB status | ConfigDB connection is normal |
-|   | ConfigDB replication status is normal |
+| ^ | ConfigDB replication status is normal |
 | user privilege configuration | The data source connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,process,references,super,reload (only when the node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client,trigger,display view,create view,create routine,xa_recover_admin (only for data source instances of version 8.0 and above), alter routine,execute,event) |
-|   | The configDB connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload (only when the compute node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client) |
+| ^ | The configDB connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload (only when the compute node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client) |
 | Compute node configuration | Whether the currently configured compute node mode matches the real compute node mode. |
 
 Notes:
@@ -2269,15 +2279,15 @@ Config metadata refers to compute node configDB data and configuration files. Ho
 
 - Using the remote backup function requires configuring remote server related parameters.
 
-**Remote Replication Mode**: Supporting both SCP and RSYNC. If RSYNC replication mode is selected, it needs to install RSYNC tools on all compute node servers and remote servers in advance.
+**Remote Replication Mode:** Supporting both SCP and RSYNC. If RSYNC replication mode is selected, it needs to install RSYNC tools on all compute node servers and remote servers in advance.
 
-**Sign in without password**: If a remote server is connected through Sign in without password, all compute node servers are required to establish a password-free channel with the remote server. For the establishment of password-free channel, refer to the [Password-free Channel Description](installation-and-deployment.md#description-of-implementing-password-free-login) chapter of the [Installation and Deployment](installation-and-deployment.md) document.
+**Sign in without password:** If a remote server is connected through Sign in without password, all compute node servers are required to establish a password-free channel with the remote server. For the establishment of password-free channel, refer to the [Password-free Channel Description](installation-and-deployment.md#description-of-implementing-password-free-login) chapter of the [Installation and Deployment](installation-and-deployment.md) document.
 
-**Remote Hostname**: IP address of the remote server
+**Remote Hostname:** IP address of the remote server
 
 Remote Host User/Password: SSH information for remote server connection
 
-**Remote Storage Directory**: The directory where the backup metadata is stored in the remote server, which must be a directory that exists and in which remote connection accounts have write privileges
+**Remote Storage Directory:** The directory where the backup metadata is stored in the remote server, which must be a directory that exists and in which remote connection accounts have write privileges
 
 **Periodical Backup**
 
@@ -2397,7 +2407,7 @@ Click the \[Add Users] button to enter the Add User information page. There are 
 
 ![](assets/hotdb-management/image219.png)
 
-(1) **Basic Information**: including required items "Username", "Password", optional items "Host", "Max User Connections", "super privilege" and "Global privilege"
+(1) **Basic Information:** including required items "Username", "Password", optional items "Host", "Max User Connections", "super privilege" and "Global privilege"
 
 - "Username" and "Password" are the database account information used when logging into the compute node. "Username" shall not be repeated and in Chinese. "Password"shall meet the requirements.
 
@@ -2413,7 +2423,7 @@ Click the \[Add Users] button to enter the Add User information page. There are 
 
 ![](assets/hotdb-management/image220.png)
 
-(II) **LogicDB privilege**: Select the corresponding logicDB to set the corresponding privileges, or create a new logicDB and set the privilege.
+(II) **LogicDB privilege:** Select the corresponding logicDB to set the corresponding privileges, or create a new logicDB and set the privilege.
 
 - If global privilege is set in the basic information, the relevant privileges at the logicDB level can not be changed with the global privilege, and the cursor focus will prompt "Inherited from global privilege".
 
@@ -2425,9 +2435,9 @@ Click the \[Add Users] button to enter the Add User information page. There are 
 
 - LogicDB deletion only deletes the privilege record corresponding to the current logicDB, and does not affect the actual logicDB.
 
-**Note**: Changing the logicDB name may affect the logicDB privileges that some users have added and invalidate table privilege configuration. Therefore, the logicDB name change by logicDB list shall be used with caution.
+**Note:** Changing the logicDB name may affect the logicDB privileges that some users have added and invalidate table privilege configuration. Therefore, the logicDB name change by logicDB list shall be used with caution.
 
-(III) **Table privilege**: User table-level privileges are divided into two parts: table-level privilege allowed and table-level privilege denied. The privilege allowed is the privilege of users to perform table operations. The privilege denied is the privilege not given to users to perform table operations.
+(III) **Table privilege:** User table-level privileges are divided into two parts: table-level privilege allowed and table-level privilege denied. The privilege allowed is the privilege of users to perform table operations. The privilege denied is the privilege not given to users to perform table operations.
 
 - **Table privilege Allowed**
 
@@ -3371,9 +3381,9 @@ Associated field description: The table uses the field associated with the JOIN 
 
 - **Execution Condition:** The JOIN query statements with identical JOIN correlation table, current table associated key and JOIN correlation table associated key are displayed. Click \[Click to Expand] to view the execution details of all collapsed JOIN query statements.
 
-- **Total Query**: The total accumulated queries of the collapsed JOIN query statements.
+- **Total Query:** The total accumulated queries of the collapsed JOIN query statements.
 
-- **Orange corner mark**: This associated key or this group of associated keys has no index. Please combine the key value distribution, key type and length, query execution frequency, query filter condition, existing index in the table, etc. to determine whether to adjust the index.
+- **Orange corner mark:** This associated key or this group of associated keys has no index. Please combine the key value distribution, key type and length, query execution frequency, query filter condition, existing index in the table, etc. to determine whether to adjust the index.
 
 ![](assets/hotdb-management/image311.jpeg)
 
@@ -4715,9 +4725,9 @@ Password security management can provide users with password validity monitoring
 
 #### Database user password
 
-**Description of empty page**: If the record is displayed empty after entering the "Security -> Password Security Management -> Database User Password" page, it needs to check whether "Database User Password Expiration Alert" in "Setting -> Periodical Setting" is enabled. If the page is still empty after the switch is on, it needs to check whether the current database user password validity has reached the advance reminder time.
+**Description of empty page:** If the record is displayed empty after entering the "Security -> Password Security Management -> Database User Password" page, it needs to check whether "Database User Password Expiration Alert" in "Setting -> Periodical Setting" is enabled. If the page is still empty after the switch is on, it needs to check whether the current database user password validity has reached the advance reminder time.
 
-**Expiration alert mode**: When the "Database User Password Expiration Alert" is enabled, if the password validity has reached the advance reminder time, the pop-up window reminder prompts by default (if there is an expired user after logging in to HotDB Management, the pop-up window prompts); it can also notify database users of password expiration by email alert (it needs to be configured in "Event -> \[Email Alert Setting]").
+**Expiration alert mode:** When the "Database User Password Expiration Alert" is enabled, if the password validity has reached the advance reminder time, the pop-up window reminder prompts by default (if there is an expired user after logging in to HotDB Management, the pop-up window prompts); it can also notify database users of password expiration by email alert (it needs to be configured in "Event -> \[Email Alert Setting]").
 
 **(I) In-station alert description**
 
@@ -4743,9 +4753,9 @@ Modifying the password of the exclusive user **root** account of HotDB Managemen
 
 #### Data source password
 
-**Description of** **empty page**: Refer to the description of empty page of the "Database User Password" chapter.
+**Description of** **empty page:** Refer to the description of empty page of the "Database User Password" chapter.
 
-**Expiration alert mode**: Refer to the description of empty page of the "Database User Password" chapter.
+**Expiration alert mode:** Refer to the description of empty page of the "Database User Password" chapter.
 
 **(I) In-station alert description**
 
@@ -4797,7 +4807,7 @@ When a data source or a compute node ConfigDB is running in a "master-master" or
 
 ![](assets/hotdb-management/image423.png)
 
-**Step 1**: Select the detection range, which is LogicDB by default.
+**Step 1:** Select the detection range, which is LogicDB by default.
 
 LogicDB: detect data consistency between the master/slave data sources under the data node associated with the logicDB
 
@@ -4805,11 +4815,11 @@ Data source: specify the data consistency detection of data source under the dat
 
 ConfigDB: detects the data consistency of the master/slave ConfigDBs in the compute node ConfigDB (master-slave or master-master replication structure)
 
-**Step 2**: Select the logicDB or data node and data source to be detected.
+**Step 2:** Select the logicDB or data node and data source to be detected.
 
-**Step 3**: Configure data source concurrencies, i.e. the number of data sources can be detected at the same time, which is 8 by default and cannot exceed 32.
+**Step 3:** Configure data source concurrencies, i.e. the number of data sources can be detected at the same time, which is 8 by default and cannot exceed 32.
 
-**Step 4**: Click the \[Start a Detection] button to submit the detection task to the back end of compute node for execution. The progress of task execution can be viewed on the page.
+**Step 4:** Click the \[Start a Detection] button to submit the detection task to the back end of compute node for execution. The progress of task execution can be viewed on the page.
 
 **View Results**
 
@@ -4861,11 +4871,11 @@ It detects whether all global tables in the cluster have the same table structur
 
 ![](assets/hotdb-management/image427.png)
 
-**Step 1**: Select the logicDB and the global table under the logicDB to be detected.
+**Step 1:** Select the logicDB and the global table under the logicDB to be detected.
 
-**Step 2**: Set the number of detection concurrency, which is 8 by default when it is empty and cannot exceed 32.
+**Step 2:** Set the number of detection concurrency, which is 8 by default when it is empty and cannot exceed 32.
 
-**Step 3**: Click the \[Start Checking] button to submit the detection task to the back end of compute node for execution. The progress of the task being executed can be viewed on the page or the task execution can be canceled by clicking the \[Forced Cancellation].
+**Step 3:** Click the \[Start Checking] button to submit the detection task to the back end of compute node for execution. The progress of the task being executed can be viewed on the page or the task execution can be canceled by clicking the \[Forced Cancellation].
 
 #### View detection details
 
@@ -5061,7 +5071,7 @@ Calculate the score according to the number of times the query cannot find the n
 
 - If the compute node of master/slave mode cluster has a high-availability switch, calculation cannot be performed within 24 hours after the switch.
 
-**Note**: Non-sharding table or table without table structure are not scored;
+**Note:** Non-sharding table or table without table structure are not scored;
 
 #### Record export
 
@@ -5273,63 +5283,63 @@ History events record and display history information at the HotDB Management pl
 
 ##### Server time difference
 
-**Description**: HotDB Management periodically detects the time difference between the data source server and the compute node server. If there is a time difference, HotDB Management saves the detection result in the history event and prompts the user through the Notice in the upper right corner of the page.
+**Description:** HotDB Management periodically detects the time difference between the data source server and the compute node server. If there is a time difference, HotDB Management saves the detection result in the history event and prompts the user through the Notice in the upper right corner of the page.
 
-**Alert Level**: The level is WARNING when the difference time is 0.5s-3s, and the level is ERROR when the difference time is more than 3s.
+**Alert Level:** The level is WARNING when the difference time is 0.5s-3s, and the level is ERROR when the difference time is more than 3s.
 
 - 
 
 ##### Parameter perception
 
-**Description**: The parameters of data source MySQL affect the processing of some commands by the compute node. Therefore, HotDB Management periodically checks whether the parameters of each data source are consistent, and an alert is given if the parameters are inconsistent.
+**Description:** The parameters of data source MySQL affect the processing of some commands by the compute node. Therefore, HotDB Management periodically checks whether the parameters of each data source are consistent, and an alert is given if the parameters are inconsistent.
 
 - 
 
 ##### Data source is shared
 
-**Description**: HotDB Management will give an alert when the heartbeat detects that a data source is used by multiple compute nodes. The specific heartbeat detection mechanism is completed in the compute node, and the HotDB Management notifies the user of the detection result and displays the data source shared within 10 minutes.
+**Description:** HotDB Management will give an alert when the heartbeat detects that a data source is used by multiple compute nodes. The specific heartbeat detection mechanism is completed in the compute node, and the HotDB Management notifies the user of the detection result and displays the data source shared within 10 minutes.
 
 - 
 
 ##### Master/slave data consistency detection
 
-**Description**: It displays the detection result of whether the table structure, index and records on the master/slave data sources are consistent. The detection results are shown here.
+**Description:** It displays the detection result of whether the table structure, index and records on the master/slave data sources are consistent. The detection results are shown here.
 
 - 
 
 ##### Data source migration
 
-**Description**: When HotDB Management has performed a data source migration, a history event will be recorded to view whether the data source migration result is Successful, Failed, or Warning.
+**Description:** When HotDB Management has performed a data source migration, a history event will be recorded to view whether the data source migration result is Successful, Failed, or Warning.
 
 - 
 
 ##### Periodic modification detection of database user password
 
-**Description**: When the database user password expiration reminder is enabled and it is detected that the database user password is about to expire or has expired, HotDB Management gives an alert and detailed information can be viewed in History Events.
+**Description:** When the database user password expiration reminder is enabled and it is detected that the database user password is about to expire or has expired, HotDB Management gives an alert and detailed information can be viewed in History Events.
 
 - 
 
 ##### Periodic modification detection of data source user password
 
-**Description**: When the data source password expiration reminder is enabled and it is detected that the data source user password is about to expire or has expired, HotDB Management gives gives an alert and detailed information can be viewed in History Events.
+**Description:** When the data source password expiration reminder is enabled and it is detected that the data source user password is about to expire or has expired, HotDB Management gives gives an alert and detailed information can be viewed in History Events.
 
 - 
 
 ##### Table structure&index detection exception
 
-**Description**: When HotDB Management starts a "Table Structure＆Index Detection" task, if the detection result is abnormal, HotDB Management records the abnormal detection result as a history event.
+**Description:** When HotDB Management starts a "Table Structure＆Index Detection" task, if the detection result is abnormal, HotDB Management records the abnormal detection result as a history event.
 
 - 
 
 ##### Configuration modification backup failure
 
-**Description**: When a user modifies certain configDB information under the HotDB Management configuration menu, the backup file of related logicDB may be affected. History events will record the failure of related logicDB backup file due to configuration modification. The level of this alert type is WARNING.
+**Description:** When a user modifies certain configDB information under the HotDB Management configuration menu, the backup file of related logicDB may be affected. History events will record the failure of related logicDB backup file due to configuration modification. The level of this alert type is WARNING.
 
 - 
 
 ##### Online change of sharding plan
 
-**Description**: The history event records the task execution when the execution of "Online Change of Sharding Plan" task is completed. The level of this alert type is WARNING, ERROR and INFO.
+**Description:** The history event records the task execution when the execution of "Online Change of Sharding Plan" task is completed. The level of this alert type is WARNING, ERROR and INFO.
 
 - 
 
@@ -5487,7 +5497,7 @@ The following is a description of all compute node log types:
 
 HotDB Management provides the Slow Query Log Analysis of the execution time and times details of SQL statements for select, insert, update, delete, transaction open, submission and rollback. The internal algorithm is used to automatically analyze the SQL statement that needs to be optimized and remind the user with the To-Be-Optimized mark. O&M personnel can also query the page statistics to obtain the actual SQL execution efficiency and SQL statements to be optimized to help improve system performance.
 
-**Enable Log Record**: If the page is displayed as empty, it needs to check whether the SQL log statistics switch is enabled. Turn on the "Statistics on SQL implementation conducted or not" switch on the "Configuration -> Compute Node Parameter Configuration" page.
+**Enable Log Record:** If the page is displayed as empty, it needs to check whether the SQL log statistics switch is enabled. Turn on the "Statistics on SQL implementation conducted or not" switch on the "Configuration -> Compute Node Parameter Configuration" page.
 
 #### Slow query log record description
 
@@ -5495,9 +5505,9 @@ HotDB Management provides the Slow Query Log Analysis of the execution time and 
 
 (I) **Slow query log list field description**
 
-**LogicDB**: The name of the logicDB used for executing SQL.
+**LogicDB:** The name of the logicDB used for executing SQL.
 
-**SQL Statement Abstract**: HotDB adopts the summary method similar to mysqldumpslow to group similar SQL statements. Here is the SQL after the summary.
+**SQL Statement Abstract:** HotDB adopts the summary method similar to mysqldumpslow to group similar SQL statements. Here is the SQL after the summary.
 
 **Description of SQL Statement Abstract:**
 
@@ -5509,15 +5519,15 @@ HotDB Management provides the Slow Query Log Analysis of the execution time and 
 
 - The insert/replace values statement list, set statement list and update set statement list of inset set/insert onduplicate set do not determine whether the constant value is less than 10 or is a constant with special meaning such as "Y" or "N". It only needs to determine whether it is a value or string and display it with "S" and "N" (**valid in V2.5.3 and above**)
 
-**Compute Node Total Execution Times**: Total execution times of all SQL statements of the SQL template in the compute node.
+**Compute Node Total Execution Times:** Total execution times of all SQL statements of the SQL template in the compute node.
 
-**Compute Node Average Execution Time**: It is calculated through dividing the compute node total execution time by the compute node total execution times. Compute node execution time refers to the time from the compute node receiving the first SQL statement packet to the compute node sending the last result packet of SQL; compute node total execution time refers to the total execution time of all SQL statements of the SQL template.
+**Compute Node Average Execution Time:** It is calculated through dividing the compute node total execution time by the compute node total execution times. Compute node execution time refers to the time from the compute node receiving the first SQL statement packet to the compute node sending the last result packet of SQL; compute node total execution time refers to the total execution time of all SQL statements of the SQL template.
 
-**Data source Average Execution Time**: It is calculated through dividing the data source total execution time by the data source total execution times. Data source execution time refers to the time from the compute node sending the first SQL statement packet to the back-end to the compute node receiving the last result packet of SQL from the slowest data node. If a SQL is split into n SQL for execution, the execution time is calculated in accumulation, while the processing time of the compute node in the progress is not included. Data node total execution time refers to the total execution time of all SQL statements of the SQL template.
+**Data source Average Execution Time:** It is calculated through dividing the data source total execution time by the data source total execution times. Data source execution time refers to the time from the compute node sending the first SQL statement packet to the back-end to the compute node receiving the last result packet of SQL from the slowest data node. If a SQL is split into n SQL for execution, the execution time is calculated in accumulation, while the processing time of the compute node in the progress is not included. Data node total execution time refers to the total execution time of all SQL statements of the SQL template.
 
-**Data Source Average Execution Time Proportion**: the proportion of the data source average execution time in the compute node average execution time, with three decimal places reserved.
+**Data Source Average Execution Time Proportion:** the proportion of the data source average execution time in the compute node average execution time, with three decimal places reserved.
 
-**Time Consumption Distribution Details**: the execution time distribution of all SQL statements of the SQL template in the compute node or data source can be viewed.
+**Time Consumption Distribution Details:** the execution time distribution of all SQL statements of the SQL template in the compute node or data source can be viewed.
 
 **SQL Query Optimization Suggestions:** the optimization suggestions for SQL query are given based on the internal algorithm.
 
@@ -5605,13 +5615,13 @@ DR mode explanation: when the DR mode is enabled, please refer to the [Notificat
 
 **(I) Add notification strategy parameter**
 
-- **Recipient**: Multiple recipients are separated by an English semicolon.
+- **Recipient:** Multiple recipients are separated by an English semicolon.
 
-- **Cc**: Optional.
+- **Cc:** Optional.
 
-- **Monitoring Item**: The monitoring item in email reminder cannot be empty. If the parent item in Monitoring Item is checked, the child item is automatically checked.
+- **Monitoring Item:** The monitoring item in email reminder cannot be empty. If the parent item in Monitoring Item is checked, the child item is automatically checked.
 
-- **Monitoring item setting notes**:
+- **Monitoring item setting notes:**
 
 (1) To perform the email reminder of the corresponding item, it shall first ensure that the monitoring item has been opened in the Setting. Otherwise, the email cannot prompt the alert notification of the monitoring item (the monitoring item can be opened in the [Setting](#setting) menu, and the alert value of the corresponding item can be customized).
 
@@ -5627,53 +5637,53 @@ DR mode explanation: when the DR mode is enabled, please refer to the [Notificat
 
 ##### (I) Failure real-time monitoring
 
-**Description**: The failure status monitoring item sends an email reminder of the most recent exception detected within the notification frequency. If the failure is not repaired, the email will send repeated reminder until the failure has been repaired.
+**Description:** The failure status monitoring item sends an email reminder of the most recent exception detected within the notification frequency. If the failure is not repaired, the email will send repeated reminder until the failure has been repaired.
 
 ![](assets/hotdb-management/image462.png)
 
-**Email example**: The prompt information for compute node service failure or switching is as follows:
+**Email example:** The prompt information for compute node service failure or switching is as follows:
 
 ![](assets/hotdb-management/image463.jpeg)
 
-**Email example**: The prompt information for data source service failure or switching is as follows:
+**Email example:** The prompt information for data source service failure or switching is as follows:
 
 ![](assets/hotdb-management/image464.png)
 
 ##### (II) Compute node service resource monitoring
 
-**Description**: The compute node server resource monitoring item notice is about the most recent time when the threshold is exceeded during the notification time.
+**Description:** The compute node server resource monitoring item notice is about the most recent time when the threshold is exceeded during the notification time.
 
 ![](assets/hotdb-management/image465.png)
 
-**Threshold setting**: To monitor the corresponding item of the compute node service resources, it shall be ensured that the monitoring item has been opened in "Setting -> Monitoring Panel Setting" and the corresponding thresholds have been set, as shown below:
+**Threshold setting:** To monitor the corresponding item of the compute node service resources, it shall be ensured that the monitoring item has been opened in "Setting -> Monitoring Panel Setting" and the corresponding thresholds have been set, as shown below:
 
 ![](assets/hotdb-management/image466.png)
 
-**Note**: The above thresholds are the test environment settings and are for reference only.
+**Note:** The above thresholds are the test environment settings and are for reference only.
 
-**Email example**: The prompt information of real-time monitoring alert reminder of compute node server resources is as follows:
+**Email example:** The prompt information of real-time monitoring alert reminder of compute node server resources is as follows:
 
 ![](assets/hotdb-management/image467.png)
 
 ##### (III) Compute node service status
 
-**Description**: The compute node service status notice is about the most recent time when the threshold is exceeded during the notification time.
+**Description:** The compute node service status notice is about the most recent time when the threshold is exceeded during the notification time.
 
 ![](assets/hotdb-management/image468.png)
 
-**Threshold setting**: To monitor the corresponding item of the compute node service status, it shall be ensured that the monitoring item has been opened in "Setting -> Monitoring Panel Setting" and the corresponding thresholds have been set, as shown below:
+**Threshold setting:** To monitor the corresponding item of the compute node service status, it shall be ensured that the monitoring item has been opened in "Setting -> Monitoring Panel Setting" and the corresponding thresholds have been set, as shown below:
 
 ![](assets/hotdb-management/image469.png)
 
-**Note**: The above thresholds are the test environment settings and are for reference only.
+**Note:** The above thresholds are the test environment settings and are for reference only.
 
-**Email example**: The prompt information of compute node service status monitoring alert reminder is as follows:
+**Email example:** The prompt information of compute node service status monitoring alert reminder is as follows:
 
 ![](assets/hotdb-management/image470.png)
 
 ##### (IV) Other server resource monitoring
 
-**Description**: Other Server Resource status notification is about the most recent time when the threshold is exceeded during the notification time.
+**Description:** Other Server Resource status notification is about the most recent time when the threshold is exceeded during the notification time.
 
 ![](assets/hotdb-management/image471.png)
 
@@ -5681,25 +5691,25 @@ DR mode explanation: when the DR mode is enabled, please refer to the [Notificat
 
 ![](assets/hotdb-management/image472.png)
 
-**Note**: The above thresholds are the test environment settings and are for reference only..
+**Note:** The above thresholds are the test environment settings and are for reference only..
 
-**Email example**: The prompt information of other server resource monitoring exception reminder is as follows:
+**Email example:** The prompt information of other server resource monitoring exception reminder is as follows:
 
 ![](assets/hotdb-management/image473.png)
 
 ##### (V) Data source information monitoring
 
-**Description**: The data source information monitoring notification is bout the most recent exception during the notification time.
+**Description:** The data source information monitoring notification is bout the most recent exception during the notification time.
 
 ![](assets/hotdb-management/image474.png)
 
-**Threshold setting**: To monitor the corresponding item of the data source, it shall be ensured that the monitoring item has been opened in "Setting -> \[Topological Graph Alert Setting]" and the corresponding thresholds have been set, as shown below:
+**Threshold setting:** To monitor the corresponding item of the data source, it shall be ensured that the monitoring item has been opened in "Setting -> \[Topological Graph Alert Setting]" and the corresponding thresholds have been set, as shown below:
 
 ![](assets/hotdb-management/image475.png)
 
-**Note**: The above thresholds are the test environment settings and are for reference only.
+**Note:** The above thresholds are the test environment settings and are for reference only.
 
-**Email example**: The prompt information of data source related monitoring alert reminder is as follows:
+**Email example:** The prompt information of data source related monitoring alert reminder is as follows:
 
 ![](assets/hotdb-management/image476.png)
 
@@ -5721,23 +5731,23 @@ DR mode explanation: when the DR mode is enabled, please refer to the [Notificat
 
 ##### (VII) Periodical detection abnormal monitoring
 
-**Description**: The periodical detection abnormal monitoring notification is bout the most recent exception (except for backup/restore failure) during the notification time.
+**Description:** The periodical detection abnormal monitoring notification is bout the most recent exception (except for backup/restore failure) during the notification time.
 
 ![](assets/hotdb-management/image480.png)
 
-**Threshold setting**: To monitor the corresponding item of the data source, it shall be ensured that the monitoring item has been opened in "Setting -> [Periodical Detection Setting](#periodical-detection-setting)" and the corresponding thresholds have been set, as shown below:
+**Threshold setting:** To monitor the corresponding item of the data source, it shall be ensured that the monitoring item has been opened in "Setting -> [Periodical Detection Setting](#periodical-detection-setting)" and the corresponding thresholds have been set, as shown below:
 
 ![](assets/hotdb-management/image481.png)
 
-**Note**: The above thresholds are the test environment settings and are for reference only.
+**Note:** The above thresholds are the test environment settings and are for reference only.
 
 ![](assets/hotdb-management/image482.png)
 
-**Note**: Backup/restore failure is alerted only if it occurs within the notification time range. This failures only includes those caused by abnormal conditions after normal backup/restore.
+**Note:** Backup/restore failure is alerted only if it occurs within the notification time range. This failures only includes those caused by abnormal conditions after normal backup/restore.
 
 ##### (VIII) License authorization monitoring
 
-**Description**: When the compute node license authorization expires, if the detection switch is turned on and the reminder conditions are met, the notification email will be sent according to the set reminder frequency.
+**Description:** When the compute node license authorization expires, if the detection switch is turned on and the reminder conditions are met, the notification email will be sent according to the set reminder frequency.
 
 ![](assets/hotdb-management/image483.png)
 
@@ -5745,7 +5755,7 @@ DR mode explanation: when the DR mode is enabled, please refer to the [Notificat
 
 - For "License Authorization Expired" and "Abnormal License Authorization Detection", there are 3 methods of notification: page pop-up prompt; top information bar prompt (license status is displayed by default); and email reminder (receiving and sending information shall be set, otherwise no email prompt will be given).
 
-> **Note**: The pop-up prompt and top information bar prompt are not affected by the email settings.
+> **Note:** The pop-up prompt and top information bar prompt are not affected by the email settings.
 
 - License Authorization Expired means that the current license has a certain period of validity. After checking this item, the system will send email reminder of license authorization expiration according to the license authorization monitoring setting status in Notice Setting, the notification frequency in Periodical Detection Setting, and the setting of advance notification days.
 
@@ -5783,7 +5793,7 @@ Click the \[I got it] button to retract the pop-up window, and log in again or r
 
 Click the \[Not Prompt] button to retract the pop-up window, and the pop-up window will not be re-activated when logging in again or refreshing the page.
 
-**Email example**: The email prompt for "License authorization information cannot be updated" is as follows:
+**Email example:** The email prompt for "License authorization information cannot be updated" is as follows:
 
 ![](assets/hotdb-management/image490.png)
 
@@ -5867,7 +5877,7 @@ The audit object of audit log can be configured in "Setting -> Audit Log Setting
 
 #### Periodical detection setting
 
-**Description**: The periodical detection setting is the function provided by HotDB Management for switch and related parameter setting of background execution periodical detection thread.
+**Description:** The periodical detection setting is the function provided by HotDB Management for switch and related parameter setting of background execution periodical detection thread.
 
 ![](assets/hotdb-management/image494.png)
 
@@ -5879,13 +5889,13 @@ The audit object of audit log can be configured in "Setting -> Audit Log Setting
 
 #### Periodical plan
 
-**Description**: It provides the entry for setting the periodical plan window. The effect after setting is the same as the periodical plan entry in the original function. The following are available currently: Config data periodical backup plan, global table data periodical detection plan, master/slave data consistency periodical detection plan, table structure and table index periodical detection plan, data sharding route periodical detection plan, data unique constraint periodical detection plan. For the specific setting method, refer to the Periodical Plan description in "Detection -> Master/Slave Data Consistency Detection".
+**Description:** It provides the entry for setting the periodical plan window. The effect after setting is the same as the periodical plan entry in the original function. The following are available currently: Config data periodical backup plan, global table data periodical detection plan, master/slave data consistency periodical detection plan, table structure and table index periodical detection plan, data sharding route periodical detection plan, data unique constraint periodical detection plan. For the specific setting method, refer to the Periodical Plan description in "Detection -> Master/Slave Data Consistency Detection".
 
 ![](assets/hotdb-management/image495.png)
 
 ### Topological graph alert setting
 
-**Description**: It can set the threshold for alerts for monitoring items at each layer in "Monitoring -> Logic Topological Graph". When the threshold is exceeded, the topological graph displays the corresponding warning information. You can restore the default setting by clicking the Reset button.
+**Description:** It can set the threshold for alerts for monitoring items at each layer in "Monitoring -> Logic Topological Graph". When the threshold is exceeded, the topological graph displays the corresponding warning information. You can restore the default setting by clicking the Reset button.
 
 ![](assets/hotdb-management/image496.png)
 
@@ -5919,17 +5929,17 @@ In the email sender setting, enter the correct email sender parameter informatio
 
 **Email sender parameter description**
 
-- **Letter Name**: The sender's remark information
+- **Letter Name:** The sender's remark information
 
-- **Sender's E-mail Address**: Full e-mail address of the letter
+- **Sender's E-mail Address:** Full e-mail address of the letter
 
-- **SMTP Server Port**: SSL check box is used. If checked, the SMTP server port is 465 by default. If unchecked, the SMTP server port is 25 by default. The SMTP server port can also be edited.
+- **SMTP Server Port:** SSL check box is used. If checked, the SMTP server port is 465 by default. If unchecked, the SMTP server port is 25 by default. The SMTP server port can also be edited.
 
-- **SMTP Server Address**: The address of the email server, generally in the form of SMTP (465/25 port). Example of server address: smtp.exmail.qq.com
+- **SMTP Server Address:** The address of the email server, generally in the form of SMTP (465/25 port). Example of server address: smtp.exmail.qq.com
 
-- **SMTP Verification**: It is checked by default. If checked, -> SMTP username and SMTP password must be checked; if not checked, -> SMTP username and SMTP password input box shall be empty and gray and cannot be edited (when using the intranet mailbox server to set the email password-free form, SMTP verification can be unchecked)
+- **SMTP Verification:** It is checked by default. If checked, -> SMTP username and SMTP password must be checked; if not checked, -> SMTP username and SMTP password input box shall be empty and gray and cannot be edited (when using the intranet mailbox server to set the email password-free form, SMTP verification can be unchecked)
 
-- **SMTP Username**: It is generally the left part of the sender's email address@, and some mailbox manufacturers require to complete email address
+- **SMTP Username:** It is generally the left part of the sender's email address@, and some mailbox manufacturers require to complete email address
 
 - **Password:** SMTP username password used to verify SMTP server user availability
 
@@ -5941,7 +5951,7 @@ After inputting the correct parameters, click Test to verify whether the current
 
 ![](assets/hotdb-management/image502.png)
 
-- **Email**: Enter the inbox address (in case of intranet, the corresponding inbox address needs to be filled in), click the "Send a test email" button to check the email sender parameter settings and inbox parameters, the inbox parameters are filled in When the error occurs, the window prompts. "Test mail sending failed" is prompted when the email sender parameter is set incorrectly. "Email is sent successfully, please check it" when the email sender parameter is set correctly (the "Send a test email" button is gray and email cannot be sent again within 1 minute after successful sending). If the email sender parameter is set incorrectly, the pop-up window displays an error message, as shown below.
+- **Email:** Enter the inbox address (in case of intranet, the corresponding inbox address needs to be filled in), click the "Send a test email" button to check the email sender parameter settings and inbox parameters, the inbox parameters are filled in When the error occurs, the window prompts. "Test mail sending failed" is prompted when the email sender parameter is set incorrectly. "Email is sent successfully, please check it" when the email sender parameter is set correctly (the "Send a test email" button is gray and email cannot be sent again within 1 minute after successful sending). If the email sender parameter is set incorrectly, the pop-up window displays an error message, as shown below.
 
 ![](assets/hotdb-management/image503.png)
 
@@ -5971,7 +5981,7 @@ The operation function menu of audit log records and the audit log record retent
 
 There are many HotDB Server cluster components, and the operation mechanism is complicated. Troubleshooting is difficult when an exception or malfunction occurs. The data collection tool can be used to quickly collect the logs and configuration files required for exception analysis when the user has a cluster problem, thereby improving the impact of the problem-solving speed reduction on the business.
 
-**Function Entry**: Click "Tools -> Data Collection" in the management platform to enter the "Data Collection" page.
+**Function Entry:** Click "Tools -> Data Collection" in the management platform to enter the "Data Collection" page.
 
 ![](assets/hotdb-management/image507.png)
 
@@ -5979,15 +5989,15 @@ There are many HotDB Server cluster components, and the operation mechanism is c
 
 According to the collection scenario, data collection is divided into two types: cluster running status and performance test.
 
-- **Cluster Running Status**: Generally, it is used for data collection when faults, exceptions and running problems occur in the cluster running process. The data collected in this scenario includes the running logs, configuration files and server status of running components of the entire cluster.
+- **Cluster Running Status:** Generally, it is used for data collection when faults, exceptions and running problems occur in the cluster running process. The data collected in this scenario includes the running logs, configuration files and server status of running components of the entire cluster.
 
-- **Performance Test**: Generally, it is used when performance test results need to be analyzed or performance test bottlenecks need to be identified after the performance test of HotDB Server. The data collected in this scenario is mainly about compute nodes, data sources, configDB, and server related information.
+- **Performance Test:** Generally, it is used when performance test results need to be analyzed or performance test bottlenecks need to be identified after the performance test of HotDB Server. The data collected in this scenario is mainly about compute nodes, data sources, configDB, and server related information.
 
 **Collection list:**
 
 The collection list contain files that need to be packed in one-key collection of data. The collection lists of different cluster modes are also different. For example, when the compute node is in the master/slave mode, the collection list will add keepalived component related data; when the compute node is in the multi-node load balancing mode, the collection list will add LVS component related data, and the page display list shall prevail.
 
-**Note**: When collecting data in the "Cluster Running Status" scenario, if the configDB or data source instance version is MySQL8.0 or above, the mysqld_auto.cnf file will be collected according to the actual situation. This file is not displayed in the page list, and is only collected according to the actual situation after judging the version.
+**Note:** When collecting data in the "Cluster Running Status" scenario, if the configDB or data source instance version is MySQL8.0 or above, the mysqld_auto.cnf file will be collected according to the actual situation. This file is not displayed in the page list, and is only collected according to the actual situation after judging the version.
 
 **Function description:**
 
@@ -5997,9 +6007,9 @@ Data collection shall focus on the following steps and issues.
 
 2. Select whether to turn on the collection setting according to the actual situation.
 
-**The compute node server exports the entire JVM memory data**: This switch needs to be noted when collecting data in the "Cluster Running Status" scenario and is OFF on the page by default. If it is ON, it needs to consider the possible full GC problem. It is not recommended to turn on the switch in the production environment. If it is ON, the task will execute jmap -dump:live,format=b,file=dump.bin \[pid] 2>&1 when collecting compute node related data. Note: pid is the compute node process ID
+**The compute node server exports the entire JVM memory data:** This switch needs to be noted when collecting data in the "Cluster Running Status" scenario and is OFF on the page by default. If it is ON, it needs to consider the possible full GC problem. It is not recommended to turn on the switch in the production environment. If it is ON, the task will execute jmap -dump:live,format=b,file=dump.bin \[pid] 2>&1 when collecting compute node related data. Note: pid is the compute node process ID
 
-**Allow to use smartctl and MegaCli commands to collect server-related data**: This switch needs to be noted when collecting data in the "Performance Test" scenario and is ON on the page by default. If the corresponding components are not installed on the server when executing smartctl and MegaCli commands, the program will automatically install the corresponding commands through the yum mode.
+**Allow to use smartctl and MegaCli commands to collect server-related data:** This switch needs to be noted when collecting data in the "Performance Test" scenario and is ON on the page by default. If the corresponding components are not installed on the server when executing smartctl and MegaCli commands, the program will automatically install the corresponding commands through the yum mode.
 
 3. Click the One-key collection" button
 
@@ -6251,9 +6261,9 @@ The navigation is at the top of HotDB Management and is displayed globally. For 
 
 ![](assets/hotdb-management/image529.png)
 
-**Other forms of license exception notification**: In case of license information detection exception, in addition to the corresponding prompt in the top information bar, an exception prompt will pop up when the user logging in to the management platform or refreshing the home page. In addition, the user can also configure the email Notification Strategy to obtain an email reminder when the license information is abnormal. Relevant exception information is also recorded in the compute node log.
+**Other forms of license exception notification:** In case of license information detection exception, in addition to the corresponding prompt in the top information bar, an exception prompt will pop up when the user logging in to the management platform or refreshing the home page. In addition, the user can also configure the email Notification Strategy to obtain an email reminder when the license information is abnormal. Relevant exception information is also recorded in the compute node log.
 
-**Special note**: Currently, the abnormal license information will not cause the stop of compute node service, but it still needs to be noted. The problem can be solved by restarting the compute node service during the low peak period of service.
+**Special note:** Currently, the abnormal license information will not cause the stop of compute node service, but it still needs to be noted. The problem can be solved by restarting the compute node service during the low peak period of service.
 
 ### Compute node cluster switching
 
@@ -6265,7 +6275,7 @@ On the Compute Node Cluster Selection page, click the \[Back to Compute Node Clu
 
 #### Tutorial
 
-**Description**: In the navigation bar, click on the Help and select \[Tutorial] to enter the tutorial guide page.
+**Description:** In the navigation bar, click on the Help and select \[Tutorial] to enter the tutorial guide page.
 
 ![](assets/hotdb-management/image531.png)
 
@@ -6275,9 +6285,9 @@ On the Compute Node Cluster Selection page, click the \[Back to Compute Node Clu
 
 #### Reload instructions
 
-**Description**: When the compute node related configDB parameters are modified in HotDB Management, the modified parameters shall be synchronized to the memory of compute node through the [Reload](#reload) function to take effect immediately. Currently, only some parameters support Reload.
+**Description:** When the compute node related configDB parameters are modified in HotDB Management, the modified parameters shall be synchronized to the memory of compute node through the [Reload](#reload) function to take effect immediately. Currently, only some parameters support Reload.
 
-**Reload prompt description**: When there is a scenario triggering reload in the management platform, a To Be Loaded mark appears on the \[Reload] button. After the user clicks \[Reload] and "Synchronization Complete" is prompted, the To Be Loaded mark will disappear automatically. If the user does not click \[Reload], the mark still appears after logging out and logging in again. The mark is specifically in the cluster of compute nodes, and when different users enter the same compute node cluster, all To Be Loaded marks can be displayed, as shown below:
+**Reload prompt description:** When there is a scenario triggering reload in the management platform, a To Be Loaded mark appears on the \[Reload] button. After the user clicks \[Reload] and "Synchronization Complete" is prompted, the To Be Loaded mark will disappear automatically. If the user does not click \[Reload], the mark still appears after logging out and logging in again. The mark is specifically in the cluster of compute nodes, and when different users enter the same compute node cluster, all To Be Loaded marks can be displayed, as shown below:
 
 ![](assets/hotdb-management/image533.png)
 
@@ -6293,15 +6303,15 @@ Click the \[Confirm] button to forcibly cancel the current switch and perform sy
 
 ![](assets/hotdb-management/image535.png)
 
-**Step 1**: Click the \[Reload] button in the navigation bar. The pop-up box prompts: "Are you sure to synchronize the configuration data to SERVER port?"
+**Step 1:** Click the \[Reload] button in the navigation bar. The pop-up box prompts: "Are you sure to synchronize the configuration data to SERVER port?"
 
 ![](assets/hotdb-management/image536.png)
 
-**Step 2**: Click \[Confirm] to check whether there is an error in the contents of the "Configuration->Config Checking" module. "Synchronization succeeded" is prompted when all detection items are normal. "Configuration verification failed" is prompted when there is an error.
+**Step 2:** Click \[Confirm] to check whether there is an error in the contents of the "Configuration->Config Checking" module. "Synchronization succeeded" is prompted when all detection items are normal. "Configuration verification failed" is prompted when there is an error.
 
 ![](assets/hotdb-management/image537.png)
 
-**Step 3 (in case of an exception)**: After the config checking fails, click \[Config Checking] to jump to the "Configuration->Config Checking" module to view the specific error information.
+**Step 3 (in case of an exception):** After the config checking fails, click \[Config Checking] to jump to the "Configuration->Config Checking" module to view the specific error information.
 
 ![](assets/hotdb-management/image538.png)
 
@@ -6337,7 +6347,7 @@ The function operations that trigger Reload are as follows:
 
 ### Notice
 
-**Description**: This function is used to display various alert types of notification items and other notification items. When there is a notification item, the total number of notifications is displayed in the upper right corner. If there is no notification item, it is not displayed;
+**Description:** This function is used to display various alert types of notification items and other notification items. When there is a notification item, the total number of notifications is displayed in the upper right corner. If there is no notification item, it is not displayed;
 
 ![](assets/hotdb-management/image540.png)
 
@@ -6351,7 +6361,7 @@ The function operations that trigger Reload are as follows:
 
 ### Theme
 
-**Description**: In the navigation bar, click \[Theme] to change the theme style of the current HotDB Management.
+**Description:** In the navigation bar, click \[Theme] to change the theme style of the current HotDB Management.
 
 ![](assets/hotdb-management/image544.png)
 
@@ -6365,7 +6375,7 @@ The function operations that trigger Reload are as follows:
 
 #### Modify user information
 
-**Description**: In the Modify User Information page, only the personal password can be changed, and the username and compute node cluster privileges can be viewed. In the navigation bar, click \[Modify User Information] to enter the personal information page.
+**Description:** In the Modify User Information page, only the personal password can be changed, and the username and compute node cluster privileges can be viewed. In the navigation bar, click \[Modify User Information] to enter the personal information page.
 
 ![](assets/hotdb-management/image545.png)
 
@@ -6387,7 +6397,7 @@ The function operations that trigger Reload are as follows:
 
 ### Sign out
 
-**Description**: In the navigation bar, click \[Sign Out] to exit successfully. After signing out successfully, the program will jump to the login page.
+**Description:** In the navigation bar, click \[Sign Out] to exit successfully. After signing out successfully, the program will jump to the login page.
 
 ![](assets/hotdb-management/image550.png)
 

@@ -87,7 +87,7 @@ total 148
 
 #### Apply for official license
 
-Send HotDB ([service@hotdb.com](service@hotdb.com)) a license application email with the generated file `management-fingerprint-2020-12-28-10-17-08` as an attachment and obtain the official license with the assistance offered by counterparts.
+Send HotDB ([service@hotdb.com](mailto:service@hotdb.com)) a license application email with the generated file `management-fingerprint-2020-12-28-10-17-08` as an attachment and obtain the official license with the assistance offered by counterparts.
 
 #### Update official license
 
