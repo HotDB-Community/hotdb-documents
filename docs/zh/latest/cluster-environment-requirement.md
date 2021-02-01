@@ -103,11 +103,11 @@
 | ^ | ^ | wait_timeout | 该参数大于配置库中配置的存储节点house_keeping_sleep_time参数值 |
 | ^ | ^ | rpl_semi_sync_master_status | 若有该参数且配有从机则要求该参数为ON状态 |
 | ^ | ^ | rpl_semi_sync_slave_status | 若有该参数且配有主机则要求该参数为ON状态 |
-| ^ | ^ | sysdate-is-now | 5.5版本及以下MySQL实例使用：`select sysdate(),sleep(1),sysdate();`，5.5版本以上使用`select sysdate(6),sleep(0.001),sysdate(6);`测试<br>要求两列时间相同 |
+| ^ | ^ | sysdate-is-now | 5.5版本及以下MySQL实例使用：`select sysdate(),sleep(1),sysdate();`<br>5.5版本以上使用`select sysdate(6),sleep(0.001),sysdate(6);`测试<br>要求两列时间相同 |
 | ^ | MySQ磁盘空间 | MySQL实例数据目录绝对路径 | 所有MySQL实例：执行`show global variables like 'datadir';`命令返回结果为绝对路径 |
 | ^ | ^ | MySQL实例数据目录剩余磁盘空间 | 所有MySQL实例数据目录剩余磁盘空间大于200G |
 | ^ | MySQL高可用 | 高可用正确配置 | 同数据节点下的存储节点或一组配置库满足任一条件：<br>①使用了双1部署（sync_binlog=1且innodb_flush_log_at_trx_commit=1）且没有配置任何切换规则；<br>②有主从\双主\双主多从架构且开启了半同步，且复制运行正常且配置了切换规则；<br>③mgr架构且复制运行正常且online状态成员数大于2（不含2） |
-| ^ | ^ | 高可用过度配置 | 同数据节点下的存储节点或一组配置库不为以下任一一种情况：①使用双1部署（sync_binlog=1且innodb_flush_log_at_trx_commit=1）且配置了切换规则且开启了半同步复制；②使用MGR复制且使用双1部署（sync_binlog=1且innodb_flush_log_at_trx_commit=1） |
+| ^ | ^ | 高可用过度配置 | 同数据节点下的存储节点或一组配置库不为以下任一一种情况：<br>①使用双1部署（sync_binlog=1且innodb_flush_log_at_trx_commit=1）且配置了切换规则且开启了半同步复制；<br>②使用MGR复制且使用双1部署（sync_binlog=1且innodb_flush_log_at_trx_commit=1） |
 | ^ | MySQL用户权限 | 复制用户权限 | 具有复制关系的配置库或存储节点MySQL实例：复制用户权限不低于（replication slave,replication client） |
 | ^ | ^ | 配置库用户权限 | 配置库：连接用户权限不低于（select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload,lock tables,replication slave,replication client） |
 | ^ | ^ | 存储节点连接用户 | 存储节点：连接用户权限不低于（select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,alter routine,execute,event）<br>注意：MySQL8.0及以上版本的存储节点连接用户还需拥有xa_recover_admin权限 |

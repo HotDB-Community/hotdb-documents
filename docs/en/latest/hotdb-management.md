@@ -136,7 +136,7 @@ The users managed by this function are the users using the HotDB Management plat
 
 The user management table is the platform user record that has been added by the current HotDB Management. The fuzzy search of user name and user info and the search of user status can be performed by the search box in the upper left corner.
 
-**List field description**
+**Table field description**
 
 - Username: Username for login to the HotDB Management account
 - Role: User-assigned roles include manager users and general users
@@ -2577,7 +2577,7 @@ By default, the SSH connection status of cluster component server is "Not Connec
 
 HotDB Management fully displays the physical and logic components such as front-end application, logicDB, compute node, data node, data source in the cluster in a visual mode. The QPS and connections on the component is dynamically generated through the front-end application connection pool and the back-end database connection pool information. [Logic Topological Graph](#logic-topological-graph) enables users to quickly understand the running status of the whole cluster and help users achieve efficient operation and maintenance.
 
-**DR mode explanation:** when the DR mode is enabled, please refer to the [Logic topological graph](cross-computation.md#logic-topological-graph) chapter in the [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md) document for the relevant logical explanations of the logic topological graph.
+**DR mode explanation:** when the DR mode is enabled, please refer to the [Logic topological graph](cross-idc-disaster-recovery.md#logic-topological-graph) chapter in the [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md) document for the relevant logical explanations of the logic topological graph.
 
 #### Topological graph component description
 
@@ -5965,15 +5965,15 @@ After inputting the correct parameters, click Test to verify whether the current
 
 The monitoring notification frequency controls the email sending interval (also can be understood as the monitoring detection frequency) of monitoring items in the email alert, as shown below:
 
-![](assets/hotdb-management/image505.png)
+![](assets/hotdb-management/image527.png)
 
-Closing the corresponding monitoring item may affect the email alert in "Event->Notification Strategy" . When closing, check whether there is a notification strategy added and whether a sub-item of the monitoring item is checked.
+Closing the corresponding monitoring item may affect the email alert in "Event -> [Notification Strategy](#notifncation-strategy)" . When closing, check whether there is a notification strategy added and whether a sub-item of the monitoring item is checked.
 
 ### Audit logs setting
 
-The operation function menu of audit log records and the audit log record retention time can be set in "Event -> Audit Logs".
+The operation function menu of audit log records and the audit log record retention time can be set in "Event -> [Audit Logs](#audit-logs)".
 
-![](assets/hotdb-management/image506.png)
+![](assets/hotdb-management/image528.png)
 
 ## Tool
 
@@ -5981,23 +5981,24 @@ The operation function menu of audit log records and the audit log record retent
 
 There are many HotDB Server cluster components, and the operation mechanism is complicated. Troubleshooting is difficult when an exception or malfunction occurs. The data collection tool can be used to quickly collect the logs and configuration files required for exception analysis when the user has a cluster problem, thereby improving the impact of the problem-solving speed reduction on the business.
 
-**Function Entry:** Click "Tools -> Data Collection" in the management platform to enter the "Data Collection" page.
+**Function Entry:** Click "[Tools](#tool) -> [Data Collection](#data-collection)" in the management platform to enter the "[Data Collection](#data-collection)" page.
 
-![](assets/hotdb-management/image507.png)
+![](assets/hotdb-management/image529.png)
 
 **Collection scenario:**
 
 According to the collection scenario, data collection is divided into two types: cluster running status and performance test.
 
 - **Cluster Running Status:** Generally, it is used for data collection when faults, exceptions and running problems occur in the cluster running process. The data collected in this scenario includes the running logs, configuration files and server status of running components of the entire cluster.
-
 - **Performance Test:** Generally, it is used when performance test results need to be analyzed or performance test bottlenecks need to be identified after the performance test of HotDB Server. The data collected in this scenario is mainly about compute nodes, data sources, configDB, and server related information.
 
 **Collection list:**
 
 The collection list contain files that need to be packed in one-key collection of data. The collection lists of different cluster modes are also different. For example, when the compute node is in the master/slave mode, the collection list will add keepalived component related data; when the compute node is in the multi-node load balancing mode, the collection list will add LVS component related data, and the page display list shall prevail.
 
-**Note:** When collecting data in the "Cluster Running Status" scenario, if the configDB or data source instance version is MySQL8.0 or above, the mysqld_auto.cnf file will be collected according to the actual situation. This file is not displayed in the page list, and is only collected according to the actual situation after judging the version.
+> !Note
+> 
+> When collecting data in the "Cluster Running Status" scenario, if the configDB or data source instance version is MySQL8.0 or above, the `mysqld_auto.cnf` file will be collected according to the actual situation. This file is not displayed in the page list, and is only collected according to the actual situation after judging the version.
 
 **Function description:**
 
@@ -6007,21 +6008,19 @@ Data collection shall focus on the following steps and issues.
 
 2. Select whether to turn on the collection setting according to the actual situation.
 
-**The compute node server exports the entire JVM memory data:** This switch needs to be noted when collecting data in the "Cluster Running Status" scenario and is OFF on the page by default. If it is ON, it needs to consider the possible full GC problem. It is not recommended to turn on the switch in the production environment. If it is ON, the task will execute jmap -dump:live,format=b,file=dump.bin \[pid] 2>&1 when collecting compute node related data. Note: pid is the compute node process ID
-
-**Allow to use smartctl and MegaCli commands to collect server-related data:** This switch needs to be noted when collecting data in the "Performance Test" scenario and is ON on the page by default. If the corresponding components are not installed on the server when executing smartctl and MegaCli commands, the program will automatically install the corresponding commands through the yum mode.
+    **The compute node server exports the entire JVM memory data:** This switch needs to be noted when collecting data in the "Cluster Running Status" scenario and is OFF on the page by default. If it is ON, it needs to consider the possible full GC problem. It is not recommended to turn on the switch in the production environment. If it is ON, the task will execute `jmap -dump:live,format=b,file=dump.bin [pid] 2>&1` when collecting compute node related data. Note: pid is the compute node process ID
+    
+    **Allow to use smartctl and MegaCli commands to collect server-related data:** This switch needs to be noted when collecting data in the "Performance Test" scenario and is ON on the page by default. If the corresponding components are not installed on the server when executing smartctl and MegaCli commands, the program will automatically install the corresponding commands through the yum mode.
 
 3. Click the One-key collection" button
 
-**Precautions for starting a collection task:**
+    **Precautions for starting a collection task:**
+    
+    1. There shall be no other compute node groups performing data collection tasks on the current management platform, otherwise the collection task fails. "One-key Collection" can be performed normally only after the completion of other tasks.
+    2. The compute node cluster that starts a task needs to configuregg the available SSH data for all servers on the "[Configuration](#configuration) -> [Server](#serve)" menu page. Otherwise, some server data may not be collected due to SSH connection failure during the collection process.    
+    3. Ensure the normal running of compute node service as far as possible. If the task started detects that the compute node cannot run normally, the user needs to manually specify the location of the compute node log.
 
-1. There shall be no other compute node groups performing data collection tasks on the current management platform, otherwise the collection task fails. "One-key Collection" can be performed normally only after the completion of other tasks.
-
-2. The compute node cluster that starts a task needs to configure the available SSH data for all servers on the "Configuration -> Server" menu page. Otherwise, some server data may not be collected due to SSH connection failure during the collection process.
-
-3. Ensure the normal running of compute node service as far as possible. If the task started detects that the compute node cannot run normally, the user needs to manually specify the location of the compute node log.
-
-4. Pay attention to the task execution on the [Tool](#tool) -> "Data Collection" -> "Record" page.
+4. Pay attention to the task execution on the [Tool](#tool) -> "[Data Collection](#data-collection)" -> "Record" page.
 
 5. The collected tasks will automatically download the collected data to the management platform in the form of a compressed package. The user can also re-download the previously started task collection file later on the management platform record page.
 
@@ -6029,7 +6028,7 @@ Data collection shall focus on the following steps and issues.
 
 7. For the collected files stored on the management platform server, the management platform provides a 30-day retention period by default. For files that are not in the file window period, the program performs the deletion task every morning and in the retention period.
 
-![](assets/hotdb-management/image508.png)
+    ![](assets/hotdb-management/image530.png)
 
 8. When deleting the page record, the program will also delete the file content in the /opt directory of the management platform server.
 
@@ -6037,11 +6036,11 @@ Data collection shall focus on the following steps and issues.
 
 10. For the data cannot be collected or abnormal data collected, the "Task Collection Abnormal Report.txt" record is uniformly used in the compressed packet.
 
-![](assets/hotdb-management/image509.png)
+    ![](assets/hotdb-management/image531png)
 
 ### License management
 
-This function is the same as the "License Management" function in admin. For details, please refer to the relevant chapter.
+This function is the same as the "[License Management](#license-management)" function in admin. For details, please refer to the relevant chapter.
 
 ### Business data reporting
 
@@ -6049,187 +6048,176 @@ Business data reporting provides annual reports of the cluster for users, which 
 
 **Function entry:** enter the Business data reporting page through [Tool](#tool) -> [Business data reporting](#business-data-reporting) on the management platform, as shown in the following figure:
 
-![](assets/hotdb-management/image510.png)
+![](assets/hotdb-management/image532.png)
 
 Each time entering the page, the business data will be automatically obtained. "By month" is selected by default and the business data of the "current month" will be displayed. The statistical cycle can be selected as "By month", "By quarter", and "By year".
 
-By month: the selection range is from the month of the start time to the current month, format: "year + month".
+- By month: the selection range is from the month of the start time to the current month, format: "year + month".
+- By quarter: the selection range is from the quarter of the starting time to the current quarter, format: "year + quarter".
+- By year: the selection range is from the year of the start time to the current year, format: "year + year".
 
-By quarter: the selection range is from the quarter of the starting time to the current quarter, format: "year + quarter".
-
-By year: the selection range is from the year of the start time to the current year, format: "year + year".
-
-![](assets/hotdb-management/image511.png)
+![](assets/hotdb-management/image533.png)
 
 When you reselect the time range for business data statistics, the page will automatically refresh the matching data. Click Export to export the data report, format: PDF/WORD. The exported file name is: cluster name + business data report + time range (i.e. the selected time range)
 
-![](assets/hotdb-management/image512.png)
+![](assets/hotdb-management/image534.png)
 
-**（1） Cluster scale**
+#### Cluster scale
 
 The Cluster scale shows the number of servers and components in the cluster, which is displayed in combination of graphics and text. The text shows the specific statistics of the name and number of current components in the selected time range (displayed according to the selection drop-down box).
 
-**Server:** the number of servers in the current compute node cluster. The data is obtained through "configuration -> server".
-
-**Compute node:** the total number of compute nodes in the current compute node cluster.
-
-**Data node:** the total number of data nodes in the current compute node cluster.
-
-**Data source:** the total number of data sources in the current compute node cluster.
-
-**Backup program:** number of backup programs on the data source server which are in the startup state.
-
-**ConfigDB:** number of ConfigDBs of the current compute node.
-
-**LVS:** number of LVS servers in cluster mode
+- **Server:** the number of servers in the current compute node cluster. The data is obtained through "configuration -> server".
+- **Compute node:** the total number of compute nodes in the current compute node cluster.
+- **Data node:** the total number of data nodes in the current compute node cluster.
+- **Data source:** the total number of data sources in the current compute node cluster.
+- **Backup program:** number of backup programs on the data source server which are in the startup state.
+- **ConfigDB:** number of ConfigDBs of the current compute node.
+- **LVS:** number of LVS servers in cluster mode
 
 The data of cluster scale is updated regularly in the early hours of each day, as shown in the following figure:
 
-![](assets/hotdb-management/image513.png)
+![](assets/hotdb-management/image535.png)
 
-Note: when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-".
+> !Note
+> 
+> When the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-".
 
-**（2） Cluster data**
+#### Cluster data
 
 Cluster data consists of four parts: cluster data volume, peak curve of single day data addition, data capacity planning prediction and data operation. Each part is displayed in combination of graphics and text.
 
-- Cluster data volume
+**(1) Cluster data volume**
 
-**Total data volume:** the total data volume of tables of all data nodes in the current compute node cluster.
-
-**Max LogicDB:** the LogicDB with the largest amount of data in the current compute node cluster.
-
-**Max data node:** the data node with the largest amount of data in the current compute node cluster.
-
-**Max table:** the table with the largest amount of data in the current compute node cluster.
+- **Total data volume:** the total data volume of tables of all data nodes in the current compute node cluster.
+- **Max LogicDB:** the LogicDB with the largest amount of data in the current compute node cluster.
+- **Max data node:** the data node with the largest amount of data in the current compute node cluster.
+- **Max table:** the table with the largest amount of data in the current compute node cluster.
 
 The data is updated regularly at zero every day for statistics and display, including the total data volume of the cluster, max LogicDB and its data volume, max data node and its data volume, max table and its data volume, as shown in the following figure:
 
-![](assets/hotdb-management/image514.png)
+![](assets/hotdb-management/image536.png)
 
-Note: when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-".
+>!Note
+> 
+> when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-".
 
-- Peak curve of single day data addition
+**(2) Peak curve of single day data addition**
 
 The data is regularly updated at 0:00 every day, and the date with the largest peak amount of single day data addition within the statistical range, the corresponding data amount and the data of the day before and after will be displayed. If there is no corresponding data in the day before and after, the closest date and data will be selected for display, as shown in the following figure:
 
-![](assets/hotdb-management/image515.png)
+![](assets/hotdb-management/image537.png)
 
 If there are multiple time points with the same peak value in the selected time range, the data closest to the selecting time will be displayed.
 
-Note: when the system is in initial status and has not carried out data statistics, the page displays no data temporarily.
+> !Note
+> 
+> when the system is in initial status and has not carried out data statistics, the page displays no data temporarily.
 
-- Data capacity planning prediction
+**(3) Data capacity planning prediction**
 
 The data capacity planning prediction includes growth prediction of the cluster data volume in the next year, growth prediction of the compute node ConfigDB in the next year and growth prediction of management platform ConfigDB in the next year. The default time range displayed is one year from the current time, regardless of the specific time range selected by the user.
 
 The data is regularly updated at 0:00 every day. The cluster data volume, compute node ConfigDB data volume and management platform ConfigDB data volume are counted respectively. If the statistical data in the current increment prediction is less than 21 days, "The data recorded currently is less than 21 days, so the increment prediction is temporarily unavailable." will be prompted, as shown in the following figure:
 
-![](assets/hotdb-management/image516.png)
+![](assets/hotdb-management/image538.png)
 
 Click the zoom in icon at the upper right of the graph to view the curve on a full screen. When the cursor hovers over the graph, the current corresponding date and its historical data capacity statistics and capacity trend prediction will be displayed. Click the zoom in/out button again to go back to the business data reporting page, as shown below:
 
-![](assets/hotdb-management/image517.png)
+![](assets/hotdb-management/image539.png)
 
-Note: when the system is in initial status and has not carried out data statistics, the page displays no data temporarily.
+> !Note
+> 
+> When the system is in initial status and has not carried out data statistics, the page displays no data temporarily.
 
 - Data operation
 
 Data operations include the number of effective data backups, the number of successful data restore, the number of general DDL statements successfully executed, and the number of online DDL statements successfully executed. The data will be acquired and displayed in real time.
 
-**Data backup:**
-
-Management -> Data backup. The completed backup tasks will be counted in real time.
-
-**Data restore:**
-
-Management -> Data restore, the data restored successfully will be counted in real time.
-
-**General DDL:**
-
-Management -> Table structure modification -> General DDL. Execute general DDL, every DDL successfully executed will be counted in real time.
-
-**Online DDL:**
-
-Management -> Table structure modification -> Online DDL, execute online DDL, every DDL successfully executed will be counted in real time.
+- **Data backup:**Management -> Data backup. The completed backup tasks will be counted in real time.
+- **Data restore:**Management -> Data restore, the data restored successfully will be counted in real time.
+- **General DDL:**Management -> Table structure modification -> General DDL. Execute general DDL, every DDL successfully executed will be counted in real time.
+- **Online DDL:**Management -> Table structure modification -> Online DDL, execute online DDL, every DDL successfully executed will be counted in real time.
 
 At present, the execution times of different operations will be counted by month. When the new month comes, the operation times will be accumulated again from zero, as shown in the following figure:
 
-![](assets/hotdb-management/image518.png)
+![](assets/hotdb-management/image540.png)
 
-Note: when the system is in initial status and has not carried out data statistics, the page displays no data temporarily.
+> !Note
+> 
+> When the system is in initial status and has not carried out data statistics, the page displays no data temporarily.
 
-**（3） Cluster performance**
+####  Cluster performance
 
 The data displayed in the cluster performance is the peak value and corresponding time of the compute node within the selected time range, including two parts of data: the QPS, TPS and the number of connections of the compute node, and the QPS and the number of connections of the data source. The data will be updated regularly at 0:00 every day, as shown in the following figure:
 
-![](assets/hotdb-management/image519.png)
+![](assets/hotdb-management/image541.png)
 
-Note: when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-".
+> !Note
+> 
+> when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-".
 
-**（4） Cluster support**
+#### Cluster support
 
 Cluster support calculates the high available data of the current cluster's compute nodes, data nodes and ConfigDB respectively, including cumulative failure time, cumulative failure times and reliability. The data is updated regularly at 0:00 every day and displayed on the management platform in combination of graphics and text.
 
-- Cumulative failure time
+**(1) Cumulative failure time**
 
-**Cumulative failure time of compute node:** the cumulative time of all high availability switch of the cluster's compute nodes within the selected time range, unit: seconds.
+- **Cumulative failure time of compute node:** the cumulative time of all high availability switch of the cluster's compute nodes within the selected time range, unit: seconds.
+- **Cumulative failure time of data node:** the cumulative time of all high availability switch of the cluster's all data nodes within the selected time range, unit: seconds.
+- **Cumulative failure time of ConfigDB:** the cumulative time of all high availability switch of the cluster's all ConfigDBs within the selected time range, unit: seconds.
 
-**Cumulative failure time of data node:** the cumulative time of all high availability switch of the cluster's all data nodes within the selected time range, unit: seconds.
+**(2) Total switching times**
 
-**Cumulative failure time of ConfigDB:** the cumulative time of all high availability switch of the cluster's all ConfigDBs within the selected time range, unit: seconds.
+- **Cumulative switching times of compute node:** the total number of high availability switch of the cluster's all compute nodes in the selected time range.
+- **Cumulative switching times of data node:** the total number of high availability switch of the cluster's all data nodes in the filtered time range.
+- **Cumulative switching times of ConfigDB:** the total number of high availability switch of the cluster's all ConfigDBs within the filtering time range.
 
-- Total switching times
-
-**Cumulative switching times of compute node:** the total number of high availability switch of the cluster's all compute nodes in the selected time range.
-
-**Cumulative switching times of data node:** the total number of high availability switch of the cluster's all data nodes in the filtered time range.
-
-**Cumulative switching times of ConfigDB:** the total number of high availability switch of the cluster's all ConfigDBs within the filtering time range.
-
-- Reliability
+**(3) Reliability**
 
 **Reliability** = (1 - (cumulative failure time in the selected range/total time of the selected range)) * 100%. If the cumulative failure time is 0, the reliability will be 100% without calculation.
 
-![](assets/hotdb-management/image520.png)
+![](assets/hotdb-management/image542.png)
 
-Note: when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-". When the compute node, data node or ConfigDB is a single node, "a single node with no statistics for now" will be displayed.
+> !Note
+> 
+> when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-". When the compute node, data node or ConfigDB is a single node, "a single node with no statistics for now" will be displayed.
 
-![](assets/hotdb-management/image521.png)
+![](assets/hotdb-management/image543.png)
 
-**（5） Cluster operation and maintenance**
+#### Cluster operation and maintenance
 
 Cluster operation and maintenance includes data detection, deployment upgrade, alert optimization and safety protection.
 
-- Data detection
+**(1) Data detection**
 
 It includes five types of detection, including master/slave data consistency detection, global table data detection, table structure&index detection, route correctness verification, and data unique constraint detection, which are displayed in combination of graphics and text.
 
-1) Proportion of exception tables = (number of exception tables / total number of detected tables) * 100%
+1. Proportion of exception tables = (number of exception tables / total number of detected tables) * 100%
+2. In the detection submenu, master/slave data consistency detection, global table data detection, table structure&index detection, route correctness verification, and data unique constraint detection can be performed. Real-time statistics of detection data will be displayed, as shown in the following figure:
 
-2) In the detection submenu, master/slave data consistency detection, global table data detection, table structure&index detection, route correctness verification, and data unique constraint detection can be performed. Real-time statistics of detection data will be displayed, as shown in the following figure:
+![](assets/hotdb-management/image544.png)
 
-![](assets/hotdb-management/image522.png)
-
-- Deployment upgrade
+**(2) Deployment upgrade**
 
 Display the number of cluster upgrades and license updates that have been successfully completed within the selected time range. When there are upgrade and update operations, the data will be counted and displayed in real time, as shown in the following figure:
 
-![](assets/hotdb-management/image523.png)
+![](assets/hotdb-management/image545.png)
 
-- Alert optimization
+**(3) Alert optimization**
 
 It shows the number of alert emails successfully sent, the number of optimized slow queries and the number of tables with sharding plan modification in the selected time range. Real time statistics will be displayed as follows:
 
-![](assets/hotdb-management/image524.png)
+![](assets/hotdb-management/image546.png)
 
-- safety protection
+**(4) safety protection**
 
 It shows the number of intercepted IP, the number of intercepted SQL and the number of intercepted wrong password login (wrong password of login server / management end) within the selected time range, as shown in the following figure:
 
-![](assets/hotdb-management/image525.png)
+![](assets/hotdb-management/image547.png)
 
-Note: when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-" or no data display temporarily.
+> !Note
+> 
+> when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-" or no data display temporarily.
 
 ### Intelligent inspection
 
@@ -6241,175 +6229,170 @@ For details, you can refer to the [Intelligent Inspection](intelligent-inspectio
 
 The navigation is at the top of HotDB Management and is displayed globally. For the above operations, menu privilege control is currently not supported.
 
-![](assets/hotdb-management/image526.png)
+![](assets/hotdb-management/image548.png)
 
 ### Version
 
-![](assets/hotdb-management/image527.png)
+![](assets/hotdb-management/image549.png)
 
-- It displays the current compute node cluster: cluster name, compute node version number, license authorization information (license type: beta or permanent version, remaining time), limit of number of nodes, limit of number of ConfigDBs.
+It displays the current compute node cluster: cluster name, compute node version number, license authorization information (license type: beta or permanent version, remaining time), limit of number of nodes, limit of number of ConfigDBs.
 
-- Click on "License Management" to hyperlink to the "License Management" function.
+Click on "License Management" to hyperlink to the "[License Management](#license-management)" function.
 
 **License information description:**
 
-- When the compute node cannot be connected, there will be a red dot mark. When clicking "Version No.", it will prompt "Unable to connect to the compute node", as shown below:
+When the compute node cannot be connected, there will be a red dot mark. When clicking "Version No.", it will prompt "Unable to connect to the compute node", as shown below:
 
-![](assets/hotdb-management/image528.png)
+![](assets/hotdb-management/image550.png)
 
-- For license status detection, when the license information is abnormal, the information bar displays the corresponding exception reminder information (orange dot reminder), as shown below:
+**License status detection:**
+ 
+When the license information is abnormal, the information bar displays the corresponding exception reminder information (orange dot reminder), as shown below:
 
-![](assets/hotdb-management/image529.png)
+![](assets/hotdb-management/image551.png)
 
-**Other forms of license exception notification:** In case of license information detection exception, in addition to the corresponding prompt in the top information bar, an exception prompt will pop up when the user logging in to the management platform or refreshing the home page. In addition, the user can also configure the email Notification Strategy to obtain an email reminder when the license information is abnormal. Relevant exception information is also recorded in the compute node log.
+**Other forms of license exception notification:**
 
-**Special note:** Currently, the abnormal license information will not cause the stop of compute node service, but it still needs to be noted. The problem can be solved by restarting the compute node service during the low peak period of service.
+In case of license information detection exception, in addition to the corresponding prompt in the top information bar, an exception prompt will pop up when the user logging in to the management platform or refreshing the home page. In addition, the user can also configure the email [Notification Strategy](#notification-strategy) to obtain an email reminder when the license information is abnormal. Relevant exception information is also recorded in the compute node log.
+
+> !Important
+> 
+> Currently, the abnormal license information will not cause the stop of compute node service, but it still needs to be noted. The problem can be solved by restarting the compute node service during the low peak period of service.
 
 ### Compute node cluster switching
 
 On the Compute Node Cluster Selection page, click the \[Back to Compute Node Cluster Selection] button to enter the Compute Node Cluster Selection page.
 
-![](assets/hotdb-management/image530.jpeg)
+![](assets/hotdb-management/image552.jpeg)
 
 ### Help
 
 #### Tutorial
 
-**Description:** In the navigation bar, click on the Help and select \[Tutorial] to enter the tutorial guide page.
+In the navigation bar, click on the Help and select \[Tutorial] to enter the tutorial guide page.
 
-![](assets/hotdb-management/image531.png)
-
-![](assets/hotdb-management/image532.png)
+![](assets/hotdb-management/image553.png)
 
 ### Reload
 
 #### Reload instructions
 
-**Description:** When the compute node related configDB parameters are modified in HotDB Management, the modified parameters shall be synchronized to the memory of compute node through the [Reload](#reload) function to take effect immediately. Currently, only some parameters support Reload.
+When the compute node related configDB parameters are modified in HotDB Management, the modified parameters shall be synchronized to the memory of compute node through the [Reload](#reload) function to take effect immediately. Currently, only some parameters support Reload.
 
-**Reload prompt description:** When there is a scenario triggering reload in the management platform, a To Be Loaded mark appears on the \[Reload] button. After the user clicks \[Reload] and "Synchronization Complete" is prompted, the To Be Loaded mark will disappear automatically. If the user does not click \[Reload], the mark still appears after logging out and logging in again. The mark is specifically in the cluster of compute nodes, and when different users enter the same compute node cluster, all To Be Loaded marks can be displayed, as shown below:
+**Reload prompt description:** 
 
-![](assets/hotdb-management/image533.png)
+When there is a scenario triggering reload in the management platform, a To Be Loaded mark appears on the \[Reload] button. After the user clicks \[Reload] and "Synchronization Complete" is prompted, the To Be Loaded mark will disappear automatically. If the user does not click \[Reload], the mark still appears after logging out and logging in again. The mark is specifically in the cluster of compute nodes, and when different users enter the same compute node cluster, all To Be Loaded marks can be displayed, as shown below:
+
+![](assets/hotdb-management/image559.png)
 
 **Reload special scenario description**
 
 If master/slave configDB and master/slave data source switch occur during Reload, the page will prompt the user and provide two options: \[Forced Switch Stop] and \[Cancel Reload]. The details are as follows:
 
-![](assets/hotdb-management/image534.jpeg)
+![](assets/hotdb-management/image560.jpeg)
 
 Click the \[Confirm] button to forcibly cancel the current switch and perform synchronous loading, and then successful synchronous loading is prompted. Click the \[Cancel] button to cancel the synchronous loading operation.
 
 #### Function exercise
 
-![](assets/hotdb-management/image535.png)
+![](assets/hotdb-management/image561.png)
 
 **Step 1:** Click the \[Reload] button in the navigation bar. The pop-up box prompts: "Are you sure to synchronize the configuration data to SERVER port?"
 
-![](assets/hotdb-management/image536.png)
+![](assets/hotdb-management/image562.png)
 
-**Step 2:** Click \[Confirm] to check whether there is an error in the contents of the "Configuration->Config Checking" module. "Synchronization succeeded" is prompted when all detection items are normal. "Configuration verification failed" is prompted when there is an error.
+**Step 2:** Click \[Confirm] to check whether there is an error in the contents of the "Configuration->[Config Checking](#config-checking)" module. "Synchronization succeeded" is prompted when all detection items are normal. "Configuration verification failed" is prompted when there is an error.
 
-![](assets/hotdb-management/image537.png)
+![](assets/hotdb-management/image563.png)
 
-**Step 3 (in case of an exception):** After the config checking fails, click \[Config Checking] to jump to the "Configuration->Config Checking" module to view the specific error information.
+**Step 3 (in case of an exception):** After the config checking fails, click \[Config Checking] to jump to the "Configuration->[Config Checking](#config-checking)" module to view the specific error information.
 
-![](assets/hotdb-management/image538.png)
+![](assets/hotdb-management/image564.png)
 
 #### Reload triggering scenario
 
-![](assets/hotdb-management/image539.png)
+![](assets/hotdb-management/image565.png)
 
 The function operations that trigger Reload are as follows:
 
 - Node management: add, modify and delete
-
 - Switch: add, modify and delete
-
 - Data source group: add, modify and delete (the data source group of operation shall have associated data source, otherwise it will not be triggered)
-
 - LogicDB: add, modify, delete and delete in batches
-
 - Table configuration: quickly add table configuration, add new table, modify table, delete and delete in batches (including addition and deletion of child table)
-
 - Sharding function: add, modify, delete and replicate
-
 - Compute node parameter configuration: modify parameters
-
 - Database user management: add, modify, delete and delete in batches
-
 - White list: add, modify, switch, delete and add white list
-
 - SQL Firewall: enable, enable in batches, disable and disable in batches
-
 - Database user password: modify the password successfully
-
 - Data source password: change, change in batches and setup with one click (set selection and set all)
 
 ### Notice
 
-**Description:** This function is used to display various alert types of notification items and other notification items. When there is a notification item, the total number of notifications is displayed in the upper right corner. If there is no notification item, it is not displayed;
+This function is used to display various alert types of notification items and other notification items. When there is a notification item, the total number of notifications is displayed in the upper right corner. If there is no notification item, it is not displayed;
 
-![](assets/hotdb-management/image540.png)
+![](assets/hotdb-management/image566.png)
 
-- The content of notice is consistent with the content of "Event" on the [Home](#home).
+The content of notice is consistent with the content of [Event](#event) on the [Home](#home).
 
-- Click on the specific event in the Notice to jump to "Event -> History Event" or specific function to view the details.
+Click on the specific event in the Notice to jump to "Event -> History Event" or specific function to view the details.
 
-- The Notice content is divided into three levels: ERROR, WARNING and INFO, displayed with the icons of ![](assets/hotdb-management/image541.png), ![](assets/hotdb-management/image542.png) and ![](assets/hotdb-management/image543.png) respectively.
+The Notice content is divided into three levels: ERROR, WARNING and INFO, displayed with the icons of ![](assets/hotdb-management/image567.png), ![](assets/hotdb-management/image568.png) and ![](assets/hotdb-management/image569.png) respectively.
 
-- Click the \[Setting] button in the Notice to set whether to prompt the event.
+Click the \[Setting] button in the Notice to set whether to prompt the event.
 
 ### Theme
 
-**Description:** In the navigation bar, click \[Theme] to change the theme style of the current HotDB Management.
+In the navigation bar, click \[Theme] to change the theme style of the current HotDB Management.
 
-![](assets/hotdb-management/image544.png)
+![](assets/hotdb-management/image570.png)
 
 ### User information
 
 #### Switch user view
 
-- If the HotDB Management login user is "Manager User", it can be switched to the manager user view page in the upper right corner in the general user view.
-
-- If the HotDB Management login user is "Manager User", it can be switched to the general user view page in the upper right corner in the manager user.
+If the HotDB Management login user is "Manager User", it can be switched to the manager user view page in the upper right corner in the general user view. it can also be switched to the general user view page in the upper right corner in the manager user.
 
 #### Modify user information
 
-**Description:** In the Modify User Information page, only the personal password can be changed, and the username and compute node cluster privileges can be viewed. In the navigation bar, click \[Modify User Information] to enter the personal information page.
+In the Modify User Information page, only the personal password can be changed, and the username and compute node cluster privileges can be viewed. In the navigation bar, click \[Modify User Information] to enter the personal information page.
 
-![](assets/hotdb-management/image545.png)
+![](assets/hotdb-management/image571.png)
 
-- On the Personal Information page, enter the current password, enter the new password and confirm the new password. Click \[Save] to successfully change the user password.
+On the Personal Information page, enter the current password, enter the new password and confirm the new password. Click \[Save] to successfully change the user password.
 
-- The new password shall not be the same as the current password.
+The new password shall not be the same as the current password.
 
-- If the password is forgotten, please contact super administrator to reset the password.
+If the password is forgotten, please contact super administrator to reset the password.
 
-![](assets/hotdb-management/image546.png)
+![](assets/hotdb-management/image572.png)
 
-- High-risk operation qualification switch requires password checking by users when it is turned on or off.
+High-risk operation qualification switch requires password checking by users when it is turned on or off.
 
-![](assets/hotdb-management/image547.png)
+![](assets/hotdb-management/image573.png)
 
-- When the high-risk operation switch is turned on, the page needs to confirm the advanced password if the user performs dangerous operations, such as data source password change, normal DDL and online DDL execution of SQL containing dangerous operation instructions such as "drop" and "truncate".
+When the high-risk operation switch is turned on, the page needs to confirm the advanced password if the user performs dangerous operations, such as data source password change, normal DDL and online DDL execution of SQL containing dangerous operation instructions such as "drop" and "truncate".
 
-![](assets/hotdb-management/image548.png)![](assets/hotdb-management/image549.png)
+![](assets/hotdb-management/image574.png)
+
+![](assets/hotdb-management/image575.png)
 
 ### Sign out
 
-**Description:** In the navigation bar, click \[Sign Out] to exit successfully. After signing out successfully, the program will jump to the login page.
+In the navigation bar, click \[Sign Out] to exit successfully. After signing out successfully, the program will jump to the login page.
 
-![](assets/hotdb-management/image550.png)
+![](assets/hotdb-management/image576.png)
 
 ### Language
 
-The management platform supports both Chinese and English; the default language is Chinese. If you want to switch to English, you can change the language parameters in application.properties under the installation conf/ directory on the management platform.
+The management platform supports both Chinese and English; the default language is Chinese. If you want to switch to English, you can change the language parameters in application.properties under the installation `conf/directory` on the management platform.
 
-![](assets/hotdb-management/image551.png)
+![](assets/hotdb-management/image577.png)
 
-- Currently, the language parameter only supports Chinese and English.
+Currently, the language parameter only supports Chinese and English.
 
-- You need to restart the management platform service to take effect after changing the parameters.
+You need to restart the management platform service to take effect after changing the parameters.
 
 ### HTTPS secure access
 
@@ -6417,73 +6400,58 @@ The management platform supports encrypted access using HTTPS.
 
 #### Start with default configuration
 
-Under /conf/application.properties of the management platform installation directory, HTTPS configuration is annotated by default. If you want to enable it, delete the annotation and restart the management platform.
+Under `conf/application.properties` of the management platform installation directory, HTTPS configuration is commented by default. If you want to enable it, delete the annotation and restart the management platform.
 
-![](assets/hotdb-management/image552.png)
+![](assets/hotdb-management/image578.png)
 
-![](assets/hotdb-management/image553.png)
+![](assets/hotdb-management/image579.png)
 
-![](assets/hotdb-management/image554.png)
+![](assets/hotdb-management/image580.png)
 
 The meaning of HTTPS parameter is as follows:
 
-https.port：HTTPS access port, 4322 by default.
-
-https.keystore-password: Password of the generated .jks file， zjsWg6977DwK6HBD by default.
-
-https.keystore-file：Name of the generated .jks file, hotdb.jks by default. The file is located under the directory /conf by default.
+- `https.port` - HTTPS access port, `4322` by default.
+- `https.keystore-password` - Password of the generated .jks file， `zjsWg6977DwK6HBD` by default.
+- `https.keystore-file` - Name of the generated .jks file, `hotdb.jks` by default. The file is located under the directory `conf` by default.
 
 #### Customized HTTPS configuration
 
 The management platform supports the customized name and password of jks file through JDK. The steps are as follows:
 
-1. Execute the command through the /conf path of the management platform installation directory.
+1. Execute the command through the `conf` path of the management platform installation directory.
 
-> You can generate it in two different ways.
->
-> Phased generation:
->
-> keytool -genkey -alias test -keypass 123456 -keyalg RSA -keysize 1024 -validity 365 -keystore hotdbtest.jks -storepass 123456
->
-> Press Enter and input the relevant information.
->
-> One-time generation:
->
-> keytool -genkey -alias test -keypass 123456 -keyalg RSA -keysize 1024 -validity 365 -keystore hotdbtest.jks -storepass 123456 -dname "CN=tester,OU=hotdb,O=hotdb,L=shanghai,ST=shanghai,C=CHINA"
->
-> Note:
->
-> Because jks files need to be placed in the /conf directory under the installation directory of the management platform, it is better to execute commands through the /conf path (or put it in the /conf directory after the file is generated).
->
-> The meaning of common commands of keytool in JDK are as follows:
->
-> -genkey: create a default file ".keystore" in the user's home directory, and an alias of mykey will also be generated. mykey contains the user's public key, private key and certificate (if no location is specified, .keystore will be located inthe default directory of the user's system)
->
-> -alias：generate alias
->
-> -keystore：name of the specified keystore (the generated information will not be in the. Keystore file)
->
-> -keyalg：algorithm for specifying the key (such as RSA, DSA)
->
-> -validity：specifies the validity period of the generated certificate, unit: day
->
-> -keysize：size of the specified key
->
-> -storepass：password for the specified keystore
->
-> -keypass：password for the specified alias
->
-> -dname：owner information of the specified certificate, for example: "CN = first name and last name, OU = unit name, O = organization name, L = city or region name, ST = state or province name, C = two letter country code of the unit"
->
-> -v：show certificate details in keystore
->
-> Note: more commands can be viewed using: keytool -- help.
+```bash
+# You can generate it in two different ways
 
-2. Modify https.keystore -password and https.keystore -file in application.xml to be the newly generated value and restart the management platform to access the management platform using HTTPS.
+# Phased generation:
+keytool -genkey -alias test -keypass 123456 -keyalg RSA -keysize 1024 -validity 365 -keystore hotdbtest.jks -storepass 123456
+# Press Enter and input the relevant information.
 
-> ![](assets/hotdb-management/image555.png)
+# One-time generation:
+keytool -genkey -alias test -keypass 123456 -keyalg RSA -keysize 1024 -validity 365 -keystore hotdbtest.jks -storepass 123456 -dname "CN=tester,OU=hotdb,O=hotdb,L=shanghai,ST=shanghai,C=CHINA"
+
+# Note: Because jks files need to be placed in the /conf directory under the installation directory of the management platform, it is better to execute commands through the /conf path (or put it in the /conf directory after the file is generated).
+
+# The meaning of common commands of keytool in JDK are as follows:
+# -genkey: create a default file ".keystore" in the user's home directory, and an alias of mykey will also be generated. mykey contains the user's public key, private key and certificate (if no location is specified, .keystore will be located inthe default directory of the user's system)
+# -alias：generate alias
+# -keystore：name of the specified keystore (the generated information will not be in the. Keystore file)
+# -keyalg：algorithm for specifying the key (such as RSA, DSA)
+# -validity：specifies the validity period of the generated certificate, unit: day
+# -keysize：size of the specified key
+# -storepass：password for the specified keystore
+# -keypass：password for the specified alias
+# -dname：owner information of the specified certificate, for example: "CN = first name and last name, OU = unit name, O = organization name, L = city or region name, ST = state or province name, C = two letter country code of the unit"
+# -v：show certificate details in keystore
+
+# Note: more commands can be viewed using: keytool -- help.
+```
+
+2. Modify `https.keystore-password` and `https.keystore-file` in `application.xml` to be the newly generated value and restart the management platform to access the management platform using HTTPS.
+
+> ![](assets/hotdb-management/image581.png)
 >
-> ![](assets/hotdb-management/image556.png)
+> ![](assets/hotdb-management/image582.png)
 >
-> ![](assets/hotdb-management/image554.png)
+> ![](assets/hotdb-management/image583.png)
 

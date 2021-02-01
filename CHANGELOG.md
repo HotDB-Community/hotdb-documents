@@ -48,8 +48,8 @@
   * [X] `docs/zh/latest/install-and-deploy.md` F C
   * [X] `docs/zh/latest/service-license.md` F C
   * [X] `docs/zh/latest/manual-update.md` F C
-  * [X] `docs/zh/latest/cluster-environment-requirement.md` F
-  * [X] `docs/zh/latest/hardware-config-recommendation.md` F
+  * [X] `docs/zh/latest/cluster-environment-requirement.md` F C
+  * [X] `docs/zh/latest/hardware-config-recommendation.md` F C
 * `hotdb-server`
   * [X] `docs/zh/latest/standard.md` F
   * [X] `docs/zh/latest/management-port-command.md` L M F C
@@ -77,8 +77,8 @@
   * [X] `docs/en/latest/install-and-deploy.md` C
   * [X] `docs/en/latest/service-license.md` C
   * [X] `docs/en/latest/manual-update.md` C
-  * [X] `docs/en/latest/cluster-environment-requirement.md`
-  * [X] `docs/en/latest/hardware-config-recommendation.md`
+  * [X] `docs/en/latest/cluster-environment-requirement.md` C
+  * [X] `docs/en/latest/hardware-config-recommendation.md` C
 * `hotdb-server`
   * [ ] `docs/en/latest/standard.md` D
   * [X] `docs/en/latest/management-port-command.md`  C
@@ -97,3 +97,4 @@
 
 * 参数说明，allowRCWithoutReadConsistentInXA，中英文不一致
 * 计算节点错误码 英文，未翻译
+* 适配问题：chrome浏览器+1366X768大小屏幕，有滑动条的表格，拖到最右边看不到右侧边框（我怎么知道为什么）
