@@ -11,8 +11,9 @@ pre > code {
 .app-nav {
   position: fixed !important;
   width: 100% !important;
-  min-height: 60px !important;
+  height: 80px !important;
   margin: 0 0 0 0 !important;
+  top: 0;
   padding: 10px 75px 10px 75px !important;
   z-index: 100 !important;
   border-bottom: 1px solid rgba(0, 0, 0, .07) !important;
@@ -135,3 +136,18 @@ pre > code {
 .tooltip{
   width: 40em;
 }
+
+/*a:target,h1:target,h2:target,h3:target{*/
+/*  padding-top: 80px !important;*/
+/*  margin-top: 80px !important;*/
+/*  display: block;*/
+
+/*  background: rgb(93, 0, 255);*/
+/*}*/
+/*h2:target{*/
+/*  padding-top: 80px !important;*/
+/*  margin-top: 80px !important;*/
+/*  display: block;*/
+
+/*  background: rgb(93, 0, 255);*/
+/*}*/

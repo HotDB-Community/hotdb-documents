@@ -167,7 +167,7 @@ function redirectLocation() {
   }
 }
 
-const codeWithPipeCharRegex = /(`[^`\r\n]*\|[^`\r\n]*`)/g
+const codeWithPipeCharRegex = /(`[^`\r\n]+`)/g
 
 //需要转义内联代码中的管道符，需要将`ps -ef | grep java`转义为`ps -ef \| grep java`，docsify的bug
 function escapeCode(html){
