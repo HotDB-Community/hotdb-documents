@@ -19,6 +19,8 @@ window.$docsify = {
   maxLevel: 3,
   subMaxLevel: 3,
   notFoundPage: true,
+  topMargin: 80,
+
   search: {
     noData: {
       "/zh/": "没有结果！",
@@ -84,34 +86,15 @@ window.$docsify = {
       className: "important"
     }
   },
-
-  topbar: {
-    downloadUrl: "javascript:void(0)", //TODO
-    downloadText: {
-      "/zh/": "<i class='fa fa-download'></i> 下载文档",
-      "/en/": "<i class='fa fa-download'></i> Download Document"
-    },
-    downloadTitle: {
-      "/zh/": "下载整合的PDF文档",
-      "/en/": "Download integrated pdf document"
-    },
-    editUrl: `${repositoryUrl}/blob/master/docs`,
-    editText: {
-      "/zh/": "<i class='fa fa-edit'></i> 编辑文档",
-      "/en/": "<i class='fa fa-edit'></i> Edit Document"
-    },
-    editTitle: {
-      "/zh/": "在Github上编辑文档",
-      "/en/": "Edit document on Github"
-    },
-    issuesUrl: `${repositoryUrl}/issues`,
-    issuesText: {
-      "/zh/": "<i class='fa fa-comment'></i> 反馈问题",
-      "/en/": "<i class='fa fa-comment'></i> Report Issues"
-    },
-    issuesTitle: {
-      "/zh/": "在Github上反馈问题",
-      "/en/": "Report Issues on Github"
+  
+  markdown: {
+    renderer: {
+      //rowspan和colspan的渲染器
+      tablecell(content, flags) {
+        if(content === "^") return `<td class="rowspan"></td>`
+        else if(content === "<") return `<td class="colspan"></td>>`
+        else return `<td>${content}</td>`
+      }
     }
   },
 
@@ -133,12 +116,6 @@ window.$docsify = {
 
         //预处理markdown
         return resolveFootNote(resolveAnchor(escapeCode(html)))
-      })
-      hook.afterEach(function(html) {
-        //console.log(html)
-        
-        //添加topbar
-        return createTopBar() + resolveRowSpanAndColSpan(html)
       })
       hook.doneEach(function() {
         $(document).ready(function() {
@@ -167,12 +144,22 @@ function redirectLocation() {
   }
 }
 
-const codeWithPipeCharRegex = /(`[^`\r\n]+`)/g
+const codeRegex = /(`[^`\r\n]+`)/g
 
 //需要转义内联代码中的管道符，需要将`ps -ef | grep java`转义为`ps -ef \| grep java`，docsify的bug
-function escapeCode(html){
-  return html.replace(codeWithPipeCharRegex,(s,c)=>{
-    return c.replaceAll("|","\\|")
+function escapeCode(html) {
+  return html.replace(codeRegex, (s, c) => {
+    return c.replaceAll("|", "\\|")
+  })
+}
+
+const anchorRegex = /{#([^\r\n}]+)}/g
+
+//解析markdown锚点，绑定heading的id
+function resolveAnchor(html) {
+  return html.replace(anchorRegex,(s,id)=>{
+    //直接替换成隐藏锚点
+    return `<span id="${id}"></span>`
   })
 }
 
@@ -191,57 +178,7 @@ function resolveFootNote(html) {
   })
 }
 
-const anchorRegex = /{#([\w-]+)}/g
-
-//解析markdown锚点，绑定heading的id
-function resolveAnchor(html) {
-  return html.replace(anchorRegex, " :id=$1")
-}
-
-function createTopBar() {
-  return `<div class="topbar">
-        <p style="float: right">
-          <a class="topbar-link" href="${window.$docsify.topbar.downloadUrl}"  target="_blank"
-           title="${getText(window.$docsify.topbar.downloadTitle)}">
-            ${getText(window.$docsify.topbar.downloadText)}
-          </a class="topbar-link">
-          <a class="topbar-link" href="${window.$docsify.topbar.editUrl}${window.$docsify.fileName}" target="_blank"
-           title="${getText(window.$docsify.topbar.editTitle)}">
-            ${getText(window.$docsify.topbar.editText)}
-          </a class="topbar-link">
-          <a class="topbar-link" href="${window.$docsify.topbar.issuesUrl}" target="_blank"
-           title="${getText(window.$docsify.topbar.issuesTitle)}">
-            ${getText(window.$docsify.topbar.issuesText)}
-          </a>
-        </p>
-      </div>`
-}
-
-const rowSpanOrColSpanRegex = /<td>([\^<])<\/td>/g
-
-//处理合并单元格的特殊语法
-function resolveRowSpanAndColSpan(html){
-  return html.replace(rowSpanOrColSpanRegex,(s,c)=>{
-     return c==="^" ? `<td class="rowspan"></td>`:`<td class="colspan"></td>>`
-  })  
-}
-
 //绑定footNote对应的tooltip
 function bindFootNote() {
   $('[data-toggle="tooltip"]').tooltip()
-}
-
-
-//得到基于语言的文本
-function getText(text) {
-  if(typeof text === "string") {
-    return text
-  } else if(typeof text === "object") {
-    const url = window.location.href
-    for(const key in text) {
-      if(url.indexOf(`/#${key}`) !== -1) {
-        return text[key]
-      }
-    }
-  }
 }
