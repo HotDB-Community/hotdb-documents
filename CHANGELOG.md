@@ -55,7 +55,7 @@
   * [X] `docs/zh/latest/standard.md` F
   * [X] `docs/zh/latest/management-port-command.md` L M F C
 * `hotdb-management`
-  * [X] `docs/zh/latest/hotdm-management.md` F
+  * [X] `docs/zh/latest/hotdm-management.md` F C
   * [X] `docs/zh/latest/intelligent-inspection.md` L F C
 * `idc`
   * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` F C
@@ -84,7 +84,7 @@
   * [ ] `docs/en/latest/standard.md` D
   * [X] `docs/en/latest/management-port-command.md`  C
 * `hotdb-management`
-  * [ ] `docs/en/latest/hotdm-management.md`
+  * [ ] `docs/en/latest/hotdm-management.md` C
   * [X] `docs/en/latest/intelligent-inspection.md` C
 * `idc`
   * [X] `docs/en/latest/cross-idc-disaster-recovery.md` C

@@ -1871,7 +1871,7 @@ mysql> dbremapping @@remove@db01:logic_db01,db02:logic_db02; # 移除多条映�
 Query OK, 0 rows affected (0.00 sec)
 ```
 
-### onlineddl - OnlineDDL操作
+### `onlineddl` - OnlineDDL操作
 
 此命令保证了在对数据表结构修改时，不会堵塞线上业务的读写，数据库依然可以提供正常的数据访问服务，语法：
 
