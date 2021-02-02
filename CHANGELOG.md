@@ -15,6 +15,7 @@
 * [X] 更新图片：中文管理平台、跨机房灾备、白皮书
 * [X] 实现markdown表格单元格的跨行跨列特殊语法并应用
 * [X] 解决html锚点定位不准确，以及实现解析markdown锚点语法解决bug
+* [X] 修复解析markdown锚点的bug（对于标题直接设置id，对于其他则设置span隐藏锚点）
 * [ ] 检查markdown文档的格式
 * [ ] 检查markdown文档中的文档和标题链接
 * [ ] 为markdown文档中的代码块
