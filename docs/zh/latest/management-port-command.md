@@ -1947,7 +1947,7 @@ releasehold ddl;
 
 ### 全局唯一约束相关
 
-若要了解关于全局唯一约束相关内容，请参考《分布式事务数据库HotDB Server【标准】功能使用手册》
+若要了解关于全局唯一约束相关内容，请参考[标准](standard.md)文档。
 
 #### `check @@history_unique` - 检查唯一键的历史数据唯一性{#check-history_unique}
 
