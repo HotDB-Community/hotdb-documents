@@ -638,22 +638,22 @@ mysql> desc datasource;
 |--------------------+------------------------------------------------------------+
 | filedname          | description                                                |
 |--------------------+------------------------------------------------------------+
-| dn                 | 数据节点号(Datanode)                                       |
-| ds                 | 数据源号(Datasource)                                       |
-| name               | 数据源名称(Datasource name)                                |
-| type               | 数据源类型(Datasource type)                                |
-| status             | 数据源状态(Datasource status)                              |
-| host               | 主机地址(Host)                                             |
-| port               | 主机端口(Port)                                             |
-| schema             | 物理数据库名(Physical database name)                       |
-| active             | 活动连接数(Active connections)                             |
-| idle               | 空闲连接数(Idle connections)                               |
-| size               | 总连接数(Total connections)                                |
-| unavailable_reason | 数据源不可用原因(Reason for datasource unavailable)        |
+| dn                 | 数据节点号(Datanode)                                      |
+| ds                 | 数据源号(Datasource)                                      |
+| name               | 数据源名称(Datasource name)                               |
+| type               | 数据源类型(Datasource type)                               |
+| status             | 数据源状态(Datasource status)                             |
+| host               | 主机地址(Host)                                            |
+| port               | 主机端口(Port)                                            |
+| schema             | 物理数据库名(Physical database name)                      |
+| active             | 活动连接数(Active connections)                            |
+| idle               | 空闲连接数(Idle connections)                              |
+| size               | 总连接数(Total connections)                               |
+| unavailable_reason | 数据源不可用原因(Reason for datasource unavailable)       |
 | flow_control       | 剩余可用计数(Remaining available quantity in flow control) |
-| idc_id             | 机房ID(ID of IDC)                                          |
-| listener_id        | LISTENER ID(ID of LISTENER)                                |
-| listener_status    | LISTENER STATUS(STATUS of LISTENER)                        |
+| idc_id             | 机房ID(ID of IDC)                                         |
+| listener_id        | LISTENER ID(ID of LISTENER)                               |
+| listener_status    | LISTENER STATUS(STATUS of LISTENER)                       |
 |--------------------+------------------------------------------------------------+
 16 rows in set (0.00 sec)
 ```
@@ -1330,7 +1330,7 @@ mysql> show @@masterslaveconsistency;
 | db   | table      | dn    | result | info                                                                                                |
 +------+------------+-------+--------+-----------------------------------------------------------------------------------------------------+
 | DB_T | FB_STUDENT | dn_04 | NO     | 存在数据不一致, 因为 存储节点: 5, 表: FB_STUDENT, MySQL错误: Table 'db252.fb_student' doesn't exist |
-| DB_A | SP         | dn_04 | NO     | 表: SP在节点: 4存在数据不一致，列: ID, 分布区间为: 0-17;, 并且不一致行唯一键为: (ID) :(2),(1)      |
+| DB_A | SP         | dn_04 | NO     | 表: SP在节点: 4存在数据不一致，列: ID, 分布区间为: 0-17;, 并且不一致行唯一键为: (ID) :(2),(1)     |
 | DB_T | JOIN_Z     |       | YES    |                                                                                                     |
 +------+------------+-------+--------+-----------------------------------------------------------------------------------------------------++
 3 row in set (0.07 sec)
@@ -1827,7 +1827,7 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 
 以下场景中，可能会出现数据不一致的情况，包括主从存储节点的数据不一致，和数据节点之间的数据不一致：
 
-**（一）人为操作**
+**(1) 人为操作**
 
 1. 人为或应用程序直接操作存储节点，可能导致任意类型的不一致；
 2. 使用HINT语句操作数据，可能导致任意类型的不一致；
@@ -1836,7 +1836,7 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 5. 设置server.xml 参数checkUpdate=false时，即允许更新分片字段，可能导致路由不正确，进而导致数据操作时存在与预期不一致的问题；
 6. 未use逻辑库的情况下，执行了连接绑定语句（包括HINT、`set [session] foreign_key_checks=0、START TRANSACTION /*!40100 WITH CONSISTENT SNAPSHOT */、set [session] UNIQUE_CHECKS=0`等），导致其SQL语句均直接下发至存储节点执行，进而可能导致任意类型的不一致；
 
-**（二）环境配置**
+**(2) 环境配置**
 
 1. 存储节点所在服务器时间不一致，在低于2.5.1版本时，会存在导致全局表timestamp类型数据不一致的问题、事务内时间不一致问题；在大于等于2.5.1版本，则参考[timestampProxy](#timestampproxy)设置的模式与场景；
 2. 存储节点搭建从机方法不当，例如使用extrabackup备份恢复数据的方式搭建从机；
@@ -1844,7 +1844,7 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 4. 不合理的存储节点MySQL参数设置、复制架构等导致不一致，包括但不限于：使用语句格式的binlog、部分复制、多主复制、配置不正确的二级从、主从或节点间字符集、时区配置不一致等；
 5. 在没有开启全局唯一约束的情况下，不含分片字段的唯一键无法保证全局唯一；
 
-**（三）异常情况**
+**(3) 异常情况**
 
 1. 在做DDL操作时存储节点故障、后端连接异常中断导致存储节点间表结构不一致，表结构不一致在部分时候可能带来更多不一致的数据；
 2. 故障切换后，业务上数据正确，但无法完全保证故障的主与切换到的从的数据一。同时，被标记为"不可用"的存储节点如果操作不当，例如在未校验数据一致性的情况下将其重新标记为"可用"并加入数据节点，会导致不一致；
@@ -1854,7 +1854,7 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 6. 计算节点/MySQL OOM等服务异常；
 7. 备份恢复数据时出现异常，例如部分节点backup服务关闭，存储节点出现故障等 ，可能导致数据出现不一致；
 
-**（四）其他**
+**(4) 其他**
 
 1. MySQL自身BUG，可能导致任意类型的数据不一致。应尽量使用稳定的MySQL版本与功能，不能盲目追求MySQL新功能；
 2. 计算节点自身BUG，或者设计上还有遗漏的地方，可能导致任意类型的数据不一致。应及时更新至计算节点最新版本；
@@ -2450,7 +2450,7 @@ cd /usr/local/hotdb/Install_Package/
 sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-vip-with-perfix=192.168.210.216/24 --install-ntpd=no --ntpdate-server-host=182.92.12.11
 ```
 
-**说明**：`--lvs-vip-with-perfix`：当前集群的VIP
+**说明：**`--lvs-vip-with-perfix`：当前集群的VIP
 
 **第三步：调整参数并启动新集群成员**
 
@@ -2650,7 +2650,7 @@ DNID是数据节点DATANODE_ID的缩写
 
 在计算节点上可以使用DNID作为WHERE子句中的过滤条件，以及在SELECT语句中作为查询项；也可以在结果集中显示每行结果的DNID（数据节点）。
 
-**（一）在SELECT、UPDATE、DELETE子句中，使用DNID字段**
+**(1) 在SELECT、UPDATE、DELETE子句中，使用DNID字段**
 
 ```sql
 SELECT * FROM customer WHERE dnid=1;
@@ -2670,7 +2670,7 @@ UPDATE customer SET id=4 WHERE dnid=1 AND name='a';
 
 执行该DELETE语句，计算节点将会修改分片表customer在数据节点ID为1，字段name等于'a'的数据。
 
-**（二）执行SELECT语句使用DNID作为查询项**
+**(2) 执行SELECT语句使用DNID作为查询项**
 
 ```sql
 SELECT *,dnid FROM tab_name;
@@ -2678,7 +2678,7 @@ SELECT *,dnid FROM tab_name;
 
 执行该SELECT语句，计算节点将会在结果集里显示所有结果的dnid值／
 
-**（三）在结果集中显示DNID**
+**(3) 在结果集中显示DNID**
 
 登录到计算节点以后，执行SET SHOW_DNID=1语句，计算节点将会在SELECT语句中返回每一行结果的DNID（数据节点ID）。
 
@@ -2740,7 +2740,7 @@ mysql> select * from customer where id in (77,67,52,20);
 4 rows in set (0.00 sec)
 ```
 
-**（四）DNID的限制**
+**(4) DNID的限制**
 
 DNID字段为计算节点的保留字段，禁止在业务表中使用DNID字段，在SQL语句中使用DNID作为别名。
 
@@ -2752,7 +2752,7 @@ DNID只适用于SELECT，UPDATE，DELETE的简单单表语句；并且，DNID只
 
 在计算节点使用HINT语法，可绕过HotDB Server解析器，直接在指定数据节点上执行MySQL的任意SQL语句。计算节点支持两种方式的HINT语法：
 
-**（五）在HINT中使用DNID(数据节点ID)：**
+**(5) 在HINT中使用DNID(数据节点ID)：**
 
 语法：
 
@@ -2772,7 +2772,7 @@ DNID只适用于SELECT，UPDATE，DELETE的简单单表语句；并且，DNID只
 
 该语句将在数据库节点1上执行。用户可以通过分布式事务数据库平台中的"数据节点"页面，找到数据节点ID为1的存储节点名称，并在"存储节点"页面中搜索指定的存储节点名称，即可定位到实际的MySQL数据库。
 
-**（六）在HINT中使用DSID(存储节点ID)：**
+**(6) 在HINT中使用DSID(存储节点ID)：**
 
 HINT语句支持指定datasource_id跳过计算节点直接向存储节点发送语句。可利用[服务端口命令](#使用已有分片规则建表相关命令)查看存储节点datasource_id：
 
@@ -2895,7 +2895,7 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 > 
 > 若多个存储节点分布在同实例上，使用HINT中datasource_id也需单独指定存储节点执行。
 
-**（七）在HINT中使用分片字段：**
+**(7) 在HINT中使用分片字段：**
 
 语法：
 
@@ -4668,7 +4668,7 @@ revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jing
 | SHOW语句 | `SHOW HOTDB_PROFILES` | 支持 | ^ |
 | ^ | `SHOW HOTDB_PROFILE FOR QUERY N [relative time|real time]` | 支持 | N代表执行的SQL id |
 
-**功能说明**：该功能仅限session级别
+**功能说明：**该功能仅限session级别
 
 `SHOW HOTDB_PROFILES`输出与MySQL相同：
 
@@ -4865,7 +4865,7 @@ HotDB Server对MySQL部分variables及status的显示结果做了支持，可通
 
 ![](assets/standard/image130.png)
 
-**功能说明**：为逻辑库设置默认分片节点后，登录计算节点可以直接建表，HotDB Server将根据分片节点的数量为创建的表自动设置分片规则信息。具体的分片规则如下：
+**功能说明：**为逻辑库设置默认分片节点后，登录计算节点可以直接建表，HotDB Server将根据分片节点的数量为创建的表自动设置分片规则信息。具体的分片规则如下：
 
 如果逻辑库只设置了一个分片节点，则HotDB Server对创建的表不做分片处理（和MySQL原生的表一致），在HotDB Server中将此类表称为创建垂直分片表。
 
@@ -4873,7 +4873,7 @@ HotDB Server对MySQL部分variables及status的显示结果做了支持，可通
 
 ![](assets/standard/image131.png)
 
-**注意**：
+**注意：**
 
 此功能仅推荐在初次接触HotDB Server的时候使用，正式交付以及上线不推荐，需要根据实际业务场景做分片。
 
@@ -10329,7 +10329,7 @@ root> mysql -uct -pct -h127.0.0.1 -P2473
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Welcome to the MySQL monitor. Commands end with ; or g.
 Your MySQL connection id is 30
-Server version: **5.6.1**-HotDB-2.4.7 HotDB Server by Hotpu Tech
+Server version:** 5.6.1**-HotDB-2.4.7 HotDB Server by Hotpu Tech
 Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.
 Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
@@ -10339,7 +10339,7 @@ Type 'help;' or 'h' for help. Type 'c' to clear the current input statement.
 root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
 +-----------------------+
-| VERSION()             |
+| VERSION()            |
 +-----------------------+
 | 5.6.1-HotDB-2.4.7     |
 +-----------------------+

@@ -2523,7 +2523,7 @@ Disable the compute node services of HotDB_02 and HotDB_03. This process will tr
 
 1. HotDB_01、HotDB_02 servers are respectively deployed with master and slave keepalived (the corresponding VIP can be the same with and VIP of LVS, but virtual_router_id cannot be the same)
 
-**HotDB_01 server execution script**：
+**HotDB_01 server execution script：**
 
 ```bash
 /usr/local/hotdb/Install_Package
@@ -2951,7 +2951,7 @@ mysql> /*!hotdb: table=customer:1*/ select count(*) from customer;
 
 1 row in set (0.00 sec)
 
-**Note**: In terms of transaction layer, it's not recommended operating data source directly by HINT, because after using HINT, both the data and status will beyond control of the compute node. Besides, after using HINT operation, compute node will automatically perform the connection binding. Please follow the instructions after the connection binding.
+**Note:** In terms of transaction layer, it's not recommended operating data source directly by HINT, because after using HINT, both the data and status will beyond control of the compute node. Besides, after using HINT operation, compute node will automatically perform the connection binding. Please follow the instructions after the connection binding.
 
 ### Connection binding
 
@@ -3321,13 +3321,13 @@ The Syntax associated with the Character Set is as follow, HotDB Server could al
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
 | **Function classification** | **Syntax related**                                                                                                   |
 +-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-| CREATE TABLE                | col_name {CHAR | VARCHAR | TEXT} (col_length)                                                                      |
+| CREATE TABLE                | col_name {CHAR | VARCHAR | TEXT} (col_length)                                                                     |
 |                             |                                                                                                                      |
 |                             | [CHARACTER SET charset_name]                                                                                       |
 |                             |                                                                                                                      |
 |                             | [COLLATE collation_name]                                                                                           |
 |                             |                                                                                                                      |
-|                             | col_name {ENUM | SET} (val_list)                                                                                    |
+|                             | col_name {ENUM | SET} (val_list)                                                                                   |
 |                             |                                                                                                                      |
 |                             | [CHARACTER SET charset_name]                                                                                       |
 |                             |                                                                                                                      |
@@ -3383,19 +3383,19 @@ This document only lists some functions upon special treatment, and if to know a
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | **Function name**                                                                                                                                             | **Support status** | **Intercept or not** | **Description**                                                                                                                                                                     |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ABS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
+| [ABS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ACOS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
+| [ACOS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ADDDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
+| [ADDDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ADDTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
+| [ADDTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AES_DECRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
+| [AES_DECRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AES_ENCRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
+| [AES_ENCRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AND, &&](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
+| [AND, &&](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | [Area()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -5534,7 +5534,7 @@ Notes on REVOKE:
 | ^ | SHOW statement | show hotdb_profiles | Support | ^ |   |   |
 | ^ | show hotdb_profile for query N [relative time|real time] | Support | N represents the SQL id executed | ^ |   |   |
 
-**Function Description**: this function is limited to Session level only
+**Function Description:** this function is limited to Session level only
 
 show hotdb_profiles output is identical with MySQL:
 
@@ -8444,7 +8444,7 @@ ERROR 1146 (HY000): Table 'db249.autoi' doesn't exist
 
 mysql> select * from autoi where id=1;
 
-ERROR 1003 (HY000): **errors occurred in transaction, you need to rollback now**
+ERROR 1003 (HY000):** errors occurred in transaction, you need to rollback now**
 
 mysql> commit;
 
@@ -10582,7 +10582,7 @@ Min Compatible Version           2.4.3
 | mysql: [Warning] Using a password on the command line interface can be insecure. | ^ |   |
 | Welcome to the MySQL monitor. Commands end with ; or \\g. | ^ |   |
 | Your MySQL connection id is 30 | ^ |   |
-| Server version: **5.6.1**-HotDB-2.4.7 HotDB Server by Hotpu Tech | ^ |   |
+| Server version:** 5.6.1**-HotDB-2.4.7 HotDB Server by Hotpu Tech | ^ |   |
 | Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved. | ^ |   |
 | Oracle is a registered trademark of Oracle Corporation and/or its | ^ |   |
 | affiliates. Other names may be trademarks of their respective | ^ |   |

@@ -39,19 +39,19 @@
 
 #### 发起巡检
 
-**（一）发起巡检**
+**(1) 发起巡检**
 
 ![](assets/intelligent-inspection/image3.png)
 
 点击发起巡检，弹出巡检对象选择框
 
-**（二）巡检对象选择**
+**(2) 巡检对象选择**
 
 ![](assets/intelligent-inspection/image4.png)
 
 勾选需要发起巡检的对象，发起巡检（全选，可快速勾选所有巡检对象）
 
-**（三）正在巡检**
+**(3) 正在巡检**
 
 ![](assets/intelligent-inspection/image5.png)
 
@@ -61,7 +61,7 @@
 
 当前有正在进行巡检任务时，无法继续发起新的巡检（基于当前组）
 
-**（四）巡检完成**
+**(4) 巡检完成**
 
 ![](assets/intelligent-inspection/image6.png)
 
@@ -73,7 +73,7 @@
 
 巡检完成后，会在`hotdb-management/data/Inspection`目录下生成巡检过程中产生的结果文件和巡检报告
 
-**（五）取消巡检**
+**(5) 取消巡检**
 
 ![](assets/intelligent-inspection/image7.png)
 
@@ -333,13 +333,13 @@ QPS、连接数、复制时延
 
 #### 批量修改
 
-**（一）发起批量修改**
+**(1) 发起批量修改**
 
 ![](assets/intelligent-inspection/image19.png)
 
 勾选需要修改的巡检类目，点击"【批量操作】->【批量修改】"
 
-**（二）批量填写并保存**
+**(2) 批量填写并保存**
 
 ![](assets/intelligent-inspection/image20.png)
 
@@ -395,13 +395,13 @@ QPS、连接数、复制时延
 
 #### 批量删除
 
-**（一）发起批量删除**
+**(1) 发起批量删除**
 
 ![](assets/intelligent-inspection/image27.png)
 
 进入"智能巡检->历史巡检记录"页面，点击"删除巡检记录"
 
-**（二）选择巡检记录删除时间段**
+**(2) 选择巡检记录删除时间段**
 
 ![](assets/intelligent-inspection/image28.png)
 

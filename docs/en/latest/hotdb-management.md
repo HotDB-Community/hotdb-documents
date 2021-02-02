@@ -163,7 +163,7 @@ Adding a platform user needs to fill in two parts of content information: User B
 **Manage user:** can enter the management interface and manage compute node clusters with existing privileges in the general user interface. The interface views can be switched back and forth in the personal information drop-down box in the upper right corner.
 
 - Assigning compute node cluster privileges to users means that the users can see the cluster and enter the cluster for management after logging into the general user interface.
-- There are two kinds of compute node cluster privileges: **access** and **control**. Users assigned with "access privileges" can only query after entering the cluster. All operations that affect the data will trigger a prompt of "insufficient privileges". Users assigned with "control privileges" automatically have "access privileges" and can perform all operations on the cluster.
+- There are two kinds of compute node cluster privileges:** access** and **control**. Users assigned with "access privileges" can only query after entering the cluster. All operations that affect the data will trigger a prompt of "insufficient privileges". Users assigned with "control privileges" automatically have "access privileges" and can perform all operations on the cluster.
 - you can enter "comments" on the adding and editing page. It is not required.
 
 ![](assets/hotdb-management/image11.png)
@@ -250,7 +250,7 @@ Click \[Add Cluster] on the cluster management page to enter the "Add Compute No
 
 **Filling instructions:**
 
-**(I) Cluster information**
+**(1) Cluster information**
 
 Select the cluster mode of the deployed cluster, and the input parameters of different modes are different.
 
@@ -268,7 +268,7 @@ Set ConfigDB Manually specifies that configDB needs to select the configDB repli
 > 
 > Any configDB in the replication mode strongly requires that the configDB connection address in server.xml shall be consistent with the IP address of the server where the actual configDB is located. It cannot be configured as 127.0.0.1 or localhost, so as mainly to prevent the risk of misjudging the actual address when the management platform obtains multiple configDB addresses in case that the management platform and the compute node service are not on the same service..
 
-**(II) Compute node**
+**(2) Compute node**
 
 Different "Cluster Mode" displays different compute node records need to be configured. The "Single Node" mode only needs to configure one record. The "Master/Slave Node" mode needs to configure one master record and one slave record. The "Multi-Node" mode needs to configure at least three records, up to nine records.
 
@@ -311,14 +311,14 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 - If the SSH information and the configuration file address of compute node are configured in "Add Cluster", the page information will be displayed automatically. It only needs to click \[Connection Test] to verify the information correctness.
 - Only when SSH information and configuration file address pass the test, the \[Next Step] button can be clicked normally to proceed to the next step.
 
-**(II) Pre-inspection of switching**
+**(2) Pre-inspection of switching**
 
 ![](assets/hotdb-management/image21.png)
 
 - Click \[Start Detection] to check whether the current cluster high availability environment meets the requirements before high availability switch.
 - This step requires all detection items to pass the test before proceeding to the next step. Otherwise, it is necessary to manually intervene to solve the abnormal problem of the failed item.
 
-**(III) High-availability switch**
+**(3) High-availability switch**
 
 ![](assets/hotdb-management/image22.png)
 
@@ -327,7 +327,7 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 - The "Automatically rebuild high available environment after switch" on the page will be automatically ticked, that is, the program automatically rebuilds the environment after the switch is completed to satisfy the next high availability switch operation without manual rebuilding.
 - If the execution fails, manual intervention is needed to check and solve the problem.
 
-**(IV) Switch complete**
+**(4) Switch complete**
 
 ![](assets/hotdb-management/image23.png)
 
@@ -359,7 +359,7 @@ Before configuration test, attention shall be paid to the following points:
 - The configuration file directory shall be consistent with the real service directory, otherwise the connection test will fail.
 - Enter the correct configuration information, the connection test will be successful and the corresponding configuration will be saved to the compute node cluster synchronously. Click \[Next Step] to enter the environment reconstruction detection page. If the current page information does not pass the test, the operation button for the next step cannot be triggered.
 
-**(II) Environment rebuild inspection**
+**(2) Environment rebuild inspection**
 
 ![](assets/hotdb-management/image26.png)
 
@@ -369,7 +369,7 @@ Attentions shall be paid when clicking \[Start Detection]:
 - Config Checking mainly checks whether the configuration is reasonable and whether the configuration used in the memory is consistent with that in the configDB. If an inconsistency is detected, it can be processed by reloading, which is a feasible but not unique method.
 - When the detection is completed, click \[Next Step] to enter the high availability environment reconstruction page. If the current page information fails the detection, the \[Next Step] button cannot be triggered.
 
-**(III) Rebuild the high availability environment**
+**(3) Rebuild the high availability environment**
 
 ![](assets/hotdb-management/image27.png)
 
@@ -386,7 +386,7 @@ Notes for high availability reconstruction:
 - For the modification of server.xml configuration by the reconstruction process, if the actual deployed environment management network and the running network are separate, the haNodeHost configuration may have incorrectness risks, in which case manual intervention is needed because the server connection IP is currently used.
 - When the reconstruction is completed, click \[Next Step] to enter the high availability environment reconstruction page. If the current page information is not completed or the execution fails, the \[Next Step] button cannot be triggered.
 
-**(IV) Rebuild complete**
+**(4) Rebuild complete**
 
 ![](assets/hotdb-management/image29.png)
 
@@ -1224,10 +1224,10 @@ HotDB Management displays real-time user-concerned information such as data volu
 
 ![](assets/hotdb-management/image125.png)
 
-- **Email Notification: **Judge according to whether the monitoring switch in the notification setting is turned on, which can be divided into: Enable All, Not Enable and Partially Enable. Click to jump to the notification setting page.
-- **System Periodical Detection: **Judge according to whether all switches on the periodical detection setting page are turned on, which can be divided into: Enable All, Not Enable and Partially Enable. Click to jump to the periodical detection setting page.
-- **White List: **Judge according to the actual switch state of the white list function, which can be divided into: ON and OFF. Click to jump to the white list page.
-- **SQL Firewall: **Judge according to whether the SQL interception status of SQL firewall is enabled or not, which can be divided into: All ON, Partial ON and OFF. Click to jump to the SQL firewall page.
+- **Email Notification:** Judge according to whether the monitoring switch in the notification setting is turned on, which can be divided into: Enable All, Not Enable and Partially Enable. Click to jump to the notification setting page.
+- **System Periodical Detection:** Judge according to whether all switches on the periodical detection setting page are turned on, which can be divided into: Enable All, Not Enable and Partially Enable. Click to jump to the periodical detection setting page.
+- **White List:** Judge according to the actual switch state of the white list function, which can be divided into: ON and OFF. Click to jump to the white list page.
+- **SQL Firewall:** Judge according to whether the SQL interception status of SQL firewall is enabled or not, which can be divided into: All ON, Partial ON and OFF. Click to jump to the SQL firewall page.
 
 ### Summary of important information
 
@@ -2488,13 +2488,13 @@ The server page automatically displays the server IP of all components in the cl
 
 HotDB Management automatically obtains the server IP information of the compute node, data source, and configDB components.
 
-**(II) Master/slave node mode cluster**
+**(2) Master/slave node mode cluster**
 
 ![](assets/hotdb-management/image226.png)
 
 HotDB Management automatically obtains the server IP information of the compute node, data source, configDB and keepalived components.
 
-**(III) Multi-node mode cluster**
+**(3) Multi-node mode cluster**
 
 ![](assets/hotdb-management/image227.png)
 
@@ -2552,7 +2552,7 @@ The topological graph consists of five layers of components from top to bottom: 
 
 The front-end application layer is the front-end application client that connects to the compute node. The application connects to the specified logicDB through IP, port, and user password (the connection method is consistent with the MySQL connection), that is, the related connection information can be seen in the topological graph. If the real-time connections and QPS of the front-end application exceed the set threshold, the topological graph will display a warning with an orange up arrow.
 
-**(II) LogicDB**
+**(2) LogicDB**
 
 - LogicDB layer is physically a virtual layer and a virtual concept of the HotDB Server product. The topological graph allows to view all logicDBs that exist in the whole cluster.
 
@@ -2564,7 +2564,7 @@ The front-end application layer is the front-end application client that connect
 
 - When "QPS" and "Connection" exceed the set threshold, the page will display a warning with an orange arrow.
 
-**(III) Compute node**
+**(3) Compute node**
 
 - The compute node is the core component of the whole cluster, providing the underlying computing route query service for data.
 
@@ -2576,7 +2576,7 @@ The front-end application layer is the front-end application client that connect
 
 - When the mouse cursor is hovering over the compute node icon, the back-end connections, direct memory usage, front-end connections, heap memory usage, back-end inflow rate, back-end outflow rate, front-end inflow rate, front-end outflow rate and QPS are displayed. When the data exceeds the warning limit, it will be marked with an orange up arrow.
 
-**(IV) Data node**
+**(4) Data node**
 
 - The data node is a virtual concept of the HotDB Server, which does not actually exist at the physical level.
 
@@ -2612,7 +2612,7 @@ The front-end application layer is the front-end application client that connect
 
 - Data node information "QPS": obtained by adding QPS on all data sources under the data node.
 
-**(V) Data source**
+**(5) Data source**
 
 - It is a real storage layer of business data consisting of MySQL instances.
 
@@ -2622,7 +2622,7 @@ The front-end application layer is the front-end application client that connect
 
 - The data source displays the "Replication latency" (the data source with master-slave or master-master relation is displayed, and the delayed data is obtained from the display slave status), "Connection" (generated dynamically according to the back-end MySQL connection pool) and "QPS"
 
-**(VI) ConfigDB**
+**(6) ConfigDB**
 
 - The ConfigDB components of the compute nodes in the cluster are always displayed on the left of the storage layer.
 
@@ -2650,7 +2650,7 @@ The data source icon can quickly replicate connection information of the data so
 
 The topological graph can be switched to "2.5D" visual effect through the \[2.5D] button on the interface, and can be switched back to normal visual effect by clicking the \[2D] button.
 
-**(II) Topological graph setting**
+**(2) Topological graph setting**
 
 "QPS" and "Connection" information of components can be hidden or displayed.
 
@@ -2658,7 +2658,7 @@ If there are too many logicDBs on the topological graph page, the logicDB Filter
 
 Because each component can be dragged in the "General View" of topological graph, in order to reposition the scrambled component, click \[Reset Component Arrangement] to restore the position of each component.
 
-**(III) Topological Graph Info Panel**
+**(3) Topological Graph Info Panel**
 
 Move the mouse cursor into the \[<] button to activate the Topological Graph Info Panel which mainly records the INFO (addition or deletion of page component), WARNING (information of component warning parameter exceeding the threshold) and ERROR (information appears when the component is abnormal) in the topological graph.
 
@@ -2702,7 +2702,7 @@ Service program type: compute node, data source, configDB, keepalived (master/sl
 
 Service program health status: The running status of corresponding service program. Compute nodes statuses include Error (cannot be connected), Warning (exceed the threshold), and Normal (normal service operation). Other service programs have only two statues: Normal (normal operation) and Error (abnormal operation). Move the mouse cursor into the error or abnormal status area to view the details.
 
-**(II) Physical Topological Graph page**
+**(2) Physical Topological Graph page**
 
 ![](assets/hotdb-management/image239.png)
 
@@ -2716,7 +2716,7 @@ The servers not configured or not enabled for monitoring on the "Configuration -
 
 The servers that have been configured on the "Configuration -> Server" page and have unavailable SSH information due to SSH modification and change later are displayed as transparent in the figure. Click on the server to pop up the prompt "SSH information is unavailable".
 
-**(III) Server details panel**
+**(3) Server details panel**
 
 ![](assets/hotdb-management/image240.png)
 
@@ -2766,34 +2766,34 @@ The settings of other monitoring items are similar to the above description, and
 
 ![](assets/hotdb-management/image243.png)
 
-- **Total Number of Client Connection**: It displays the number of connections actually established between the current "Front-end Application" and the compute node, in unit of pcs.
-- **Thread Usage of Compute Nodes**: It displays the total number of threads, the occupied thread and the idle thread used by the current connection to the compute node, in unit of pcs.
-- **Back-end Connection Status**: It displays the total number of threads, the occupied thread and the idle thread used by connection between the compute node and the back-end data source, in unit of pcs.
-- **Direct Memory Usage of Compute Nodes**: It displays the current usage of direct memory configured by the compute node, shown as a percentage.
-- **Real-time Data Amount**: It displays the monitoring of data amount in the cluster. It supports two statistical modes: line capacity and data capacity. The units of the line are 1, K and M adopting automatic carry, and the units of data capacity are 1byte, KB, MB and GB adopting automatic carry. The data of the whole cluster is monitored by default, and the monitoring dimension can also be added or adjusted in [Setting](#setting).
-- **Heap Memory Usage of Compute Nodes**: It displays the current usage of heap memory configured by the compute node, shown as a percentage.
+- **Total Number of Client Connection:** It displays the number of connections actually established between the current "Front-end Application" and the compute node, in unit of pcs.
+- **Thread Usage of Compute Nodes:** It displays the total number of threads, the occupied thread and the idle thread used by the current connection to the compute node, in unit of pcs.
+- **Back-end Connection Status:** It displays the total number of threads, the occupied thread and the idle thread used by connection between the compute node and the back-end data source, in unit of pcs.
+- **Direct Memory Usage of Compute Nodes:** It displays the current usage of direct memory configured by the compute node, shown as a percentage.
+- **Real-time Data Amount:** It displays the monitoring of data amount in the cluster. It supports two statistical modes: line capacity and data capacity. The units of the line are 1, K and M adopting automatic carry, and the units of data capacity are 1byte, KB, MB and GB adopting automatic carry. The data of the whole cluster is monitored by default, and the monitoring dimension can also be added or adjusted in [Setting](#setting).
+- **Heap Memory Usage of Compute Nodes:** It displays the current usage of heap memory configured by the compute node, shown as a percentage.
 
-**(II) Compute node throughout**
+**(2) Compute node throughout**
 
 ![](assets/hotdb-management/image244.png)
 
-- **Network traffic monitoring**: It displays the inflow and outflow of the whole cluster, including front-end traffic in/out and back-end traffic in/out in Bps.
-- **TPS**: It displays the number of transactions executed per second for the whole cluster, in unit of pcs.
-- **QPS**: It displays the number of queries per second for the whole cluster, in unit of pcs.
-- **Client operation rate**: It displays the compute node operation throughput of the client in times/s, and monitors the whole cluster by default. The monitoring dimension can also be added or adjusted in [Setting](#setting).
-- **Back-end operation rate**: It displays the operation throughput of compute node and back-end data source in times/s, and monitors the whole cluster by default. The monitoring dimension can also be added or adjusted in [Setting](#setting).
+- **Network traffic monitoring:** It displays the inflow and outflow of the whole cluster, including front-end traffic in/out and back-end traffic in/out in Bps.
+- **TPS:** It displays the number of transactions executed per second for the whole cluster, in unit of pcs.
+- **QPS:** It displays the number of queries per second for the whole cluster, in unit of pcs.
+- **Client operation rate:** It displays the compute node operation throughput of the client in times/s, and monitors the whole cluster by default. The monitoring dimension can also be added or adjusted in [Setting](#setting).
+- **Back-end operation rate:** It displays the operation throughput of compute node and back-end data source in times/s, and monitors the whole cluster by default. The monitoring dimension can also be added or adjusted in [Setting](#setting).
 
-**(III) Compute node server resources**
+**(3) Compute node server resources**
 
 ![](assets/hotdb-management/image245.png)
 
-- **Server memory usage**: It displays the current memory usage of the server where the compute node is located. The total memory, used memory and remaining memory can be viewed. The server memory usage of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
-- **Server disk space usage**: It displays the current disk space usage of the server where the compute node is located. The total disk space, used disk space and remaining disk space can be viewed. The server disk space usage of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
-- **Server CPU load condition**: It displays the CPU load of the server where the compute node is located. The CPU load of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
-- **Server CPU usage**: It displays the CPU usage of the server where the compute node is located. By default, the CPU usage of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
-- **Server disk read/write status**: It displays the disk IO read/write status of the server where the compute node is located. The disk read/write status of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
-- **Server network traffic**: It displays the network traffic in/out of the server where the compute node is located, expressed in Bps. The network traffic in/out of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
-- **Server disk IO bandwidth usage**: It displays the disk IO bandwidth usage of the server where the compute node is located, expressed by a percent sign. The disk IO bandwidth usage of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
+- **Server memory usage:** It displays the current memory usage of the server where the compute node is located. The total memory, used memory and remaining memory can be viewed. The server memory usage of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
+- **Server disk space usage:** It displays the current disk space usage of the server where the compute node is located. The total disk space, used disk space and remaining disk space can be viewed. The server disk space usage of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
+- **Server CPU load condition:** It displays the CPU load of the server where the compute node is located. The CPU load of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
+- **Server CPU usage:** It displays the CPU usage of the server where the compute node is located. By default, the CPU usage of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
+- **Server disk read/write status:** It displays the disk IO read/write status of the server where the compute node is located. The disk read/write status of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
+- **Server network traffic:** It displays the network traffic in/out of the server where the compute node is located, expressed in Bps. The network traffic in/out of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
+- **Server disk IO bandwidth usage:** It displays the disk IO bandwidth usage of the server where the compute node is located, expressed by a percent sign. The disk IO bandwidth usage of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
 
 #### Data increment prediction
 
@@ -2819,7 +2819,7 @@ The prediction time is today one year later by default.
 
 Time range: Dates within three years from today. If today is May.15, 2020, only dates between May.16, 2020 and May.15, 2023 (May.15, 2020 is not included) can be selected. Other dates will be displayed gray.
 
-**(III) Prediction data display**
+**(3) Prediction data display**
 
 The page is divided into three parts: data node, data source and the data increment prediction. Five pieces of information are displayed on a single page in descending order of data capacity. The data node or ConfigDB whose history data record is less than 21 days will be displayed at the bottom, as shown in the following figure:
 
@@ -2830,7 +2830,7 @@ The page is divided into three parts: data node, data source and the data increm
 	![](assets/hotdb-management/image250.png)
 - Increment prediction: the prediction curve calculated by the management platform according to the history data amount and time of the current active data source or ConfigDB.
 
-**(IV) Prediction curve**
+**(4) Prediction curve**
 
 The prediction curve has two parts: one is the history data amount collected every day, which is displayed in the form of blue scatter; the other is the curve generated by fitting the collected history data, which is displayed in green solid line.
 
@@ -3250,7 +3250,7 @@ Click on the vertex to display all/cross-node cross JOIN correlation details. Th
 
 > !Note
 >
-> **Associated field description**: The table uses the field associated with the JOIN query, for example: SELECT * FROM Persons INNER JOIN Orders ON Persons.id = Orders.oid, then the id is the associated key of Persons, and oid is the associated key of Orders
+> **Associated field description:** The table uses the field associated with the JOIN query, for example: SELECT * FROM Persons INNER JOIN Orders ON Persons.id = Orders.oid, then the id is the associated key of Persons, and oid is the associated key of Orders
 
 ![](assets/hotdb-management/image311.jpeg)
 
@@ -3285,7 +3285,7 @@ The graph mode has four dimensions. The data volume reports of all members in th
 - The time range options include Last Year, Last Three Months, Last Month, Last Week, Last Day, and Custom. When the time range is less than 7 days, the trend chart is displayed with data collected every hour. When the time range is over 7 days, the trend chart is displayed with data collected at 23:00 per day.
 - Cluster Data Amount Change Trend Chart can be enlarged.
 
-**(II) Cluster Data Amount Distribution Map**
+**(2) Cluster Data Amount Distribution Map**
 
 ![](assets/hotdb-management/image316.png)
 
@@ -3298,7 +3298,7 @@ The graph mode has four dimensions. The data volume reports of all members in th
 - Click on a bar or fan on the map to enter the data volume report at the corresponding data node level.
 - Bar graph supports the sorting function, including ascending and descending orders.
 
-**(III) LogicDB Data Amount Distribution Map**
+**(3) LogicDB Data Amount Distribution Map**
 
 ![](assets/hotdb-management/image318.png)
 
@@ -3311,7 +3311,7 @@ The graph mode has four dimensions. The data volume reports of all members in th
 - Click on a bar or fan on the map to enter the data volume report at the corresponding logicDB level.
 - Bar graph supports the sorting function, including ascending and descending orders.
 
-**(IV) Table Data Amount Distribution Map**
+**(4) Table Data Amount Distribution Map**
 
 ![](assets/hotdb-management/image320.png)
 
@@ -3366,7 +3366,7 @@ The graph mode has four dimensions, including the whole cluster throughput. The 
 - The time range includes: Last Month, Last Three Months, and Custom.
 - When the mouse hovers over a certain point, the throughput data of each operation is displayed. When clicking a point on the chart, the time points of the last three charts are set to be consistent with the time point.
 
-**(III) Compute Node Throughput Type Comparison Chart**
+**(3) Compute Node Throughput Type Comparison Chart**
 
 ![](assets/hotdb-management/image325.png)
 
@@ -3376,7 +3376,7 @@ The graph mode has four dimensions, including the whole cluster throughput. The 
 - It supports enlarging the graph to full screen.
 - Bar graph supports the sorting function, including ascending and descending orders.
 
-**(III) LogicDB throughput Comparison Chart**
+**(3) LogicDB throughput Comparison Chart**
 
 ![](assets/hotdb-management/image326.png)
 
@@ -3387,7 +3387,7 @@ The graph mode has four dimensions, including the whole cluster throughput. The 
 - Click on a bar on the chart to enter the corresponding [LogicDB Dimension Throughput Report](#logic-dimension-throughput-report).
 - Bar graph supports the sorting function, including ascending and descending orders. Sorting can be based on the throughput type.
 
-**(IV) Table Throughput Comparison Chart**
+**(4) Table Throughput Comparison Chart**
 
 ![](assets/hotdb-management/image327.png)
 
@@ -3441,7 +3441,7 @@ The data node throughput graph mode includes five dimensions: data node throughp
 - The throughput of different operation types of each node can be viewed by selecting the operation type.
 - It supports enlarging the graph to full screen.
 
-**(II) Data Node Throughput Change Trend**
+**(2) Data Node Throughput Change Trend**
 
 ![](assets/hotdb-management/image333.png)
 
@@ -3451,7 +3451,7 @@ The data node throughput graph mode includes five dimensions: data node throughp
 - It supports enlarging the graph to full screen.
 - When the mouse hovers over a certain point, the throughput data of each operation is displayed.
 
-**(III) Cluster Throughput Type Comparison Chart**
+**(3) Cluster Throughput Type Comparison Chart**
 
 ![](assets/hotdb-management/image334.png)
 
@@ -3461,7 +3461,7 @@ The data node throughput graph mode includes five dimensions: data node throughp
 - It supports enlarging the graph to full screen.
 - Bar graph supports the sorting function, including ascending and descending orders.
 
-**(IV) LogicDB throughput Comparison Chart**
+**(4) LogicDB throughput Comparison Chart**
 
 ![](assets/hotdb-management/image335.png)
 
@@ -3472,7 +3472,7 @@ The data node throughput graph mode includes five dimensions: data node throughp
 - It allows to filter logicDB.
 - Bar graph supports the sorting function, including ascending and descending orders. Sorting can be based on the operation type.
 
-**(V) Table Throughput Comparison Chart**
+**(5) Table Throughput Comparison Chart**
 
 ![](assets/hotdb-management/image336.png)
 
@@ -3637,30 +3637,30 @@ Click "Manage -> Data Backup -> Backup Task -> \[Start Backup]" to manually star
 
 ![](assets/hotdb-management/image341.png)
 
-- **LogicDB**: Backup is performed in unit of logicDB, and one or more logicDB can be selected for backup at a time.
-- **Backup Type**: Full Backup and Incremental Backup. "Full Backup" is to backup all data in the current logicDB, and "Incremental Backup" is to continue backing up the new binlog based on the last full or incremental backup. Note: In the first incremental backup, it needs to ensure that the logicDB to be backed up has had a full backup, otherwise the incremental backup cannot be started.
-- **Backup logicDB simultaneously**: When the backup is started, the configDB data backup is performed once, with the same effect as manual backup in the "Config Data Backup & Restore".
-- **Compute the File MD5 Value or not**: It is checked by default, and mainly records the MD5 value of backup file to facilitate the comparison of file MD5 values during data recovery to ensure the integrity and consistency of data.
+- **LogicDB:** Backup is performed in unit of logicDB, and one or more logicDB can be selected for backup at a time.
+- **Backup Type:** Full Backup and Incremental Backup. "Full Backup" is to backup all data in the current logicDB, and "Incremental Backup" is to continue backing up the new binlog based on the last full or incremental backup. Note: In the first incremental backup, it needs to ensure that the logicDB to be backed up has had a full backup, otherwise the incremental backup cannot be started.
+- **Backup logicDB simultaneously:** When the backup is started, the configDB data backup is performed once, with the same effect as manual backup in the "Config Data Backup & Restore".
+- **Compute the File MD5 Value or not:** It is checked by default, and mainly records the MD5 value of backup file to facilitate the comparison of file MD5 values during data recovery to ensure the integrity and consistency of data.
 
 **(3) Backup setting**
 
 ![](assets/hotdb-management/image342.png)
 
-- **Backup the binlog from last Full Backup to now simultaneously**: It is checked by default, and is used to backup the binlog from last full backup to the current full backup. Note: This is an insurance measure, but the last full backup will not be found during the first full backup, so this option is meaningless for the first full backup.
-- **Local Backup Root Directory**: It is the local directory of the server where each data source resides and backup file is stored. This directory needs to be created in advance on the server where each node resides, and the directory of each server shall be consistent. Otherwise, the backup fails and the backup failure message prompts: Failed to create backup directory.
+- **Backup the binlog from last Full Backup to now simultaneously:** It is checked by default, and is used to backup the binlog from last full backup to the current full backup. Note: This is an insurance measure, but the last full backup will not be found during the first full backup, so this option is meaningless for the first full backup.
+- **Local Backup Root Directory:** It is the local directory of the server where each data source resides and backup file is stored. This directory needs to be created in advance on the server where each node resides, and the directory of each server shall be consistent. Otherwise, the backup fails and the backup failure message prompts: Failed to create backup directory.
 
 > !Tip
 >
 > when the data is backed up under different directories due to different hardware specifications and configuration methods of servers, you can use the soft link to unify the directories used for backup.
 
-- **Compression Method**: It is used to control whether the backup file is compressed, with options of No Compression, ZLIB Flow Compression, and LZ4 Compression. LZ4 compression is to first output the file and then call the system compression operation command.
-- **Encryption Method**: It is used to control whether the backup file is encrypted, with options of No Encryption, 3DES, and AES. When selecting other encryption methods, it needs to enter the encryption password which is used for decryption in data recovery.
-- **Backup File Format**: It is used to control the data format of backup file, and is divided into SQL, MySQL CSV and standard CSV. The default format is SQL. Note: The standard CSV format is mainly used for data exchange with other systems, such as exporting data to Hadoop, but it does not support recovery currently.
-- **Backup Statement Option**: When the backup file format is SQL, the SQL to be backed up can be in the insert, insert ignore or replace form.
-- **Backup to Remote Path Simultaneously**: The backup file can be transferred to a remote server. It is not checked by default. When backing up to a remote server, all backup files are merged and transferred to the specified directory on the remote server.
-- **Remote Replication Mode**: it is divided into: SCP and RSYNC. It is recommended to use the SCP mode. If RSYNC is used, it shall be deployed on a remote server.
-- **Remote Replication IP, User and Password**: Fill in the information of the actual remote server.
-- **Remote Backup File Root Directory**: The directory for storing backup files shall be filled out according to the actual situation, but it needs to be created in advance.
+- **Compression Method:** It is used to control whether the backup file is compressed, with options of No Compression, ZLIB Flow Compression, and LZ4 Compression. LZ4 compression is to first output the file and then call the system compression operation command.
+- **Encryption Method:** It is used to control whether the backup file is encrypted, with options of No Encryption, 3DES, and AES. When selecting other encryption methods, it needs to enter the encryption password which is used for decryption in data recovery.
+- **Backup File Format:** It is used to control the data format of backup file, and is divided into SQL, MySQL CSV and standard CSV. The default format is SQL. Note: The standard CSV format is mainly used for data exchange with other systems, such as exporting data to Hadoop, but it does not support recovery currently.
+- **Backup Statement Option:** When the backup file format is SQL, the SQL to be backed up can be in the insert, insert ignore or replace form.
+- **Backup to Remote Path Simultaneously:** The backup file can be transferred to a remote server. It is not checked by default. When backing up to a remote server, all backup files are merged and transferred to the specified directory on the remote server.
+- **Remote Replication Mode:** it is divided into: SCP and RSYNC. It is recommended to use the SCP mode. If RSYNC is used, it shall be deployed on a remote server.
+- **Remote Replication IP, User and Password:** Fill in the information of the actual remote server.
+- **Remote Backup File Root Directory:** The directory for storing backup files shall be filled out according to the actual situation, but it needs to be created in advance.
 
 **(4) Backup task record**
 
@@ -3668,15 +3668,15 @@ Click "Manage -> Data Backup -> Backup Task -> \[Start Backup]" to manually star
 
 The backup task completed or being executed are displayed on the Backup Task page.
 
-- **Backup sequence number**: unique identification of each backup task
-- **Task type**: displays whether the backup task is a manual backup or a scheduled backup
-- **Backup type**: displays whether the backup task is an incremental backup or a complete backup
-- **LogicDB**: displays which LogicDB are to be backed up
-- **Start time**: displays the start time of backup task
-- **End time**: displays the end time of the backup task. If the backup task is not completed, the expected end time will be displayed
-- **Total time consumption**: displays the time consumption of backup task
-- **Backup status**: displays the status of the current backup task, including backup failed, backup invalid, backup completed, backup in progress, cancelling, manually cancelled, automatically cancelled, and delayed. The backup task being executed will display the backup progress in the form of progress bar.
-- **Operation**: click "details" to display the backup details of the current backup task, failure reason, etc.
+- **Backup sequence number:** unique identification of each backup task
+- **Task type:** displays whether the backup task is a manual backup or a scheduled backup
+- **Backup type:** displays whether the backup task is an incremental backup or a complete backup
+- **LogicDB:** displays which LogicDB are to be backed up
+- **Start time:** displays the start time of backup task
+- **End time:** displays the end time of the backup task. If the backup task is not completed, the expected end time will be displayed
+- **Total time consumption:** displays the time consumption of backup task
+- **Backup status:** displays the status of the current backup task, including backup failed, backup invalid, backup completed, backup in progress, cancelling, manually cancelled, automatically cancelled, and delayed. The backup task being executed will display the backup progress in the form of progress bar.
+- **Operation:** click "details" to display the backup details of the current backup task, failure reason, etc.
 
 Failed and invalid backup will be displayed in the backup list with the ![](assets/hotdb-management/image344.png)and ![](assets/hotdb-management/image345.png)marks. When moving the mouse cursor to them, the specific reason will be displayed.
 
@@ -3694,13 +3694,13 @@ The backup plan can set periodical backup task for HotDB Management. After setti
 
 Click "Manage -> Data Backup -> Backup Plan -> \[Add New Plan] in HotDB Management to enter the Add Backup Plan page.
 
-- **Backup Plan Name**: Users can set the backup plan name which shall not be same as the existing backup plan name.
-- **LogicDB**: The logicDB needs to be backed up in periodical backup. One or more logicDB can be selected for backup.
-- **Full Backup Period**: Users can select the full backup period based on actual business needs.
+- **Backup Plan Name:** Users can set the backup plan name which shall not be same as the existing backup plan name.
+- **LogicDB:** The logicDB needs to be backed up in periodical backup. One or more logicDB can be selected for backup.
+- **Full Backup Period:** Users can select the full backup period based on actual business needs.
   After the "Full Backup Period" is selected, detailed settings such as "Period Time: Date of Specific Full Backup", "Backup Window Period: Time Range of Backup Start", and "Timeout: If the backup task is not completed within the set time, the backup will be canceled automatically and it needs to be checked to take effect" can be performed on full backup.
-- **Incremental Backup Period**: It is checked by default. If not, the backup plan only performs full backup and no incremental backup will be performed.
+- **Incremental Backup Period:** It is checked by default. If not, the backup plan only performs full backup and no incremental backup will be performed.
   Incremental backup execution time can be set, and an incremental backup is executed after 4 hours of full backup by default.
-- **Backup File Retention**: The retention time of backup file in the server directory can be set, which is 7 days by default.
+- **Backup File Retention:** The retention time of backup file in the server directory can be set, which is 7 days by default.
 
 > **Notes on "Backup File Retention":**
 > 
@@ -3710,8 +3710,8 @@ Click "Manage -> Data Backup -> Backup Plan -> \[Add New Plan] in HotDB Manageme
 > 
 > 3. The scheduled task is executed at 0:00 every day. When the backup is deleted, a full backup will be reserved, that is, it does not fully match the time (for example, if the retention period is 24 hours, a full backup A which is greater than or equal to 24 hours will be found, and all automatic backup files before A will be deleted).
 
-- **Add Exception or not**: Exceptions for backup can be set in the periodical backup plan. For example, if a periodical plan executes a full back at 0:00 a.m. every morning and executes an incremental backup every 4 hours, but xxx is set as an exception, the backup plan will not be executed on that day.
-- **Backup Setting**: For details, please refer to the "Backup Setting" description in "Manual Backup".
+- **Add Exception or not:** Exceptions for backup can be set in the periodical backup plan. For example, if a periodical plan executes a full back at 0:00 a.m. every morning and executes an incremental backup every 4 hours, but xxx is set as an exception, the backup plan will not be executed on that day.
+- **Backup Setting:** For details, please refer to the "Backup Setting" description in "Manual Backup".
 
 **(2) Specific setting instructions for backup plan**
 
@@ -3796,18 +3796,18 @@ Click "Data Management -> Data Restore -> \[Start Restore]" to jump to the data 
 
 For data security reasons, if there is no data backup for more than 3 h before the restore is started, the user will be informed whether to execute a backup immediately. If a backup is needed, it will jump to the backup window for Manual Backup first.
 
-**(II) Page description**
+**(2) Page description**
 
-- **LogicDB**: One or more logicDB can be selected to restore.
-- **Restorable Timepoint**: the backup time point that can be restored. Hotdb Management calculates the target time interval that can be restored currently according to the backup file information of the corresponding logicDB recorded, that is, the time point when the backup of logicDB is successful and not cleaned up (excluding the backup that is invalid due to lonfigDB modification).
+- **LogicDB:** One or more logicDB can be selected to restore.
+- **Restorable Timepoint:** the backup time point that can be restored. Hotdb Management calculates the target time interval that can be restored currently according to the backup file information of the corresponding logicDB recorded, that is, the time point when the backup of logicDB is successful and not cleaned up (excluding the backup that is invalid due to lonfigDB modification).
   You can also select to restore to any restorable time point after selecting "restore to the user-defined time point". For details, please refer to [(III) restore to the user-defined time point](#restore-to-user-defined-time-point).
-- **Full Backup to be Used**: the file information that can be restored, which is the latest full backup file by default. Deleted or invalid files are not displayed (backup files shall be fully consistent with the logicDB).
-- **Incremental Backup to be used in Restore**: Calculate the incremental backup to be used based on the selected restore time point and the full backup to be used selected by users. If there are multiple incremental backups, the latest incremental backup is displayed by default.
-- **Whether to Conduct Drop Operation for the Restored Table before Restore**: It is checked by default, otherwise the restored table shall be deleted manually. If restore is executed directly without checking this option and deleting the restored table manually, users will be prompted that the table already exists.
-- **Full Backup File Encryption Method**: Unencrypted, 3DES and AES. By default, it will be the encryption method used in full backup.
-- **Full Backup File Encryption Key**: It is not displayed when the encryption method is Unencrypted.
+- **Full Backup to be Used:** the file information that can be restored, which is the latest full backup file by default. Deleted or invalid files are not displayed (backup files shall be fully consistent with the logicDB).
+- **Incremental Backup to be used in Restore:** Calculate the incremental backup to be used based on the selected restore time point and the full backup to be used selected by users. If there are multiple incremental backups, the latest incremental backup is displayed by default.
+- **Whether to Conduct Drop Operation for the Restored Table before Restore:** It is checked by default, otherwise the restored table shall be deleted manually. If restore is executed directly without checking this option and deleting the restored table manually, users will be prompted that the table already exists.
+- **Full Backup File Encryption Method:** Unencrypted, 3DES and AES. By default, it will be the encryption method used in full backup.
+- **Full Backup File Encryption Key:** It is not displayed when the encryption method is Unencrypted.
 
-**(III) Restore to the user-defined time point**{#restore-to-user-defined-time-point}
+**(3) Restore to the user-defined time point**{#restore-to-user-defined-time-point}
 
 ![](assets/hotdb-management/image351.png)
 
@@ -3845,19 +3845,19 @@ If the configDB is backed up when backing up, the configDB is not restored in re
 
 Completed data recovery tasks can be viewed for recovery task details.
 
-- **LogicDB**: The logicDB included in the recovery.
-- **Operator**: HotDB Management user who Starts the recovery task.
-- **Task Status**: including Restore in Progress, Restore Succeeded, and Restore Failed.
-- **Restore with Full Backup**: Full backup information restored for use. Click the time link to jump to the corresponding Backup Task Details page.
-- **Restore with Incremental Backup**: Incremental backup information restored for use. Click the time link to jump to the corresponding Incremental Backup Task Details page.
-- **Restore Target Timepoint**: It displays the restore target timepoint.
-- **Start Time**: The start time of recovery task.
-- **Stop Time**: The stop/failure time of the task. The ongoing task does not display the time.
-- **Restore Compute Consuming Time**: Time consumed for restore.
-- **Node Involving Restore**: The data nodes affected by the recovery are displayed with a list of data node names.
-- **Node with Successful Restore**: The successfully restored data nodes are displayed with a list of data node names.
-- **Node with Failed Restore**: The data nodes that failed to restore are displayed with a list of data node names. Data sources under failed data nodes will be set unavailable.
-- **Detailed Log**: The restore log page displays the restore details. If there is an error in restore, the error details will be displayed.
+- **LogicDB:** The logicDB included in the recovery.
+- **Operator:** HotDB Management user who Starts the recovery task.
+- **Task Status:** including Restore in Progress, Restore Succeeded, and Restore Failed.
+- **Restore with Full Backup:** Full backup information restored for use. Click the time link to jump to the corresponding Backup Task Details page.
+- **Restore with Incremental Backup:** Incremental backup information restored for use. Click the time link to jump to the corresponding Incremental Backup Task Details page.
+- **Restore Target Timepoint:** It displays the restore target timepoint.
+- **Start Time:** The start time of recovery task.
+- **Stop Time:** The stop/failure time of the task. The ongoing task does not display the time.
+- **Restore Compute Consuming Time:** Time consumed for restore.
+- **Node Involving Restore:** The data nodes affected by the recovery are displayed with a list of data node names.
+- **Node with Successful Restore:** The successfully restored data nodes are displayed with a list of data node names.
+- **Node with Failed Restore:** The data nodes that failed to restore are displayed with a list of data node names. Data sources under failed data nodes will be set unavailable.
+- **Detailed Log:** The restore log page displays the restore details. If there is an error in restore, the error details will be displayed.
 
 If the task is in progress, the data will be refreshed regularly at a frequency of 30s/time.
 
@@ -4132,11 +4132,11 @@ The source table configuration and modification plan information cannot be modif
 
 Modification setting:
 
-- **Source table processing**: After selecting Delete after 24 hours or Delete after customized time, the source table is automatically deleted according to the set time. After selecting to reserve the source table, it will exist in the form of source table name +roYYMMDDHHMMSS. The source table will not be processed when the modification task fails. The source table can be viewed in the logicDB, but will not be displayed on the table configuration page.
-- **Batch Number of Lines**: The number of data lines replicated per batch during data replication, which shall not be more than 10,000 and not be less than 1.
-- **Replication Interval**: The interval between batches during data replication. "x times the SQL execution time" means the interval is x times the execution time of inserting a new table for each batch of replicated data. "Fixed x Second(s)" means that the interval of replication for each batch is fixed x seconds. The input range of multiples is \[0.1-100000], and the input range of seconds is \[0.001-100].
-- **Wait Timeout**: It is the time to wait for the user to make processing when the modification causes data inconsistency. If data inconsistency is not confirmed within the set time range, the modification task will automatically fail. It can be edited and modified within 7 days by default. The input box only allows input of positive integers within \[1-30].
-- **Pause Data Replication Time-frame**: During the selected time range, data replication between new and old tables is not performed and paused. The sharding modification task will be performed after the set time frame. (If the Modification Table has large Data Amount, it's recommended setting "Pause Data Replication Time-frame" to avoid the peak period)
+- **Source table processing:** After selecting Delete after 24 hours or Delete after customized time, the source table is automatically deleted according to the set time. After selecting to reserve the source table, it will exist in the form of source table name +roYYMMDDHHMMSS. The source table will not be processed when the modification task fails. The source table can be viewed in the logicDB, but will not be displayed on the table configuration page.
+- **Batch Number of Lines:** The number of data lines replicated per batch during data replication, which shall not be more than 10,000 and not be less than 1.
+- **Replication Interval:** The interval between batches during data replication. "x times the SQL execution time" means the interval is x times the execution time of inserting a new table for each batch of replicated data. "Fixed x Second(s)" means that the interval of replication for each batch is fixed x seconds. The input range of multiples is \[0.1-100000], and the input range of seconds is \[0.001-100].
+- **Wait Timeout:** It is the time to wait for the user to make processing when the modification causes data inconsistency. If data inconsistency is not confirmed within the set time range, the modification task will automatically fail. It can be edited and modified within 7 days by default. The input box only allows input of positive integers within \[1-30].
+- **Pause Data Replication Time-frame:** During the selected time range, data replication between new and old tables is not performed and paused. The sharding modification task will be performed after the set time frame. (If the Modification Table has large Data Amount, it's recommended setting "Pause Data Replication Time-frame" to avoid the peak period)
 
 After clicking the \[Submission] button, the system submits the sharding modification task to the compute node for background execution. The current execution status can be viewed on the Online Change of Sharding Plan page. After the task is completed, click the "View Results" button to view the task execution details.
 
@@ -4452,7 +4452,7 @@ Users can click \[Immediately modify] to jump to the "Security -> Password Secur
 
 Users can also click the \[No Alert] button to close the pop-up window. The window will not pop up on the next login (if there is a new database user password expiration record, the pop-up window will prompt again).
 
-**(II) Password modification**
+**(2) Password modification**
 
 ![](assets/hotdb-management/image420.png)
 
@@ -4480,7 +4480,7 @@ Users can click \[Immediately modify] to jump to the "Security -> Password Secur
 
 Users can also click the \[No Alert] button to close the pop-up window. The window will not pop up on the next login (if there is a new data source user password expiration record, the pop-up window will prompt again)
 
-**(II) Password modification**
+**(2) Password modification**
 
 ![](assets/hotdb-management/image422.png)
 
@@ -4500,7 +4500,7 @@ Batch modification can be executed through modifying multiple data source user p
 
 After executing the batch password modification tasks, the modification results will be prompted, including records of successful and failed modifications. The failed record can be viewed in the \[History Record] page for the specific reason for failure.
 
-**(III) Special instruction**
+**(3) Special instruction**
 
 - When the data source cannot be connected properly, the password modification operation will fail directly.
 - If multiple compute node clusters share one data source, users will be prompted not to modify.
@@ -4779,7 +4779,7 @@ In order to help users find the appropriate table sharding solution through the 
 
 - The SQL record switch in the "Event -> Slow Query Log Analysis" is temporarily turned off in the calculation process started by the sharding plan intelligent recommendation function.
 
-**(II) Steps for starting a recommendation**
+**(2) Steps for starting a recommendation**
 
 ![](assets/hotdb-management/image437.png)
 
@@ -5372,7 +5372,7 @@ For "License Authorization Expired" and "Abnormal License Authorization Detectio
 
 License Authorization Expired means that the current license has a certain period of validity. After checking this item, the system will send email reminder of license authorization expiration according to the license authorization monitoring setting status in Notice Setting, the notification frequency in Periodical Detection Setting, and the setting of advance notification days.
 
-**Email example**: The license authorization expiration email reminder is as follows:
+**Email example:** The license authorization expiration email reminder is as follows:
 
 ![](assets/hotdb-management/image484.png)
 
