@@ -26,14 +26,14 @@ HotDB Server Architecture Diagram
 
 The complete distributed transactional database HotDB Server cluster system contains the following components:
 
-- **Compute node**: the core of the distributed transactional database HotDB Server cluster system. It undertakes all the work related to database services and serves as the lifeblood of the whole distributed service.
-- **Management platform**: the distributed transactional database platform, also known as HotDB Management, can realize the easy-to-use configuration of database users, data nodes, table types, sharding rules and other information of compute nodes. Besides, it can provide intelligent operation and maintenance related services such as service status monitoring, exception reminder, report viewing, and task management.
-- **Data source**: the MySQL database that actually stores business data. A data source can be determined by IP, Prot, and Database. In addition, Data Node, a virtual concept in the HotDB Server cluster system, is used to describe a group of data sources with master-slave relations.
-- **Management platform ConfigDB**: MySQL database that stores metadata of management platform.
-- **Compute node ConfigDB**: MySQL database that stores metadata of compute nodes.
-- **High availability component**: the compute node of HotDB Server can cooperate with Keepalived high availability solution to realize the availability check and high availability switch of the compute node in the active standby mode.
-- **Load balancing component**: Multiple compute node clusters can choose to use LVS and other methods to distribute SQL requests. The application end can access the compute node service of HotDB Server by VIP of LVS, while ensuring the transparency of use and uninterrupted service. Other load balancing schemes can also be used for processing, such as F5 plus user-defined detection, direct connection between application and compute nodes.
-- **Backup program**: the distributed transactional database backup program developed by Hotpu technology, used for the backup of business data.
+- **Compute node:** the core of the distributed transactional database HotDB Server cluster system. It undertakes all the work related to database services and serves as the lifeblood of the whole distributed service.
+- **Management platform:** the distributed transactional database platform, also known as HotDB Management, can realize the easy-to-use configuration of database users, data nodes, table types, sharding rules and other information of compute nodes. Besides, it can provide intelligent operation and maintenance related services such as service status monitoring, exception reminder, report viewing, and task management.
+- **Data source:** the MySQL database that actually stores business data. A data source can be determined by IP, Prot, and Database. In addition, Data Node, a virtual concept in the HotDB Server cluster system, is used to describe a group of data sources with master-slave relations.
+- **Management platform ConfigDB:** MySQL database that stores metadata of management platform.
+- **Compute node ConfigDB:** MySQL database that stores metadata of compute nodes.
+- **High availability component:** the compute node of HotDB Server can cooperate with Keepalived high availability solution to realize the availability check and high availability switch of the compute node in the active standby mode.
+- **Load balancing component:** Multiple compute node clusters can choose to use LVS and other methods to distribute SQL requests. The application end can access the compute node service of HotDB Server by VIP of LVS, while ensuring the transparency of use and uninterrupted service. Other load balancing schemes can also be used for processing, such as F5 plus user-defined detection, direct connection between application and compute nodes.
+- **Backup program:** the distributed transactional database backup program developed by Hotpu technology, used for the backup of business data.
 
 ### Features
 
@@ -502,11 +502,11 @@ The management platform provides a reasonable score for the sharding plan of the
 
 **Five dimensions:**
 
-- **Score of well-distributed data amount: **Calculate the score according to whether the data distribution of each node is uniform and whether the growth is uniform
-- **Score of cross-node transaction proportion: **Calculate the score based on the proportion of cross-node transaction queries
-- **Score of SELECT operations: **Calculate the score according to whether the total queries of each node is uniform, the proportion of cross-node join queries, the proportion of single-node queries, and the proportion of queries that are routed to all nodes because they cannot be routed to the specified node.
-- **Score of IUD operations: **Calculate the score according to whether the IUD operation of each node is uniform and the single-node IUD operation proportion
-- **Score of other dimensions: **Calculate the score according to the number of times the query cannot find the node and whether the sharding key definition is reasonable.
+- **Score of well-distributed data amount:** Calculate the score according to whether the data distribution of each node is uniform and whether the growth is uniform
+- **Score of cross-node transaction proportion:** Calculate the score based on the proportion of cross-node transaction queries
+- **Score of SELECT operations:** Calculate the score according to whether the total queries of each node is uniform, the proportion of cross-node join queries, the proportion of single-node queries, and the proportion of queries that are routed to all nodes because they cannot be routed to the specified node.
+- **Score of IUD operations:** Calculate the score according to whether the IUD operation of each node is uniform and the single-node IUD operation proportion
+- **Score of other dimensions:** Calculate the score according to the number of times the query cannot find the node and whether the sharding key definition is reasonable.
 
 ![](assets/white-paper/image40.png)
 
@@ -587,8 +587,8 @@ HotDB Server supports the hot reload of configuration parameters. When updating 
 
 Management platform users, users of the distributed transactional database platform, are divided into manager users and general users.
 
-- **Manager users: **Manager users can add general users for the management platform and deploy compute node clusters. Moreover, manager users can manage the authorized compute node cluster, and support to switch the perspective of manager user role and general user role in the user information of management platform.
-- **General users: **General users are the users who actually manage the compute node cluster and have access or control privileges to the authorized compute node cluster.
+- **Manager users:** Manager users can add general users for the management platform and deploy compute node clusters. Moreover, manager users can manage the authorized compute node cluster, and support to switch the perspective of manager user role and general user role in the user information of management platform.
+- **General users:** General users are the users who actually manage the compute node cluster and have access or control privileges to the authorized compute node cluster.
 
 ###### LogicDB users
 

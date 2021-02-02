@@ -431,11 +431,11 @@ service keepalived start
 
 ##### 高可用切换检查项
 
-**（一）主备计算节点服务正常**
+**(1) 主备计算节点服务正常**
 
 **要求：**当前主计算节点服务端口（默认3323）正常开放，管理端口（默认3325）正常开放，当前备计算节点服务端口状态关闭，管理端口正常开放。
 
-**（二）主备计算节点配置文件server.xml配置正确**
+**(2) 主备计算节点配置文件server.xml配置正确**
 
 **当前主计算节点server.xml配置**
 
@@ -455,7 +455,7 @@ service keepalived start
 > 
 > 上述IP地址需填写当前主计算节点所在服务器IP地址，端口号为当前主计算节点管理端口
 
-**（三）主备keepalived配置文件keepalived.conf配置正确**
+**(3) 主备keepalived配置文件keepalived.conf配置正确**
 
 **当前主计算节点keepalived.conf配置**
 
@@ -566,17 +566,17 @@ vrrp_instance VI_1 {
 }
 ```
 
-**（四）配置校验正常**
+**(4) 配置校验正常**
 
 配置校验正常通过，可在管理平台中"配置->配置校验"菜单中检测配置库配置是否正确
 
 计算节点内存信息与配置库保持一致，可通过管理平台"动态加载"功能或登录管理端口（默认3325）执行`reload @@config`命令确保两者信息一致
 
-**（五）Keepalived程序运行正常**
+**(5) Keepalived程序运行正常**
 
 主备keepalived程序运行正常，可在主备计算节点服务器中通过`service keepalived status`命令查询
 
-**（六）Keepalived的VIP在当前主计算节点上**
+**(6) Keepalived的VIP在当前主计算节点上**
 
 在当前主计算节点服务器上执行`ip addr`显示内容包含keepalived配置的虚拟IP地址
 
@@ -750,13 +750,13 @@ vi hotdb_server
 > 
 > 以下操作说明使用的"当前备"为计算节点服务器没有VIP（keepalived虚拟IP）的计算节点，"当前主"为VIP所在的计算节点。可在主备计算节点服务器上执行"ip addr"命令查看当前VIP漂移位置，以确定当前计算节点的主备状态。
 
-**（一）停止当前备（无VIP）keepalived服务**
+**(1) 停止当前备（无VIP）keepalived服务**
 
 ```bash
 service keepalived stop
 ```
 
-**（二）当前主（有VIP）计算节点server.xml与keepalived.conf修改**
+**(2) 当前主（有VIP）计算节点server.xml与keepalived.conf修改**
 
 **当前主（有VIP）计算节点server.xml配置修改**
 
@@ -817,7 +817,7 @@ vrrp_instance VI_1 {
 }
 ```
 
-**（三）当前备（无VIP）计算节点server.xml与keepalived.conf修改**
+**(3) 当前备（无VIP）计算节点server.xml与keepalived.conf修改**
 
 **当前备计算节点server.xml配置**
 
@@ -883,7 +883,7 @@ vrrp_instance VI_1 {
 }
 ```
 
-**（四）当前主（有VIP）keepalived服务执行配置重新加载**
+**(4) 当前主（有VIP）keepalived服务执行配置重新加载**
 
 ```bash
 service keepalived reload
