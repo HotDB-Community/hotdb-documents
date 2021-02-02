@@ -86,7 +86,7 @@ window.$docsify = {
       className: "important"
     }
   },
-  
+
   markdown: {
     renderer: {
       //rowspan和colspan的渲染器
@@ -153,13 +153,13 @@ function escapeCode(html) {
   })
 }
 
-const anchorRegex = /{#([^\r\n}]+)}/g
+const anchorRegex = /([^\r\n]*?){#([^\r\n}]+)}/g
 
 //解析markdown锚点，绑定heading的id
 function resolveAnchor(html) {
-  return html.replace(anchorRegex,(s,id)=>{
-    //直接替换成隐藏锚点
-    return `<span id="${id}"></span>`
+  return html.replace(anchorRegex, (s, prefix, id) => {
+    if(prefix.startsWith("#")) return `${prefix} :id=${id}`
+    else return `${prefix}<span id="${id}"></span>`
   })
 }
 

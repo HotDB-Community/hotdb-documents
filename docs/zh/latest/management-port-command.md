@@ -1206,7 +1206,7 @@ show @@lastsql;
 | `mysqlid` | 数据节点id | `LONG/[number]` |
 | `dn_ds` | 数据节点id - 数据源id | `STRING/[number_number]` |
 | `host` | 数据源 | `STRING/[ip:port/database]` |
-| `last_executed_sql` | 在数据源`[host]`上执行的最后一条MySQL语句 | `STRING/[sql]` |
+| `last_executed_sql` | 在数据源\[host]上执行的最后一条MySQL语句 | `STRING/[sql]` |
 
 #### `show @@onlineddl` - 显示正在运行的onlineddl语句
 
