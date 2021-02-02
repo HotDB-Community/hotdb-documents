@@ -5606,18 +5606,13 @@ adaptiveProcessor参数默认为true，即开启自动适配，包括[processor]
 
 ```xml
 <property name="processors">16</property><!--处理器数-->
-```xml
 <property name="processorExecutor">4</property><!--各处理器线程数-->
-```
-
 <property name="timerExecutor">4</property><!--定时器线程数-->
-
 ```
 
 登录3325端口，执行`show @@threadpool`命令，查看当前processor、processorExecutor和timerExecutor值。例如：
 
 ```
-
 mysql> show @@threadpool;
 
 +-----------------+-----------+--------------+-----------------+----------------+------------+
@@ -5634,7 +5629,6 @@ mysql> show @@threadpool;
 | $NIOExecutor-7- | 4         | 1            | 0               | 27221          | 27222      |
 +-----------------+-----------+--------------+-----------------+----------------+------------+
 9 rows in set (0.00 sec)
-
 ```
 
 $NIOExecutor有0到7，表示当前processor=8，对应的pool_size为4，表示processorExecutor=4，TimerExecutor对应的pool_size为4，表示timerExecutor=4。
@@ -5697,7 +5691,7 @@ server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
 当计算节点版本高于（包含）2.5.3.1时，若参数allowRCWithoutReadConsistentInXA设置成0，XA模式下允许使用保证事务读写一致性的READ COMMITTED隔离级别，其行为等同于MySQL（但须注意原SQL涉及跨库查询被拆分多条语句多次查询时，会不停读到最新事务，故该模式下需尽量使用单库查询） ；若参数allowRCWithoutReadConsistentInXA设置成1，也允许XA模式下使用READ COMMITTED隔离级别，但是不能保证事务读写一致性，隔离级别实质介于READ COMMITED和READ UNCOMMITED之间，其性能优于设置成0的情况，且启动和同步加载时时会有日志提示，如下：
 
-```
+```log
 2020-03-12 15:36:03.719 [WARN][INIT][main] cn.hotpu.hotdb.a(519) -- Note that the READ COMMITTED isolation level in XA mode is essentially between READ COMMITTED and READ UNCOMMITTED at this time, which does not guarantee strong consistency of reading and writing.
 ```
 
@@ -5873,7 +5867,7 @@ mysql> show @@session;
 
 **参数设置：**
 
-server.xml中手动添加一条CheckConnValid的配置
+server.xml中手动添加一条checkConnValid的配置
 
 ```xml
 <property name="CheckConnValid">true</property>
@@ -5918,7 +5912,7 @@ server.xml中手动添加一条CheckConnValid的配置
 | 默认值 | 600000 |
 | 最小值 | 1000 |
 | 最大值 | 86400000 |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.3 |
 
 **参数设置：**
@@ -6099,8 +6093,8 @@ server.xml中clusterHost参数配置 如下配置：
 
 server.xml中clusterName参数配置 如下配置：
 
-```
-<property name="HotDB-Cluster "> HotDB-Cluster </property><!-- 集群组名称 -->
+```xml
+<property name="clusterName">HotDB-Cluster</property><!-- 集群组名称 -->
 ```
 
 **参数作用：**
@@ -6337,7 +6331,7 @@ use A;
 select count(*) from B.b;
 ```
 
-结果：Count (*)得出的结果不一定全为0或1000
+结果：`count (*)`得出的结果不一定全为0或1000
 
 ![](assets/standard/image140.png)
 
@@ -6439,7 +6433,7 @@ select * from B.b;
 | 默认值 | 120 |
 | 最小值 | 1 |
 | 最大值 | 3600 |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.3 |
 
 **参数设置：**
@@ -6466,7 +6460,7 @@ select * from B.b;
 | 默认值 | 3000 |
 | 最小值 | 0 |
 | 最大值 | 100000 |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，>2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.3 |
 
 **参数作用：**
@@ -6689,7 +6683,7 @@ server.xml的enableCursor参数：
 | 是否可见 | 是 |
 | 参数说明 | 是否开启存储节点流控 |
 | 默认值 | False |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.5 |
 
 **参数作用：**
@@ -6732,7 +6726,7 @@ mysql> show @@datasource;
 | 是否可见 | 是 |
 | 参数说明 | 是否启用心跳，是：true，否：false |
 | 默认值 | true |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.3 |
 
 | Property | Value |
@@ -6743,7 +6737,7 @@ mysql> show @@datasource;
 | 默认值 | 2 |
 | 最大值 | 60 |
 | 最小值 | 1 |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.3 |
 
 | Property | Value |
@@ -6754,7 +6748,7 @@ mysql> show @@datasource;
 | 默认值 | 500 |
 | 最大值 | 10000 |
 | 最小值 | 100 |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.3 |
 
 enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检测周期，默认值为2s，即心跳定时检测每2秒执行一次。heartbeatTimeoutMs设置心跳超时时间，默认值为500ms。
@@ -6787,7 +6781,7 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 | 是否可见 | 是 |
 | 参数说明 | 是否开启主从延迟检测 |
 | 默认值 | true |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.5 |
 
 | Property | Value |
@@ -6798,7 +6792,7 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 | 默认值 | 500 |
 | 最大值 | 1000 |
 | 最小值 | 100 |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.5 |
 
 设置主从延迟检测周期，默认值为500ms，即定时检测每500ms秒执行一次主从延迟检测。
@@ -7065,7 +7059,7 @@ mysql> select * from test3 where id in (select id from test31);
 | 是否可见 | 是 |
 | 参数说明 | 是否开启Watchdog |
 | 默认值 | False |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.5 |
 
 **参数设置：**
@@ -7078,10 +7072,9 @@ mysql> select * from test3 where id in (select id from test31);
 
 用于检测计算节点前端连接、后端连接池的异常连接及其他异常状态，检测异常后记录日志并终止连接。
 
-可以通过查看日志tail -f hotdb.log|grep "watchdog"是否已经开启：
+可以通过`tail -f hotdb.log|grep "watchdog"`查看日志是否已经开启：
 
-```
-root> cat hotdb.log|grep 'watchdog'
+```log
 2018-06-01 18:26:50.983 [WARN] [WATCHDOG] [$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TABLEB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
 2018-06-01 18:26:50.986 [WARN] [WATCHDOG] [$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table TESTB not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
 2018-06-01 18:26:50.988 [WARN] [WATCHDOG] [$NIOREACTOR-7-RW] watchdogTableCheckHandler(78) - Table JOIN_DN02 not found in watchdog table structure check in HotOB memory, but was found in MySQLConnection [node=i, id=18, threadId=199616, state=running, closed=false, autocommit=true, host=192.168.200.5q, port=3308, database=db249, localPort=51691, isClose:false, toBeclose:false]. You may need to contact HotDB administrator to get help.
@@ -7090,25 +7083,25 @@ root> cat hotdb.log|grep 'watchdog'
 
 可以通过日志查看表结构与内存中不一致检测信息：
 
-```
+```log
 2018-10-3118:46:44.834 [WARN] [WATCHDOG] [$NIOREACTOR-0-RW] WatchdogTableCheckHandler(85) - Table CCC is inconsistent in watchdog table structure check between HotDB memory and MySQL: MySQLConnection [node=20, id=299, threadId=3748, state=running, closed=false, autocommit=true, host=192.168.210.41. port=3310, database=rmb0l, localPort=58808, isClose:false, toBeClose:false]. You may need to contact HOtDB administrator to get help.
 ```
 
 可以通过日志查看配置库与内存中不一致检测信息：
 
-```
+```log
 2018-10-31 17:45:39.617 [INFO] [WATCHDOG] [Watchdog] WatchDog(500) -- HotDB user config is inconsistent between config database and HotDB memory, Logic tables are not the same in FUN_RMB. you may need to reload HotDB config to bring into effect.
 ```
 
 可以通过日志查看超过24小时未提交的事务检测信息：
 
-```
+```log
 2018-10-26 16:14:55.787 [INFO] [WATCHDOG] [$NIOREACTOR-0-RW] WatchDogLongTransactionCheckHandler(123) - Session [thread=Thread-5,id=1720,user=rmb,host=192.168.200.3,port=3323,localport=54330,schema=FUNTEST_RMB] has not been queryed for 839s. executed IUD5:[INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. binded connection:[MySQLConnection [node=11, id=1330, threadld=18085, state=borrowed, closed=false, autocommit=false, host=192.168.210.42, port=3307, database=db251, localPort=15722, isCiose:false, toBeClose:false] lastSQL:INSERT INTO rmb_cbc VALUES (tuanjian, 4000)]. innodb_trx:[(ds:11 trx_id:25765462 trx_state:RUNNING trx_started:2018-10-26 16:00:56 trx_requested_lock_id:NULL trx_wait_started:NULL trx_weight:2 trx_mysql._thread_id:18085 trx_query:NULL trx_operation_state:NULL trx_tables_in_use:0 trx_tables_locked:1 trx_lock_structs:1 trx_lock_memory_bytes:1136 trx_rows_locked:0 trx_rows_modified:1 trx_concurrency_tickets:0 trx_isolation_level:REPEATABLE READ trx_unique_checks:1 trx_foreign_key_checks:1 trx_last_foreign_key_error:NULL trx_adaptive_hash_latched:0 trx_adaptive_hash_timeout:0 trx_is_read_only:0 trx_autocommit_non_locking:0 )]. we will close this session now.
 ```
 
 可以通过日志查看存储节点切换检测信息：
 
-```
+```log
 2018-10-26 19:29:01.146 [INFO] [MANAGER] [Labor-478] HotdbConfig(2164) - reload config successfully for connection:[thread=Labor-478,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440.schema=null]
 2018-10-26 19:30:24.384 [INFO] [FAILOVER] [$NlOExecutor-7-2] SwitchDataSource(111) - received switch datasource 24 command from Manager: [thread=$NIOExecutor-7-2,id=1609,user=root,host=192.168.200.2,port=3325,localport=57440,schema=null]
 2018-10-26 19:30:24.387 [WARN] [RESPONSE] [Labor-484] InitSequenceHandler(270) - FUN_RMB.BC's sequence in Backup datasource: 25 is greater than current sequence
@@ -7286,7 +7279,7 @@ mysql> select * from ss where id=1;
 | 默认值 | 10000ms |
 | 最小值 | 2000ms |
 | 最大值 | 600000ms |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.5 |
 
 **参数作用：**
@@ -7459,7 +7452,7 @@ haState与haNodeHost属于配套参数。
 | 默认值 | 32 |
 | 最小值 | 1 |
 | 最大值 | 2048 |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.3 |
 
 **参数作用：**
@@ -7624,7 +7617,7 @@ Current database: INFORMATION_SCHEMA
 
 该参数可以控制分片表之间的JOIN等，通过关联条件与分片字段的信息，可判断出不是可以直接下发的单库JOIN查询时，相关的JOIN语句是否可执行。在全局表JOIN和垂直分片表JOIN的情况下，这个参数开启不会有对应限制。
 
-将joinable设置为false，在该环境下执行语句，报错ERROR 1064 (HY000): joinable is not configured.
+将joinable设置为false，在该环境下执行语句，报错`ERROR 1064 (HY000): joinable is not configured`.
 
 ```
 mysql> select * from join_cross_a_jwy a inner join join_cross_b_jwy b on a.adnid between 108 and 110;
@@ -7676,8 +7669,8 @@ mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept lim
 
 此时执行：
 
-```
-mysql> select b.* from customer_auto_1 a join customer_auto_3 b on a.id=b.id where a.postcode=123456;
+```sql
+select b.* from customer_auto_1 a join customer_auto_3 b on a.id=b.id where a.postcode=123456;
 ```
 
 查看general_log实际执行效果如下：
@@ -7751,8 +7744,8 @@ root> ll
 
 例如： joinLoopSize设置为1000。bn_a_jwy为auto分片表，分片字段为id，bn_b_jwy为match分片表，分片字段为a，bn_c_jwy为auto分片表，分片字段为a，三张表的数据量都为2w。
 
-```
-mysql> select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 9000;
+```sql
+select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 9000;
 ```
 
 查看实际general_log执行效果：
@@ -7994,7 +7987,7 @@ mysql> show variables like '%max_user_connections%;
 <property name="maxIdleTransactionTimeout">864000000</property>
 ```
 
-maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示事务内最后一次SQL完成后超过24小时未提交事务，则判定为超时事务，HotDB在hotdb.log中以`[INFO] [WATCHDOG] WatchDogLongTransactionCheckHandler`标签记录连接IP、端口、用户名、逻辑库、lastsql、是否autocommit、后端连接的innodb_trx等信息，并关闭连接，自动回滚事务。
+maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示事务内最后一次SQL完成后超过24小时未提交事务，则判定为超时事务，HotDB在`hotdb.log`中以`[INFO] [WATCHDOG] WatchDogLongTransactionCheckHandler`标签记录连接IP、端口、用户名、逻辑库、lastsql、是否autocommit、后端连接的innodb_trx等信息，并关闭连接，自动回滚事务。
 
 参数仅在enableWatchdog=true时生效。Watchdog中maxIdleTransactionTimeout每10分钟检测一次，在Watchdog对maxIdleTransactionTimeout的检测中判断连接的事务空闲时间，如果超出设定的阈值，则关闭连接；故实际的事务空闲时间不等于设定的阈值。
 
@@ -8043,11 +8036,23 @@ mysql> show variables like '%max_join_size%;
 +---------------+-------+
 | max_join_size | 5000  |
 +---------------+-------+
-
-mysql> set session max_join_size=1; # 为方便测试，此处将参数设置为1，生产环境推荐最小值为1000
+ 
+mysql> set global max_user_connections = 1000;
 
 Query OK, 0 rows affected (0.00 sec)
 
+mysql> show variables like '%max_user_connections%;
+
++----------------------+------------+
+| variable_name        | value      |
++----------------------+------------+
+| max_user_connections | 2124000000 |
++----------------------+------------+
+
+mysql> set session max_join_size=1;
+
+Query OK, 0 rows affected (0.00 sec)
+ 
 mysql> show variables like '%max_user_connections%;
 
 +----------------------+-------+
@@ -8138,7 +8143,7 @@ server.xml中maxNotInSubquery参数配置 如下配置：
 控制子查询中最大NOT IN个数，默认20000，当执行的SQL语句中NOT IN子查询为分片表且带有聚合函数，此时去重后的NOT IN个数超过默认值20000时，HotDB会限制该SQL执行，并给出ERROR提示
 
 ```
-(ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml）。
+(ERROR 1104 (HY000): The sub SELECT would examine more than maxNotInSubquery rows; check your maxNotInSubquery in server.xml）
 ```
 
 例如：（为方便测试，设置maxNotInSubquery 为10）
@@ -8389,7 +8394,7 @@ recordSQLForward
 recordSqlAuditlog
 ```
 
-计算节点工作模式为隐藏参数，默认为正常模式，即operateMode=0，在启动计算节点时会在hotdb.log内输出相应的日志信息，如下所示：
+operateMode为隐藏参数，默认为正常模式，即operateMode=0，在启动计算节点时会在hotdb.log内输出相应的日志信息，如下所示：
 
 ![](assets/standard/image147.png)
 
@@ -8401,9 +8406,7 @@ recordSqlAuditlog
 
 在性能最大化模式下，计算节点会主动将影响计算节点性能的参数强制关闭，例如：
 
-```
-recordSql=false,recordSQLSyntaxError=false,recordCrossDNJoin=false,recordUNION=false,recordSubQuery=false,recordDeadLockSQL=false,recordLimitOffsetWithoutOrderby=false,recordSQLKeyConflict=false,recordSQLUnsupported=false,recordMySQLWarnings=false,recordMySQLErrors=false,recordHotDBWarnings=false,recordHotDBErrors=false,recordDDL=false,recordSQLIntercepted=false,recordAuditlog=false,recordSQLForward=false,recordSqlAuditlog=false，即使server.xml文件中配置这些参数为true。
-```
+prefetchBatchMax
 
 当计算节点工作模式为调试模式时，计算节点会在hotdb.log中输出相应的信息，如下所示：
 
@@ -8427,7 +8430,7 @@ recordSql=true,recordSQLSyntaxError=true,recordCrossDNJoin=true,recordUNION=true
 | 默认值 | 100000 |
 | 最大值 | 1000000 |
 | 最小值 | 1000 |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.3 |
 
 **参数设置：**
@@ -8647,7 +8650,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 此参数用于设置计算节点内部线程池里的每处理器线程各自的执行线程数。参数[adaptiveProcessor](#adaptiveprocessor)默认开启，开启时将由计算节点自动适配最大processorExecutor数。
 
-登录3325端口，执行show @@threadpool;命令，可查看当前processorExecutor数。
+登录3325端口，执行`show @@threadpool`命令，可查看当前processorExecutor数。
 
 #### Processors
 
@@ -8697,15 +8700,19 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数作用：**
 
-用于设置当前计算节点为只读模式，在readonly模式下，计算节点只接收DQL（SELECT语句）操作，及SET命令行和SHOW类型操作，拒绝执行DDL（CREATE TABLE/VIEW/INDEX/SYN/CLUSTER语句）、DML（INSERT，UPDATE，DELETE）和`DCL（GRANT，ROLLBACK [WORK] TO [SAVEPOINT]，COMMIT`）等修改性操作命令
+用于设置当前计算节点为只读模式，在readonly模式下，计算节点只接收DQL（SELECT语句）操作，及SET命令行和SHOW类型操作，拒绝执行DDL（CREATE TABLE/VIEW/INDEX/SYN/CLUSTER）、DML（INSERT，UPDATE，DELETE）和DCL（GRANT，ROLLBACK \[WORK] TO \[SAVEPOINT]，COMMIT）等修改性操作命令
 
-**注意事项：**该参数仍然是为单计算节点服务提供的，不允许多计算节点同时提供服务，也即不允许同时开启多个计算节点并同时对外进行服务。
+> !Note
+>
+> 该参数仍然是为单计算节点服务提供的，不允许多计算节点同时提供服务，也即不允许同时开启多个计算节点并同时对外进行服务。
 
 开启状态：
 
+```
 mysql> drop table customer;
 
 ERROR 1289 (HY000): Command not allowed in Read-Only mode.
+```
 
 #### recordAuditlog
 
@@ -8763,9 +8770,8 @@ recordCrossDNJoin记录跨库的JOIN语句。
 
 建表：
 
-account表auto_crc32分片，分片字段 id，节点1
-
-borrower表auto_mod分片，分片字段id，节点2
+- account表auto_crc32分片，分片字段 id，节点1
+- borrower表auto_mod分片，分片字段id，节点2
 
 执行如下：
 
@@ -8773,7 +8779,7 @@ borrower表auto_mod分片，分片字段id，节点2
 mysql> SELECT * FROM account a JOIN borrower b;
 ```
 
-查看计算节点安装目录的/logs/sql.log日志。
+查看计算节点安装目录的`logs/sql.log`日志。
 
 ```log
 2018-05-22 16:17:11.607 [INFO] [CROSSDNJOIN] [$NIOExecutor-6-2] JoinVisitor(4947) -- SELECT * FROM account a JOIN borrower b
@@ -8812,7 +8818,7 @@ recordDDL日志中记录DDL语句，执行如下语句：
 mysql> create table abc(id int);
 ```
 
-查看计算节点安装目录的/logs/sql.log日志：
+查看计算节点安装目录的`logs/sql.log`日志：
 
 ```log
 2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique}
@@ -8923,7 +8929,7 @@ recordHotDBWarnings记录计算节点返回的警告信息，举例如下：
 create table abc(id int);
 ```
 
-查看计算节点安装目录的/logs/sql.log日志：
+查看计算节点安装目录的`logs/sql.log`日志：
 
 ```log
 2018-05-23 14:23:52.697 [INFO] [HOTDBWARNING] [$NIOExecutor-6-2] ServerConnection(2368) -- sql: create table abc(id int), warning: {Create table without primary key and unique}
@@ -8965,7 +8971,7 @@ recordLimitOffsetWithoutOrderby记录无orderby的limit语句。
 mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b ) limit 1,3;
 ```
 
-查看计算节点安装目录的/logs/sql.log日志
+查看计算节点安装目录的`logs/sql.log`日志
 
 ```log
 2018-05-23 14:05:14.915 [INFO] [LIMITOFFSETWITHOUTORDERBY] [$NIOExecutor-6-l] SubqueryExecutor(97) - sql: select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b) limit 1,3
@@ -9048,7 +9054,7 @@ recordMySQLWarnings记录MySQL返回的警告信息。
 mysql> update account set Account_number="$!''##";
 ```
 
-查看计算节点安装目录的/logs/sql.log日志：
+查看计算节点安装目录的`logs/sql.log`日志：
 
 ```log
 2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) --- sql: UPDATE account SET Account_number = '*$!''##', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
@@ -9084,17 +9090,15 @@ mysql> update account set Account_number="$!''##";
 
 是否统计记录SQL的执行情况。
 
-1.通过管理平台操作日志智能分析页面查看：
+1. 通过管理平台操作日志智能分析页面查看：
 
-- 关闭状态
+    - 关闭状态
+      ![](assets/standard/image150.png)
+    
+    - 开启并允许一段时间后
+      ![](assets/standard/image151.png)
 
-![](assets/standard/image150.png)
-
-- 开启并允许一段时间后
-
-![](assets/standard/image151.png)
-
-2.通过server配置库查看SQL执行统计情况
+2. 通过server配置库查看SQL执行统计情况
 
 ```
 mysql> select * from hotdb_query_records order by db_id limit 1G
@@ -9177,22 +9181,22 @@ server.xml的recordSqlAuditlog参数默认false：
 > !Note
 >
 > 日志输出为json格式，特殊字符如双引号采用进行转义，json中部分key代表的含义如下：
-
-- `sql_type` - 当前执行SQL的类型，包括：DDL/DML/DQL/OTHER。
-- `sql_subtype` - 当前执行SQL类型的子类,其中 DDL包括CREARE/ALTER/DROP/TUNCATE/RENAME；DQL包括SELECT；DML包括UPDATE/DELETE/INSERT/REPLACE/LOAD；OTHER包括SET/PREPARE/TRANSACTION/SHOW。
-- `ip` - 执行SQL的客户端IP地址。
-- `time` - 执行SQL的时间。
-- `user` - 连接计算节点执行SQL的用户（包括主机名）。
-- `host` - 连接计算节点所指定的host值。
-- `logic_db` - 连接计算节点执行SQL所use 的逻辑库。
-- `connection_id` - 执行SQL所使用的前端连接ID。
-- `command` - 具体执行SQL的语句（SQL原语句）。
-- `query_rows` - 返回的数据行数（主要体现在SELECT操作上）。
-- `affected_rows` - SQL执行受影响的行数。
-- `matched_rows` - SQL执行匹配的行数。
-- `status` - SQL执行结果是成功还是失败，失败为0 ，成功为1。
-- `failed_reason` - SQL执行失败的原因。
-- `end_time` - SQL执行结束时间。
+> 
+> - `sql_type` - 当前执行SQL的类型，包括：DDL/DML/DQL/OTHER。
+> - `sql_subtype` - 当前执行SQL类型的子类,其中 DDL包括CREARE/ALTER/DROP/TUNCATE/RENAME；DQL包括SELECT；DML包括UPDATE/DELETE/INSERT/REPLACE/LOAD；OTHER包括SET/PREPARE/TRANSACTION/SHOW。
+> - `ip` - 执行SQL的客户端IP地址。
+> - `time` - 执行SQL的时间。
+> - `user` - 连接计算节点执行SQL的用户（包括主机名）。
+> - `host` - 连接计算节点所指定的host值。
+> - `logic_db` - 连接计算节点执行SQL所use 的逻辑库。
+> - `connection_id` - 执行SQL所使用的前端连接ID。
+> - `command` - 具体执行SQL的语句（SQL原语句）。
+> - `query_rows` - 返回的数据行数（主要体现在SELECT操作上）。
+> - `affected_rows` - SQL执行受影响的行数。
+> - `matched_rows` - SQL执行匹配的行数。
+> - `status` - SQL执行结果是成功还是失败，失败为0 ，成功为1。
+> - `failed_reason` - SQL执行失败的原因。
+> - `end_time` - SQL执行结束时间。
 
 #### recordSQLIntercepted
 
@@ -9219,7 +9223,7 @@ server.xml中recordSQLIntercepted参数如下配置：
 
 recordSQLIntercepted记录被拦截的SQL语句，拦截的语句配置在中间件管理平台->安全->SQL防火墙。
 
-查看计算节点安装目录的/logs/sql.log日志：
+查看计算节点安装目录的`logs/sql.log`日志：
 
 ```log
 2018-06-01 14:17:45.669 [INFO] [SQLINTERCEPTED] [$NIOExecutor-1-2] g(-1) -- sql: DELETE FROM sql_intercept_tab, user:zy, ip: 192.168.200.45, db: TEST_JZL, intercepted by filewall: not allowed to execute delete without where expression
@@ -9256,25 +9260,25 @@ recordSQLKeyConflict记录主键冲突、违反外键约束的语句。
 
 举例如下：
 
-建表：
+1. 建表：
 
 ```
 mysql> CREATE TABLE `vtab001` (`id` int(11) NOT NULL,`name` varchar(255) DEFAULT NULL,PRIMARY KEY (`id`));
 ```
 
-执行一次插入语句：
+2. 执行一次插入语句：
 
 ```
 mysql> insert into vtab001 values(1,'aaa');
 ```
 
-再次执行使之违反主键约束：
+3. 再次执行使之违反主键约束：
 
 ```
 mysql> insert into vtab001 values(1,'aaa');
 ```
 
-查看计算节点安装目录的/logs/sql.log日志：
+4. 查看计算节点安装目录的`logs/sql.log`日志：
 
 ```log
 2018-06-01 14:09:47.139 [INFO] [SQLKEYCONFLICT] [$NIOREACTOR-1-RW] MySQLConnection(65) -- sql: insert into vtab001 values(1,'aaa'), error response from MySQLConnection [node=1, id=19, threadId=121339, state=borrowed, closed=false, autocommit=true, host=192.168.220.102, port=3306, database-db249, localPort=56158, isclose:false, toBeclose:false], err: Duplicate entry '1' for key 'PRIMARY', CODE: 1062
@@ -9313,7 +9317,7 @@ recordSQLSyntaxError记录语法错误的SQL。
 
 mysql> SELECT * FROM;
 
-查看计算节点安装目录的/logs/sql.log日志：
+查看计算节点安装目录的`logs/sql.log`日志：
 
 ```log
 2018-05-22 16:12:42.686 [INFO] [SQLSYNTAXERROR] [$NIOExecutor-6-3] ServerConnection(671) - SELECT * FROM
@@ -9403,7 +9407,7 @@ recordSubQuery记录子查询。
 mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b );
 ```
 
-查看计算节点安装目录的/logs/sql.log日志：
+查看计算节点安装目录的`logs/sql.log`日志：
 
 ```
 2018-05-23 13:56:11.714 [INFO] [SUBQUERY] [$NIOExecutor-6-0] SubqueryExecutor(169) -- select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM branch b )
@@ -9444,7 +9448,7 @@ recordUNION记录UNION语句。
 mysql> SELECT * FROM trends UNION SELECT * from trends_uint;
 ```
 
-查看计算节点安装目录的/logs/sql.log日志：
+查看计算节点安装目录的`logs/sql.log`日志：
 
 ```log
 2018-05-23 13:30:27.156 [INFO] [UNION] [$NIOREACTOR-5-RW] UnionExecutor(162) - SELECT * FROM trends UNION SELECT * from trends_uint
@@ -9584,7 +9588,7 @@ Rows matched: 1 Changed: 1 Warnings: 0
 | 是否可见 | 否 |
 | 参数说明 | 控制是否跳过表结构中对列数据类型的校验 |
 | 默认值 | false |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.5 |
 
 **参数设置：**
@@ -9658,7 +9662,7 @@ Query OK, 0 rows affected (0.23 sec)
 | 默认值 | 3600 |
 | 最小值 | 1 |
 | 最大值 | 28800 |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.3 |
 
 **参数作用：**
@@ -9724,7 +9728,7 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 | 默认值 | 0 不持久化 |
 | 最小值 | 0 |
 | 最大值 | 3600000 |
-| Reload是否生效 | 2.4.5版本为N， 2.4.7及以上为Y |
+| Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本 | 2.4.3 |
 
 **参数作用：**
