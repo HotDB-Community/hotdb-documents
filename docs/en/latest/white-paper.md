@@ -75,7 +75,7 @@ The acquisition performance of global auto-incremental sequence is greater than 
 
 > !Note
 > 
-> The TPS mentioned above is simple TPS. The above performance indicators are based on the following: using the highest configuration hardware specification described in Distributed Transactional Database HotDB Server Hardware Configuration Recommendation; installing and deploying the HotDB Server in a standardized way and perform the tuning described in Performance Test Report For Single Compute Node Basic Scenario of HotDB Server; with no less than 12 data nodes; no performance bottleneck appears in the data source server\\MySQL instance.
+> The TPS mentioned above is simple TPS. The above performance indicators are based on the following: using the highest configuration hardware specification described in [Hardware Config Recommendation](hardware-config-recommendation.md) document, installing and deploying the HotDB Server in a standardized way and perform the tuning described in Performance Test Report For Single Compute Node Basic Scenario of HotDB Server; with no less than 12 data nodes; no performance bottleneck appears in the data source server/MySQL instance.
 
 #### Strong transparency
 

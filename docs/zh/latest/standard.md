@@ -2,7 +2,7 @@
 
 ## 基本信息
 
-此手册基于分布式事务数据库产品 HotDB Server - V2.5.6版本编写，主要说明计算节点的基本使用方法及操作流程，供使用者参考与学习。
+此手册基于**分布式事务数据库产品 HotDB Server - V2.5.6版本**编写，主要说明计算节点的基本使用方法及操作流程，供使用者参考与学习。
 
 此手册中部分功能可结合分布式事务数据库平台（以下简称管理平台）共同使用，若需了解管理平台的使用方法，请参考[管理平台](hotdb-management.md)文档。
 
@@ -125,7 +125,7 @@ mysql> show tables;
 
 #### 管理平台
 
-管理平台为计算节点提供用户信息、节点信息、表信息、分片等信息的配置，默认端口为3324，在浏览器中输入HTTP链接地址，即可访问管理平台（建议使用Chrome或者FireFox浏览器），如：http://*192.168.200.191:3324*/login，访问页面如下所示：
+管理平台为计算节点提供用户信息、节点信息、表信息、分片等信息的配置，默认端口为3324，在浏览器中输入HTTP链接地址，即可访问管理平台（建议使用Chrome或者FireFox浏览器），如：`http://192.168.200.191:3324/login`，访问页面如下所示：
 
 ![](assets/standard/image5.png)
 
@@ -9315,7 +9315,9 @@ recordSQLSyntaxError记录语法错误的SQL。
 
 例如：
 
-mysql> SELECT * FROM;
+```sql
+SELECT * FROM;
+```
 
 查看计算节点安装目录的`logs/sql.log`日志：
 
@@ -9553,7 +9555,7 @@ server.xml中serverId参数如下配置：
 
 showAllAffectedRowsInGlobalTable参数设置为true后，全局表执行insert,delete,update相关的SQL语句,结果将显示所有影响到的行数总和。
 
-例如：全局表join_c06_ct关联8个节点，执行该条SQL语句实际数据更新1条，将该参数设置为true时，结果将显示影响到的行数为8（即：更新行数*影响节点数）。
+例如：全局表join_c06_ct关联8个节点，执行该条SQL语句实际数据更新1条，将该参数设置为true时，结果将显示影响到的行数为8（即：更新行数\*影响节点数）。
 
 ```
 mysql> delete from join_us06_ct where id = 8;
@@ -9569,9 +9571,11 @@ mysql> insert into join_us06_ct values (8,6,1.3,1.4,'y','u',now(),now(),2017);
 
 Query OK, 8 rows affected (0.01 sec)
 Records: 8 Duplicates: 0 Warnings: 0
+```
 
 将该参数设置为false时，只显示影响的行数，有如下提示:
 
+```
 mysql> update join_us06_ct set e = 'm' where id =4;
 
 Query OK, 1 rows affected (0.10 sec)
@@ -9677,15 +9681,6 @@ mysql> select a.*,b.*,c.* from customer_auto_3 a join customer_auto_1 b on a.pos
 ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a new transaction started automatically
 ```
 
-| Property | Value |
-|------------|-----------|
-| 参数值 | sslUseSM4 |
-| 是否可见 | 否 |
-| 参数说明 | 是否支持国密算法 |
-| 默认值 | 否 |
-| Reload是否生效 | 是 |
-| 最低兼容版本 | 2.5.5 |
-
 #### sslUseSM4
 
 **参数说明：**
@@ -9710,11 +9705,14 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 **参数作用：**
 
 在server.xml中打开enableSSL和sslUseSM4开关，可以使客户端访问计算节点的过程处于国密验证的加密状态。
+
 ![](assets/standard/image152.png)
 
 该功能对于用户来说只能通过抓包查看，示例：抓包可见TLS握手包中存在HotDB Server国密SM4定义的加密套件编号：0xff01，说明SM4加解密套件已生效。
-![](assets/standard/image153.png "fig:")
-![](assets/standard/image154.png "fig:")
+
+![](assets/standard/image153.png)
+
+![](assets/standard/image154.png)
 
 #### statisticsUpdatePeriod
 
@@ -9942,71 +9940,71 @@ server.xml的switchoverTimeoutForTrans参数设置 如下图:
 
 例如：
 
-1.设置[switchoverTimeoutForTrans](#switchovertimeoutfortrans)超时时间36000ms。
+1. 设置switchoverTimeoutForTrans超时时间36000ms。
 
-2.开启事务执行插入操作，手动执行主备切换，在36000ms内提交事务。提交成功如下：
+2. 开启事务执行插入操作，手动执行主备切换，在36000ms内提交事务。提交成功如下：
 
-```
-mysql> begin;
+    ```
+    mysql> begin;
+    
+    Query OK, 0 rows affected (0.00 sec)
+    
+    mysql> insert into TEST_001 values(1);
+    
+    Query OK, 0 rows affected (0.00 sec)
+    
+    mysql> commit;
+    
+    Query OK, 0 rows affected (0.00 sec)
+    
+    mysql> select * from TEST_001;
+    
+    +----+
+    | id |
+    +----+
+    | 1  |
+    +----+
+    1 row in set (0.01 sec)
+    ```
+    
+    提交事务后查询到id=1
 
-Query OK, 0 rows affected (0.00 sec)
-
-mysql> insert into TEST_001 values(1);
-
-Query OK, 0 rows affected (0.00 sec)
-
-mysql> commit;
-
-Query OK, 0 rows affected (0.00 sec)
-
-mysql> select * from TEST_001;
-
-+----+
-| id |
-+----+
-| 1  |
-+----+
-1 row in set (0.01 sec)
-```
-
-提交事务后查询到id=1
-
-3.开启事务执行插入操作，手动执行主备切换，超过36000 ms事务未提交，由于提交超时，事务回滚如下：
-
-```
-mysql> begin;
-
-Query OK, 0 rows affected (0.00 sec)
-
-mysql> insert into TEST_001 values(2);
-
-Query OK, 0 rows affected (0.00 sec)
-```
-
-一分钟后执行查询语句：
-
-```
-mysql> select * from TEST_001;
-
-ERROR 2013 (HY000): Lost connection to MySQL server during query
-ERROR 2016 (HY000): MySQL server has gone away
-No connection. Trying to reconnect...
-Connection id: 40672
-Current database: test_jzl
-```
-
-重新登录后查询，发现事务没有提交：
-
-```
-mysql> select * from TEST_001;
-
-+----+
-| id |
-+----+
-| 1  |
-+----+
-1 row in set (0.01 sec)
-```
+3. 开启事务执行插入操作，手动执行主备切换，超过36000 ms事务未提交，由于提交超时，事务回滚如下：
+    
+    ```
+    mysql> begin;
+    
+    Query OK, 0 rows affected (0.00 sec)
+    
+    mysql> insert into TEST_001 values(2);
+    
+    Query OK, 0 rows affected (0.00 sec)
+    ```
+    
+    一分钟后执行查询语句：
+    
+    ```
+    mysql> select * from TEST_001;
+    
+    ERROR 2013 (HY000): Lost connection to MySQL server during query
+    ERROR 2016 (HY000): MySQL server has gone away
+    No connection. Trying to reconnect...
+    Connection id: 40672
+    Current database: test_jzl
+    ```
+    
+    重新登录后查询，发现事务没有提交：
+    
+    ```
+    mysql> select * from TEST_001;
+    
+    +----+
+    | id |
+    +----+
+    | 1  |
+    +----+
+    1 row in set (0.01 sec)
+    ```
 
 #### timerExecutor
 
@@ -10031,7 +10029,7 @@ mysql> select * from TEST_001;
 
 **参数作用：**
 
-参数[adaptiveProcessor](#adaptiveprocessor)默认开启，开启时将由计算节点自动适配最大timerExecutor数。登录3325端口，执行show @@threadpool;命令，可查看当前timerExecutor数。
+参数[adaptiveProcessor](#adaptiveprocessor)默认开启，开启时将由计算节点自动适配最大timerExecutor数。登录3325端口，执行`show @@threadpool;`命令，可查看当前timerExecutor数。
 
 #### timestampProxy
 
@@ -10097,19 +10095,18 @@ unusualSQLMode属隐藏参数，若要开启，需通过管理平台"更多参�
 
 1. 设置为1时：记录所有unusualSQL类型的日志与计数信息,每触发一次都输出对应日志信息且计数器加1。
 
-    日志同时记录计数器和SQL的场景：
+    **日志同时记录计数器和SQL的场景：**
     
-    1) 第一次触发时日志：
+    1. 第一次触发时日志：
     
-    ```
+    ```log
     2021-01-13 14:26:46.564 [INFO] [UNUSUALSQL] [$I-NIOExecutor-7-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-7-0,id=169,user=root,host=192.168.240.142,port=3323,localport=26672,schema=CC]; backend:MySQLConnection [node=2, id=247, threadId=27213, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=58336, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"lili"); backend_sql:null] [CC.SUCCESS.count]=1
     ```
     
-    2) 第二次触发时日志：
+    2. 第二次触发时日志：
     
-    ```
+    ```log
     2021-01-13 14:27:38.159 [INFO] [UNUSUALSQL] [$I-NIOExecutor-0-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-0-0,id=169,user=root,host=192.168.240.142,port=3323,localport=26672,schema=CC]; backend:MySQLConnection [node=2, id=298, threadId=27230, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=58370, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"haha"); backend_sql:null] [CC.SUCCESS.count]=2
-    
     ```
     
     后续每一次触发该类计数器，对应日志都正常输出。
@@ -10133,19 +10130,19 @@ unusualSQLMode属隐藏参数，若要开启，需通过管理平台"更多参�
 
     日志同时记录计数器和SQL的场景：
     
-    1) 第一次触发时日志：
+    1. 第一次触发时日志：
     
     ```
     2021-01-13 14:48:55.314 [INFO] [UNUSUALSQL] [$I-NIOExecutor-6-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-6-0,id=106,user=root,host=192.168.240.142,port=3323,localport=27698,schema=CC]; backend:MySQLConnection [node=2, id=262, threadId=27511, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=59424, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"zhang"); backend_sql:null] [CC.SUCCESS.count]=1
     ```
     
-    2) 第二次触发时：无对应日志输出
+    2. 第二次触发时：无对应日志输出
     
-    3) 第三次触发时：无对应日志输出
+    3. 第三次触发时：无对应日志输出
     
     后续该类计数器每一次触发，都不再有对应日志输出。
     
-    无日志输出、只在接口统计计数器的场景：
+    **无日志输出、只在接口统计计数器的场景：**
     
     每一次触发，计数器都正常统计。
     
@@ -10162,23 +10159,23 @@ unusualSQLMode属隐藏参数，若要开启，需通过管理平台"更多参�
 
 3. 当该参数设置为N（N>1）时：记录所有unusualSQL类型的日志与计数信息，但其日志信息只在每统计满N时输出一次日志，总出现次数依旧可以通过show @@unusualsqlcount结果查看 （此处以N为3进行测试）
 
-    日志里面同时记录计数器和SQL的场景：
+    **日志里面同时记录计数器和SQL的场景：**
     
-    1) 第一次触发：无对应日志输出
+    1. 第一次触发：无对应日志输出
     
-    2) 第二次触发：无对应日志输出
+    2. 第二次触发：无对应日志输出
     
-    3) 第三次触发时日志
+    3. 第三次触发时日志
     
     ```
     2021-01-13 15:10:47.953 [INFO] [UNUSUALSQL] [$I-NIOExecutor-4-2] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-4-2,id=100,user=root,host=192.168.240.142,port=3323,localport=28882,schema=CC]; backend:MySQLConnection [node=2, id=253, threadId=27759, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=60634, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"log"); backend_sql:null] [CC.SUCCESS.count]=3
     ```
     
-    4) 第四次触发：无对应日志输出
+    4. 第四次触发：无对应日志输出
     
     后续每当该类计数器统计满3时都会输出对应日志一次。
     
-    无日志输出、只在接口统计计数器的场景：
+    **无日志输出、只在接口统计计数器的场景：**
     
     每一次触发，计数器都正常统计。
     
@@ -10291,11 +10288,10 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 
 用于设置当前计算节点是否启用AIO。
 
-AIO：异步非阻塞，服务器实现模式为一个有效请求创建一个线程，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处理，IO方式适用于连接数目多且连接比较长（重操作）的架构。由于目前Linux上AIO的实现尚未完成，计算节点对AIO的优化也远远不如NIO，建议不要开启这个参数**。**
+AIO：异步非阻塞，服务器实现模式为一个有效请求创建一个线程，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处理，IO方式适用于连接数目多且连接比较长（重操作）的架构。由于目前Linux上AIO的实现尚未完成，计算节点对AIO的优化也远远不如NIO，建议不要开启这个参数。
 
 ```
 root> tail -n 300 hotdb.log | grep 'aio'
-
 2018-06-01 13:51:18.961 [INFO] [INIT] [main] j(-1) -- using aio network handler
 2018-06-01 13:52:19.644 [INFO] [INIT] [main] j(-1) -- using aio network handler
 ```
@@ -10309,7 +10305,7 @@ root> tail -n 300 hotdb.log | grep 'aio'
 | 参数值 | version |
 | 是否可见 | 隐藏 |
 | 参数说明 | 计算节点对外显示的版本号 |
-| 默认值 | 与计算节点show @@version 的结果同步，例如：5.6.29-HotDB-2.5.1。 |
+| 默认值 | 与计算节点`show @@version`的结果同步，例如：5.6.29-HotDB-2.5.1。 |
 | Reload是否生效 | 是 |
 | 最低兼容版本 | 2.4.3 |
 
@@ -10408,23 +10404,23 @@ Server version: 5.7.23 hotpu
 > !Note
 >
 > 连接后的status结果及客户端连接计算节点时的提示信息均会同步按照版本备注信息显示。例如：
-
-```
-root@192.168.210.49:(none) 5.7.23 08:41:42> status;
---------------
-mysql Ver 14.14 Distrib 5.7.21, for linux-glibc2.12 (x86_64) using EditLine wrapper
-Connection id: 444
-Current database:
-Current user: root@192.168.210.49
-SSL: Not in use
-Current pager: stdout
-Using outfile: ''
-Using delimiter: ;
-Server version: 5.7.23 hotpu
-Protocol version: 10
-Connection: 192.168.210.49 via TCP/IP
-......
-```
+> 
+> ```
+> root@192.168.210.49:(none) 5.7.23 08:41:42> status;
+> --------------
+> mysql Ver 14.14 Distrib 5.7.21, for linux-glibc2.12 (x86_64) using EditLine wrapper
+> Connection id: 444
+> Current database:
+> Current user: root@192.168.210.49
+> SSL: Not in use
+> Current pager: stdout
+> Using outfile: ''
+> Using delimiter: ;
+> Server version: 5.7.23 hotpu
+> Protocol version: 10
+> Connection: 192.168.210.49 via TCP/IP
+> ......
+> ```
 
 #### VIP & checkVIPPeriod
 
@@ -10505,8 +10501,7 @@ virtual_ipaddress {
 2019-12-19 15:09:03.340 [INFO] [INIT] [Labor-7] cn.hotpu.hotdb.c(1808) - HotDB-Server listening on 3323
 2019-12-19 15:09:03.340 [INFO] [INIT] [Labor-7] cn.hotpu.hotdb.c(1809) - ===============================================
 2019-12-19 15:09:03.350 [INFO] [WATCHDOG] [Labor-7] cn.hotpu.hotdb.f(197) - Watchdog started.
-209-12-19 15:09:03.712 [INFO] [TIMER] [Labor-2] cn.hotpu.hotdb.c(2150) - CheckVIP timer finish online.
-
+2019-12-19 15:09:03.712 [INFO] [TIMER] [Labor-2] cn.hotpu.hotdb.c(2150) - CheckVIP timer finish online.
 2019-12-19 15:09:03.713 [INFO] [MANAGER] [Labor-2] cn.hotpu.hotdb.c(2165) - VIP online end
 ```
 
@@ -10531,9 +10526,7 @@ virtual_ipaddress {
 
 **参数作用：**
 
-用于设置启动时是否等待配置库同步追上。默认关闭，启动时若连上主配置库则不等待复制追上，
-
-开启开关，当选定的当前配置库配置有MySQL复制作为某个实例的从机，且复制存在延迟时的情况下，需要等到当前配置库追上复制，确保当前使用的配置库的数据为最新的数据，才继续启动。
+用于设置启动时是否等待配置库同步追上。默认关闭，启动时若连上主配置库则不等待复制追上，开启开关，当选定的当前配置库配置有MySQL复制作为某个实例的从机，且复制存在延迟时的情况下，需要等到当前配置库追上复制，确保当前使用的配置库的数据为最新的数据，才继续启动。
 
 关闭状态：启动时若连上主配置库，则若当前配置库存在延迟的情况下也直接继续启动：
 
@@ -10550,7 +10543,7 @@ virtual_ipaddress {
 
 开启的状态下：
 
-需要等到复制同步后才继续启动：
+需要等到复制同步后才继续启动
 
 ```log
 2018-07-12 14:28:52.019 [INFO] [INIT] [$NIOREACTOR-9-RW] XAInitRecoverHandler(125) -- wait for config datasource synchronizing...
@@ -10599,9 +10592,14 @@ mysql> show @@latency;
 
 日志能够看到提示不再用故障的主存储节点，并且不会启用没有复制同步追上的存储节点：
 
+
 ```log
 2018-06-08 10:36:47.921 [INFO] [FAILOVER] [Labor-1552] j(-1) - slave_sql_running is Yes in :[id:178,nodeId:6 192.168.200.52:3312/phy248 status:1,charset:utf8] during failover of datanode 6
-2018-06-0810:36:48.982 [INFO] [FAILOVER] [Labor-1552] j(-1) - masterLogFile:mysql-bin.000518,readMasterLogFile:mysql-bin.000518,readMasterLogPos:384545127,execMaster LogPos:384512435,relayLogFiTe:mysql-relay-bin.000002,relayLogPos; 248414,secondBehindMaster:19,execLogchanged:true in slave：MySQLConnection [node=6, id=140, threadId=3 15945, state=borrowed, closed=false, autocommit=true, host=192.168.200.52, port=3312, database=phy248, localPort=64694, isClose:false, toBeclose:false]
+2018-06-08 10:36:48.417 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:java.net.ConnectException:connection refused
+2018-06-08 10:36:48.418 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused
+2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:j ava.net.ConnectException: connection refused
+2018-06-08 10:36:48.918 [WARN] [HEARTBEAT] [$NIOConnector] m(-1) - datasoruce 6 192.168.200.51:3312/phy248 init heartbeat failed due to：Get backend connection failed:cn.hotpu.hotdb.h.l:java.net.connectException: connection refused
+2018-06-08 10:36:48.982 [INFO] [FAILOVER] [Labor-1552] j(-1) - masterLogFile:mysql-bin.000518,readMasterLogFile:mysql-bin.000518,readMasterLogPos:384545127,execMaster LogPos:384512435,relayLogFiTe:mysql-relay-bin.000002,relayLogPos; 248414,secondBehindMaster:19,execLogchanged:true in slave: MySQLConnection [node=6, id=140, threadId=3 15945, state=borrowed, closed=false, autocommit=true, host=192.168.200.52, port=3312, database=phy248, localPort=64694, isClose:false, toBeclose:false]
 ```
 
 关闭状态：
@@ -10612,8 +10610,8 @@ mysql> show @@latency;
 2018-06-08 16:19:22.864 [INFO] [FAILOVER] [Labor-1852] bh(-1) -- switch datasource:6 for datanode:6 successfully by Manager.
 ```
 
-> !Important
->
+> !Note
+> 
 > 在计算节点版本高于2.5.6 （包含）调整了master_delay对切换的影响，waitForSlaveInFailover参数（高可用切换是否等待从机追上复制）开启，当切换时检测到有master_delay的延时设置，会自动在追复制前取消，切换成功后恢复延时复制的设置。若取消master_delay后的复制延迟仍大于10s，则不允许切换，master_delay也会恢复之前设置的值。
 
 #### waitSyncFinishAtStartup
@@ -10652,6 +10650,17 @@ mysql> show @@latency;
 ```
 
 关闭开关：无其他异常，可以直接初始化存储节点
+
+```log
+2018-06-01 16:21:14.958 [INFO] [INIT] [main] j(-1) - reading config...
+2018-06-01 16:21:15.170 [info] [INIT] [main] a(-1) - using config datasource in start up:[id:-1,nodeld:-1 l27.0.0.1:3306/hotdb_config_249 status:1,charset:utf8]
+2018-06-01 16:21:15.518 [info] [INIT] [main] a(-1) - master config datasource [id:-1,nodeld:-1 l27.0.0.1:3306/hotdb_config_249 status:1,charset:utf8] connect success.
+2018-06-01 16:21:16.892 [info] [INIT] [main] j(-1) - ===============================================
+2018-06-01 16:21:16.893 [info] [INIT] [main] j(-1) - HotDB-2.4.9 is ready to startup ...
+2018-06-01 16:21:16.894 [info] [INIT] [main] j(-1) - Sysconfig params:SystemConfig [ frontwriteQueueSize=2048, service port=9993, management port=9995, charset=utf8, processors=8, processorExecutor=4, timerExecutor=4, managerExecutor=2, idleTimeout=28800, processorcheckPeriod=1000, dataNodeIdleCheckPeriod=120, dataNodeHeartbeatPeriod=3000, txIsolation=2, processorBufferPool=163840000, processorBufferChunk=16384, enableXA=false, enableHeartbeat=true, sqlTimeout=42100, configDatabase=jdbc:mysql://127.0.0.1:3306/hotdb_config_249,backConfigDatasource=jdbc:mysql://127.0.0.l:3306/hotdb_config_249, usingAIO=o, hastate=master, cryptMandatory=false, autoIncrement=true, heartbeatPeriod=l, heartbeatTimeoutMs=l00, joinable=true, joinCacheSize=4, errorsPermittedInTransaction=true, strategyForRWSplit=3, deadlockCheckPeriod=0, maxAllowedPacket=64M,VIP=null,checkVIPPeriod=1600]
+2018-06-01 16:21:17.210 [info] [INIT] [main] BufferPool(-1) - total buffer:163840000,every chunk bytes:16384,chunk number:10000,every threadLocalMaxNumber:1000
+2018-06-01 16:21:17.216 [info] [INIT] [main] j(-1) - usinq aio network handler
+```
 
 #### weightForSlaveRWSplit
 
