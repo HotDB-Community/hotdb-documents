@@ -17,6 +17,7 @@
 * [X] 解决html锚点定位不准确，以及实现解析markdown锚点语法解决bug
 * [X] 修复解析markdown锚点的bug（对于标题直接设置id，对于其他则设置span隐藏锚点）
 * [X] 将中文书名号`《...》`替换为真正的文档超链接
+* [X] 优化表格分割线的长度
 * [ ] 检查markdown文档的格式
 * [ ] 检查markdown文档中的文档和标题链接
 * [ ] 为markdown文档中的代码块
@@ -86,7 +87,7 @@
   * [ ] `docs/en/latest/standard.md` D
   * [X] `docs/en/latest/management-port-command.md`  C
 * `hotdb-management`
-  * [ ] `docs/en/latest/hotdm-management.md` C
+  * [X] `docs/en/latest/hotdm-management.md` C
   * [X] `docs/en/latest/intelligent-inspection.md` C
 * `idc`
   * [X] `docs/en/latest/cross-idc-disaster-recovery.md` C

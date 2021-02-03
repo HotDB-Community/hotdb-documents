@@ -50,7 +50,7 @@ LogicDB (LogicDatabase, LDB for short) refers to a collection of database that c
 Table Configuration refers to the configuration rule information for database tables of the user's own business defined in management platform. The defined table can be normally used after the table structure is created in [compute node](#compute-node) data service port. The following types of tables can be created currently: Sharding Table, Vertical Sharding Table, Global Table, and Child Table.
 
 | Table Type | Definitions |
-|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|------------|-------------|
 | Sharding Table | Data rows are split according to sharding key and sharding function, and stored in multiple specified data nodes. This is suitable for table with large amount of data. |
 | Global Table | A table with the same table structure and the same table data is stored in all data nodes under this LogicDB. This is suitable for tables with small amount of data or frequent JOIN operation; this is not suitable for tables with frequent modification operations. |
 | Vertical Sharding Table | A table associated with the only data node and with no sharding function; no sharding or replication in different data nodes. |

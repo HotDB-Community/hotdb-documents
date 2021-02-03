@@ -157,7 +157,7 @@ This chapter will briefly introduce the summary of functions which are added, pr
 This section will introduce the new compute node parameters added and optimized in Compute Node -- V2.5.6, as listed below:
 
 | Parameter name of compute node | Description of compute node parameters | Default value | Reload is valid or not | Version supported |   |
-|---------------------------------------------------------|------------------------------------------------------|------------------------------|------------------------|--------------------------------|-------|
+|--------------------------------|----------------------------------------|---------------|------------------------|-------------------|---|
 | [enableOracleFunction](#enableoraclefunction) | Whether to parse Oracle functions first | false | N | 2.5.6 |   |
 | [lockWaitTimeout](#lockwaittimeout) | Timeout for obtaining metadata lock (s) | 31536000 | Y | Synchronized downward to 2.5.3 |   |
 | [operateMode](#operatemode) | Compute node working mode | 0 | Y | Newly added in 2.5.6 |   |
@@ -599,9 +599,9 @@ The user can enter corresponding command to monitor service condition of compute
 
 ```
 mysql> show @@datasource;
-|----+----+-----------------------+------+--------+-------------+------+--------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
+|---------------------------|---------------------------------------------------|
 | dn | ds | name                  | type | status | host        | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
-|----+----+-----------------------+------+--------+-------------+------+--------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
+|----|----|-----------------------|------|--------|-------------|------|--------|--------|------|------|--------------------|--------------|--------|-------------|-----------------|
 | 17 | 17 | 10.10.0.140_3313_db01 | 1    | 1      | 10.10.0.140 | 3313 | db01   | 0      | 45   | 45   | NULL               | 0/64         | 1      | 8           | 1               |
 ...more contents are omitted, and you could log in to view...
 ```
@@ -731,7 +731,7 @@ In Distributed Transactional Database system, in case of deadlock between two da
 The operations in the following table, describe the deadlock process of two data nodes in distributed system. Session 1 and Session 2 execute DELETE operation respectively on the two data nodes:
 
 | Session 1 | Session 2 |
-|----------------------------------------------------------|
+|-----------|-----------|
 | Session 1 Start transaction | `start transaction;` |
 | Session 2 Start transaction | 　 | `start transaction;` |
 | Session 1 Execute DELETE statement on data node where DNID = 15 | `delete from customer where dnid=15 and id=1;` |
@@ -897,7 +897,7 @@ HotDB Server has two kinds of users, one is Compute Node User who operates data,
 LogicDB must be accessed with granted compute node user privilege. Compute node provides LogicDB with operating privilege similar to that of MySQL, as follow:
 
 | Privilege type | Executable SQL statement |
-|----------------|---------------------------------------------------|
+|----------------|--------------------------|
 | CREATE | CREATE TABLE,CREATE INDEX |
 | DROP | DROP TABLE,DROP INDEX,TRUNCATE TABLE,RENAME TABLE |
 | ALTER | ALTER TABLE,RENAME TABLE |
@@ -1304,7 +1304,7 @@ It's shown in the result that for the JOIN_Z table in LogicDBDB_T, among master/
 - info: In case of master/slave data consistency, there is no information output; in case of master/slave data inconsistency, there will be several kinds of information as follow:
 
 | A large amount of data inconsistency in table | Table: ... in datanode: ... exist a large amount of data inconsistency |
-|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+|-----------------------------------------------|------------------------------------------------------------------------|
 | Some data inconsistency in table | Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows' Primary Key (...): |
 | Standby Slave Table doesn't exist | exist data inconsistency, because DS: ... Table '...' doesn't exist |
 | Index of table doesn't exist | DN: ... not exsit index of table:... |
@@ -2244,7 +2244,7 @@ In order to satisfy the demand for business development and application data gro
 Parameters involved are as follows:
 
 | Parameters | Instructions | Reference value | Whether the reloading is valid |
-|----------------|-----------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|--------------------------------|
+|------------|--------------|-----------------|--------------------------------|
 | haMode | High availability mode: 0: master and slave; 1: cluster | In cluster environment, the parameter value is 1 | yes |
 | serverId | Cluster node number 1-N (number of nodes), unique in the cluster and N < = total number of nodes in the cluster | The serverID should start from 1 and should not be repeated continuously in the cluster | yes |
 | clusterName | Cluster group name | HotDB-Cluster | yes |
@@ -2258,7 +2258,7 @@ Parameters involved are as follows:
 Expand from HA mode to multi-node mode is mainly about how to switch keepalived to LVS. This section mainly describes the expansion operation of HA to cluster. The information of components involved is as follows:
 
 | Role | Connection information | Name |
-|---------------------|--------------------------|---------------------|
+|------|------------------------|------|
 | Master compute node | 192.168.210.67_3323_3325 | HotDB_01 |
 | Slave compute node | 192.168.210.68_3325 | HotDB_02 |
 | LVS service | 192.168.210.136 | VIP:192.168.210.218 |
@@ -2343,7 +2343,7 @@ The adaptation mode is the same as"[Expand compute nodes in cluster mode](#expan
 This section mainly describes the operation of expanding compute nodes in cluster mode. The information of involved components is as follows:
 
 | Role | Connection information | Name |
-|--------------------------|---------------------------|---------------------|
+|------|------------------------|------|
 | Master compute node | 192.168.210.157_3323_3325 | HotDB_01 |
 | Slave compute node | 192.168.210.156_3323_3325 | HotDB_02 |
 | Slave compute node | 192.168.210.155_3323_3325 | HotDB_03 |
@@ -2414,7 +2414,7 @@ The number of compute nodes can be reduced by compute node reduction function. A
 Parameters involved are as follows:
 
 | Parameters | Instructions | Reference value | **Whether the reloading is valid** |
-|------------|----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|------------------------------------|
+|------------|--------------|-----------------|------------------------------------|
 | haMode | High availibity: 0: master/slave；1: cluster | In cluster environment, the parameter value is 1. | Yes |
 | HaState | Master / slave role configuration in HA mode. | Configuration of primary compute node: master, configuration of standby compute node: backup. | Yes |
 | haNodeHost | The connection information of the current active compute node in the high availability mode. | The configuration format is IP: PORT | Yes |
@@ -3089,7 +3089,7 @@ When NDB SQL mode starts, NDB SQL logic could be used only after meeting the fol
 For the following SQL type statements, the compute node doesn't support itself, but supports Query after NDB SQL is enabled
 
 | MySQL statement type | Clause type | Function | Description |
-|----------------------|----------------------------------|----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|----------------------|-------------|----------|-------------|
 | SELECT | INNER/LEFT JOIN/RIGHT JOIN WHERE | Operation Expression | column1+column2、column1-column2、column1*column2、column1/column2 |
 | ^ | ^ | ^ | <=> or <> |
 | ^ | ^ | \% or MOD | Only support column% constant; not support column1% column2 |
@@ -3159,7 +3159,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 #### Value type
 
 | MySQL data type | Support status | Description |
-|----------------------|----------------|----------------------------------------------------------------------------------------------|
+|-----------------|----------------|-------------|
 | ^ | BIT | Support |
 | ^ | TINYINT | Support |
 | ^ | SMALLINT | Support |
@@ -3190,7 +3190,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 #### Character string type
 
 | MySQL data type | Support status | Description |
-|-----------------|----------------|----------------------------------------------------------------------------------------------|
+|-----------------|----------------|-------------|
 | ^ | CHAR | Support |
 | ^ | VARCHAR | Support |
 | ^ | BINARY | Support |
@@ -3213,7 +3213,7 @@ Compute node supports use Space typespatial_type when Create Table; it supports 
 #### Other types
 
 | MySQL data type | Support status | Description |
-|-----------------|----------------|---------------------------------------------------------------------------------------------------------------|
+|-----------------|----------------|-------------|
 | JSON | Support | 　It's forbidden from being used either as sharding key, Parent/Child Table associated Field, or as join Field |
 
 ### Support of HotDB Server toward character set
@@ -4119,7 +4119,7 @@ DELETE FROM t PARTITION(p0);
 ##### Cross-node DELETE statement
 
 | MySQL statement type | Clause type | Function | Support status | Description |   |
-|----------------------|------------------------|----------------------------------------|-------------------|---------------------------------------------------|---------|
+|----------------------|-------------|----------|----------------|-------------|---|
 | ^ | DELETE | PARTITION | 　 | Support |   |
 | ^ | ^ | ORDER BY DESC | ASC | 　 | Support |
 | ^ | ^ | LIMIT | 　 | Support |   |
@@ -4153,7 +4153,7 @@ USING table_references
 ##### Single-node INSERT statement
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|----------------------------------------------|-------------------------------------------------------|---------------------------------------|------------------------------------------------------------------------------|
+|----------------------|-------------|----------|----------------|-------------|
 | ^ | INSERT | INSERT ... SELECT ... | Single-node simple single-table Query | Support |
 | ^ | ^ | ^ | Single-node JOIN | Support |
 | ^ | ^ | ^ | Single-node Subquery | Support |
@@ -4249,7 +4249,7 @@ INSERT BATCH refers to the mode of writing single INSERT statement into multi-ro
 INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|--------------|-----------------------|--------------------------------------|-----------------------------------------------------------------------|
+|----------------------|-------------|----------|----------------|-------------|
 | ^ | INSERT | INSERT ... SELECT ... | Cross-node simple single-table Query | Support |
 | ^ | ^ | ^ | Cross-node JOIN | Not support |
 | ^ |   | ^ | Cross-node UNION | Not support |
@@ -4308,7 +4308,7 @@ For INSERT BATCH in a transaction, if parts succeed and parts failed, it will au
 ##### Single-node REPLACE statement
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|-------------------------------------------|--------------------------------------------------------|---------------------------------------|------------------------------------------------------------------------------|
+|----------------------|-------------|----------|----------------|-------------|
 | ^ | REPALCE | REPLACE ... SELECT ... | Single-node simple single-table Query | Support |
 | ^ |   | ^ | Single-node JOIN | Support |
 | ^ |   | ^ | Single-node Subquery | Support |
@@ -4336,7 +4336,7 @@ REPLACE BATCH refers to the mode of writing single REPLACE statement into multip
 REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|---------------|------------------------|--------------------------------------|------------------------------------------------------------------------|
+|----------------------|-------------|----------|----------------|-------------|
 | ^ | REPLACE | REPLACE ... SELECT ... | Cross-node simple single-table Query | Support |
 | ^ |   | ^ | Cross-node JOIN | Not support |
 | ^ |   | ^ | Cross-node UNION | Not support |
@@ -4839,7 +4839,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 #### ALTER statement
 
 | MySQL statement type | Clause type | Support status | Description |
-|----------------------|---------------------------------------------------------------------|-------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|----------------------|-------------|----------------|-------------|
 | ^ | ALTER TABLE | ADD COLUMN | Support |
 | ^ | ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY | Support | Support ADD UNIQUE [index_name][index_type]index_col_name |
 | ^ | ADD FOREIGN KEY for child table(s) | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
@@ -4947,7 +4947,7 @@ create database if not exists zjj_d3 default datanode '1,4';
 #### DROP statement
 
 | MySQL statement type | Clause type | Support status | Description |
-|----------------------|------------------------|--------------------------------------------|-------------------------------------------------|
+|----------------------|-------------|----------------|-------------|
 | ^ | DROP DATABASE | 　 | Forbidden |
 | ^ | DROP EVENT | 　 | Forbidden |
 | ^ | DROP FUNCTION | 　 | Forbidden |
@@ -5119,7 +5119,7 @@ HotDB Server only supports Storage Procedure, Custom Function statement in verti
 #### Prepare SQL Statement
 
 | Statement type | SQL statement | Support status | Description |   |
-|----------------|-----------------------|----------------------|---------------|---------|
+|----------------|---------------|----------------|-------------|---|
 | ^ | Prepare SQL Statement | PREPARE ... FROM ... | Support |   |
 | ^ |   | EXECUTE ... | Support |   |
 | ^ |   | {DEALLOCATE | DROP} PREPARE | Support |
@@ -5129,7 +5129,7 @@ HotDB Server only supports Storage Procedure, Custom Function statement in verti
 HotDB Server realizes a set of its own username and privilege management system, which could be merely operated on the Distributed Transactional Database Management Platform page. SQL statements of MySQL database user management are all Forbidden.
 
 | Statement type | SQL statement | Support status | Description |
-|----------------|---------------------------|----------------|-------------|
+|----------------|---------------|----------------|-------------|
 | ^ | User management statement | ALTER USER | Forbidden |
 | ^ |   | CREATE USER | Support |
 | ^ |   | DROP USER | Support |
@@ -5196,7 +5196,7 @@ GRANT
 
 priv_type[, priv_type] ...
 
-ON  priv_level TO 'user_name'@'host_name'[,'user_name'@'host_name'] ...
+ON priv_level TO 'user_name'@'host_name'[,'user_name'@'host_name'] ...
 
 [WITH MAX_USER_CONNECTIONS con_num]
 
@@ -5309,7 +5309,7 @@ Notes on REVOKE:
 #### Table maintenance statement
 
 | Statement type | SQL statement | Support status | Description |
-|----------------|-----------------------------|----------------|-------------|
+|----------------|---------------|----------------|-------------|
 | ^ | Table maintenance statement | ANALYZE TABLE | Forbidden |
 | ^ |   | CHECK TABLE | Forbidden |
 | ^ |   | CHECKSUM TABLE | Forbidden |
@@ -5447,7 +5447,7 @@ Notes on REVOKE:
 #### HotDB PROFILE
 
 | Statement type | SQL statement | Support status | Description | ^ |   |   |
-|----------------|----------------------------------------------------------|---------------------|----------------------------------|------|---------|---------------------------------------|
+|----------------|---------------|----------------|-------------|---|---|---|
 | SET statement | set hotdb_profiling={0 | 1 | on | off} | Support | Support set [session] hotdb_profiling |
 | ^ | SHOW statement | show hotdb_profiles | Support | ^ |   |   |
 | ^ | show hotdb_profile for query N [relative time|real time] | Support | N represents the SQL id executed | ^ |   |   |
@@ -5567,7 +5567,7 @@ result send end time: the time point when the compute node completes sending the
 #### Other MySQL management statement
 
 | Statement type | SQL statement | Support status | Description |   |
-|----------------|-----------------------------|---------------------------|-------------------------------------|---------|
+|----------------|---------------|----------------|-------------|---|
 | ^ | Other management statements | BINLOG 'str' | Forbidden |   |
 | ^ |   | CACHE INDEX | Forbidden |   |
 | ^ |   | KILL [CONNECTION | QUERY] | Support |   |
@@ -5702,7 +5702,7 @@ The following parameter are of special processing, the for its specific show res
 +--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------+
 
 | Status Name | Show description |
-|-------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+|-------------|------------------|
 | Compression | All OFF (compute node does not support Compression Protocol for the time being) |
 | Innodb_buffer_pool_dump_status | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB |
 | Innodb_buffer_pool_load_status | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB |
@@ -5926,9 +5926,9 @@ Sharding table is the kind of table that splits data of the table by rows accord
 
 The syntax for creating a sharding table is as follows:
 
-CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {functionid | functionname} 'functionid | functionname' USING COLUMN 'shardcolumnname' (.....
+CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY {functionid | functionname} 'functionid | functionname' USING COLUMN 'shardcolumnname' (.....
 
-CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid'(.....
+CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid'(.....
 
 Besides, the keywords after SHARD BY can also be placed after the table definition (the same is true for the vertical sharding table and the global table), for example:
 
@@ -6014,7 +6014,7 @@ ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
 
 Tables with similar table structure could use the same Sharding Function, and the following Syntax could be used to make direct citation of Sharding Function to create Sharding Table
 
-CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleid\\rulename' [on datanode 'datanodes'] (......
+CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleid\\rulename' [on datanode 'datanodes'] (......
 
 Log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function), show hotdb rules; and show hotdb functions; you could see the Sharding Function associated with its sharding Function
 
@@ -6106,7 +6106,7 @@ The vertical sharding table is a global unique total data table with no sharding
 
 The syntax for creating a vertical sharding table is as follows:
 
-CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY vertical on datanode 'datanodeid'(.....
+CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY vertical on datanode 'datanodeid'(.....
 
 Syntax description:
 
@@ -6136,7 +6136,7 @@ Global table refers to the table stored in all data nodes under the LogicDB. The
 
 The syntax for creating a global table is as follows:
 
-CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY global on datanode 'datanodeid'(.....
+CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY global on datanode 'datanodeid'(.....
 
 Syntax description:
 
@@ -6177,14 +6177,14 @@ mysql> show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 **The command contains parameters and its description:**
 
 | Parameter | Description | Type |
-|-----------|---------------------------------------------------------|--------|
+|-----------|-------------|------|
 | pattern | Optional, Fuzzy Query Expression, Match rule_name Field | STRING |
 | expr | Optional, Fuzzy Query Expression, Match Specified Field | STRING |
 
 **The result contains Field and its Description:**
 
 | Column name | Description | Value type/Range |
-|---------------|-------------------------|------------------|
+|-------------|-------------|------------------|
 | datanode_id | Node ID | INTEGER |
 | datanode_name | Node name | STRING |
 | datanode_type | 0: Master/Slave; 1: MGR | INTEGER |
@@ -6244,14 +6244,14 @@ mysql> show hotdb functions;
 **The command contains parameters and its description:**
 
 | Parameter | Description | Type |
-|-----------|-------------------------------------------------------------|--------|
+|-----------|-------------|------|
 | pattern | Optional, Fuzzy Query Expression, Match function_name Field | STRING |
 | expr | Optional, Fuzzy Query Expression, Match function_name Field | STRING |
 
 **The result contains Field and its Description:**
 
 | Column name | Description | Value type/Range |
-|----------------|---------------------------------------------------------------------------------------------|------------------|
+|-------------|-------------|------------------|
 | function_id | Sharding Function ID | INTEGER |
 | function_name | Sharding Function name | STRING |
 | function_type | Sharding Type | STRING |
@@ -6334,13 +6334,13 @@ mysql> show hotdb function infos [WHERE expr];
 **The command contains parameters and its description:**
 
 | Parameter | Description | Type |
-|-----------|---------------------------------------------------------|--------|
+|-----------|-------------|------|
 | expr | Optional, Fuzzy Query Expression, Match Specified Field | STRING |
 
 **The result contains Field and its Description:**
 
 | Column name | Description | Value type/Range |
-|--------------|----------------------|------------------|
+|-------------|-------------|------------------|
 | function_id | Sharding Function ID | INTEGER |
 | column_value | Sharding Key value | STRING |
 | datanode_id | Data node id | INTEGER |
@@ -6412,14 +6412,14 @@ mysql> show hotdb rules [LIKE 'pattern' | WHERE expr];
 **The command contains parameters and its description:**
 
 | Parameter | Description | Type |
-|-----------|---------------------------------------------------------|--------|
+|-----------|-------------|------|
 | pattern | Optional, Fuzzy Query Expression, Match rule_name Field | STRING |
 | expr | Optional, Fuzzy Query Expression, Match rule_name Field | STRING |
 
 **The result contains Field and its Description:**
 
 | Column name | Description | Value type/Range |
-|----------------|---------------------------------------------------------------------------------------------|------------------|
+|-------------|-------------|------------------|
 | rule_id | Sharding Function ID | INTEGER |
 | rule_name | Sharding Function name | STRING |
 | rule_column | Sharding Key Name | STRING |
@@ -6543,7 +6543,7 @@ INFORMATION_SCHEMA database provides information and data of the existing comput
 This chapter lists the tables and its special processing contents in INFORMATION_SCHEMA supported by the compute node, as follows:
 
 | Table name | Special processing |
-|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|------------|--------------------|
 | character_sets | Only return the Character Set and Collation Set data supported by the compute node |
 | collations | Only return the Character Set and Collation Set data supported by the compute node |
 | collation_character_set_applicability | Only return the Character Set and Collation Set data supported by the compute node |
@@ -6607,7 +6607,7 @@ This chapter lists the tables and its special processing contents in INFORMATION
 In order to be compatible with the data source above MySQL 8.0, conduct the following special processing for the New contents of MySQL8.0:
 
 | Table Name | Special processing |
-|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|------------|--------------------|
 | check_constraints | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
 | column_statistics | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
 | keywords | Return Null Set |
@@ -6627,7 +6627,7 @@ During the use process, the compute node has maintained many system configuratio
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|---------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | adaptiveProcessor |
 | Visible or not | Hidden |
 | Description of parameters | Control whether the startup service is Automatic Adaptation or not. |
@@ -6716,7 +6716,7 @@ Only when the compute node is under pressure could it reach the Automatic Adapta
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | allowRCWithoutReadConsistentInXA |
 | Visible or not | No |
 | Description of parameters | RC isolation level that does not gurantee strong read-write consistency is allowed in XA mode |
@@ -6752,7 +6752,7 @@ When the parameter allowRCWithoutReadConsistentInXA is set to 1, the isolation l
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|---------------------------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | autoIncrement |
 | Visible or not | Yes |
 | Description of parameters | Management platform v.2.5.4 below: adopt Global Auto-Incremental serial number or not |
@@ -6772,7 +6772,7 @@ In version 2.5.3 and below, only true or false can be set. Setting as true is eq
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|--------------------------------------|
+|----------|-------|
 | Parameter value | badConnAfterContinueGet |
 | Visible or not | No |
 | Description of parameters | Continue to obtain connection or not |
@@ -6795,7 +6795,7 @@ After compute node obtaining connection from the connection pool and having cond
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|---------------------------------------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | badConnAfterFastCheckAllIdle |
 | Visible or not | No |
 | Description of parameters | When broken back-end connection is obtained, whether to check all idle connections rapidly or not |
@@ -6818,7 +6818,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------|
+|----------|-------|
 | Parameter value | bakUrl |
 | Visible or not | Yes |
 | Description of parameters | Slave configDB address |
@@ -6827,7 +6827,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 | Min Compatible Version | 2.4.4 |
 
 | Property | Value |
-|--------------------------------|-------------------------|
+|----------|-------|
 | Parameter value | bakUsername |
 | Visible or not | Yes |
 | Description of parameters | Slave configDB username |
@@ -6836,7 +6836,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 | Min Compatible Version | 2.4.4 |
 
 | Property | Value |
-|--------------------------------|-------------------------|
+|----------|-------|
 | Parameter value | bakPassword |
 | Visible or not | Yes |
 | Description of parameters | Slave configDB password |
@@ -6880,7 +6880,7 @@ description: NULL
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | checkConnLastUsedTime |
 | Visible or not | No |
 | Description of parameters | Max allowed interval time of last use by the back-end connection. If exceeded, it will check whether this connection is valid or not, unit: ms |
@@ -6912,7 +6912,7 @@ mysql> show @@session;
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | CheckConnValid |
 | Visible or not | No |
 | Description of parameters | Whether to check whether the back-end connection is valid or not |
@@ -6937,7 +6937,7 @@ When obtaining connection from the connection pool, check availability of the co
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|--------------------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | checkConnValidTimeout |
 | Visible or not | No |
 | Description of parameters | At the time of checking validity of back-end connection, max timeout, unit: ms |
@@ -6958,7 +6958,7 @@ At the time of checking validity of back-end connection, when the checking time 
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|--------------------------------------------------------------|
+|----------|-------|
 | Parameter value | checkMySQLParamInterval |
 | Visible or not | No |
 | Description of parameters | Interval time of checking MySQL Parameter Setting (Unit: ms) |
@@ -6983,7 +6983,7 @@ Check whether interval time of MySQL Parameter Setting is reasonable or not. The
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | checkUpdate |
 | Visible or not | No |
 | Description of parameters | Whether to intercept update operation of the sharding key or not |
@@ -7026,7 +7026,7 @@ mysql> select * from ss where a='aa';
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------------------------------|
+|----------|-------|
 | Parameter value | clientFoundRows |
 | Visible or not | No |
 | Description of parameters | Use found rows to replace the affected rows in OK package |
@@ -7059,7 +7059,7 @@ jdbc is committed useAffectedRows=true, the actual number of rows affected will 
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-------------------------------|
+|----------|-------|
 | Parameter value | clusterElectionTimeoutMs |
 | Visible or not | No |
 | Description of parameters | Cluster Election Timeout (ms) |
@@ -7084,7 +7084,7 @@ This parameter is used for setting Cluster Election Timeout of the compute node,
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|--------------------------------|
+|----------|-------|
 | Parameter value | clusterHeartbeatTimeoutMs |
 | Visible or not | No |
 | Description of parameters | Cluster Heartbeat Timeout (ms) |
@@ -7109,7 +7109,7 @@ This parameter is used for setting Cluster Heartbeat Timeout of the compute node
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------|
+|----------|-------|
 | Parameter value | clusterHost |
 | Visible or not | Yes |
 | Description of parameters | IP of the current node |
@@ -7134,7 +7134,7 @@ This parameter shall be set consistent with the actual IP of the compute node (c
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|--------------------|
+|----------|-------|
 | Parameter value | clusterName |
 | Visible or not | Yes |
 | Description of parameters | Cluster Group Name |
@@ -7159,7 +7159,7 @@ Specify the name of the group added after cluster startup, and this parameter of
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-------------------------|
+|----------|-------|
 | Parameter value | clusterNetwork |
 | Visible or not | Yes |
 | Description of parameters | Cluster Network Segment |
@@ -7184,7 +7184,7 @@ This parameter is the network segment of the whole cluster, and it's limited tha
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|---------------------------------------------------------|
+|----------|-------|
 | Parameter value | clusterPacketTimeoutMs |
 | Visible or not | No |
 | Description of parameters | Failure time of inter-cluster communication packet (ms) |
@@ -7209,7 +7209,7 @@ This parameter is used for setting Cluster Packet Timeout, and generally modific
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|----------------------------|
+|----------|-------|
 | Parameter value | clusterPort |
 | Visible or not | Yes |
 | Description of parameters | Cluster Communication Port |
@@ -7234,7 +7234,7 @@ Thed default value 3326 specifies the port of listening cluster information. Thi
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|----------------------------------|
+|----------|-------|
 | Parameter value | clusterSize |
 | Visible or not | Yes |
 | Description of parameters | Total number of nodes in cluster |
@@ -7259,7 +7259,7 @@ This parameter is total number of compute node in cluster. If haMode is set as 1
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-------------------------------------------------------|
+|----------|-------|
 | Parameter value | clusterStartedPacketTimeoutMs |
 | Visible or not | No |
 | Description of parameters | Failure Time of Cluster Started Broadcast Packet (ms) |
@@ -7284,7 +7284,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|----------------------------------|
+|----------|-------|
 | Parameter value | configMGR |
 | Visible or not | Yes |
 | Description of parameters | Whether configDB uses MGR or not |
@@ -7293,7 +7293,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 | Min Compatible Version | 2.5.0 |
 
 | Property | Value |
-|--------------------------------|----------------------|
+|----------|-------|
 | Parameter value | bak1Url |
 | Visible or not | Yes |
 | Description of parameters | MGR configDB address |
@@ -7302,7 +7302,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 | Min Compatible Version | 2.5.0 |
 
 | Property | Value |
-|--------------------------------|-----------------------|
+|----------|-------|
 | Parameter value | bak1Username |
 | Visible or not | Yes |
 | Description of parameters | MGR configDB username |
@@ -7311,7 +7311,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 | Min Compatible Version | 2.5.0 |
 
 | Property | Value |
-|--------------------------------|-----------------------|
+|----------|-------|
 | Parameter value | bak1Password |
 | Visible or not | Yes |
 | Description of parameters | MGR configDB password |
@@ -7335,7 +7335,7 @@ configMGR and bak1Url and bak1Username and bak1Password are supporting parameter
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------------------|
+|----------|-------|
 | Parameter value | crossDbXa |
 | Visible or not | No |
 | Description of parameters | Whether XA transactions are adopted in cross-LogicDB |
@@ -7454,7 +7454,7 @@ Result: `select * from B.b;` execute normally.
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|--------------------------------------|
+|----------|-------|
 | Parameter value | cryptMandatory |
 | Visible or not | Yes |
 | Description of parameters | Mandatory password encryption or not |
@@ -7484,7 +7484,7 @@ It's used for setting whether to make mandatory password identification or not w
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------------|
+|----------|-------|
 | Parameter value | dataNodeIdleCheckPeriod |
 | Visible or not | Yes |
 | Description of parameters | Default Data Node Idle Check Period (S) |
@@ -7511,7 +7511,7 @@ For example: Conduct on large concurrent insert operation on the 3323 service po
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|---------------------------------------------|
+|----------|-------|
 | Parameter value | deadlockCheckPeriod |
 | Visible or not | Yes |
 | Description of parameters | Deadlock Check Period (Ms), 0 means Disable |
@@ -7546,7 +7546,7 @@ ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-------------------|
+|----------|-------|
 | Parameter value | defaultMaxLimit |
 | Visible or not | No |
 | Description of parameters | default max limit |
@@ -7602,7 +7602,7 @@ mysql> show processlist;
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|----------------------------------------------------|
+|----------|-------|
 | Parameter value | dropTableRetentionTime |
 | Visible or not | Yes |
 | Description of parameters | dropTableRetentionTime, 0 by default, no retention |
@@ -7627,7 +7627,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------|
+|----------|-------|
 | Parameter value | drBakUrl |
 | Visible or not | Yes |
 | Description of parameters | Slave ConfigDB address of DR center |
@@ -7636,7 +7636,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 | Min Compatible Version | 2.5.3.1 |
 
 | Property | Value |
-|--------------------------------|--------------------------------------|
+|----------|-------|
 | Parameter value | drBakUsername |
 | Visible or not | Yes |
 | Description of parameters | Slave ConfigDB username of DR center |
@@ -7645,7 +7645,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 | Min Compatible Version | 2.5.3.1 |
 
 | Property | Value |
-|--------------------------------|--------------------------------------|
+|----------|-------|
 | Parameter value | drBakPassword |
 | Visible or not | Yes |
 | Description of parameters | Slave ConfigDB password of DR center |
@@ -7668,7 +7668,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------|
+|----------|-------|
 | Parameter value | drUrl |
 | Visible or not | Yes |
 | Description of parameters | ConfigDB address of DR center |
@@ -7677,7 +7677,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 | Min Compatible Version | 2.5.3.1 |
 
 | Property | Value |
-|--------------------------------|-------------------------------|
+|----------|-------|
 | Parameter value | drUsername |
 | Visible or not | Yes |
 | Description of parameters | ConfigDB usernameof DR center |
@@ -7686,7 +7686,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 | Min Compatible Version | 2.5.3.1 |
 
 | Property | Value |
-|--------------------------------|-------------------------------|
+|----------|-------|
 | Parameter value | drPassword |
 | Visible or not | Yes |
 | Description of parameters | ConfigDB passwordof DR center |
@@ -7709,7 +7709,7 @@ drUrl, drUsername and drPassword are supporting parameters, among which drUrl re
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|----------------------------------------------------------|
+|----------|-------|
 | Parameter value | enableCursor |
 | Visible or not | Yes |
 | Description of parameters | Allow PREPARE statement to obtain data via CURSOR or not |
@@ -7734,7 +7734,7 @@ Allow PREPARE to obtain data content via Cursor or not (jdbcURl:useCursorFetch=t
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|----------------------------------------|
+|----------|-------|
 | Parameter value | enableFlowControl |
 | Visible or not | Yes |
 | Description of parameters | Enable data source flow control or not |
@@ -7777,7 +7777,7 @@ mysql> show @@datasource;
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------------------|
+|----------|-------|
 | Parameter value | enableHeartbeat |
 | Visible or not | Yes |
 | Description of parameters | Enable Heartbeat or not, Yes: true, No: false |
@@ -7786,7 +7786,7 @@ mysql> show @@datasource;
 | Min Compatible Version | 2.4.3 |
 
 | Property | Value |
-|--------------------------------|----------------------------------------|
+|----------|-------|
 | Parameter value | heartbeatPeriod |
 | Visible or not | Yes |
 | Description of parameters | Heartbeat Period (S) |
@@ -7797,7 +7797,7 @@ mysql> show @@datasource;
 | Min Compatible Version | 2.4.3 |
 
 | Property | Value |
-|--------------------------------|----------------------------------------|
+|----------|-------|
 | Parameter value | heartbeatTimeoutMs |
 | Visible or not | Yes |
 | Description of parameters | Heartbeat Timeout (Ms) |
@@ -7832,7 +7832,7 @@ For Heartbeat Timeout under the condition that Heartbeat is enabled, in case of 
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------|
+|----------|-------|
 | Parameter value | enableLatencyCheck |
 | Visible or not | Yes |
 | Description of parameters | Enable master/slave latency check or not |
@@ -7841,7 +7841,7 @@ For Heartbeat Timeout under the condition that Heartbeat is enabled, in case of 
 | Min Compatible Version | 2.4.5 |
 
 | Property | Value |
-|--------------------------------|----------------------------------------|
+|----------|-------|
 | Parameter value | latencyCheckPeriod |
 | Visible or not | Yes |
 | Description of parameters | Master/Slave Latency Check Period (ms) |
@@ -7879,7 +7879,7 @@ mysql> show @@latency;
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------|
+|----------|-------|
 | Parameter value | enableListener |
 | Visible or not | Yes |
 | Description of parameters | Enable Listener mode or not. |
@@ -7931,7 +7931,7 @@ Please refer to the description of [linear expansion](#linear-expansion) for pre
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|--------------------------------|
+|----------|-------|
 | Parameter value | enableOracleFunction |
 | Visible or not | No |
 | Description of parameters | Support oracle function or not |
@@ -8002,7 +8002,7 @@ ERROR 10010 (HY000): expect VIEW. lexer state: token=IDENTIFIER, sqlLeft=sequenc
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------|
+|----------|-------|
 | Parameter value | enableSleep |
 | Visible or not | Yes |
 | Description of parameters | Whether SLEEP Function is allowed or not |
@@ -8046,7 +8046,7 @@ mysql> select sleep(2);
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-------------------------------------------|
+|----------|-------|
 | Parameter value | enableSSL |
 | Visible or not | Yes |
 | Description of parameters | Whether to enable SSL connection function |
@@ -8067,7 +8067,7 @@ This parameter is used to set whether the compute node is allowed to connect usi
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------------------------|
+|----------|-------|
 | Parameter value | enableSubquery |
 | Visible or not | No |
 | Description of parameters | Whether Subquery under special scenarios is allowed or not |
@@ -8171,7 +8171,7 @@ You could view check information of data source switch via log:
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------|
+|----------|-------|
 | Parameter value | enableXA |
 | Visible or not | Yes |
 | Description of parameters | Apply XA TRANSACTION or not |
@@ -8190,7 +8190,7 @@ Using the external XA TRANSACTION provided by MySQL, the compute node could solv
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------------|
+|----------|-------|
 | Parameter value | errorsPermittedInTransaction |
 | Visible or not | Yes |
 | Description of parameters | Whether error is allowed in transaction or not |
@@ -8273,7 +8273,7 @@ mysql> select * from ss where id=1;
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | failoverAutoresetslave |
 | Visible or not | Yes |
 | Description of parameters | When failover, auto reset the master/slave replication relation or not |
@@ -8296,7 +8296,7 @@ This parameter is used for guaranteeing data accuracy after data source failover
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|----------------------------------------------|
+|----------|-------|
 | Parameter value | frontConnectionTrxIsoLevel |
 | Visible or not | No |
 | Description of parameters | Front-end connection default isolation level |
@@ -8323,7 +8323,7 @@ It's used for setting user isolation level of front-end connection of the comput
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------|
+|----------|-------|
 | Parameter value | frontWriteBlockTimeout |
 | Visible or not | Yes |
 | Description of parameters | Front-end Connection Write Block Timeout |
@@ -8348,7 +8348,7 @@ Great network latency or unreachable network from the compute node to the client
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|---------------------------|
+|----------|-------|
 | Parameter value | generatePrefetchCostRatio |
 | Visible or not | No |
 | Description of parameters | 触发提前预取的已消耗比例 |
@@ -8375,7 +8375,7 @@ Great network latency or unreachable network from the compute node to the client
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | globalUniqueConstraint |
 | Visible or not | No |
 | Description of parameters | Whether enable Global Unique Constraint for the new tables by default or not |
@@ -8402,7 +8402,7 @@ To Enable Global Unique Constraint guarantees that the column with Unique Constr
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | haMode |
 | Visible or not | Yes |
 | Description of parameters | High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center 4:Cluster in master center, 5:Cluster in DR center |
@@ -8431,7 +8431,7 @@ In HotDB Server 2.5.6 and above, haMode can be set to 0,1,2,3,4,5. Among them, 4
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------------|
+|----------|-------|
 | Parameter value | haState |
 | Visible or not | Yes |
 | Description of parameters | Master node: master; Slave node: backup |
@@ -8440,7 +8440,7 @@ In HotDB Server 2.5.6 and above, haMode can be set to 0,1,2,3,4,5. Among them, 4
 | Min Compatible Version | 2.4.3 |
 
 | Property | Value |
-|--------------------------------|-----------------------------|
+|----------|-------|
 | Parameter value | haNodeHost |
 | Visible or not | Yes |
 | Description of parameters | HA role, Other node IP:PORT |
@@ -8472,7 +8472,7 @@ For example, 192.168.210.22:3326,192.168.210.23:3326 and 192.168.210.24:3326 bel
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|---------------------------------------------|
+|----------|-------|
 | Parameter value | highCostSqlConcurrency |
 | Visible or not | No |
 | Description of parameters | Number of high cost statement concurrencies |
@@ -8516,7 +8516,7 @@ mysql> show @@debug;
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|----------------------------------------|
+|----------|-------|
 | Parameter value | idcId |
 | Visible or not | Yes |
 | Description of parameters | ID of IDC, 1:master center,2:DR center |
@@ -8525,7 +8525,7 @@ mysql> show @@debug;
 | Min Compatible Version | 2.5.3.1 |
 
 | Property | Value |
-|--------------------------------|---------------------------------------|
+|----------|-------|
 | Parameter value | idcNodeHost |
 | Visible or not | Yes |
 | Description of parameters | connection information of another IDC |
@@ -8550,7 +8550,7 @@ For example, set idcId as 1 in server.xml of the master center, idcNodeHost for 
 
 | Property | Value |
 | Parameter value | idleTimeout |
-|--------------------------------|----------------------------------------|
+|----------|-------|
 | Visible or not | No |
 | Description of parameters | Front-end idle connection timeout time |
 | Default value | 28800 |
@@ -8630,7 +8630,7 @@ If it is set to 0, the front-end idle connection will never time out, and the co
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------------------|
+|----------|-------|
 | Parameter value | joinable |
 | Visible or not | Yes |
 | Description of parameters | Allow JOIN Query or not, Yes: true, No: false |
@@ -8674,7 +8674,7 @@ mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept lim
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | joinBatchSize |
 | Visible or not | Yes |
 | Description of parameters | At equi-join query, record number of equi-join queries turning into IN queries per batch |
@@ -8716,7 +8716,7 @@ View actual execution result of general_log as follow:
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|----------------------------------------|
+|----------|-------|
 | Parameter value | joinCacheSize |
 | Visible or not | No |
 | Description of parameters | Off-heap memory size of JOIN cache (M) |
@@ -8750,7 +8750,7 @@ root> ll
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | joinLoopSize |
 | Visible or not | Yes |
 | Description of parameters | JOIN Query times per batch of each node when using BNL algorithm |
@@ -8787,7 +8787,7 @@ View actual execution result of general_log:
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------------------------------|
+|----------|-------|
 | Parameter value | keyStore |
 | Visible or not | Yes |
 | Description of parameters | Path to the data certificate .jks file for TLS connection |
@@ -8810,7 +8810,7 @@ This parameter is used to set the path to the data certificate .jks file for con
 **Description of parameter:**
 
 |Property                     |Value|
-|----|----|                                                                                             |
+|-----------------------------|-----|
 |Parameter value                 | keyStorePass                                                         |
 |Visible or not                  | Yes                                                                  |
 |Description of parameters       | Password of the data certificate .jks file for TLS connection        |
@@ -8833,15 +8833,15 @@ This parameter is used to set the password of the data certificate .jks file for
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|------------------------------------------|
-| Parameter  value | lockWaitTimeout |
-| Visible  or not | Yes |
-| Description  of parameters | Timeout  for obtaining metadata lock (s) |
-| Default  value | 31536000 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.5.3 |
-| Max  value | 31536000 |
-| Min  value | 1 |
+|----------|-------|
+| Parameter value | lockWaitTimeout |
+| Visible or not | Yes |
+| Description of parameters | Timeout for obtaining metadata lock (s) |
+| Default value | 31536000 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.5.3 |
+| Max value | 31536000 |
+| Min value | 1 |
 
 **Parameter Setting:**
 
@@ -8864,15 +8864,15 @@ session B execute: if the set value of lockWaitTimeout is exceeded, the followin
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|---------------------------------------------------------------------|
-| Parameter  value | masterSourceInitWaitTimeout |
-| Visible  or not | No |
-| Description  of parameters | When start, Master Data Source Initialization  Timeout in data node |
-| Default  value | 300 |
+|----------|-------|
+| Parameter value | masterSourceInitWaitTimeout |
+| Visible or not | No |
+| Description of parameters | When start, Master Data Source Initialization Timeout in data node |
+| Default value | 300 |
 | Min value | 0 |
 | Max value | 600 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.3 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Effect:**
 
@@ -8891,15 +8891,15 @@ Causes for data source timeout are: beyond limit of the system or database conne
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|----------------------------------------|
-| Parameter  value | maxAllowedPacket |
-| Visible  or not | No |
-| Description  of parameters | Max data packet allowed to be received |
-| Default  value | 65536 |
+|----------|-------|
+| Parameter value | maxAllowedPacket |
+| Visible or not | No |
+| Description of parameters | Max data packet allowed to be received |
+| Default value | 65536 |
 | Min value | 1 |
 | Max value | 1048576 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.5 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.5 |
 
 **Parameter Effect:**
 
@@ -8926,27 +8926,27 @@ mysql> show variables like '%allowed%;
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|---------------------------|
-| Parameter  value | maxConnections |
-| Visible  or not | Yes |
-| Description  of parameters | Front-end Max Connections |
-| Default  value | 5000 |
+|----------|-------|
+| Parameter value | maxConnections |
+| Visible or not | Yes |
+| Description of parameters | Front-end Max Connections |
+| Default value | 5000 |
 | Min value | 300000 |
 | Max value | 1 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.4 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.4 |
 
 
 | Property | Value |
-|---------------------------------|--------------------------------------------------|
-| Parameter  value | maxUserConnections |
-| Visible  or not | Yes |
-| Description  of parameters | User Front-end Max Connections, 0 means no limit |
-| Default  value | 0 |
+|----------|-------|
+| Parameter value | maxUserConnections |
+| Visible or not | Yes |
+| Description of parameters | User Front-end Max Connections, 0 means no limit |
+| Default value | 0 |
 | Min value | 300000 |
 | Max value | 0 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.4 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.4 |
 
 **Parameter Effect:**
 
@@ -8998,13 +8998,13 @@ mysql> show variables like '%max_user_connections%;
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|----------------------------------------------|
-| Parameter  value | maxIdleTransactionTimeout |
-| Visible  or not | Yes |
-| Description  of parameters | Non-committed Idle Transaction  Timeout (ms) |
-| Default  value | 86400000 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.5.1 |
+|----------|-------|
+| Parameter value | maxIdleTransactionTimeout |
+| Visible or not | Yes |
+| Description of parameters | Non-committed Idle Transaction Timeout (ms) |
+| Default value | 86400000 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.5.1 |
 
 **Parameter Setting:**
 
@@ -9029,15 +9029,15 @@ When the parameter is set as 0, it means never timeout, that is, no limit for CO
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------------------------------------------|
-| Parameter  value | maxJoinSize |
-| Visible  or not | Yes |
-| Description  of parameters | Row limits in JOIN query cache (M: Million, K:  Thousand) |
-| Default  value | 10M |
+|----------|-------|
+| Parameter value | maxJoinSize |
+| Visible or not | Yes |
+| Description of parameters | Row limits in JOIN query cache (M: Million, K:  Thousand) |
+| Default value | 10M |
 | Min value | 1K |
 | Max value | 1000M |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.3 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Effect:**
 
@@ -9096,15 +9096,15 @@ ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|----------------------------------------------------------------|
-| Parameter  value | maxLatencyForRWSplit |
-| Visible  or not | Yes |
-| Description  of parameters | Max Latency of Readable Standby Slave in  Read/write splitting |
-| Default  value | 1000ms |
+|----------|-------|
+| Parameter value | maxLatencyForRWSplit |
+| Visible or not | Yes |
+| Description of parameters | Max Latency of Readable Standby Slave in Read/write splitting |
+| Default value | 1000ms |
 | Min value | 200 |
 | Max value | 10000 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.5 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.5 |
 
 **Parameter Effect:**
 
@@ -9147,10 +9147,10 @@ mysql> select * from cd;
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------|
+|----------|-------|
 | Parameter value | maxNotInSubquery |
 | Visible or not | Hidden |
-| Description of parameters | Max number of  not in in subquery |
+| Description of parameters | Max number of not in in subquery |
 | Default value | 20000 |
 | Whether Reload is valid or not | Yes |
 | Min Compatible Version | 2.4.9 |
@@ -9214,7 +9214,7 @@ config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql)
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------|
+|----------|-------|
 | Parameter value | maxReconnectConfigDBTimes |
 | Visible or not | No |
 | Description of parameters | Max times of reconnecting ConfigDB |
@@ -9241,15 +9241,15 @@ The parameter can prevent long time consumption for configDB connection during t
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------------------------------------------------|
-| Parameter  value | maxSqlRecordLength |
-| Visible  or not | Yes |
-| Description  of parameters | Max length of SQL statement record in SQL execution  statistics |
-| Default  value | 1000 |
+|----------|-------|
+| Parameter value | maxSqlRecordLength |
+| Visible or not | Yes |
+| Description of parameters | Max length of SQL statement record in SQL execution statistics |
+| Default value | 1000 |
 | Min value | 1000 |
 | Max value | 16000 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.5 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.5 |
 
 **Parameter Effect:**
 
@@ -9264,28 +9264,28 @@ When the length of the executed SQL statement exceeds the set length, it will be
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|------------------------|
-| Parameter  value | ndbSqlAddr |
-| Visible  or not | Yes |
-| Description  of parameters | NDB SQL-end IP address |
-| Default  value | localhost:3329 |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.5.2 |
+|----------|-------|
+| Parameter value | ndbSqlAddr |
+| Visible or not | Yes |
+| Description of parameters | NDB SQL-end IP address |
+| Default value | localhost:3329 |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.5.2 |
 
 | Property | Value |
-|---------------------------------|-----------------------------|
-| Parameter  value | ndbSqlUser |
-| Visible  or not | Yes |
-| Description  of parameters | NDB  SQL front-end username |
-| Default  value | root |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.5.2 |
+|----------|-------|
+| Parameter value | ndbSqlUser |
+| Visible or not | Yes |
+| Description of parameters | NDB SQL front-end username |
+| Default value | root |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.5.2 |
 
 | Property | Value |
-|--------------------------------|-----------------------------|
+|----------|-------|
 | Parameter value | ndbSqlPass |
 | Visible or not | Yes |
-| Description of parameters | NDB  SQL front-end password |
+| Description of parameters | NDB SQL front-end password |
 | Default value | root |
 | Whether Reload is valid or not | No |
 | Min Compatible Version | 2.5.2 |
@@ -9305,13 +9305,13 @@ ndbSqlAddr, ndbSqlUser, ndbSqlPass are supporting parameters: ndbSqlAddr is phys
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|---------------------------------------------------|
-| Parameter  value | ndbSqlDataAddr |
-| Visible  or not | Yes |
-| Description  of parameters | IP address and port receiving  NDB SQL connection |
-| Default  value | 127.0.0.1:3327 |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.5.2 |
+|----------|-------|
+| Parameter value | ndbSqlDataAddr |
+| Visible or not | Yes |
+| Description of parameters | IP address and port receiving NDB SQL connection |
+| Default value | 127.0.0.1:3327 |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.5.2 |
 
 **Parameter Setting:**
 
@@ -9326,13 +9326,13 @@ The connection from NDB SQL to compute node, that is the communication port from
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Parameter  value | ndbSqlMode |
-| Visible  or not | Yes |
-| Description  of parameters | Mode used by NDB SQL node (NDB execution  mode: none: Forbidden NDB function, the default value; local: NDB SQL server and  compute node server are on the same computer) |
-| Default  value | none |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.5.2 |
+|----------|-------|
+| Parameter value | ndbSqlMode |
+| Visible or not | Yes |
+| Description of parameters | Mode used by NDB SQL node (NDB execution mode: none: Forbidden NDB function, the default value; local: NDB SQL server and compute node server are on the same computer) |
+| Default value | none |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.5.2 |
 
 **Parameter Setting:**
 
@@ -9347,22 +9347,22 @@ none: the default value, representing Forbidden NDB function; local: NDB SQL ser
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|------------------------|
-| Parameter  value | ndbSqlVersion |
-| Visible  or not | Yes |
-| Description  of parameters | NDB SQL Version Number |
-| Default  value | 5.7.24 |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.5.2 |
+|----------|-------|
+| Parameter value | ndbSqlVersion |
+| Visible or not | Yes |
+| Description of parameters | NDB SQL Version Number |
+| Default value | 5.7.24 |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.5.2 |
 
 | Property | Value |
-|---------------------------------|---------------------------|
-| Parameter  value | ndbVersion |
-| Visible  or not | Yes |
-| Description  of parameters | NDB Engine Version Number |
-| Default  value | 7.5.12 |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.5.2 |
+|----------|-------|
+| Parameter value | ndbVersion |
+| Visible or not | Yes |
+| Description of parameters | NDB Engine Version Number |
+| Default value | 7.5.12 |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.5.2 |
 
 **Parameter Setting:**
 
@@ -9378,7 +9378,7 @@ ndbSqlVersion and ndbVersion are of corresponding relation, and please refer to 
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|--------------------------------|
+|----------|-------|
 | Parameter value | operateMode |
 | Visible or not | No |
 | Description of parameters | Operating mode of compute node |
@@ -9449,15 +9449,15 @@ In debug mode, the compute node will force to enable the parameters related to t
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------------------------------------------------|
-| Parameter  value | parkPeriod |
-| Visible  or not | Yes |
-| Description  of parameters | Thread Dormancy Period at the idle time of  Message System (ns) |
-| Default  value | 100000 |
+|----------|-------|
+| Parameter value | parkPeriod |
+| Visible or not | Yes |
+| Description of parameters | Thread Dormancy Period at the idle time of Message System (ns) |
+| Default value | 100000 |
 | Min value | 1000000 |
 | Max value | 1000 |
-| Whether  Reload is valid or not | N for v.2.4.5  Y for v.2.4.7 and above |
-| Min  Compatible Version | 2.4.3 |
+| Whether Reload is valid or not | N for v.2.4.5 Y for v.2.4.7 and above |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Setting:**
 
@@ -9476,7 +9476,7 @@ This parameter is used for adjusting sleep time of cost message queue thread at 
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-------------------------------------|
+|----------|-------|
 | Parameter value | pingLogCleanPeriod |
 | Visible or not | Hidden |
 | Description of parameters | Ping Log Clean Period, 3 by default |
@@ -9501,7 +9501,7 @@ pingLogCleanPeriod parameter is 3 by default, with the optional unit being Hour,
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|------------------------------------------------------------------------|
+|----------|-------|
 | Parameter value | pingLogCleanPeriodUnit |
 | Visible or not | Hidden |
 | Description of parameters | Unit of ping log clean period, 2 by default, 0: Hour, 1: Day, 2: Month |
@@ -9526,7 +9526,7 @@ pingLogCleanPeriodUnit parameter is 2 by default, meaning that the unit of ping 
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|---------------------------------------------------------|
+|----------|-------|
 | Parameter value | pingPeriod |
 | Visible or not | Hidden |
 | Description of parameters | ping server period, Unit: s, 3600s by default, min 300s |
@@ -9557,10 +9557,10 @@ In the detection process, for a certain IP address, the program will automatical
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-------------------------------------------------------|
+|----------|-------|
 | Parameter value | prefetchBatchInit |
 | Visible or not | Yes |
-| Description of parameters | The initial value of the  auto-incremental batch size |
+| Description of parameters | The initial value of the auto-incremental batch size |
 | Default value | 100 |
 | Whether Reload is valid or not | Yes |
 | Min Compatible Version | 2.5.4 |
@@ -9582,10 +9582,10 @@ The initial value can be configured within the upper and lower limits of the aut
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------------------------|
+|----------|-------|
 | Parameter value | prefetchBatchMax |
 | Visible or not | Yes |
-| Description of parameters | The upper limit of the  auto-incremental batch size |
+| Description of parameters | The upper limit of the auto-incremental batch size |
 | Default value | 10000 |
 | Min value | 10 |
 | Max value | 100000 |
@@ -9608,10 +9608,10 @@ The upper limit of the auto-incremental batch size. If 1000 is set, the maximum 
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------------------------|
+|----------|-------|
 | Parameter value | prefetchBatchMin |
 | Visible or not | Yes |
-| Description of parameters | The lower limit of the  auto-incremental batch size |
+| Description of parameters | The lower limit of the auto-incremental batch size |
 | Default value | 10 |
 | Min value | 2 |
 | Max value | 1000 |
@@ -9633,10 +9633,10 @@ The lower limit of the auto-incremental prefetch batch size. If 100 is set, the 
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|----------------------------------------------|
+|----------|-------|
 | Parameter value | prefetchValidTimeout |
 | Visible or not | Yes |
-| Description of parameters | The valid timeout time of  prefetch(seconds) |
+| Description of parameters | The valid timeout time of prefetch(seconds) |
 | Default value | 10 |
 | Min value | 3 |
 | Max value | 86400 |
@@ -9658,15 +9658,15 @@ The valid timeout time of prefetching the auto-incremental batch. When set as 0,
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|---------------------------------|
-| Parameter  value | processorExecutor |
-| Visible  or not | Yes |
-| Description  of parameters | Number of threads of processors |
-| Default  value | 4 |
+|----------|-------|
+| Parameter value | processorExecutor |
+| Visible or not | Yes |
+| Description of parameters | Number of threads of processors |
+| Default value | 4 |
 | Min value | 2 |
 | Max value | 8 |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.4.3 |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Setting:**
 
@@ -9685,15 +9685,15 @@ Log in to 3325 port, execute the show @@threadpool; command, and then you could 
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|----------------------|
-| Parameter  value | processors |
-| Visible  or not | Yes |
-| Description  of parameters | Number of processors |
-| Default  value | 8 |
+|----------|-------|
+| Parameter value | processors |
+| Visible or not | Yes |
+| Description of parameters | Number of processors |
+| Default value | 8 |
 | Min value | 4 |
 | Max value | 128 |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.4.3 |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Setting:**
 
@@ -9712,13 +9712,13 @@ Log in to 3325 port, execute show @@threadpool; command, and then you could view
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|----------------------|
-| Parameter  value | readOnly |
-| Visible  or not | No |
-| Description  of parameters | readOnly mode or not |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.8 |
+|----------|-------|
+| Parameter value | readOnly |
+| Visible or not | No |
+| Description of parameters | readOnly mode or not |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.8 |
 
 **Parameter Setting:**
 
@@ -9747,13 +9747,13 @@ ERROR 1289 (HY000): Command not allowed in Read-Only mode.
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-------------------|
-| Parameter  value | recordAuditlog |
-| Visible  or not | No |
-| Description  of parameters | Record audit  log |
-| Default  value | true |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.5.0 |
+|----------|-------|
+| Parameter value | recordAuditlog |
+| Visible or not | No |
+| Description of parameters | Record audit log |
+| Default value | true |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.5.0 |
 
 **Parameter Setting:**
 
@@ -9772,13 +9772,13 @@ recordAuditlog enables audit log or not. This parameter is used for controlling 
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-------------------------------|
-| Parameter  value | recordCrossDNJoin |
-| Visible  or not | No |
-| Description  of parameters | Record cross-node JOIN in log |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordCrossDNJoin |
+| Visible or not | No |
+| Description of parameters | Record cross-node JOIN in log |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -9814,13 +9814,13 @@ View `logs/sql.log` of compute node installation directory
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------------|
-| Parameter  value | recordDDL |
-| Visible  or not | No |
-| Description  of parameters | Record DDL statement in log |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordDDL |
+| Visible or not | No |
+| Description of parameters | Record DDL statement in log |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -9850,13 +9850,13 @@ View `logs/sql.log` of compute node installation directory
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|----------------------------------------------------|
-| Parameter  value | recordDeadLockSQL |
-| Visible  or not | No |
-| Description  of parameters | The log records the statement triggering  deadlock |
-| Default  value | true |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordDeadLockSQL |
+| Visible or not | No |
+| Description of parameters | The log records the statement triggering deadlock |
+| Default value | true |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -9882,13 +9882,13 @@ recordDeadLockSQL log records the statement triggering deadlock:
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-------------------------------------------------|
-| Parameter  value | recordHotDBErrors |
-| Visible  or not | No |
-| Description  of parameters | The log records error message returned by HotDB |
-| Default  value | true |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.8 |
+|----------|-------|
+| Parameter value | recordHotDBErrors |
+| Visible or not | No |
+| Description of parameters | The log records error message returned by HotDB |
+| Default value | true |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.8 |
 
 **Parameter Setting:**
 
@@ -9913,13 +9913,13 @@ For example: when executing Create statement by user without create privilege, t
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-------------------------------------------------------------------|
-| Parameter  value | recordHotDBWarnings |
-| Visible  or not | No |
-| Description  of parameters | The log records the warning message returned by  the compute node |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordHotDBWarnings |
+| Visible or not | No |
+| Description of parameters | The log records the warning message returned by the compute node |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -9949,13 +9949,13 @@ View `logs/sql.log` of the compute node installation directory
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------------------------------------|
-| Parameter  value | recordLimitOffsetWithoutOrderby |
-| Visible  or not | No |
-| Description  of parameters | The log records the limit statement without orderby |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordLimitOffsetWithoutOrderby |
+| Visible or not | No |
+| Description of parameters | The log records the limit statement without orderby |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -9987,13 +9987,13 @@ View `logs/sql.log` of compute node installation directory
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-------------------------------------------------|
-| Parameter  value | recordMySQLErrors |
-| Visible  or not | No |
-| Description  of parameters | The log records error message returned by MySQL |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordMySQLErrors |
+| Visible or not | No |
+| Description of parameters | The log records error message returned by MySQL |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -10024,13 +10024,13 @@ View `logs/hotdb.log` of compute node installation directory
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|--------------------------------------------------------|
-| Parameter  value | recordMySQLWarnings |
-| Visible  or not | Hidden |
-| Description  of parameters | The log records the warning message returned by  MySQL |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordMySQLWarnings |
+| Visible or not | Hidden |
+| Description of parameters | The log records the warning message returned by MySQL |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -10055,13 +10055,13 @@ View `logs/sql.log` of compute node installation directory,
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|--------------------------------------------------------|
-| Parameter  value | recordMySQLWarnings |
-| Visible  or not | Hidden |
-| Description  of parameters | The log records the warning message returned by  MySQL |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordMySQLWarnings |
+| Visible or not | Hidden |
+| Description of parameters | The log records the warning message returned by MySQL |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -10093,13 +10093,13 @@ View /logs/sql.log of compute node installation directory,
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|----------------------------------------------------|
-| Parameter  value | recordSql |
-| Visible  or not | Yes |
-| Description  of parameters | Make statistics of SQL execution  condition or not |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | recordSql |
+| Visible or not | Yes |
+| Description of parameters | Make statistics of SQL execution condition or not |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Setting:**
 
@@ -10167,13 +10167,13 @@ crc: 321944166562
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------|
-| Parameter  value | recordSqlAuditlog |
-| Visible  or not | No |
-| Description  of parameters | Record SQL audit log. |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.5.5 |
+|----------|-------|
+| Parameter value | recordSqlAuditlog |
+| Visible or not | No |
+| Description of parameters | Record SQL audit log. |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.5.5 |
 
 **Parameter Setting:**
 
@@ -10192,13 +10192,13 @@ For example, execute DDL on the server of compute node and view the log output.
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------|
-| Parameter  value | recordSqlAuditlog |
-| Visible  or not | No |
-| Description  of parameters | Record SQL audit log. |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.5.5 |
+|----------|-------|
+| Parameter value | recordSqlAuditlog |
+| Visible or not | No |
+| Description of parameters | Record SQL audit log. |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.5.5 |
 
 
 **Parameter Setting:**
@@ -10243,13 +10243,13 @@ For example, execute DDL on the server of compute node and view the log output.
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-------------------------------------------|
-| Parameter  value | recordSQLIntercepted |
-| Visible  or not | No |
-| Description  of parameters | The log records the intercepted statement |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordSQLIntercepted |
+| Visible or not | No |
+| Description of parameters | The log records the intercepted statement |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -10274,13 +10274,13 @@ View `logs/sql.log` of compute node installation directory
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------------------------------------------------------------------------------|
-| Parameter  value | recordSQLKeyConflict |
-| Visible  or not | No |
-| Description  of parameters | The log records the statement with Primary Key conflict  and violating foreign key constraint |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordSQLKeyConflict |
+| Visible or not | No |
+| Description of parameters | The log records the statement with Primary Key conflict and violating foreign key constraint |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -10325,13 +10325,13 @@ insert into vtab001 values(1,'aaa');
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|---------------------------------------------|
-| Parameter  value | recordSQLSyntaxError |
-| Visible  or not | No |
-| Description  of parameters | The log records statement with Syntax error |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordSQLSyntaxError |
+| Visible or not | No |
+| Description of parameters | The log records statement with Syntax error |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -10362,13 +10362,13 @@ View `logs/sql.log` of compute node installation directory
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|---------------------------------------------|
-| Parameter  value | recordSQLUnsupported |
-| Visible  or not | No |
-| Description  of parameters | The log records the statement not supported |
-| Default  value | true |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordSQLUnsupported |
+| Visible or not | No |
+| Description of parameters | The log records the statement not supported |
+| Default value | true |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -10407,13 +10407,13 @@ View `logs/sql.log` of compute node installation directory
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|--------------------------|
-| Parameter  value | recordSubQuery |
-| Visible  or not | No |
-| Description  of parameters | The log records Subquery |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordSubQuery |
+| Visible or not | No |
+| Description of parameters | The log records Subquery |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -10444,13 +10444,13 @@ View `logs/sql.log` of compute node installation directory
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------|
-| Parameter  value | recordUNION |
-| Visible  or not | No |
-| Description  of parameters | The log records UNION |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.7 |
+|----------|-------|
+| Parameter value | recordUNION |
+| Visible or not | No |
+| Description of parameters | The log records UNION |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.7 |
 
 **Parameter Setting:**
 
@@ -10481,13 +10481,13 @@ View `logs/sql.log` of compute node installation directory
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|--------------------------------------------------------------------------------------|
-| Parameter  value | routeByRelativeCol |
-| Visible  or not | No |
-| Description  of parameters | It does not include the route  via Secondary Index Field at the time of sharding key |
-| Default  value | false |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.5.2 |
+|----------|-------|
+| Parameter value | routeByRelativeCol |
+| Visible or not | No |
+| Description of parameters | It does not include the route via Secondary Index Field at the time of sharding key |
+| Default value | false |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.5.2 |
 
 **Parameter Setting:**
 
@@ -10506,13 +10506,13 @@ This function is OFF by default, that is, it does not route via Secondary Index 
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|---------------------------------------------------------------|
-| Parameter  value | serverId |
-| Visible  or not | Yes |
-| Description  of parameters | Cluster node number  1-N (number of nodes), unique in cluster |
-| Default  value | 1 |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.5.0 |
+|----------|-------|
+| Parameter value | serverId |
+| Visible or not | Yes |
+| Description of parameters | Cluster node number 1-N (number of nodes), unique in cluster |
+| Default value | 1 |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.5.0 |
 
 **Parameter Setting:**
 
@@ -10531,22 +10531,22 @@ It is used for dividing connection communication ID among the nodes in the clust
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|--------------|
-| Parameter  value | service port |
-| Visible  or not | Yes |
-| Description  of parameters | service port |
-| Default  value | 3323 |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | service port |
+| Visible or not | Yes |
+| Description of parameters | service port |
+| Default value | 3323 |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.4.3 |
 
 | Property | Value |
-|---------------------------------|-----------------|
-| Parameter  value | management port |
-| Visible  or not | Yes |
-| Description  of parameters | management port |
-| Default  value | 3325 |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | management port |
+| Visible or not | Yes |
+| Description of parameters | management port |
+| Default value | 3325 |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Effect:**
 
@@ -10559,13 +10559,13 @@ Management port is used to monitor compute node service information and monitori
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-------------------------------------------------------------------------------------|
-| Parameter  value | showAllAffectedRowsInGlobalTable |
-| Visible  or not | Yes |
-| Description  of parameters | Whether Global Table IDU statement shows total  number of AffectedRows in all nodes |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | showAllAffectedRowsInGlobalTable |
+| Visible or not | Yes |
+| Description of parameters | Whether Global Table IDU statement shows total number of AffectedRows in all nodes |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Effect:**
 
@@ -10603,13 +10603,13 @@ Rows matched: 1 Changed: 1 Warnings: 0
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|--------------------------------------------------------------------------|
-| Parameter  value | skipDatatypeCheck |
-| Visible  or not | No |
-| Description  of parameters | Control whether to skip checking of column data  type in table structure |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.5 |
+|----------|-------|
+| Parameter value | skipDatatypeCheck |
+| Visible or not | No |
+| Description of parameters | Control whether to skip checking of column data type in table structure |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.5 |
 
 **Parameter Setting:**
 
@@ -10650,15 +10650,15 @@ Query OK, 0 rows affected (0.23 sec)
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------------|
-| Parameter  value | socketBacklog |
-| Visible  or not | No |
-| Description  of parameters | service port Socket backlog |
-| Default  value | 1000 |
+|----------|-------|
+| Parameter value | socketBacklog |
+| Visible or not | No |
+| Description of parameters | service port Socket backlog |
+| Default value | 1000 |
 | Min value | 1000 |
 | Max value | 4000 |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.4.3 |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Setting:**
 
@@ -10675,15 +10675,15 @@ Service port socket requires a certain period of time to process socket connecti
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|----------------------------------------|
-| Parameter  value | sqlTimeout |
-| Visible  or not | Yes |
-| Description  of parameters | Sql Execution Timeout (S) |
-| Default  value | 3600 |
+|----------|-------|
+| Parameter value | sqlTimeout |
+| Visible or not | Yes |
+| Description of parameters | Sql Execution Timeout (S) |
+| Default value | 3600 |
 | Min value | 1 |
 | Max value | 28800 |
-| Whether  Reload is valid or not | N for v.2.4.5  Y for v.2.4.7 and above |
-| Min  Compatible Version | 2.4.3 |
+| Whether Reload is valid or not | N for v.2.4.5 Y for v.2.4.7 and above |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Effect:**
 
@@ -10704,10 +10704,10 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-------------------------------------------------|
+|----------|-------|
 | Parameter value | sslUseSM4 |
 | Visible or not | No |
-| Description of parameters | Whether to support SM4 native cipher  algorithm |
+| Description of parameters | Whether to support SM4 native cipher algorithm |
 | Default value | no |
 | Whether Reload is valid or not | Yes |
 | Min Compatible Version | 2.5.5 |
@@ -10737,15 +10737,15 @@ For users, this function can only be viewed through packet capture. Example: if 
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|----------------------------------------|
-| Parameter  value | statisticsUpdatePeriod |
-| Visible  or not | Yes |
-| Description  of parameters | Command Statistics Persistence Period |
-| Default  value | 0 Non-persistence |
+|----------|-------|
+| Parameter value | statisticsUpdatePeriod |
+| Visible or not | Yes |
+| Description of parameters | Command Statistics Persistence Period |
+| Default value | 0 Non-persistence |
 | Min value | 0 |
 | Max value | 3600000 |
-| Whether  Reload is valid or not | N for v.2.4.5  Y for v.2.4.7 and above |
-| Min  Compatible Version | 2.4.3 |
+| Whether Reload is valid or not | N for v.2.4.5 Y for v.2.4.7 and above |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Effect:**
 
@@ -10772,13 +10772,13 @@ Empty set (0.03 sec)
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|------------------------------------|
-| Parameter  value | strategyForRWSplit |
-| Visible  or not | Yes |
-| Description  of parameters | Enable Read/write splitting or not |
-| Default  value | 0 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | strategyForRWSplit |
+| Visible or not | Yes |
+| Description of parameters | Enable Read/write splitting or not |
+| Default value | 0 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Effect:**
 
@@ -10904,13 +10904,13 @@ For details, please refer to [Read/write splitting](#readwrite-splitting).
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| Parameter  value | switchByLogInFailover |
-| Visible  or not | No |
-| Description  of parameters | When failover, control whether to determine  switch priority by Master_Log_File position of various data sources under the  node or not |
-| Default  value | false |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.5 |
+|----------|-------|
+| Parameter value | switchByLogInFailover |
+| Visible or not | No |
+| Description of parameters | When failover, control whether to determine switch priority by Master_Log_File position of various data sources under the node or not |
+| Default value | false |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.5 |
 
 **Parameter Setting:**
 
@@ -10932,15 +10932,15 @@ For details, please refer to [Read/write splitting](#readwrite-splitting).
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|--------------------------------------------------------------------------|
-| Parameter  value | switchoverTimeoutForTrans |
-| Visible  or not | Yes |
-| Description  of parameters | When making Manual Switch, the old transaction Wait  Commit Timeout (ms) |
-| Default  value | 3000 |
+|----------|-------|
+| Parameter value | switchoverTimeoutForTrans |
+| Visible or not | Yes |
+| Description of parameters | When making Manual Switch, the old transaction Wait Commit Timeout (ms) |
+| Default value | 3000 |
 | Min value | 1800000 |
 | Max value | 0 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.3 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Setting:**
 
@@ -11029,15 +11029,15 @@ For example:
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------------|
-| Parameter  value | timerExecutor |
-| Visible  or not | Yes |
-| Description  of parameters | Number of threads of timers |
-| Default  value | 4 |
+|----------|-------|
+| Parameter value | timerExecutor |
+| Visible or not | Yes |
+| Description of parameters | Number of threads of timers |
+| Default value | 4 |
 | Min value | 2 |
 | Max value | 8 |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.4.3 |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Setting:**
 
@@ -11054,13 +11054,13 @@ The parameter [adaptiveProcessor](#adaptiveprocessor) is enabled by default, and
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------|
-| Parameter  value | timestampProxy |
-| Visible  or not | Yes |
-| Description  of parameters | TimeProxy  mode |
-| Default  value | 0 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.5.1 |
+|----------|-------|
+| Parameter value | timestampProxy |
+| Visible or not | Yes |
+| Description of parameters | TimeProxy mode |
+| Default value | 0 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.5.1 |
 
 
 **Parameter Setting:**
@@ -11088,7 +11088,7 @@ This parameter is used for Complete Global Proxy of the table with on update cur
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------------------------|
+|----------|-------|
 | Parameter value | unusualSQLMode |
 | Visible or not | No |
 | Description of parameters | Controls the frequency of unusualSQL outputing logs |
@@ -11219,31 +11219,31 @@ when configured as 0, all counters will be recorded, and logs will be output whe
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|------------------------------------------|
-| Parameter  value | url |
-| Visible  or not | Yes |
-| Description  of parameters | configDB address |
-| Default  value | jdbc:mysql://127.0.0.1:3306/hotdb_config |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | url |
+| Visible or not | Yes |
+| Description of parameters | configDB address |
+| Default value | jdbc:mysql://127.0.0.1:3306/hotdb_config |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.3 |
 
 | Property | Value |
-|---------------------------------|-------------------|
-| Parameter  value | username |
-| Visible  or not | Yes |
-| Description  of parameters | configDB username |
-| Default  value | hotdb_config |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | username |
+| Visible or not | Yes |
+| Description of parameters | configDB username |
+| Default value | hotdb_config |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.3 |
 
 | Property | Value |
-|---------------------------------|-------------------|
-| Parameter  value | password |
-| Visible  or not | Yes |
-| Description  of parameters | configDB password |
-| Default  value | hotdb_config |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | password |
+| Visible or not | Yes |
+| Description of parameters | configDB password |
+| Default value | hotdb_config |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Effect:**
 
@@ -11288,7 +11288,7 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|---------------------|
+|----------|-------|
 | Parameter value | usingAIO |
 | Visible or not | No |
 | Description of parameters | Use AIO or not, Yes |
@@ -11321,13 +11321,13 @@ root> tail -n 300 hotdb.log | grep 'aio'
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|-----------------------------------------------------------------------------------------------|
-| Parameter  value | version |
-| Visible  or not | No |
-| Description  of parameters | The version number shown to the public by  the compute node |
-| Default  value | Synchronize with result of the compute node `show  @@version`, for example:5.6.29-HotDB-2.5.1 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | version |
+| Visible or not | No |
+| Description of parameters | The version number shown to the public by the compute node |
+| Default value | Synchronize with result of the compute node `show @@version`, for example:5.6.29-HotDB-2.5.1 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Effect:**
 
@@ -11371,10 +11371,10 @@ root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 **Description of parameter:**
 
 | Property | Value |
-|--------------------------------|-----------------------------------|
+|----------|-------|
 | Parameter value | versionComment |
 | Visible or not | No |
-| Description of parameters | Version comment  of compute node. |
+| Description of parameters | Version comment of compute node. |
 | Default value | (None) |
 | Whether Reload is valid or not | Yes |
 | Min Compatible Version | 2.5.5 |
@@ -11447,24 +11447,24 @@ Server version: 5.7.23 hotpu
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|---------------------------------------------------------------------------------------------|
-| Parameter  value | [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_back_log) |
-| Visible  or not | Yes |
-| Description  of parameters | Virtual IP address |
-| Default  value | Null |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.8 |
+|----------|-------|
+| Parameter value | [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_back_log) |
+| Visible or not | Yes |
+| Description of parameters | Virtual IP address |
+| Default value | Null |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.8 |
 
 | Property | Value |
-|---------------------------------|------------------|
-| Parameter  value | CheckVIPPeriod |
-| Visible  or not | Yes |
-| Description  of parameters | Check VIP Period |
-| Default  value | 500ms |
+|----------|-------|
+| Parameter value | CheckVIPPeriod |
+| Visible or not | Yes |
+| Description of parameters | Check VIP Period |
+| Default value | 500ms |
 | Min value | 10ms |
 | Max value | 1000ms |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.8 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.8 |
 
 VIP and checkVIPPeriod are supporting parameters; VIP is set as Keepalived virtual IP, and checkVIPPeriod is used for controlling check frequency of virtual IP. When the compute node enables VIP check, if the compute node in slave status founds existence of VIP, then it will execute online automatically; if compute node in master status founds that VIP does not exist, then it will auto offline. This group of parameters are applicable to Compute Node High Availability environment, and it’s recommended making configuration under compute node Master/Slave node environment, and shall be set as actual virtual IP of the current Keepalived. If not set or in case of set error, there will be no processing, while this parameter could be ignored in single compute node
 
@@ -11531,13 +11531,13 @@ Backup compute node:
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|---------------------------------------------------------|
-| Parameter  value | cryptMandatory |
-| Visible  or not | No |
-| Description  of parameters | When enabled, wait for configDB  synchronization or not |
-| Default  value | false |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | cryptMandatory |
+| Visible or not | No |
+| Description of parameters | When enabled, wait for configDB synchronization or not |
+| Default value | false |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Setting:**
 
@@ -11575,13 +11575,13 @@ It could be enabled only after waiting for master/slave synchronization
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|---------------------------------------------------------------------------------|
-| Parameter  value | waitForSlaveInFailover |
-| Visible  or not | Yes |
-| Description  of parameters | In failover, whether to wait for the Slave to  catch up with replication or not |
-| Default  value | true |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | waitForSlaveInFailover |
+| Visible or not | Yes |
+| Description of parameters | In failover, whether to wait for the Slave to catch up with replication or not |
+| Default value | true |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Setting:**
 
@@ -11639,13 +11639,13 @@ When the master/slave data source has replication latency, it could switch to th
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|--------------------------------------------------------------------------|
-| Parameter  value | waitSyncFinishAtStartup |
-| Visible  or not | Yes |
-| Description  of parameters | When enabled, wait for synchronization  of the Master data source or not |
-| Default  value | true |
-| Whether  Reload is valid or not | No |
-| Min  Compatible Version | 2.4.3 |
+|----------|-------|
+| Parameter value | waitSyncFinishAtStartup |
+| Visible or not | Yes |
+| Description of parameters | When enabled, wait for synchronization of the Master data source or not |
+| Default value | true |
+| Whether Reload is valid or not | No |
+| Min Compatible Version | 2.4.3 |
 
 **Parameter Setting:**
 
@@ -11687,13 +11687,13 @@ Turn off the switch: No other abnormalities, the compute node could be enabled d
 **Description of parameter:**
 
 | Property | Value |
-|---------------------------------|----------------------------------------------------------|
-| Parameter  value | weightForSlaveRWSplit |
-| Visible  or not | Yes |
-| Description  of parameters | Read Proportion of the Slave, 50 by default (percentage) |
-| Default  value | 50 |
-| Whether  Reload is valid or not | Yes |
-| Min  Compatible Version | 2.4.4 |
+|----------|-------|
+| Parameter value | weightForSlaveRWSplit |
+| Visible or not | Yes |
+| Description of parameters | Read Proportion of the Slave, 50 by default (percentage) |
+| Default value | 50 |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.4.4 |
 
 **Parameter Setting:**
 

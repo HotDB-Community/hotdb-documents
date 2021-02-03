@@ -14,7 +14,7 @@ fun main(){
 			val filePath = scanner.nextLine().trim()
 			val file = File(filePath)
 			if(file.isDirectory){
-				file.listFiles()?.forEach{ handleFile(it) }
+				file.listFiles()?.filter{ it.isFile }?.forEach { handleFile(it) }
 			}else{
 				handleFile(file)
 			}
