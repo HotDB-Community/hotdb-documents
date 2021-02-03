@@ -130,7 +130,7 @@ For example: `http://192.168.200.191:3324/login`, the accesss page is shown as f
 Both manager username and password are: admin by default, while other user accounts are created by the manager user, with the initial password being: `service_hotdb@hotdb.com`.
 
 If to know detailed use method of the management platform, please refer to [HotDB Management](hotdb-management.md) document.
- 
+
 ### New functions and new features of Version 2.5.6
 
 This chapter will briefly introduce the summary of functions which are added, prohibited or deleted in HotDB Server -- V2.5.6. For detailed function usage, click the hyperlink to view the details:
@@ -496,7 +496,7 @@ In order to ensure that in case of Unavailable Status of Data Node in Vertical s
 
   For example: ALogicDB includes Node 1, 2, and BLogicDB includes Node 3, 4. If Node 1, 2 are Unavailable, but Node 3, 4 are available, then compute node could start, the table under BLogicDB could come into normal operation, the table under ALogicDB can't make Read/Write; if Node 1, 3 are Unavailable, then the compute node can't be enabled.
 
-- Judgment of whether a node is available or not, is related with the status of the data source in configDB and the actual available status of the data source, and it's required that the configuration status shall be consistent with the data source status. Otherwise, Compute Node Enable will be influenced, and when compute node is enabled, connect configured available data source of configDB. If connection succeeded, it shall be deemed as available; if a data source configured available cannot be connected, even if the node has other available data sources which could be connected, the node shall be deemed as Unavailable, and each node shall be configured with at least one available data source, otherwise compute node can't be enabled. The specific conditions are as follow: 
+- Judgment of whether a node is available or not, is related with the status of the data source in configDB and the actual available status of the data source, and it's required that the configuration status shall be consistent with the data source status. Otherwise, Compute Node Enable will be influenced, and when compute node is enabled, connect configured available data source of configDB. If connection succeeded, it shall be deemed as available; if a data source configured available cannot be connected, even if the node has other available data sources which could be connected, the node shall be deemed as Unavailable, and each node shall be configured with at least one available data source, otherwise compute node can't be enabled. The specific conditions are as follow:
 
 > 1. Master/slave data source is configured available
 >
@@ -522,25 +522,25 @@ As for following parameters of MySQL data source service port, they are required
 
 2. **innodb_rollback_on_timeout shall be ON,** and the innodb_rollback_on_timeout parameter shown by `show [global|session] variables` at any time shall be on, the description is as follow:
 
-	- If innodb_rollback_on_timeout parameters are all off, then compute node allows successful load, but the behavior of the compute node equals to the transaction rollback method when innodb_rollback_on_timeout parameter is on, and the following prompts will be given at the time of Config Checking:
+   - If innodb_rollback_on_timeout parameters are all off, then compute node allows successful load, but the behavior of the compute node equals to the transaction rollback method when innodb_rollback_on_timeout parameter is on, and the following prompts will be given at the time of Config Checking:
 
-	![](assets/standard/image26.png)
+   ![](assets/standard/image26.png)
 
-	And at the time of Reload, the log output will be: innodb_rollback_on_timeout=off is not supported, HotDB behavior will be equivalent to innodb_rollback_on_timeout = on.
+   And at the time of Reload, the log output will be: innodb_rollback_on_timeout=off is not supported, HotDB behavior will be equivalent to innodb_rollback_on_timeout = on.
 
-	- If innodb_rollback_on_timeout parameter data sources are inconsistent, Reload will fail, and there will be prompt as follow at the time of Config Checking:
+   - If innodb_rollback_on_timeout parameter data sources are inconsistent, Reload will fail, and there will be prompt as follow at the time of Config Checking:
 
-	![](assets/standard/image27.png)
+   ![](assets/standard/image27.png)
 
-	And at the time of Reload, the data source being off will have log output: MySQL variables 'innodb_rollback_on_timeout' is not consistent, the current value is OFF ,neet to bu changed to ON, and the data source being on will have log output: MySQL variables 'innodb_rollback_on_timeout' is not consistent, the current value is ON
+   And at the time of Reload, the data source being off will have log output: MySQL variables 'innodb_rollback_on_timeout' is not consistent, the current value is OFF ,neet to bu changed to ON, and the data source being on will have log output: MySQL variables 'innodb_rollback_on_timeout' is not consistent, the current value is ON
 
 3. **read_only**, the parameter description is as follow:
 
-	- If for master data source, the parameter read_only=1, then compute node will refuse to start, and reload fails.
+   - If for master data source, the parameter read_only=1, then compute node will refuse to start, and reload fails.
 
-	- If for the Slave, the parameter read_only=1 and is configured with the configuration rule of Switch to the Slave, then compute node could start, RELOAD fails.
+   - If for the Slave, the parameter read_only=1 and is configured with the configuration rule of Switch to the Slave, then compute node could start, RELOAD fails.
 
-	- If for the Slave, the parameter read_only=1 and is not configured with the configuration rule of Switch to the Slave, then compute node could start, and reload will be successful if without other error.
+   - If for the Slave, the parameter read_only=1 and is not configured with the configuration rule of Switch to the Slave, then compute node could start, and reload will be successful if without other error.
 
 #### Parameters requiring consistent configuration of all nodes
 
@@ -601,7 +601,7 @@ The user can enter corresponding command to monitor service condition of compute
 mysql> show @@datasource;
 |---------------------------|---------------------------------------------------|
 | dn | ds | name                  | type | status | host        | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
-|----|----|-----------------------|------|--------|-------------|------|--------|--------|------|------|--------------------|--------------|--------|-------------|-----------------|
+|---------------------------|---------------------------------------------------|
 | 17 | 17 | 10.10.0.140_3313_db01 | 1    | 1      | 10.10.0.140 | 3313 | db01   | 0      | 45   | 45   | NULL               | 0/64         | 1      | 8           | 1               |
 ...more contents are omitted, and you could log in to view...
 ```
@@ -730,14 +730,14 @@ In Distributed Transactional Database system, in case of deadlock between two da
 
 The operations in the following table, describe the deadlock process of two data nodes in distributed system. Session 1 and Session 2 execute DELETE operation respectively on the two data nodes:
 
-| Session 1 | Session 2 |
-|-----------|-----------|
-| Session 1 Start transaction | `start transaction;` |
+| Session 1 | Session 2 |   |
+|-----------|-----------|---|
+| Session 1 Start transaction | `start transaction;` |   |
 | Session 2 Start transaction | 　 | `start transaction;` |
-| Session 1 Execute DELETE statement on data node where DNID = 15 | `delete from customer where dnid=15 and id=1;` |
-| Session 2 Execute DELETE statement on data node where DNID = 13 | `delete from customer where dnid=13 and id=4;` |
-| Session 1 Execute DELETE statement on data node where DNID = 13; DELETE operation will be blocked by Session 2 | `delete from customer where dnid=13 and id=4;` |
-| Session 2 Execute DELETE statement on data node where DNID = 15; this operation will be blocked by Session 1; since Session 1 is blocked by Session 2, and Session 2 is also blocked by Session 1, therefore, there will be deadlock at this time | `delete from customer where dnid=15 and id=1;` |
+| Session 1 Execute DELETE statement on data node where DNID = 15 | `delete from customer where dnid=15 and id=1;` |   |
+| Session 2 Execute DELETE statement on data node where DNID = 13 | `delete from customer where dnid=13 and id=4;` |   |
+| Session 1 Execute DELETE statement on data node where DNID = 13; DELETE operation will be blocked by Session 2 | `delete from customer where dnid=13 and id=4;` |   |
+| Session 2 Execute DELETE statement on data node where DNID = 15; this operation will be blocked by Session 1; since Session 1 is blocked by Session 2, and Session 2 is also blocked by Session 1, therefore, there will be deadlock at this time | `delete from customer where dnid=15 and id=1;` |   |
 
 Under the above condition, Session 1 and Session 2 are mutually blocked, thus there will be deadlock. Since the deadlock occurs between two data sources of data node, MySQL can't detect existence of the deadlock.
 
@@ -1032,17 +1032,17 @@ The configured parameters are as follows:
 Users have no need to restart the compute node service for the parameter modification, for server.jks documents will be read again during dynamic loading. If SSL-related logic initialization fails, the dynamic loading will not fail, though the subsequent SSL connections cannot be established normally. Non-SSL connections will not be affected.
 
 > !Note
-> 
+>
 > - If the compute node cannot find any available `server.jks` file, the following error messages will be output when starting or synchronously loading.
-> 
+>
 > ![](assets/standard/image41.png)
-> 
+>
 > - If the `keyStorePass` configuration is wrong, the following error messages will be output during startup or synchronously loading.
-> 
+>
 > ![](assets/standard/image42.png)
-> 
+>
 > - If the certificate configuration is wrong, the following error messages will be output during login
-> 
+>
 > ![](assets/standard/image43.png)
 
 #### TLS connection login
@@ -1169,7 +1169,7 @@ mysqlbinlog -R -h 192.168.200.77 -P3306 -v --base64-output=decode-rows --skip-gt
 This section will show how to in practical application scenario, combine complete backup of mysqldump with incremental backup of mysqlbinlog to migrate data from source-end standalone MySQL to compute node.
 
 > !Note
-> 
+>
 > During the whole operation process, it's not recommended executing any DDL, parameter change and other irregular operations in source end or compute node of data migration. Due to single thread operation and restriction by network latency, the data-catching execution speed of this mode is slower than execution speed of MySQL replication. Therefore, it's not guaranteed that execution speed of compute node could meet real-time catching of data, and there may be increasing data latency. Therefore, at this time, find the transaction trough to retry or plan a scheme separately.
 
 Scenario description: Hoping to import physical database db01 at source-end 192.168.210.45:3309 (this instance is ordinary MySQL instance with production data) to LogicDB logicdb01 configured on the management platform, and the belonging master compute node of the LogicDB is 192.168.210.32. Reference steps are as follow:
@@ -1214,7 +1214,7 @@ source /root/db01.sql
 During the execution process, pay close attention to whether there is Warning or Error, otherwise, there will be problem of data inconsistency.
 
 > !Tip
-> 
+>
 > If transaction data is free of messy code problem, it could be considered splitting file and importing it to compute node in parallel, in order to accelerate the processing speed.
 
 6. Use mysqlbinlog to make incremental data synchronization. If database name of the source end is different from LogicDB name of the compute node, then it needs to add database mapping relation in management port first, for example:
@@ -1234,7 +1234,7 @@ In order to accelerate data-catching speed, it's recommended that the server exe
 7. Check accuracy of data synchronization: at this time, it is necessary to stop service for a short time, interrupt the write-in operation of the transaction system toward database. After manual execution of a special data at the source end, view whether the data has been synchronized or not. After confirming that the compute node has been synchronized with the latest data, stop mysqlbinlog command, and if needed, cancel database name mapping.
 
 > !Tip
-> 
+>
 > After both the source end and the compute node have executed the following commands, you could view whether the select results are consistent or not to approximately judge whether the data is consistent or not
 
 ```sql
@@ -1501,13 +1501,13 @@ mysql> insert into test values(null,1);
 ```
 
 > !Note
-> 
+>
 > The auto-incremental sequence 2 mode can guarantee the global uniqueness and approximately positive growth in the long run, and does not guarantee the continuity of the auto increment;
-> 
+>
 > The compute node can perceive the field type range of the auto-incremental sequence; the behavior of the node beyond the range is the same as that of MySQL;
-> 
+>
 > If the parameter [autoIncrement](#autoincrement) is set as 2, the auto-incremental field type must be bigint, otherwise the table creation fails:
-> 
+>
 > ```
 > mysql> create table table_test(id tinyint auto_increment primary key);
 > ERROR 10212 (HY000): auto_increment column must be bigint
@@ -1543,7 +1543,7 @@ To use XA TRANSACTION of compute node in the system, in order to guarantee stron
 - After enabling XA mode and using HINT, since compute node can't control modified contents of HINT statement, therefore, for any operations related with the connection in later period, the compute node will no longer control accuracy of the isolation level.
 
 > !Important
-> 
+>
 > Under XA mode: refer to SQL99 Standard, begin\\start transaction will immediately start a transaction. That is, under the condition of enabling XA mode, begin\\start transaction will equal to start transaction with consistent snapshot.
 
 When the compute node version is 2.5.6 and above, if the front end is disconnected under XA mode, the transaction status will be recorded to the log and ConfigDB. You can check whether the transaction needs to be redone by executing SHOW ABNORMAL_XA_TRX directly at the service port.
@@ -1559,7 +1559,7 @@ When the compute node version is 2.5.6 and above, if the front end is disconnect
 ![](assets/standard/image50.png)
 
 > !Important
-> 
+>
 > - **disconnect_reason:** reasons for disconnection, such as kill, TCP disconnection (program err:java.io.IOException: Connection reset by peer), SQL execution timeout (stream closed, read return -1), idle timeout, etc.
 > - **trx_state:** the transaction status of disconnection, including:
 >   1. ROLLBACKED_BY_HOTDB: in a transaction and the transaction is rolled back by the compute node (when the transaction is not commited automatically, the application program does not issue the commit command or lose the commit command halfway);
@@ -1578,13 +1578,13 @@ Meanwhile, at the time of use, compute node log will output relevant Warning pro
 The Non-Deterministic Function will bring some column problems in use, especially data consistency problem of Global Table, therefore, HotDB Server provides the function of Nondeterministic Function Proxy. Non-Deterministic Function is generally divided into types, one is Time Function with known value, such as CURDATE(), CURRENT_TIMESTAMP(), etc., the other is Random Value Function and Unique Value Function with unknown value, such as RAND(), UUID(), etc.
 
 1. For Time Function, compute node makes Uniform Proxy.
-	- When the Table Field type is datetime (or timestamp) and free of default value, the parameter [timestampProxy](#timestampproxy) will control Proxy Range of the compute node (Auto Mode by default, and Global Processing/Auto Detection are optional), and insert such Function Proxy as specific value into Table;
-	- In case the Functions such as curdate(), curtime(), etc. appear in select/insert/update/delete statement, compute node will insert such Function Proxy as specific value into Table;
+   - When the Table Field type is datetime (or timestamp) and free of default value, the parameter [timestampProxy](#timestampproxy) will control Proxy Range of the compute node (Auto Mode by default, and Global Processing/Auto Detection are optional), and insert such Function Proxy as specific value into Table;
+   - In case the Functions such as curdate(), curtime(), etc. appear in select/insert/update/delete statement, compute node will insert such Function Proxy as specific value into Table;
 2. For Random Value Function, compute node conducts different Proxy methods toward different SQL statements.
 3. For Unique Value Function, compute node makes Uniform Proxy.
-	- In case uuid() or uuid_short() appear in select/insert/update/delete statement, compute node will make Proxy Unique Value according to standard UUIDv1 algorithm;
-	- In case of server_id conflict between data source and configDB, compute node will Auto Disable uuid_short() and inform the user of adjusting the server_id manually. You can refer to description in official website of MySQL:\
-  <https://dev.mysql.com/doc/refman/5.7/en/replication-options.html>.
+   - In case uuid() or uuid_short() appear in select/insert/update/delete statement, compute node will make Proxy Unique Value according to standard UUIDv1 algorithm;
+   - In case of server_id conflict between data source and configDB, compute node will Auto Disable uuid_short() and inform the user of adjusting the server_id manually. You can refer to description in official website of MySQL:\
+     <https://dev.mysql.com/doc/refman/5.7/en/replication-options.html>.
 
 ### Global Time Zone Support
 
@@ -1633,7 +1633,7 @@ You could either modify the following parameter in server.xml or modify the para
 ![](assets/standard/image51.png)
 
 > !Note
-> 
+>
 > After enable the function, there may be great influence on execution efficiency of INSERT, UPDATE and DELETE of SQL statements, and may result in increasing delay of SQL operation; it may also increase the circumstance of Lock Wait and Deadlock. Please make the choice upon careful consideration.
 
 #### Table level control when creating a table
@@ -1764,18 +1764,18 @@ Therefore, compute node parameter [failoverAutoresetslave](#failoverautoresetsla
 After failover, IO thread between the original Master/Slave will be suspended, and Heartbeat Detection of the original Active Master will be conducted once every minute, until the original Active Master recovers normal. After the original Active Master recovers normal, comparing with binlog position of the original Active Master, detect whether the original Standby Slave (the existing Active Master) has the transaction not acquired before Switch, if yes, enable this parameter will Auto Reset the master/slave replication relation. If not, there will be no treatment after Re-enable the IO Thread.
 
 > !Note
-> 
+>
 > The precondition for detecting whether there is transaction not received or not is that both the Active Master and Standby Slave need to enable GTID, otherwise, when this parameter is enabled, there will be Auto Reset of master/slave replication relation after failover completed.
 >
 > If at the time of Heartbeat Detection, the original Active Master is still in Unavailable state after more than 10080 times of Retry, at this time, parameter is in Enable status, and there will also be Auto Reset of master/slave replication relation.
 >
 > For example, after Auto Reset of replication relation, warning log recorded by compute node at warning level will be as follow:
 > `you should decide whether to manually execute the unexecuted part of binlog or rebuild the replication according to the actual situation.`
-> 
+>
 > And the Master/Slave Status in the management platform will display Abnormal, and the Pre-click display is as the prompt message in the figure:
 >
 > ![](assets/standard/image57.png)
-> 
+>
 > If after failover completed, the Master Active and Standby Slave neither Switch GTID or have transaction not received, but this parameter is disabled, then the compute node will also record warning log at warning level as follow:
 > `DBA is required to deal with the new master, which is the original slave before switching and decide whether to stop replication or continue replication regardless. In addition, there is risk of data error caused by automatic reconnection of replication after manual or unexpected restart of the new master.`
 
@@ -2135,15 +2135,15 @@ After multiple compute node cluster starts, by accessing to the database service
 
 Notices for multiple compute node cluster:
 
-1. When compute node cluster starts, the Primary is random, the compute node on the server where the Master configDB resides can't become Primary;
-2. After a certain period, the compute node with failure will disable the service port independently to become Started status;
-3. In case the Secondary finds that the Primary loses response and itself is not on the server where Master configDB resides, it will launch new Election, and will become the new Primary if receiving the majority votes;
-4. Add new node, and the Primary will find join of the new Started node, and will Add the new node found; if the Primary finds that the Secondary loses response, it will kick out this node;
-5. For cluster environment upgrade version, if the business is not influenced, it's recommended enabling after disabling the Cluster Upgrade;
-6. For server.xml configuration of various nodes in the cluster, all parameters must be consistent except the cluster related parameters;
-7. Time difference of various compute node servers shall be less than 1s;
-8. It's required that network latency between compute node servers shall be less than 1s at any time;
-9. It's recommended deploying only a set of multiple compute node cluster within a local-area network segment (It's just a suggestion, not a mandatory requirement. The reason for the suggestion is to reserve more space for future expansion);
+1.  When compute node cluster starts, the Primary is random, the compute node on the server where the Master configDB resides can't become Primary;
+2.  After a certain period, the compute node with failure will disable the service port independently to become Started status;
+3.  In case the Secondary finds that the Primary loses response and itself is not on the server where Master configDB resides, it will launch new Election, and will become the new Primary if receiving the majority votes;
+4.  Add new node, and the Primary will find join of the new Started node, and will Add the new node found; if the Primary finds that the Secondary loses response, it will kick out this node;
+5.  For cluster environment upgrade version, if the business is not influenced, it's recommended enabling after disabling the Cluster Upgrade;
+6.  For server.xml configuration of various nodes in the cluster, all parameters must be consistent except the cluster related parameters;
+7.  Time difference of various compute node servers shall be less than 1s;
+8.  It's required that network latency between compute node servers shall be less than 1s at any time;
+9.  It's recommended deploying only a set of multiple compute node cluster within a local-area network segment (It's just a suggestion, not a mandatory requirement. The reason for the suggestion is to reserve more space for future expansion);
 10. configDB IP requires configuration of actual IP.
 
 ##### Linear expansion
@@ -2219,19 +2219,19 @@ Verify whether the Listener service is enabled or not: execute show @@datasource
 
 ###### Notes
 
-1. Once deployed and correctly identified, the Listener is of no concern to users in the process of daily compute node operation;
+1.  Once deployed and correctly identified, the Listener is of no concern to users in the process of daily compute node operation;
 
-2. Listener components should be installed on the same server as the data source;
+2.  Listener components should be installed on the same server as the data source;
 
-3. If a Listener needs to listen to multiple data sources, different service ports need to be filled in;
+3.  If a Listener needs to listen to multiple data sources, different service ports need to be filled in;
 
-4. When a certain data source is cancelled to be listened by Listener, the allocated Listener service port will always exist. The original data source can use the Listener service port to bind the Listener again.
+4.  When a certain data source is cancelled to be listened by Listener, the allocated Listener service port will always exist. The original data source can use the Listener service port to bind the Listener again.
 
-5. When a certain data source is cancelled to be listened by Listener, the allocated Listener service port will always exist. At this time, if other data sources use the Listener service port, the Listener log will report an error: Port conflicts. Port already exists. Therefore, you need to restart Listener before you can use the Listener service port.
+5.  When a certain data source is cancelled to be listened by Listener, the allocated Listener service port will always exist. At this time, if other data sources use the Listener service port, the Listener log will report an error: Port conflicts. Port already exists. Therefore, you need to restart Listener before you can use the Listener service port.
 
-6. When the cluster needs to be restarted, it is recommended that the Listener components be restarted together. The restart sequence is: restart Listener first, and then restart the cluster, so that the cluster can recognize the Listener faster;
+6.  When the cluster needs to be restarted, it is recommended that the Listener components be restarted together. The restart sequence is: restart Listener first, and then restart the cluster, so that the cluster can recognize the Listener faster;
 
-7. As a pluggable component, when Listener is not available, the cluster and data sources can still provide services.
+7.  As a pluggable component, when Listener is not available, the cluster and data sources can still provide services.
 
 #### Compute node auto scaling
 
@@ -2413,8 +2413,8 @@ The number of compute nodes can be reduced by compute node reduction function. A
 
 Parameters involved are as follows:
 
-| Parameters | Instructions | Reference value | **Whether the reloading is valid** |
-|------------|--------------|-----------------|------------------------------------|
+| Parameters | Instructions | Reference value | Whether the reloading is valid |
+|------------|--------------|-----------------|--------------------------------|
 | haMode | High availibity: 0: master/slave；1: cluster | In cluster environment, the parameter value is 1. | Yes |
 | HaState | Master / slave role configuration in HA mode. | Configuration of primary compute node: master, configuration of standby compute node: backup. | Yes |
 | haNodeHost | The connection information of the current active compute node in the high availability mode. | The configuration format is IP: PORT | Yes |
@@ -3067,7 +3067,7 @@ mysql> show @@onlineddl;
 ```
 
 > !Note
-> 
+>
 > Execution of onlineddl statement doesn't mean completion of DDL, the return of"Query OK, 0 rows affected"only means that the DDL statement is executable, and if to see whether execution is completed, please view the progress showed in progress in `show @@onlineddl`. When the result of `show @@onlineddl` is null, it means that all DDL execution completed and there is no other DDL task at present, in case of midway DDL disconnection due to network or other abnormalities, it will roll back to the whole DDL;
 
 ### NDB Cluster SQL Node Service
@@ -3234,61 +3234,22 @@ HotDB Server supports relevant setting of Character Set, and the Character Set a
 
 The Syntax associated with the Character Set is as follow, HotDB Server could also make synchronous Support, and the functions are consistent with that of MySQL:
 
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-| **Function classification** | **Syntax related**                                                                                                   |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-| CREATE TABLE                | col_name {CHAR | VARCHAR | TEXT} (col_length)                                                                     |
-|                             |                                                                                                                      |
-|                             | [CHARACTER SET charset_name]                                                                                       |
-|                             |                                                                                                                      |
-|                             | [COLLATE collation_name]                                                                                           |
-|                             |                                                                                                                      |
-|                             | col_name {ENUM | SET} (val_list)                                                                                   |
-|                             |                                                                                                                      |
-|                             | [CHARACTER SET charset_name]                                                                                       |
-|                             |                                                                                                                      |
-|                             | [COLLATE collation_name]                                                                                           |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-| ALTER TABLE                 | ALTER TABLE tbl_name CONVERT TO CHARACTER SET charset_name [COLLATE collation_name];                               |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | ALTER TABLE tbl_name DEFAULT CHARACTER SET charset_name [COLLATE collation_name];                                  |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | ALTER TABLE t MODIFY tbl_name column_definition CHARACTER SET charset_name [COLLATE collation_name];               |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-| SET                         | SET NAMES 'charset_name' [COLLATE 'collation_name']                                                            |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | SET CHARACTER SET charset_name                                                                                       |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | set [session] {character_set_client|character_set_results|character_set_connection|collation_connection} = xxx; |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-| WITH                        | With ORDER BY:                                                                                                       |
-|                             |                                                                                                                      |
-|                             | SELECT k FROM t1 ORDER BY k COLLATE latin1_german2_ci;                                                               |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | With AS:                                                                                                             |
-|                             |                                                                                                                      |
-|                             | SELECT k COLLATE latin1_german2_ci AS k1 FROM t1 ORDER BY k1;                                                        |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | With GROUP BY:                                                                                                       |
-|                             |                                                                                                                      |
-|                             | SELECT k FROM t1 GROUP BY k COLLATE latin1_german2_ci;                                                               |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | With aggregate functions:                                                                                            |
-|                             |                                                                                                                      |
-|                             | SELECT MAX(k COLLATE latin1_german2_ci) FROM t1;                                                                     |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | With DISTINCT:                                                                                                       |
-|                             |                                                                                                                      |
-|                             | SELECT DISTINCT k COLLATE latin1_german2_ci FROM t1;                                                                 |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | With WHERE:                                                                                                          |
-|                             |                                                                                                                      |
-|                             | SELECT * FROM k WHERE a='a' COLLATE utf8_bin = 'a';                                                             |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
-|                             | With HAVING:                                                                                                         |
-|                             |                                                                                                                      |
-|                             | SELECT * FROM k WHERE a='a' having a='a' COLLATE utf8_bin = a order by id;                                      |
-+-----------------------------+----------------------------------------------------------------------------------------------------------------------+
+| Function classification | Syntax related |
+|-------------------------|----------------|
+| `CREATE TABLE` | `col_name {CHAR|VARCHAR|TEXT} (col_length) [CHARACTER SET charset_name] [COLLATE collation_name] col_name {ENUM | SET} (val_list) [CHARACTER SET charset_name] [COLLATE collation_name]` |
+| `ALTER TABLE` | `ALTER TABLE tbl_name CONVERT TO CHARACTER SET charset_name [COLLATE collation_name];` |
+| ^ | `ALTER TABLE tbl_name DEFAULT CHARACTER SET charset_name [COLLATE collation_name];` |
+| ^ | `ALTER TABLE tbl_name MODIFY col_name column_definition CHARACTER SET charset_name [COLLATE collation_name];` |
+| `SET` | `SET NAMES 'charset_name' [COLLATE 'collation_name']` |
+| ^ | `SET CHARACTER SET charset_name` |
+| ^ | `set [session] {character_set_client|character_set_results|character_set_connection|collation_connection} = xxx;` |
+| `WITH` | `With ORDER BY: SELECT k FROM t1 ORDER BY k COLLATE latin1_swedish_ci;` |
+| ^ | `With AS: SELECT k COLLATE latin1_swedish_ci AS k1 FROM t1 ORDER BY k1;` |
+| ^ | `With GROUP BY: SELECT k FROM t1 GROUP BY k COLLATE latin1_swedish_ci;` |
+| ^ | `With aggregate functions: SELECT MAX(k COLLATE latin1_swedish_ci) FROM t1;` |
+| ^ | `With DISTINCT: SELECT DISTINCT k COLLATE latin1_swedish_ci FROM t1;` |
+| ^ | `With WHERE: SELECT * FROM k WHERE a='a' COLLATE utf8_bin;` |
+| ^ | `With HAVING: SELECT * FROM k WHERE a='a' having a='a' COLLATE utf8_bin order by id;` |
 
 ## Function and operator support
 
@@ -3296,701 +3257,352 @@ The Syntax associated with the Character Set is as follow, HotDB Server could al
 
 This document only lists some functions upon special treatment, and if to know all functions supported by the compute node, please obtain the official *HotDB Server-v2.5.3 Latest List of Functions*.
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Function name**                                                                                                                                             | **Support status** | **Intercept or not** | **Description**                                                                                                                                                                     |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ABS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ACOS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ADDDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ADDTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AES_DECRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AES_ENCRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AND, &&](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Area()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AsBinary(), AsWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ASCII()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ASIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [:=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html)                                                                                        | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AsText(), AsWKT()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ATAN2(), ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [AVG()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [BENCHMARK()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                              | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [BIN()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [BINARY](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [BIT_AND()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                   | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [BIT_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [BIT_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [BIT_OR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                    | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [BIT_XOR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                   | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [&](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [\^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Buffer()](http://dev.mysql.com/doc/refman/5.6/en/spatial-operator-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CASE](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CAST()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CEIL()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CEILING()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Centroid()](http://dev.mysql.com/doc/refman/5.6/en/gis-multipolygon-property-functions.html)                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CHAR_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CHAR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CHARACTER_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CHARSET()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [COALESCE()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [COERCIBILITY()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [COLLATION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [COMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CONCAT_WS()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CONNECTION_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                          | Support            | No                   | connection_id of front-end session with the compute node                                                                                                                            |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Contains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CONV()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CONVERT_TZ()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CONVERT()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                       | Support            | No                   | Whether Sharding Table or Global Table, compute node doesn't support CONVERT (value, type) writing mode, and it only supports CONVERT (value using Character Set);                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [COS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [COT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [COUNT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| COUNT(DISTINCT)                                                                                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CRC32()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Crosses()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html)                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| CURDATE()                                                                                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CURDATE(), CURRENT_DATE](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CURRENT_ROLE()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html)                                                                          | Not support        | Yes                  | Compute node doesn't support new role function of MySQL8.0                                                                                                                          |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CURRENT_TIME(), CURRENT_TIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CURRENT_USER(), CURRENT_USER](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                             | Support            | No                   | Return the current LogicDB username                                                                                                                                                 |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [CURTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DATABASE()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                               | Support            | No                   | Return database name of the current compute node                                                                                                                                    |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DATE_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DATE_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DATE_SUB()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DATEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DAYNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DAYOFMONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DAYOFWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DAYOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DECODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DEFAULT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DEGREES()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DES_DECRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DES_ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Dimension()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Disjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [DIV](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [/](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ELT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ENCODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [EndPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Envelope()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [<=>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Equals()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [EXP()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [EXPORT_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ExteriorRing()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [EXTRACT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ExtractValue()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [FIELD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [FIND_IN_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [FLOOR()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [FOUND_ROWS()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                             | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [FROM_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [FROM_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [FROM_UNIXTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GeomCollFromText(),GeometryCollectionFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GeomCollFromWKB(),GeometryCollectionFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GeometryCollection()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GeometryN()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html)                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GeometryType()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GeomFromText(), GeometryFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GeomFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GET_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GET_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                             | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GLength()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [>=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GREATEST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GROUP_CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GROUPING()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html)                                                                            | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GTID_SUBSET()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [GTID_SUBTRACT()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [HEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [HOUR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IFNULL()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [INET_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [INET_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [INET6_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [INET6_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [INSERT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [INSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [InteriorRingN()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Intersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [INTERVAL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IS_FREE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                         | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IS_IPV4_COMPAT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IS_IPV4_MAPPED()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IS_IPV4()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IS_IPV6()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IS NOT NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IS NOT](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IS NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IS_USED_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                         | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IS](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IsClosed()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IsEmpty()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ISNULL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [IsSimple()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_ARRAYAGG(col_or_expr) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html# function_json-arrayagg)                          | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_OBJECTAGG(key, value) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html# function_json-arrayagg)                          | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_PRETTY(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html# function_json-pretty)                                             | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_STORAGE_FREE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html# function_json-storage-free)                                 | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_STORAGE_SIZE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html# function_json-storage-free)                                 | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_MERGE_PATCH(json_doc, json_doc[, json_doc] ...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html# function_json-merge-patch) | Not support        | Yes                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [JSON_TABLE(expr, path COLUMNS (column_list) [AS] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html# function_json-table)            | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LAST_DAY](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LAST_INSERT_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LEAST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [<<](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LEFT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [<=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [<](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LineFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LineFromWKB(), LineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LOAD_FILE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LOCALTIME(), LOCALTIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LOCALTIMESTAMP, LOCALTIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LOCATE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LOG10()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LOG2()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LOG()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LOWER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [LTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MAKE_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MAKEDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MAKETIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MASTER_POS_WAIT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                      | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MATCH](http://dev.mysql.com/doc/refman/5.6/en/fulltext-search.html)                                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MAX()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MBRContains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MBRDisjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MBREqual() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MBRIntersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MBROverlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MBRTouches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MBRWithin()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MD5()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MICROSECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MID()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MIN()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MINUTE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MLineFromText(),MultiLineStringFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MLineFromWKB(),MultiLineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MOD()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [% or MOD](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MONTHNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MPointFromText(),MultiPointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MPointFromWKB(), MultiPointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MPolyFromText(),MultiPolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MPolyFromWKB(),MultiPolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MultiLineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MultiPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [MultiPolygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NAME_CONST()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NOT BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [!=, <>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NOT IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NOT LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NOT REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NOT, !](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NOW()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NULLIF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NumGeometries()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html)                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NumInteriorRings()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [NumPoints()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [OCT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [OCTET_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [||, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ORD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Overlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PASSWORD()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PERIOD_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PERIOD_DIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PI()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [+](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Point()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PointN()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PolyFromText(), PolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PolyFromWKB(), PolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Polygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [POSITION()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [POW()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [POWER()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PROCEDURE ANALYSE()](http://dev.mysql.com/doc/refman/5.6/en/procedure-analyse.html)                                                                          | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PS_CURRENT_THREAD_ID()](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html)                                                           | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [PS_THREAD_ID(connection_id)](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html)                                                      | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [QUARTER()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [QUOTE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [RADIANS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [RAND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | In join, the Sharding Table doesn't support any rand Syntax                                                                                                                         |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [RANDOM_BYTES()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [RELEASE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                         | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [REPEAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [REPLACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [REVERSE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [>>](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [RIGHT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [RLIKE](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ROLES_GRAPHML()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html)                                                                         | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ROUND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [ROW_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                              | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [RPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [RTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SCHEMA()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                 | Support            | No                   | 1. select schema() return to LogicDB name;                                                                                                                                         |
-|                                                                                                                                                               |                    |                      |                                                                                                                                                                                     |
-|                                                                                                                                                               |                    |                      | 2. show tables from information_schema; compute node is not supported, Query result is null;                                                                                       |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SEC_TO_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SESSION_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                           | Support            | No                   | select session_user(); the Query result is not information of the current user login the LogicDB but the user information of LogicDB associated node                                |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SHA1(), SHA()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SHA2()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                    | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SIGN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SLEEP()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SOUNDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SOUNDS LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SPACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SQL_THREAD_WAIT_AFTER_GTIDS()(deprecated 5.6.9)](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                 | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SQRT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                  | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SRID()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [StartPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [STD()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                       | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [STDDEV_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [STDDEV_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                               | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [STDDEV()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                    | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [STR_TO_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [STRCMP()](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SUBDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SUBSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SUBSTRING_INDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SUBSTRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SUBTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SUM()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SYSDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | (Notice: SYSDATE of the test server adds parameter, making it equal to now(), therefore, there will be no difference in latency, in order to avoid Master/Slave data inconsistency) |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [SYSTEM_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                            | Support            | No                   | The Query result is not user information of LogicDB, but random user information of LogicDB associated node                                                                         |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TIME_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TIME_TO_SEC()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TIMEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [*](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TIMESTAMPADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TIMESTAMPDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TO_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TO_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TO_SECONDS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Touches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html)                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [TRUNCATE()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                         | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UNCOMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UNCOMPRESSED_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                     | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UNHEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UNIX_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UpdateXML()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html)                                                                                      | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UPPER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                       | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                   | Support            | No                   | select user(); the Query result is information of the current user of LogicDB                                                                                                       |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UTC_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UTC_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UTC_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UUID_SHORT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [UUID()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [VALIDATE_PASSWORD_STRENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [VALUES()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [VAR_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                   | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [VAR_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                  | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [VARIANCE()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                  | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [VERSION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                | Support            | No                   | The Query result shows the version of compute node                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                             | Not support        | Yes                  | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [WEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [WEEKDAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [WEEKOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [WEIGHT_STRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [窗口函数](https://dev.mysql.com/doc/refman/8.0/en/window-functions.html)                                                                                     | Not support        | Yes                  | New function of MySQL8.0                                                                                                                                                            |
-|                                                                                                                                                               |                    |                      |                                                                                                                                                                                     |
-| Window Function                                                                                                                                               |                    |                      |                                                                                                                                                                                     |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Within()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                        | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [X()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [XOR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                          | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [Y()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html)                                                                               | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [YEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                                 | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| [YEARWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support            | No                   | 　                                                                                                                                                                                  |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Function name** | **Support status** | **Intercept or not** | **Description** |
+|-------------------|--------------------|----------------------|-----------------|
+| [ABS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [ACOS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [ADDDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [ADDTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [AES_DECRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [AES_ENCRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [AND, &&](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | Support | No | 　 |
+| [Area()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html) | Support | No | 　 |
+| [AsBinary(), AsWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html) | Support | No | 　 |
+| [ASCII()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [ASIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html) | Support | No | 　 |
+| [:=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html) | Not support | Yes | 　 |
+| [AsText(), AsWKT()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html) | Support | No | 　 |
+| [ATAN2(), ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [AVG()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
+| [BENCHMARK()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Not support | Yes | 　 |
+| [BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [BIN()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [BINARY](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html) | Support | No | 　 |
+| [BIT_AND()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
+| [BIT_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
+| [BIT_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [BIT_OR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
+| [BIT_XOR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
+| [&](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
+| [\~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
+| [|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
+| [\^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
+| [Buffer()](http://dev.mysql.com/doc/refman/5.6/en/spatial-operator-functions.html) | Support | No | 　 |
+| [CASE](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html) | Support | No | 　 |
+| [CAST()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html) | Support | No | 　 |
+| [CEIL()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [CEILING()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [Centroid()](http://dev.mysql.com/doc/refman/5.6/en/gis-multipolygon-property-functions.html) | Support | No | 　 |
+| [CHAR_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [CHAR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [CHARACTER_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [CHARSET()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | 　 |
+| [COALESCE()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [COERCIBILITY()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | 　 |
+| [COLLATION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | 　 |
+| [COMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [CONCAT_WS()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [CONNECTION_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | connection_id of front-end session with the compute node |
+| [Contains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
+| [CONV()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [CONVERT_TZ()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [CONVERT()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html) | Support | No | Whether Sharding Table or Global Table, compute node doesn't support CONVERT (value, type) writing mode, and it only supports CONVERT (value using Character Set); |
+| [COS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [COT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [COUNT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
+| COUNT(DISTINCT) | Support | No | 　 |
+| [CRC32()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [Crosses()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html) | Support | No | 　 |
+| CURDATE() | Support | No | 　 |
+| [CURDATE(), CURRENT_DATE](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [CURRENT_ROLE()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html) | Not support | Yes | Compute node doesn't support new role function of MySQL8.0 |
+| [CURRENT_TIME(), CURRENT_TIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [CURRENT_USER(), CURRENT_USER](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | Return the current LogicDB username |
+| [CURTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [DATABASE()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | Return database name of the current compute node |
+| [DATE_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [DATE_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [DATE_SUB()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [DATEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [DAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [DAYNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [DAYOFMONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [DAYOFWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [DAYOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [DECODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [DEFAULT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [DEGREES()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [DES_DECRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [DES_ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [Dimension()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
+| [Disjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
+| [DIV](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
+| [/](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
+| [ELT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [ENCODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [EndPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
+| [Envelope()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
+| [<=>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [Equals()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
+| [EXP()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [EXPORT_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [ExteriorRing()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html) | Support | No | 　 |
+| [EXTRACT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [ExtractValue()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html) | Support | No | 　 |
+| [FIELD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [FIND_IN_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [FLOOR()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [FOUND_ROWS()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Not support | Yes | 　 |
+| [FROM_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [FROM_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [FROM_UNIXTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [GeomCollFromText(),GeometryCollectionFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
+| [GeomCollFromWKB(),GeometryCollectionFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
+| [GeometryCollection()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
+| [GeometryN()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html) | Support | No | 　 |
+| [GeometryType()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
+| [GeomFromText(), GeometryFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
+| [GeomFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
+| [GET_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [GET_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
+| [GLength()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
+| [>=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [GREATEST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [GROUP_CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
+| [GROUPING()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html) | Not support | Yes | New function of MySQL8.0 |
+| [GTID_SUBSET()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html) | Support | No | 　 |
+| [GTID_SUBTRACT()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html) | Support | No | 　 |
+| [HEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [HOUR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [IF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html) | Support | No | 　 |
+| [IFNULL()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html) | Support | No | 　 |
+| [IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [INET_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [INET_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [INET6_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [INET6_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [INSERT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [INSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [InteriorRingN()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html) | Support | No | 　 |
+| [Intersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
+| [INTERVAL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [IS_FREE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
+| [IS_IPV4_COMPAT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [IS_IPV4_MAPPED()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [IS_IPV4()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [IS_IPV6()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [IS NOT NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [IS NOT](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [IS NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [IS_USED_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
+| [IS](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [IsClosed()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
+| [IsEmpty()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
+| [ISNULL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [IsSimple()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
+| [JSON_ARRAYAGG(col_or_expr) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg) | Not support | Yes | New function of MySQL8.0 and 5.7 |
+| [JSON_OBJECTAGG(key, value) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg) | Not support | Yes | New function of MySQL8.0 and 5.7 |
+| [JSON_PRETTY(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-pretty) | Not support | Yes | New function of MySQL8.0 and 5.7 |
+| [JSON_STORAGE_FREE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free) | Not support | Yes | New function of MySQL8.0 |
+| [JSON_STORAGE_SIZE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free) | Not support | Yes | New function of MySQL8.0 and 5.7 |
+| [JSON_MERGE_PATCH(json_doc, json_doc[, json_doc] ...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch) | Not support | Yes | New function of MySQL8.0 and 5.7 |
+| [JSON_TABLE(expr, path COLUMNS (column_list) [AS] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html#function_json-table) | Not support | Yes | New function of MySQL8.0 |
+| [LAST_DAY](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [LAST_INSERT_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | 　 |
+| [LCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [LEAST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [<<](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
+| [LEFT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [<=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [<](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html) | Support | No | 　 |
+| [LineFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
+| [LineFromWKB(), LineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
+| [LineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
+| [LN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [LOAD_FILE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Not support | Yes | 　 |
+| [LOCALTIME(), LOCALTIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [LOCALTIMESTAMP, LOCALTIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [LOCATE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [LOG10()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [LOG2()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [LOG()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [LOWER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [LPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [LTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [MAKE_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [MAKEDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [MAKETIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [MASTER_POS_WAIT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
+| [MATCH](http://dev.mysql.com/doc/refman/5.6/en/fulltext-search.html) | Support | No | 　 |
+| [MAX()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
+| [MBRContains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
+| [MBRDisjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
+| [MBREqual() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
+| [MBRIntersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
+| [MBROverlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
+| [MBRTouches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
+| [MBRWithin()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
+| [MD5()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [MICROSECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [MID()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
+| [MIN()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
+| [MINUTE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [MLineFromText(),MultiLineStringFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
+| [MLineFromWKB(),MultiLineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
+| [MOD()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [% or MOD](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
+| [MONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [MONTHNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [MPointFromText(),MultiPointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
+| [MPointFromWKB(), MultiPointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
+| [MPolyFromText(),MultiPolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
+| [MPolyFromWKB(),MultiPolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
+| [MultiLineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
+| [MultiPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
+| [MultiPolygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
+| [NAME_CONST()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [NOT BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [!=, <>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [NOT IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
+| [NOT LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html) | Support | No | 　 |
+| [NOT REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html) | Support | No | 　 |
+| [NOT, !](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | Support | No | 　 |
+| [NOW()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [NULLIF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html) | Support | No | 　 |
+| [NumGeometries()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html) | Support | No | 　 |
+| [NumInteriorRings()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html) | Support | No | 　 |
+| [NumPoints()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
+| [OCT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [OCTET_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [\|\|, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | Support | No | 　 |
+| [ORD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [Overlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
+| [PASSWORD()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [PERIOD_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [PERIOD_DIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [PI()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [+](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
+| [Point()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
+| [PointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
+| [PointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
+| [PointN()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
+| [PolyFromText(), PolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
+| [PolyFromWKB(), PolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
+| [Polygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
+| [POSITION()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [POW()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [POWER()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [PROCEDURE ANALYSE()](http://dev.mysql.com/doc/refman/5.6/en/procedure-analyse.html) | Not support | Yes | 　 |
+| [PS_CURRENT_THREAD_ID()](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html) | Not support | Yes | New function of MySQL8.0 |
+| [PS_THREAD_ID(connection_id)](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html) | Not support | Yes | New function of MySQL8.0 |
+| [QUARTER()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [QUOTE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [RADIANS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [RAND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | In join, the Sharding Table doesn't support any rand Syntax |
+| [RANDOM_BYTES()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html) | Support | No | 　 |
+| [RELEASE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
+| [REPEAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [REPLACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [REVERSE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [>>](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
+| [RIGHT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [RLIKE](http://dev.mysql.com/doc/refman/5.6/en/regexp.html) | Support | No | 　 |
+| [ROLES_GRAPHML()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html) | Not support | Yes | New function of MySQL8.0 |
+| [ROUND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [ROW_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Not support | Yes | 　 |
+| [RPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [RTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [SCHEMA()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | 1. select schema() return to LogicDB name; 2. show tables from information_schema; compute node is not supported, Query result is null; |
+| [SEC_TO_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [SECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [SESSION_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | select session_user(); the Query result is not information of the current user login the LogicDB but the user information of LogicDB associated node |
+| [SHA1(), SHA()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [SHA2()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [SIGN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [SIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [SLEEP()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
+| [SOUNDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [SOUNDS LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [SPACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [SQL_THREAD_WAIT_AFTER_GTIDS()(deprecated 5.6.9)](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html) | Not support | Yes | 　 |
+| [SQRT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [SRID()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
+| [StartPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
+| [STD()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
+| [STDDEV_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
+| [STDDEV_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
+| [STDDEV()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
+| [STR_TO_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [STRCMP()](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html) | Support | No | 　 |
+| [SUBDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [SUBSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [SUBSTRING_INDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [SUBSTRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [SUBTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [SUM()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
+| [SYSDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | (Notice: SYSDATE of the test server adds parameter, making it equal to now(), therefore, there will be no difference in latency, in order to avoid Master/Slave data inconsistency) |
+| [SYSTEM_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | The Query result is not user information of LogicDB, but random user information of LogicDB associated node |
+| [TAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [TIME_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [TIME_TO_SEC()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [TIMEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [*](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
+| [TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [TIMESTAMPADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [TIMESTAMPDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [TO_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [TO_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [TO_SECONDS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [Touches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html) | Support | No | 　 |
+| [TRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [TRUNCATE()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
+| [UCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
+| [UNCOMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [UNCOMPRESSED_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [UNHEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [UNIX_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [UpdateXML()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html) | Support | No | 　 |
+| [UPPER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | select user(); the Query result is information of the current user of LogicDB |
+| [UTC_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [UTC_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [UTC_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [UUID_SHORT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [UUID()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [VALIDATE_PASSWORD_STRENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
+| [VALUES()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
+| [VAR_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
+| [VAR_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
+| [VARIANCE()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
+| [VERSION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | The Query result shows the version of compute node |
+| [WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html) | Not support | Yes | 　 |
+| [WEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [WEEKDAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [WEEKOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [WEIGHT_STRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
+| [Window Functions](https://dev.mysql.com/doc/refman/8.0/en/window-functions.html) | Not support | Yes | New function of MySQL8.0 |
+| [Within()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
+| [X()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html) | Support | No | 　 |
+| [XOR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | Support | No | 　 |
+| [Y()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html) | Support | No | 　 |
+| [YEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| [YEARWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
 
 ### MERGE_RESULT
 
@@ -4000,73 +3612,51 @@ By default, the MERGE_RESULT value is 1.
 
 When MERGE_RESULT=0, for the SQL statement containing Aggregate Function, the compute node will not merge the Result Set, and the query result of each data node will be returned separately:
 
+```
 mysql> select count(*) from customer;
-
-+------------+
-
++----------+
 | COUNT(*) |
-
-+------------+
-
-| 23 |
-
-| 11 |
-
-| 13 |
-
-| 53 |
-
-+------------+
-
++----------+
+| 23       |
+| 11       |
+| 13       |
+| 53       |
++----------+
 4 rows in set (0.00 sec)
+```
 
 SET MERGE_RESULT=0 and SET SHOW_DNID=1, is available for statistics of distribution condition of transaction tables on various data nodes:
 
+```
 mysql> set MERGE_RESULT=0;
-
 mysql> set show_dnid=1;
-
 mysql> select count(*) from customer;
-
-+------------+------+
-
++----------+------+
 | COUNT(*) | DNID |
-
-+------------+------+
-
-| 13 | 12 |
-
-| 11 | 15 |
-
-| 53 | 13 |
-
-| 23 | 14 |
-
-+------------+------+
-
++----------+------+
+| 13       | 12   |
+| 11       | 15   |
+| 53       | 13   |
+| 23       | 14   |
++----------+------+
 4 rows in set (0.00 sec)
+```
 
 DNID column in the Result Set shows unique ID of each data node. In the result, the actual data amount of the customer table on various data nodes has been showed intuitively.
 
 When MERGE_RESULT=1, for the SQL statement containing Aggregate Function, the compute node shall return query results of all data nodes by SQL Semantics:
 
+```
 mysql> set show_dnid=0;
-
 mysql> set MERGE_RESULT=1;
-
 mysql> select count(*) from customer;
-
-+------------+
-
++----------+
 | COUNT(*) |
-
-+------------+
-
-| 100 |
-
-+------------+
-
++----------+
+| 100      |
++----------+
 1 row in set (0.00 sec)
+```
 
 ## SQL syntax support
 
@@ -4076,11 +3666,15 @@ In distributed database, logic of DML statement will become more complex. Comput
 
 Single-node DML statement, refers to that SQL statement only needs to run on one node, and the accurate results could be computed. For example, assuming that in Sharding Table the customer has sharding key provinceid, then the following statement is single-node SELECT, because this statement will only run on the node where provinceid=1 resides:
 
+```sql
 SELECT * FROM customer WHERE provinceid=1;
+```
 
 Cross-node DML statement, refers to that SQL statement requires data of multiple data nodes, and then upon secondary processing of compute nodes, the final results could be integrated and computed. For example, assuming that in the Sharding Table the customer has sharding key provinceid, then the following SELECT statement is cross-node statement, because the id is not sharding key, the data with id>10 may distribute on multiple nodes, and in order to obtain the final result through integration and ranking, data of multiple nodes is required:
 
+```sql
 SELECT * FROM customer WHERE id>10 ORDER BY id;
+```
 
 Obviously, single-node SQL statement has better performance than cross-node SQL statement. When using compute node, try to use single-node DML statement as much as possible.
 
@@ -4088,65 +3682,56 @@ In the instance above, it only describes single-node and cross-node Query of sim
 
 For Subquery statement, if requiring Query of data from multiple data nodes, it is called cross-node Subquery; if requiring data from single data node only, it is called single-node Subquery.
 
-Query Support function of the compute node toward single-node JOIN, is the same as Support function of single-node SELECT statement. For support of compute node toward cross-node JOIN statement, please refer to [Cross-node JOIN](#跨库JOIN)
+Query Support function of the compute node toward single-node JOIN, is the same as Support function of single-node SELECT statement. For support of compute node toward cross-node JOIN statement, please refer to [Cross-node JOIN](#cross-node-join)
 
 #### DELETE statement
 
 Since MySQL5.6.2, DELETE statement supports delete data from specified partition. If there are Table Name t and Partition name p0, the statement will delete all data from the Partition p0:
 
+```sql
 DELETE FROM t PARTITION(p0);
+```
 
 ##### Single-node DELETE statement
 
-+--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
-| **MySQL statement type** | **Clause type**    | **Function** | **Support status** | **Description**                                                                                                             |
-+--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
-| DELETE                   | PARTITION          | 　           | Support            | 　                                                                                                                          |
-+--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
-|                          | ORDER BY           | 　           | Support            | 　                                                                                                                          |
-+--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
-|                          | LIMIT              | 　           | Support            | 　                                                                                                                          |
-+--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
-|                          | WHERE              | dnid         | Support            | 1. dnid in DML where Clause shall be a necessary requirement, and it is not supported if not being a necessary requirement |
-|                          |                    |              |                    |                                                                                                                             |
-|                          |                    |              |                    | 2. Global Table does not support use dnid.                                                                                |
-+--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
-|                          |                    | Function     | Support            | 　                                                                                                                          |
-+--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
-|                          | Multi-table DELETE | 　           | Support            |                                                                                                                             |
-+--------------------------+--------------------+--------------+--------------------+-----------------------------------------------------------------------------------------------------------------------------+
+| MySQL statement type | Clause type | Function | Support status | Description |
+|----------------------|-------------|----------|----------------|-------------|
+| `DELETE` | `PARTITION` | 　 | Support | 　 |
+| ^ | `ORDER BY` | 　 | Support | 　 |
+| ^ | `LIMIT` | 　 | Support | 　 |
+| ^ | `WHERE` | dnid | Support | 1. dnid in DML where Clause shall be a necessary requirement, and it is not supported if not being a necessary requirement<br>2. Global Table does not support use dnid. |
+| ^ | ^ | Function | Support | 　 |
+| ^ | Multi-table `DELETE` | 　 | Support |   |
 
 ##### Cross-node DELETE statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |   |
-|----------------------|-------------|----------|----------------|-------------|---|
-| ^ | DELETE | PARTITION | 　 | Support |   |
-| ^ | ^ | ORDER BY DESC | ASC | 　 | Support |
-| ^ | ^ | LIMIT | 　 | Support |   |
-| ^ | ORDER BY ... LIMIT ... | 　 | Support | Parent/Child Table is not supported |   |
-| ^ | ^ | ORDER BY case sensitive of Field value | 　 | Support |   |
-| ^ | ^ | WHERE | Function in WHERE | Support |   |
-| ^ | JOIN | 　 | Support | Scenarios with temporary tables are not supported |   |
+| MySQL statement type | Clause type | Function | Support status | Description |
+|----------------------|-------------|----------|----------------|-------------|
+| `DELETE` | `PARTITION` | 　 | Support |   |
+| ^ | `ORDER BY DESC` | ASC | 　 | Support |
+| ^ | `LIMIT` | 　 | Support |   |
+| ^ | `ORDER BY ... LIMIT ...` | Support | Parent/Child Table is not supported |   |
+| ^ | `ORDER BY` case sensitive of Field value | 　 | Support |   |
+| ^ | `WHERE` | Function in WHERE | Support |   |
+| ^ | `JOIN` |   | Support | Scenarios with temporary tables are not supported |
 
 In cross-node DELETE statement, the following Multi-table statement is not supported:
 
+```sql
 DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
-
 tbl_name[.*] [, tbl_name[.*]] ...
-
 FROM table_references
-
 [WHERE where_condition]
+```
 
 Or:
 
+```sql
 DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
-
 FROM tbl_name[.*] [, tbl_name[.*]] ...
-
 USING table_references
-
 [WHERE where_condition]
+```
 
 #### INSERT statement
 
@@ -4154,79 +3739,65 @@ USING table_references
 
 | MySQL statement type | Clause type | Function | Support status | Description |
 |----------------------|-------------|----------|----------------|-------------|
-| ^ | INSERT | INSERT ... SELECT ... | Single-node simple single-table Query | Support |
-| ^ | ^ | ^ | Single-node JOIN | Support |
-| ^ | ^ | ^ | Single-node Subquery | Support |
-| ^ | ^ | ^ | Single-node UNION/UNION ALL | Support |
-| ^ | ^ | IGNORE | 　 | Support |
-| ^ | ^ | PARTITION | 　 | Support |
-| ^ | ^ | ON DUPLICATE KEY UPDATE | 　 | Support |
-| ^ | ^ | INSERT INTO table_name(columns... ) VALUES(values...) | 　 | Support |
-| ^ | ^ | INSERT INTO ... VALUES() | 　 | Support |
-| ^ | ^ | INSERT INTO ... SET | 　 | Support |
-| ^ | ^ | Sharding Table Splitting-free Field | 　 | Not support |
+| `INSERT` | `INSERT ... SELECT ...` | Single-node simple single-table Query | Support |   |
+| ^ | ^ | Single-node JOIN | Support |   |
+| ^ | ^ | Single-node Subquery | Support |   |
+| ^ | ^ | Single-node UNION/UNION ALL | Support |   |
+| ^ | `IGNORE` | 　 | Support |   |
+| ^ | `PARTITION` | 　 | Support |   |
+| ^ | `ON DUPLICATE KEY UPDATE` | 　 | Support |   |
+| ^ | `INSERT INTO table_name(columns... ) VALUES(values...)` | 　 | Support |   |
+| ^ | `INSERT INTO ... VALUES()` | 　 | Support |   |
+| ^ | `INSERT INTO ... SET` | 　 | Support |   |
+| ^ | Sharding Table Splitting-free Field | 　 | Not support |   |
 | ^ | Sharding Table Splitting Field value is NULL | 　 | Support | NULL value parameter needs to be configured in Sharding Function |
 | ^ | Child Table Non-Associated Field value | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
 | ^ | Child Table Associated Field value is NULL | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
-| ^ | ^ | INSERT BATCH | Sharding Table | Support |
-| ^ | ^ | ^ | Global Table | Support |
+| ^ | `INSERT BATCH` | Sharding Table | Support |   |
+| ^ | ^ | Global Table | Support |   |
 | ^ | ^ | Child Table | Conditional limit | Associated field of Parent Table is not supported if it is not sharding key. |
 
 - INSERT INTO...SELECT...
 
-- For INSERT INTO... SELECT ... statement, if the SELECT clause is not supported, INSERT INTO... SELECT...is not supported either. It can be executed in other circumstances.
+For INSERT INTO... SELECT ... statement, if the SELECT clause is not supported, INSERT INTO... SELECT...is not supported either. It can be executed in other circumstances.
 
 - INSERT IGNORE
 
-- On compute node, INSERT IGNORE reserves original features of MySQL. In case of Primary Key/Unique Key conflict, data and conflict information will be ignored.
+On compute node, INSERT IGNORE reserves original features of MySQL. In case of Primary Key/Unique Key conflict, data and conflict information will be ignored.
 
-- Parent/Child Table does not support inser/replace into... select....
+Parent/Child Table does not support `insert/replace into... select....`
 
-mysql> create table test(id int not null Primary Key,provinceid int)engine=innodb;
-
+```
+mysql> create table test(id int not null primary key,provinceid int)engine=innodb;
 Query OK, 0 rows affected (0.02 sec)
-
 mysql> insert into test set id = 1,provinceid=2;
-
 Query OK, 1 row affected (0.00 sec)
-
 mysql> select * from test;
-
 +----+------------+
-
 | id | provinceid |
-
 +----+------------+
-
-| 1 | 2 |
-
+| 1  | 2          |
 +----+------------+
-
 1 row in set (0.00 sec)
-
-mysql> insert ignore into test set id = 1,provinceid=2; -- there has already existed the record of Primary Keyid = 1, data is ignored.
-
+mysql> insert ignore into test set id = 1,provinceid=2; --there has already existed the record of Primary Keyid = 1, data is ignored.
 Query OK, 0 rows affected (0.00 sec)
+```
 
 For operation of INSERT IGORE statement in Sharding Table, if in INSERT statement, sharding key and sharding key value are not given, then the compute node will judge whether to ignore the SQL statement according to whether the global unique constraint is enabled.
 
 For example, test is a sharding table, and id is a sharding key.
 
+```
 mysql> CREATE TABLE `test2` (
-
-`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-
-`name` varchar(20) DEFAULT NULL,
-
-UNIQUE KEY `id` (`id`),
-
-UNIQUE KEY `name` (`name`)
-
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL,
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB;
 
 mysql> insert ignore into test2(name) values ('e');
-
-mysql> insert ignore into test2(name) values ('e')
+mysql> insert ignore into test2(name) values ('e');
+```
 
 With the global unique constraint disabled, when inserting the second row, if the values of id column 1 and 2 are routed to the same node, the second SQL will be ignored. If it is not the same node, the second row will be inserted successfully.
 
@@ -4246,7 +3817,9 @@ In Distributed Transactional Database, INSERT statement could generate cross-nod
 
 INSERT BATCH refers to the mode of writing single INSERT statement into multi-row records:
 
+```sql
 INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
+```
 
 | MySQL statement type | Clause type | Function | Support status | Description |
 |----------------------|-------------|----------|----------------|-------------|
@@ -4257,51 +3830,29 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ |   | ^ | Global Table | Support |
 | ^ |   | ^ | Sharding Table | Support |
 
-- **Special instructions for INSERT BATCH**
+**Special instructions for INSERT BATCH:**
 
 For INSERT BATCH in a transaction, if parts succeed and parts failed, it will automatically roll back to the previous SAVEPOINT.
 
 #### LOAD DATA statement
 
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **MySQL statement type** | **Clause type**                         | **Function** | **Support status** | **Description**                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| LOAD DATA                | LOAD DATA ... INFILE ... INTO TABLE     |              | Support            | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                            |
-|                          |                                         |              |                    |                                                                                                                                                                                                                                                              |
-|                          |                                         |              |                    | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the imported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | LOW_PRIORITY                            |              | Not support        |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | CONCURRENT                              |              | Not support        |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | LOCAL                                   |              | Not support        |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | REPLACE                                 |              | Support            |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | IGNORE                                  |              | Support            |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | PARTITION                               |              | Not support        |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | CHARACTER SET                           |              | Not support        |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | {FIELDS | COLUMNS}                     |              | Support            |                                                                                                                                                                                                                                                              |
-|                          |                                         |              |                    |                                                                                                                                                                                                                                                              |
-|                          | [TERMINATED BY 'string']            |              |                    |                                                                                                                                                                                                                                                              |
-|                          |                                         |              |                    |                                                                                                                                                                                                                                                              |
-|                          | [[OPTIONALLY] ENCLOSED BY 'char'] |              |                    |                                                                                                                                                                                                                                                              |
-|                          |                                         |              |                    |                                                                                                                                                                                                                                                              |
-|                          | [ESCAPED BY 'char']                 |              |                    |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | LINES STARTING BY 'string'            |              | Not support        |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | LINES TERMINATED BY 'string'          |              | Support            |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | Import the specified field              |              | Support            |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | SET                                     |              | Support            |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                          | IGNORE number {LINES | ROWS}           |              | Support            |                                                                                                                                                                                                                                                              |
-+--------------------------+-----------------------------------------+--------------+--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| MySQL statement type | Clause type | Function | Support status | Description |
+|----------------------|-------------|----------|----------------|-------------|
+| `LOAD DATA` | `LOAD DATA ... INFILE ... INTO TABLE` |   | Support | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege. |
+| ^ | ^ | ^ | ^ | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the imported file must be uploaded to the fixed path on the current active compute node server: `/usr/local/hotdb/hotdb-server/HotDB-TEMP`. |
+| ^ | `LOW_PRIORITY` |   | Not support |   |
+| ^ | `CONCURRENT` |   | Not support |   |
+| ^ | `LOCAL` |   | Not support |   |
+| ^ | `REPLACE` |   | Support |   |
+| ^ | `IGNORE` |   | Support |   |
+| ^ | `PARTITION` |   | Not support |   |
+| ^ | `CHARACTER SET` |   | Not support |   |
+| ^ | `{FIELDS | COLUMNS} [TERMINATED BY 'string'] [[OPTIONALLY] ENCLOSED BY 'char'] [ESCAPED BY 'char']` |   | Support |   |
+| ^ | `LINES STARTING BY 'string'` |   | Not support |   |
+| ^ | `LINES TERMINATED BY 'string'` |   | Support |   |
+| ^ | Import the specified field |   | Support |   |
+| ^ | `SET` |   | Support |   |
+| ^ | `IGNORE number {LINES | ROWS}` |   | Support |   |
 
 #### REPLACE statement
 
@@ -6813,7 +6364,7 @@ After compute node obtaining connection from the connection pool and having cond
 
 When broken back-end connection is obtained, the connection pool of the compute node will check all idle connections rapidly
 
-#### bakUrl & bakUsername & bakPassword
+#### bakUrl & bakUsername & bakPassword{#bakurl-bakusername-bakpassword}
 
 **Description of parameter:**
 
@@ -8549,8 +8100,8 @@ For example, set idcId as 1 in server.xml of the master center, idcNodeHost for 
 **Description of parameter:**
 
 | Property | Value |
-| Parameter value | idleTimeout |
 |----------|-------|
+| Parameter value | idleTimeout |
 | Visible or not | No |
 | Description of parameters | Front-end idle connection timeout time |
 | Default value | 28800 |
@@ -8809,14 +8360,14 @@ This parameter is used to set the path to the data certificate .jks file for con
 
 **Description of parameter:**
 
-|Property                     |Value|
-|-----------------------------|-----|
-|Parameter value                 | keyStorePass                                                         |
-|Visible or not                  | Yes                                                                  |
-|Description of parameters       | Password of the data certificate .jks file for TLS connection        |
-|Default value                   | BB5A70F75DD5FEB214A5623DD171CEEB                                     |
-|Whether Reload is valid or not  | Yes                                                                  |
-|Min Compatible Version          | 2.5.5                                                                |
+| Property | Value |
+|----------|-------|
+| Parameter value | keyStorePass |
+| Visible or not | Yes |
+| Description of parameters | Password of the data certificate .jks file for TLS connection |
+| Default value | BB5A70F75DD5FEB214A5623DD171CEEB |
+| Whether Reload is valid or not | Yes |
+| Min Compatible Version | 2.5.5 |
 
 **Parameter setting:**
 
@@ -9676,7 +9227,7 @@ The valid timeout time of prefetching the auto-incremental batch. When set as 0,
 
 **Parameter Effect:**
 
-This parameter is used for setting number of threads of processors in internal thread pool model of the compute node. The parameter [adaptiveProcessor](#adaptiveProcessor_1) is Enabled by default, and when enabled, the compute node will make Automatic Adaptation to Max processorExecutor.
+This parameter is used for setting number of threads of processors in internal thread pool model of the compute node. The parameter [adaptiveProcessor](#adaptiveprocessor) is Enabled by default, and when enabled, the compute node will make Automatic Adaptation to Max processorExecutor.
 
 Log in to 3325 port, execute the show @@threadpool; command, and then you could view the current number of processorExecutor.
 
@@ -9703,9 +9254,9 @@ Log in to 3325 port, execute the show @@threadpool; command, and then you could 
 
 **Parameter Effect:**
 
-This parameter is used for setting number of threads in internal thread pool model of the compute node. The parameter [adaptiveProcessor](#adaptiveProcessor) is Enable by default, and when enabled, the compute node will make Automatic Adaptation to the max number of processors.
+This parameter is used for setting number of threads in internal thread pool model of the compute node. The parameter [adaptiveProcessor](#adaptiveprocessor) is Enable by default, and when enabled, the compute node will make Automatic Adaptation to the max number of processors.
 
-Log in to 3325 port, execute show @@threadpool; command, and then you could view the number of current processors.
+Log in to 3325 port, execute `show @@threadpool;` command, and then you could view the number of current processors.
 
 #### readOnly
 
@@ -10052,41 +9603,12 @@ update account set Account_number="$!\\''##";
 
 View `logs/sql.log` of compute node installation directory,
 
-**Description of parameter:**
-
-| Property | Value |
-|----------|-------|
-| Parameter value | recordMySQLWarnings |
-| Visible or not | Hidden |
-| Description of parameters | The log records the warning message returned by MySQL |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
-
-**Parameter Setting:**
-
-recordMySQLWarnings parameter configuration in Server.xml is configured as follow:
-
-<property name="recordMySQLWarnings">false</property>
-
-
-**Parameter Effect:**
-
-recordMySQLWarnings log records the warning message returned by MySQL.
-
-Execute as follow:
-
-mysql> update account set Account_number="$!\\''##";
-
-View /logs/sql.log of compute node installation directory,
-
+```log
 2018-06-12 10:52:07.011 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\'\'##', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
-
 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\'\'##', warninq from MySQLConnection [node=2, id=78814, threadId=75272, state=runninq, closed=false, autocommit=false, host=192.168.200.51, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
-
 2018-06-12 10:52:07.012 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\'\'##', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 1, code: 1265
-
 2018-06-12 10:52:07.013 [INFO] [MYSQLWARNING] |[$NIOREACTOR-3-RW] showwarninqsHandler(79) - sql: UPDATE account SET Account_number = '*$!\\\'\'##', warninq from MySQLConnection [node=3, id=55313, threadId=166, state=runninq, closed=false, autocommit=false, host=192.168.200.52, port=3309, database-db249, localPort=13317, isclose:false, toBeclose:false], warning: Data truncated for column 'Account_number' at row 2, code: 1265
+```
 
 #### recordSql
 
@@ -11062,22 +10584,25 @@ The parameter [adaptiveProcessor](#adaptiveprocessor) is enabled by default, and
 | Whether Reload is valid or not | Yes |
 | Min Compatible Version | 2.5.1 |
 
-
 **Parameter Setting:**
-
 
 When timestampProxy parameter is 0, it means auto mode, and when the compute node checks that the time difference of data source is greater than 0.5, it will be the auto Proxy of the Global Time Function. If less than 0.5, it only make Proxy of the time function of the Global Table, high-accuracy time stamp and cross-node statement.
 
+```xml
 <property name="timestampProxy">0</property>
+```
 
 When the parameter is set as 1, it means global_table_only, only in Global Table mode; the compute node only make Proxy of the time function of Global Table.
 
+```xml
 <property name="timestampProxy">1</property>
+```
 
-When the parameter is set as 2, it means all, in Global mode, and the compute node will make Proxy of the Global Time Function. **Parameter Effect:**
+When the parameter is set as 2, it means all, in Global mode, and the compute node will make Proxy of the Global Time Function.
 
+```xml
 <property name="timestampProxy">2</property>
-
+```
 
 **Parameter Effect:**
 
@@ -11209,7 +10734,7 @@ when configured as 0, all counters will be recorded, and logs will be output whe
    +--------------+-------------+-------+
    ```
 
-> **Notes:**
+> Notes:
 >
 > 1. The counter is refined to table-level, and each error number of table level is counted by counters.
 > 2. Log path: `/usr/local/hotdb/hotdb-server/logs/extra/unusualsql/hotdb-unusualsql.log`
