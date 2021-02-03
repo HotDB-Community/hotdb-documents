@@ -70,7 +70,6 @@ mysql -uroot -proot -h127.0.0.1 -P3323
 
 ```
 root> mysql -uroot -proot -h127.0.0.1 -P3323
-
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Welcome to the MySQL monitor. Commands end with ; or g.
 Your MySQL connection id is 515
@@ -80,7 +79,6 @@ Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Ot
 Type 'help;' or 'h' for help. Type 'c' to clear the current input statement.
 
 mysql> show databases;
-
 +-----------------+
 | DATABASE        |
 +-----------------+
@@ -90,11 +88,9 @@ mysql> show databases;
 2 rows in set (0.01 sec)
 
 mysql> use CLASSIC_LOGICDB
-
 Database changed
 
 mysql> show tables;
-
 +---------------------------+
 | Tables_in_CLASSIC_LOGICDB |
 +---------------------------+
@@ -125,7 +121,9 @@ mysql> show tables;
 
 #### 管理平台
 
-管理平台为计算节点提供用户信息、节点信息、表信息、分片等信息的配置，默认端口为3324，在浏览器中输入HTTP链接地址，即可访问管理平台（建议使用Chrome或者FireFox浏览器），如：`http://192.168.200.191:3324/login`，访问页面如下所示：
+管理平台为计算节点提供用户信息、节点信息、表信息、分片等信息的配置，默认端口为3324，在浏览器中输入HTTP链接地址，即可访问管理平台（建议使用Chrome或者FireFox浏览器）
+
+如：`http://192.168.200.191:3324/login`，访问页面如下所示：
 
 ![](assets/standard/image5.png)
 
@@ -201,7 +199,7 @@ server.xml的部分参数修改后需要重新启动计算节点才能生效，�
 
 ### 登录管理平台
 
-在浏览器中输入管理平台的HTTP链接地址，并登录到管理平台；HTTP链接地址通常为部署管理平台的服务器IP，端口默认为3324，如http://192.168.200.89:3324/login.html。
+在浏览器中输入管理平台的HTTP链接地址，并登录到管理平台；HTTP链接地址通常为部署管理平台的服务器IP，端口默认为3324，如`http://192.168.200.89:3324/login.html`。
 
 管理平台提供了两类用户角色：超级管理员与普通用户，超级管理员默认初始用户名和密码都为：`admin`；普通用户由超级管理员创建，默认密码为：`hotdb@hotpu.cn`。
 
@@ -274,8 +272,8 @@ show databases;
 > !Note
 >
 > 管理平台安装后，系统默认创建一个平台用户root（密码root）。
->
-> ![](assets/standard/image9.png)
+
+![](assets/standard/image9.png)
 
 ### 添加存储节点组
 
@@ -288,7 +286,7 @@ show databases;
 参数包括：
 
 - 组名：输入存储节点组命名；
-- 连接用户：有权限访问该物理库的用户名（上节添加的[用户名](#创建mysql数据库与存储节点用户)）；
+- 连接用户：有权限访问该物理库的用户名（上节添加的用户名）；
 - 连接用户密码：有权限访问该物理库的用户密码；
 - 物理库名：存储节点中可引用的数据库名称，例如"db01"（3.4节添加的物理库）；
 - 备份用户：（选填）用于备份该物理库的用户名；
@@ -417,7 +415,6 @@ mysql -uroot -proot -h127.0.0.1 -P3323 -Dtest
 
 ```
 root> mysql -h127.0.0.1 -uroot -proot -P3323 -Dtest
-
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Welcome to the MySQL monitor. Commands end with ; or g.
 Your MySQL connection id is 100728
@@ -484,10 +481,10 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 ### 计算节点启动说明
 
-- 启动计算节点，可以切换到/usr/local/hotdb/hotdb-server/bin目录下，再运行启动脚本，或者直接加上路径:sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start；
+- 启动计算节点，可以切换到`/usr/local/hotdb/hotdb-server/bin`目录下，再运行启动脚本，或者直接加上路径:`sh /usr/local/hotdb/hotdb-server/bin/hotdb_server start`；
 - 配置库复制同步状态会影响计算节点启动，计算节点启动或者发生高可用切换Online时配置库必须保证复制追上；
-- 存储节点复制同步状态会影响计算节点启动，通过在server.xml中配置参数[waitSyncFinishAtStartup](#waitsyncfinishatstartup) 的true/false属性控制计算节点启动时是否等待存储节点复制追上，默认需等待；
-- 启动计算节点时,若存储节点连接状态异常，可通过修改server.xml中的配置参数[masterSourceInitWaitTimeout](#lockwaittimeout)，控制数据节点中主存储节点是否重新初始化及初始化超时时间，具体控制逻辑参考[计算节点启动时对逻辑库可用的判断](#计算节点启动时对逻辑库可用的判断)。
+- 存储节点复制同步状态会影响计算节点启动，通过在`server.xml`中配置参数[waitSyncFinishAtStartup](#waitsyncfinishatstartup) 的true/false属性控制计算节点启动时是否等待存储节点复制追上，默认需等待；
+- 启动计算节点时,若存储节点连接状态异常，可通过修改`server.xml`中的配置参数[masterSourceInitWaitTimeout](#lockwaittimeout)，控制数据节点中主存储节点是否重新初始化及初始化超时时间，具体控制逻辑参考[计算节点启动时对逻辑库可用的判断](#计算节点启动时对逻辑库可用的判断)。
 - 影响计算节点启动失败的原因可能是多种多样的，包括但不限于：
 - 软硬件环境异常：例如脚本校验无法通过，磁盘空间不足，可用内存不足，Java版本不匹配等
 - 配置库异常：例如配置库无法连接，配置错误等
@@ -533,27 +530,28 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 对于下列MySQL存储节点实例的参数，计算节点要求设置为统一的固定值：
 
 1. **completion_type必须为NO_CHAN**, 如果出现该参数不符合规范，则动态加载失败；
+
 2. **innodb_rollback_on_timeout需要为ON**，且任何时候`SHOW [GLOBAL|SESSION] VARIABLES`显示出来的innodb_rollback_on_timeout参数都为on，说明如下：
 
-- 如果innodb_rollback_on_timeout参数全为off， 则计算节点允许加载成功，但计算节点的行为将等同于innodb_rollback_on_timeout参数为on时的事务回滚方式，且配置校验时给出如下提示：
+	- 如果innodb_rollback_on_timeout参数全为off， 则计算节点允许加载成功，但计算节点的行为将等同于innodb_rollback_on_timeout参数为on时的事务回滚方式，且配置校验时给出如下提示：
 
-![](assets/standard/image25.jpeg)
+	![](assets/standard/image25.jpeg)
 
-且动态加载时日志输出：innodb_rollback_on_timeout=off is not supported, HotDB behavior will be equivalent to innodb_rollback_on_timeout = on.
+	且动态加载时日志输出：innodb_rollback_on_timeout=off is not supported, HotDB behavior will be equivalent to innodb_rollback_on_timeout = on.
 
-- 如果innodb_rollback_on_timeout参数存储节点间不一致，动态加载失败，且配置校验时提示如下:
+	- 如果innodb_rollback_on_timeout参数存储节点间不一致，动态加载失败，且配置校验时提示如下:
 
-> ![](assets/standard/image26.jpeg)
+	![](assets/standard/image26.jpeg)
 
-且动态加载时，为off的存储节点日志输出，MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is OFF ,neet to bu changed to ON , 为on的存储节点日志输出MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is ON
+	且动态加载时，为off的存储节点日志输出，MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is OFF ,neet to bu changed to ON , 为on的存储节点日志输出MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is ON
 
 3. **read_only**，参数说明如下：
 
-- 如果主存储节点的参数read_only=1，计算节点将拒绝启动，动态加载失败。
+	- 如果主存储节点的参数read_only=1，计算节点将拒绝启动，动态加载失败。
 
-- 如果从机的参数read_only=1且配置了切换到该从机的配置规则，计算节点可以启动，RELOAD失败。
+	- 如果从机的参数read_only=1且配置了切换到该从机的配置规则，计算节点可以启动，RELOAD失败。
 
-- 如果从机的参数read_only=1且没有配置切换到该从机的配置规则，计算节点可以启动，reload如果无其它错误则成功。
+	- 如果从机的参数read_only=1且没有配置切换到该从机的配置规则，计算节点可以启动，reload如果无其它错误则成功。
 
 #### 要求所有节点配置一致的参数
 
@@ -610,7 +608,6 @@ mysql> show @@help;
 
 ```
 mysql> show @@datasource;
-
 |----+----+-----------------------+------+--------+-------------+------+--------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
 | dn | ds | name                  | type | status | host        | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
 |----+----+-----------------------+------+--------+-------------+------+--------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
@@ -618,13 +615,12 @@ mysql> show @@datasource;
 ...省略更多内容，可自行登陆查看...
 ```
 
-`show @@`命令后接的为一个表的表名，例如上个例子中，"show @@datasource;"，datasource为一个表的表名。
+`show @@`命令后接的为一个表的表名，例如上个例子中，`show @@datasource;`，datasource为一个表的表名。
 
 用户也可以对`show @@`命令后的表名进行DESC操作以查看该表各个字段的含义，如查看存储节点信息中各个字段的含义：
 
 ```
 mysql> desc datasource;
-
 |--------------------+------------------------------------------------------------+
 | filedname          | description                                                |
 |--------------------+------------------------------------------------------------+
@@ -652,7 +648,6 @@ mysql> desc datasource;
 
 ```
 mysql> select * from datasource where dn=11;
-
 |----+----+-----------------------+------+--------+-------------+------+--------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
 | dn | ds | name                  | type | status | host        | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
 |----+----+-----------------------+------+--------+-------------+------+--------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
@@ -779,7 +774,6 @@ mysql> select * from datasource where dn=11;
 
 ```
 mysql> start transaction;
-
 Query OK, 0 rows affected (0.00 sec)
 ```
 
@@ -787,7 +781,6 @@ Query OK, 0 rows affected (0.00 sec)
 
 ```
 mysql> start transaction;
-
 Query OK, 0 rows affected (0.00 sec)
 ```
 
@@ -795,7 +788,6 @@ Query OK, 0 rows affected (0.00 sec)
 
 ```
 mysql> delete from customer where dnid=15 and id=1;
-
 Query OK, 1 row affected (0.00 sec)
 ```
 
@@ -803,7 +795,6 @@ Query OK, 1 row affected (0.00 sec)
 
 ```
 mysql> delete from customer where dnid=13 and id=4;
-
 Query OK, 1 row affected (0.00 sec)
 ```
 
@@ -817,7 +808,6 @@ mysql> delete from customer where dnid=13 and id=4;
 
 ```
 mysql> delete from customer where dnid=15 and id=1;
-
 Query OK, 1 row affected (1.59 sec)
 ```
 
@@ -825,7 +815,6 @@ Query OK, 1 row affected (1.59 sec)
 
 ```
 mysql> delete from customer where dnid=13 and id=4;
-
 ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting transaction
 ```
 
@@ -865,7 +854,6 @@ ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting trans
 
 ```
 mysql> insert into table01 (id,title,author,submission_date) values (3,"apple", "apple pie", '2019-10-11-20-05');
-
 ERROR 1062 (23000): Duplicate entry '3' for key 'PRIMARY'
 ```
 
@@ -945,7 +933,7 @@ HotDB Server有两类用户，一类是计算节点数据库用户，用于操�
 拥有SUPER权限的user，可在3323端口执行HINT语句。如:
 
 ```sql
-/*!hotdb:dnid=1*/select * from table
+/*!hotdb:dnid=1*/select * from table;
 ```
 
 **权限范围：**
@@ -998,14 +986,15 @@ mysql_ssl_rsa_setup --datadir=/usr/local/crt/
 
 如果需要生成能够进行CA认证的自签名证书，需要使用openssl工具，可参考下列步骤进行：
 
-1.生成CA根证书私钥：`openssl genrsa 2048 > ca-key.pem`
-2.生成CA根证书：`openssl req -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem`，注意信息填写步骤中Common Name最好填入有效域名，并且不能与签发的证书中的Common Name一样，这里我们填写127.0.0.1
-3.生成服务器证书请求文件：`openssl req -newkey rsa:2048 -days 3600 -nodes -keyout server-key.pem -out server-req.pem`，注意信息填写步骤中Common Name需要填入HotDB-Server所监听的IP地址/域名，客户端将用此IP进行服务的连接，注意不能和CA证书中的信息一样
-4.用openssl rsa命令处理秘钥以删除密码：`openssl rsa -in server-key.pem -out server-key.pem`
-5.为服务端生成自签名证书：`openssl x509 -req -in server-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem`
-6.生成客户端证书请求文件：`openssl req -newkey rsa:2048 -days 3600 -nodes -keyout client-key.pem -out client-req.pem`，注意信息填写步骤中Common Name不能和CA证书中的信息一样
-7.用openssl rsa命令处理秘钥以删除密码：`openssl rsa -in client-key.pem -out client-key.pem`
-8.为客户端生成自签名证书：`openssl x509 -req -in client-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out client-cert.pem`
+1. 生成CA根证书私钥：`openssl genrsa 2048 > ca-key.pem`
+2.
+生成CA根证书：`openssl req -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem`，注意信息填写步骤中Common Name最好填入有效域名，并且不能与签发的证书中的Common Name一样，这里我们填写127.0.0.1
+3. 生成服务器证书请求文件：`openssl req -newkey rsa:2048 -days 3600 -nodes -keyout server-key.pem -out server-req.pem`，注意信息填写步骤中Common Name需要填入HotDB-Server所监听的IP地址/域名，客户端将用此IP进行服务的连接，注意不能和CA证书中的信息一样
+4. 用openssl rsa命令处理秘钥以删除密码：`openssl rsa -in server-key.pem -out server-key.pem`
+5. 为服务端生成自签名证书：`openssl x509 -req -in server-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem`
+6. 生成客户端证书请求文件：`openssl req -newkey rsa:2048 -days 3600 -nodes -keyout client-key.pem -out client-req.pem`，注意信息填写步骤中Common Name不能和CA证书中的信息一样
+7. 用openssl rsa命令处理秘钥以删除密码：`openssl rsa -in client-key.pem -out client-key.pem`
+8. 为客户端生成自签名证书：`openssl x509 -req -in client-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out client-cert.pem`
 
 ##### 生成server.jks文件
 
@@ -1053,7 +1042,7 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 <property name="keyStorePass">BB5A70F75DD5FEB214A5623DD171CEEB</property><!-- 用于TLS连接的数据证书.jks文件的密码(Password of the data certificate .jks file for TLS connection) -->
 ```
 
-参数说明：程序自带的密钥文件中密码是hotdb.com，通过select hex(aes_encrypt('hotdb.com',unhex(md5('Hotpu@2013#shanghai#'))));加密得到默认keyStorePass：BB5A70F75DD5FEB214A5623DD171CEEB。若使用自己生成的密钥文件，需根据实际输入的密码来填写。例如：前文输入密码SDcrtest，通过select hex(aes_encrypt('SDcrtest',unhex(md5('Hotpu@2013#shanghai#'))))查询到keyStorePass值，然后填写C43BD9DDE9C908FEE7683AED7A301E33。
+参数说明：程序自带的密钥文件中密码是`hotdb.com`，通过`select hex(aes_encrypt('hotdb.com',unhex(md5('Hotpu@2013#shanghai#'))))`s加密得到默认keyStorePass：BB5A70F75DD5FEB214A5623DD171CEEB。若使用自己生成的密钥文件，需根据实际输入的密码来填写。例如：前文输入密码SDcrtest，通过`select hex(aes_encrypt('SDcrtest',unhex(md5('Hotpu@2013#shanghai#'))))`查询到keyStorePass值，然后填写C43BD9DDE9C908FEE7683AED7A301E33。
 
 配置好的参数如下图：
 
@@ -1061,19 +1050,19 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 
 参数的修改无需重启计算节点服务， 动态加载时会重新读取`server.jks`文件。若SSL相关逻辑初始化失败，动态加载不会失败，但后续的SSL连接无法正常建立，非SSL连接不受影响。
 
-**注意事项：**
-
-- 若计算节点找不到任何可用的`server.jks`文件，则启动或同步加载时会输出以下报错信息
-
-![](assets/standard/image41.png)
-
-- 若`keyStorePass`配置错误，则启动或者同步加载时输出以下报错信息
-
-![](assets/standard/image42.png)
-
-- 若证书配置错误，登录时会输出以下报错信息
-
-![](assets/standard/image43.png)
+> !Note
+>
+> - 若计算节点找不到任何可用的`server.jks`文件，则启动或同步加载时会输出以下报错信息
+> 
+> ![](assets/standard/image41.png)
+> 
+> - 若`keyStorePass`配置错误，则启动或者同步加载时输出以下报错信息
+> 
+> ![](assets/standard/image42.png)
+> 
+> - 若证书配置错误，登录时会输出以下报错信息
+> 
+> ![](assets/standard/image43.png)
 
 #### TLS连接登录
 
@@ -1094,7 +1083,8 @@ mysql -ujing01 -p123456 -h192.168.240.117 -P3323 --ssl-ca=/usr/local/crt/ca.pem 
 ##### JDBC方式
 
 对于JDBC来说，也需要相应的秘钥文件。操作方式可参考[MySQL官方手册](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-using-ssl.html)，这里可通过两种方式：
-1）可通过将CA导入Java信任库的方式：
+
+1. 可通过将CA导入Java信任库的方式：
 
 ```bash
 keytool -importcert -alias MySQLCACert -file ca.pem -keystore truststore
@@ -1108,7 +1098,7 @@ keytool -importcert -alias MySQLCACert -file ca.pem -keystore truststore
 jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/usr/local/crt/truststore&clientCertificateKeyStorePassword=hotdb.com&verifyServerCertificate=true
 ```
 
-2）可通过使用证书的方式：
+2. 可通过使用证书的方式：
 
 ```bash
 openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name "mysqlclient" -out client-keystore.p12
@@ -1164,7 +1154,9 @@ HotDB Server支持mysqldump功能，用法同MySQL一样。
 
 计算节点支持mysqlbinlog命令，mysqlbinlog命令能够解析binlog文件用于同步增量数据，从而减少了将单机MySQL数据迁移至计算节点时的停机时间。使用mysqlbinlog连接远程mysql实例获取binlog文件并解析出其中的SQL语句，然后交由计算节点执行，从而将某个数据库的增量数据导入到计算节点某个逻辑库下。首先，登入到[管理端口](#管理端信息监控)（默认端口为3325），执行dbremapping命令添加数据库映射关系，关于dbremapping命令用法，请参考[管理端命令](management-port-command.md)文档。
 
-`dbremapping @@add@`期望被导入的数据库名:逻辑库名
+```sql
+dbremapping @@add@期望被导入的数据库名:逻辑库名
+```
 
 然后使用mysqlbinlog语句执行选中部分的binlog中SQL语句，要求使用如下语法与参数：
 
@@ -1277,29 +1269,18 @@ select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separat
 
 ```
 mysql> use db01
-
 Database changed
-
 mysql> set session group_concat_max_len=1048576;
-
 Query OK, 0 rows affected (0.00 sec)
-
 mysql> set @mytablename='table02';
-
 Query OK, 0 rows affected (0.00 sec)
-
 mysql> set @mydbname=database();
-
 Query OK, 0 rows affected (0.00 sec)
-
-mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ','NULL'),ifnull('),','NULL')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename G
-
+mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
 *************************** 1. row ***************************
 sqltext: select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
 1 row in set (0.00 sec)
-
 msyql> select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
-
 +------------+
 | sum        |
 +------------+
@@ -1352,7 +1333,7 @@ mysql> show @@masterslaveconsistency;
 
 ### 全局AUTO_INCREMENT
 
-全局AUTO_INCREMENT，是指表的AUTO_INCREMENT列在整个分布式系统中的各个节点间有序自增。HotDB Server提供全局AUTO_INCREMENT的支持，当表中包含AUTO_INCREMENT列，并且在server.xml文件中，将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为非0（[设置为1](#参数设置为1)或者[设置为2](#参数设置为2)）时，即可以像使用MySQL的AUTO_INCRMENT一样使用计算节点的全局AUTO_INCREMENT。配置示例如：
+全局AUTO_INCREMENT，是指表的AUTO_INCREMENT列在整个分布式系统中的各个节点间有序自增。HotDB Server提供全局AUTO_INCREMENT的支持，当表中包含AUTO_INCREMENT列，并且在server.xml文件中，将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为非0（1或2)）时，即可以像使用MySQL的AUTO_INCRMENT一样使用计算节点的全局AUTO_INCREMENT。配置示例如：
 
 ```xml
 <property name="autoIncrement">1</property>
@@ -1360,20 +1341,16 @@ mysql> show @@masterslaveconsistency;
 
 #### 参数设置为0
 
-若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为0，则自增字段在存储节点MySQL内维护；在表类型为分片表时，表现较明显，可能存在同一分片表，不同存储节点间自增序列重复的情况。
+若将参数[autoIncrement](#autoincrement)设置为0，则自增字段在存储节点MySQL内维护；在表类型为分片表时，表现较明显，可能存在同一分片表，不同存储节点间自增序列重复的情况。
 
 例如：customer为auto分片表，分片字段为id，且name定义为自增序列。则name的自增特性由各个存储节点控制：
 
 ```
 mysql> create table customer(id int ,name int auto_increment primary key);
-
 mysql> insert into customer values (1,null),(2,null),(3,null),(4,null);
-
 Query OK, 4 rows affected (0.01 sec)
 Records: 4 Duplicates:0 Warnings: 0
-
 mysql> select * from customer;
-
 +----+------+----- +
 | id | name | DNID |
 +----+------+----- +
@@ -1387,7 +1364,7 @@ mysql> select * from customer;
 
 #### 参数设置为1
 
-若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为1，则由计算节点接管所有表的自增，可以保证全局自增。
+若将参数[autoIncrement](#autoincrement)设置为1，则由计算节点接管所有表的自增，可以保证全局自增。
 
 ```xml
 <property name="autoIncrement">1</property>
@@ -1397,14 +1374,10 @@ mysql> select * from customer;
 
 ```
 mysql> create table customer(id int ,name int auto_increment primary key);
-
 mysql> insert into customer values (1,null),(2,null),(3,null),(4,null);
-
 Query OK, 4 rows affected (0.01 sec)
 Records: 4 Duplicates: 0 Warnings: 0
-
 mysql> select * From customer order by id;
-
 +----+------+------+
 | id | name | DNID |
 +----+------+------+
@@ -1416,11 +1389,10 @@ mysql> select * From customer order by id;
 4 rows in set (0.00 sec)
 ```
 
-若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为1，自增字段类型必须为INT或BIGINT，否则建表提示warning：
+若将参数[autoIncrement](#autoIncrement)设置为1，自增字段类型必须为INT或BIGINT，否则建表提示warning：
 
 ```
 mysql> create table table_test(id tinyint auto_increment primary key);
-
 Query OK, 0 rows affected, 1 warning (0.05 sec)
 Warning (Code 10212): auto_increment column must be bigint or int
 ```
@@ -1429,9 +1401,9 @@ Warning (Code 10212): auto_increment column must be bigint or int
 
 #### 参数设置为2
 
-若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为2，则由计算节点接管所有表的自增。在此模式下，当计算节点模式为集群模式且表中包含自增序列时，仅保证自增序列全局唯一与长期看相对递增且递增，但不保证自增的连续性（短时间内不同节点间自增值会交错）。计算节点智能控制自增特性，进而帮助提升集群模式下计算节点的性能。若计算节点模式为高可用或单节点模式，则设置为2与设置为1的结果相同。
+若将参数[autoIncrement](#autoincrement)设置为2，则由计算节点接管所有表的自增。在此模式下，当计算节点模式为集群模式且表中包含自增序列时，仅保证自增序列全局唯一与长期看相对递增且递增，但不保证自增的连续性（短时间内不同节点间自增值会交错）。计算节点智能控制自增特性，进而帮助提升集群模式下计算节点的性能。若计算节点模式为高可用或单节点模式，则设置为2与设置为1的结果相同。
 
-例如：若现有Primary计算节点A，Secondary计算节点B和Secondary计算节点C，设置批次大小（[prefetchBatchInit](#prefetchbatchinit)）初始值为100，则计算节点A的自增序列预取区间为`[1,100]`，计算节点B的预取区间为`[101,200]`以及计算节点C的预取区间为`[201,300]`，即：
+例如：若现有Primary计算节点A，Secondary计算节点B和Secondary计算节点C，设置批次大小（[prefetchBatchInit](#prefetchbatchinit)）初始值为100，则计算节点A的自增序列预取区间为\[1,100]，计算节点B的预取区间为\[101,200]以及计算节点C的预取区间为\[201,300]，即：
 
 ```
 mysql> create table test(id int auto_increment primary key,num int);
@@ -1441,9 +1413,7 @@ mysql> create table test(id int auto_increment primary key,num int);
 
 ```
 mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
-
 mysql> select * from test order by id;
-
 +----+-----+
 | id | num |
 +----+-----+
@@ -1452,16 +1422,17 @@ mysql> select * from test order by id;
 | 3  | 3   |
 | 4  | 4   |
 +----+-----+
-
-# 自增序列预取范围为[1,100]
 ```
+
+> !Tip
+>
+> 自增序列预取范围为\[1,100]
 
 在计算节点B上执行：
 
 ```
 mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
 mysql> select * from test order by id;
-
 +-----+-----+
 | id  | num |
 +-----+-----+
@@ -1474,16 +1445,17 @@ mysql> select * from test order by id;
 | 103 | 3   |
 | 104 | 4   |
 +-----+-----+
-
-# 自增序列预取范围为[101,200]
 ```
+
+> !Tip
+> 
+> 自增序列预取范围为\[101,200]
 
 在计算节点C上执行：
 
 ```
 mysql> insert into test values(null,1),(null,2),(null,3),(null,4);
 mysql> select * from test order by id;
-
 +-----+-----+
 | id  | num |
 +-----+-----+
@@ -1500,9 +1472,11 @@ mysql> select * from test order by id;
 | 203 | 3   |
 | 204 | 4   |
 +-----+-----+
-
-# 自增序列预取范围为[201,300]
 ```
+
+> !Tip
+> 
+> 自增序列预取范围为\[201,300]
 
 在以下两种情况会判断是否重新预取批次并重新计算下一批次大小，由此来调整合适当前业务环境的批次大小：
 
@@ -1518,7 +1492,6 @@ mysql> insert into test values(null,1);
 mysql> insert into test values (11,5);
 mysql> insert into test values(null,1);
 mysql> select * from test order by id;
-
 +----+-----+
 | id | num |
 +----+-----+
@@ -1532,7 +1505,6 @@ mysql> select * from test order by id;
 
 ```
 mysql> insert into test values(null,1);
-
 +-----+-----+
 | id  | num |
 +-----+-----+
@@ -1546,12 +1518,13 @@ mysql> insert into test values(null,1);
 > !Note
 >
 > 自增序列2模式可保证全局唯一且长时间范围看是大致正向增长，不保证自增连续性；
+> 
 > 对于自增序列的字段类型范围计算节点也可以感知，超过范围计算节点行为同MySQL一致；
-> 若将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为2，自增字段类型必须为bigint，否则建表失败：
+> 
+> 若将参数[autoIncrement](#autoincrement)设置为2，自增字段类型必须为bigint，否则建表失败：
 >
 > ```
 > mysql> create table table_test(id tinyint auto_increment primary key);
->
 > ERROR 10212 (HY000): auto_increment column must be bigint
 > ```
 
@@ -1578,7 +1551,7 @@ Can't reset XA in reloading, please restart the hotdb to enable XA
 在系统中使用计算节点的XA事务，为保证事务的强一致性，需注意以下几点：
 
 - MySQL版本必须为5.7.17及以上。因为5.7.17之前的版本，MySQL在处理XA事务时，存在缺陷。因此在开启XA模式下，若计算节点启动时检测到存在任意存储节点MySQL版本低于5.7.17则计算节点启动失败；若启动计算节点后添加低于5.7.17的存储节点，动态加载将失败；若启动计算节点前低于5.7.17的存储节点无法连接，即使启动后重新连接成功，该存储节点仍然为不可用且动态加载将失败。以上情况都将输出ERROR级别的日志提示：Currently in XA mode, MySQL version is not allowed to be lower than 5.7.17.
-- 存储节点及配置库需开启半同步复制（额外注意：开启XA模式时，不允许使用MySQL Group Replication复制模式），当开启半同步复制时，不建议开双1（innodb_flush_log_at_trx_commit = 1,sync_binlog = 1）模式，两者同时开启也会影响性能；
+- 存储节点及配置库需开启半同步复制（**额外注意：开启XA模式时，不允许使用MySQL Group Replication复制模式**），当开启半同步复制时，不建议开双1（innodb_flush_log_at_trx_commit = 1,sync_binlog = 1）模式，两者同时开启也会影响性能；
 - 部署和使用XA强一致模式，需配置数据节点的高可用，并注意在主机故障切换从机后，原主机不可重用，不可直接在计算节点中标记其为可用，后续必须重新部署原主机，才可标记为可用。
 - XA事务的完整支持serializable、repeatable read、read committed，暂不支持read uncommitted，但当前端隔离级别设置为read committed时，需参考参数[allowRCWithoutReadConsistentInXA](#allowrcwithoutreadconsistentinxa)说明， 注意避免读写强一致性的问题。
 - 开启XA模式，使用HINT后，因计算节点无法控制HINT语句修改的内容，后续跟这个连接相关的任何操作计算节点都不再控制隔离级别的正确性。
@@ -1604,7 +1577,9 @@ Can't reset XA in reloading, please restart the hotdb to enable XA
 > ![](assets/standard/image51.png)
 >
 > - **disconnect_reason：**连接断开原因，如kill前端连接（kill）、TCP连接断开（program err:java.io.IOException: Connection reset by peer）、SQL执行超时（stream closed,read return -1）、空闲超时（idle timeout）等。
-> - **trx_state：**连接断开时的事务状态，包括：1.ROLLBACKED_BY_HOTDB：在事务中且事务被计算节点回滚（对应非自动提交时应用程序未发出commit命令或commit命令中途丢失）；2.COMMITED_BY_HOTDB：在事务中且事务被计算节点提交（对应非自动提交时，计算节点收到了commit并成功提交，但是在commit中途前端连接断开，因此计算节点未能成功发出ok包）。
+> - **trx_state：**连接断开时的事务状态，包括：
+>    1.ROLLBACKED_BY_HOTDB：在事务中且事务被计算节点回滚（对应非自动提交时应用程序未发出commit命令或commit命令中途丢失）；
+>    2.COMMITED_BY_HOTDB：在事务中且事务被计算节点提交（对应非自动提交时，计算节点收到了commit并成功提交，但是在commit中途前端连接断开，因此计算节点未能成功发出ok包）。
 
 #### XA事务与读写分离的关系
 
@@ -1634,7 +1609,7 @@ XA模式下，当开启读写分离时：无法保证隔离级别正确性，但
 
 如登入服务端口后输入命令：
 
-```mysql
+```sql
 set time_zone = '+0:00';
 show variables like '%time_zone';
 ```
@@ -1719,7 +1694,6 @@ Note (Code 10210): Global_unique is not applicable to vertical-sharding tables o
 
 ```
 mysql> create table test02(id int) GLOBAL_UNIQUE=1;
-
 mysql> show create table test02
 +-------+---------------------------------------------------------------+
 | Table | Create Table                                                  |
@@ -1753,15 +1727,12 @@ create table test02(id not null auto_increment primary key,a char(8),b decimal(4
 
 ![](assets/standard/image55.png)
 
-2. 在计算节点通过ALTER TABLE使用GLOBAL_UNIQUE语法，开启全局唯一，同理，出现warning信息说明需要执行unique @@create后方能生效：
+2. 在计算节点通过ALTER TABLE使用GLOBAL_UNIQUE语法，开启全局唯一，同理，出现warning信息说明需要执行`unique @@create`后方能生效：
 
 ```
 mysql> alter table keevey01 global_unique=1;
-
 Query OK, 0 rows affected, 1 warning (0.01 sec)
-
 mysql> show warnings;
-
 +-------+-------+--------------------------------------------------------------------------------------------------------------------------------------+
 | Level | Code  | Message                                                                                                                              |
 +-------+-------+--------------------------------------------------------------------------------------------------------------------------------------+
@@ -1812,14 +1783,19 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 
 > !Note
 >
-> - 检测是否有未接收的事务的前提是主从库都需要开启GTID，否则此参数开启时，故障切换完成会自动重置主从复制关系。
-> - 若原主库在心跳检测时重试超过10080次，仍然为不可用状态，此时，参数为开启状态，也会自动重置主从复制关系。
-> - 若发生自动重置复制关系后，计算节点记录warning级别的报警日志如下：
->   `you should decide whether to manually execute the unexecuted part of binlog or rebuild the replication according to the actual situation.`，
->   且管理平台中的主备状态会显示异常，鼠标悬浮显示如图提示信息：
->   ![](assets/standard/image58.png)
-> - 若故障切换完成后，主从库未开启GTID或存在未接收的事务，但此参数为关闭状态，计算节点也会记录warning级别的报警日志如下：
->   `DBA is required to deal with the new master, which is the original slave before switching and decide whether to stop replication or continue replication regardless. In addition, there is risk of data error caused by automatic reconnection of replication after manual or unexpected restart of the new master.`
+> 检测是否有未接收的事务的前提是主从库都需要开启GTID，否则此参数开启时，故障切换完成会自动重置主从复制关系。
+> 
+> 若原主库在心跳检测时重试超过10080次，仍然为不可用状态，此时，参数为开启状态，也会自动重置主从复制关系。
+> 
+> 若发生自动重置复制关系后，计算节点记录warning级别的报警日志如下：
+> `you should decide whether to manually execute the unexecuted part of binlog or rebuild the replication according to the actual situation.`，
+> 
+> 且管理平台中的主备状态会显示异常，鼠标悬浮显示如图提示信息：
+> 
+> ![](assets/standard/image58.png)
+> 
+> 若故障切换完成后，主从库未开启GTID或存在未接收的事务，但此参数为关闭状态，计算节点也会记录warning级别的报警日志如下：
+> `DBA is required to deal with the new master, which is the original slave before switching and decide whether to stop replication or continue replication regardless. In addition, there is risk of data error caused by automatic reconnection of replication after manual or unexpected restart of the new master.`
 
 ### 注意事项
 
@@ -1874,7 +1850,7 @@ HotDB Server提供数据节点内的MySQL高可用，当主存储节点不可用
 
 #### 数据节点高可用
 
-MySQL数据库主从的配置方式，请参考MySQL的官方网站（注意对应版本的官方文档，例如：http://dev.mysql.com/doc/refman/5.6/en/replication.html）
+MySQL数据库主从的配置方式，请参考MySQL的官方网站（注意对应版本的官方文档，例如：<http://dev.mysql.com/doc/refman/5.6/en/replication.html>）
 
 默认情况下，计算节点心跳功能是开启的：
 
@@ -1916,19 +1892,23 @@ MySQL数据库主从的配置方式，请参考MySQL的官方网站（注意对�
 
 ![](assets/standard/image64.jpeg)
 
-- 如果是主从，选择优先级最高的进行切换，切换后计算节点会将原主机和原主机的其他从机置为不可用，不能再进行切换。
-- 如果是双主，切换后不会将原主库置为不可用，可以继续手动来回切换。
-- 如果优先级最高从库不可用或延迟超过10s，依次选择剩余从库中优先级较高的进行切换，如果均不可用或存在延迟超过10s，则不切换，提示错误（切换失败日志提示 switch datasource datasourceid failed due to:no available backup found）
-- 在计算节点版本高于2.5.6 （包含）手动切换时，会先检查当前的hotdb_datanode/hotdb_datasource/hotdb_failover表是否与running 表中一致，若不一致会提示："当前存储节点的配置信息与内存中的配置信息不一致，无法进行切换，请动态加载后重试"；若校验通过，在新备存储节点接管前，会将被接管的存储节点更新为主库，原主库更新为双主备库或从库（注：若为主从关系，原主库及其相关的从节点均被级联置为不可用，且切换时会同步清理原复制关系，将原主库与原从库的故障切换规则进行互换，待人工进行线下的复制关系重建）
-- 切换成功时，计算节点记录切换过程日志：
+如果是主从，选择优先级最高的进行切换，切换后计算节点会将原主机和原主机的其他从机置为不可用，不能再进行切换。
 
-```
+如果是双主，切换后不会将原主库置为不可用，可以继续手动来回切换。
+
+如果优先级最高从库不可用或延迟超过10s，依次选择剩余从库中优先级较高的进行切换，如果均不可用或存在延迟超过10s，则不切换，提示错误（切换失败日志提示`switch datasource datasourceid failed due to:no available backup found`）
+
+在计算节点版本高于2.5.6 （包含）手动切换时，会先检查当前的hotdb_datanode/hotdb_datasource/hotdb_failover表是否与running 表中一致，若不一致会提示："当前存储节点的配置信息与内存中的配置信息不一致，无法进行切换，请动态加载后重试"；若校验通过，在新备存储节点接管前，会将被接管的存储节点更新为主库，原主库更新为双主备库或从库（注：若为主从关系，原主库及其相关的从节点均被级联置为不可用，且切换时会同步清理原复制关系，将原主库与原从库的故障切换规则进行互换，待人工进行线下的复制关系重建）
+
+切换成功时，计算节点记录切换过程日志：
+
+```log
 INFO [pool-1-thread-1064] (SwitchDataSource.java:78) -received switch datasourceid command from Manager : [连接信息]
 WARN [pool-1-thread-1339] (BackendDataNode.java:263) -datanode id switch datasource:id to datasource:id in failover. due to: Manual Switch by User: username
 INFO [pool-1-thread-1339] (SwitchDataSource.java:68) -switch datasource:id for datanode:id successfully by Manager.
 ```
 
-- 在没有配置切换规则时，不会进行切换，提示错误: `switch datasource id failed due to:found no backup information）
+在没有配置切换规则时，不会进行切换，提示错误: `switch datasource id failed due to:found no backup information）
 
 ##### 故障切换
 
@@ -1960,7 +1940,7 @@ INFO [$NIOREACTOR-6-RW] (Heartbeat.java:502) -heartbeat continue success twice f
 
 例如：存储节点服务关掉时，整个切换过程提示如下：
 
-```
+```log
 02/21 15:57:29.342 INFO [HeartbeatTimer] (BackendDataNode.java:396) -start failover for datanode:5
 02/21 15:57:29.344 INFO [HeartbeatTimer] (BackendDataNode.java:405) -found candidate backup for datanode 5 :[id:9,nodeId:5 192.168.200.51:331001_3310_ms status:1] in failover, start checking slave status.
 02/21 15:57:29.344 WARN [$NIOREACTOR-0-RW] (HeartbeatInitHandler.java:44) -datasoruce 5 192.168.200.52:331001_3310_ms init heartbeat failed due to:MySQL Error Packet{length=36,id=1}
@@ -1971,7 +1951,7 @@ INFO [$NIOREACTOR-6-RW] (Heartbeat.java:502) -heartbeat continue success twice f
 
 - 在没有配置切换规则时，不会进行切换，计算节点记录日志
 
-```
+```log
 WARN [pool-1-thread-177] (?:?) -datanode id failover failed due to found no backup information
 ```
 
@@ -2036,7 +2016,7 @@ HotDB Server支持高可用架构部署，利用keepalived高可用服务原理�
 
 查看计算节点日志：
 
-```
+```log
 2018-06-13 09:40:04.408 [INFO] [INIT] [Labor-3] j(-1) -- HotDB-Manager listening on 3325
 2018-06-13 09:40:04.412 [INFO] [INIT] [Labor-3] j(-1) -- HotDB-Server listening on 3323
 ```
@@ -2045,11 +2025,8 @@ HotDB Server支持高可用架构部署，利用keepalived高可用服务原理�
 
 ```
 root> ss -npl | grep 3323
-
 LISTEN 0 1000 *:3323 *:* users:(("java",12639,87))
-
 root> ps -aux |grep hotdb
-
 Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
 root 12639 60.7 34.0 4194112 2032134 ? Sl Jun04 7043:58 /usr/java/jdk1.7.0_80/bin/java -DHOTDB_HOME=/usr/local/hotdb-2.4/hotdb-server -classpath /usr/local/hotdb-2.4/hotdb-server/conf: ...省略更多... -Xdebug -Xrunjdwp:transport=dt_socket,address=8065,server=y,suspend=n -Djava.net.preferIPv4Stack=true cn.hotpu.hotdb.HotdbStartup
 ```
@@ -2058,7 +2035,6 @@ root 12639 60.7 34.0 4194112 2032134 ? Sl Jun04 7043:58 /usr/java/jdk1.7.0_80/bi
 
 ```
 root> ip a
-
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 inet 127.0.0.1/8 scope host lo
@@ -2086,11 +2062,8 @@ valid_lft forever preferred_lft forever
 
 ```
 root> ss -npl | grep 3325
-
 LISTEN 0 1000 *:3325 *:* users:(("java",11603,83))
-
 root> ps -aux |grep hotdb
-
 Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
 root 11603 12.0 13.6 3788976 1086196 ? Sl Jun04 1389:44 /usr/java/jdk1.7.0_80/bin/java -DHOTDB_HOME=/usr/local/hotdb-2.4/hotdb-server -classpath /usr/local/hotdb-2.4/hotdb-server/conf: ...省略更多... -Xdebug -Xrunjdwp:transport=dt_socket,address=8065,server=y,suspend=n -Djava.net.preferIPv4Stack=true cn.hotpu.hotdb.HotdbStartup
 ```
@@ -2114,7 +2087,6 @@ Keepalived的VIP已在192.168.200.191服务器上:
 
 ```
 root> ip a
-
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 inet 127.0.0.1/8 scope host lo
@@ -2998,11 +2970,9 @@ Warning (Code 10041): The current session has been bound to the backend connecti
 
 ```
 mysql> use db_b
-
 Database changed
 
 mysql> show warnings;
-
 +-------+-------+----------------------------------------------------------------------------------------------------------------------+
 | Level | Code  | Message                                                                                                              |
 +-------+-------+----------------------------------------------------------------------------------------------------------------------+
@@ -3011,7 +2981,6 @@ mysql> show warnings;
 1 row in set (0.00 sec)
 
 mysql> select * from tbb;
-
 ERROR 2013 (HY000): Lost connection to MySQL server during query
 ERROR 2016 (HY000): MySQL server has gone away
 No connection. Trying to reconnect...
@@ -3122,7 +3091,6 @@ EXPLAIN语句只适用于INSERT，SELECT，UPDATE，DELETE的简单单表语句�
 
 ```
 mysql> show @@onlineddl;
-
 +--------------+-------------------------------------------------------------------------------+----------+---------+
 | schema        | onlineddl                                                                    | progress | speed   |
 +--------------+-------------------------------------------------------------------------------+----------+---------+
@@ -3130,9 +3098,9 @@ mysql> show @@onlineddl;
 +--------------+-------------------------------------------------------------------------------+----------+---------+
 ```
 
-> !Important
+> !Note
 >
-> onlineddl 语句不是执行下去就代表DDL完成， 返回了"Query OK, 0 rows affected "仅代表DDL语句可以执行， 如果想看是否执行完成，要查看 show @@onlineddl中progress 显示的进度。show @@onlineddl结果为空时，代表所有DDL执行完毕且当前无其他DDL任务，如果中途因为网络或其他异常DDL中断，会回滚整个DDL。
+> onlineddl 语句不是执行下去就代表DDL完成， 返回了"Query OK, 0 rows affected "仅代表DDL语句可以执行， 如果想看是否执行完成，要查看`show @@onlineddl`中progress 显示的进度。`show @@onlineddl`结果为空时，代表所有DDL执行完毕且当前无其他DDL任务，如果中途因为网络或其他异常DDL中断，会回滚整个DDL。
 
 ### NDB Cluster SQL节点服务
 
@@ -3189,7 +3157,6 @@ alter table table_name change shard column new_column；
 
 ```
 mysql> alter table sbtest1 change shard column k;
-
 Query OK, 0 rows affected (2 min 2.27 sec)
 ```
 
@@ -10068,7 +10035,7 @@ timestampProxy参数为0时，代表自动模式，当计算节点检测到存�
 
 该参数用于表上有on update current_timestamp属性或SQL里用时间函数的代理，解决对应场景，insert或update操作可能会导致结果异常以及节点间时间数据存在差值的问题。如果timestampProxy设置为0且时间差异过大或者设置为2时，会大幅影响所有UPDATE语句的执行速度与效率。
 
-### unusualSQLMode
+#### unusualSQLMode
 
 **参数说明：**
 
