@@ -49,7 +49,7 @@ Descriptions of teaching environment of single-node deployment and the deploymen
 **Deployment environment:**
 
 | Item | Name |
-|-------------------|--------------------------------------|
+|------|------|
 | Server Properties | Virtual Machine |
 | Operating System | CentOS Linux release 7.6.1810 (Core) |
 | MySQL Version | MySQL 5.7.25 |
@@ -58,7 +58,7 @@ Descriptions of teaching environment of single-node deployment and the deploymen
 **Deployment components:**
 
 | Component name | Number of installations |
-|---------------------|-------------------------|
+|----------------|-------------------------|
 | Compute Node | 1 |
 | Management Platform | 1 |
 | ConfigDB | 1 |
@@ -640,7 +640,7 @@ Descriptions of master/standby node cluster deployment teaching environment and 
 **Deployment environment:**
 
 | Item | Name |
-|------------------|--------------------------------------|
+|------|------|
 | Physical Server | Physical Server |
 | Operating System | CentOS Linux release 7.6.1810 (Core) |
 | MySQL Version | MySQL 5.7.25 |
@@ -649,7 +649,7 @@ Descriptions of master/standby node cluster deployment teaching environment and 
 **Deployment components**
 
 | Component name | Number of installations |
-|---------------------|-------------------------|
+|----------------|-------------------------|
 | Compute Node | 2 |
 | Keepalived | 2 |
 | Management Platform | 1 |
@@ -667,7 +667,7 @@ Descriptions of master/standby node cluster deployment teaching environment and 
 **Deployment planning:**
 
 | Instance | IP | service port | management port | HA role |
-|----------------------|-----------------|--------------|-----------------|---------|
+|----------|----|--------------|-----------------|---------|
 | Master compute node | 192.168.200.190 | 3323 | 3325 | Master |
 | Standby compute node | 192.168.200.191 | 3323 | 3325 | Slave |
 
@@ -1530,7 +1530,7 @@ Without using management platform, you could also install directly using Install
 ##### Description of script parameters
 
 | Parameter name | Description of parameter |
-|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|----------------|--------------------------|
 | `dry-run` | Check only with no Modification. You can choose "yes" or "no", among which "no" is the default option. |
 | `hotdb-version` | Specify major version No. of HotDB. You can choose "2.3", "2.4" and "zabbix", among which "2.4" is the default option. |
 | `install-hotdb-server` | Install HotDB-server or not. You can choose "yes" or "no", among which "no" is the default option. |

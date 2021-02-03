@@ -7,15 +7,15 @@ import java.util.*
 
 private val scanner = Scanner(System.`in`)
 
-fun main(){
+fun main() {
 	while(true) {
 		try {
 			println("Input file path:")
 			val filePath = scanner.nextLine().trim()
 			val file = File(filePath)
-			if(file.isDirectory){
-				file.listFiles()?.forEach{ handleFile(it) }
-			}else{
+			if(file.isDirectory) {
+				file.listFiles()?.filter{ it.isFile }?.forEach { handleFile(it) }
+			} else {
 				handleFile(file)
 			}
 			println("OK.")
@@ -26,13 +26,40 @@ fun main(){
 	}
 }
 
-
-private fun handleFile(file: File){
+private fun handleFile(file: File) {
 	val text = file.readText()
 	val handledText = handleText(text)
 	file.writeText(handledText)
 }
 
-private fun handleText(text:String):String{
-	return text
+private val tableSeparatorRegex = """\+(-+\+)+""".toRegex()
+private var tableStart = false
+private var tableSeparatorStart = false
+private var tableHeader = ""
+
+private fun handleText(text: String): String {
+	return text.lineSequence().mapNotNull { line ->
+		if(!tableStart && line.startsWith('|') && line.endsWith('|') && line.count { it == '|' } >= 3) {
+			tableStart = true
+			tableSeparatorStart = true
+			tableHeader = line
+			line
+		}else if(tableSeparatorStart && line.startsWith("|-")){
+			tableSeparatorStart = false
+			buildString{
+				tableHeader.forEach { c->
+					if(c == '|') append('|') else if(c.isChinese()) append("--") else append('-')
+				}
+			}
+		}else if(tableStart && !line.startsWith('|')){
+			tableStart = false
+			line
+		}else{
+			line
+		}
+	}.joinToString("\n")
+}
+
+private fun Char.isChinese():Boolean{
+	return Character.UnicodeScript.of(this.toInt()) == Character.UnicodeScript.HAN
 }
