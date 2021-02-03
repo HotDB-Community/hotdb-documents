@@ -533,25 +533,25 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 2. **innodb_rollback_on_timeout需要为ON**，且任何时候`SHOW [GLOBAL|SESSION] VARIABLES`显示出来的innodb_rollback_on_timeout参数都为on，说明如下：
 
-	- 如果innodb_rollback_on_timeout参数全为off， 则计算节点允许加载成功，但计算节点的行为将等同于innodb_rollback_on_timeout参数为on时的事务回滚方式，且配置校验时给出如下提示：
+   - 如果innodb_rollback_on_timeout参数全为off， 则计算节点允许加载成功，但计算节点的行为将等同于innodb_rollback_on_timeout参数为on时的事务回滚方式，且配置校验时给出如下提示：
 
-	![](assets/standard/image25.jpeg)
+   ![](assets/standard/image25.jpeg)
 
-	且动态加载时日志输出：innodb_rollback_on_timeout=off is not supported, HotDB behavior will be equivalent to innodb_rollback_on_timeout = on.
+   且动态加载时日志输出：innodb_rollback_on_timeout=off is not supported, HotDB behavior will be equivalent to innodb_rollback_on_timeout = on.
 
-	- 如果innodb_rollback_on_timeout参数存储节点间不一致，动态加载失败，且配置校验时提示如下:
+   - 如果innodb_rollback_on_timeout参数存储节点间不一致，动态加载失败，且配置校验时提示如下:
 
-	![](assets/standard/image26.jpeg)
+   ![](assets/standard/image26.jpeg)
 
-	且动态加载时，为off的存储节点日志输出，MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is OFF ,neet to bu changed to ON , 为on的存储节点日志输出MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is ON
+   且动态加载时，为off的存储节点日志输出，MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is OFF ,neet to bu changed to ON , 为on的存储节点日志输出MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is ON
 
 3. **read_only**，参数说明如下：
 
-	- 如果主存储节点的参数read_only=1，计算节点将拒绝启动，动态加载失败。
+   - 如果主存储节点的参数read_only=1，计算节点将拒绝启动，动态加载失败。
 
-	- 如果从机的参数read_only=1且配置了切换到该从机的配置规则，计算节点可以启动，RELOAD失败。
+   - 如果从机的参数read_only=1且配置了切换到该从机的配置规则，计算节点可以启动，RELOAD失败。
 
-	- 如果从机的参数read_only=1且没有配置切换到该从机的配置规则，计算节点可以启动，reload如果无其它错误则成功。
+   - 如果从机的参数read_only=1且没有配置切换到该从机的配置规则，计算节点可以启动，reload如果无其它错误则成功。
 
 #### 要求所有节点配置一致的参数
 
@@ -987,8 +987,10 @@ mysql_ssl_rsa_setup --datadir=/usr/local/crt/
 如果需要生成能够进行CA认证的自签名证书，需要使用openssl工具，可参考下列步骤进行：
 
 1. 生成CA根证书私钥：`openssl genrsa 2048 > ca-key.pem`
-2.
+2. 
+
 生成CA根证书：`openssl req -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem`，注意信息填写步骤中Common Name最好填入有效域名，并且不能与签发的证书中的Common Name一样，这里我们填写127.0.0.1
+
 3. 生成服务器证书请求文件：`openssl req -newkey rsa:2048 -days 3600 -nodes -keyout server-key.pem -out server-req.pem`，注意信息填写步骤中Common Name需要填入HotDB-Server所监听的IP地址/域名，客户端将用此IP进行服务的连接，注意不能和CA证书中的信息一样
 4. 用openssl rsa命令处理秘钥以删除密码：`openssl rsa -in server-key.pem -out server-key.pem`
 5. 为服务端生成自签名证书：`openssl x509 -req -in server-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem`
@@ -1053,15 +1055,15 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 > !Note
 >
 > - 若计算节点找不到任何可用的`server.jks`文件，则启动或同步加载时会输出以下报错信息
-> 
+>
 > ![](assets/standard/image41.png)
-> 
+>
 > - 若`keyStorePass`配置错误，则启动或者同步加载时输出以下报错信息
-> 
+>
 > ![](assets/standard/image42.png)
-> 
+>
 > - 若证书配置错误，登录时会输出以下报错信息
-> 
+>
 > ![](assets/standard/image43.png)
 
 #### TLS连接登录
@@ -1389,7 +1391,7 @@ mysql> select * From customer order by id;
 4 rows in set (0.00 sec)
 ```
 
-若将参数[autoIncrement](#autoIncrement)设置为1，自增字段类型必须为INT或BIGINT，否则建表提示warning：
+若将参数[autoIncrement](#autoincrement)设置为1，自增字段类型必须为INT或BIGINT，否则建表提示warning：
 
 ```
 mysql> create table table_test(id tinyint auto_increment primary key);
@@ -1448,7 +1450,7 @@ mysql> select * from test order by id;
 ```
 
 > !Tip
-> 
+>
 > 自增序列预取范围为\[101,200]
 
 在计算节点C上执行：
@@ -1475,7 +1477,7 @@ mysql> select * from test order by id;
 ```
 
 > !Tip
-> 
+>
 > 自增序列预取范围为\[201,300]
 
 在以下两种情况会判断是否重新预取批次并重新计算下一批次大小，由此来调整合适当前业务环境的批次大小：
@@ -1518,9 +1520,9 @@ mysql> insert into test values(null,1);
 > !Note
 >
 > 自增序列2模式可保证全局唯一且长时间范围看是大致正向增长，不保证自增连续性；
-> 
+>
 > 对于自增序列的字段类型范围计算节点也可以感知，超过范围计算节点行为同MySQL一致；
-> 
+>
 > 若将参数[autoIncrement](#autoincrement)设置为2，自增字段类型必须为bigint，否则建表失败：
 >
 > ```
@@ -1578,8 +1580,8 @@ Can't reset XA in reloading, please restart the hotdb to enable XA
 >
 > - **disconnect_reason：**连接断开原因，如kill前端连接（kill）、TCP连接断开（program err:java.io.IOException: Connection reset by peer）、SQL执行超时（stream closed,read return -1）、空闲超时（idle timeout）等。
 > - **trx_state：**连接断开时的事务状态，包括：
->    1.ROLLBACKED_BY_HOTDB：在事务中且事务被计算节点回滚（对应非自动提交时应用程序未发出commit命令或commit命令中途丢失）；
->    2.COMMITED_BY_HOTDB：在事务中且事务被计算节点提交（对应非自动提交时，计算节点收到了commit并成功提交，但是在commit中途前端连接断开，因此计算节点未能成功发出ok包）。
+>   1.ROLLBACKED_BY_HOTDB：在事务中且事务被计算节点回滚（对应非自动提交时应用程序未发出commit命令或commit命令中途丢失）；
+>   2.COMMITED_BY_HOTDB：在事务中且事务被计算节点提交（对应非自动提交时，计算节点收到了commit并成功提交，但是在commit中途前端连接断开，因此计算节点未能成功发出ok包）。
 
 #### XA事务与读写分离的关系
 
@@ -1784,16 +1786,16 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 > !Note
 >
 > 检测是否有未接收的事务的前提是主从库都需要开启GTID，否则此参数开启时，故障切换完成会自动重置主从复制关系。
-> 
+>
 > 若原主库在心跳检测时重试超过10080次，仍然为不可用状态，此时，参数为开启状态，也会自动重置主从复制关系。
-> 
+>
 > 若发生自动重置复制关系后，计算节点记录warning级别的报警日志如下：
 > `you should decide whether to manually execute the unexecuted part of binlog or rebuild the replication according to the actual situation.`，
-> 
+>
 > 且管理平台中的主备状态会显示异常，鼠标悬浮显示如图提示信息：
-> 
+>
 > ![](assets/standard/image58.png)
-> 
+>
 > 若故障切换完成后，主从库未开启GTID或存在未接收的事务，但此参数为关闭状态，计算节点也会记录warning级别的报警日志如下：
 > `DBA is required to deal with the new master, which is the original slave before switching and decide whether to stop replication or continue replication regardless. In addition, there is risk of data error caused by automatic reconnection of replication after manual or unexpected restart of the new master.`
 
@@ -2706,7 +2708,7 @@ mysql> select * from customer where id in (77,67,52,20);
 
 |----|---|------|--------|
 | id | name   | telephone   | provinceid | province  | city | address     |
-|----|--------|-------------|------------|-----------|------|-------------|
+|----|---|------|--------|
 | 52 | 马深圳 | 13912340052 | 7          | Guangdong | 深圳 | 某某街某某号|
 | 77 | 郝上海 | 13912340077 | 25         | Shanghai  | 上海 | 某某街某某号|
 | 20 | 许重庆 | 13912340020 | 4          | Chongqing | 重庆 | 某某街某某号|
@@ -2914,7 +2916,7 @@ mysql> /*!hotdb: table=customer:1*/ select count(*) from customer;
 
 |---------------|-------|
 | count(*) |
-|----------+
+|---------------|-------|
 | 11       |
 |----------+
 1 row in set (0.00 sec)
@@ -3632,7 +3634,6 @@ MERGE_RESULT=0时，含有聚合函数的SQL语句，计算节点将不合并结
 
 ```
 mysql> select count(*) from customer;
-
 +----------+
 | COUNT(*) |
 +----------+
@@ -3642,13 +3643,14 @@ mysql> select count(*) from customer;
 | 53       |
 +----------+
 4 rows in set (0.00 sec)
+```
 
 SET MERGE_RESULT=0 和SET SHOW_DNID=1，可用于统计业务表在各个数据节点上的分布情况：
 
+```
 mysql> set MERGE_RESULT=0;
 mysql> set show_dnid=1;
 mysql> select count(*) from customer;
-
 +----------+------+
 | COUNT(*) | DNID |
 +----------+------+
@@ -3668,7 +3670,6 @@ MERGE_RESULT=1时，含有聚合函数的SQL语句，计算节点将所有数据
 mysql> set show_dnid=0;
 mysql> set MERGE_RESULT=1;
 mysql> select count(*) from customer;
-
 +----------+
 | COUNT(*) |
 +----------+
@@ -3707,7 +3708,7 @@ SELECT * FROM customer WHERE id>10 ORDER BY id;
 
 MySQL5.6.2开始，DELETE语句支持删除指定分区（partition）中的数据。如有表名称t与分区名称p0，下面语句将删除分区p0所有的数据：
 
-```
+```sql
 DELETE FROM t PARTITION(p0);
 ```
 
@@ -3724,19 +3725,28 @@ DELETE FROM t PARTITION(p0);
 
 ##### 跨库的DELETE语句
 
-| MySQL语句类型 | 子句类型 | 功能 | 支持状态 | 说明 |   |
-|---------------|----------|------|----------|------|---|
-| `DELETE` | `PARTITION` | 　 | 支持 |   |   |
-| ^ | `ORDER BY DESC | ASC` | 　 | 支持 |   |   |
-| ^ | `LIMIT` | 　 | 支持 |   |   |
-| ^ | `ORDER BY ... LIMIT ...` | 　 | 支持 | 父子表不支持 |   |
-| ^ | `ORDER BY`字段值大小写敏感 | 　 | 支持 |   |   |
-| ^ | `WHERE` | WHERE中的函数 | 支持 |   |   |
-| ^ | `JOIN` | 　 | 支持 | 含临时表场景不支持 |   |
+| MySQL语句类型 | 子句类型 | 功能 | 支持状态 | 说明 |
+|---------------|----------|------|----------|------|
+| `DELETE` | `PARTITION` | 　 | 支持 |   |
+| ^ | `ORDER BY DESC | ASC` | 　 | 支持 |   |
+| ^ | `LIMIT` | 　 | 支持 |   |
+| ^ | `ORDER BY ... LIMIT ...` | 　 | 支持 | 父子表不支持 |
+| ^ | `ORDER BY`字段值大小写敏感 | 　 | 支持 |   |
+| ^ | `WHERE` | WHERE中的函数 | 支持 |   |
+| ^ | `JOIN` | 　 | 支持 | 含临时表场景不支持 |
 
 在跨库的DELETE中语句，下面的多表语句不被支持：
 
+```sql
+DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
+tbl_name[.*] [, tbl_name[.*]] ...
+FROM table_references
+[WHERE where_condition]
 ```
+
+或者：
+
+```sql
 DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
 FROM tbl_name[.*] [, tbl_name[.*]] ...
 USING table_references
@@ -3774,24 +3784,17 @@ USING table_references
 
 ```
 mysql> create table test(id int not null primary key,provinceid int)engine=innodb;
-
 Query OK, 0 rows affected (0.02 sec)
-
 mysql> insert into test set id = 1,provinceid=2;
-
 Query OK, 1 row affected (0.00 sec)
-
 mysql> select * from test;
-
 +----+------------+
 | id | provinceid |
 +----+------------+
 | 1  | 2          |
 +----+------------+
 1 row in set (0.00 sec)
-
 mysql> insert ignore into test set id = 1,provinceid=2; --主键id为1的记录已经存在，数据被忽略。
-
 Query OK, 0 rows affected (0.00 sec)
 ```
 
@@ -3829,7 +3832,9 @@ mysql> insert ignore into test2(name) values ('e');
 
 INSERT BATCH指的是单条INSERT语句，写入多行记录的方式：
 
+```sql
 INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
+```
 
 | MySQL语句类型 | 子句类型 | 功能 | 支持状态 | 说明 |
 |---------------|----------|------|----------|------|
@@ -3838,7 +3843,7 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | ^ | 全局表 | 支持 |   |
 | ^ | ^ | 分片表 | 支持 |   |
 
-- 批量INSERT (INSERT BATCH）的情况特殊说明
+**批量INSERT (INSERT BATCH）的情况特殊说明：**
 
 事务中的批量INSERT，部分成功部分失败，会自动回滚至上一个SAVEPOINT。
 
@@ -3846,7 +3851,8 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL语句类型 | 子句类型 | 功能 | 支持状态 | 说明 |
 |---------------|----------|------|----------|------|
-| `LOAD DATA` | `LOAD DATA ... INFILE ... INTO TABLE` | ^ | 支持 | 1. 要求执行语句的计算节点数据库用户拥有FILE权限<br>2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，导入文件都必须上传至当前主计算节点服务器上的固定路径：/usr/local/hotdb/hotdb-server/HotDB-TEMP。 |
+| `LOAD DATA` | `LOAD DATA ... INFILE ... INTO TABLE` | ^ | 支持 | 1. 要求执行语句的计算节点数据库用户拥有FILE权限 |
+| ^ | ^ | ^ | ^ | 2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，导入文件都必须上传至当前主计算节点服务器上的固定路径：`/usr/local/hotdb/hotdb-server/HotDB-TEMP`。 |
 | ^ | `LOW_PRIORITY` |   | 不支持 |   |
 | ^ | `CONCURRENT` |   | 不支持 |   |
 | ^ | `LOCAL` |   | 不支持 |   |
@@ -3854,8 +3860,8 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | `IGNORE` |   | 支持 |   |
 | ^ | `PARTITION` |   | 不支持 |   |
 | ^ | `CHARACTER SET` |   | 不支持 |   |
-| ^ | `{FIELDS | COLUMNS}` |   | 支持 |   |
-| ^ | `[TERMINATED BY 'string'] [[OPTIONALLY] ENCLOSED BY 'char'] [ESCAPED BY 'char'] LINES STARTING BY 'string'` |   | 不支持 |   |
+| ^ | `{FIELDS | COLUMNS} [TERMINATED BY 'string'] [[OPTIONALLY] ENCLOSED BY 'char'] [ESCAPED BY 'char']` |   | 支持 |   |
+| ^ | `LINES STARTING BY 'string'` |   | 不支持 |   |
 | ^ | `LINES TERMINATED BY 'string'` |   | 支持 |   |
 | ^ | 导入指定字段 |   | 支持 |   |
 | ^ | `SET` |   | 支持 |   |
@@ -4659,7 +4665,7 @@ mysql> show hotdb_profile for query 2 relative time;
 
 |----------|----------|-------------------|
 | Status                                     | Relative_time | Duration |
-|--------------------------------------------|---------------|----------|
+|----------|----------|-------------------|
 | SQL receive start time                     | 0             | NULL     |
 | SQL receive end time                       | 67            | 67       |
 | multiquery parse end time                  | 125           | 58       |
@@ -9059,11 +9065,11 @@ mysql> update account set Account_number="$!''##";
 
 1. 通过管理平台操作日志智能分析页面查看：
 
-    - 关闭状态
-      ![](assets/standard/image150.png)
-    
-    - 开启并允许一段时间后
-      ![](assets/standard/image151.png)
+   - 关闭状态
+     ![](assets/standard/image150.png)
+
+   - 开启并允许一段时间后
+     ![](assets/standard/image151.png)
 
 2. 通过server配置库查看SQL执行统计情况
 
@@ -9148,7 +9154,7 @@ server.xml的recordSqlAuditlog参数默认false：
 > !Note
 >
 > 日志输出为json格式，特殊字符如双引号采用进行转义，json中部分key代表的含义如下：
-> 
+>
 > - `sql_type` - 当前执行SQL的类型，包括：DDL/DML/DQL/OTHER。
 > - `sql_subtype` - 当前执行SQL类型的子类,其中 DDL包括CREARE/ALTER/DROP/TUNCATE/RENAME；DQL包括SELECT；DML包括UPDATE/DELETE/INSERT/REPLACE/LOAD；OTHER包括SET/PREPARE/TRANSACTION/SHOW。
 > - `ip` - 执行SQL的客户端IP地址。
@@ -9911,67 +9917,67 @@ server.xml的switchoverTimeoutForTrans参数设置 如下图:
 
 2. 开启事务执行插入操作，手动执行主备切换，在36000ms内提交事务。提交成功如下：
 
-    ```
-    mysql> begin;
-    
-    Query OK, 0 rows affected (0.00 sec)
-    
-    mysql> insert into TEST_001 values(1);
-    
-    Query OK, 0 rows affected (0.00 sec)
-    
-    mysql> commit;
-    
-    Query OK, 0 rows affected (0.00 sec)
-    
-    mysql> select * from TEST_001;
-    
-    +----+
-    | id |
-    +----+
-    | 1  |
-    +----+
-    1 row in set (0.01 sec)
-    ```
-    
-    提交事务后查询到id=1
+   ```
+   mysql> begin;
+
+   Query OK, 0 rows affected (0.00 sec)
+
+   mysql> insert into TEST_001 values(1);
+
+   Query OK, 0 rows affected (0.00 sec)
+
+   mysql> commit;
+
+   Query OK, 0 rows affected (0.00 sec)
+
+   mysql> select * from TEST_001;
+
+   +----+
+   | id |
+   +----+
+   | 1  |
+   +----+
+   1 row in set (0.01 sec)
+   ```
+
+   提交事务后查询到id=1
 
 3. 开启事务执行插入操作，手动执行主备切换，超过36000 ms事务未提交，由于提交超时，事务回滚如下：
-    
-    ```
-    mysql> begin;
-    
-    Query OK, 0 rows affected (0.00 sec)
-    
-    mysql> insert into TEST_001 values(2);
-    
-    Query OK, 0 rows affected (0.00 sec)
-    ```
-    
-    一分钟后执行查询语句：
-    
-    ```
-    mysql> select * from TEST_001;
-    
-    ERROR 2013 (HY000): Lost connection to MySQL server during query
-    ERROR 2016 (HY000): MySQL server has gone away
-    No connection. Trying to reconnect...
-    Connection id: 40672
-    Current database: test_jzl
-    ```
-    
-    重新登录后查询，发现事务没有提交：
-    
-    ```
-    mysql> select * from TEST_001;
-    
-    +----+
-    | id |
-    +----+
-    | 1  |
-    +----+
-    1 row in set (0.01 sec)
-    ```
+
+   ```
+   mysql> begin;
+
+   Query OK, 0 rows affected (0.00 sec)
+
+   mysql> insert into TEST_001 values(2);
+
+   Query OK, 0 rows affected (0.00 sec)
+   ```
+
+   一分钟后执行查询语句：
+
+   ```
+   mysql> select * from TEST_001;
+
+   ERROR 2013 (HY000): Lost connection to MySQL server during query
+   ERROR 2016 (HY000): MySQL server has gone away
+   No connection. Trying to reconnect...
+   Connection id: 40672
+   Current database: test_jzl
+   ```
+
+   重新登录后查询，发现事务没有提交：
+
+   ```
+   mysql> select * from TEST_001;
+
+   +----+
+   | id |
+   +----+
+   | 1  |
+   +----+
+   1 row in set (0.01 sec)
+   ```
 
 #### timerExecutor
 
@@ -10062,100 +10068,100 @@ unusualSQLMode属隐藏参数，若要开启，需通过管理平台"更多参�
 
 1. 设置为1时：记录所有unusualSQL类型的日志与计数信息,每触发一次都输出对应日志信息且计数器加1。
 
-    **日志同时记录计数器和SQL的场景：**
-    
-    1. 第一次触发时日志：
-    
-    ```log
-    2021-01-13 14:26:46.564 [INFO] [UNUSUALSQL] [$I-NIOExecutor-7-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-7-0,id=169,user=root,host=192.168.240.142,port=3323,localport=26672,schema=CC]; backend:MySQLConnection [node=2, id=247, threadId=27213, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=58336, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"lili"); backend_sql:null] [CC.SUCCESS.count]=1
-    ```
-    
-    2. 第二次触发时日志：
-    
-    ```log
-    2021-01-13 14:27:38.159 [INFO] [UNUSUALSQL] [$I-NIOExecutor-0-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-0-0,id=169,user=root,host=192.168.240.142,port=3323,localport=26672,schema=CC]; backend:MySQLConnection [node=2, id=298, threadId=27230, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=58370, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"haha"); backend_sql:null] [CC.SUCCESS.count]=2
-    ```
-    
-    后续每一次触发该类计数器，对应日志都正常输出。
-    
-    **无日志输出、只在接口统计计数器的场景：**
-    
-    每一次触发，计数器都正常统计。
-    
-    ```
-    mysql> show @@unusualsqlcount;
-    
-    +--------------+-------------+-------+
-    | unusual_type | unusual_key | count |
-    +--------------+-------------+-------+
-    | TABLE        | CsC.TEST    | 2     |
-    | SCHEMA       | CC          | 1     |
-    +--------------+-------------+-------+
-    ```
+   **日志同时记录计数器和SQL的场景：**
+
+   1. 第一次触发时日志：
+
+   ```log
+   2021-01-13 14:26:46.564 [INFO] [UNUSUALSQL] [$I-NIOExecutor-7-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-7-0,id=169,user=root,host=192.168.240.142,port=3323,localport=26672,schema=CC]; backend:MySQLConnection [node=2, id=247, threadId=27213, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=58336, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"lili"); backend_sql:null] [CC.SUCCESS.count]=1
+   ```
+
+   2. 第二次触发时日志：
+
+   ```log
+   2021-01-13 14:27:38.159 [INFO] [UNUSUALSQL] [$I-NIOExecutor-0-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-0-0,id=169,user=root,host=192.168.240.142,port=3323,localport=26672,schema=CC]; backend:MySQLConnection [node=2, id=298, threadId=27230, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=58370, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"haha"); backend_sql:null] [CC.SUCCESS.count]=2
+   ```
+
+   后续每一次触发该类计数器，对应日志都正常输出。
+
+   **无日志输出、只在接口统计计数器的场景：**
+
+   每一次触发，计数器都正常统计。
+
+   ```
+   mysql> show @@unusualsqlcount;
+
+   +--------------+-------------+-------+
+   | unusual_type | unusual_key | count |
+   +--------------+-------------+-------+
+   | TABLE        | CsC.TEST    | 2     |
+   | SCHEMA       | CC          | 1     |
+   +--------------+-------------+-------+
+   ```
 
 2. 设置为0时：记录所有unusualSQL类型的日志与计数信息，但其日志信息只在第一次出现时输出，后续若再次出现，则只进行个数记录统计并展示在show @@unusualsqlcount结果中。
 
-    日志同时记录计数器和SQL的场景：
-    
-    1. 第一次触发时日志：
-    
-    ```
-    2021-01-13 14:48:55.314 [INFO] [UNUSUALSQL] [$I-NIOExecutor-6-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-6-0,id=106,user=root,host=192.168.240.142,port=3323,localport=27698,schema=CC]; backend:MySQLConnection [node=2, id=262, threadId=27511, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=59424, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"zhang"); backend_sql:null] [CC.SUCCESS.count]=1
-    ```
-    
-    2. 第二次触发时：无对应日志输出
-    
-    3. 第三次触发时：无对应日志输出
-    
-    后续该类计数器每一次触发，都不再有对应日志输出。
-    
-    **无日志输出、只在接口统计计数器的场景：**
-    
-    每一次触发，计数器都正常统计。
-    
-    ```
-    mysql> show @@unusualsqlcount;
-    
-    +--------------+-------------+-------+
-    | unusual_type | unusual_key | count |
-    +--------------+-------------+-------+
-    | TABLE        | CC.TEST     | 3     |
-    | SCHEMA       | CC          | 1     |
-    +--------------+-------------+-------+
-    ```
+   日志同时记录计数器和SQL的场景：
+
+   1. 第一次触发时日志：
+
+   ```
+   2021-01-13 14:48:55.314 [INFO] [UNUSUALSQL] [$I-NIOExecutor-6-0] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-6-0,id=106,user=root,host=192.168.240.142,port=3323,localport=27698,schema=CC]; backend:MySQLConnection [node=2, id=262, threadId=27511, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=59424, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"zhang"); backend_sql:null] [CC.SUCCESS.count]=1
+   ```
+
+   2. 第二次触发时：无对应日志输出
+
+   3. 第三次触发时：无对应日志输出
+
+   后续该类计数器每一次触发，都不再有对应日志输出。
+
+   **无日志输出、只在接口统计计数器的场景：**
+
+   每一次触发，计数器都正常统计。
+
+   ```
+   mysql> show @@unusualsqlcount;
+
+   +--------------+-------------+-------+
+   | unusual_type | unusual_key | count |
+   +--------------+-------------+-------+
+   | TABLE        | CC.TEST     | 3     |
+   | SCHEMA       | CC          | 1     |
+   +--------------+-------------+-------+
+   ```
 
 3. 当该参数设置为N（N>1）时：记录所有unusualSQL类型的日志与计数信息，但其日志信息只在每统计满N时输出一次日志，总出现次数依旧可以通过show @@unusualsqlcount结果查看 （此处以N为3进行测试）
 
-    **日志里面同时记录计数器和SQL的场景：**
-    
-    1. 第一次触发：无对应日志输出
-    
-    2. 第二次触发：无对应日志输出
-    
-    3. 第三次触发时日志
-    
-    ```
-    2021-01-13 15:10:47.953 [INFO] [UNUSUALSQL] [$I-NIOExecutor-4-2] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-4-2,id=100,user=root,host=192.168.240.142,port=3323,localport=28882,schema=CC]; backend:MySQLConnection [node=2, id=253, threadId=27759, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=60634, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"log"); backend_sql:null] [CC.SUCCESS.count]=3
-    ```
-    
-    4. 第四次触发：无对应日志输出
-    
-    后续每当该类计数器统计满3时都会输出对应日志一次。
-    
-    **无日志输出、只在接口统计计数器的场景：**
-    
-    每一次触发，计数器都正常统计。
-    
-    ```
-    mysql> show @@unusualsqlcount;
-    
-    +--------------+-------------+-------+
-    | unusual_type | unusual_key | count |
-    +--------------+-------------+-------+
-    | TABLE        | CC.TEST     | 4     |
-    | SCHEMA       | CC          | 1     |
-    +--------------+-------------+-------+
-    ```
+   **日志里面同时记录计数器和SQL的场景：**
+
+   1. 第一次触发：无对应日志输出
+
+   2. 第二次触发：无对应日志输出
+
+   3. 第三次触发时日志
+
+   ```
+   2021-01-13 15:10:47.953 [INFO] [UNUSUALSQL] [$I-NIOExecutor-4-2] cn.hotpu.hotdb.mysql.nio.a(501) - ERROR 1264:Out of range value for column 'id' at row 1 [frontend:[thread=$I-NIOExecutor-4-2,id=100,user=root,host=192.168.240.142,port=3323,localport=28882,schema=CC]; backend:MySQLConnection [node=2, id=253, threadId=27759, state=idle, closed=false, autocommit=true, host=192.168.240.143, port=3310, database=db01, localPort=60634, isClose:false, toBeClose:false, MySQLVersion:5.7.25]; frontend_sql:insert into success(id,name) values(11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111,"log"); backend_sql:null] [CC.SUCCESS.count]=3
+   ```
+
+   4. 第四次触发：无对应日志输出
+
+   后续每当该类计数器统计满3时都会输出对应日志一次。
+
+   **无日志输出、只在接口统计计数器的场景：**
+
+   每一次触发，计数器都正常统计。
+
+   ```
+   mysql> show @@unusualsqlcount;
+
+   +--------------+-------------+-------+
+   | unusual_type | unusual_key | count |
+   +--------------+-------------+-------+
+   | TABLE        | CC.TEST     | 4     |
+   | SCHEMA       | CC          | 1     |
+   +--------------+-------------+-------+
+   ```
 
 > !Note
 >
@@ -10371,7 +10377,7 @@ Server version: 5.7.23 hotpu
 > !Note
 >
 > 连接后的status结果及客户端连接计算节点时的提示信息均会同步按照版本备注信息显示。例如：
-> 
+>
 > ```
 > root@192.168.210.49:(none) 5.7.23 08:41:42> status;
 > --------------
@@ -10578,7 +10584,7 @@ mysql> show @@latency;
 ```
 
 > !Note
-> 
+>
 > 在计算节点版本高于2.5.6 （包含）调整了master_delay对切换的影响，waitForSlaveInFailover参数（高可用切换是否等待从机追上复制）开启，当切换时检测到有master_delay的延时设置，会自动在追复制前取消，切换成功后恢复延时复制的设置。若取消master_delay后的复制延迟仍大于10s，则不允许切换，master_delay也会恢复之前设置的值。
 
 #### waitSyncFinishAtStartup
@@ -10733,3 +10739,4 @@ Marker所有类型(All Markers)：AUTHORITY, BUFFER, CONNECTION, DEADLOCK, EXIT,
 计算节点可根据DNID来显示数据来源的数据节点，故DNID为数据库的保留字段（表结构中请勿使用该字段名称）。
 
 计算节点判断存储节点是否可用，是通过对存储节点hotdb_heartbeat表的操作来判断的，故hotdb_heartbeat作为表名称的保留字。
+
