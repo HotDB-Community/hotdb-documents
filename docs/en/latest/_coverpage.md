@@ -1,4 +1,4 @@
-![logo](/assets/navicon-colorful.png)
+<img class="coverpage-logo" src="assets/navicon-colorful.png" alt="logo"/>
 
 # HotDB Server Reference Manual
 

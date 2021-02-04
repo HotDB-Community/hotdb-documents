@@ -3041,9 +3041,11 @@ It displays the connection status of the compute node front-end connection (incl
 
 - After the command completes the query, select the connection ID and manually close the corresponding connection through the\[Close Connection] button.
 
-- When moving the mouse cursor into the session link in the operation bar, the prompt is displayed as below. The [Current Session Information show @@session](current-session-information-show-session) of the connection ID can be viewed. Click the link to obtain the connection ID of this record and jump to the session information viewing window.
+- When moving the mouse cursor into the session link in the operation bar, the prompt is displayed as below. The [Current Session Information show @@session](#current-session-information-show-session) of the connection ID can be viewed. Click the link to obtain the connection ID of this record and jump to the session information viewing window.
 
-![](assets/hotdb-management/image280.png)![](assets/hotdb-management/image281.png)
+![](assets/hotdb-management/image280.png)
+
+![](assets/hotdb-management/image281.png)
 
 - After entering the condition value in the filter input box and the drop-down box, click the \[Search] button to trigger the filtering action. Multiple filters are connected with "and".
 
@@ -3384,7 +3386,7 @@ The graph mode has four dimensions, including the whole cluster throughput. The 
 - It is a stacked bar graph with values displayed at each layer. The coordinate axes are logicDB and throughput.
 - It supports enlarging the graph to full screen.
 - It allows to filter logicDB.
-- Click on a bar on the chart to enter the corresponding [LogicDB Dimension Throughput Report](#logic-dimension-throughput-report).
+- Click on a bar on the chart to enter the corresponding [LogicDB Dimension Throughput Report](#logicdb-dimension-throughput-report).
 - Bar graph supports the sorting function, including ascending and descending orders. Sorting can be based on the throughput type.
 
 **(4) Table Throughput Comparison Chart**
@@ -3396,7 +3398,7 @@ The graph mode has four dimensions, including the whole cluster throughput. The 
 - The table name is displayed in the form of \[LogicDB name].\[table name].
 - It supports enlarging the graph to full screen and allows to filter tables.
 - Bar graph supports the sorting function, including ascending and descending orders. Sorting can be based on the throughput type.
-- Click on a table bar on the chart to enter the corresponding [Table Dimension Throughput Report](#table-dimension-throughout-report).
+- Click on a table bar on the chart to enter the corresponding [Table Dimension Throughput Report](#table-dimension-throughput-report).
 
 #### LogicDB Dimension Throughput Report
 
@@ -4076,7 +4078,7 @@ The task record "**Status**" usually includes 9 types, which are:
 4. Failed![](assets/hotdb-management/image373.png): The task fails because the user manually cancels the task. Error mark prompts: "Manually cancel modification task execution".
 5. Failed![](assets/hotdb-management/image373.png): The task fails because the data inconsistency still exists after automatic restore by the program, and the user chooses to abandon this modification task. Error tag prompts: "data inconsistency still exists after automatic restore by the program, and the user chooses to abandon this modification task".
 6. Failed![](assets/hotdb-management/image373.png): The task fails because the data is found inconsistent after the change is completed and data inconsistency still exists after automatic restore by the program which shall be confirmed by the user. The user fails to process within the set waiting time which causes the task to fail. Error tag prompts: "The data inconsistency has not been processed within the set time range, and the modification task automatically fails".
-7. Failed![](assets/hotdb-management/image373.png): The task fails because the modification plan fails the "[Modification plan Pre-check](#modification-plan-pre-check)" after the task is started in batches. Error tag prompts: "After the task is started in batches, the modification plan fails the pre-check, causing the task to fail."
+7. Failed![](assets/hotdb-management/image373.png): The task fails because the modification plan fails the "[Modification plan pre-detection](#modification-plan-pre-detection)" after the task is started in batches. Error tag prompts: "After the task is started in batches, the modification plan fails the pre-check, causing the task to fail."
 8. Waiting: The task is not completed, and data inconsistency needs to be confirmed by the user. Warning tag prompts: "Inconsistent data still exists after the program automatically has restored the inconsistent data, waiting for the user to confirm and process".
 9. Pause![](assets/hotdb-management/image374.png): After the task is started, because the user sets the pause replication period, after the task enters the period, the page displays the task status as Pause, and "The modification task is in the pause data replication period" is prompted when moving the mouse cursor into it.
 
@@ -4438,9 +4440,9 @@ Password security management can provide users with password validity monitoring
 
 #### Database user password
 
-**Description of empty page:** If the record is displayed empty after entering the "Security -> Password Security Management -> Database User Password" page, it needs to check whether "Database User Password Expiration Alert" in "Setting -> [Periodical Setting](#periodical-setting)" is enabled. If the page is still empty after the switch is on, it needs to check whether the current database user password validity has reached the advance reminder time.
+**Description of empty page:** If the record is displayed empty after entering the "Security -> Password Security Management -> Database User Password" page, it needs to check whether "Database User Password Expiration Alert" in "Setting -> [Periodical Detection Setting](#periodical-detection-setting)" is enabled. If the page is still empty after the switch is on, it needs to check whether the current database user password validity has reached the advance reminder time.
 
-**Expiration alert mode:** When the "Database User Password Expiration Alert" is enabled, if the password validity has reached the advance reminder time, the pop-up window reminder prompts by default (if there is an expired user after logging in to HotDB Management, the pop-up window prompts); it can also notify database users of password expiration by email alert (it needs to be configured in "Event -> [Email Alert Setting](#email-alert-setting)").
+**Expiration alert mode:** When the "Database User Password Expiration Alert" is enabled, if the password validity has reached the advance reminder time, the pop-up window reminder prompts by default (if there is an expired user after logging in to HotDB Management, the pop-up window prompts); it can also notify database users of password expiration by email alert (it needs to be configured in "Events -> [Notification Strategy](#notification-strategy)").
 
 **(I) In-station alert description**
 
