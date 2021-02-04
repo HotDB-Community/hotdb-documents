@@ -46,15 +46,6 @@ pre > code {
   border-radius: 5px;
 }
 
-.topbar {
-  overflow: auto;
-}
-.topbar-link {
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 5px 5px;
-}
-
 /*作为文档标题的侧边栏TOC调小*/
 .app-sub-sidebar > li {
   /*font-size: 12px !important;*/
@@ -70,6 +61,8 @@ pre > code {
 .docsify-copy-code-button{
   padding: 0.4em 0.6em !important;
 }
+
+/*readme-toc*/
 
 .readme-toc {
   line-height: 1.75 !important;
@@ -92,14 +85,7 @@ pre > code {
   margin: 0 0 !important;
 }
 
-.md-foot-note{
-
-}
-.tooltip{
-
-}
-
-/*自定义警告框*/
+/*alert*/
 
 .alert.callout.info {
   border-left-color: #17a2b8 !important
@@ -137,17 +123,21 @@ pre > code {
   width: 40em;
 }
 
-/*a:target,h1:target,h2:target,h3:target{*/
-/*  padding-top: 80px !important;*/
-/*  margin-top: 80px !important;*/
-/*  display: block;*/
+/*topbar*/
 
-/*  background: rgb(93, 0, 255);*/
-/*}*/
-/*h2:target{*/
-/*  padding-top: 80px !important;*/
-/*  margin-top: 80px !important;*/
-/*  display: block;*/
-
-/*  background: rgb(93, 0, 255);*/
-/*}*/
+.topbar {
+  overflow: auto;
+}
+.topbar p{
+  line-height: 30px;
+  margin: 10px 0 10px 0 !important;
+}
+.topbar-link {
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 5px 5px 4px 5px;
+}
+.topbar-link .fa{
+  width: 15px !important;
+  height: 15px !important;
+}
