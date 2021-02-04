@@ -19,7 +19,7 @@
   * [管理平台](hotdb-management.md)
   * [智能巡检](intelligent-inspection.md)
 * **容灾功能使用手册**
-  * [跨机房灾备](cross-idc-disaster-recovery.md)
+  * [跨机房容灾](cross-idc-disaster-recovery.md)
   * [可视化机房](visual-idc.md)
 * **附录**
   * [名词解释](glossary.md)

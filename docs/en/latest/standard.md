@@ -409,14 +409,14 @@ For example:
 ```
 root> mysql -h127.0.0.1 -uroot -proot -P3323 -Dtest
 mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor. Commands end with ; or \\g.
+Welcome to the MySQL monitor. Commands end with ; or \g.
 Your MySQL connection id is 100728
 Server version: 5.7.19-HotDB-2.5.2 HotDB Server by Hotpu Tech
 Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
 Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
 owners.
-Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 ```
 
 Execute customer Create Table statement:
@@ -569,14 +569,14 @@ The user could log in to management port (default port: 3325) to use `show @@hel
 ```
 root> mysql -uroot -proot -P3325 -h192.168.200.201
 mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor. Commands end with ; or \\g.
+Welcome to the MySQL monitor. Commands end with ; or \g.
 Your MySQL connection id is 992081
 Server version: 5.1.27-HotDB-2.5.0 HotDB Manager by Hotpu Tech
 Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
 Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
 owners.
-Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 mysql> show @@help;
 +-------------------------------------------+---------------------------------------------------------------------------+
 | statement | description |
@@ -809,7 +809,7 @@ ERROR 1213 (HY000): Deadlock found when trying to get lock; try restarting trans
 
 If the following error information is returned during SQL execution, the compute node will record it in the compute node log (hotdb-unusualsql.log):
 
-- ERROR information caused by primary key\\unique key conflict or foreign key constraint not satisfied (i.e. MySQL error code 1062, 1216, 1217, 1451, 1452, 1557, 1761, 1762, 3008)
+- ERROR information caused by primary key/unique key conflict or foreign key constraint not satisfied (i.e. MySQL error code 1062, 1216, 1217, 1451, 1452, 1557, 1761, 1762, 3008)
 - Data overflow (i.e. MySQL error code 1264, 1690, 3155, 3669) and data truncation (i.e. MySQL error code 1265, 1292, 1366) caused by data type conversion or implicit conversion
 - Involving binlog unsafe statements (i.e. MySQL error codes 1418, 1592, 1663, 1668, 1669, 1671, 1673, 1674, 1675, 1693, 1714, 1715, 1716, 1719, 1722, 1724, 1727, 1785, 3006, 3199, 3570, 3571, MY-010908, MY-013098)
 - When the INSERT operation is performed on the sharding table whose sharding key is not an auto-incremental field, the INSERT of auto increment is specified externally.
@@ -1242,7 +1242,7 @@ use xxx
 set session group_concat_max_len=1048576;
 set @mytablename='xxx';
 set @mydbname=database();
-select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
+select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \G
 ```
 
 If consistent, then data increment synchronization completed.
@@ -1258,7 +1258,7 @@ mysql> set @mytablename='table02';
 Query OK, 0 rows affected (0.00 sec)
 mysql> set @mydbname=database();
 Query OK, 0 rows affected (0.00 sec)
-mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
+mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \G
 *************************** 1. row ***************************
 sqltext: select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
 1 row in set (0.00 sec)
@@ -1544,7 +1544,7 @@ To use XA TRANSACTION of compute node in the system, in order to guarantee stron
 
 > !Important
 >
-> Under XA mode: refer to SQL99 Standard, begin\\start transaction will immediately start a transaction. That is, under the condition of enabling XA mode, begin\\start transaction will equal to start transaction with consistent snapshot.
+> Under XA mode: refer to SQL99 Standard, begin/start transaction will immediately start a transaction. That is, under the condition of enabling XA mode, begin/start transaction will equal to start transaction with consistent snapshot.
 
 When the compute node version is 2.5.6 and above, if the front end is disconnected under XA mode, the transaction status will be recorded to the log and ConfigDB. You can check whether the transaction needs to be redone by executing SHOW ABNORMAL_XA_TRX directly at the service port.
 
@@ -3810,7 +3810,7 @@ If the value of the sharding key is not specified in the INSERT clause:
 
 If the sharding key has a default value, the default value is used for routing by default;
 
-If the sharding key has no default value, null will be filled in. If the null value is configured with routing rules, it can be inserted. If the null value is not configured with routing rules, it is not allowed to insert (for example, range\\match is the type that requires configuration of null sharding functions; auto_crc32 is the type that automatically route according to null)
+If the sharding key has no default value, null will be filled in. If the null value is configured with routing rules, it can be inserted. If the null value is not configured with routing rules, it is not allowed to insert (for example, range/match is the type that requires configuration of null sharding functions; auto_crc32 is the type that automatically route according to null)
 
 ##### Cross-node INSERT statement
 
@@ -4988,7 +4988,7 @@ ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
 Tables with similar table structure could use the same Sharding Function, and the following Syntax could be used to make direct citation of Sharding Function to create Sharding Table
 
 ```sql
-CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleid\\rulename' [on datanode 'datanodes'] (......
+CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleid/rulename' [on datanode 'datanodes'] (......
 dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 ```
 
@@ -5754,7 +5754,7 @@ If not requiring Master/Slave configDB, then the configuration here shall be con
 In case of configDB switch due to failure with the Active Master, to restore the Active Master to normal, it needs to update v value in the row hotdb_master_config_status named k in houdb_config_info table of the configDB from 0 to 1, and execute reload @@config on management port, and only in this way could the Master configDB be reused (for operating method of enabling Master configDB on the management platform, please refer to [HotDB Management](hotdb-management.md) document).
 
 ```
-mysql> select * from hotdb_config_info\\G
+mysql> select * from hotdb_config_info\G
 
 ***************************1.row**************************
 k: hotdb_master_config_status

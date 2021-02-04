@@ -4,7 +4,7 @@
 
 HotDB Server集群部署对服务器、操作系统、依赖软件等有一定要求，不符合要求的环境部署出来的集群可能无法使用或不满足使用要求。建议部署前详细了解HotDB Server集群部署对环境的[要求说明](#环境说明)。
 
-此文档将详细描述普通模式下，如何部署一套HotDB Server集群。若要了解开启灾备模式后，相较于普通模式，需要特殊注意的地方，请参考[跨机房灾备](cross-idc-disaster-recovery.md)文档中的[安装部署](cross-idc-disaster-recovery.md#安装部署)章节。
+此文档将详细描述普通模式下，如何部署一套HotDB Server集群。若要了解开启灾备模式后，相较于普通模式，需要特殊注意的地方，请参考[跨机房容灾](cross-idc-disaster-recovery.md)文档中的[安装部署](cross-idc-disaster-recovery.md#安装部署)章节。
 
 ### 部署架构示意图
 
