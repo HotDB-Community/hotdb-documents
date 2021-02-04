@@ -6,7 +6,7 @@
 
 此手册中部分功能可结合分布式事务数据库平台（以下简称管理平台）共同使用，若需了解管理平台的使用方法，请参考[管理平台](hotdb-management.md)文档。
 
-HotDB Server在2.5.3.1及以上版本时提供基于MySQL原生复制功能解决HotDB Server跨机房灾备问题的解决方案，能够实现跨机房数据同步以及解决跨机房分布式事务数据库服务灾备的问题。此标准文档仅详细介绍HotDB Server在单机房模式的功能与特性，若要了解灾备模式下的功能与特性，请参考[跨机房灾备](cross-idc-disaster-recovery.md)文档。
+HotDB Server在2.5.3.1及以上版本时提供基于MySQL原生复制功能解决HotDB Server跨机房容灾问题的解决方案，能够实现跨机房数据同步以及解决跨机房分布式事务数据库服务灾备的问题。此标准文档仅详细介绍HotDB Server在单机房模式的功能与特性，若要了解灾备模式下的功能与特性，请参考[跨机房容灾](cross-idc-disaster-recovery.md)文档。
 
 部分截图的版本细节差异无需特别关注，以文档描述的版本号为准。文档内容较多，建议开启文档结构图，方便阅读。
 
@@ -136,7 +136,7 @@ mysql> show tables;
 本章节将简单介绍在HotDB Server -- V2.5.6中新增、禁止或删除的功能概要，详细功能使用方法可点击超链接查看详情：
 
 - 支持[计算节点服务数量在线水平扩容/缩容](#计算节点水平弹性伸缩)功能，即在线扩展计算节点实例个数；
-- 基于MySQL复制的跨机房灾备功能支持多计算节点集群模式，详情可查看[跨机房灾备](cross-idc-disaster-recovery.md)文档。
+- 基于MySQL复制的跨机房容灾功能支持多计算节点集群模式，详情可查看[跨机房容灾](cross-idc-disaster-recovery.md)文档。
 - 支持直接解析识别部分[Oracle函数以及Sequence语法](#enableoraclefunction)，以减少Oracle迁移至HotDB Server时的业务代码修改量；
 - 支持客户端连接使用SSL+[SM4国密](#sslusesm4)认证安全通道；
 - 优化根据默认分片节点创建[全局表](#全局表)的功能；
@@ -1275,7 +1275,7 @@ mysql> set @mytablename='table02';
 Query OK, 0 rows affected (0.00 sec)
 mysql> set @mydbname=database();
 Query OK, 0 rows affected (0.00 sec)
-mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \\G
+mysql> select concat('select sum(crc32(concat(ifnull(',group_concat(column_name separator ',\'NULL\'),ifnull('),',\'NULL\')))) as sum from ',table_name,';') as sqltext from information_schema.columns where table_schema=@mydbname and table_name=@mytablename \G
 *************************** 1. row ***************************
 sqltext: select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
 1 row in set (0.00 sec)
@@ -1558,7 +1558,7 @@ Can't reset XA in reloading, please restart the hotdb to enable XA
 
 > !Important
 >
-> XA模式下：参照SQL99标准，beginstart transaction会立即开启一个事务。也即在XA模式打开的情况下，beginstart transaction将等同于start transaction with consistent snapshot。
+> XA模式下：参照SQL99标准，begin/start transaction会立即开启一个事务。也即在XA模式打开的情况下，beginstart transaction将等同于start transaction with consistent snapshot。
 
 在计算节点版本高于2.5.6 （包含）时，XA模式下前端连接断开时会将事务的状态记录到日志及配置库中，也可以直接通过服务端口执行SHOW ABNORMAL_XA_TRX查看是否需要重做事务。
 
@@ -1836,7 +1836,7 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 
 ## 高可用服务
 
-此章节主要描述了单机房模式下的计算节点集群的高可用服务，若要了解灾备模式下的高可用服务，请参考[跨机房灾备](cross-idc-disaster-recovery.md)文档。
+此章节主要描述了单机房模式下的计算节点集群的高可用服务，若要了解灾备模式下的高可用服务，请参考[跨机房容灾](cross-idc-disaster-recovery.md)文档。
 
 ### 高可用服务
 

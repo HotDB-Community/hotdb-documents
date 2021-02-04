@@ -423,7 +423,7 @@ Upgrade without service stopped of master/slave node cluster mode shall meet the
 
 - SQL for Compute node ConfigDB upgrade does not contain any statement for `alter table` modifying existing column(except for modifying the length or range of the added column).
 - SQL for Compute node ConfigDB upgrade does not contain any statement of `drop table`.
-- SQL for Compute node ConfigDB upgrade does not contain any statement of `update\\delete` existing data.
+- SQL for Compute node ConfigDB upgrade does not contain any statement of `update/delete` existing data.
 
 #### High Availability Switch Check
 
@@ -945,7 +945,7 @@ Upgrade without service stopped of multi-node cluster mode shall meet the follow
 
 - The upgrade SQL for Compute node ConfigDB does not contain any statement of "alter table" modifying existing column (except for statements of modifying the length or range of the added column).
 - The upgrade SQL of Compute node ConfigDB does not contain any statement "drop table".
-- The upgrade SQL for Compute node ConfigDB does not contain any statement of "update\\delete" existing data.
+- The upgrade SQL for Compute node ConfigDB does not contain any statement of "update/delete" existing data.
 - The compute node version before upgrade shall be V2.5.1 and above.
 - If the compute node version before upgrade is V2.5.1 or V2.5.3, the date in the version must be greater than or equal to 20190821 (August 21, 2019).
 

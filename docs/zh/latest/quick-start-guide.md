@@ -334,14 +334,14 @@ mysql -uroot -proot -h192.168.210.97 -P3323 -Dtest
 ```
 root> mysql -h192.168.210.97 -uroot -proot -P3323 -Dtest
 mysql: [Warning] Using a password on the command line interface can be insecure.
-Welcome to the MySQL monitor. Commands end with ; or \\g.
+Welcome to the MySQL monitor. Commands end with ; or \g.
 Your MySQL connection id is 100728
 Server version: 5.7.19-HotDB-2.5.2 HotDB Server by Hotpu Tech
 Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
 Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
 owners.
-Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 mysql>
 ```
 

@@ -182,7 +182,7 @@ HotDB Server supports MySQL native communication protocol, data definition, data
 
 #### Data definition
 
-HotDB Server supports general data definition operation statements, such as CREATE\\DROP\\ALTER\\RENAME\\TRUNCATE. In addition, it supports creating business tables directly by associating with existing sharding rules without defining tables in advance on the management platform.
+HotDB Server supports general data definition operation statements, such as CREATE/DROP/ALTER/RENAME/TRUNCATE. In addition, it supports creating business tables directly by associating with existing sharding rules without defining tables in advance on the management platform.
 
 #### Data operation
 
@@ -724,7 +724,7 @@ Cluster of Load Balancing Mode Deployment Architecture Diagram
 ```
 Processor: Gold 6130*2
 Memory: 8g*12 (4G * 12 is recommended if there is a single 4G memory)
-Hard disk: 2.5'800G write-intensive SATA\\SAS SSD *2 RAID 1 (800G is selected because of longer write life)
+Hard disk: 2.5'800G write-intensive SATA/SAS SSD *2 RAID 1 (800G is selected because of longer write life)
 RAID card: H730P
 Network card: 10G optical network card
 Number of servers: 2 (at least 3 and at most 9 in the cluster load balancing mode)
@@ -739,7 +739,7 @@ Number of servers: 2 (at least 3 and at most 9 in the cluster load balancing mod
 ```
 Processor: Silver 4116*2
 Memory: 16G*12
-Hard disk: 2.5' 2.4T 10K SAS HDD *2 RAID 1 (for system and backup file storage) + 2.5' 800G write-intensive SATA\\SAS SSD *6 RAID 5 (for MySQL)
+Hard disk: 2.5' 2.4T 10K SAS HDD *2 RAID 1 (for system and backup file storage) + 2.5' 800G write-intensive SATA/SAS SSD *6 RAID 5 (for MySQL)
 RAID card: H730P
 Network card: Gigabit optical network card
 Number of servers: at least 2 (add as needed)
@@ -761,7 +761,7 @@ Number of servers: 1 or reused
 ```
 Processor: Silver 4110*2
 Memory: 8G*12 (4G*12 is recommended if there is a single 4G memory)
-Hard disk: 2.5 '400G write-intensive SATA\\SAS SSD *2 RAID 1
+Hard disk: 2.5 '400G write-intensive SATA/SAS SSD *2 RAID 1
 RAID card: H730P
 Network card: Gigabit optical network card
 Number of servers: 1 or reused
