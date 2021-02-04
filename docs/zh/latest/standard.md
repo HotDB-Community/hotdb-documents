@@ -987,10 +987,7 @@ mysql_ssl_rsa_setup --datadir=/usr/local/crt/
 如果需要生成能够进行CA认证的自签名证书，需要使用openssl工具，可参考下列步骤进行：
 
 1. 生成CA根证书私钥：`openssl genrsa 2048 > ca-key.pem`
-2. 
-
-生成CA根证书：`openssl req -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem`，注意信息填写步骤中Common Name最好填入有效域名，并且不能与签发的证书中的Common Name一样，这里我们填写127.0.0.1
-
+2. 生成CA根证书：`openssl req -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem`，注意信息填写步骤中Common Name最好填入有效域名，并且不能与签发的证书中的Common Name一样，这里我们填写127.0.0.1
 3. 生成服务器证书请求文件：`openssl req -newkey rsa:2048 -days 3600 -nodes -keyout server-key.pem -out server-req.pem`，注意信息填写步骤中Common Name需要填入HotDB-Server所监听的IP地址/域名，客户端将用此IP进行服务的连接，注意不能和CA证书中的信息一样
 4. 用openssl rsa命令处理秘钥以删除密码：`openssl rsa -in server-key.pem -out server-key.pem`
 5. 为服务端生成自签名证书：`openssl x509 -req -in server-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem`
