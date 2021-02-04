@@ -3719,9 +3719,9 @@ DELETE FROM t PARTITION(p0);
 | MySQL语句类型 | 子句类型 | 功能 | 支持状态 | 说明 |
 |---------------|----------|------|----------|------|
 | DELETE | PARTITION | 　 | 支持 |   |
-| ^ | ORDER BY DESC | ASC | 　 | 支持 |   |
+| ^ | `ORDER BY DESC | ASC` | 　 | 支持 |   |
 | ^ | LIMIT | 　 | 支持 |   |
-| ^ | ORDER BY ... LIMIT ... | 　 | 支持 | 父子表不支持 |
+| ^ | `ORDER BY ... LIMIT ...` | 　 | 支持 | 父子表不支持 |
 | ^ | ORDER BY字段值大小写敏感 | 　 | 支持 |   |
 | ^ | WHERE | WHERE中的函数 | 支持 |   |
 | ^ | JOIN | 　 | 支持 | 含临时表场景不支持 |
@@ -3829,10 +3829,10 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL语句类型 | 子句类型 | 功能 | 支持状态 | 说明 |
 |---------------|----------|------|----------|------|
-| ^ | INSERT | INSERT ... SELECT ... | 支持 | 　SELECT 子句中若存在不支持的语句，亦无法进行INSERT ... SELECT ... |
-| ^ | INSERT BATCH | 子表 | 支持 | 父表的JOIN字段不是分片字段时不支持。 |
-| ^ | ^ | 全局表 | 支持 |   |
-| ^ | ^ | 分片表 | 支持 |   |
+| INSERT | INSERT ... SELECT ... |   | 支持 | 　SELECT 子句中若存在不支持的语句，亦无法进行INSERT ... SELECT ... |
+| INSERT BATCH | 子表 |   | 支持 | 父表的JOIN字段不是分片字段时不支持。 |
+| ^ | 全局表 |   | 支持 |   |
+| ^ | 分片表 |   | 支持 |   |
 
 **批量INSERT (INSERT BATCH）的情况特殊说明：**
 
@@ -3842,7 +3842,7 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL语句类型 | 子句类型 | 功能 | 支持状态 | 说明 |
 |---------------|----------|------|----------|------|
-| LOAD DATA | LOAD DATA ... INFILE ... INTO TABLE | ^ | 支持 | 1. 要求执行语句的计算节点数据库用户拥有FILE权限 |
+| LOAD DATA | `LOAD DATA ... INFILE ... INTO TABLE` | ^ | 支持 | 1. 要求执行语句的计算节点数据库用户拥有FILE权限 |
 | ^ | ^ | ^ | ^ | 2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，导入文件都必须上传至当前主计算节点服务器上的固定路径：`/usr/local/hotdb/hotdb-server/HotDB-TEMP` |
 | ^ | LOW_PRIORITY |   | 不支持 |   |
 | ^ | CONCURRENT |   | 不支持 |   |
@@ -3851,12 +3851,12 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | IGNORE |   | 支持 |   |
 | ^ | PARTITION |   | 不支持 |   |
 | ^ | CHARACTER SET |   | 不支持 |   |
-| ^ | {FIELDS \| COLUMNS} \[TERMINATED BY 'string'] \[\[OPTIONALLY] ENCLOSED BY 'char'] \[ESCAPED BY 'char'] |   | 支持 |   |
-| ^ | LINES STARTING BY 'string' |   | 不支持 |   |
-| ^ | LINES TERMINATED BY 'string' |   | 支持 |   |
+| ^ | `{FIELDS | COLUMNS} [TERMINATED BY 'string'] [[OPTIONALLY] ENCLOSED BY 'char'] [ESCAPED BY 'char']` |   | 支持 |   |
+| ^ | `LINES STARTING BY 'string'` |   | 不支持 |   |
+| ^ | `LINES TERMINATED BY 'string'` |   | 支持 |   |
 | ^ | 导入指定字段 |   | 支持 |   |
 | ^ | SET |   | 支持 |   |
-| ^ | IGNORE number {LINES | ROWS} |   | 支持 |   |
+| ^ | `IGNORE number {LINES | ROWS}` |   | 支持 |   |
 
 #### REPLACE语句
 
@@ -3864,15 +3864,15 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL语句类型 | 子句类型 | 功能 | 支持状态 | 说明 |
 |---------------|----------|------|----------|------|
-| REPALCE | REPLACE ... SELECT ... | 单库简单单表查询 | 支持 |   |
+| REPALCE | `REPLACE ... SELECT ...` | 单库简单单表查询 | 支持 |   |
 | ^ | 单库JOIN | 支持 |   |   |
 | ^ | 单库子查询 | 支持 |   |   |
 | ^ | 单库UNION/UNION ALL | 支持 |   |   |
 | ^ | PARTITION | 　 | 支持 |   |
 | ^ | ON DUPLICATE KEY UPDATE | 　 | 支持 |   |
-| ^ | REPLACE INTO table_name(columns... ) VALUES(values...) | 　 | 支持 |   |
-| ^ | REPALCE INTO ... VALUES() | 　 | 支持 |   |
-| ^ | REPLACE INTO ... SET | 　 | 支持 |   |
+| ^ | `REPLACE INTO table_name(columns... ) VALUES(values...)` | 　 | 支持 |   |
+| ^ | `REPALCE INTO ... VALUES()` | 　 | 支持 |   |
+| ^ | `REPLACE INTO ... SET` | 　 | 支持 |   |
 | ^ | 分片表无拆分字段值 | 　 | 不支持 |   |
 | ^ | 分片表拆分字段值为NULL | 　 | 支持 | 需要在分片函数参数中配置NULL值参数 |
 | ^ | 子表无关联字段值 | 　 | 不支持 | 子表数据的INSERT操作必须满足外键条件 |
@@ -3893,7 +3893,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL语句类型 | 子句类型 | 功能 | 支持状态 | 说明 |   |
 |---------------|----------|------|----------|------|---|
-| REPLACE | REPLACE ... SELECT ... | 跨库简单单表查询 | 支持 |   |   |
+| REPLACE | `REPLACE ... SELECT ...` | 跨库简单单表查询 | 支持 |   |   |
 | ^ | ^ | 跨库JOIN | 不支持 |   |   |
 | ^ | ^ | 跨库UNION | 不支持 |   |   |
 | ^ | REPLACE BATCH | 子表 | 支持 | 父表的JOIN字段不是分片字段时不支持。 |   |
@@ -3937,9 +3937,9 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | ^     |   ^  |   ^  | 2. dnid与其他条件用or关联，仅取dnid条 |
 | ^ |  ^     |   ^ |  ^   | 3. 不支持SELECT子句中跟dnid表达式，例如：`SELECT dnid=4 FROM dml_a_jwy` |
 | ^ | ^ | 函数 | 支持 | 请参考函数说明 |
-| ^ | GROUP BY ASC|DESC WITH ROLLUP | 　 | 支持 |   |
+| ^ | `GROUP BY ASC|DESC WITH ROLLUP` | 　 | 支持 |   |
 | ^ | HAVING | 　 | 支持 | 　 |
-| ^ | ORDER BY ASC|DESC | 　 | 支持 | 　 |
+| ^ | `ORDER BY ASC | DESC` | 　 | 支持 | 　 |
 | ^ | LIMIT n,m | 　 | 支持 | 　 |
 | ^ | PROCEDURE | 　 | 不支持 | 　 |
 | ^ | INTO OUTFILE | 　 | 支持 | 1. 要求执行语句的计算节点数据库用户拥有FILE权限 |
@@ -3949,7 +3949,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | INTO 变量 | 　 | 不支持 | 　 |
 | ^ | FOR UPDATE | 　 | 支持 | 不支持与NOWAIT或SKIP LOCKED连用 |
 | ^ | LOCK IN SHARE MODE | 　 | 支持 | 与MySQL8.0的FOR SHARE功能相同，为保证向下兼容，仍保留支持 |
-| ^ | FOR SHARE |   | 支持 | 支持在MySQL8.0及以上存储节点使用； 不支持与NOWAIT或SKIP LOCKED连用 |
+| ^ | FOR SHARE |   | 支持 | 支持在MySQL8.0及以上存储节点使用，不支持与NOWAIT或SKIP LOCKED连用 |
 | ^ | 函数 | 包括聚合函数 | 支持 | 支持单表聚合函数括号外的复杂运算 |
 | ^ | DUAL | 　 | 支持 | 　 |
 | ^ | FORCE INDEX | 　 | 支持 | 　 |
@@ -3962,10 +3962,10 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 |---------------|----------|------|------|------|
 | SELECT | LIMIT n,m | 　 | 支持 | 　 |
 | ^ | ORDER BY | 　 | 支持 | 　 |
-| ^ | ORDER BY LIMIT n,m | 　 | 支持 | 　 |
-| ^ | GROUP BY ASC|DESC WITH ROLLUP | 　 | 支持 | 　 |
-| ^ | GROUP BY ORDER BY LIMIT m,n | 　 | 支持 | 　 |
-| ^ | GROUP BY/ORDER BY字段值大小写敏感 | 　 | 支持 | 　 |
+| ^ | `ORDER BY LIMIT n,m` | 　 | 支持 | 　 |
+| ^ | `GROUP BY ASC|DESC WITH ROLLUP` | 　 | 支持 | 　 |
+| ^ | `GROUP BY ORDER BY LIMIT m,n`| 　 | 支持 | 　 |
+| ^ | `GROUP BY/ORDER BY`字段值大小写敏感 | 　 | 支持 | 　 |
 | ^ | 聚合函数 | SELECT子句中的聚合函数 | 支持 | 　 |
 | ^ | ^ | HAVING子句中的聚合函数 | 支持 | 　 |
 | ^ | ^ | COUNT(DISTINCT) | 支持 | 　 |
@@ -4006,7 +4006,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | IGNORE | 　 | 支持 | 　 |
 | ^ | ORDER BY | 　 | 支持 | 　 |
 | ^ | LIMIT n | 　 | 支持 | 　 |
-| ^ | SET | ^ | 支持 | 1.允许更新分片字段，但要求分片字段值的变更不会影响数据路由，即修改后的分片字段值与修改前的值路由到相同节点，否则执行不成功 |
+| ^ | SET |  | 支持 | 1.允许更新分片字段，但要求分片字段值的变更不会影响数据路由，即修改后的分片字段值与修改前的值路由到相同节点，否则执行不成功 |
 | ^ | ^ | ^ | ^ | 2.父子表不允许使用表达式语法更新父子表的关联字段，即使分片字段值的变更不会影响数据路由，例如`SET id=id`或`SET id=id+3` |
 | ^ | ^ | ^ | ^ | 3.不支持一条语句多次更新分片字段，例如：`UPDATE table1 SET id =31,id=41 WHERE id =1;` |
 | ^ | WHERE | dnid | 支持 | DML WHERE条件里dnid作为OR条件时，仅判断dnid条件，其他限制条件忽略 |
@@ -4018,10 +4018,10 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL语句类型 | 子句类型 | 功能 | 支持状态 | 说明 |
 |---------------|----------|------|----------|------|
-| UPDATE | ORDER BY DESC|ASC | 　 | 支持 | 　 |
-| ^ | LIMIT n | 　 | 支持 | 　 |
-| ^ | ORDER BY DESC|ASC LIMIT n,m | 　 | 支持 | 父子表不支持 |
-| ^ | ORDER BY字段值大小写敏感 | 　 | 支持 | 　 |
+| UPDATE | `ORDER BY DESC|ASC` | 　 | 支持 | 　 |
+| ^ | `LIMIT n` | 　 | 支持 | 　 |
+| ^ | `ORDER BY DESC|ASC LIMIT n,m` | 　 | 支持 | 父子表不支持 |
+| ^ | `ORDER BY`字段值大小写敏感 | 　 | 支持 | 　 |
 | ^ | WHERE | 　 | 支持 | 　 |
 | ^ | SET | ^ | 支持 | 1.允许更新分片字段，但要求分片字段值的变更不会影响数据路由，即修改后的分片字段值与修改前的值路由到相同节点，否则执行不成功 |
 | ^ | ^ | ^ | ^ | 2.父子表不允许使用表达式语法更新父子表关联字段，即使关联字段值的变更不会影响数据路由，例如`SET id=id`或`SET id=id+3` |
@@ -4051,9 +4051,11 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | ^ | 字段值大小写敏感 | 支持 | 　 |
 | ^ | ^ | ENUM类型 | 支持 |   |
 | ^ | ^ | 函数 | 支持 |   |
-| ^ | OR | ^ | 限制支持 | 跨库JOIN支持能转换成in条件的情况； 不支持的部分使用NDB且满足NDB限制的支持 |
+| ^ | OR |   | 限制支持 | 跨库JOIN支持能转换成in条件的情况 |
+| ^ | ^ |  ^ |  ^        | 不支持的部分使用NDB且满足NDB限制的支持 |
 | ^ | WHERE | 不同字段OR条件 | 限制支持 | 类似 a=x and b=x or c=x的形式不支持；仅支持OR表达式为AND表达式的子节点的情况以及不限OR个数的情况，例如：`select xxx from a,b where (a.c1 OR a.c2) and b.c1=100 and (a.c4 OR a.c6)`: 其中OR子句中每个条件(c1、c2等)仅支持`table.column [=|<|<=|>|>=|!=] value`或`IS [NOT] NULL`或具体的值(0/1/TRUE/FALSE/字符串等)； 不支持的部分使用NDB且满足NDB限制的支持 |
-| ^ | ^ | 单个字段的or条件 | 限制支持 | left join中的or表达式不为and表达式子节点的不支持； 不支持的部分使用NDB且满足NDB限制的支持 |
+| ^ | ^ | 单个字段的or条件 | 限制支持 | left join中的or表达式不为and表达式子节点的不支持 |
+| ^ | ^ | ^ | ^ |不支持的部分使用NDB且满足NDB限制的支持 |
 | ^ | ^ | IN | 支持 | 　 |
 | ^ | ^ | AND | 支持 | 　 |
 | ^ | ^ | IS NOT NULL | 支持 | 　 |
@@ -4069,9 +4071,9 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | ^ | WITH ROLLUP | 支持 | 　 |
 | ^ | ^ | 字段别名 | 支持 | 别名不能与表名中的字段名称相同 |
 | ^ | ^ | 字段值大小写 | 支持 | 　 |
-| ^ | FORCE INDEX | ^ | 支持 | 　 |
-| ^ | USING INDEX | ^ | 支持 | 　 |
-| ^ | IGNORE INDEX | ^ | 支持 | 　 |
+| ^ | FORCE INDEX |  | 支持 | 　 |
+| ^ | USING INDEX |  | 支持 | 　 |
+| ^ | IGNORE INDEX |  | 支持 | 　 |
 | ^ | AVG | AVG() | 支持 | 不支持函数嵌套,`AVG(SUM(column_name))` |
 | ^ | ^ | AVG(IFNULL()) | 支持 | 　 |
 | ^ | ^ | AVG(column1-column2) | 支持 | 仅支持单表的column做运算，多表字段不支持;已拦截多表字段的运算 |
@@ -4085,13 +4087,13 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | ^ | SUM(CASE ... WHEN...) | 支持 | 仅支持CASE WHEN判断的是单个表的字段，且CASE WHEN字段必须带表别名 |
 | ^ | ^ | SUM(IFNULL()) | 支持 |   |
 | ^ | ^ | SUM(column1-column2) | 支持 | 仅支持单表的column做运算，多表字段不支持;已拦截多表字段的运算 |
-| ^ | INTO OUTFILE | ^ | 支持 | 1. 要求执行语句的计算节点数据库用户拥有FILE权限|
+| ^ | INTO OUTFILE |  | 支持 | 1. 要求执行语句的计算节点数据库用户拥有FILE权限|
 | ^ | ^ | ^ | ^ |2. 当计算节点为集群模式时，无论在集群中哪台服务器上执行此语法，输出文件都将保存在当前主计算节点服务器上的固定路径：`/usr/local/hotdb/hotdb-server/HotDB-TEMP` |
 | ^ | ^ | ^ | ^ |3. 若输出时集群发生切换，仍能保证数据输出正常 |
-| ^ | FOR UPDATE | ^ | 不支持 | 　 |
-| ^ | LOCK IN SHARE MODE | ^ | 不支持 | 　 |
-| ^ | 子查询 | ^ | 支持 | 详情请参考《HotDB Server -v2.5.4 最新功能清单》子查询相关 |
-| ^ | 表别名 | ^ | 支持 | 支持使用表别名WHERE a.column或者SELECT a.column |
+| ^ | FOR UPDATE | | 不支持 | 　 |
+| ^ | LOCK IN SHARE MODE |  | 不支持 | 　 |
+| ^ | 子查询 |  | 支持 | 详情请参考《HotDB Server -v2.5.4 最新功能清单》子查询相关 |
+| ^ | 表别名 |  | 支持 | 支持使用表别名WHERE a.column或者SELECT a.column |
 | ^ | ON子句 | 单个= | 支持 | 　 |
 | ^ | ^ | <=> | 特殊支持 | 使用NDB且满足NDB限制的支持 |
 | ^ | ^ | != <> | 支持 | 　 |
@@ -4134,8 +4136,8 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | ^ | IFNULL | 支持 | 　 |
 | ^ | ^ | CASE...WHEN...END | 支持 | 仅支持CASE WHEN判断的是单个表的字段；不支持多表字段的条件判断如：`CASE WHEN column_name1=xx THEN column_name2 END` CASE WHEN必须使用表别名 |
 | ^ | ^ | DISTINCT | 支持 | 　 |
-| ^ | USING(column) | ^ | 支持 |   |
-| ^ | PARTITION | ^ | 支持 | 　 |
+| ^ | USING(column) |  | 支持 |   |
+| ^ | PARTITION |  | 支持 | 　 |
 | ^ | LIMIT | LIMIT n,m | 支持 | 　 |
 | ^ | ^ | LIMIT n | 支持 | 　 |
 | ^ | 多表(三表及以上)查询 | 单种LEFT JOIN | 支持 | 　 |
@@ -4144,10 +4146,10 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | ^ | 混合的LEFT/INNER JOIN/RIGHT JOIN | 支持 | 　 |
 | ^ | ^ | 混合的LEFT/INNER/NATURAL JOIN | 特殊支持 | 使用NDB且满足NDB限制的支持 |
 | ^ | ^ | TABLE a ... JOIN (TABLE b,TABLE c) ... | 支持 | LEFT JOIN,RIGHT JOIN不支持ON条件的IN |
-| ^ | NATURAL JOIN | ^ | 特殊支持 | 使用NDB且满足NDB限制的支持 |
-| ^ | 不同节点的表JOIN | ^ | 支持 |   |
-| JOIN | UPDATE ... JOIN | ^ | 支持 | 　 |
-| ^ | DELETE ... JOIN | ^ | 支持 | 　 |
+| ^ | NATURAL JOIN |  | 特殊支持 | 使用NDB且满足NDB限制的支持 |
+| ^ | 不同节点的表JOIN |  | 支持 |   |
+| JOIN | UPDATE ... JOIN |  | 支持 | 　 |
+| ^ | DELETE ... JOIN |  | 支持 | 　 |
 
 ### DDL语句
 
@@ -4155,16 +4157,13 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 | MySQL语句类型 | 子句类型 | 支持状态 | 说明 |
 |---------------|----------|----------|------|
-| `ALTER TABLE` | `ADD COLUMN` | 支持 | 　 |
+| ALTER TABLE | `ADD COLUMN` | 支持 | 　 |
 | ^ | `ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY` | 支持 | 支持`ADD UNIQUE [index_name][index_type]index_col_name` |
 | ^ | 父子表的`ADD FOREIGN KEY` | 限制支持 | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。 |
-| ^ | ^ | ^ | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式环境中，当非分片字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败： |
-| ^ | ^ | ^ | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
+| ^ | ^ | ^ | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式环境中，当非分片字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：`ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails` |
 | ^ | `ADD SPATIAL [INDEX|KEY]` | 支持 | 　 |
 | ^ | `ADD CONSTRAINT [CONSTRAINT [symbol]] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY` | 支持 | 　 |
-| ^ | 父子表的`ADD CONSTRAINT [CONSTRAINT [symbol]] FOREIGN KEY` | 限制支持 | 非字段作为外键关联字段时，无法跨节点保证父子表数据关联性。 |
-| ^ | ^ | ^ | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败： |
-| ^ | ^ | ^ | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
+| ^ | 父子表的`ADD CONSTRAINT [CONSTRAINT [symbol]] FOREIGN KEY` | 限制支持 | 非字段作为外键关联字段时，无法跨节点保证父子表数据关联性。即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：`ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails` |
 | ^ | `ALGORITHM` | 支持 | MySQL8.0新增INSTANT，且默认使用INSTANT |
 | ^ | `ALTER COLUMN` | 支持 | 　 |
 | ^ | `LOCK` | 支持 | 　 |
@@ -4179,7 +4178,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^ | `GENERATED COLUMNS` | 支持 | MySQL8.0与5.7新增功能 |
 | ^ | `SECONDARY INDEXES` | 支持 | MySQL8.0与5.7新增功能 |
 | ^ | `CHECK` | 支持 | MySQL8.0新增功能 |
-| `ALTER` | `VIEW` | 支持 | 计算节点版本高于（包含）2.5.6时支持 |
+| ALTER | `VIEW` | 支持 | 计算节点版本高于（包含）2.5.6时支持 |
 
 #### CREATE语句
 
@@ -4190,9 +4189,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | `CREATE FUNCTION` | 　 | 限制支持 | 　单库场景下可支持 |
 | `CREATE INDEX` | FOREIGN KEY | 支持 | 　 |
 | ^ | `UNIQUE` | 支持 |   |
-| ^ | 父子表的`FOREIGN KEY` | 限制支持 | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。 |
-| ^ | ^ | ^ | 即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败： |
-| ^ | ^ | ^ | ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
+| ^ | 父子表的`FOREIGN KEY` | 限制支持 | 非分片字段作为外键关联字段时，无法跨节点保证父子表数据关联性。即在MySQL中，若父表与子表的外键值相等，则可匹配后插入数据，但在分布式父子表环境中，当非关联字段作为外键关联字段时，由于子表外键关联字段路由的节点与父表分片字段的路由节点不一致，导致子表最终路由的存储节点中找不到父表所对应的外键值，故插入失败：`ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails` |
 | ^ | `FULLTEXT` | 支持 | 　 |
 | ^ | `SPATIAL` | 支持 | 　 |
 | ^ | `ALGORITHM` | 支持 | 　 |
@@ -4201,16 +4198,16 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | `CREATE TABLE` | `CREATE TEMPORARY TABLE` | 禁用 |   |
 | ^ | `CREATE TABLE [IF NOT EXISTS]` | 支持 | 　 |
 | ^ | `CREATE TABLE LIKE` | 支持 | 　 |
-| ^ | `CREATE TABLE AS SELECT ...` | 支持 | 1.要求存储节点用户拥有CREATE TEMPORARY TABLE权限。 |
+| ^ | `CREATE TABLE AS SELECT ...` | 支持 | 1. 要求存储节点用户拥有CREATE TEMPORARY TABLE权限。 |
 | ^ | ^ | ^ | 2. 要求CREATE的表和SELECT的表关联至少一个相同的数据节点，否则执行不成功：`ERROR 10215 (HY000): [LOADTEST1] no overlapping datanode` |
-| ^ | ^ | ^ | 3. 不支持CREATE TABLE ... IGNORE SELECT 和 CREATE TABLE ... REPLACE SELECT |
+| ^ | ^ | ^ | 3. 不支持`CREATE TABLE ... IGNORE SELECT`和`CREATE TABLE ... REPLACE SELECT` |
 | ^ | `GENERATED COLUMNS` | 支持 | MySQL8.0与5.7新增功能 |
 | ^ | `SECONDARY INDEXES` | 支持 | MySQL8.0与5.7新增功能 |
 | ^ | `CHECK` | 支持 | MySQL8.0新增功能 |
 | `CREATE TRIGGER` | 　 | 支持 | 　目前仅支持单库，且需要赋予CREATE权限，内部语句不验证权限，DEFINER相关目前不支持，show trrigers时相关字段显示当前用户 |
 | `CREATE VIEW` | 　 | 支持 | 　计算节点版本高于（包含）2.5.6时支持 |
 
-CREATE DATABASE 在计算节点使用时对应为创建逻辑库的功能，语法使用说明如下：
+`CREATE DATABASE` 在计算节点使用时对应为创建逻辑库的功能，语法使用说明如下：
 
 ```sql
 CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name [create_option] ... [DEFAULT DATANODE 'datanodeid']
@@ -4218,7 +4215,7 @@ CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name [create_option] ... [DEFAULT 
 
 > !Info
 >
-> ```sql
+> ```
 > create_option: [DEFAULT] { CHARACTER SET [=] charset_name | COLLATE [=] collation_name }
 > ```
 >
@@ -4258,7 +4255,7 @@ create database if not exists zjj_d3 default datanode '1,4';
 | ^ | `LOCK` | 支持 |   |
 | `DROP TABLE` | `DROP [TEMPORARY] TABLE [IF EXISTS]` | 禁用 |   |
 | ^ | `DROP TABLE` | 支持 |   |
-| ^ | `DROP TABLE` 多表 | 支持 | 必须保证多表在相同节点 |
+| ^ | `DROP TABLE`多表 | 支持 | 必须保证多表在相同节点 |
 | ^ | `DROP TABLE table_name [RESTRICT | CASCADE]` | 支持 |   |
 | `DROP TRIGGER` | 　 | 支持 | 需要赋予DROP权限 |
 | `DROP VIEW` | 　 | 支持 |   |
@@ -4293,7 +4290,7 @@ create database if not exists zjj_d3 default datanode '1,4';
 | ^ | ^ | `[LOW_PRIORITY] WRITE` | 禁用 |   |
 | ^ | `UNLOCK TABLES` | ^ | 禁用 |   |
 | ^ | `LOCK INSTANCE FOR BACKUP` | ^ | 禁用 |   |
-| ^ | `UNLOCK INSTANCE;` | ^ | 禁用 |   |
+| ^ | `UNLOCK INSTANCE` | ^ | 禁用 |   |
 | 事务隔离级别语句 | `SET SESSION TRANSACTION` | `REPEATABLE READ` | 支持 | XA模式可完整支持， 普通模式下会存在读到部分提交的情况 |
 | ^ | ^ | `READ COMMITTED` | 支持 | 普通模式下会存在读写不一致的问题； XA模式下，2.5.5版本以下不支持，2.5.5版本及以上支持，但跨库多次查询的情况下不保证读写强一致；即：对select 、insert select 这类SQL，如果出现一个SQL转成多个SQL执行的SQL语句，则SQL执行结果在该隔离级别下可能不正确。可参考[数据强一致性（XA事务）](#数据强一致性xa事务)章节描述 |
 | ^ | ^ | `READ UNCOMMITTED` | 不支持 |   |
@@ -4348,7 +4345,7 @@ HotDB Server当前仅支持垂直库（即逻辑库仅关联一个数据节点�
 
 | 语句类型 | SQL语句 | 支持状态 | 说明 |
 |----------|---------|----------|------|
-| ^ | `Prepare SQL Statement | PREPARE ... FROM ...` | 支持 |   |
+| `Prepare SQL Statement` | `PREPARE ... FROM ...` | 支持 |   |
 | ^ | `EXECUTE ...` | 支持 |   |
 | ^ | `{DEALLOCATE | DROP} PREPARE` | 支持 |   |
 
@@ -4620,8 +4617,7 @@ revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jing
 | ^ | `SHOW TRIGGERS` | 支持 | 返回空集　 |
 | ^ | `SHOW GLOBAL|SESSION VARIABLES` | 支持 | 　 |
 | ^ | `SHOW WARNINGS` | 支持 |   |
-| ^ | `SHOW HOTDB TABLES` | 支持 | 支持`[{FROM | IN} *db_name*] [LIKE '*pattern*' | WHERE *expr*]` |
-| ^ | ^ | ^ | 显示计算节点的分片信息 |
+| ^ | `SHOW HOTDB TABLES` | 支持 | 支持`[{FROM | IN} db_name] [LIKE 'pattern' | WHERE expr]`，显示计算节点的分片信息 |
 
 #### HotDB PROFILE
 
@@ -4732,7 +4728,7 @@ HotDB Server对MySQL部分variables及status的显示结果做了支持，可通
 | bianling | 显示说明 |
 |----------|----------|
 | `BIND_ADDRESS` | **始终显示** |
-| `TX_ISOLATION` | 根据server.xml中配置的隔离级别设置，默认REPEATABLE-READ,session也按照server.xml中配置显示 此参数在MySQL8.0时被移除，用transaction_isolation代替此参数 |
+| `TX_ISOLATION` | 根据server.xml中配置的隔离级别设置，默认`REPEATABLE-READ`,session也按照server.xml中配置显示 此参数在MySQL8.0时被移除，用transaction_isolation代替此参数 |
 | `TRANSACTION_ISOLATION` | MySQL8.0新增参数，用于代替tx_isolation |
 | `AUTO_INCREMENT_OFFSET` | 目前显示 1 |
 | `CHARACTER_SET_CONNECTION` | 仅支持utf8/gbk/latin1/utf8mb4字符集 |
@@ -4972,7 +4968,6 @@ mysql> show hotdb datanodes;
 
 ```
 mysql> create table ft_match shard by functiontype 'match' using column 'id' on datanode '11,13'(id int(10) primary key, a char(20) not null);
-
 ERROR 10070 (HY000): The functiontype can only by auto_crc32/auto_mode.
 ```
 
@@ -4980,15 +4975,12 @@ ERROR 10070 (HY000): The functiontype can only by auto_crc32/auto_mode.
 
 ```
 mysql> create table mod_ft shard by functionid '15' using column 'id'(id int(10) primary key, a char(20) not null);
-
 ERROR 10090 (HY000): The function must be specified datanodes.
 
 mysql> create table testsa shard by functionid '3' using column 'id'(id int,a int);
-
 Query OK, 0 rows affected, 1 warning (0.10 sec)
 
 mysql> CREATE TABLE match_tb shard by functionname 'test_match1' using column 'ananme' on datanode '1,2'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
-
 ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
 ```
 

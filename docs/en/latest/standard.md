@@ -3695,25 +3695,26 @@ DELETE FROM t PARTITION(p0);
 ##### Single-node DELETE statement
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|-------------|----------|----------------|-------------|
-| `DELETE` | `PARTITION` | 　 | Support | 　 |
-| ^ | `ORDER BY` | 　 | Support | 　 |
-| ^ | `LIMIT` | 　 | Support | 　 |
-| ^ | `WHERE` | dnid | Support | 1. dnid in DML where Clause shall be a necessary requirement, and it is not supported if not being a necessary requirement<br>2. Global Table does not support use dnid. |
+|----------------------|--------------------|----------|----------------|----------------------------------------------------------------------------------------------------------------------------|
+| DELETE | PARTITION | 　 | Support | 　 |
+| ^ | ORDER BY | 　 | Support | 　 |
+| ^ | LIMIT | 　 | Support | 　 |
+| ^ | WHERE | dnid | Support | 1. dnid in DML where Clause shall be a necessary requirement, and it is not supported if not being a necessary requirement |
+| ^ | ^ | ^ | ^ | 2. Global Table does not support use dnid. |
 | ^ | ^ | Function | Support | 　 |
-| ^ | Multi-table `DELETE` | 　 | Support |   |
+| ^ | Multi-table DELETE | 　 | Support |   |
 
 ##### Cross-node DELETE statement
 
 | MySQL statement type | Clause type | Function | Support status | Description |
 |----------------------|-------------|----------|----------------|-------------|
-| `DELETE` | `PARTITION` | 　 | Support |   |
-| ^ | `ORDER BY DESC` | ASC | 　 | Support |
-| ^ | `LIMIT` | 　 | Support |   |
-| ^ | `ORDER BY ... LIMIT ...` | Support | Parent/Child Table is not supported |   |
-| ^ | `ORDER BY` case sensitive of Field value | 　 | Support |   |
-| ^ | `WHERE` | Function in WHERE | Support |   |
-| ^ | `JOIN` |   | Support | Scenarios with temporary tables are not supported |
+| DELETE | PARTITION | 　 | Support |   |
+| ^ | ORDER BY DESC | ASC | 　 | Support |
+| ^ | LIMIT | 　 | Support |   |
+| ^ | ORDER BY ... LIMIT ... | Support | Parent/Child Table is not supported |   |
+| ^ | ORDER BY case sensitive of Field value | 　 | Support |   |
+| ^ | WHERE | Function in WHERE | Support |   |
+| ^ | JOIN |   | Support | Scenarios with temporary tables are not supported |
 
 In cross-node DELETE statement, the following Multi-table statement is not supported:
 
@@ -3739,21 +3740,21 @@ USING table_references
 
 | MySQL statement type | Clause type | Function | Support status | Description |
 |----------------------|-------------|----------|----------------|-------------|
-| `INSERT` | `INSERT ... SELECT ...` | Single-node simple single-table Query | Support |   |
+| INSERT | INSERT ... SELECT ... | Single-node simple single-table Query | Support |   |
 | ^ | ^ | Single-node JOIN | Support |   |
 | ^ | ^ | Single-node Subquery | Support |   |
 | ^ | ^ | Single-node UNION/UNION ALL | Support |   |
-| ^ | `IGNORE` | 　 | Support |   |
-| ^ | `PARTITION` | 　 | Support |   |
-| ^ | `ON DUPLICATE KEY UPDATE` | 　 | Support |   |
-| ^ | `INSERT INTO table_name(columns... ) VALUES(values...)` | 　 | Support |   |
-| ^ | `INSERT INTO ... VALUES()` | 　 | Support |   |
-| ^ | `INSERT INTO ... SET` | 　 | Support |   |
+| ^ | IGNORE | 　 | Support |   |
+| ^ | PARTITION | 　 | Support |   |
+| ^ | ON DUPLICATE KEY UPDATE | 　 | Support |   |
+| ^ | INSERT INTO table_name(columns... ) VALUES(values...) | 　 | Support |   |
+| ^ | INSERT INTO ... VALUES() | 　 | Support |   |
+| ^ | INSERT INTO ... SET | 　 | Support |   |
 | ^ | Sharding Table Splitting-free Field | 　 | Not support |   |
 | ^ | Sharding Table Splitting Field value is NULL | 　 | Support | NULL value parameter needs to be configured in Sharding Function |
 | ^ | Child Table Non-Associated Field value | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
 | ^ | Child Table Associated Field value is NULL | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
-| ^ | `INSERT BATCH` | Sharding Table | Support |   |
+| ^ | INSERT BATCH | Sharding Table | Support |   |
 | ^ | ^ | Global Table | Support |   |
 | ^ | ^ | Child Table | Conditional limit | Associated field of Parent Table is not supported if it is not sharding key. |
 
@@ -3822,13 +3823,13 @@ INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 ```
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|-------------|----------|----------------|-------------|
-| ^ | `INSERT` | `INSERT ... SELECT ...` | Cross-node simple single-table Query | Support |
-| ^ | ^ | ^ | Cross-node JOIN | Not support |
-| ^ |   | ^ | Cross-node UNION | Not support |
-| ^ | `INSERT BATCH` | Child Table | Support | JOIN Field of Parent Table is not supported if not being sharding key |
-| ^ |   | ^ | Global Table | Support |
-| ^ |   | ^ | Sharding Table | Support |
+|----------------------|-----------------------|--------------------------------------|----------------|-----------------------------------------------------------------------|
+| INSERT | INSERT ... SELECT ... | Cross-node simple single-table Query | Support |   |
+| ^ | ^ | Cross-node JOIN | Not support |   |
+| ^ | ^ | Cross-node UNION | Not support |   |
+| INSERT BATCH | Child Table |   | Support | JOIN Field of Parent Table is not supported if not being sharding key |
+| ^ | Global Table |   | Support |   |
+| ^ | Sharding Table |   | Support |   |
 
 **Special instructions for INSERT BATCH:**
 
@@ -3838,15 +3839,15 @@ For INSERT BATCH in a transaction, if parts succeed and parts failed, it will au
 
 | MySQL statement type | Clause type | Function | Support status | Description |
 |----------------------|-------------|----------|----------------|-------------|
-| `LOAD DATA` | `LOAD DATA ... INFILE ... INTO TABLE` |   | Support | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege. |
+| LOAD DATA | `LOAD DATA ... INFILE ... INTO TABLE` |   | Support | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege. |
 | ^ | ^ | ^ | ^ | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the imported file must be uploaded to the fixed path on the current active compute node server: `/usr/local/hotdb/hotdb-server/HotDB-TEMP`. |
-| ^ | `LOW_PRIORITY` |   | Not support |   |
-| ^ | `CONCURRENT` |   | Not support |   |
-| ^ | `LOCAL` |   | Not support |   |
-| ^ | `REPLACE` |   | Support |   |
-| ^ | `IGNORE` |   | Support |   |
-| ^ | `PARTITION` |   | Not support |   |
-| ^ | `CHARACTER SET` |   | Not support |   |
+| ^ | LOW_PRIORITY |   | Not support |   |
+| ^ | CONCURRENT |   | Not support |   |
+| ^ | LOCAL |   | Not support |   |
+| ^ | REPLACE |   | Support |   |
+| ^ | IGNORE |   | Support |   |
+| ^ | PARTITION |   | Not support |   |
+| ^ | CHARACTER SET |   | Not support |   |
 | ^ | `{FIELDS | COLUMNS} [TERMINATED BY 'string'] [[OPTIONALLY] ENCLOSED BY 'char'] [ESCAPED BY 'char']` |   | Support |   |
 | ^ | `LINES STARTING BY 'string'` |   | Not support |   |
 | ^ | `LINES TERMINATED BY 'string'` |   | Support |   |
@@ -3859,24 +3860,26 @@ For INSERT BATCH in a transaction, if parts succeed and parts failed, it will au
 ##### Single-node REPLACE statement
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|-------------|----------|----------------|-------------|
-| `REPALCE` | `REPLACE ... SELECT ...` | Single-node simple single-table Query | Support |   |
+|----------------------|--------------------------------------------------------|---------------------------------------|---------------------|------------------------------------------------------------------------------|
+| REPALCE | `REPLACE ... SELECT ...` | Single-node simple single-table Query | Support |   |
 | ^ | ^ | Single-node JOIN | Support |   |
 | ^ | ^ | Single-node Subquery | Support |   |
 | ^ | ^ | Single-node UNION/UNION ALL | Support |   |
 | ^ | IGNORE | 　 | Support |   |
 | ^ | PARTITION | 　 | Support |   |
 | ^ | ON DUPLICATE KEY UPDATE | 　 | Support |   |
-| ^ | REPLACE INTO table_name(columns... ) VALUES(values...) | 　 | Support |   |
-| ^ | REPALCE INTO ... VALUES() | 　 | Support |   |
-| ^ | REPLACE INTO ... SET | 　 | Support |   |
+| ^ | `REPLACE INTO table_name(columns... ) VALUES(values...)` | 　 | Support |   |
+| ^ | `REPALCE INTO ... VALUES()` | 　 | Support |   |
+| ^ | `REPLACE INTO ... SET` | 　 | Support |   |
 | ^ | Sharding table has no sharding key | 　 | Not support |   |
 | ^ | Sharding table sharding key value is NULL | 　 | Support | NULL value parameter needs to be configured in Sharding Function parameter |
 | ^ | Child table has no related field value | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
 | ^ | Child table related field value is NULL | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
 | ^ | REPLACE BATCH | Sharding Table | Support |   |
-| ^ | ^ | Global Table | Support |
+| ^ | ^ | Global Table | Support |   |
 | ^ | ^ | Child Table | Conditional support | Associated field of Parent Table is not supported if it is not sharding key. |
+
+
 
 ##### Cross-node REPLACE statement
 
@@ -3889,69 +3892,64 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 ```
 
 | MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|-------------|----------|----------------|-------------|
-| `REPLACE` | `REPLACE ... SELECT ...` | Cross-node simple single-table Query | Support |
-|   | ^ | Cross-node JOIN | Not support |
-|   | ^ | Cross-node UNION | Not support |
-| `REPLACE BATCH` | Child Table | Support | JOIN Field of Parent Table is not supported if it is not sharding key. |
-|   | ^ | Global Table | Support |
-|   | ^ | Sharding Table | Support |
+|----------------------|--------------------------|--------------------------------------|------------------------------------------------------------------------|-------------|
+| REPLACE | `REPLACE ... SELECT ...` | Cross-node simple single-table Query | Support |   |
+|   | ^ | Cross-node JOIN | Not support |   |
+|   | ^ | Cross-node UNION | Not support |   |
+| REPLACE BATCH | Child Table | Support | JOIN Field of Parent Table is not supported if it is not sharding key. |   |
+|   | ^ | Global Table | Support |   |
+|   | ^ | Sharding Table | Support |   |
 
 #### SELECT statement
 
 ##### Single-node SELECT statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |
-|--------------------------|--------------------|---------------------------------------------------------|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| SELECT | JOIN | LEFT JOIN | Support |   |
-| ^ | ^ | INNER JOIN | Support |   | 
-| ^ | ^ | RIGHT JOIN | Support |   |   
-| ^ | ^ | CROSS JOIN | Support |   |   
-| ^ | ^ | Ordinary JOIN (Multi-table Query without JOIN key word) | Support |   | 
+| MySQL statement type | Clause type | Function | Support status | Description |   |
+|----------------------|--------------------|---------------------------------------------------------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
+| SELECT | JOIN | LEFT JOIN | Support |   |   |
+| ^ | ^ | INNER JOIN | Support |   |   |
+| ^ | ^ | RIGHT JOIN | Support |   |   |
+| ^ | ^ | CROSS JOIN | Support |   |   |
+| ^ | ^ | Ordinary JOIN (Multi-table Query without JOIN key word) | Support |   |   |
 | ^ | ^ | PARTITION Table | Support | 　 |   |
-| ^ | ^ | Mixed JOIN of single table type | Support | 　 |  
-| ^ | ^ | Mixed JOIN of multi-table type | Support | 　 |  
-| ^ | Subquery | JOIN | Support | 　 |  
-| ^ |   | IFNULL/NULLIF | Support | 　 |   |
-| ^ |   | UNION/UNION ALL | Support |   |   |
-| ^ |   | IS NULL/IS NOT NULL | Support |   |   |
-| ^ |   | PARTITION Table | Support | 　 |   |
-| ^ |   | Select from where Expression | Support |   |   |
-| ^ |   | Select select Expression | Support |   |   |
-| ^ |   | SELECT FROM SELECT Expression | Support | NDB service is used and NDB limit requirements are met in compute nodes. |   |
+| ^ | ^ | Mixed JOIN of single table type | Support | 　 |   |
+| ^ | ^ | Mixed JOIN of multi-table type | Support | 　 |   |
+| ^ | Subquery | JOIN | Support | 　 |   |
+| ^ | ^ | IFNULL/NULLIF | Support | 　 |   |
+| ^ | ^ | UNION/UNION ALL | Support |   |   |
+| ^ | ^ | IS NULL/IS NOT NULL | Support |   |   |
+| ^ | ^ | PARTITION Table | Support | 　 |   |
+| ^ | ^ | Select from where Expression | Support |   |   |
+| ^ | ^ | Select select Expression | Support |   |   |
+| ^ | ^ | SELECT FROM SELECT Expression | Support | NDB service is used and NDB limit requirements are met in compute nodes. |   |
 | ^ | UNION/UNION ALL | Simple single-table Query | Support | 　 |   |
-| ^ |   | JOIN | Support |   |   |
-| ^ |   | Subquery | Support | The same Support Syntax as Subquery |   |
-| ^ |   | Having Aggregate Function | Support |   |   |
-| ^ |   | PARTITION Table | Support | 　 |   |
+| ^ | ^ | JOIN | Support |   |   |
+| ^ | ^ | Subquery | Support | The same Support Syntax as Subquery |   |
+| ^ | ^ | Having Aggregate Function | Support |   |   |
+| ^ | ^ | PARTITION Table | Support | 　 |   |
 | ^ | DISTINCTROW | 　 | Support | 　 |   |
 | ^ | DISTINCT | 　 | Support |   |   |
 | ^ | SELECT INTO | 　 | Not support | 　 |   |
 | ^ | STRAIGHT_JOIN | 　 | Support | 　 |   |
 | ^ | SQL_NO_CACHE | 　 | Support | 　 |   |
 | ^ | PARTITION | 　 | Support | 　 |   |
-| ^ | WHERE | dnid | Support | 1. After set show_dnid=1, do not support where condition with dnid; |
-| ^ |   |   |   | 2. dnid and Other conditions use or association, and only take dnid Condition; |   |
-| ^ |   |   |   |   |   |
-| ^ |   |   |   | 3. Not support SELECT Clause with dnid Expression, for example: select dnid=4 from dml_a_jwy; |   |
-| ^ |   | Function | Support | Please refer to Function Description |   |
+| ^ | WHERE | dnid | Support | 1. After set show_dnid=1, do not support where condition with dnid; |   |
+| ^ | ^ | ^ | ^ | 2. dnid and Other conditions use or association, and only take dnid Condition; |   |
+| ^ | ^ | ^ | ^ | 3. Not support SELECT Clause with dnid Expression, for example: select dnid=4 from dml_a_jwy; |   |
+| ^ | ^ | Function | Support | Please refer to Function Description |   |
 | ^ | GROUP BY ASC | DESC WITH ROLLUP | 　 | Support |   |
 | ^ | HAVING | 　 | Support | 　 |   |
 | ^ | ORDER BY ASC | DESC | 　 | Support | 　 |
 | ^ | LIMIT n,m | 　 | Support | 　 |   |
 | ^ | PROCEDURE | 　 | Not support | 　 |   |
 | ^ | INTO OUTFILE | 　 | Support | 　1. It is required that the database user of the compute node who executes the statement has the FILE privilege. |   |
-| ^ |   |   |   |   |   |
-| ^ |   |   |   | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |   |
-| ^ |   |   |   |   |   |
-| ^ |   |   |   | 3. If the cluster is switched during the export, the data output can still be normal. |   |
+| ^ | ^ | ^ | ^ | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |   |
+| ^ | ^ | ^ | ^ | 3. If the cluster is switched during the export, the data output can still be normal. |   |
 | ^ | INTO DUMPFILE | 　 | Not support | 　 |   |
 | ^ | INTO Variable | 　 | Not support | 　 |   |
 | ^ | FOR UPDATE | 　 | Support | Not support collocation with NOWAIT or SKIP LOCKED |   |
 | ^ | LOCK IN SHARE MODE | 　 | Support | The same as FOR SHARE function of MySQL8.0, in order to guarantee downward compatibility, it's still reserved and supported |   |
-| ^ | FOR SHARE |   | Support | Support use on data source of MySQL8.0 and above; |   |
-| ^ |   |   |   |   |   |
-| ^ |   |   |   | Not support collocation with NOWAIT or SKIP LOCKED |   |
+| ^ | FOR SHARE |   | Support | Support use on data source of MySQL8.0 and above, Not support collocation with NOWAIT or SKIP LOCKED |   |
 | ^ | Function | Including Aggregate Function | Support | Support complex operation beyond bracket of single-table Aggregate Function |   |
 | ^ | DUAL | 　 | Support | 　 |   |
 | ^ | FORCE INDEX | 　 | Support | 　 |   |
@@ -3960,261 +3958,260 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 ##### Cross-node SELECT statement
 
-| MySQL statement type | Clause type | Function*| Support status | Description |
-|--------------------------|-------------------------------------------------|-------------------------------------|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| SELECT | LIMIT n,m | 　 | Support | 　 |   |
-|   | ORDER BY | 　 | Support | 　 |   |
-|                          | ORDER BY LIMIT n,m | 　 | Support | 　 |   |
-|   | GROUP BY ASC | DESC WITH ROLLUP | 　 | Support | 　 |
-|   | GROUP BY ORDER BY LIMIT m,n | 　 | Support | 　 |   |
-|   | GROUP BY/ORDER BY case sensitive of Field value | 　 | Support | 　 |   |
-|   | Aggregate Function | Aggregate Function in SELECT Clause | Support | 　 |   |
-|   |   | Aggregate Function in HAVING Clause | Support | 　 |   |
-|   |   | COUNT(DISTINCT) | Support | 　 |   |
-|   | DISTINCT | 　 | Support | 　 |   |
-|   | INTO | 　 | Not support | 　 |   |
-|   | WHERE | Function | Support | 　 |   |
-|   | PARTITION | 　 | Support | 　 |   |
-|   | HAVING | 　 | Support | 　 |   |
-|   | PROCEDURE | 　 | Not support | 　 |   |
-|   | INTO OUTFILE | 　 | Support | 　　1. It is required that the database user of the compute node who executes the statement has the FILE privilege. |   |
-|   |   |   |   | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |   |
-|   |   |   |   | 3. If the cluster is switched during the export, the data output can still be normal. |   |
-|   | INTO DUMPFILE | 　 | Not support | 　 |   |
-|   | INTO Variable | 　 | Not support | 　 |   |
-|   | FOR UPDATE | 　 | Support | 　 |   |
-|   | LOCK IN SHARE MODE | 　 | Support | 　 |   |
-|   | FORCE INDEX | 　 | Support | 　 |   |
-|   | USING INDEX | 　 | Support | 　 |   |
-|   | IGNORE INDEX | 　 | Support | 　 |   |
-|   | STRAIGHT_JOIN | 　 | Support | 　 |   |
-|   | JOIN | 　 | Limited support | Please refer to [Cross-node JOIN](#cross-node-join); For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes. |   |
-|   | Subquery | JOIN | Support | 　 |   |
-|   |   | IFNULL/NULLIF | Support |   |   |
-|   |   | UNION/UNION ALL | Support |   |   |
-|   |   | IS NULL /IS NOT NULL | Support |   |   |
-|   |   | PARTITION Table | Support |   |   |
-|   |   | AVG/SUM/MIN/MAX Function | Support |   |   |
-|   |   | Horizontal derived table | Not support | New function of MySQL8.0 |   |
-|   | UNION/UNION ALL | join | Support |   |   |
+| MySQL statement type | Clause type | Function | Support status | Description |
+|----------------------|---------------------------------------------------|-------------------------------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| SELECT | LIMIT n,m | 　 | Support | 　 |
+| ^ | ORDER BY | 　 | Support | 　 |
+| ^ | `ORDER BY LIMIT n,m` | 　 | Support | 　 |
+| ^ | `GROUP BY ASC | DESC WITH ROLLUP` | 　 | Support | 　 |
+| ^ | `GROUP BY ORDER BY LIMIT m,n` | 　 | Support | 　 |
+| ^ | `GROUP BY/ORDER BY` case sensitive of Field value | 　 | Support | 　 |
+| ^ | Aggregate Function | Aggregate Function in SELECT Clause | Support | 　 |
+| ^ | ^ | Aggregate Function in HAVING Clause | Support | 　 |
+| ^ | ^ | COUNT(DISTINCT) | Support | 　 |
+| ^ | DISTINCT | 　 | Support | 　 |
+| ^ | INTO | 　 | Not support | 　 |
+| ^ | WHERE | Function | Support | 　 |
+| ^ | PARTITION | 　 | Support | 　 |
+| ^ | HAVING | 　 | Support | 　 |
+| ^ | PROCEDURE | 　 | Not support | 　 |
+| ^ | INTO OUTFILE | 　 | Support | 　　1. It is required that the database user of the compute node who executes the statement has the FILE privilege. |
+| ^ | ^ | ^ | ^ | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |
+| ^ | ^ | ^ | ^ | 3. If the cluster is switched during the export, the data output can still be normal. |
+| ^ | INTO DUMPFILE | 　 | Not support | 　 |
+| ^ | INTO Variable | 　 | Not support | 　 |
+| ^ | FOR UPDATE | 　 | Support | 　 |
+| ^ | LOCK IN SHARE MODE | 　 | Support | 　 |
+| ^ | FORCE INDEX | 　 | Support | 　 |
+| ^ | USING INDEX | 　 | Support | 　 |
+| ^ | IGNORE INDEX | 　 | Support | 　 |
+| ^ | STRAIGHT_JOIN | 　 | Support | 　 |
+| ^ | JOIN | 　 | Limited support | Please refer to [Cross-node JOIN](#cross-node-join); For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes. |
+| ^ | Subquery | JOIN | Support | 　 |
+| ^ | ^ | IFNULL/NULLIF | Support |   |
+| ^ | ^ | UNION/UNION ALL | Support |   |
+| ^ | ^ | IS NULL /IS NOT NULL | Support |   |
+| ^ | ^ | PARTITION Table | Support |   |
+| ^ | ^ | AVG/SUM/MIN/MAX Function | Support |   |
+| ^ | ^ | Horizontal derived table | Not support | New function of MySQL8.0 |
+| ^ | UNION/UNION ALL | join | Support |   |
+
+
 
 #### UPDATE statement
 
 ##### Single-node UPDATE statement
 
-| MySQL statement type | Clause type        | Function | Support status | Description                                                                                                                                                                                                                                                                                                   |
-|----|----|----|----|----|
-| UPDATE                   | LOW_PRIORITY           | 　           | Support            | 　                                                                                                                                                                                                                                                                                                                |
-|                          | IGNORE                 | 　           | Support            | 　                                                                                                                                                                                                                                                                                                                |
-|                          | ORDER BY               | 　           | Support            | 　                                                                                                                                                                                                                                                                                                                |
-|                          | LIMIT n                | 　           | Support            | 　                                                                                                                                                                                                                                                                                                                |
-|                          | SET                    |              | Support            | 1. It is allowed to update the sharding key, but it is required that the change of the value of the sharding key will not affect the data routing, that is, the modified value of the sharding key and the value before the modification are routed to the same node, otherwise the execution is not successful. |
-|                          |                        |              |                    | 2. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3.                                                         |
-|                          |                        |              |                    | 3. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1;                                                                                                                                                                       |
-|                          | WHERE                  | dnid         | Support            | When dnid serves as or Condition in DML where Condition, only dnid Condition is judged, while other limit conditions will be ignored                                                                                                                                                                              |
-|                          |                        | Function     | Support            | 　                                                                                                                                                                                                                                                                                                                |
-|                          | Function               | 　           | Support            | 　                                                                                                                                                                                                                                                                                                                |
-|                          | Multi-table associated | 　           | Support            | 　                                                                                                                                                                                                                                                                                                                |
+| MySQL statement type | Clause type | Function | Support status | Description |
+|----------------------|------------------------|----------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| UPDATE | LOW_PRIORITY | 　 | Support | 　 |
+| ^ | IGNORE | 　 | Support | 　 |
+| ^ | ORDER BY | 　 | Support | 　 |
+| ^ | LIMIT n | 　 | Support | 　 |
+| ^ | SET |   | Support | 1. It is allowed to update the sharding key, but it is required that the change of the value of the sharding key will not affect the data routing, that is, the modified value of the sharding key and the value before the modification are routed to the same node, otherwise the execution is not successful. |
+| ^ | ^ | ^ | ^ | 2. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3. |
+| ^ | ^ | ^ | ^ | 3. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1; |
+| ^ | WHERE | dnid | Support | When dnid serves as or Condition in DML where Condition, only dnid Condition is judged, while other limit conditions will be ignored |
+| ^ | ^ | Function | Support | 　 |
+| ^ | Function | 　 | Support | 　 |
+| ^ | Multi-table associated | 　 | Support | 　 |
 
 ##### Cross-node UPDATE statement
 
-| MySQL statement type | Clause type                        | Function           | Support status | Description                                                                                                                                                                                                                                                                                                    |
-|----|----|----|----|----|
-| UPDATE                   | ORDER BY DESC|ASC                     | 　                     | Support            | 　                                                                                                                                                                                                                                                                                                                 |
-|                          | LIMIT n                                | 　                     | Support            | 　                                                                                                                                                                                                                                                                                                                 |
-|                          | ORDER BY DESC|ASC LIMIT n,m           | 　                     | Support            | Parent/Child Table is not supported                                                                                                                                                                                                                                                                                |
-|                          | ORDER BY case sensitive of Field value | 　                     | Support            | 　                                                                                                                                                                                                                                                                                                                 |
-|                          | WHERE                                  | 　                     | Support            | 　                                                                                                                                                                                                                                                                                                                 |
-|                          | SET                                    | 　                     | Support            | 　1. It is allowed to update the sharding key, but it is required that the change of the value of the sharding key will not affect the data routing, that is, the modified value of the sharding key and the value before the modification are routed to the same node, otherwise the execution is not successful. |
-|                          |                                        |                        |                    | 2. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3.                                                          |
-|                          |                                        |                        |                    | 3. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1;                                                                                                                                                                        |
-|                          |                                        | Function in SET Clause | Support            |                                                                                                                                                                                                                                                                                                                    |
-|                          | Function in WHERE                      | 　                     | Support            | 　                                                                                                                                                                                                                                                                                                                 |
-|                          | PARTITION                              | 　                     | Support            | 　                                                                                                                                                                                                                                                                                                                 |
-|                          | JOIN                                   | 　                     | Support            | 　                                                                                                                                                                                                                                                                                                                 |
+| MySQL statement type | Clause type | Function | Support status | Description |
+|----------------------|------------------------------------------|------------------------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| UPDATE | `ORDER BY DESC|ASC` | 　 | Support | 　 |
+| ^  | `LIMIT n` | 　 | Support | 　 |
+| ^  | `ORDER BY DESC|ASC LIMIT n,m` | 　 | Support | Parent/Child Table is not supported |
+| ^  | `ORDER BY` case sensitive of Field value | 　 | Support | 　 |
+| ^  | WHERE | 　 | Support | 　 |
+| ^  | SET | 　 | Support | 　1. It is allowed to update the sharding key, but it is required that the change of the value of the sharding key will not affect the data routing, that is, the modified value of the sharding key and the value before the modification are routed to the same node, otherwise the execution is not successful. |
+| ^  | ^ |   |   | 2. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3. |
+| ^  | ^ |   |   | 3. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1; |
+| ^  | ^ | Function in SET Clause | Support |   |
+| ^  | Function in WHERE | 　 | Support | 　 |
+| ^  | PARTITION | 　 | Support | 　 |
+| ^  | JOIN | 　 | Support | 　 |
 
 #### Cross-node JOIN
 
-| Primary function | Secondary function                 | Tertiary function                  | Support status | Description                                                                                                                                                                                                                                                                  |
-|----|----|----|----|----|
-| INNER/               | UNION ALL                              | 　                                     | Support            | 　                                                                                                                                                                                                                                                                               |
-| LEFT JON             |                                        |                                        |                    |                                                                                                                                                                                                                                                                                  |
-|                      | UNION                                  | 　                                     | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      | HAVING                                 | Unconditional Field                    | Not support        | SELECT Clause must contain HAVING Filter Field, so does MySQL                                                                                                                                                                                                                    |
-|                      |                                        | COUNT(*)                              | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | AVG()                                  | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | MAX()                                  | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | MIN()                                  | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | SUM()                                  | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | 别名                                   | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | Alias                                  |                    |                                                                                                                                                                                                                                                                                  |
-|                      | ORDER BY                               | Single Field                           | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | Multiple Field in the same order       | Support            | order by *column_name1* desc,*column_name2* desc                                                                                                                                                                                                                                 |
-|                      |                                        | Multiple Fields in different orders    | Support            | order by *column_name1* desc,*column_name2* asc                                                                                                                                                                                                                                  |
-|                      |                                        | Field Alias                            | Support            | The Alias can't be the same with the Field Name in the Table                                                                                                                                                                                                                     |
-|                      |                                        | Field value Case                       | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | ENUM type                              | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | Function                               | Support            |                                                                                                                                                                                                                                                                                  |
-|                      | OR                                     |                                        | Limited support    | Condition in which Cross-node JOIN supports can transfer to in Condition;                                                                                                                                                                                                        |
-|                      |                                        |                                        |                    | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes.                                                                                                                           |
-|                      | WHERE                                  | OR condition of different fields       | Limited support    | a=x and b=x or c=x not supported, only support the condition that OR Expression is sub-node of AND Expression, and the condition that there is only one or Expression, for example: select xxx from a,b where (c1 OR c2) and c3 and (c4 OR c5 OR c6) and c7..AND cN.. statement: |
-|                      |                                        |                                        |                    | Among which, every condition (C1, C2, etc.) in OR Clause only supports `table.column [=|<|<=|>|>=|!=] value` or `IS [NOT] NULL` or specific value (0/1/TRUE/FALSE/character string, etc.);                                                                              |
-|                      |                                        |                                        |                    | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes.                                                                                                                           |
-|                      |                                        | or Condition of Single Field           | Limited support    | or Expression in left join which is not sub-node of and Expression is not supported;                                                                                                                                                                                             |
-|                      |                                        |                                        |                    | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes.                                                                                                                           |
-|                      |                                        | IN                                     | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | AND                                    | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | IS NOT NULL                            | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | IS NULL                                | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | BETWEEN ... AND ...                   | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | >、>= 、< 、<=                     | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | NOW() and other constant Expression    | Support            | column1 > NOW() or column1 > DATE_ADD(NOW(), INTERVAL +3 day )                                                                                                                                                                                                                 |
-|                      |                                        | Operation Expression                   | Special support    | column1=column2+1(Support of using NDB and meeting NDB limit)                                                                                                                                                                                                                    |
-|                      |                                        | LIKE                                   | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      | GROUP BY                               | Single Field                           | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | Multiple Field                         | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | ORDER BY NULL                          | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | WITH ROLLUP                            | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | Field Alias                            | Support            | The Alias can't be the same with the Field name in the Table Name                                                                                                                                                                                                                |
-|                      |                                        | Field value Case                       | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      | FORCE INDEX                            |                                        | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      | USING INDEX                            |                                        | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      | IGNORE INDEX                           |                                        | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      | AVG                                    | AVG()                                  | Support            | Not support nested Function, AVG(SUM(*column_name*))                                                                                                                                                                                                                             |
-|                      |                                        | AVG()                                  | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | AVG(IFNULL())                          | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | AVG(*column1-column2*)                 | Support            | Only support operation of single-table columns, Multi-table Field is not supported; operation of Multi-table Field has been intercepted                                                                                                                                          |
-|                      | COUNT                                  | COUNT DISTINCT                         | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | COUNT()                                | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | COUNT(*)                              | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | COUNT(1)                               | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      | MIN                                    | MIN()                                  | Support            | Nested Function is not supported                                                                                                                                                                                                                                                 |
-|                      | MAX                                    | MAX()                                  | Support            | Nested Function is not supported                                                                                                                                                                                                                                                 |
-|                      | SUM                                    | SUM()                                  | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | SUM(CASE ... WHEN...)                | Support            | Only support Field judged as single table by CASE WHEN, and the CASE WHEN Field must have Table Alias                                                                                                                                                                            |
-|                      |                                        | SUM(IFNULL())                          | Support            | Procedure Control Function                                                                                                                                                                                                                                                       |
-|                      |                                        | SUM(*column1*-*column2*)               | Support            | Only support operation of single-table columns, Multi-table Field is not supported; operation of Multi-table Field has been intercepted                                                                                                                                          |
-|                      | INTO OUTFILE                           |                                        | Support            | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                                                |
-|                      |                                        |                                        |                    | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP.                    |
-|                      |                                        |                                        |                    | 3. If the cluster is switched during the export, the data output can still be normal.                                                                                                                                                                                          |
-|                      | FOR UPDATE                             |                                        | Not support        | 　                                                                                                                                                                                                                                                                               |
-|                      | LOCK IN SHARE MODE                     |                                        | Not support        | 　                                                                                                                                                                                                                                                                               |
-|                      | Subquery                               |                                        | Support            | See [SELECT statement](#select-statement)                                                                                                                                                                                                                                                     |
-|                      | Table Alias                            |                                        | Support            | Support using the Table Alias where a.column or select a.column                                                                                                                                                                                                                  |
-|                      | ON Clause                              | Single =                               | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | <=>                                  | Special support    | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
-|                      |                                        | != <>                                | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | >= > <= <                          | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | Multiple>= > <= <Condition         | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | Multiple and = Condition               | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | IN                                     | Support            | When LEFT JOIN, the Left Table Field using IN condition to filter is not supported in ON condition                                                                                                                                                                               |
-|                      |                                        | IS NOT NULL                            | Support            | When LEFT JOIN, the Left Table Field using IS NOT NULL condition to filter is not supported in ON condition                                                                                                                                                                      |
-|                      |                                        | IS NULL                                | Support            | When LEFT JOIN, the Left Table or Right Table Field using IS NULL condition to filter is not supported in ON condition                                                                                                                                                           |
-|                      |                                        | BETWEEN ... AND ...                   | Support            | When LEFT JOIN, the Left Table Field using BETWEEN ... AND... condition to filter is not supported in ON condition                                                                                                                                                              |
-|                      |                                        | LIKE                                   | Support            | When LEFT JOIN, the Left Table Field using LIKE condition to filter is not supported in ON condition                                                                                                                                                                             |
-|                      |                                        | Or Condition                           | Special support    | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
-|                      |                                        | Mathematical Expression                | Special support    | Support of using NDB and meeting NDB limit, such as: column1=column2+1                                                                                                                                                                                                           |
-|                      | SELECT Clause                          | Show Null Column                       | Support            | SELECT '' AS A FROM ... Query result could show accurate null column                                                                                                                                                                                                           |
-|                      |                                        | STRAIGHT_JOIN                          | Support            |                                                                                                                                                                                                                                                                                  |
-|                      | Function                               | UNIX_TIMESTAMP()                       | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | NOW()                                  | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | DATE_FORMAT()                          | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | DATE_ADD()                             | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | DATEDIFF()                             | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | FROM_UNIXTIME()                        | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | CONVERT                                | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | SUBSTRING_INDEX()                      | Support            |                                                                                                                                                                                                                                                                                  |
-|                      |                                        | SUBSTRING()                            | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | TRIM()                                 | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | RTRIM()                                | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | LTRIM()                                | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | UCASE()                                | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | UPPER()                                | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | FLOOR()                                | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | \% or MOD                              | Support            | Only support column% constant; Not support column1%column2                                                                                                                                                                                                                       |
-|                      |                                        | RAND()                                 | Special support    | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
-|                      |                                        | TRUNCATE()                             | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | / or DIV                               | Support            | Only support column div constant; Not support column1 div column2                                                                                                                                                                                                                |
-|                      |                                        | ABS()                                  | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | LENGTH()                               | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | CONCAT()                               | Support            | Not support concat() to serve as JOIN condition (on Clause condition) in Operation Expression, or as association condition in where Clause                                                                                                                                       |
-|                      |                                        | CAST()                                 | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | IF()                                   | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | IFNULL                                 | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | CASE...WHEN...END                    | Support            | Only support the Field judged as single table by CASE WHEN; Not support condition judgment of Multi-table Field, such as: CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias                                                                        |
-|                      |                                        | DISTINCT                               | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      | USING(column)                          |                                        | Support            |                                                                                                                                                                                                                                                                                  |
-|                      | PARTITION                              |                                        | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      | LIMIT                                  | LIMIT n,m                              | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | LIMIT n                                | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      | Multi-table (above three tables) Query | Single LEFT JOIN                       | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | Single INNER JION                      | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | Single NATURAL JOIN                    | Special support    | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
-|                      |                                        | Mixed LEFT/INNER JOIN/RIGHT JOIN       | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      |                                        | Mixed LEFT/INNER/NATURAL JOIN          | Special support    | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
-|                      |                                        | table a ... join (table b,table c) ... | Support            | left join, right join does not support in of on condition                                                                                                                                                                                                                        |
-|                      | NATURAL JOIN                           |                                        | Special support    | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
-|                      | Table of different nodes JOIN          |                                        | Support            |                                                                                                                                                                                                                                                                                  |
-| JOIN                 | UPDATE ... JOIN                        |                                        | Support            | 　                                                                                                                                                                                                                                                                               |
-|                      | DELETE ... JOIN                        |                                        | Support            | 　                                                                                                                                                                                                                                                                               |
+| Primary function | Secondary function | Tertiary function | Support status | Description |
+|------------------|----------------------------------------|----------------------------------------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| INNER/ | UNION ALL | 　 | Support | 　 |
+| LEFT JON |   |   |   |   |
+| ^ | UNION | 　 | Support | 　 |
+| ^ | HAVING | Unconditional Field | Not support | SELECT Clause must contain HAVING Filter Field, so does MySQL |
+| ^ | ^ | COUNT(*) | Support |   |
+| ^ | ^ | AVG() | Support |   |
+| ^ | ^ | MAX() | Support |   |
+| ^ | ^ | MIN() | Support |   |
+| ^ | ^ | SUM() | Support |   |
+| ^ | ^ | 别名 | Support | 　 |
+| ^ | ^ | Alias |   |   |
+| ^ | ORDER BY | Single Field | Support | 　 |
+| ^ | ^ | Multiple Field in the same order | Support | `order by column_name1 desc, column_name2 desc` |
+| ^ | ^ | Multiple Fields in different orders | Support | `order by column_name1 desc, column_name2 asc` |
+| ^ | ^ | Field Alias | Support | The Alias can't be the same with the Field Name in the Table |
+| ^ | ^ | Field value Case | Support | 　 |
+| ^ | ^ | ENUM type | Support |   |
+| ^ | ^ | Function | Support |   |
+| ^ | OR |   | Limited support | Condition in which Cross-node JOIN supports can transfer to in Condition; |
+| ^ | ^ | ^ | ^ | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes. |
+| ^ | WHERE | OR condition of different fields | Limited support | a=x and b=x or c=x not supported, only support the condition that OR Expression is sub-node of AND Expression, and the condition that there is only one or Expression, for example: select xxx from a,b where (c1 OR c2) and c3 and (c4 OR c5 OR c6) and c7..AND cN.. statement: |
+| ^ | ^ | ^ | ^ | Among which, every condition (C1, C2, etc.) in OR Clause only supports `table.column [=|<|<=|>|>=|!=] value` or `IS [NOT] NULL` or specific value (0/1/TRUE/FALSE/character string, etc.); |
+| ^ | ^ | ^ | ^ | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes. |
+| ^ | ^ | or Condition of Single Field | Limited support | or Expression in left join which is not sub-node of and Expression is not supported; |
+| ^ | ^ | ^ | ^ | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes. |
+| ^ | ^ | IN | Support | 　 |
+| ^ | ^ | AND | Support | 　 |
+| ^ | ^ | IS NOT NULL | Support | 　 |
+| ^ | ^ | IS NULL | Support | 　 |
+| ^ | ^ | BETWEEN ... AND ... | Support | 　 |
+| ^ | ^ | >、>= 、< 、<= | Support | 　 |
+| ^ | ^ | NOW() and other constant Expression | Support | column1 > NOW() or column1 > DATE_ADD(NOW(), INTERVAL +3 day ) |
+| ^ | ^ | Operation Expression | Special support | column1=column2+1(Support of using NDB and meeting NDB limit) |
+| ^ | ^ | LIKE | Support | 　 |
+| ^ | GROUP BY | Single Field | Support | 　 |
+| ^ | ^ | Multiple Field | Support | 　 |
+| ^ | ^ | ORDER BY NULL | Support | 　 |
+| ^ | ^ | WITH ROLLUP | Support | 　 |
+| ^ | ^ | Field Alias | Support | The Alias can't be the same with the Field name in the Table Name |
+| ^ | ^ | Field value Case | Support | 　 |
+| ^ | FORCE INDEX |   | Support | 　 |
+| ^ | USING INDEX |   | Support | 　 |
+| ^ | IGNORE INDEX |   | Support | 　 |
+| ^ | AVG | AVG() | Support | Not support nested Function, `AVG(SUM(column_name))` |
+| ^ | ^ | AVG() | Support | 　 |
+| ^ | ^ | AVG(IFNULL()) | Support | 　 |
+| ^ | ^ | AVG(*column1-column2*) | Support | Only support operation of single-table columns, Multi-table Field is not supported; operation of Multi-table Field has been intercepted |
+| ^ | COUNT | COUNT DISTINCT | Support | 　 |
+| ^ | ^ | COUNT() | Support | 　 |
+| ^ | ^ | COUNT(*) | Support | 　 |
+| ^ | ^ | COUNT(1) | Support | 　 |
+| ^ | MIN | MIN() | Support | Nested Function is not supported |
+| ^ | MAX | MAX() | Support | Nested Function is not supported |
+| ^ | SUM | SUM() | Support | 　 |
+| ^ | ^ | SUM(CASE ... WHEN...) | Support | Only support Field judged as single table by CASE WHEN, and the CASE WHEN Field must have Table Alias |
+| ^ | ^ | SUM(IFNULL()) | Support | Procedure Control Function |
+| ^ | ^ | SUM(*column1*-*column2*) | Support | Only support operation of single-table columns, Multi-table Field is not supported; operation of Multi-table Field has been intercepted |
+| ^ | INTO OUTFILE |   | Support | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege. |
+| ^ | ^ | ^ | ^ | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: `/usr/local/hotdb/hotdb-server/HotDB-TEMP`. |
+| ^ | ^ | ^ | ^ | 3. If the cluster is switched during the export, the data output can still be normal. |
+| ^ | FOR UPDATE |   | Not support | 　 |
+| ^ | LOCK IN SHARE MODE |   | Not support | 　 |
+| ^ | Subquery |   | Support | See [SELECT statement](#select-statement) |
+| ^ | Table Alias |   | Support | Support using the Table Alias where a.column or select a.column |
+| ^ | ON Clause | Single = | Support | 　 |
+| ^ | ^ | <=> | Special support | Support of using NDB and meeting NDB limit |
+| ^ | ^ | != <> | Support | 　 |
+| ^ | ^ | >= > <= < | Support | 　 |
+| ^ | ^ | Multiple>= > <= <Condition | Support | 　 |
+| ^ | ^ | Multiple and = Condition | Support | 　 |
+| ^ | ^ | IN | Support | When LEFT JOIN, the Left Table Field using IN condition to filter is not supported in ON condition |
+| ^ | ^ | IS NOT NULL | Support | When LEFT JOIN, the Left Table Field using IS NOT NULL condition to filter is not supported in ON condition |
+| ^ | ^ | IS NULL | Support | When LEFT JOIN, the Left Table or Right Table Field using IS NULL condition to filter is not supported in ON condition |
+| ^ | ^ | BETWEEN ... AND ... | Support | When LEFT JOIN, the Left Table Field using BETWEEN ... AND... condition to filter is not supported in ON condition |
+| ^ | ^ | LIKE | Support | When LEFT JOIN, the Left Table Field using LIKE condition to filter is not supported in ON condition |
+| ^ | ^ | Or Condition | Special support | Support of using NDB and meeting NDB limit |
+| ^ | ^ | Mathematical Expression | Special support | Support of using NDB and meeting NDB limit, such as: column1=column2+1 |
+| ^ | SELECT Clause | Show Null Column | Support | SELECT '' AS A FROM ... Query result could show accurate null column |
+| ^ | ^ | STRAIGHT_JOIN | Support |   |
+| ^ | Function | UNIX_TIMESTAMP() | Support |   |
+| ^ | ^ | NOW() | Support |   |
+| ^ | ^ | DATE_FORMAT() | Support |   |
+| ^ | ^ | DATE_ADD() | Support |   |
+| ^ | ^ | DATEDIFF() | Support |   |
+| ^ | ^ | FROM_UNIXTIME() | Support |   |
+| ^ | ^ | CONVERT | Support |   |
+| ^ | ^ | SUBSTRING_INDEX() | Support |   |
+| ^ | ^ | SUBSTRING() | Support | 　 |
+| ^ | ^ | TRIM() | Support | 　 |
+| ^ | ^ | RTRIM() | Support | 　 |
+| ^ | ^ | LTRIM() | Support | 　 |
+| ^ | ^ | UCASE() | Support | 　 |
+| ^ | ^ | UPPER() | Support | 　 |
+| ^ | ^ | FLOOR() | Support | 　 |
+| ^ | ^ | \% or MOD | Support | Only support column% constant; Not support column1%column2 |
+| ^ | ^ | RAND() | Special support | Support of using NDB and meeting NDB limit |
+| ^ | ^ | TRUNCATE() | Support | 　 |
+| ^ | ^ | / or DIV | Support | Only support column div constant; Not support column1 div column2 |
+| ^ | ^ | ABS() | Support | 　 |
+| ^ | ^ | LENGTH() | Support | 　 |
+| ^ | ^ | CONCAT() | Support | Not support concat() to serve as JOIN condition (on Clause condition) in Operation Expression, or as association condition in where Clause |
+| ^ | ^ | CAST() | Support | 　 |
+| ^ | ^ | IF() | Support | 　 |
+| ^ | ^ | IFNULL | Support | 　 |
+| ^ | ^ | CASE...WHEN...END | Support | Only support the Field judged as single table by CASE WHEN; Not support condition judgment of Multi-table Field, such as: `CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias` |
+| ^ | ^ | DISTINCT | Support | 　 |
+| ^ | USING(column) |   | Support |   |
+| ^ | PARTITION |   | Support | 　 |
+| ^ | LIMIT | LIMIT n,m | Support | 　 |
+| ^ | ^ | LIMIT n | Support | 　 |
+| ^ | Multi-table (above three tables) Query | Single LEFT JOIN | Support | 　 |
+| ^ | ^ | Single INNER JION | Support | 　 |
+| ^ | ^ | Single NATURAL JOIN | Special support | Support of using NDB and meeting NDB limit |
+| ^ | ^ | Mixed LEFT/INNER JOIN/RIGHT JOIN | Support | 　 |
+| ^ | ^ | Mixed LEFT/INNER/NATURAL JOIN | Special support | Support of using NDB and meeting NDB limit |
+| ^ | ^ | table a ... join (table b,table c) ... | Support | left join, right join does not support in of on condition |
+| ^ | NATURAL JOIN |   | Special support | Support of using NDB and meeting NDB limit |
+| ^ | Table of different nodes JOIN |   | Support |   |
+| JOIN | UPDATE ... JOIN |   | Support | 　 |
+|   | DELETE ... JOIN |   | Support | 　 |
 
 ### DDL statement
 
 #### ALTER statement
 
 | MySQL statement type | Clause type | Support status | Description |
-|----------------------|-------------|----------------|-------------|
-| ^ | ALTER TABLE | ADD COLUMN | Support |
-| ^ | ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY | Support | Support `ADD UNIQUE [index_name][index_type]index_col_name` |
-| ^ | ADD FOREIGN KEY for child table(s) | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
-| ^ |   | ADD SPATIAL \[INDEX|KEY] | Support |
-| ^ |   | ADD CONSTRAINT [CONSTRAINT [symbol]] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY | Support |
-| ^ | ADD CONSTRAINT \[CONSTRAINT [symbol]] FOREIGN KEY for child table(s) | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
-| ^ | ALGORITHM | Support | New INSTANT of MySQL8.0, and INSTANT is used by default |
-| ^ |   | ALTER COLUMN | Support |
-| ^ |   | LOCK | Support |
-| ^ |   | MODIFY/CHANGE [COLUMN] | Support |
-| ^ |   | DROP COLUMN | Support |
-| ^ |   | DROP PRIMARY KEY/KEY/INDEX/FOREIGN KEY | Support |
-| ^ |   | DISABLE KEYS | Support |
-| ^ |   | ENABLE KEYS | Support |
-| ^ |   | DISCARD TABLESPACE | Not support |
-| ^ |   | IMPORT TABLESPACE | Not support |
-| ^ |   | ADD/DROP/TRUNCATE PARTITION | Support |
-| ^ | GENERATED COLUMNS | Support | New function of MySQL8.0 and 5.7 |
-| ^ | SECONDARY INDEXES | Support | New function of MySQL8.0 and 5.7 |
-| ^ | CHECK | Support | New function of MySQL8.0 |
-| ALTER | VIEW | Support | Supported in V2.5.6 and above |
+|----------------------|-----------------------------------------------------------------------|---------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ^ | `ALTER TABLE` | ADD COLUMN | Support |
+| ^ | `ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY` | Support | Support `ADD UNIQUE [index_name][index_type]index_col_name` |
+| ^ | `ADD FOREIGN KEY` for child table(s) | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: `ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails` |
+| ^ |   | `ADD SPATIAL [INDEX|KEY]` | Support |
+| ^ |   | `ADD CONSTRAINT [CONSTRAINT [symbol]] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY` | Support |
+| ^ | `ADD CONSTRAINT [CONSTRAINT [symbol]] FOREIGN KEY` for child table(s) | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
+| ^ | `ALGORITHM` | Support | New INSTANT of MySQL8.0, and INSTANT is used by default |
+| ^ | `ALTER COLUMN` | Support |   |
+| ^ | `LOCK` | Support |   |
+| ^ | `MODIFY/CHANGE [COLUMN]` | Support |   |
+| ^ | `DROP COLUMN` | Support |   |
+| ^ | `DROP PRIMARY KEY/KEY/INDEX/FOREIGN KEY` | Support |   |
+| ^ | `DISABLE KEYS` | Support |   |
+| ^ | `ENABLE KEYS` | Support |   |
+| ^ | `DISCARD TABLESPACE` | Not support |   |
+| ^ | `IMPORT TABLESPACE` | Not support |   |
+| ^ | `ADD/DROP/TRUNCATE PARTITION` | Support |   |
+| ^ | `GENERATED COLUMNS` | Support | New function of MySQL8.0 and 5.7 |
+| ^ | `SECONDARY INDEXES` | Support | New function of MySQL8.0 and 5.7 |
+| ^ | `CHECK` | Support | New function of MySQL8.0 |
+| ALTER | `VIEW` | Support | Supported in V2.5.6 and above |
 
 #### CREATE statement
 
-| MySQL statement type | Clause type                | Support status | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-|----|----|----|----|----|
-| CREATE DATABASE          | 　                             | Support            | Create database is supported in V2.5.6 and above. The function instructions can be seen at the bottom of the table.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| CREATE EVENT             | 　                             | Forbidden          | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| CREATE FUNCTION          | 　                             | Limited            | Supported in single node　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| 　                       |                                |                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| CREATE INDEX             | FOREIGN KEY                    | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-|                          | UNIQUE                         | Support            |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-|                          | FOREIGN KEY for child table(s) | Partial Support    | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
-|                          | FULLTEXT                       | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-|                          | SPATIAL                        | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-|                          | ALGORITHM                      | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-|                          | LOCK                           | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-|                          | FUNCTIONAL KEYS                | Support            | New function of MySQL8.0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| 　                       |                                |                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| CREATE TABLE             | CREATE TEMPORARY TABLE         | Forbidden          | SQL Parser supports this Syntax, not supports Temporary Table function                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-|                          | CREATE TABLE [IF NOT EXISTS] | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-|                          | CREATE TABLE LIKE              | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-|                          | CREATE TABLE AS SELECT ...    | Support            | 1. The data source user is required to have CREATE TEMPORARY TABLE privilege.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-|                          |                                |                    | 2. It is required that the CREATE table and the SELECT table are associated with at least one same data node, otherwise the execution is unsuccessful: ERROR 10215 (HY000): [LOADTEST1] no overlapping datanode .                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-|                          |                                |                    | 3. CREATE TABLE ... IGNORE SELECT and CREATE TABLE ... REPLACE SELECT are not supported.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-|                          | GENERATED COLUMNS              | Support            | New function of MySQL8.0 and 5.7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-|                          | SECONDARY INDEXES              | Support            | New function of MySQL8.0 and 5.7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-|                          | CHECK                          | Support            | New function of MySQL8.0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| 　                       |                                |                    |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| CREATE TRIGGER           | 　                             | Support            | 　At present, it only supports single-node, and need CREATE privilege granted, internal statement does not verify the privilege, DEFINER related is not supported at present, related Field show the current user when show triggers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| CREATE VIEW              | 　                             | Support            | 　                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| MySQL statement type | Clause type | Support status | Description |
+|----------------------|----------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `CREATE DATABASE` | 　 | Support | Create database is supported in V2.5.6 and above. The function instructions can be seen at the bottom of the table. |
+| `CREATE EVENT` | 　 | Forbidden | 　 |
+| `CREATE FUNCTION` | 　 | Limited | Supported in single node　 |
+| `CREATE INDEX` | `FOREIGN KEY` | Support | 　 |
+| ^ | `UNIQUE` | Support |   |
+| ^ | `FOREIGN KEY for child table(s)` | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: `ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails` |
+| ^ | `FULLTEXT` | Support | 　 |
+| ^ | `SPATIAL` | Support | 　 |
+| ^ | `ALGORITHM` | Support | 　 |
+| ^ | `LOCK` | Support | 　 |
+| ^ | `FUNCTIONAL KEYS` | Support | New function of MySQL8.0 |
+| `CREATE TABLE` | `CREATE TEMPORARY TABLE` | Forbidden | SQL Parser supports this Syntax, not supports Temporary Table function |
+| ^ | `CREATE TABLE [IF NOT EXISTS]` | Support | 　 |
+| ^ | `CREATE TABLE LIKE` | Support | 　 |
+| ^ | `CREATE TABLE AS SELECT ...` | Support | 1. The data source user is required to have CREATE TEMPORARY TABLE privilege. |
+| ^ | ^ | ^ | 2. It is required that the CREATE table and the SELECT table are associated with at least one same data node, otherwise the execution is unsuccessful: `ERROR 10215 (HY000): [LOADTEST1] no overlapping datanode.` |
+| ^ | ^ | ^ | 3. `CREATE TABLE ... IGNORE SELECT` and `CREATE TABLE ... REPLACE SELECT` are not supported. |
+| ^ | `GENERATED COLUMNS` | Support | New function of MySQL8.0 and 5.7 |
+| ^ | `SECONDARY INDEXES` | Support | New function of MySQL8.0 and 5.7 |
+| ^ | `CHECK` | Support | New function of MySQL8.0 |
+| `CREATE TRIGGER` | 　 | Support | 　At present, it only supports single-node, and need CREATE privilege granted, internal statement does not verify the privilege, DEFINER related is not supported at present, related Field show the current user when show triggers |
+| `CREATE VIEW` | 　 | Support | 　 |
 
 `CREATE DATABASE` is used to create LogicDB, the usage is as follows:
 
@@ -4251,77 +4248,74 @@ create database if not exists zjj_d3 default datanode '1,4';
 #### DROP statement
 
 | MySQL statement type | Clause type | Support status | Description |
-|----------------------|-------------|----------------|-------------|
-| ^ | DROP DATABASE | 　 | Forbidden |
-| ^ | DROP EVENT | 　 | Forbidden |
-| ^ | DROP FUNCTION | 　 | Forbidden |
-| ^ | DROP INDEX | UNIQUE | Support |
-| ^ |   | Regular index KEY | Support |
-| ^ |   | FOREIGN KEY | Support |
-| ^ |   | ^ | Support |
-| ^ |   | FULLTEXT | Support |
-| ^ |   | SPATIAL | Support |
-| ^ |   | ALGORITHM | Support |
-| ^ |   | LOCK | Support |
-| ^ | DROP TABLE | DROP \[TEMPORARY] TABLE \[IF EXISTS] | Forbidden |
-| ^ |   | DROP TABLE | Support |
-| ^ | DROP TABLE multi-table | Support | Multi-table must be guaranteed in the same node |
-| ^ |   | DROP TABLE table_name \[RESTRICT \| CASCADE] | Support |
-| DROP TRIGGER | 　 | Support | DROP privilege shall be granted |
-| ^ | DROP VIEW | 　 | Support |
+|----------------------|----------------------------------------------|----------------|-------------------------------------------------|
+| `DROP DATABASE` | 　 | Forbidden |   |
+| `DROP EVENT` | 　 | Forbidden |   |
+| `DROP FUNCTION` | 　 | Forbidden |   |
+| `DROP INDEX` | `UNIQUE` | Support |   |
+| ^ | Regular index `KEY` | Support |   |
+| ^ | `FOREIGN KEY` | Support |   |
+| ^ | `FULLTEXT` | Support |   |
+| ^ | `SPATIAL` | Support |   |
+| ^ | `ALGORITHM` | Support |   |
+| ^ | `LOCK` | Support |   |
+| `DROP TABLE` | `DROP [TEMPORARY] TABLE [IF EXISTS]` | Forbidden |   |
+| ^ | `DROP TABLE` | Support |   |
+| ^ | `DROP TABLE` multi-table | Support | Multi-table must be guaranteed in the same node |
+| ^ | `DROP TABLE table_name [RESTRICT | CASCADE]` | Support |   |
+| `DROP TRIGGER` | 　 | Support | DROP privilege shall be granted |
+| `DROP VIEW` | 　 | Support |   |
 
 #### TRUNCATE AND RENAME statement
 
-| MySQL statement type | Clause type | Support status | Description                                                                                                                                                                                                                                                                       |
-|----|----|----|----|
-| RENAME TABLE             | 　              | Support            | 1. RENAME multiple tables is supported, but these tables are required to be on the same node. Otherwise, the execution will fail and an error will be reported: ERROR 10042 (HY000): unsupported to rename multi table with different datanodes.                                    |
-| ^                         |                 ^|^                    | 2. The target table of RENAME does not need to be added with the table configuration in advance. If you add the table configuration to the new table, you need to ensure that the configuration of the new table is consistent with the old table, otherwise RENAME will not succeed |
-|  ^                        |                 ^| ^                   | Note: database users of the compute node need to have ALTER and DROP privileges of the old table, and CREATE and INSERT privileges on the new table.　                                                                                                                                |
-| TRUNCATE TABLE           | 　              | Support            | 　                                                                                                                                                                                                                                                                                    |
+| MySQL statement type | Clause type | Support status | Description |
+|----------------------|-------------|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `RENAME TABLE` | 　 | Support | 1. RENAME multiple tables is supported, but these tables are required to be on the same node. Otherwise, the execution will fail and an error will be reported: ERROR 10042 (HY000): unsupported to rename multi table with different datanodes. |
+| ^ | ^ | ^ | 2. The target table of RENAME does not need to be added with the table configuration in advance. If you add the table configuration to the new table, you need to ensure that the configuration of the new table is consistent with the old table, otherwise RENAME will not succeed |
+| ^ | ^ | ^ | Note: database users of the compute node need to have ALTER and DROP privileges of the old table, and CREATE and INSERT privileges on the new table.　 |
+| `TRUNCATE TABLE` | 　 | Support | 　 |
 
 ### Transaction management and locking statement
 
-| Statement type                    | Transaction statement | Statement parameter                 | Status  | Description                                                                                                                                                                                                                                                                                                                                                                                                  |
-|----|----|----|----|----|
-| Transaction management                | START TRANSACTION         | No parameter                            | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       |                           | WITH CONSISTENT SNAPSHOT                | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       |                           | READ WRITE                              | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       |                           | READ ONLY                               | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | BEGIN                     |                                         | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | COMMIT                    |                                         | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | COMMIT                    | [AND [NO] CHAIN] [[NO] RELEASE] | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | ROLLBACK                  |                                         | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | ROLLBACK                  | [AND [NO] CHAIN] [[NO] RELEASE] | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | SET autocommit            | 0|1                                    | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| SAVEPOINT                             | SAVEPOINT                 |                                         | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | ROLLBACK ... TO ...      |                                         | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | RELEASE SAVEPOINT         |                                         | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| LOCK                                  | LOCK TABLES               | READ [LOCAL]                          | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       |                           | [LOW_PRIORITY] WRITE                  | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | UNLOCK TABLES             |                                         | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | LOCK INSTANCE FOR BACKUP  |                                         | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | UNLOCK INSTANCE;          |                                         | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| Transaction isolation level statement | SET SESSION TRANSACTION   | REPEATABLE READ                         | Support     | Fully supported in XA mode. In general mode, partial commit may be read.                                                                                                                                                                                                                                                                                                                                        |
-|                                       |                           | READ COMMITTED                          | Support     | Read&write inconsistency may exist in general mode;                                                                                                                                                                                                                                                                                                                                                              |
-|                                       |                           |                                         |             | In XA mode, it is not supported in v.2.5.5 below, and it is supported in v.2.5.5 and above.                                                                                                                                                                                                                                                                                                                     |
-|                                       |                           |                                         |             | In v.2.5.5 and above, however, strong read-write consistency will not be guaranteed under multiple cross-node queries. That is, for SQL such as select and insert select, if one SQL is converted to multiple SQL statements, the SQL execution result may be incorrect at this isolation level. Refer to the description of [data strong consistency](#data-strong-consistency-xa-transaction) (XA transaction) |
-|                                       |                           | READ UNCOMMITTED                        | Not support |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       |                           | SERIALIZABLE                            | Support     | Fully supported in XA mode. In general mode, partial commit may be read.                                                                                                                                                                                                                                                                                                                                        |
-|                                       | SET GLOBAL TRANSACTION    | REPEATABLE READ                         | Not support | Not support SET GLOBAL mode, only support SET SESSION                                                                                                                                                                                                                                                                                                                                                            |
-|                                       |                           | READ COMMITTED                          | Not support | Not support SET GLOBAL mode, only support SET SESSION                                                                                                                                                                                                                                                                                                                                                            |
-|                                       |                           | READ UNCOMMITTED                        | Not support |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       |                           | SERIALIZABLE                            | Not support |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | SET SESSION TRANSACTION   | READ ONLY                               | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       |                           | READ WRITE                              | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | SET GLOBAL TRANSACTION    | READ ONLY                               | Not support |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       |                           | READ WRITE                              | Not support |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| Distributed transaction               | XA START|BEGIN ...      | [JOIN|RESUME]                        | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | XA END                    | [SUSPEND [FOR MIGRATE]]             | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | XA PREPARE                |                                         | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | XA COMMIT                 | [ONE PHASE]                           | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | XA ROLLBACK               |                                         | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | XA RECOVER                |                                         | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                  |
-|                                       | XA RECOVER                | [CONVERT XID]                         | Forbidden   | New parameter of 5.7                                                                                                                                                                                                                                                                                                                                                                                             |
+| Statement type | Transaction statement | Statement parameter | Status | Description |
+|---------------------------------------|----------------------------|-----------------------------------|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Transaction management | `START TRANSACTION` | No parameter | Support |   |
+| ^  | ^ | `WITH CONSISTENT SNAPSHOT` | Support |   |
+| ^  | ^ | `READ WRITE` | Support |   |
+| ^  | ^ | `READ ONLY` | Support |   |
+| ^  | `BEGIN` |   | Support |   |
+| ^  | `COMMIT` |   | Support |   |
+| ^  | `COMMIT` | `[AND [NO] CHAIN] [[NO] RELEASE]` | Support |   |
+| ^  | `ROLLBACK` |   | Support |   |
+| ^  | `ROLLBACK` | `[AND [NO] CHAIN] [[NO] RELEASE]` | Support |   |
+| ^  | `SET autocommit` | `0|1` | Support |   |
+| `SAVEPOINT` | `SAVEPOINT` |   | Support |   |
+| ^  | `ROLLBACK ... TO ...` |   | Support |   |
+| ^  | `RELEASE SAVEPOINT` |   | Support |   |
+| `LOCK` | `LOCK TABLES` | `READ [LOCAL]` | Forbidden |   |
+| ^  |  ^ | `[LOW_PRIORITY] WRITE` | Forbidden |   |
+| ^  | `UNLOCK TABLES` |   | Forbidden |   |
+| ^  | `LOCK INSTANCE FOR BACKUP` |   | Forbidden |   |
+| ^  | `UNLOCK INSTANCE` |   | Forbidden |   |
+| Transaction isolation level statement | `SET SESSION TRANSACTION` | `REPEATABLE READ` | Support | Fully supported in XA mode. In general mode, partial commit may be read. |
+| ^  | ^  | `READ COMMITTED` | Support | Read&write inconsistency may exist in general mode; In XA mode, it is not supported in v.2.5.5 below, and it is supported in v.2.5.5 and above. In v.2.5.5 and above, however, strong read-write consistency will not be guaranteed under multiple cross-node queries. That is, for SQL such as select and insert select, if one SQL is converted to multiple SQL statements, the SQL execution result may be incorrect at this isolation level. Refer to the description of [data strong consistency](#data-strong-consistency-xa-transaction) (XA transaction) |
+| ^  |  ^ | `READ UNCOMMITTED` | Not support |   |
+| ^  |  ^ | `SERIALIZABLE` | Support | Fully supported in XA mode. In general mode, partial commit may be read. |
+| ^  | `SET GLOBAL TRANSACTION` | `REPEATABLE READ` | Not support | Not support SET GLOBAL mode, only support SET SESSION |
+| ^  |  ^ | `READ COMMITTED` | Not support | Not support SET GLOBAL mode, only support SET SESSION |
+| ^  |  ^ | `READ UNCOMMITTED` | Not support |   |
+| ^  |  ^ | `SERIALIZABLE` | Not support |   |
+| ^  | `SET SESSION TRANSACTION` | `READ ONLY` | Support |   |
+| ^  |  ^ | `READ WRITE` | Support |   |
+| ^  | `SET GLOBAL TRANSACTION` | `READ ONLY` | Not support |   |
+| ^  |  ^ | `READ WRITE` | Not support |   |
+| Distributed transaction | `XA START|BEGIN ...` | `[JOIN|RESUME]` | Forbidden |   |
+| ^  | `XA END` | `[SUSPEND [FOR MIGRATE]]` | Forbidden |   |
+| ^  | `XA PREPARE` |   | Forbidden |   |
+| ^  | `XA COMMIT` | `[ONE PHASE]` | Forbidden |   |
+| ^  | `XA ROLLBACK` |   | Forbidden |   |
+| ^  | `XA RECOVER` |   | Forbidden |   |
+| ^  | `XA RECOVER` | `[CONVERT XID]` | Forbidden | New parameter of 5.7 |
 
 ### Other MySQL statements
 
@@ -4329,51 +4323,51 @@ create database if not exists zjj_d3 default datanode '1,4';
 
 HotDB Server only supports Storage Procedure, Custom Function statement in vertical table. (i.e. the LogicDB only associate one data node).
 
-| Statement type                         | SQL statement                                                                    | Support status | Description               |
-|----|----|----|----|----|
-| Storage Procedure                          | BEGIN ... END ...                                                                   | Limited            | Can be used in vertical table |
-|                                            | DECLARE                                                                              | Limited            | **　**                        |
-|                                            | CASE                                                                                 | Limited            | **　**                        |
-|                                            | IF                                                                                   | Limited            | **　**                        |
-|                                            | ITRATE                                                                               | Limited            | **　**                        |
-|                                            | LEAVE                                                                                | Limited            | **　**                        |
-|                                            | LOOP                                                                                 | Limited            | **　**                        |
-|                                            | REPEAT                                                                               | Limited            | **　**                        |
-|                                            | RETURN                                                                               | Limited            | **　**                        |
-|                                            | WHILE                                                                                | Limited            | **　**                        |
-|                                            | CURSOR                                                                               | Limited            | **　**                        |
-|                                            | DECLARE ... CONDITION...                                                            | Limited            | **　**                        |
-|                                            | DECLARE ... HANDLER ...                                                             | Limited            | **　**                        |
-|                                            | GET DIAGNOSTICS                                                                      | Limited            | **　**                        |
-|                                            | RESIGNAL                                                                             | Limited            | **　**                        |
-|                                            | SIGNAL                                                                               | Limited            | **　**                        |
-| Plugin and User-Defined Function statement | CREATE [AGGREGATE] FUNCTION function_name RETURNS {STRING|INTEGER|REAL|DECIMAL} | Limited            |                               |
-|                                            | SONAME shared_library_name                                                           |                    |                               |
-|                                            | DROP FUNCTION                                                                        | Limited            |                               |
-|                                            | INSTALL PLUGIN                                                                       | Forbidden          |                               |
-|                                            | UNINSTALL PLUGIN                                                                     | Forbidden          |                               |
+| Statement type | SQL statement | Support status | Description |
+|--------------------------------------------|-----------------------------------------------------------------------------------|----------------|-------------------------------|
+| Storage Procedure | `BEGIN ... END ...` | Limited | Can be used in vertical table |
+|  ^ | `DECLARE` | Limited |   |
+|  ^ | `CASE` | Limited |   |
+|  ^ | `IF` | Limited |   |
+|  ^ | `ITRATE` | Limited |   |
+|  ^ | `LEAVE` | Limited |   |
+|  ^ | `LOOP` | Limited |   |
+|  ^ | `REPEAT` | Limited |   |
+|  ^ | `RETURN` | Limited |   |
+|  ^ | `WHILE` | Limited |   |
+|  ^ | `CURSOR` | Limited |   |
+|  ^ | `DECLARE ... CONDITION...` | Limited |   |
+|  ^ | `DECLARE ... HANDLER ...` | Limited |   |
+|  ^ | `GET DIAGNOSTICS` | Limited |   |
+|  ^ | `RESIGNAL` | Limited |   |
+|  ^ | `SIGNAL` | Limited |   |
+| Plugin and User-Defined Function statement | `CREATE [AGGREGATE] FUNCTION function_name RETURNS {STRING|INTEGER|REAL|DECIMAL}` | Limited |   |
+|  ^ | `SONAME shared_library_name` |   |   |
+|  ^ | `DROP FUNCTION` | Limited |   |
+|  ^ | `INSTALL PLUGIN` | Forbidden |   |
+|  ^ | `UNINSTALL PLUGIN` | Forbidden |   |
 
 #### Prepare SQL Statement
 
-| Statement type | SQL statement | Support status | Description |   |
-|----------------|---------------|----------------|-------------|---|
-| ^ | Prepare SQL Statement | PREPARE ... FROM ... | Support |   |
-| ^ |   | EXECUTE ... | Support |   |
-| ^ |   | {DEALLOCATE | DROP} PREPARE | Support |
+| Statement type | SQL statement | Support status | Description |
+|-----------------------|-------------------------------|----------------|-------------|
+| Prepare SQL Statement | `PREPARE ... FROM ...` | Support |   |
+| ^ | `EXECUTE ...` | Support |   |
+| ^ | `{DEALLOCATE | DROP} PREPARE` | Support |   |
 
 #### User management statement
 
 HotDB Server realizes a set of its own username and privilege management system, which could be merely operated on the Distributed Transactional Database Management Platform page. SQL statements of MySQL database user management are all Forbidden.
 
 | Statement type | SQL statement | Support status | Description |
-|----------------|---------------|----------------|-------------|
-| ^ | User management statement | ALTER USER | Forbidden |
-| ^ |   | CREATE USER | Support |
-| ^ |   | DROP USER | Support |
-| ^ |   | GRANT | Support |
-| ^ |   | RENAME USER | Forbidden |
-| ^ |   | REVOKE | Support |
-| ^ |   | SET PASSWORD | Forbidden |
+|---------------------------|---------------|----------------|-------------|
+| User management statement | `ALTER USER` | Forbidden |   |
+| ^ | `CREATE USER` | Support |   |
+| ^ | `DROP USER` | Support |   |
+| ^ | `GRANT` | Support |   |
+| ^ | `RENAME USER` | Forbidden |   |
+| ^ | `REVOKE` | Support |   |
+| ^ | `SET PASSWORD` | Forbidden |   |
 
 Support the use of SQL statements to CREATE / DROP user and to GRANT / REVOKE user when the compute node version is higher than 2.5.6.
 
@@ -4560,95 +4554,91 @@ Notes on REVOKE:
 #### Table maintenance statement
 
 | Statement type | SQL statement | Support status | Description |
-|----------------|---------------|----------------|-------------|
-| ^ | Table maintenance statement | ANALYZE TABLE | Forbidden |
-| ^ |   | CHECK TABLE | Forbidden |
-| ^ |   | CHECKSUM TABLE | Forbidden |
-| ^ |   | OPTIMIZE TABLE | Forbidden |
-| ^ |   | REPAIR TABLE | Forbidden |
+|-----------------------------|----------------|----------------|-------------|
+| Table maintenance statement | `ANALYZE TABLE` | Forbidden |   |
+| ^ | `CHECK TABLE` | Forbidden |   |
+| ^ | `CHECKSUM TABLE` | Forbidden |   |
+| ^ | `OPTIMIZE TABLE` | Forbidden |   |
+| ^ | `REPAIR TABLE` | Forbidden |   |
 
 #### SET statement
 
-| Statement type | SQL statement               | Support status | Description                                                                           |
-|----|----|----|----|----|
-| SET statement      | SET GLOBAL                      | Not support        | 　                                                                                        |
-|                    | SET SESSION                     | Partial support    | Such as: SET SESSION TRANSACTION/SET TX_READONLY/SET NAMES, etc.                         |
-|                    | SET @@global.                 | Not support        | 　                                                                                        |
-|                    | SET @@session.                | Not support        | 　                                                                                        |
-|                    | SET @@                         | Not support        | 　                                                                                        |
-|                    | SET ROLE                        | Forbidden          | Compute node does not support new role function of MySQL8.0                               |
-|                    | User Custom Variable            | Support            | Only support recall under single-node                                                     |
-|                    | SET CHARACTER SET               | Support            | Only support: CHARACTER_SET_CLIENT                                                        |
-|                    |                                 |                    | CHARACTER_SET_CONNECTION                                                                  |
-|                    |                                 |                    | CHARACTER_SET_RESULTS                                                                     |
-|                    | SET NAMES                       | Support            | 　                                                                                        |
-|                    | SET TRANSACTION ISOLATION LEVEL | Support            | Under ordinary mode, the level supported is REPEATABLE READ, READ COMMITTED, SERIALIZABLE |
-|                    |                                 |                    | XA mode only supports REPEATABLE READ, SERIALIZABLE                                       |
+| Statement type | SQL statement | Support status | Description |   |
+|----------------|---------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
+| SET statement | `SET GLOBAL` | Not support | 　 |   |
+| ^  | `SET SESSION` | Partial support | Such as: `SET SESSION TRANSACTION/SET TX_READONLY/SET NAMES`, etc. |   |
+| ^  | `SET @@global.` | Not support | 　 |   |
+| ^  | `SET @@session.` | Not support | 　 |   |
+| ^  | `SET @@` | Not support | 　 |   |
+| ^  | `SET ROLE` | Forbidden | Compute node does not support new role function of MySQL8.0 |   |
+| ^  | User Custom Variable | Support | Only support recall under single-node |   |
+| ^  | `SET CHARACTER SET` | Support | Only support: `CHARACTER_SET_CLIENT`, `CHARACTER_SET_CONNECTION`, `CHARACTER_SET_RESULTS` |   |
+| ^  | `SET NAMES` | Support | 　 |   |
+| ^  | `SET TRANSACTION ISOLATION LEVEL` | Support | Under ordinary mode, the level supported is `REPEATABLE READ`, `READ COMMITTED`, `SERIALIZABLE`<br>XA mode only supports `REPEATABLE READ`, `SERIALIZABLE` |   |
 
 #### SHOW statement
 
-| Statement type | SQL statement               | Support status | Description                                                                           |
-|----|----|----|----|----|
-| SHOW statement     | SHOW AUTHORS                                                                          | Support            | 　                                                                        |
-|                    | SHOW BINARY LOGS                                                                      | Support            | 　                                                                        |
-|                    | SHOW BINLOG EVENTS                                                                    | Support            | 　                                                                        |
-|                    | SHOW CHARACTER SET                                                                    | Support            | 　                                                                        |
-|                    | SHOW COLLATION                                                                        | Support            | 　                                                                        |
-|                    | SHOW FIELDS FROM                                                                      | Support            | 　                                                                        |
-|                    | SHOW COLUMNS FROM|IN tbl_name                                                        | Support            | 　                                                                        |
-|                    | SHOW FULL COLUMNS FROM|IN tbl_name                                                   | Support            | 　                                                                        |
-|                    | SHOW CONTRIBUTORS                                                                     | Support            | 　                                                                        |
-|                    | SHOW CREATE DATABASE                                                                  | Support            | 　                                                                        |
-|                    | SHOW CREATE EVENT                                                                     | Support            | 　                                                                        |
-|                    | SHOW CREATE FUNCTION                                                                  | Support            | 　                                                                        |
-|                    | SHOW CREATE PROCEDURE                                                                 | Support            | 　                                                                        |
-|                    | SHOW CREATE TABLE                                                                     | Support            | 　                                                                        |
-|                    | SHOW CREATE TRIGGER                                                                   | Support            | 　                                                                        |
-|                    | SHOW CREATE VIEW                                                                      | Support            | 　                                                                        |
-|                    | SHOW DATABASES                                                                        | Support            | 　                                                                        |
-|                    | SHOW ENGINES                                                                          | Support            | 　                                                                        |
-|                    | SHOW ERRORS                                                                           | Support            |                                                                           |
-|                    | SHOW EVENTS                                                                           | Support            | 　                                                                        |
-|                    | SHOW FUNCTION STATUS                                                                  | Support            | 　                                                                        |
-|                    | SHOW GRANTS                                                                           | Support            | Show privilege control condition of the compute node                      |
-|                    | SHOW INDEX FROM *db_name.table_name*                                                  | Support            | 　                                                                        |
-|                    | SHOW INDEX FROM table_name WHERE...                                                  | Support            | 　                                                                        |
-|                    | SHOW MASTER STATUS                                                                    | Support            | 　                                                                        |
-|                    | SHOW OPEN TABLES                                                                      | Support            | Show uniform null set                                                     |
-|                    | SHOW PLUGINS                                                                          | Support            | 　                                                                        |
-|                    | SHOW PRIVILEGES                                                                       | Support            | 　                                                                        |
-|                    | SHOW PROCEDURE STATUS                                                                 | Support            | 　                                                                        |
-|                    | SHOW PROCESSLIST                                                                      | Support            | Show connection condition of the compute node                             |
-|                    | SHOW PROFILES                                                                         | Support            | 　                                                                        |
-|                    | SHOW RELAYLOG EVENTS [IN 'log_name'] [FROM pos] [LIMIT [offset,] row_count] | Support            | 　                                                                        |
-|                    | SHOW SLAVE HOSTS                                                                      | Support            | 　                                                                        |
-|                    | SHOW SLAVE STATUS                                                                     | Support            | 　                                                                        |
-|                    | SHOW GLOBAL STATUS                                                                    | Support            | 　                                                                        |
-|                    | SHOW SESSION STATUS                                                                   | Support            | 　                                                                        |
-|                    | SHOW STATUS                                                                           | Support            |                                                                           |
-|                    | SHOW TABLE STATUS                                                                     | Support            | 　                                                                        |
-|                    | SHOW FULL TABLES                                                                      | Support            | 　                                                                        |
-|                    | SHOW TABLES                                                                           | Support            | 　                                                                        |
-|                    | SHOW TRIGGERS                                                                         | Support            | 　                                                                        |
-|                    | SHOW GLOBAL|SESSION VARIABLES                                                        | Support            | 　                                                                        |
-|                    | SHOW WARNINGS                                                                         | Support            |                                                                          |
-|                    | Show HOTDB tables                                                                     | Support            | Support [{FROM | IN} *db_name*] [LIKE '*pattern*' | WHERE *expr*] |
-|                    |                                                                                       |                    | Show sharding information of the compute node                             |
+| Statement type | SQL statement | Support status | Description |
+|----------------|-------------------------------------------------------------------------------|----------------|--------------------------------------------------------------------------------------------------------------|
+| SHOW statement | `SHOW AUTHORS` | Support | 　 |
+| ^ | `SHOW BINARY LOGS` | Support | 　 |
+| ^ | `SHOW BINLOG EVENTS` | Support | 　 |
+| ^ | `SHOW CHARACTER SET` | Support | 　 |
+| ^ | `SHOW COLLATION` | Support | 　 |
+| ^ | `SHOW FIELDS FROM` | Support | 　 |
+| ^ | `SHOW COLUMNS FROM|IN tbl_name` | Support | 　 |
+| ^ | `SHOW FULL COLUMNS FROM|IN tbl_name` | Support | 　 |
+| ^ | `SHOW CONTRIBUTORS` | Support | 　 |
+| ^ | `SHOW CREATE DATABASE` | Support | 　 |
+| ^ | `SHOW CREATE EVENT` | Support | 　 |
+| ^ | `SHOW CREATE FUNCTION` | Support | 　 |
+| ^ | `SHOW CREATE PROCEDURE` | Support | 　 |
+| ^ | `SHOW CREATE TABLE` | Support | 　 |
+| ^ | `SHOW CREATE TRIGGER` | Support | 　 |
+| ^ | `SHOW CREATE VIEW` | Support | 　 |
+| ^ | `SHOW DATABASES` | Support | 　 |
+| ^ | `SHOW ENGINES` | Support | 　 |
+| ^ | `SHOW ERRORS` | Support |   |
+| ^ | `SHOW EVENTS` | Support | 　 |
+| ^ | `SHOW FUNCTION STATUS` | Support | 　 |
+| ^ | `SHOW GRANTS` | Support | Show privilege control condition of the compute node |
+| ^ | `SHOW INDEX FROM db_name.table_name` | Support | 　 |
+| ^ | `SHOW INDEX FROM table_name WHERE...` | Support | 　 |
+| ^ | `SHOW MASTER STATUS` | Support | 　 |
+| ^ | `SHOW OPEN TABLES` | Support | Show uniform null set |
+| ^ | `SHOW PLUGINS` | Support | 　 |
+| ^ | `SHOW PRIVILEGES` | Support | 　 |
+| ^ | `SHOW PROCEDURE STATUS` | Support | 　 |
+| ^ | `SHOW PROCESSLIST` | Support | Show connection condition of the compute node |
+| ^ | `SHOW PROFILES` | Support | 　 |
+| ^ | `SHOW RELAYLOG EVENTS [IN 'log_name'] [FROM pos] [LIMIT [offset,] row_count]` | Support | 　 |
+| ^ | `SHOW SLAVE HOSTS` | Support | 　 |
+| ^ | `SHOW SLAVE STATUS` | Support | 　 |
+| ^ | `SHOW GLOBAL STATUS` | Support | 　 |
+| ^ | `SHOW SESSION STATUS` | Support | 　 |
+| ^ | `SHOW STATUS` | Support |   |
+| ^ | `SHOW TABLE STATUS` | Support | 　 |
+| ^ | `SHOW FULL TABLES` | Support | 　 |
+| ^ | `SHOW TABLES` | Support | 　 |
+| ^ | `SHOW TRIGGERS` | Support | 　 |
+| ^ | `SHOW GLOBAL|SESSION VARIABLES` | Support | 　 |
+| ^ | `SHOW WARNINGS` | Support |   |
+| ^ | `Show HOTDB tables` | Support | Support `[{FROM | IN} db_name] [LIKE 'pattern' | WHERE expr]`, Show sharding information of the compute node |
 
 #### HotDB PROFILE
 
-| Statement type | SQL statement | Support status | Description | ^ |   |   |
-|----------------|---------------|----------------|-------------|---|---|---|
-| SET statement | set hotdb_profiling={0 | 1 | on | off} | Support | Support set [session] hotdb_profiling |
-| ^ | SHOW statement | show hotdb_profiles | Support | ^ |   |   |
-| ^ | show hotdb_profile for query N [relative time|real time] | Support | N represents the SQL id executed | ^ |   |   |
+| Statement type | SQL statement | Support status | Description |
+|----------------|---------------|----------------|-------------|
+| SET statement | `set hotdb_profiling={0|1|on|off}` | Support | Support `set [session] hotdb_profiling` |
+| SHOW statement | `show hotdb_profiles` | Support |  |
+| ^ | `show hotdb_profile for query N [relative time|real time]` | Support | N represents the SQL id executed |
 
 **Function Description:** this function is limited to Session level only
 
 `show hotdb_profiles` output is identical with MySQL:
 
-- Query_ID of the 1^st^ column is id of SQL
-- Duration of the 2^nd^ column is the time length of (the time point when the compute node completes writing the last Result Set to the front-end -- the time point when the compute node starts to receive the first data packet of SQL), and the unit is: ms.
+- Query_ID of the 1st column is id of SQL
+- Duration of the 2nd column is the time length of (the time point when the compute node completes writing the last Result Set to the front-end -- the time point when the compute node starts to receive the first data packet of SQL), and the unit is: ms.
 - Query of the 3rd column is SQL text
 
 For example:
@@ -4716,20 +4706,20 @@ Note: Description of the status column:
 
 #### Other MySQL management statement
 
-| Statement type | SQL statement | Support status | Description |   |
-|----------------|---------------|----------------|-------------|---|
-| ^ | Other management statements | BINLOG 'str' | Forbidden |   |
-| ^ |   | CACHE INDEX | Forbidden |   |
-| ^ |   | KILL [CONNECTION | QUERY] | Support |   |
-| ^ |   | LOAD INDEX INTO CACHE | Forbidden |   |
-| ^ |   | RESET MASTER | Forbidden |   |
-| ^ |   | RESET QUERY CACHE | Forbidden |   |
-| ^ |   | RESET SLAVE | Forbidden |   |
-| ^ | MySQL Utility Statements | DESCRIBE | DESC | Support |
-| ^ | EXPLAIN | Support | Please refer to [EXPLAIN](#explain) |   |
-| ^ |   | EXPLAIN EXTENDED | Not support |   |
-| ^ |   | HELP | Not support |   |
-| ^ |   | USE | Support |   |
+| Statement type | SQL statement | Support status | Description |
+|-----------------------------|-----------------------------|----------------|-------------------------------------|
+| Other management statements | `BINLOG 'str'` | Forbidden |   |
+| ^ | `CACHE INDEX` | Forbidden |   |
+| ^ | `KILL [CONNECTION | QUERY]` | Support |   |
+| ^ | `LOAD INDEX INTO CACHE` | Forbidden |   |
+| ^ | `RESET MASTER` | Forbidden |   |
+| ^ | `RESET QUERY CACHE` | Forbidden |   |
+| ^ | `RESET SLAVE` | Forbidden |   |
+| MySQL Utility Statements | `DESCRIBE | DESC` | Support |   |
+| ^ | `EXPLAIN` | Support | Please refer to [EXPLAIN](#explain) |
+| ^ | `EXPLAIN EXTENDED` | Not support |   |
+| ^ | `HELP` | Not support |   |
+| ^ | `USE` | Support |   |
 
 The use method of KILL statement is the same with that of MySQL KILL statement. KILL will simultaneously disable the front-end connection of the compute node, and data source connection of MySQL database.
 
@@ -4741,109 +4731,92 @@ Show description of the parameters without special treatment: when show_dnid=1, 
 
 The following parameter are of special processing, the for its specific show results, please see the Show description:
 
-| MySQL VARIABLES      | Show description                                                                                                                        |
-|-----|----|
-| BIND_ADDRESS             | *Always show*                                                                                                                             |
-| TX_ISOLATION             | REPEATABLE-READ is default. If it is session, show session's value.                                                                        |
-|                          | This parameter was removed in MySQL8.0, and was replaced with transaction_isolation                                                         |
-| TRANSACTION_ISOLATION    | New parameter of MySQL8.0, used for replacing tx_isalation                                                                                  |
-| AUTO_INCREMENT_OFFSET    | Show 1 at present                                                                                                                           |
-| CHARACTER_SET_CONNECTION | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                          |
-| CHARACTER_SET_RESULTS    | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                          |
-| MAX_CONNECTIONS          | Show according to actual configuration of the compute node                                                                                  |
-| MAX_USER_CONNECTIONS     | Show according to actual configuration of the compute node                                                                                  |
-| MAX_JOIN_SIZE            | Only support set session max_join_size=xxx, show according to set value of the compute node                                                 |
-| CHARACTER_SET_SERVER     | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                          |
-| VERSION_COMMENT          | HotDB Server by Hotpu Tech                                                                                                                  |
-| INTERACTIVE_TIMEOUT      | 172800                                                                                                                                      |
-| SERVER_UUID              | Always show 00000000-0000-0000-0000-0000000000                                                                                              |
-| TX_READ_ONLY             | OFF is default. If it is session, show session status. This parameter was removed in MySQL8.0, and was replaced with transaction_ready_only |
-| TRANSACTION_READ_ONLY    | New parameter of MySQL8.0, used for replacing tx_read_only                                                                                  |
-| PORT                     | Show according to the configured service port value                                                                                         |
-| AUTOCOMMIT               | ON is default. If it is session, show session status.                                                                                      |
-| HOSTNAME                 | MySQL5.7, show as Hostname of the compute node server                                                                                       |
-| COLLATION_DATABASE       | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                          |
-| CHARACTER_SET_DATABASE   | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                          |
-| PROTOCOL_VERSION         | Show according to practical Communication Protocol Version used by the compute node                                                         |
-| READ_ONLY                | Set according to the practical mode used by the compute node                                                                                |
-| VERSION                  | For MySQL Version No. - HotDB Server Version No., show according to the practical one used by the compute node                              |
-| COLLATION_SERVER         | At present, only support:                                                                                                                   |
-|                          | latin1_swedish_ci                                                                                                                           |
-|                          | latin1_bin                                                                                                                                  |
-|                          | gbk_chinese_ci                                                                                                                              |
-|                          | gbk_bin                                                                                                                                     |
-|                          | utf8_general_ci                                                                                                                             |
-|                          | utf8_bin                                                                                                                                    |
-|                          | utf8mb4_general_ci                                                                                                                          |
-|                          | utf8mb4_bin                                                                                                                                 |
-| SOCKET                   | Show Null Character String                                                                                                                  |
-| SERVER_ID                | Show 0                                                                                                                                      |
-| WAIT_TIMEOUT             | 172800                                                                                                                                      |
-| SSL_CIPHER               | Return Null Character String                                                                                                                |
-| COLLATION_CONNECTION     | At present, only support:                                                                                                                   |
-|                          | latin1_swedish_ci                                                                                                                           |
-|                          | latin1_bin                                                                                                                                  |
-|                          | gbk_chinese_ci                                                                                                                              |
-|                          | gbk_bin                                                                                                                                     |
-|                          | utf8_general_ci                                                                                                                             |
-|                          | utf8_bin                                                                                                                                    |
-|                          | utf8mb4_general_ci                                                                                                                          |
-|                          | utf8mb4_bin                                                                                                                                 |
-| FOREIGN_KEY_CHECKS       | Show ON                                                                                                                                     |
-| CHARACTER_SET_CLIENT     | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                          |
-| TIME_ZONE                | Show SYSTEM                                                                                                                                 |
-| MAX_ALLOWED_PACKET       | Compute node control, Default: 64M                                                                                                          |
-| ADMIN_ADDRESS            | Always show Null Character String, new of MySQL8.0                                                                                          |
-| INNODB_BUFFER_POOL_SIZE  | Sum of all nodes under the LogicDB, Master/Slave node is counted as master node                                                             |
+| MySQL VARIABLES | Show description |
+|----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `BIND_ADDRESS` | **Always show** |
+| `TX_ISOLATION` | REPEATABLE-READ is default. If it is session, show session's value. This parameter was removed in MySQL8.0, and was replaced with transaction_isolation |
+| `TRANSACTION_ISOLATION` | New parameter of MySQL8.0, used for replacing tx_isalation |
+| `AUTO_INCREMENT_OFFSET` | Show 1 at present |
+| `CHARACTER_SET_CONNECTION` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
+| `CHARACTER_SET_RESULTS` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
+| `MAX_CONNECTIONS` | Show according to actual configuration of the compute node |
+| `MAX_USER_CONNECTIONS` | Show according to actual configuration of the compute node |
+| `MAX_JOIN_SIZE` | Only support set session max_join_size=xxx, show according to set value of the compute node |
+| `CHARACTER_SET_SERVER` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
+| `VERSION_COMMENT` | HotDB Server by Hotpu Tech |
+| `INTERACTIVE_TIMEOUT` | 172800 |
+| `SERVER_UUID` | Always show 00000000-0000-0000-0000-0000000000    |
+| `TX_READ_ONLY` | OFF is default. If it is session, show session status. This parameter was removed in MySQL8.0, and was replaced with transaction_ready_only |
+| `TRANSACTION_READ_ONLY` | New parameter of MySQL8.0, used for replacing tx_read_only |
+| `PORT` | Show according to the configured service port value |
+| `AUTOCOMMIT` | ON is default. If it is session, show session status. |
+| `HOSTNAME` | MySQL5.7, show as Hostname of the compute node server |
+| `COLLATION_DATABASE` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
+| `CHARACTER_SET_DATABASE` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
+| `PROTOCOL_VERSION` | Show according to practical Communication Protocol Version used by the compute node |
+| `READ_ONLY` | Set according to the practical mode used by the compute node |
+| `VERSION` | For MySQL Version No. - HotDB Server Version No., show according to the practical one used by the compute node |
+| `COLLATION_SERVER` | At present, only support: latin1_swedish_ci latin1_bin gbk_chinese_ci gbk_bin utf8_general_ci utf8_bin utf8mb4_general_ci utf8mb4_bin |
+| `SOCKET` | Show Null Character String |
+| `SERVER_ID` | Show 0 |
+| `WAIT_TIMEOUT` | 172800 |
+| `SSL_CIPHER` | Return Null Character String |
+| `COLLATION_CONNECTION` | At present, only support: latin1_swedish_ci latin1_bin gbk_chinese_ci gbk_bin utf8_general_ci utf8_bin  utf8mb4_general_ci utf8mb4_bin |
+| `FOREIGN_KEY_CHECKS` | Show ON |
+| `CHARACTER_SET_CLIENT` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
+| `TIME_ZONE` | Show SYSTEM |
+| `MAX_ALLOWED_PACKET` | Compute node control, Default: 64M |
+| `ADMIN_ADDRESS` | Always show Null Character String, new of MySQL8.0 |
+| `INNODB_BUFFER_POOL_SIZE` | Sum of all nodes under the LogicDB, Master/Slave node is counted as master node |
 
 | Status Name | Show description |
 |-------------|------------------|
-| Compression | All OFF (compute node does not support Compression Protocol for the time being) |
-| Innodb_buffer_pool_dump_status | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB |
-| Innodb_buffer_pool_load_status | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB |
-| Innodb_have_atomic_builtins | If there is OFF among all nodes under LogicDB, then it is OFF; if there are all ON, then it is ON |
-| Innodb_page_size | Take the value of the first node of LogicDB |
-| Innodb_row_lock_time_avg | Take simple average of all nodes under the LogicDB |
-| Innodb_row_lock_time_max | Take Max Value of all nodes under the LogicDB |
-| Last_query_cost | Always 0.000000 |
-| Last_query_partial_plans | Always 0 |
-| Max_used_connections | Take Max Value of all nodes under the LogicDB |
-| Slave_heartbeat_period | Take Max Value of all nodes under the LogicDB |
-| Slave_last_heartbeat | For date type value, take Min Value of all nodes under the LogicDB; if they are all Null Character String, then it is Null Character String |
-| Slave_running | If there is OFF among all nodes under LogicDB, then it is OFF, if they are all ON, then it is ON |
-| Ssl_cipher | Always return Null Character String |
-| Ssl_cipher_list | Always return Null Character String |
-| Ssl_ctx_verify_depth | Take the value of the first node of LogicDB |
-| Ssl_ctx_verify_mode | Take the value of the first node of LogicDB |
-| Ssl_default_timeout | Take the value of the first node of LogicDB |
-| Ssl_server_not_after | Always return Null Character String |
-| Ssl_server_not_before | Always return Null Character String |
-| Ssl_session_cache_mode | Take the value of the first node of LogicDB |
-| Ssl_verify_depth | Take the value of the first node of LogicDB |
-| Ssl_verify_mode | Take the value of the first node of LogicDB |
-| Ssl_version | Take the value of the first node of LogicDB |
-| Tc_log_page_size | Take the value of the first node of LogicDB |
-| Uptime | Take Max Value of all nodes under the LogicDB |
-| Uptime_since_flush_status | Take Max Value of all nodes under the LogicDB |
-| Caching_sha2_password_rsa_public_key | Always show Null Character String, new of MySQL8.0 |
-| Current_tls_ca | Always show Null Character String, new of MySQL8.0 |
-| Current_tls_capath | Always show Null Character String, new of MySQL8.0 |
-| Current_tls_cert | Always show Null Character String, new of MySQL8.0 |
-| Current_tls_cipher | Always show Null Character String, new of MySQL8.0 |
-| Current_tls_ciphersuites | Always show Null Character String, new of MySQL8.0 |
-| Current_tls_crl | Always show Null Character String, new of MySQL8.0 |
-| Current_tls_crlpath | Always show Null Character String, new of MySQL8.0 |
-| Current_tls_key | Always show Null Character String, new of MySQL8.0 |
-| Current_tls_version | Always show Null Character String, new of MySQL8.0 |
-| group_replication_primary_member | Always show Null Character String, new of MySQL8.0 |
-| mecab_charset | The first of LogicDB, New of MySQL8.0 |
-| Performance_schema_session_connect_attrs_longest_seen | Max of LogicDB, New of MySQL8.0 |
-| Rpl_semi_sync_master_clients | Always show 0, New of MySQL8.0 |
-| Rpl_semi_sync_master_net_avg_wait_time | Average of LogicDB, New of MySQL8.0 |
-| Rpl_semi_sync_master_status | Always show ON, New of MySQL8.0 |
-| Rpl_semi_sync_master_tx_avg_wait_time | Average of LogicDB, New of MySQL8.0 |
-| Rpl_semi_sync_slave_status | Always show ON, New of MySQL8.0 |
-| Rsa_public_key | Always show Null Character String, New of MySQL8.0 |
+| `Compression` | All OFF (compute node does not support Compression Protocol for the time being) |
+| `Innodb_buffer_pool_dump_status` | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB |
+| `Innodb_buffer_pool_load_status` | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB |
+| `Innodb_have_atomic_builtins` | If there is OFF among all nodes under LogicDB, then it is OFF; if there are all ON, then it is ON |
+| `Innodb_page_size` | Take the value of the first node of LogicDB |
+| `Innodb_row_lock_time_avg` | Take simple average of all nodes under the LogicDB |
+| `Innodb_row_lock_time_max` | Take Max Value of all nodes under the LogicDB |
+| `Last_query_cost` | Always 0.000000 |
+| `Last_query_partial_plans` | Always 0 |
+| `Max_used_connections` | Take Max Value of all nodes under the LogicDB |
+| `Slave_heartbeat_period` | Take Max Value of all nodes under the LogicDB |
+| `Slave_last_heartbeat` | For date type value, take Min Value of all nodes under the LogicDB; if they are all Null Character String, then it is Null Character String |
+| `Slave_running` | If there is OFF among all nodes under LogicDB, then it is OFF, if they are all ON, then it is ON |
+| `Ssl_cipher` | Always return Null Character String |
+| `Ssl_cipher_list` | Always return Null Character String |
+| `Ssl_ctx_verify_depth` | Take the value of the first node of LogicDB |
+| `Ssl_ctx_verify_mode` | Take the value of the first node of LogicDB |
+| `Ssl_default_timeout` | Take the value of the first node of LogicDB |
+| `Ssl_server_not_after` | Always return Null Character String |
+| `Ssl_server_not_before` | Always return Null Character String |
+| `Ssl_session_cache_mode` | Take the value of the first node of LogicDB |
+| `Ssl_verify_depth` | Take the value of the first node of LogicDB |
+| `Ssl_verify_mode` | Take the value of the first node of LogicDB |
+| `Ssl_version` | Take the value of the first node of LogicDB |
+| `Tc_log_page_size` | Take the value of the first node of LogicDB |
+| `Uptime` | Take Max Value of all nodes under the LogicDB |
+| `Uptime_since_flush_status` | Take Max Value of all nodes under the LogicDB |
+| `Caching_sha2_password_rsa_public_key` | Always show Null Character String, new of MySQL8.0 |
+| `Current_tls_ca` | Always show Null Character String, new of MySQL8.0 |
+| `Current_tls_capath` | Always show Null Character String, new of MySQL8.0 |
+| `Current_tls_cert` | Always show Null Character String, new of MySQL8.0 |
+| `Current_tls_cipher` | Always show Null Character String, new of MySQL8.0 |
+| `Current_tls_ciphersuites` | Always show Null Character String, new of MySQL8.0 |
+| `Current_tls_crl` | Always show Null Character String, new of MySQL8.0 |
+| `Current_tls_crlpath` | Always show Null Character String, new of MySQL8.0 |
+| `Current_tls_key` | Always show Null Character String, new of MySQL8.0 |
+| `Current_tls_version` | Always show Null Character String, new of MySQL8.0 |
+| `group_replication_primary_member` | Always show Null Character String, new of MySQL8.0 |
+| `mecab_charset` | The first of LogicDB, New of MySQL8.0 |
+| `Performance_schema_session_connect_attrs_longest_seen` | Max of LogicDB, New of MySQL8.0 |
+| `Rpl_semi_sync_master_clients` | Always show 0, New of MySQL8.0 |
+| `Rpl_semi_sync_master_net_avg_wait_time` | Average of LogicDB, New of MySQL8.0 |
+| `Rpl_semi_sync_master_status` | Always show ON, New of MySQL8.0 |
+| `Rpl_semi_sync_master_tx_avg_wait_time` | Average of LogicDB, New of MySQL8.0 |
+| `Rpl_semi_sync_slave_status` | Always show ON, New of MySQL8.0 |
+| `Rsa_public_key` | Always show Null Character String, New of MySQL8.0 |
 
 ### Special functions of compute node syntax
 
@@ -4953,35 +4926,29 @@ Sharding table creating syntax description:
 SHARD BY {FUNCTIONID | FUNCTIONNAME | FUNCTIONTYPE} refers to the keyword of sharding function ID, sharding function name and partition function type.
 ```
 
-' functionid_value | functionname_value | functiontype_value ' refers to the specific value of sharding function ID, sharding function name and sharding function type.
-
-USING COLUMN refers to the keyword of the sharding column.
-
-'shardcolumnname' refers to the value of the sharding column.
-
-ON DATANODE refers to the keyword of the data node.
-
-'datanodeid' refers to the value of a specific data node. Multiple discontinuous values can be separated by commas. Multiple consecutive values can be specified in the form of intervals, such as 1, 3, 4, 5-10, 12-40.
+- `functionid_value | functionname_value | functiontype_value` refers to the specific value of sharding function ID, sharding function name and sharding function type.
+- `USING COLUMN` refers to the keyword of the sharding column.
+- `shardcolumnname` refers to the value of the sharding column.
+- `ON DATANODE` refers to the keyword of the data node.
+- `datanodeid` refers to the value of a specific data node. Multiple discontinuous values can be separated by commas. Multiple consecutive values can be specified in the form of intervals, such as 1, 3, 4, 5-10, 12-40.
 
 Log in to the service port, use the LogicDB, enter Create Table statement, and execution succeeded. The management platform will show this table as defined status
 
+```
 mysql> use fun_zy
-
 Database changed
 
 mysql> CREATE TABLE match1_tb shard by functionname 'test_match1' using column 'aname' (id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
-
 Query OK, 0 rows affected (0.09 sec)
+```
 
 ![](assets/standard/image133.png)
 
 For Create Table according to this Syntax Rule, pay attention to several points below:
 
-- 'functionid | functionname | functiontype' is specific specified Sharding Function ID, Sharding Function name and Sharding Function type
-
-- 'shardcolumnname' is specified sharding key
-
-- 'datanodeid' is node ID, which could be separated by comma, and support specification in interval form, such as: '1,3,4,5-10,12-40', the node ID could log in to Distributed Transactional Database Management Platform page, and select"Configuration"->"Node Management"to view, and could also log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function) to show hotdb datanodes; view:
+- `functionid | functionname | functiontype` is specific specified Sharding Function ID, Sharding Function name and Sharding Function type
+- `shardcolumnname` is specified sharding key
+- `datanodeid` is node ID, which could be separated by comma, and support specification in interval form, such as: '1,3,4,5-10,12-40', the node ID could log in to Distributed Transactional Database Management Platform page, and select"Configuration"->"Node Management"to view, and could also log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function) to show hotdb datanodes; view:
 
 ```sql
 mysql> show hotdb datanodes;
@@ -4998,35 +4965,36 @@ mysql> show hotdb datanodes;
 +---------------+----------------+-----------------+
 ```
 
+Function Type only support auto_crc32/auto_mod; if other types are used, it will prompt: ERROR:The fucntiontype can only be auto_crc32/auto_mod.
 
-
-- Function Type only support auto_crc32/auto_mod; if other types are used, it will prompt: ERROR:The fucntiontype can only be auto_crc32/auto_mod.
-
-mysql> create table ft_match shard by functiontype 'match' using column 'id' on datanode '11,13'(id int(10) Primary Key, a char(20) not null);
-
+```
+mysql> create table ft_match shard by functiontype 'match' using column 'id' on datanode '11,13'(id int(10) primary key, a char(20) not null);
 ERROR 10070 (HY000): The functiontype can only by auto_crc32/auto_mode.
+```
 
-- When using functionid | functionname to Create Table, if the specified function information associated function_type is auto_crc32/auto_mod, it needs to specify on datanode 'datanodes', otherwise, it will prompt: The function must be specified datanodes. If being other types, specification is unnecessary.
+When using functionid | functionname to Create Table, if the specified function information associated function_type is auto_crc32/auto_mod, it needs to specify on datanode 'datanodes', otherwise, it will prompt: The function must be specified datanodes. If being other types, specification is unnecessary.
 
-mysql> create table mod_ft shard by functionid '15' using column 'id'(id int(10) Primary Key, a char(20) not null);
-
+```
+mysql> create table mod_ft shard by functionid '15' using column 'id'(id int(10) primary key, a char(20) not null);
 ERROR 10090 (HY000): The function must be specified datanodes.
 
 mysql> create table testsa shard by functionid '3' using column 'id'(id int,a int);
-
 Query OK, 0 rows affected, 1 warning (0.10 sec)
 
 mysql> CREATE TABLE match_tb shard by functionname 'test_match1' using column 'ananme' on datanode '1,2'(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, adnid INT DEFAULT NULL, aname VARCHAR(32) DEFAULT '', adept VARCHAR(40), adate datetime DEFAULT NULL)ENGINE =INNODB;
-
 ERROR 10090 (HY000): This rule doesn't need to specify a datanodes;
+```
 
 Tables with similar table structure could use the same Sharding Function, and the following Syntax could be used to make direct citation of Sharding Function to create Sharding Table
 
 ```sql
 CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleid\\rulename' [on datanode 'datanodes'] (......
 dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+```
+
 Log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function), show hotdb rules; and show hotdb functions; you could see the Sharding Function associated with its sharding Function
 
+```
 mysql> show hotdb rules;
 +---------+--------------------------------------------------------+-------------+-------------+----------------+
 | rule_id | rule_name | rule_column | function_id | auto_generated |
