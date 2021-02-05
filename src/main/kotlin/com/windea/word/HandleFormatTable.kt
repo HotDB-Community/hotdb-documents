@@ -34,10 +34,15 @@ private fun handleFile(file: File) {
 
 private val tableSeparatorRegex = """^\|(-+\|)+$""".toRegex()
 private var isTable = false
+private var isCodeFence = false
 private val tableCache = mutableListOf<List<String>>()
 
 private fun handleText(text: String): String {
 	return text.lineSequence().mapNotNull { line ->
+		//需要忽略代码块中的行
+		if(line.startsWith("```")) isCodeFence = !isCodeFence
+		if(isCodeFence) return@mapNotNull line
+		//判断
 		if(!isTable && line.isTableLine()) {
 			isTable = true
 			//将表头加入缓存
@@ -55,7 +60,7 @@ private fun handleText(text: String): String {
 				//拼接处理后的表格+之后的一行
 				val table = tableCache.joinToTable()
 				tableCache.clear()
-				table + "\n" + line
+				table + line
 			}
 		} else {
 			line
@@ -117,6 +122,14 @@ private fun List<List<String>>.joinToTable(): String {
 
 private fun List<List<String>>.getFixedLengths(): List<Int> {
 	val indices = this.first().indices
-	return indices.map { i -> this.map { it[i].fixedLength }.maxOrNull() ?: throw IllegalArgumentException() }
+	return indices.map { i -> this.map {
+		//可能会报IndexOutOfBoundsException
+		try {
+			it[i].fixedLength
+		} catch(e: Exception) {
+			println(it)
+			throw e
+		} 
+	}.maxOrNull() ?: throw IllegalArgumentException() }
 }
 
