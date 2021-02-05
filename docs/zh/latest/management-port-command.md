@@ -47,37 +47,37 @@ select * from backend where MYSQLID=198865;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `processor` | 所属的processor | `STRING/[processor number]` |
-| `id` | 后端连接号 | `LONG/[number]` |
-| `mysqlid` | 对应的MySQL连接号 | `LONG/[number]` |
-| `dnid` | 数据节点id | `INT/[number]` |
-| `host` | 主机信息 | `STRING/[host:port]` |
-| `schema` | 物理数据库名 | `STRING/[database]` |
-| `lport` | 本地端口号 | `INT/[number]` |
-| `net_in` | 接收的字节数 | `LONG/[number]` |
-| `net_out` | 发送的字节数 | `LONG/[number]` |
-| `up_time` | 启动时长（秒） | `LONG/[number]` |
-| `state` | 链路状态 | `connecting` - 主动去连接服务器的过程，发起了socket建立请求，还没有建立成功 |
-| ^ | ^ | `authenticating` - 握手认证过程 |
-| ^ | ^ | `idle` - 空闲可用状态 |
-| ^ | ^ | `borrowed` - 租用状态：存在事务场景下，即使后端没有执行sql，但连接会被保持，直到提交commit、rollback后才会释放 |
-| ^ | ^ | `running` - 发送了请求，等待应答或者正在处理应答的状态 |
-| ^ | ^ | `closed` - 链路关闭 |
-| `send_queue` | 发送队列大小 | `INT/[number]` |
-| `iso_level` | 事务隔离级别 | `0` - 读未提交 |
-| ^ | ^ | `1` - 读已提交 |
-| ^ | ^ | `2` - 可重复读 |
-| ^ | ^ | `3` - 可串行化 |
-| `autocommit` | 是否自动提交 | `BOOLEAN/[true/false]` |
-| `closed` | 是否已关闭 | `BOOLEAN/[true/false]` |
-| `version` | 连接池版本号 | `INT/[number]` |
-| `charset` | 结果字符集 | `STRING/[charset]` |
-| `comment` | 备注 | `heartbeat` - 心跳使用的连接 |
-| ^ | ^ | `latency check` - 延迟检测使用的连接 |
-| ^ | ^ | `idle` - 空闲状态的连接 |
-| ^ | ^ | `querying` - 正在执行查询的连接 |
+| 列名         | 说明              | 值类型/范围                                                                                                    |
+|--------------|-------------------|----------------------------------------------------------------------------------------------------------------|
+| `processor`  | 所属的processor   | `STRING/[processor number]`                                                                                    |
+| `id`         | 后端连接号        | `LONG/[number]`                                                                                                |
+| `mysqlid`    | 对应的MySQL连接号 | `LONG/[number]`                                                                                                |
+| `dnid`       | 数据节点id        | `INT/[number]`                                                                                                 |
+| `host`       | 主机信息          | `STRING/[host:port]`                                                                                           |
+| `schema`     | 物理数据库名      | `STRING/[database]`                                                                                            |
+| `lport`      | 本地端口号        | `INT/[number]`                                                                                                 |
+| `net_in`     | 接收的字节数      | `LONG/[number]`                                                                                                |
+| `net_out`    | 发送的字节数      | `LONG/[number]`                                                                                                |
+| `up_time`    | 启动时长（秒）    | `LONG/[number]`                                                                                                |
+| `state`      | 链路状态          | `connecting` - 主动去连接服务器的过程，发起了socket建立请求，还没有建立成功                                    |
+| ^            | ^                 | `authenticating` - 握手认证过程                                                                                |
+| ^            | ^                 | `idle` - 空闲可用状态                                                                                          |
+| ^            | ^                 | `borrowed` - 租用状态：存在事务场景下，即使后端没有执行sql，但连接会被保持，直到提交commit、rollback后才会释放 |
+| ^            | ^                 | `running` - 发送了请求，等待应答或者正在处理应答的状态                                                         |
+| ^            | ^                 | `closed` - 链路关闭                                                                                            |
+| `send_queue` | 发送队列大小      | `INT/[number]`                                                                                                 |
+| `iso_level`  | 事务隔离级别      | `0` - 读未提交                                                                                                 |
+| ^            | ^                 | `1` - 读已提交                                                                                                 |
+| ^            | ^                 | `2` - 可重复读                                                                                                 |
+| ^            | ^                 | `3` - 可串行化                                                                                                 |
+| `autocommit` | 是否自动提交      | `BOOLEAN/[true/false]`                                                                                         |
+| `closed`     | 是否已关闭        | `BOOLEAN/[true/false]`                                                                                         |
+| `version`    | 连接池版本号      | `INT/[number]`                                                                                                 |
+| `charset`    | 结果字符集        | `STRING/[charset]`                                                                                             |
+| `comment`    | 备注              | `heartbeat` - 心跳使用的连接                                                                                   |
+| ^            | ^                 | `latency check` - 延迟检测使用的连接                                                                           |
+| ^            | ^                 | `idle` - 空闲状态的连接                                                                                        |
+| ^            | ^                 | `querying` - 正在执行查询的连接                                                                                |
 
 
 #### `show @@bufferpool` - 显示缓冲池状态
@@ -92,14 +92,14 @@ show @@bufferpool;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `thread` | 线程名 | `STRING/ ["$NIOREACTOR-"[number]"-RW", "$NIOExecutor-"[number]"-" [number]]` |
-| `pool_size` | 缓冲池大小 | `INT/[number]` |
-| `local_allocate_opts` | 本地缓存线程申请buffer次数 | `LONG /[number]` |
-| `queue_recycle_opts` | 本地缓存线程回收buffer次数 | `LONG/[number]` |
-| `other_allocate_opts` | 其他线程申请buffer次数 | `INT/[number]` |
-| `other_recycle_opts` | 其他线程回收buffer次数 | `INT/[number]` |
+| 列名                  | 说明                       | 值类型/范围                                                                  |
+|-----------------------|----------------------------|------------------------------------------------------------------------------|
+| `thread`              | 线程名                     | `STRING/ ["$NIOREACTOR-"[number]"-RW", "$NIOExecutor-"[number]"-" [number]]` |
+| `pool_size`           | 缓冲池大小                 | `INT/[number]`                                                               |
+| `local_allocate_opts` | 本地缓存线程申请buffer次数 | `LONG /[number]`                                                             |
+| `queue_recycle_opts`  | 本地缓存线程回收buffer次数 | `LONG/[number]`                                                              |
+| `other_allocate_opts` | 其他线程申请buffer次数     | `INT/[number]`                                                               |
+| `other_recycle_opts`  | 其他线程回收buffer次数     | `INT/[number]`                                                               |
 
 #### `show @@clientquery` - 当前客户端查询统计
 
@@ -113,16 +113,16 @@ show @@clientquery;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `client` | 客户端信息 | `STRING/[host]` |
-| `db` | 逻辑库名 | `STRING/[database]` |
-| `select` | 查询次数 | `LONG/[number]` |
-| `insert` | 插入次数 | `LONG/[number]` |
-| `update` | 更新次数 | `LONG/[number]` |
-| `delete` | 删除次数 | `LONG/[number]` |
-| `other` | 其它操作次数 | `LONG/[number]` |
-| `all` | 总和 | `LONG/[number]` |
+| 列名     | 说明         | 值类型/范围         |
+|----------|--------------|---------------------|
+| `client` | 客户端信息   | `STRING/[host]`     |
+| `db`     | 逻辑库名     | `STRING/[database]` |
+| `select` | 查询次数     | `LONG/[number]`     |
+| `insert` | 插入次数     | `LONG/[number]`     |
+| `update` | 更新次数     | `LONG/[number]`     |
+| `delete` | 删除次数     | `LONG/[number]`     |
+| `other`  | 其它操作次数 | `LONG/[number]`     |
+| `all`    | 总和         | `LONG/[number]`     |
 
 > !Note
 > 
@@ -140,12 +140,12 @@ show @@cluster;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `status` | 成员状态 | `STRING` |
-| `host` | 成员Host | `STRING/[host]` |
-| `port` | 集群通信端口 | `INTEGER/[port]` |
-| `server_port` | 集群节点服务端口 | `INTEGER/[port]` |
+| 列名           | 说明             | 值类型/范围      |
+|----------------|------------------|------------------|
+| `status`       | 成员状态         | `STRING`         |
+| `host`         | 成员Host         | `STRING/[host]`  |
+| `port`         | 集群通信端口     | `INTEGER/[port]` |
+| `server_port`  | 集群节点服务端口 | `INTEGER/[port]` |
 | `manager_port` | 集群节点管理端口 | `INTEGER/[port]` |
 
 #### `show @@connection` - 显示前端连接状态
@@ -160,24 +160,24 @@ show @@connection;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `processor` | processor名称 | `STRING/[processor number]` |
-| `id` | 前端连接ID | `LONG/[number]` |
-| `host` | 客户端信息 | `STRING/[host:port]` |
-| `dstport` | 目标端口号 | `INT/[number]` |
-| `schema` | 目标数据库名 | `STRING/[database]` |
-| `charset` | 字符集 | `STRING/[charset]` |
-| `net_in` | 接收的字节数 | `LONG/[number]` |
-| `net_out` | 发送的字节数 | `LONG/[number]` |
-| `up_time` | 启动时长（秒） | `INT/[number]` |
-| `recv_buffer` | 接收队列大小（字节） | `LONG/[number]` |
-| `send_queue` | 发送队列大小（字节） | `LONG/[number]` |
-| `iso_level` | 事务隔离级别 | `0` - 读未提交 |
-| ^ | ^ | `1` - 读已提交 |
-| ^ | ^ | `2` - 可重复读 |
-| ^ | ^ | `3` - 可串行化 |
-| `autocommit` | 是否自动提交 | `BOOLEAN/[true/false]` |
+| 列名          | 说明                 | 值类型/范围                 |
+|---------------|----------------------|-----------------------------|
+| `processor`   | processor名称        | `STRING/[processor number]` |
+| `id`          | 前端连接ID           | `LONG/[number]`             |
+| `host`        | 客户端信息           | `STRING/[host:port]`        |
+| `dstport`     | 目标端口号           | `INT/[number]`              |
+| `schema`      | 目标数据库名         | `STRING/[database]`         |
+| `charset`     | 字符集               | `STRING/[charset]`          |
+| `net_in`      | 接收的字节数         | `LONG/[number]`             |
+| `net_out`     | 发送的字节数         | `LONG/[number]`             |
+| `up_time`     | 启动时长（秒）       | `INT/[number]`              |
+| `recv_buffer` | 接收队列大小（字节） | `LONG/[number]`             |
+| `send_queue`  | 发送队列大小（字节） | `LONG/[number]`             |
+| `iso_level`   | 事务隔离级别         | `0` - 读未提交              |
+| ^             | ^                    | `1` - 读已提交              |
+| ^             | ^                    | `2` - 可重复读              |
+| ^             | ^                    | `3` - 可串行化              |
+| `autocommit`  | 是否自动提交         | `BOOLEAN/[true/false]`      |
 
 #### `show @@connection_statistics` - 显示当前存活的前端连接信息
 
@@ -191,17 +191,17 @@ show @@connection_statistics;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `id` | 连接id | `INTEGER/[number]` |
-| `client_addr` | 客户端IP地址 | `STRING/[host]` |
-| `port` | 客户端连接端口 | `INTEGER/[number]` |
-| `logicdb` | 使用的逻辑库 | `STRING/[database]` |
-| `username` | 用户名 | `STRING` |
-| `host` | 客户端匹配的host | `STRING` |
-| `connect_time` | 连接建立时间 | `STRING/[date]` |
-| `close_time` | 当前连接时间 | `STRING/[date]` |
-| `operation_count` | 本次连接操作次数 | `INTEGER/[number]` |
+| 列名              | 说明             | 值类型/范围         |
+|-------------------|------------------|---------------------|
+| `id`              | 连接id           | `INTEGER/[number]`  |
+| `client_addr`     | 客户端IP地址     | `STRING/[host]`     |
+| `port`            | 客户端连接端口   | `INTEGER/[number]`  |
+| `logicdb`         | 使用的逻辑库     | `STRING/[database]` |
+| `username`        | 用户名           | `STRING`            |
+| `host`            | 客户端匹配的host | `STRING`            |
+| `connect_time`    | 连接建立时间     | `STRING/[date]`     |
+| `close_time`      | 当前连接时间     | `STRING/[date]`     |
+| `operation_count` | 本次连接操作次数 | `INTEGER/[number]`  |
 
 #### `show @@database` - 显示当前可用逻辑库信息
 
@@ -215,8 +215,8 @@ show @@database;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
+| 列名     | 说明   | 值类型/范围         |
+|----------|--------|---------------------|
 | database | 逻辑库 | `STRING/[database]` |
 
 #### `show @@datanode` - 显示数据节点信息
@@ -231,27 +231,27 @@ show @@datanode;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `dn` | 数据节点号（可使用`restart @@heartbeat`指令进行恢复心跳检测） | `INT/[number]` |
-| `ds` | 当前存储节点信息 | `STRING/[host:port/database]` |
-| `ds_id` | 当前存储节点号 | `INT/[number]` |
-| `type` | 当前存储节点类型 | `1` - 主库 |
-| ^ | ^ | `2` - 主从库 |
-| ^ | ^ | `3` - 从库 |
-| ^ | ^ | `4` - MGR |
-| `active` | 活动连接数 | `INT/[number]` |
-| `idle` | 空闲连接数 | `INT/[number]` |
-| `size` | 总连接数 | `INT/[number]` |
-| `state` | 节点状态 | `normal` - 正常 |
-| ^ | ^ | `failover` - 故障转移 |
-| `last_failover_start_time` | 上一次故障切换开始时间 | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
-| `last_failover_duration` | 上一次故障切换持续时间(ms) | `STRING/[number]` |
-| `last_failover_reason` | 上一次故障切换原因 | `STRING` |
-| `last_failover_info` | 上一次故障切换信息 | `STRING` |
-| `negotiation` | MGR节点协商状态 | `OK` - 正常 |
-| ^ | ^ | `ERROR` - 异常 |
-| ^ | ^ | `NULL` - 非MGR |
+| 列名                       | 说明                                                          | 值类型/范围                        |
+|----------------------------|---------------------------------------------------------------|------------------------------------|
+| `dn`                       | 数据节点号（可使用`restart @@heartbeat`指令进行恢复心跳检测） | `INT/[number]`                     |
+| `ds`                       | 当前存储节点信息                                              | `STRING/[host:port/database]`      |
+| `ds_id`                    | 当前存储节点号                                                | `INT/[number]`                     |
+| `type`                     | 当前存储节点类型                                              | `1` - 主库                         |
+| ^                          | ^                                                             | `2` - 主从库                       |
+| ^                          | ^                                                             | `3` - 从库                         |
+| ^                          | ^                                                             | `4` - MGR                          |
+| `active`                   | 活动连接数                                                    | `INT/[number]`                     |
+| `idle`                     | 空闲连接数                                                    | `INT/[number]`                     |
+| `size`                     | 总连接数                                                      | `INT/[number]`                     |
+| `state`                    | 节点状态                                                      | `normal` - 正常                    |
+| ^                          | ^                                                             | `failover` - 故障转移              |
+| `last_failover_start_time` | 上一次故障切换开始时间                                        | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
+| `last_failover_duration`   | 上一次故障切换持续时间(ms)                                    | `STRING/[number]`                  |
+| `last_failover_reason`     | 上一次故障切换原因                                            | `STRING`                           |
+| `last_failover_info`       | 上一次故障切换信息                                            | `STRING`                           |
+| `negotiation`              | MGR节点协商状态                                               | `OK` - 正常                        |
+| ^                          | ^                                                             | `ERROR` - 异常                     |
+| ^                          | ^                                                             | `NULL` - 非MGR                     |
 
 #### `show @@datasource` - 显示存储节点信息
 
@@ -265,25 +265,25 @@ show @@datasource;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `dn` | 数据节点号（可使用`restart @@heartbeat`指令进行恢复心跳检测） | `INT/[number]` |
-| `ds` | 当前存储节点信息 | `STRING/[host:port/database]` |
-| `type` | 当前存储节点类型 | `1` - 主库 |
-| ^ | ^ | `2` - 主从库 |
-| ^ | ^ | `3` - 从库 |
-| ^ | ^ | `4` - MGR |
-| `status` | 存储节点状态 | `0` - 不可用 |
-| ^ | ^ | `1` - 可用 |
-| ^ | ^ | `2` - 最后一个存储节点异常 |
-| `host` | 主机地址 | `STRING/[IP]` |
-| `port` | 主机端口 | `STRING /[port]` |
-| `schema` | 物理数据库名 | `STRING/[database]` |
-| `active` | 活动连接数 | `INT/[number]` |
-| `idle` | 空闲连接数 | `INT/[number]` |
-| `size` | 总连接数 | `INT/[number]` |
-| `unavailable_reason` | 存储节点不可用原因 | `STRING` |
-| `flow_control` | 剩余可用计数 | `INT/[number]` |
+| 列名                 | 说明                                                          | 值类型/范围                   |
+|----------------------|---------------------------------------------------------------|-------------------------------|
+| `dn`                 | 数据节点号（可使用`restart @@heartbeat`指令进行恢复心跳检测） | `INT/[number]`                |
+| `ds`                 | 当前存储节点信息                                              | `STRING/[host:port/database]` |
+| `type`               | 当前存储节点类型                                              | `1` - 主库                    |
+| ^                    | ^                                                             | `2` - 主从库                  |
+| ^                    | ^                                                             | `3` - 从库                    |
+| ^                    | ^                                                             | `4` - MGR                     |
+| `status`             | 存储节点状态                                                  | `0` - 不可用                  |
+| ^                    | ^                                                             | `1` - 可用                    |
+| ^                    | ^                                                             | `2` - 最后一个存储节点异常    |
+| `host`               | 主机地址                                                      | `STRING/[IP]`                 |
+| `port`               | 主机端口                                                      | `STRING /[port]`              |
+| `schema`             | 物理数据库名                                                  | `STRING/[database]`           |
+| `active`             | 活动连接数                                                    | `INT/[number]`                |
+| `idle`               | 空闲连接数                                                    | `INT/[number]`                |
+| `size`               | 总连接数                                                      | `INT/[number]`                |
+| `unavailable_reason` | 存储节点不可用原因                                            | `STRING`                      |
+| `flow_control`       | 剩余可用计数                                                  | `INT/[number]`                |
 
 #### `show @@globaltableconsistency` - 全局表一致性检测
 
@@ -297,23 +297,23 @@ show @@globaltableconsistency;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `db` | 逻辑库名 | `STRING/[database]` |
-| `table` | 全局表名 | `STRING/[host:port/database]` |
-| `status` | 状态 | `0` - 无法检测 |
-| ^ | ^ | `1` - 一致 |
-| ^ | ^ | `-1` - 不一致 |
-| `result` | 检测结果 | `STRING` |
-| `less_half_dn_lost_and_first_dn_exsitdata_count` | 小于二分之一节点缺失且第一节点有数据的行数 | `INT/[number]` |
-| `repair` | 恢复状态 | `STRING` |
-| `less_half_dn_lost_and_first_dn_nodata_count` | 小于二分之一节点缺失且第一节点没有数据的行数 | `INT/[number]` |
-| `greater_half_dn_lost_count` | 大于二分之一节点缺失的行数 | `INT/[number]` |
-| `only_one_dn_not_lost_row_count` | 仅有一个节点未丢失的数据的行数 | `INT/[number]` |
-| `inconsist_row_count` | 大于一个节点不一致 | `INT/[number]` |
-| `only_one_dn_inconsist_row_count` | 仅有一个节点不一致且无缺失的行数 | `INT/[number]` |
-| `inconsist_and_lost_count` | 同时存在不一致和缺失行数 | `INT/[number]` |
-| `version` | 检测版本 | `INT/[number]` |
+| 列名                                             | 说明                                         | 值类型/范围                   |
+|--------------------------------------------------|----------------------------------------------|-------------------------------|
+| `db`                                             | 逻辑库名                                     | `STRING/[database]`           |
+| `table`                                          | 全局表名                                     | `STRING/[host:port/database]` |
+| `status`                                         | 状态                                         | `0` - 无法检测                |
+| ^                                                | ^                                            | `1` - 一致                    |
+| ^                                                | ^                                            | `-1` - 不一致                 |
+| `result`                                         | 检测结果                                     | `STRING`                      |
+| `less_half_dn_lost_and_first_dn_exsitdata_count` | 小于二分之一节点缺失且第一节点有数据的行数   | `INT/[number]`                |
+| `repair`                                         | 恢复状态                                     | `STRING`                      |
+| `less_half_dn_lost_and_first_dn_nodata_count`    | 小于二分之一节点缺失且第一节点没有数据的行数 | `INT/[number]`                |
+| `greater_half_dn_lost_count`                     | 大于二分之一节点缺失的行数                   | `INT/[number]`                |
+| `only_one_dn_not_lost_row_count`                 | 仅有一个节点未丢失的数据的行数               | `INT/[number]`                |
+| `inconsist_row_count`                            | 大于一个节点不一致                           | `INT/[number]`                |
+| `only_one_dn_inconsist_row_count`                | 仅有一个节点不一致且无缺失的行数             | `INT/[number]`                |
+| `inconsist_and_lost_count`                       | 同时存在不一致和缺失行数                     | `INT/[number]`                |
+| `version`                                        | 检测版本                                     | `INT/[number]`                |
 
 #### `show @@heartbeat` - 显示后端心跳状态
 
@@ -327,24 +327,24 @@ show @@heartbeat;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `dn` | 数据节点id | `INT/[number]` |
-| `ds_id` | 存储节点id | `INT/[number]` |
-| `ds_type` | 存储节点类型 | `STRING/[master/slave]` |
-| `host` | 主机地址 | `STRING/[ip]` |
-| `port` | 主机端口 | `INT/[port]` |
-| `db` | 物理库名 | `STRING/[database]` |
-| `retry` | 重试次数 | `INT/[number]` |
-| `status` | 心跳状态 | `checking` - 校验中 |
-| ^ | ^ | `idle` - 正常开启心跳检测 |
-| ^ | ^ | `stopped` - 停止 |
-| ^ | ^ | `paused` - 暂停心跳检测 |
-| ^ | ^ | `unknown` - 心跳检测功能未开启 |
-| `period` | 心跳周期 | `INT/[number]` |
-| `execute_time` | 最近10秒,1分钟,5分钟的心跳平均响应时间（毫秒） | `STRING/[number],[number],[number]` |
-| `last_active_time` | 最新心跳成功时间 | `DATETIME/[yyyy-MM-dd HH:mm:ss]` |
-| `stop` | 心跳是否停止 | `BOOLEAN/[true/false]` |
+| 列名               | 说明                                           | 值类型/范围                         |
+|--------------------|------------------------------------------------|-------------------------------------|
+| `dn`               | 数据节点id                                     | `INT/[number]`                      |
+| `ds_id`            | 存储节点id                                     | `INT/[number]`                      |
+| `ds_type`          | 存储节点类型                                   | `STRING/[master/slave]`             |
+| `host`             | 主机地址                                       | `STRING/[ip]`                       |
+| `port`             | 主机端口                                       | `INT/[port]`                        |
+| `db`               | 物理库名                                       | `STRING/[database]`                 |
+| `retry`            | 重试次数                                       | `INT/[number]`                      |
+| `status`           | 心跳状态                                       | `checking` - 校验中                 |
+| ^                  | ^                                              | `idle` - 正常开启心跳检测           |
+| ^                  | ^                                              | `stopped` - 停止                    |
+| ^                  | ^                                              | `paused` - 暂停心跳检测             |
+| ^                  | ^                                              | `unknown` - 心跳检测功能未开启      |
+| `period`           | 心跳周期                                       | `INT/[number]`                      |
+| `execute_time`     | 最近10秒,1分钟,5分钟的心跳平均响应时间（毫秒） | `STRING/[number],[number],[number]` |
+| `last_active_time` | 最新心跳成功时间                               | `DATETIME/[yyyy-MM-dd HH:mm:ss]`    |
+| `stop`             | 心跳是否停止                                   | `BOOLEAN/[true/false]`              |
 
 > !Note
 > 
@@ -368,12 +368,12 @@ show @@latency;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `dn` | 数据节点id | `INT/[number]` |
-| `info` | 当前存储节点路径 | `STRING/[ip]:[port]/[database]` |
-| `backup_info` | 备库存储节点路径 | `STRING/[ip]:[port]/[database]` |
-| `latency` | 如可用则显示同步延迟（ms）；如不可用或存储节点被暂停显示`"STOPPED"`；如无同步延迟，则显示`"ERROR! Check your replication."`；如同步延迟无效，则显示`"ERROR! Check your replication.(datasource may have just switched)"` | `STRING/[number] ms`, `"STOPPED"`, `"ERROR! Check your replication."`, `"ERROR! Check your replication.(datasource may have just switched)"` |
+| 列名          | 说明                                                                                                                                                                                                                     | 值类型/范围                                                                                                                                  |
+|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| `dn`          | 数据节点id                                                                                                                                                                                                               | `INT/[number]`                                                                                                                               |
+| `info`        | 当前存储节点路径                                                                                                                                                                                                         | `STRING/[ip]:[port]/[database]`                                                                                                              |
+| `backup_info` | 备库存储节点路径                                                                                                                                                                                                         | `STRING/[ip]:[port]/[database]`                                                                                                              |
+| `latency`     | 如可用则显示同步延迟（ms）；如不可用或存储节点被暂停显示`"STOPPED"`；如无同步延迟，则显示`"ERROR! Check your replication."`；如同步延迟无效，则显示`"ERROR! Check your replication.(datasource may have just switched)"` | `STRING/[number] ms`, `"STOPPED"`, `"ERROR! Check your replication."`, `"ERROR! Check your replication.(datasource may have just switched)"` |
 
 #### `show @@longtransaction` - 显示长事务信息
 
@@ -393,11 +393,11 @@ select trx_id, trx_started from information_schema.innodb_trx where trx_started<
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `host` | 主机地址 | `STRING/[IP]` |
-| `port` | 主机端口号 | `INT/[PORT]` |
-| `trx_id` | 事务标识 | `STRING/[number]` |
+| 列名     | 说明       | 值类型/范围       |
+|----------|------------|-------------------|
+| `host`   | 主机地址   | `STRING/[IP]`     |
+| `port`   | 主机端口号 | `INT/[PORT]`      |
+| `trx_id` | 事务标识   | `STRING/[number]` |
 
 #### `show @@masterslaveconsistency` - 主从数据一致性检测
 
@@ -417,13 +417,13 @@ show @@masterslaveconsistency;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `db` | 逻辑库名 | `STRING/[database]` |
-| `table` | 表名 | `STRING/[table]` |
-| `dn` | 数据节点名称 | `STRING` |
-| `result` | 是否一致 | `STRING/["YES","NO","UNKNOWN"]` |
-| `info` | 一致性结果 | `STRING` |
+| 列名     | 说明         | 值类型/范围                     |
+|----------|--------------|---------------------------------|
+| `db`     | 逻辑库名     | `STRING/[database]`             |
+| `table`  | 表名         | `STRING/[table]`                |
+| `dn`     | 数据节点名称 | `STRING`                        |
+| `result` | 是否一致     | `STRING/["YES","NO","UNKNOWN"]` |
+| `info`   | 一致性结果   | `STRING`                        |
 
 #### `show @@operation` - 显示详细的命令执行统计情况
 
@@ -446,22 +446,22 @@ select * from operation where `TABLE` like '%tid%';
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `schema` | 逻辑库名 | `STRING/[database]` |
-| `dn` | 数据节点id | `INT/[number]` |
-| `ds` | 存储节点id | `INT/[number]` |
-| `host` | 存储节点所在主机IP | `STRING/[IP]` |
-| `port` | 存储节点的端口 | `INT/[number]` |
-| `db` | 物理库 | `STRING/[database]` |
-| `table` | 表名 | `STRING/[table]` |
-| `select` | 对\[table]表select操作次数 | `LONG/[number]` |
-| `insert` | 对\[table]表insert操作次数 | `LONG/[number]` |
-| `update` | 对\[table]表insert操作次数 | `LONG/[number]` |
-| `delete` | 对\[table]表delete操作次数 | `LONG/[number]` |
-| `replace` | 对\[table]表replace操作次数 | `LONG/[number]` |
-| `other` | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
-| `all` | 对以上操作的统计 | `LONG/[number]` |
+| 列名      | 说明                                            | 值类型/范围         |
+|-----------|-------------------------------------------------|---------------------|
+| `schema`  | 逻辑库名                                        | `STRING/[database]` |
+| `dn`      | 数据节点id                                      | `INT/[number]`      |
+| `ds`      | 存储节点id                                      | `INT/[number]`      |
+| `host`    | 存储节点所在主机IP                              | `STRING/[IP]`       |
+| `port`    | 存储节点的端口                                  | `INT/[number]`      |
+| `db`      | 物理库                                          | `STRING/[database]` |
+| `table`   | 表名                                            | `STRING/[table]`    |
+| `select`  | 对\[table]表select操作次数                      | `LONG/[number]`     |
+| `insert`  | 对\[table]表insert操作次数                      | `LONG/[number]`     |
+| `update`  | 对\[table]表insert操作次数                      | `LONG/[number]`     |
+| `delete`  | 对\[table]表delete操作次数                      | `LONG/[number]`     |
+| `replace` | 对\[table]表replace操作次数                     | `LONG/[number]`     |
+| `other`   | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]`     |
+| `all`     | 对以上操作的统计                                | `LONG/[number]`     |
 
 #### `show @@operation_db` - 显示逻辑库为单位的命令执行情况
 
@@ -475,16 +475,16 @@ show @@operation_db;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `db` | 逻辑库名 | `STRING/[database]` |
-| `select` | 对\[table]表select操作次数 | `LONG/[number]` |
-| `insert` | 对\[table]表insert操作次数 | `LONG/[number]` |
-| `update` | 对\[table]表insert操作次数 | `LONG/[number]` |
-| `delete` | 对\[table]表delete操作次数 | `LONG/[number]` |
-| `replace` | 对\[table]表replace操作次数 | `LONG/[number]` |
-| `other` | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
-| `all` | 对以上操作的统计 | `LONG/[number]` |
+| 列名      | 说明                                            | 值类型/范围         |
+|-----------|-------------------------------------------------|---------------------|
+| `db`      | 逻辑库名                                        | `STRING/[database]` |
+| `select`  | 对\[table]表select操作次数                      | `LONG/[number]`     |
+| `insert`  | 对\[table]表insert操作次数                      | `LONG/[number]`     |
+| `update`  | 对\[table]表insert操作次数                      | `LONG/[number]`     |
+| `delete`  | 对\[table]表delete操作次数                      | `LONG/[number]`     |
+| `replace` | 对\[table]表replace操作次数                     | `LONG/[number]`     |
+| `other`   | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]`     |
+| `all`     | 对以上操作的统计                                | `LONG/[number]`     |
 
 #### `show @@operation_dn` - 显示数据节点为单位的命令执行情况
 
@@ -498,16 +498,16 @@ show @@operation_dn;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `dn` | 数据库节点id | `INT/[number]` |
-| `select` | 对\[table]表select操作次数 | `LONG/[number]` |
-| `insert` | 对\[table]表insert操作次数 | `LONG/[number]` |
-| `update` | 对\[table]表insert操作次数 | `LONG/[number]` |
-| `delete` | 对\[table]表delete操作次数 | `LONG/[number]` |
-| `replace` | 对\[table]表replace操作次数 | `LONG/[number]` |
-| `other` | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
-| `all` | 对以上操作的统计 | `LONG/[number]` |
+| 列名      | 说明                                            | 值类型/范围     |
+|-----------|-------------------------------------------------|-----------------|
+| `dn`      | 数据库节点id                                    | `INT/[number]`  |
+| `select`  | 对\[table]表select操作次数                      | `LONG/[number]` |
+| `insert`  | 对\[table]表insert操作次数                      | `LONG/[number]` |
+| `update`  | 对\[table]表insert操作次数                      | `LONG/[number]` |
+| `delete`  | 对\[table]表delete操作次数                      | `LONG/[number]` |
+| `replace` | 对\[table]表replace操作次数                     | `LONG/[number]` |
+| `other`   | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
+| `all`     | 对以上操作的统计                                | `LONG/[number]` |
 
 > !Note
 > 
@@ -525,19 +525,19 @@ show @@operation_ds;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `ds` | 存储节点id | `INT/[number]` |
-| `host` | 存储节点所在主机IP | `STRING/[IP]` |
-| `port` | 存储节点的端口 | `INT/[number]` |
-| `db` | 物理库 | `STRING/[database]` |
-| `select` | 对\[table]表select操作次数 | `LONG/[number]` |
-| `insert` | 对\[table]表insert操作次数 | `LONG/[number]` |
-| `update` | 对\[table]表insert操作次数 | `LONG/[number]` |
-| `delete` | 对\[table]表delete操作次数 | `LONG/[number]` |
-| `replace` | 对\[table]表replace操作次数 | `LONG/[number]` |
-| `other` | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
-| `all` | 对以上操作的统计 | `LONG/[number]` |
+| 列名      | 说明                                            | 值类型/范围         |
+|-----------|-------------------------------------------------|---------------------|
+| `ds`      | 存储节点id                                      | `INT/[number]`      |
+| `host`    | 存储节点所在主机IP                              | `STRING/[IP]`       |
+| `port`    | 存储节点的端口                                  | `INT/[number]`      |
+| `db`      | 物理库                                          | `STRING/[database]` |
+| `select`  | 对\[table]表select操作次数                      | `LONG/[number]`     |
+| `insert`  | 对\[table]表insert操作次数                      | `LONG/[number]`     |
+| `update`  | 对\[table]表insert操作次数                      | `LONG/[number]`     |
+| `delete`  | 对\[table]表delete操作次数                      | `LONG/[number]`     |
+| `replace` | 对\[table]表replace操作次数                     | `LONG/[number]`     |
+| `other`   | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]`     |
+| `all`     | 对以上操作的统计                                | `LONG/[number]`     |
 
 #### `show @@operation_table` - 显示表为单位的命令执行情况
 
@@ -551,16 +551,16 @@ show @@operation_table;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `table` | 表名 | `STRING/[table]` |
-| `select` | 对\[table]表select操作次数 | `LONG/[number]` |
-| `insert` | 对\[table]表insert操作次数 | `LONG/[number]` |
-| `update` | 对\[table]表insert操作次数 | `LONG/[number]` |
-| `delete` | 对\[table]表delete操作次数 | `LONG/[number]` |
-| `replace` | 对\[table]表replace操作次数 | `LONG/[number]` |
-| `other` | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]` |
-| `all` | 对以上操作的统计 | `LONG/[number]` |
+| 列名      | 说明                                            | 值类型/范围      |
+|-----------|-------------------------------------------------|------------------|
+| `table`   | 表名                                            | `STRING/[table]` |
+| `select`  | 对\[table]表select操作次数                      | `LONG/[number]`  |
+| `insert`  | 对\[table]表insert操作次数                      | `LONG/[number]`  |
+| `update`  | 对\[table]表insert操作次数                      | `LONG/[number]`  |
+| `delete`  | 对\[table]表delete操作次数                      | `LONG/[number]`  |
+| `replace` | 对\[table]表replace操作次数                     | `LONG/[number]`  |
+| `other`   | 对\[table]表的其它操作次数（执行DDL语句的次数） | `LONG/[number]`  |
+| `all`     | 对以上操作的统计                                | `LONG/[number]`  |
 
 #### `show @@processor` - 显示处理线程信息
 
@@ -574,16 +574,16 @@ show @@processor;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `name` | processor名称 | `STRING/["Processor"number]` |
-| `front_net_in` | 前端接受字节数 | `LONG/[number]` |
-| `front_net_out` | 前端发送字节数 | `LONG/[number]` |
-| `backend_net_in` | 后端接受字节数 | `LONG/[number]` |
-| `backend_net_out` | 后端发送字节数 | `LONG/[number]` |
-| `frontends` | 前端连接数 | `LONG/[number]` |
-| `backends` | 后端连接数 | `LONG/[number]` |
-| `w_queue` | 写队列大小 | `LONG/[number]` |
+| 列名              | 说明           | 值类型/范围                  |
+|-------------------|----------------|------------------------------|
+| `name`            | processor名称  | `STRING/["Processor"number]` |
+| `front_net_in`    | 前端接受字节数 | `LONG/[number]`              |
+| `front_net_out`   | 前端发送字节数 | `LONG/[number]`              |
+| `backend_net_in`  | 后端接受字节数 | `LONG/[number]`              |
+| `backend_net_out` | 后端发送字节数 | `LONG/[number]`              |
+| `frontends`       | 前端连接数     | `LONG/[number]`              |
+| `backends`        | 后端连接数     | `LONG/[number]`              |
+| `w_queue`         | 写队列大小     | `LONG/[number]`              |
 
 #### `show @@query` - 显示前端查询统计
 
@@ -597,14 +597,14 @@ show @@query;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `select` | 调用本服务的select操作的次数 | `LONG/[number]` |
-| `insert` | 调用本服务的insert操作的次数 | `LONG/[number]` |
-| `update` | 调用本服务的update操作的次数 | `LONG/[number]` |
-| `delete` | 调用本服务的delete操作的次数 | `LONG/[number]` |
-| `other` | 调用本服务的其它操作的次数（执行DDL语句的次数） | `LONG/[number]` |
-| `all` | 对以上操作的统计 | `LONG/[number]` |
+| 列名     | 说明                                            | 值类型/范围     |
+|----------|-------------------------------------------------|-----------------|
+| `select` | 调用本服务的select操作的次数                    | `LONG/[number]` |
+| `insert` | 调用本服务的insert操作的次数                    | `LONG/[number]` |
+| `update` | 调用本服务的update操作的次数                    | `LONG/[number]` |
+| `delete` | 调用本服务的delete操作的次数                    | `LONG/[number]` |
+| `other`  | 调用本服务的其它操作的次数（执行DDL语句的次数） | `LONG/[number]` |
+| `all`    | 对以上操作的统计                                | `LONG/[number]` |
 
 #### `show @@query_db` - 显示逻辑库前端查询统计
 
@@ -618,15 +618,15 @@ show @@query_db;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `schema` | 逻辑库 | `STRING/[database]` |
-| `select` | 对逻辑库`[schema]`的select操作的次数 | `LONG/[number]` |
-| `insert` | 对逻辑库`[schema]`的insert操作的次数 | `LONG/[number]` |
-| `update` | 对逻辑库`[schema]`的update操作的次数 | `LONG/[number]` |
-| `delete` | 对逻辑库`[schema]`的delete操作的次数 | `LONG/[number]` |
-| `other` | 对逻辑库`[schema]`的其它操作的次数（执行DDL语句的次数） | `LONG/[number]` |
-| `all` | 对以上操作的统计 | `LONG/[number]` |
+| 列名     | 说明                                                    | 值类型/范围         |
+|----------|---------------------------------------------------------|---------------------|
+| `schema` | 逻辑库                                                  | `STRING/[database]` |
+| `select` | 对逻辑库`[schema]`的select操作的次数                    | `LONG/[number]`     |
+| `insert` | 对逻辑库`[schema]`的insert操作的次数                    | `LONG/[number]`     |
+| `update` | 对逻辑库`[schema]`的update操作的次数                    | `LONG/[number]`     |
+| `delete` | 对逻辑库`[schema]`的delete操作的次数                    | `LONG/[number]`     |
+| `other`  | 对逻辑库`[schema]`的其它操作的次数（执行DDL语句的次数） | `LONG/[number]`     |
+| `all`    | 对以上操作的统计                                        | `LONG/[number]`     |
 
 #### `show @@query_tb` - 显示表级前端查询统计
 
@@ -640,16 +640,16 @@ show @@query_tb;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `schema` | 逻辑库 | `STRING/[database]` |
-| `table` | 表名 | `STRING/[table]` |
-| `select` | 对逻辑库`[schema]`下的\[table]表的select操作的次数 | `LONG/[number]` |
-| `insert` | 对逻辑库`[schema]`下的\[table]表的insert操作的次数 | `LONG/[number]` |
-| `update` | 对逻辑库`[schema]`下的\[table]表的update操作的次数 | `LONG/[number]` |
-| `delete` | 对逻辑库`[schema]`下的\[table]表的delete操作的次数 | `LONG/[number]` |
-| `other` | 对逻辑库`[schema]`下的\[table]表的其它操作的次数（执行DDL语句的次数） | `LONG/[number]` |
-| `all` | 对以上操作的统计 | `LONG/[number]` |
+| 列名     | 说明                                                                  | 值类型/范围         |
+|----------|-----------------------------------------------------------------------|---------------------|
+| `schema` | 逻辑库                                                                | `STRING/[database]` |
+| `table`  | 表名                                                                  | `STRING/[table]`    |
+| `select` | 对逻辑库`[schema]`下的\[table]表的select操作的次数                    | `LONG/[number]`     |
+| `insert` | 对逻辑库`[schema]`下的\[table]表的insert操作的次数                    | `LONG/[number]`     |
+| `update` | 对逻辑库`[schema]`下的\[table]表的update操作的次数                    | `LONG/[number]`     |
+| `delete` | 对逻辑库`[schema]`下的\[table]表的delete操作的次数                    | `LONG/[number]`     |
+| `other`  | 对逻辑库`[schema]`下的\[table]表的其它操作的次数（执行DDL语句的次数） | `LONG/[number]`     |
+| `all`    | 对以上操作的统计                                                      | `LONG/[number]`     |
 
 #### `show @@session` - 显示当前会话信息
 
@@ -663,27 +663,27 @@ show @@session;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `id` | 当前会话号 | `INT/[number]` |
-| `running` | 是否正在执行SQL | `BOOLEAN/[TRUE/FALSE]` |
-| `trx_started` | 事务开始的时间 | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
-| `trx_time` | 事务持续的时间（秒） | `INT/[number]` |
-| `trx_query` | 最后一次执行的SQL | `STRING/[SQL]` |
-| `bk_count` | 后端连接总数 | `INT/[number]` |
-| `bk_dnid` | 后端连接节点号 | `INT/[number]` |
-| `bk_dsid` | 后端连接存储节点号 | `INT/[number]` |
-| `bk_id` | 后端连接ID | `INT/[number]` |
-| `bk_mysqlid` | 后端连接MySQL ID | `INT/[number]` |
-| `bk_state` | 后端连接状态 | `STRING` |
-| `bk_closed` | 后端连接是否关闭 | `BOOLEAN/[TRUE/FALSE]` |
-| `bk_autocommit` | 后端连接是否自动提交 | `BOOLEAN/[TRUE/FALSE]` |
-| `bk_host` | 后端连接Host | `STRING/[host]` |
-| `bk_port` | 后端连接Port | `INT/[port]` |
-| `bk_db` | 后端连接物理库名 | `STRING/[DATABASE]` |
-| `bk_query` | 后端连接最后一次执行的SQL | `STRING/[SQL]` |
-| `bk_last_read_time` | 后端连接最后读包时间 | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
-| `bk_last_write_time` | 后端连接最后写包时间 | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
+| 列名                 | 说明                      | 值类型/范围                        |
+|----------------------|---------------------------|------------------------------------|
+| `id`                 | 当前会话号                | `INT/[number]`                     |
+| `running`            | 是否正在执行SQL           | `BOOLEAN/[TRUE/FALSE]`             |
+| `trx_started`        | 事务开始的时间            | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
+| `trx_time`           | 事务持续的时间（秒）      | `INT/[number]`                     |
+| `trx_query`          | 最后一次执行的SQL         | `STRING/[SQL]`                     |
+| `bk_count`           | 后端连接总数              | `INT/[number]`                     |
+| `bk_dnid`            | 后端连接节点号            | `INT/[number]`                     |
+| `bk_dsid`            | 后端连接存储节点号        | `INT/[number]`                     |
+| `bk_id`              | 后端连接ID                | `INT/[number]`                     |
+| `bk_mysqlid`         | 后端连接MySQL ID          | `INT/[number]`                     |
+| `bk_state`           | 后端连接状态              | `STRING`                           |
+| `bk_closed`          | 后端连接是否关闭          | `BOOLEAN/[TRUE/FALSE]`             |
+| `bk_autocommit`      | 后端连接是否自动提交      | `BOOLEAN/[TRUE/FALSE]`             |
+| `bk_host`            | 后端连接Host              | `STRING/[host]`                    |
+| `bk_port`            | 后端连接Port              | `INT/[port]`                       |
+| `bk_db`              | 后端连接物理库名          | `STRING/[DATABASE]`                |
+| `bk_query`           | 后端连接最后一次执行的SQL | `STRING/[SQL]`                     |
+| `bk_last_read_time`  | 后端连接最后读包时间      | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
+| `bk_last_write_time` | 后端连接最后写包时间      | `STRING/[yyyy-MM-dd HH:mm:ss.SSS]` |
 
 #### `show @@tableinfo` - 显示表的数据信息
 
@@ -697,19 +697,19 @@ show @@tableinfo;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `schema` | 逻辑库 | `STRING/[database]` |
-| `dn` | 数据节点id | `INT/[number]` |
-| `ds` | 存储节点id | `INT/[number]` |
-| `host` | 存储节点所在主机IP | `STRING/[IP]` |
-| `port` | 存储节点的端口 | `INT/[PORT]` |
-| `db` | 物理库 | `STRING/[database]` |
-| `table` | 物理表表名 | `STRING/[number]` |
-| `table_type` | 表类型 | `0` - 全局表 |
-| ^ | ^ | `1` - 分片表 |
-| `table_rows` | 物理表行数 | `INT/[number]` |
-| `data_length` | 数据长度(字节) | `LONG/[number]` |
+| 列名          | 说明               | 值类型/范围         |
+|---------------|--------------------|---------------------|
+| `schema`      | 逻辑库             | `STRING/[database]` |
+| `dn`          | 数据节点id         | `INT/[number]`      |
+| `ds`          | 存储节点id         | `INT/[number]`      |
+| `host`        | 存储节点所在主机IP | `STRING/[IP]`       |
+| `port`        | 存储节点的端口     | `INT/[PORT]`        |
+| `db`          | 物理库             | `STRING/[database]` |
+| `table`       | 物理表表名         | `STRING/[number]`   |
+| `table_type`  | 表类型             | `0` - 全局表        |
+| ^             | ^                  | `1` - 分片表        |
+| `table_rows`  | 物理表行数         | `INT/[number]`      |
+| `data_length` | 数据长度(字节)     | `LONG/[number]`     |
 
 #### `show @@tableinfo_db` - 显示以逻辑库为单位的表数据信息
 
@@ -723,11 +723,11 @@ show @@tableinfo_db;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `db` | 逻辑库名 | `STRING/[database]` |
-| `table_rows` | 对\[table]表select操作次数 | `LONG/[number]` |
-| `data_length` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| 列名          | 说明                       | 值类型/范围         |
+|---------------|----------------------------|---------------------|
+| `db`          | 逻辑库名                   | `STRING/[database]` |
+| `table_rows`  | 对\[table]表select操作次数 | `LONG/[number]`     |
+| `data_length` | 对\[table]表insert操作次数 | `LONG/[number]`     |
 
 #### `show @@tableinfo_dn` - 显示数据节点为单位的表数据信息
 
@@ -741,10 +741,10 @@ show @@tableinfo_dn;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `dn` | 数据节点id | `INT/[number]` |
-| `table_rows` | 对\[table]表select操作次数 | `LONG/[number]` |
+| 列名          | 说明                       | 值类型/范围     |
+|---------------|----------------------------|-----------------|
+| `dn`          | 数据节点id                 | `INT/[number]`  |
+| `table_rows`  | 对\[table]表select操作次数 | `LONG/[number]` |
 | `data_length` | 对\[table]表insert操作次数 | `LONG/[number]` |
 
 #### `show @@tableinfo_ds` - 显示存储节点为单位的表数据信息
@@ -759,10 +759,10 @@ show @@tableinfo_ds;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `ds` | 数据源id | `INT/[number]` |
-| `table_rows` | 对\[table]表select操作次数 | `LONG/[number]` |
+| 列名          | 说明                       | 值类型/范围     |
+|---------------|----------------------------|-----------------|
+| `ds`          | 数据源id                   | `INT/[number]`  |
+| `table_rows`  | 对\[table]表select操作次数 | `LONG/[number]` |
 | `data_length` | 对\[table]表insert操作次数 | `LONG/[number]` |
 
 #### `show @@tableinfo_table` - 显示表级的表数据信息
@@ -777,11 +777,11 @@ show @@tableinfo_table;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `table` | 表名 | `STRING/[table]` |
-| `table_rows` | 对\[table]表select操作次数 | `LONG/[number]` |
-| `data_length` | 对\[table]表insert操作次数 | `LONG/[number]` |
+| 列名          | 说明                       | 值类型/范围      |
+|---------------|----------------------------|------------------|
+| `table`       | 表名                       | `STRING/[table]` |
+| `table_rows`  | 对\[table]表select操作次数 | `LONG/[number]`  |
+| `data_length` | 对\[table]表insert操作次数 | `LONG/[number]`  |
 
 #### `show @@threadpool` - 显示线程池状态
 
@@ -795,14 +795,14 @@ show @@threadpool;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `name` | 线程池名称 | `STRING/"TimeExecutor","$NIOExecutor-"+number+"-"` |
-| `pool_size` | 线程池大小 | `INT/[number]` |
-| `acive_count` | 活跃线程数 | `LONG/[number]` |
-| `task_queue_size` | 任务队列大小 | `LONG/[number]` |
-| `completed_task` | 完成任务数 | `LONG/[number]` |
-| `total_task` | 总任务数 | `LONG/[number]` |
+| 列名              | 说明         | 值类型/范围                                        |
+|-------------------|--------------|----------------------------------------------------|
+| `name`            | 线程池名称   | `STRING/"TimeExecutor","$NIOExecutor-"+number+"-"` |
+| `pool_size`       | 线程池大小   | `INT/[number]`                                     |
+| `acive_count`     | 活跃线程数   | `LONG/[number]`                                    |
+| `task_queue_size` | 任务队列大小 | `LONG/[number]`                                    |
+| `completed_task`  | 完成任务数   | `LONG/[number]`                                    |
+| `total_task`      | 总任务数     | `LONG/[number]`                                    |
 
 #### `show @@transaction` - 显示事务数
 
@@ -816,10 +816,10 @@ show @@transaction;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `schema` | 逻辑库 | `STRING/[database]` |
-| `transaction` | 事务数 | `LONG/[number]` |
+| 列名          | 说明   | 值类型/范围         |
+|---------------|--------|---------------------|
+| `schema`      | 逻辑库 | `STRING/[database]` |
+| `transaction` | 事务数 | `LONG/[number]`     |
 
 #### `show hotdb datanodes` - 显示当前可用的节点
 
@@ -831,10 +831,10 @@ show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 
 参数说明:
 
-| 参数 | 说明 | 类型 |
-|------|------|------|
+| 参数      | 说明                                    | 类型     |
+|-----------|-----------------------------------------|----------|
 | `pattern` | 可选，模糊查询表达式，匹配rule_name字段 | `STRING` |
-| `expr` | 可选，模糊查询表达式，匹配指定字段 | `STRING` |
+| `expr`    | 可选，模糊查询表达式，匹配指定字段      | `STRING` |
 
 例如：
 
@@ -846,11 +846,11 @@ show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `datanode_id` | 节点ID | `INTEGER` |
-| `datanode_name` | 节点名称 | `STRING` |
-| `datanode_type` | 0：主备；1：MGR | `INTEGER` |
+| 列名            | 说明            | 值类型/范围 |
+|-----------------|-----------------|-------------|
+| `datanode_id`   | 节点ID          | `INTEGER`   |
+| `datanode_name` | 节点名称        | `STRING`    |
+| `datanode_type` | 0：主备；1：MGR | `INTEGER`   |
 
 #### `show hotdb functions` - 显示当前可用的分片函数
 
@@ -862,10 +862,10 @@ show hotdb functions;
 
 参数说明:
 
-| 参数 | 说明 | 类型 |
-|------|------|------|
+| 参数      | 说明                                          | 类型     |
+|-----------|-----------------------------------------------|----------|
 | `pattern` | 可选，模糊查询表达式，匹配`function_name`字段 | `STRING` |
-| `expr` | 可选，模糊查询表达式，匹配`function_name`字段 | `STRING` |
+| `expr`    | 可选，模糊查询表达式，匹配`function_name`字段 | `STRING` |
 
 例如：
 
@@ -879,12 +879,12 @@ show hotdb functions;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `function_id` | 分片函数ID | `INTEGER` |
-| `function_name` | 分片函数名称 | `STRING` |
-| `function_type` | 分片类型 | `STRING` |
-| `auto_generated` | 是否为HotDB自动生成的配置(1:自动生成，其他：非自动生成) | `INTEGER` |
+| 列名             | 说明                                                    | 值类型/范围 |
+|------------------|---------------------------------------------------------|-------------|
+| `function_id`    | 分片函数ID                                              | `INTEGER`   |
+| `function_name`  | 分片函数名称                                            | `STRING`    |
+| `function_type`  | 分片类型                                                | `STRING`    |
+| `auto_generated` | 是否为HotDB自动生成的配置(1:自动生成，其他：非自动生成) | `INTEGER`   |
 
 #### `show hotdb function infos` - 显示当前可用的分片函数信息
 
@@ -896,8 +896,8 @@ show hotdb function infos [WHERE expr];
 
 **参数说明:**
 
-| 参数 | 说明 | 类型 |
-|------|------|------|
+| 参数   | 说明                               | 类型     |
+|--------|------------------------------------|----------|
 | `expr` | 可选，模糊查询表达式，匹配指定字段 | `STRING` |
 
 例如：
@@ -910,11 +910,11 @@ show hotdb function infos [WHERE expr];
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `function_id` | 分片函数ID | `INTEGER` |
-| `column_value` | 分片字段的值 | `STRING` |
-| `datanode_id` | 数据节点id | `INTEGER` |
+| 列名           | 说明         | 值类型/范围 |
+|----------------|--------------|-------------|
+| `function_id`  | 分片函数ID   | `INTEGER`   |
+| `column_value` | 分片字段的值 | `STRING`    |
+| `datanode_id`  | 数据节点id   | `INTEGER`   |
 
 #### `show hotdb rules` - 显示当前可用的分片规则
 
@@ -926,10 +926,10 @@ show hotdb rules [LIKE 'pattern' | WHERE expr];
 
 参数说明:
 
-| 参数 | 说明 | 类型 |
-|------|------|------|
+| 参数      | 说明                                      | 类型     |
+|-----------|-------------------------------------------|----------|
 | `pattern` | 可选，模糊查询表达式，匹配`rule_name`字段 | `STRING` |
-| `expr` | 可选，模糊查询表达式，匹配`rule_name`字段 | `STRING` |
+| `expr`    | 可选，模糊查询表达式，匹配`rule_name`字段 | `STRING` |
 
 例如：
 
@@ -943,13 +943,13 @@ show hotdb rules [LIKE 'pattern' | WHERE expr];
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `rule_id` | 分片规则ID | `INTEGER` |
-| `rule_name` | 分片规则名称 | `STRING` |
-| `rule_column` | 分片字段名称 | `STRING` |
-| `function_id` | 分片类型ID | `INTEGER` |
-| `auto_generated` | 是否为HotDB自动生成的配置(1:自动生成，其他：非自动生成) | `INTEGER` |
+| 列名             | 说明                                                    | 值类型/范围 |
+|------------------|---------------------------------------------------------|-------------|
+| `rule_id`        | 分片规则ID                                              | `INTEGER`   |
+| `rule_name`      | 分片规则名称                                            | `STRING`    |
+| `rule_column`    | 分片字段名称                                            | `STRING`    |
+| `function_id`    | 分片类型ID                                              | `INTEGER`   |
+| `auto_generated` | 是否为HotDB自动生成的配置(1:自动生成，其他：非自动生成) | `INTEGER`   |
 
 #### `show backupmasterdelay [DNID]` - 显示指定数据节点中主备复制延迟大小{#show-backupmasterelay}
 
@@ -961,8 +961,8 @@ show backupmasterdelay [DNID];
 
 参数说明:
 
-| 参数 | 说明 | 类型 |
-|------|------|------|
+| 参数   | 说明       | 类型      |
+|--------|------------|-----------|
 | `DNID` | 数据节点id | `INTEGER` |
 
 例如：
@@ -971,12 +971,12 @@ show backupmasterdelay [DNID];
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `datasource_id` | 存储节点id | `INTEGER` |
-| `sql_delay` | 复制延迟大小（秒） | LONG |
-| `slave_io_running` | 备`io_thread`的状态(Yes/No) | `STRING` |
-| `slave_sql_running` | 备`sql_thread`状态（Yes/No） | `STRING` |
+| 列名                | 说明                         | 值类型/范围 |
+|---------------------|------------------------------|-------------|
+| `datasource_id`     | 存储节点id                   | `INTEGER`   |
+| `sql_delay`         | 复制延迟大小（秒）           | LONG        |
+| `slave_io_running`  | 备`io_thread`的状态(Yes/No)  | `STRING`    |
+| `slave_sql_running` | 备`sql_thread`状态（Yes/No） | `STRING`    |
 
 ### HotDB服务相关
 
@@ -994,13 +994,13 @@ show @@config_master_status;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `file` | Binlog文件 | `STRING` |
-| `position` | Binlog位置 | `INTEGER` |
-| `binlog_do_db` | Binlog需要记录的库 | `STRING` |
-| `binlog_ignore_db` | Binlog需要过滤的库 | `STRING` |
-| `executed_gtid_set` | 已经执行的GTID | `STRING` |
+| 列名                | 说明               | 值类型/范围 |
+|---------------------|--------------------|-------------|
+| `file`              | Binlog文件         | `STRING`    |
+| `position`          | Binlog位置         | `INTEGER`   |
+| `binlog_do_db`      | Binlog需要记录的库 | `STRING`    |
+| `binlog_ignore_db`  | Binlog需要过滤的库 | `STRING`    |
+| `executed_gtid_set` | 已经执行的GTID     | `STRING`    |
 
 #### `show @@server` - 显示HotDB服务器状态
 
@@ -1018,23 +1018,23 @@ show @@server;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `uptime` | HotDB实例已创建时间 | `STRING/[number"h" number"m" number"s"]` |
-| `online_time` | HotDB已启动时间 | `STRING/[number"h" number"m" number"s"]` |
-| `used_memory` | 已用内存 | `STRING/[number + "M"]` |
-| `total_memory` | 总内存 | `STRING/[number + "M"]` |
-| `max_memory` | 最大内存 | `STRING/[number + "M"]` |
-| `max_direct_memory` | 最大直接内存 | `STRING/[number + "M"]` |
-| `used_direct_memory` | 已用直接内存 | `STRING/[number + "M"]` |
-| `reload_time` | 上次重读配置时间 | `STRING/[yyyy-MM-dd hh:mm:ss]` |
-| `charset` | 字符集 | `STRING/[charset]` |
-| `role` | 主备角色 | `MASTER` - 主 |
-| ^ | ^ | `BACKUP` - 备 |
-| `status` | HotDB状态 | `ON` - 开启 |
-| ^ | ^ | `OFF` - 关闭 |
-| `mode` | HotDB读写模式 | `STRING/["READ-ONLY"，"READ-WRITE"]` |
-| `version` | HotDB版本号 | `STRING/[number.number.number.number]` |
+| 列名                 | 说明                | 值类型/范围                              |
+|----------------------|---------------------|------------------------------------------|
+| `uptime`             | HotDB实例已创建时间 | `STRING/[number"h" number"m" number"s"]` |
+| `online_time`        | HotDB已启动时间     | `STRING/[number"h" number"m" number"s"]` |
+| `used_memory`        | 已用内存            | `STRING/[number + "M"]`                  |
+| `total_memory`       | 总内存              | `STRING/[number + "M"]`                  |
+| `max_memory`         | 最大内存            | `STRING/[number + "M"]`                  |
+| `max_direct_memory`  | 最大直接内存        | `STRING/[number + "M"]`                  |
+| `used_direct_memory` | 已用直接内存        | `STRING/[number + "M"]`                  |
+| `reload_time`        | 上次重读配置时间    | `STRING/[yyyy-MM-dd hh:mm:ss]`           |
+| `charset`            | 字符集              | `STRING/[charset]`                       |
+| `role`               | 主备角色            | `MASTER` - 主                            |
+| ^                    | ^                   | `BACKUP` - 备                            |
+| `status`             | HotDB状态           | `ON` - 开启                              |
+| ^                    | ^                   | `OFF` - 关闭                             |
+| `mode`               | HotDB读写模式       | `STRING/["READ-ONLY"，"READ-WRITE"]`     |
+| `version`            | HotDB版本号         | `STRING/[number.number.number.number]`   |
 
 #### `show @@serversourceusage` - 当前服务器的资源使用情况
 
@@ -1048,17 +1048,17 @@ show @@serversourceusage;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `used_memory` | 已用内存(MB) | `STRING/[number]` |
-| `total_memory` | 总内存(MB) | `STRING/[number]` |
-| `disk` | 磁盘使用情况 | `STRING/[path number,...]` |
-| `cpu_load` | CPU负载 | `FLOAT/[float]` |
-| `cpu_usage` | CPU使用率 | `STRING/[number,number,...]` |
-| `net_in` | 网络流动速度(bytes/s) | `LONG/[number]` |
-| `net_out` | 网络流动速度(bytes/s) | `LONG/[number]` |
-| `cores` | CPU总核数 | `INT/[number]` |
-| `io` | 磁盘读写速度(kB/s) | `STRING/["sda" number number]` |
+| 列名           | 说明                  | 值类型/范围                    |
+|----------------|-----------------------|--------------------------------|
+| `used_memory`  | 已用内存(MB)          | `STRING/[number]`              |
+| `total_memory` | 总内存(MB)            | `STRING/[number]`              |
+| `disk`         | 磁盘使用情况          | `STRING/[path number,...]`     |
+| `cpu_load`     | CPU负载               | `FLOAT/[float]`                |
+| `cpu_usage`    | CPU使用率             | `STRING/[number,number,...]`   |
+| `net_in`       | 网络流动速度(bytes/s) | `LONG/[number]`                |
+| `net_out`      | 网络流动速度(bytes/s) | `LONG/[number]`                |
+| `cores`        | CPU总核数             | `INT/[number]`                 |
+| `io`           | 磁盘读写速度(kB/s)    | `STRING/["sda" number number]` |
 
 #### `show @@systemconfig_memory` - 当前计算节点服务内存中的参数
 
@@ -1072,8 +1072,8 @@ show @@systemconfig_memory;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
+| 列名     | 说明     | 值类型/范围       |
+|----------|----------|-------------------|
 | `config` | 配置信息 | `STRING/[number]` |
 
 #### `show @@time_current` - 显示当前时间
@@ -1088,9 +1088,9 @@ show @@time_current;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `timestamp` | HotDB服务器当前时间 | `STRING` |
+| 列名        | 说明                | 值类型/范围 |
+|-------------|---------------------|-------------|
+| `timestamp` | HotDB服务器当前时间 | `STRING`    |
 
 #### `show @@time_startup` - 显示HotDB启动时间
 
@@ -1104,8 +1104,8 @@ show @@time_startup;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
+| 列名        | 说明                | 值类型/范围                    |
+|-------------|---------------------|--------------------------------|
 | `timestamp` | HotDB服务器当前时间 | `STRING/[yyyy-MM-dd HH:mm:ss]` |
 
 #### `show @@usbkey` - 显示USB-KEY状态
@@ -1120,22 +1120,22 @@ show @@usbkey;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `left_time` | 剩余时间(s) | `LONG/[number]` |
-| `usbkey_status` | USB_KEY状态 | `0` - 异常 |
-| ^ | ^ | `1` - 正常 |
-| `usbkey_type` | USB_KEY类型 | `1` - 试用 |
-| ^ | ^ | `2` - 有期限 |
-| ^ | ^ | `3` - 永久 |
-| `node_limit` | 节点数限制 | `INT/[number]` |
-| `last_check_time` | 上次检测结束时间 | `STRING/[ yyyy-MM-dd HH:mm:sss]` |
-| `usbkey_check_stuck` | USB_KEY检测是否卡住 | `0` - 未被卡住 |
-| ^ | ^ | `1` - 卡住 |
+| 列名                  | 说明                 | 值类型/范围                      |
+|-----------------------|----------------------|----------------------------------|
+| `left_time`           | 剩余时间(s)          | `LONG/[number]`                  |
+| `usbkey_status`       | USB_KEY状态          | `0` - 异常                       |
+| ^                     | ^                    | `1` - 正常                       |
+| `usbkey_type`         | USB_KEY类型          | `1` - 试用                       |
+| ^                     | ^                    | `2` - 有期限                     |
+| ^                     | ^                    | `3` - 永久                       |
+| `node_limit`          | 节点数限制           | `INT/[number]`                   |
+| `last_check_time`     | 上次检测结束时间     | `STRING/[ yyyy-MM-dd HH:mm:sss]` |
+| `usbkey_check_stuck`  | USB_KEY检测是否卡住  | `0` - 未被卡住                   |
+| ^                     | ^                    | `1` - 卡住                       |
 | `last_exception_time` | 上次检测抛出异常时间 | `STRING/[ yyyy-MM-dd HH:mm:sss]` |
-| `last_exception_info` | 上次检测抛出异常信息 | `STRING` |
-| `exception_count` | 累计检测抛出异常次数 | `INT/[number]` |
-| `comment` | 备注信息 | `STRING` |
+| `last_exception_info` | 上次检测抛出异常信息 | `STRING`                         |
+| `exception_count`     | 累计检测抛出异常次数 | `INT/[number]`                   |
+| `comment`             | 备注信息             | `STRING`                         |
 
 > !Note
 > 
@@ -1161,9 +1161,9 @@ show @@version;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `version` | HotDB版本号 | `STRING` |
+| 列名      | 说明        | 值类型/范围 |
+|-----------|-------------|-------------|
+| `version` | HotDB版本号 | `STRING`    |
 
 ### MySQL服务相关
 
@@ -1179,14 +1179,14 @@ show @@ddl;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `schema` | 逻辑库 | `STRING/[database]` |
-| `dn` | 数据节点id | `INT/[number]` |
-| `ds` | 数据源id | `INT/[number]` |
-| `db` | 物理库 | `STRING/[database]` |
-| `table` | 表名 | `STRING/[table]` |
-| `ddl` | 表的DDL语句 | `STRING/[sql]` |
+| 列名     | 说明        | 值类型/范围         |
+|----------|-------------|---------------------|
+| `schema` | 逻辑库      | `STRING/[database]` |
+| `dn`     | 数据节点id  | `INT/[number]`      |
+| `ds`     | 数据源id    | `INT/[number]`      |
+| `db`     | 物理库      | `STRING/[database]` |
+| `table`  | 表名        | `STRING/[table]`    |
+| `ddl`    | 表的DDL语句 | `STRING/[sql]`      |
 
 #### `show @@lastsql` - borrowed状态连接上一次执行的sql
 
@@ -1200,13 +1200,13 @@ show @@lastsql;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `id` | 后端id | `LONG/[number]` |
-| `mysqlid` | 数据节点id | `LONG/[number]` |
-| `dn_ds` | 数据节点id - 数据源id | `STRING/[number_number]` |
-| `host` | 数据源 | `STRING/[ip:port/database]` |
-| `last_executed_sql` | 在数据源\[host]上执行的最后一条MySQL语句 | `STRING/[sql]` |
+| 列名                | 说明                                     | 值类型/范围                 |
+|---------------------|------------------------------------------|-----------------------------|
+| `id`                | 后端id                                   | `LONG/[number]`             |
+| `mysqlid`           | 数据节点id                               | `LONG/[number]`             |
+| `dn_ds`             | 数据节点id - 数据源id                    | `STRING/[number_number]`    |
+| `host`              | 数据源                                   | `STRING/[ip:port/database]` |
+| `last_executed_sql` | 在数据源\[host]上执行的最后一条MySQL语句 | `STRING/[sql]`              |
 
 #### `show @@onlineddl` - 显示正在运行的onlineddl语句
 
@@ -1220,14 +1220,14 @@ show @@onlineddl;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `schema` | 逻辑库 | `STRING/[database]` |
-| `onlineddl` | 语句 | `STRING/[SQL]` |
-| `progress` | 进度 | `LONG/[number]` |
-| `speed` | 速度（行/ms） | `LONG/[number]` |
-| `table` | 表名 | `STRING/[table]` |
-| `type` | 变更类型 | `LONG/[number]` |
+| 列名        | 说明          | 值类型/范围         |
+|-------------|---------------|---------------------|
+| `schema`    | 逻辑库        | `STRING/[database]` |
+| `onlineddl` | 语句          | `STRING/[SQL]`      |
+| `progress`  | 进度          | `LONG/[number]`     |
+| `speed`     | 速度（行/ms） | `LONG/[number]`     |
+| `table`     | 表名          | `STRING/[table]`    |
+| `type`      | 变更类型      | `LONG/[number]`     |
 
 #### `show @@tableindex` - 显示表的索引结构
 
@@ -1241,14 +1241,14 @@ show @@tableindex;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `schema` | 逻辑库 | `STRING/[database]` |
-| `dn` | 数据节点id | `INT/[number]` |
-| `ds` | 存储节点id | `INT/[number]` |
-| `db` | 物理库 | `STRING/[database]` |
-| `table` | 物理表表名 | `STRING/[number]` |
-| `index` | 表索引结构 | `STRING` |
+| 列名     | 说明       | 值类型/范围         |
+|----------|------------|---------------------|
+| `schema` | 逻辑库     | `STRING/[database]` |
+| `dn`     | 数据节点id | `INT/[number]`      |
+| `ds`     | 存储节点id | `INT/[number]`      |
+| `db`     | 物理库     | `STRING/[database]` |
+| `table`  | 物理表表名 | `STRING/[number]`   |
+| `index`  | 表索引结构 | `STRING`            |
 
 ### 分片方案在线变更相关
 
@@ -1271,32 +1271,32 @@ onlinemodifyrulecheck db.tablename[=functionid,rulecol:datanodes:checkconsistenc
 
 **命令包含字段及其说明：**
 
-| 参数 | 说明 |
-|------|------|
-| `db` | 逻辑库 |
-| `tablename` | 表名 |
-| `functionid` | 分片规则id，参考`hotdb_config`配置库的`hotdb_function`表 |
-| `rulecol` | 分片字段 |
-| `datanodes` | 数据节点，参考`hotdb_config`配置库的`hotdb_datanode`表 |
-| `checkconsistency` | 是否检查主备一致性 1 0 |
+| 参数               | 说明                                                     |
+|--------------------|----------------------------------------------------------|
+| `db`               | 逻辑库                                                   |
+| `tablename`        | 表名                                                     |
+| `functionid`       | 分片规则id，参考`hotdb_config`配置库的`hotdb_function`表 |
+| `rulecol`          | 分片字段                                                 |
+| `datanodes`        | 数据节点，参考`hotdb_config`配置库的`hotdb_datanode`表   |
+| `checkconsistency` | 是否检查主备一致性 1 0                                   |
 
 有两种用法：
 
 1. 用于预检时，检测分片规则变更的相关项是否通过，检测项ID和对应的检测项如下表：
 
-| 检测项ID | 对应字段 | 预检项说明 |
-|----------|----------|------------|
-| 1 | `tbNameLess45` | 源表名长度不超过45个字符 |
-| 2 | `running` | 源表没有正在执行分片方案变更任务 |
-| 3 | `validCol` | 分片字段为表结构包含的字段 |
-| 4 | `diffrule` | 变更方案的分片规则与分片字段与源表不一致 |
-| 5 | `existUniqueKey` | 源表有主键或者唯一键 |
-| 6 | `recommendColType` | 分片字段为当前分片函数推荐的字段类型 |
-| 7 | `lostData` | 新的分片方案不会导致数据丢失 |
-| 8 | `trigger` | 源表上无触发器 |
-| 9 | `refByTrigger` | 源表没有被其他触发器关联 |
-| 10 | `foreignConstraint` | 源表无外键约束 |
-| 11 | `consistency` | 源表数据主备一致性检测结果一致 |
+| 检测项ID | 对应字段            | 预检项说明                               |
+|----------|---------------------|------------------------------------------|
+| 1        | `tbNameLess45`      | 源表名长度不超过45个字符                 |
+| 2        | `running`           | 源表没有正在执行分片方案变更任务         |
+| 3        | `validCol`          | 分片字段为表结构包含的字段               |
+| 4        | `diffrule`          | 变更方案的分片规则与分片字段与源表不一致 |
+| 5        | `existUniqueKey`    | 源表有主键或者唯一键                     |
+| 6        | `recommendColType`  | 分片字段为当前分片函数推荐的字段类型     |
+| 7        | `lostData`          | 新的分片方案不会导致数据丢失             |
+| 8        | `trigger`           | 源表上无触发器                           |
+| 9        | `refByTrigger`      | 源表没有被其他触发器关联                 |
+| 10       | `foreignConstraint` | 源表无外键约束                           |
+| 11       | `consistency`       | 源表数据主备一致性检测结果一致           |
 
 预检测命令的检测结果（result值）若为1，表示该项检测不通过，变更结果可能会有错误。
 
@@ -1324,13 +1324,13 @@ onlinemodifyrulecheck db.tablename [db.tablename...]
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 |
-|------|------|
-| `db` | 逻辑库 |
-| `tablename` | 表名称 |
-| `id` | 检测项ID |
-| `result` | 结果（0通过，1不通过，-1检测中） |
-| `warning` | 错误提示信息 |
+| 列名        | 说明                             |
+|-------------|----------------------------------|
+| `db`        | 逻辑库                           |
+| `tablename` | 表名称                           |
+| `id`        | 检测项ID                         |
+| `result`    | 结果（0通过，1不通过，-1检测中） |
+| `warning`   | 错误提示信息                     |
 
 查看一下检测是否结束（result值是-1则未结束），或者检测是否有不通过的项（result值是1则未通过），如果result结果全为0，此时可以执行分片方案变更。
 
@@ -1352,18 +1352,18 @@ onlinemodifyrule db.tablename=functionid,rulecol:datanodes:源表处理(小时:0
 
 **命令包含字段及其说明：**
 
-| 参数 | 说明 |
-|------|------|
-| `db` | 逻辑库 |
-| `tablename` | 表名 |
-| `functionid` | 分片规则id，参考`hotdb_config`配置库的`hotdb_function`表 |
-| `rulecol` | 分片字段 |
-| `datanodes` | 数据节点，参考`hotdb_config`配置库的`hotdb_datanode`表 |
-| `源表处理` | 分片方案成功后对源表的处理方式（保留n个小时，0为不保留） |
-| `批次行数` | 限制复制数据阶段每次读写行大小 |
-| `复制间隔` | 每次读写行的间隔时间（T3：3倍SQL执行时间、I0.3：固定时间0.3s） |
-| `等待超时` | 在变更导致数据不一致的情况时，等待用户做出处理的时间，超出设置时间未确认则变更任务自动失败，设置范围`[1,30]` |
-| `暂停数据复制时段` | 在设置时段范围内变更任务自动暂停数据复制工作，时段以逗号分隔，例如：0700-2210,0300-0559 |
+| 参数               | 说明                                                                                                         |
+|--------------------|--------------------------------------------------------------------------------------------------------------|
+| `db`               | 逻辑库                                                                                                       |
+| `tablename`        | 表名                                                                                                         |
+| `functionid`       | 分片规则id，参考`hotdb_config`配置库的`hotdb_function`表                                                     |
+| `rulecol`          | 分片字段                                                                                                     |
+| `datanodes`        | 数据节点，参考`hotdb_config`配置库的`hotdb_datanode`表                                                       |
+| `源表处理`         | 分片方案成功后对源表的处理方式（保留n个小时，0为不保留）                                                     |
+| `批次行数`         | 限制复制数据阶段每次读写行大小                                                                               |
+| `复制间隔`         | 每次读写行的间隔时间（T3：3倍SQL执行时间、I0.3：固定时间0.3s）                                               |
+| `等待超时`         | 在变更导致数据不一致的情况时，等待用户做出处理的时间，超出设置时间未确认则变更任务自动失败，设置范围`[1,30]` |
+| `暂停数据复制时段` | 在设置时段范围内变更任务自动暂停数据复制工作，时段以逗号分隔，例如：0700-2210,0300-0559                      |
 
 如下图所示：`cpd_test`是逻辑库，`zx_cvset_signin_result`是表名，`4`是`functionid`，`id`是分片字段，`[1,2]`是数据节点，`24`是是指源表24小时后删除，`1000`是指批次行数，`T3`是指3倍的SQL执行时间，`7`是指等待超时7天，`0`是指不设置暂停数据复制时段。
 
@@ -1400,10 +1400,10 @@ onlinemodifyruleprogress db.tablename[,db1.tablename1,..]
 
 **命令包含字段及其说明：**
 
-| 参数 | 说明 |
-|------|------|
-| `db` | 逻辑库 |
-| `tablename` | 表名 |
+| 参数        | 说明   |
+|-------------|--------|
+| `db`        | 逻辑库 |
+| `tablename` | 表名   |
 
 如下图所示：`cpd_test`是逻辑库，`cv_live_courseware`和`cv_live_study`是表名。
 
@@ -1411,18 +1411,18 @@ onlinemodifyruleprogress db.tablename[,db1.tablename1,..]
 
 **结果包含字段及其说明：**
 
-| 字段名 | 说明 |
-|--------|------|
-| `db` | 逻辑库 |
-| `tablename` | 表名称 |
-| `progress` | 0-100，整数 |
-| `cost` | 执行时长（ms） |
-| `state` | stopping(非执行窗口)、running(正在执行)、waiting(不一致，等待用户确认是否继续)、finish(已完成)、error(失败) |
-| `detail` | 其他错误信息 |
-| `lost` | 数据缺失 |
-| `over` | 数据超出 |
-| `inconsitent` | 数据不一致 |
-| `autorepair` | 自动修复（1/0）：1是已修复，0是未修复 |
+| 字段名        | 说明                                                                                                        |
+|---------------|-------------------------------------------------------------------------------------------------------------|
+| `db`          | 逻辑库                                                                                                      |
+| `tablename`   | 表名称                                                                                                      |
+| `progress`    | 0-100，整数                                                                                                 |
+| `cost`        | 执行时长（ms）                                                                                              |
+| `state`       | stopping(非执行窗口)、running(正在执行)、waiting(不一致，等待用户确认是否继续)、finish(已完成)、error(失败) |
+| `detail`      | 其他错误信息                                                                                                |
+| `lost`        | 数据缺失                                                                                                    |
+| `over`        | 数据超出                                                                                                    |
+| `inconsitent` | 数据不一致                                                                                                  |
+| `autorepair`  | 自动修复（1/0）：1是已修复，0是未修复                                                                       |
 
 如果state的返回是waitting,需要用户确认继续执行，忽略不一致的数据，或者取消变更。
 
@@ -1438,10 +1438,10 @@ onlinemodifyrulecontinue db.tablename;
 
 **命令包含字段及其说明：**
 
-| 参数 | 说明 |
-|------|------|
-| `db` | 逻辑库 |
-| `tablename` | 表名 |
+| 参数        | 说明   |
+|-------------|--------|
+| `db`        | 逻辑库 |
+| `tablename` | 表名   |
 
 如下图所示：执行变更分片方案的过程中，当state是waitting，且存在数据不一致，使用该命令继续执行变更，再次去查看进度的时候是100且state的状态为finish。
 
@@ -1477,12 +1477,12 @@ check @@datasource_config;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `Level` | 异常信息级别(Warning, Error) | `STRING/["Error","Warning"]` |
-| `Code` | 异常编号 | `INT/[number]` |
-| `Message` | 错误信息 | `STRING` |
-| `Value` | 与错误或警告相关的数值说明 | `STRING` |
+| 列名      | 说明                         | 值类型/范围                  |
+|-----------|------------------------------|------------------------------|
+| `Level`   | 异常信息级别(Warning, Error) | `STRING/["Error","Warning"]` |
+| `Code`    | 异常编号                     | `INT/[number]`               |
+| `Message` | 错误信息                     | `STRING`                     |
+| `Value`   | 与错误或警告相关的数值说明   | `STRING`                     |
 
 以下参数或配置需要所有存储节点设置一致，且符合参数配置标准：
 
@@ -1521,10 +1521,10 @@ check @@route [db_name.tb_name | tb_name];
 
 参数说明：
 
-| 参数 | 说明 | 类型 |
-|------|------|------|
+| 参数      | 说明     | 类型     |
+|-----------|----------|----------|
 | `db_name` | 数据库名 | `STRING` |
-| `tb_name` | 表名 | `STRING` |
+| `tb_name` | 表名     | `STRING` |
 
 数据路由一致结果：
 
@@ -1536,11 +1536,11 @@ check @@route [db_name.tb_name | tb_name];
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `shard_key_value` | 路由字段的值 | `STRING` |
-| `route_dn` | 应去的路由节点 | `INT/[number]` |
-| `actual_dn` | 实际存储的节点 | `INT/[number]` |
+| 列名              | 说明           | 值类型/范围    |
+|-------------------|----------------|----------------|
+| `shard_key_value` | 路由字段的值   | `STRING`       |
+| `route_dn`        | 应去的路由节点 | `INT/[number]` |
+| `actual_dn`       | 实际存储的节点 | `INT/[number]` |
 
 ### `kill @@connection` - 将某个指定的连接关闭
 
@@ -1552,8 +1552,8 @@ kill @@connection [id1,id2,id3...idn];
 
 参数说明：
 
-| 参数 | 说明 | 类型 |
-|------|------|------|
+| 参数            | 说明     | 类型                                     |
+|-----------------|----------|------------------------------------------|
 | `connection_id` | 连接的id | `INTEGER/通过[show @connection]命令获取` |
 
 例如：
@@ -1681,8 +1681,8 @@ restart @@heartbeat [datanode_id];
 
 参数说明:
 
-| 参数 | 说明 | 类型 |
-|------|------|------|
+| 参数          | 说明       | 类型  |
+|---------------|------------|-------|
 | `datanode_id` | 数据节点id | `INT` |
 
 例如：
@@ -1703,10 +1703,10 @@ stop @@heartbeat [datanode_id:time(s)]
 
 参数说明:
 
-| 参数 | 说明 | 类型 |
-|------|------|------|
-| `datanode_id` | 数据节点id | `INT` |
-| `time` | 暂停时间（秒） | `INT` |
+| 参数          | 说明           | 类型  |
+|---------------|----------------|-------|
+| `datanode_id` | 数据节点id     | `INT` |
+| `time`        | 暂停时间（秒） | `INT` |
 
 例如：
 
@@ -1800,12 +1800,12 @@ online_dr_check;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
-| `process` | 处理过程，0-8 | `INTEGER` |
-| `error` | 错误信息（错误格式：`srcDs1:dstDs1,srcDs2:dstDs2,...;errormsg`或者`ds,ds:ds,...;errormsg`，存储节点格式：`datanodeID_datasourceID_datasourceIP_port_dbname`，如果包含，则src代表原中心机房，dst代表原灾备机房） | `STRING` |
-| `error_code` | 错误码 status 状态，1表示完成，0表示未完成 | `INTEGER` |
-| `status` | 状态，1代表完成，0表示未完成 | `INTEGER` |
+| 列名         | 说明                                                                                                                                                                                                            | 值类型/范围 |
+|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| `process`    | 处理过程，0-8                                                                                                                                                                                                   | `INTEGER`   |
+| `error`      | 错误信息（错误格式：`srcDs1:dstDs1,srcDs2:dstDs2,...;errormsg`或者`ds,ds:ds,...;errormsg`，存储节点格式：`datanodeID_datasourceID_datasourceIP_port_dbname`，如果包含，则src代表原中心机房，dst代表原灾备机房） | `STRING`    |
+| `error_code` | 错误码 status 状态，1表示完成，0表示未完成                                                                                                                                                                      | `INTEGER`   |
+| `status`     | 状态，1代表完成，0表示未完成                                                                                                                                                                                    | `INTEGER`   |
 
 ### `reset @@dberrorcount` - 将所有逻辑库报错信息清空{#reset-dberrorcount}
 
@@ -1901,8 +1901,8 @@ file @@list;
 
 **结果包含字段及其说明：**
 
-| 列名 | 说明 | 值类型/范围 |
-|------|------|-------------|
+| 列名   | 说明                     | 值类型/范围                                       |
+|--------|--------------------------|---------------------------------------------------|
 | `DATA` | conf目录下相关文件的信息 | `STRING/[number:file "time":yyyy-MM-dd hh:mm:ss]` |
 
 ### `hold commit` - 将所有客户端的连接状态置为HOLD_ALL_COMMIT{#hold-commit}

@@ -412,44 +412,44 @@ Deployment grade Examination is a set of operation environment examination grade
 
 **Examination dimension:**
 
-| Examination dimension | Examination item |
-|-----------------------|------------------|
-| Hardware resource | Server attribute |
-| ^ | Disk space |
-| ^ | Disk IO response time |
-| ^ | Memory |
-| ^ | CPU |
-| ^ | Network quality |
-| Operation system | periodical scheduling |
-| ^ | sysctl.conf |
-| ^ | Time synchronization |
-| ^ | Can be connected to the external network |
-| ^ | Firewall and selinux |
-| ^ | yum |
-| ^ | Time zone |
-| ^ | tune |
-| ^ | limits.cnf |
-| ^ | Character set |
-| ^ | SSH connection |
-| Software deployment | Backup program |
-| ^ | MySQL client |
-| ^ | MySQL server |
-| ^ | Java environment |
-| Software configuration | MySQL connection |
-| ^ | MySQL high availability |
-| ^ | Compute node startup script |
-| ^ | ConfigDB |
-| ^ | MySQL disk space |
-| ^ | MySQL parameter configuration |
-| ^ | MySQL user privilege |
-| ^ | server.xml |
-| ^ | Compute node high availability |
-| ^ | Monitoring port |
-| Basic function verification | Data source high availability switch |
-| ^ | Compute node high availability switch |
-| ^ | LogicDB privilege |
-| ^ | Backup program |
-| ^ | 10 s performance test |
+| Examination dimension       | Examination item                         |
+|-----------------------------|------------------------------------------|
+| Hardware resource           | Server attribute                         |
+| ^                           | Disk space                               |
+| ^                           | Disk IO response time                    |
+| ^                           | Memory                                   |
+| ^                           | CPU                                      |
+| ^                           | Network quality                          |
+| Operation system            | periodical scheduling                    |
+| ^                           | sysctl.conf                              |
+| ^                           | Time synchronization                     |
+| ^                           | Can be connected to the external network |
+| ^                           | Firewall and selinux                     |
+| ^                           | yum                                      |
+| ^                           | Time zone                                |
+| ^                           | tune                                     |
+| ^                           | limits.cnf                               |
+| ^                           | Character set                            |
+| ^                           | SSH connection                           |
+| Software deployment         | Backup program                           |
+| ^                           | MySQL client                             |
+| ^                           | MySQL server                             |
+| ^                           | Java environment                         |
+| Software configuration      | MySQL connection                         |
+| ^                           | MySQL high availability                  |
+| ^                           | Compute node startup script              |
+| ^                           | ConfigDB                                 |
+| ^                           | MySQL disk space                         |
+| ^                           | MySQL parameter configuration            |
+| ^                           | MySQL user privilege                     |
+| ^                           | server.xml                               |
+| ^                           | Compute node high availability           |
+| ^                           | Monitoring port                          |
+| Basic function verification | Data source high availability switch     |
+| ^                           | Compute node high availability switch    |
+| ^                           | LogicDB privilege                        |
+| ^                           | Backup program                           |
+| ^                           | 10 s performance test                    |
 
 **Examination panel:**
 
@@ -2164,63 +2164,63 @@ Config checking failures are divided into ERROR (red font display) and WARNING (
 
 **Config Checking Items:**
 
-| Type | Checking Content |
-|------|------------------|
-| Data source table configuration | Data Node reference is normal |
-| ^ | Data Source database does not repeat |
-| ^ | Data Source cannot be connected |
-| ^ | A Data Node must contain available data source |
-| ^ | Data Node must contain Data Source |
-| ^ | One data node has only one Active Master |
-| ^ | One Data Node must contain a Data Source of Active Master type |
-| ^ | The character set of data source must be consistent |
-| ^ | Non-MGR Data Node cannot cite MGR type Data Source |
-| ^ | Data node cannot cite common master-slave data source |
-| ^ | ConfigDB cannot be added as data source |
-| ^ | Data source user and configDB user cannot share |
-| ^ | The logical architecture of compute nodes in the master center and the DR center is the same. |
-| Node switching rule table configuration | Data Source reference is normal |
-| ^ | Data Source and Data Node high availability source cannot be the same |
-| ^ | Data Source and Data Node high availability source must belong to the same data node |
-| LogicDB table configuration | Data Node reference is normal |
-| Sharding function parameter table configuration | Sharding function reference is normal |
-| ^ | Data Node reference is normal |
-| ^ | The column_value of RANGE or HASH route method must be in the form of an interval, such as: a:b, and a and b shall be numbers, a<=b |
-| ^ | The sharding parameter value range of HASH route method cannot contain negative numbers |
-| ^ | The sharding parameter value of automatic Sharding Route method shall be a positive integer |
-| ^ | The sharding parameter value of ROUTE route method shall be an integer |
-| ^ | Sharding function parameter is normal |
-| ^ | Sharding interval of RANGE or HASH shall have no overlap |
-| ^ | The column_value of SIMPLE_MOD or CRC32_MOD route method can be a number greater than or equal to 0 or an interval, such as: a:b, and a and b shall be numbers, a>=0, b>=0, a< =b |
-| ^ | The module value of SIMPLE_MOD or CRC32_MOD must be within 2-2147483647 |
-| ^ | SIMPLE_MOD or CRC32_MOD must be configured with module values |
-| ^ | The sharding parameter value interval of SIMPLE_MOD or CRC32_MOD shall have no overlap |
-| Sharding function table configuration | Sharding function reference is normal |
-| Table Configuration | Global table is normal |
-| ^ | Sharding function reference is normal |
-| ^ | Data Node reference is normal |
-| ^ | LogicDB reference is normal |
-| ^ | Table name conflict detection is normal |
-| ^ | Global table node must contain all nodes of the logicDB it belongs to |
-| ^ | Association between table and data node is normal |
-| ^ | Sharding table sharding function association is normal |
-| ^ | Vertical sharding table belongs to only one node |
-| ^ | After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table. |
-| Child table configuration | Parent table reference is normal |
-| ^ | Parent table sharding type is normal |
-| ^ | Association between one parent table and multiple child tables is normal |
-| ^ | Relation between child table and parent table is normal |
-| ^ | Child table has no conflict with parent table name |
-| License management | Node number limitation checking passed |
-| ^ | LogicDB number limitation checking passed |
-| Data source configuration | Data source configuration is correct |
-| ^ | Reload requirement: the replication latency between available master Data Source and original master Data Source cannot exceed 10s |
-| ^ | Reload requires that the replication status between available master data source and original master data source shall be normal |
-| ConfigDB status | ConfigDB connection is normal |
-| ^ | ConfigDB replication status is normal |
-| user privilege configuration | The data source connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,process,references,super,reload (only when the node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client,trigger,display view,create view,create routine,xa_recover_admin (only for data source instances of version 8.0 and above), alter routine,execute,event) |
-| ^ | The configDB connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload (only when the compute node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client) |
-| Compute node configuration | Whether the currently configured compute node mode matches the real compute node mode. |
+| Type                                            | Checking Content                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Data source table configuration                 | Data Node reference is normal                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ^                                               | Data Source database does not repeat                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ^                                               | Data Source cannot be connected                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ^                                               | A Data Node must contain available data source                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ^                                               | Data Node must contain Data Source                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| ^                                               | One data node has only one Active Master                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ^                                               | One Data Node must contain a Data Source of Active Master type                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ^                                               | The character set of data source must be consistent                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                               | Non-MGR Data Node cannot cite MGR type Data Source                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| ^                                               | Data node cannot cite common master-slave data source                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ^                                               | ConfigDB cannot be added as data source                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ^                                               | Data source user and configDB user cannot share                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ^                                               | The logical architecture of compute nodes in the master center and the DR center is the same.                                                                                                                                                                                                                                                                                                                                                                        |
+| Node switching rule table configuration         | Data Source reference is normal                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ^                                               | Data Source and Data Node high availability source cannot be the same                                                                                                                                                                                                                                                                                                                                                                                                |
+| ^                                               | Data Source and Data Node high availability source must belong to the same data node                                                                                                                                                                                                                                                                                                                                                                                 |
+| LogicDB table configuration                     | Data Node reference is normal                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Sharding function parameter table configuration | Sharding function reference is normal                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ^                                               | Data Node reference is normal                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ^                                               | The column_value of RANGE or HASH route method must be in the form of an interval, such as: a:b, and a and b shall be numbers, a<=b                                                                                                                                                                                                                                                                                                                                  |
+| ^                                               | The sharding parameter value range of HASH route method cannot contain negative numbers                                                                                                                                                                                                                                                                                                                                                                              |
+| ^                                               | The sharding parameter value of automatic Sharding Route method shall be a positive integer                                                                                                                                                                                                                                                                                                                                                                          |
+| ^                                               | The sharding parameter value of ROUTE route method shall be an integer                                                                                                                                                                                                                                                                                                                                                                                               |
+| ^                                               | Sharding function parameter is normal                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ^                                               | Sharding interval of RANGE or HASH shall have no overlap                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ^                                               | The column_value of SIMPLE_MOD or CRC32_MOD route method can be a number greater than or equal to 0 or an interval, such as: a:b, and a and b shall be numbers, a>=0, b>=0, a< =b                                                                                                                                                                                                                                                                                    |
+| ^                                               | The module value of SIMPLE_MOD or CRC32_MOD must be within 2-2147483647                                                                                                                                                                                                                                                                                                                                                                                              |
+| ^                                               | SIMPLE_MOD or CRC32_MOD must be configured with module values                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ^                                               | The sharding parameter value interval of SIMPLE_MOD or CRC32_MOD shall have no overlap                                                                                                                                                                                                                                                                                                                                                                               |
+| Sharding function table configuration           | Sharding function reference is normal                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Table Configuration                             | Global table is normal                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ^                                               | Sharding function reference is normal                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ^                                               | Data Node reference is normal                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ^                                               | LogicDB reference is normal                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ^                                               | Table name conflict detection is normal                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ^                                               | Global table node must contain all nodes of the logicDB it belongs to                                                                                                                                                                                                                                                                                                                                                                                                |
+| ^                                               | Association between table and data node is normal                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| ^                                               | Sharding table sharding function association is normal                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ^                                               | Vertical sharding table belongs to only one node                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ^                                               | After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table.                                                                                                                                                                                                                                                                                                                                 |
+| Child table configuration                       | Parent table reference is normal                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ^                                               | Parent table sharding type is normal                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ^                                               | Association between one parent table and multiple child tables is normal                                                                                                                                                                                                                                                                                                                                                                                             |
+| ^                                               | Relation between child table and parent table is normal                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ^                                               | Child table has no conflict with parent table name                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| License management                              | Node number limitation checking passed                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ^                                               | LogicDB number limitation checking passed                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| Data source configuration                       | Data source configuration is correct                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ^                                               | Reload requirement: the replication latency between available master Data Source and original master Data Source cannot exceed 10s                                                                                                                                                                                                                                                                                                                                   |
+| ^                                               | Reload requires that the replication status between available master data source and original master data source shall be normal                                                                                                                                                                                                                                                                                                                                     |
+| ConfigDB status                                 | ConfigDB connection is normal                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ^                                               | ConfigDB replication status is normal                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| user privilege configuration                    | The data source connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,process,references,super,reload (only when the node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client,trigger,display view,create view,create routine,xa_recover_admin (only for data source instances of version 8.0 and above), alter routine,execute,event) |
+| ^                                               | The configDB connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload (only when the compute node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client)                                                                                                                                    |
+| Compute node configuration                      | Whether the currently configured compute node mode matches the real compute node mode.                                                                                                                                                                                                                                                                                                                                                                               |
 
 > !Note
 >
@@ -5036,57 +5036,57 @@ It records the log information generated by the compute node during the running 
 
 The following is a description of all compute node log types:
 
-| Log type | Type description |
-|----------|------------------|
-| AUDIT | Record all audit log related log information |
-| AUTHORITY | Record license-related log information, such as checking whether the current data node exceeds the node limit contained in the license, etc. |
-| BUFFER | Record cache-related log information, such as the failure to create direct caches, the size of the requested cache exceeds the set chunksize and other error messages |
-| CCCONFIG | Record log information related to NDB connection configuration information, such as unsupported NDB service mode and other error messages |
-| CCMETADATA | Record log information related to NDB metadata |
-| CCONNECTION | Record log information related to NDB connection, such as error message of the maximum connections detected |
-| CCPARSER | Record NDB log information related to SQL statement parsing, such as error message of unsupported SQL statements |
-| CCRECORDRW | Record the read and write of NDB acquisition record, which refers to the log information when parsing from the SQL format to the NDB format, such as error message of unsupported column type or character set |
-| CCSIGNAL | Record log information related to NDB signal parsing, such as error message of semaphore cannot be compressed |
-| CCSQLBUILD | Record log information when the NDB protocol is parsed into a SQL statement |
-| CLUSTER | Record log information related to the cluster, such as heartbeat detection information between clusters, cluster broadcast packet timeout information, etc. |
-| CONNECTION | Record log information related to connection, such as INFO information that the front-end connection is closed due to a new connection requested in the bound session |
-| CONNECTIONCLOSED | Record log information when the front-end connection is closed |
-| CROSSDNJOIN | Record across-node JOIN query SQL statement |
-| DDL | Record log information related to DDL, such as recording all DDL operations |
-| DEADLOCK | Record log information related to deadlocks, such as exception information in deadlock detection |
-| DISKSPACE | Record disk space-related log information, such as error message of detecting insufficient disk space caused by writing temporary files |
-| EXIT | Record log information before the compute node is closed, for example, the data consistency detection result and the created temporary table are cleared before closing |
-| FAILOVER | Record log information related to data source switching, such as data source manual switching failure due to unavailable data source |
-| HEARTBEAT | Record log information related to the heartbeat detection, such as heartbeat detection failure due to the failure to obtain data source back-end connection, the heartbeat detection initialization abnormality, etc. |
-| HOLD | Record log information related to HOLD operation, such as displaying the client information for sending the HOLD command, HOLD success or failure, etc. |
-| HOTDBERROR | Record the custom ERROR of compute node. For details, please refer to the [HotDB Server Error Code Explanation](error-codes.md) document |
-| HOTDBWARNING | Record the custom WARNING of compute node. For details, please refer to the [HotDB Server Error Code Explanation](error-codes.md) document |
-| INIT | Record log information related to the initialization of compute node, for example, the compute node stars to monitor the management port at initialization, etc. |
-| INNER | Record log information related to internal operations of compute node, such as failure to clear data nodes and create table configuration |
-| JOIN | Record log information related to JOIN query, such as error message during JOIN query |
-| LIMITOFFSETWITHOUTORDERBY | Record SQL statements that use LIMIT but are not sorted |
-| MANAGER | Log information related to management end, such as connection information when receiving the RELOAD command |
-| MYSQLERROR | Record MySQL Error messages that appear in a connection, excluding deadlocks, lock timeouts, primary key or unique key conflicts, and foreign key violations |
-| MYSQLWARNING | Record MySQL WARNING information that appears in a connection |
-| NDB | Record log information related to NDB |
-| ONLINEDDL | Record log information related to OnlineDDL, such as error message caused by OnlineDDL operation |
-| RELATIVE | Record log information related to the auxiliary table of parent and child tables, such as error message of |
-|   | updating the parent and child tables related configuration (auxs column) |
-| RESPONSE | Record log information related to back-end response when the back-end request is started, for example, the table structure does not exist after the back-end request is started |
-| ROUTE | Record log information related to route, such as sharding type not meeting route conditions |
-| SQL | Record log information related to executing SQL statements, such as error messages after executing a SQL statement |
-| SQLFORWARD | Record the log information of forwarding the SQL log information from standby compute node to master compute node |
-| SQLINTERCEPTED | Record statements intercepted by the SQL firewall |
-| SQLKEYCONFLICT | Record MySQL ERROR information of primary key or unique key conflicts |
-| SQLSYNTAXERROR | Record log information related to errors of executed SQL statements |
-| SQLUNSUPPORTED | Record SQL statements that are not supported by the compute node, such as unsupported global function indexes |
-| SUBQUERY | Record SQL statement of the subquery |
-| SWITCHSOURCE | Record log information related to the data correctness guarantee after failover. For details, please refer to the Data Correctness Guarantee after Failover chapter of the [Standard](standard.md) document |
-| TIMER | Record log information related to the timer, such as error information for delayed detection, completion of ONLINE operation executed by checkVIP timer, etc. |
-| TRANSFER | Record log information related to data source migration, such as detecting whether the UUID of data source migration is empty or has been used |
-| UNION | Record SQL statement of the UNION query |
-| UNKNOWN | Record all log information except for other log types |
-| WATCHDOG | Record log information of internal status monitoring of WATCHDOG related compute node service, such as detecting whether the compute node content has deadlocks |
+| Log type                  | Type description                                                                                                                                                                                                      |
+|---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| AUDIT                     | Record all audit log related log information                                                                                                                                                                          |
+| AUTHORITY                 | Record license-related log information, such as checking whether the current data node exceeds the node limit contained in the license, etc.                                                                          |
+| BUFFER                    | Record cache-related log information, such as the failure to create direct caches, the size of the requested cache exceeds the set chunksize and other error messages                                                 |
+| CCCONFIG                  | Record log information related to NDB connection configuration information, such as unsupported NDB service mode and other error messages                                                                             |
+| CCMETADATA                | Record log information related to NDB metadata                                                                                                                                                                        |
+| CCONNECTION               | Record log information related to NDB connection, such as error message of the maximum connections detected                                                                                                           |
+| CCPARSER                  | Record NDB log information related to SQL statement parsing, such as error message of unsupported SQL statements                                                                                                      |
+| CCRECORDRW                | Record the read and write of NDB acquisition record, which refers to the log information when parsing from the SQL format to the NDB format, such as error message of unsupported column type or character set        |
+| CCSIGNAL                  | Record log information related to NDB signal parsing, such as error message of semaphore cannot be compressed                                                                                                         |
+| CCSQLBUILD                | Record log information when the NDB protocol is parsed into a SQL statement                                                                                                                                           |
+| CLUSTER                   | Record log information related to the cluster, such as heartbeat detection information between clusters, cluster broadcast packet timeout information, etc.                                                           |
+| CONNECTION                | Record log information related to connection, such as INFO information that the front-end connection is closed due to a new connection requested in the bound session                                                 |
+| CONNECTIONCLOSED          | Record log information when the front-end connection is closed                                                                                                                                                        |
+| CROSSDNJOIN               | Record across-node JOIN query SQL statement                                                                                                                                                                           |
+| DDL                       | Record log information related to DDL, such as recording all DDL operations                                                                                                                                           |
+| DEADLOCK                  | Record log information related to deadlocks, such as exception information in deadlock detection                                                                                                                      |
+| DISKSPACE                 | Record disk space-related log information, such as error message of detecting insufficient disk space caused by writing temporary files                                                                               |
+| EXIT                      | Record log information before the compute node is closed, for example, the data consistency detection result and the created temporary table are cleared before closing                                               |
+| FAILOVER                  | Record log information related to data source switching, such as data source manual switching failure due to unavailable data source                                                                                  |
+| HEARTBEAT                 | Record log information related to the heartbeat detection, such as heartbeat detection failure due to the failure to obtain data source back-end connection, the heartbeat detection initialization abnormality, etc. |
+| HOLD                      | Record log information related to HOLD operation, such as displaying the client information for sending the HOLD command, HOLD success or failure, etc.                                                               |
+| HOTDBERROR                | Record the custom ERROR of compute node. For details, please refer to the [HotDB Server Error Code Explanation](error-codes.md) document                                                                              |
+| HOTDBWARNING              | Record the custom WARNING of compute node. For details, please refer to the [HotDB Server Error Code Explanation](error-codes.md) document                                                                            |
+| INIT                      | Record log information related to the initialization of compute node, for example, the compute node stars to monitor the management port at initialization, etc.                                                      |
+| INNER                     | Record log information related to internal operations of compute node, such as failure to clear data nodes and create table configuration                                                                             |
+| JOIN                      | Record log information related to JOIN query, such as error message during JOIN query                                                                                                                                 |
+| LIMITOFFSETWITHOUTORDERBY | Record SQL statements that use LIMIT but are not sorted                                                                                                                                                               |
+| MANAGER                   | Log information related to management end, such as connection information when receiving the RELOAD command                                                                                                           |
+| MYSQLERROR                | Record MySQL Error messages that appear in a connection, excluding deadlocks, lock timeouts, primary key or unique key conflicts, and foreign key violations                                                          |
+| MYSQLWARNING              | Record MySQL WARNING information that appears in a connection                                                                                                                                                         |
+| NDB                       | Record log information related to NDB                                                                                                                                                                                 |
+| ONLINEDDL                 | Record log information related to OnlineDDL, such as error message caused by OnlineDDL operation                                                                                                                      |
+| RELATIVE                  | Record log information related to the auxiliary table of parent and child tables, such as error message of                                                                                                            |
+|                           | updating the parent and child tables related configuration (auxs column)                                                                                                                                              |
+| RESPONSE                  | Record log information related to back-end response when the back-end request is started, for example, the table structure does not exist after the back-end request is started                                       |
+| ROUTE                     | Record log information related to route, such as sharding type not meeting route conditions                                                                                                                           |
+| SQL                       | Record log information related to executing SQL statements, such as error messages after executing a SQL statement                                                                                                    |
+| SQLFORWARD                | Record the log information of forwarding the SQL log information from standby compute node to master compute node                                                                                                     |
+| SQLINTERCEPTED            | Record statements intercepted by the SQL firewall                                                                                                                                                                     |
+| SQLKEYCONFLICT            | Record MySQL ERROR information of primary key or unique key conflicts                                                                                                                                                 |
+| SQLSYNTAXERROR            | Record log information related to errors of executed SQL statements                                                                                                                                                   |
+| SQLUNSUPPORTED            | Record SQL statements that are not supported by the compute node, such as unsupported global function indexes                                                                                                         |
+| SUBQUERY                  | Record SQL statement of the subquery                                                                                                                                                                                  |
+| SWITCHSOURCE              | Record log information related to the data correctness guarantee after failover. For details, please refer to the Data Correctness Guarantee after Failover chapter of the [Standard](standard.md) document           |
+| TIMER                     | Record log information related to the timer, such as error information for delayed detection, completion of ONLINE operation executed by checkVIP timer, etc.                                                         |
+| TRANSFER                  | Record log information related to data source migration, such as detecting whether the UUID of data source migration is empty or has been used                                                                        |
+| UNION                     | Record SQL statement of the UNION query                                                                                                                                                                               |
+| UNKNOWN                   | Record all log information except for other log types                                                                                                                                                                 |
+| WATCHDOG                  | Record log information of internal status monitoring of WATCHDOG related compute node service, such as detecting whether the compute node content has deadlocks                                                       |
 
 ### Slow Query Log Analysis
 

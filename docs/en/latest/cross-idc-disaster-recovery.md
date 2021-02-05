@@ -16,20 +16,20 @@ It supports synchronous data transmission across IDCs, and ensures that when the
 
 ### Glossary
 
-| Words | Descriptions |
-|-------|--------------|
-| IDC Type | The IDC type includes master center and DR (disaster recovery) center and is only used to identify and distinguish the two IDCs, and does not change with the service status of IDCs. In the process of using HotDB Server products, you are able to distinguish between the master center and the DR center on the compute node cluster management page. |
-| IDC Status | The IDC status consists of the current active center and the current standby center, which is determined according to whether the current active compute node in the IDC provides services (3323 service port by default). The IDC in which the current master compute node provides services is the current active center; the standby IDC that provides high-availability service switching at the IDC level with the current active center is the current standby center. |
-| Disaster Recovery Mode (DR Mode) | The components required for the operation of a compute node cluster with a disaster recovery relation are coordinated and deployed in the two IDCs. This cluster is called a cluster with DR mode enabled. |
-| Single-IDC Mode | A compute node cluster without DR mode enabled is a single-IDC-mode cluster. |
-| Disaster Recovery Data Replication Relation | Replication relation of master data source/ConfigDB between master center and DR center. |
-| Disaster Recovery Data Replication Status | Replication status of master data source/ConfigDB between master center and DR center. |
-| Disaster Recovery Data Replication Latency | Replication latency of master data source/ConfigDB between master center and DR center. |
-| Compute Node | I.e., the distributed transactional database service HotDB Server. |
-| Data Source | Data source is a MySQL database service that stores data. A MySQL database can be used as a data source; one or more data sources with MySQL replication relations form a data node. |
-| ConfigDB | ConfigDB is a MySQL database where the compute node configuration data are stored. |
-| RPO | Recovery Point Objectives |
-| RTO | Recovery Time Objectives |
+| Words                                       | Descriptions                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|---------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| IDC Type                                    | The IDC type includes master center and DR (disaster recovery) center and is only used to identify and distinguish the two IDCs, and does not change with the service status of IDCs. In the process of using HotDB Server products, you are able to distinguish between the master center and the DR center on the compute node cluster management page.                                                                                                                    |
+| IDC Status                                  | The IDC status consists of the current active center and the current standby center, which is determined according to whether the current active compute node in the IDC provides services (3323 service port by default). The IDC in which the current master compute node provides services is the current active center; the standby IDC that provides high-availability service switching at the IDC level with the current active center is the current standby center. |
+| Disaster Recovery Mode (DR Mode)            | The components required for the operation of a compute node cluster with a disaster recovery relation are coordinated and deployed in the two IDCs. This cluster is called a cluster with DR mode enabled.                                                                                                                                                                                                                                                                   |
+| Single-IDC Mode                             | A compute node cluster without DR mode enabled is a single-IDC-mode cluster.                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Disaster Recovery Data Replication Relation | Replication relation of master data source/ConfigDB between master center and DR center.                                                                                                                                                                                                                                                                                                                                                                                     |
+| Disaster Recovery Data Replication Status   | Replication status of master data source/ConfigDB between master center and DR center.                                                                                                                                                                                                                                                                                                                                                                                       |
+| Disaster Recovery Data Replication Latency  | Replication latency of master data source/ConfigDB between master center and DR center.                                                                                                                                                                                                                                                                                                                                                                                      |
+| Compute Node                                | I.e., the distributed transactional database service HotDB Server.                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Data Source                                 | Data source is a MySQL database service that stores data. A MySQL database can be used as a data source; one or more data sources with MySQL replication relations form a data node.                                                                                                                                                                                                                                                                                         |
+| ConfigDB                                    | ConfigDB is a MySQL database where the compute node configuration data are stored.                                                                                                                                                                                                                                                                                                                                                                                           |
+| RPO                                         | Recovery Point Objectives                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| RTO                                         | Recovery Time Objectives                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 
 ## Fundamentals and architecture of DR mode
 
@@ -81,20 +81,20 @@ This section will take the following deployment architecture in master/slave mod
 
 The actual connection information corresponding to each component is listed as follows:
 
-| IDC Type | Component Type | Role | Code Name | Connection Information |
-|----------|----------------|------|-----------|------------------------|
-| Master Center | Compute Node | Master | HotDB-01 | 192.168.220.186_3323_3325 |
-| ^ | ^ | Slave | HotDB-02 | 192.168.220.187_3323_3325 |
-| ^ | Data Source | Master | ds01 | 192.168.220.186_3307 |
-| ^ | ^ | Standby Master | ds02 | 192.168.220.187_3307 |
-| ^ | ConfigDB | Master | hc01 | 192.168.220.186_3306 |
-| ^ | ^ | Standby Master | hc02 | 192.168.220.187_3306 |
-| DR Center | Compute Node | Master | HotDB-03 | 192.168.220.188_3323_3325 |
-| ^ | ^ | Slave | HotDB-04 | 192.168.220.189_3323_3325 |
-| ^ | Data Source | Master | ds03 | 192.168.220.188_3307 |
-| ^ | ^ | Standby Master | ds04 | 192.168.220.189_3307<br>(Configured as master-master, however the actual replication relation is set up as master-slave) |
-| ^ | ConfigDB | Master | hc03 | 192.168.220.188_3306 |
-| ^ | ^ | Standby Master | hc04 | 192.168.220.189_3306<br>(Configured as master-master, however the actual replication relation is set up as master-slave) |
+| IDC Type      | Component Type | Role           | Code Name | Connection Information                                                                                                   |
+|---------------|----------------|----------------|-----------|--------------------------------------------------------------------------------------------------------------------------|
+| Master Center | Compute Node   | Master         | HotDB-01  | 192.168.220.186_3323_3325                                                                                                |
+| ^             | ^              | Slave          | HotDB-02  | 192.168.220.187_3323_3325                                                                                                |
+| ^             | Data Source    | Master         | ds01      | 192.168.220.186_3307                                                                                                     |
+| ^             | ^              | Standby Master | ds02      | 192.168.220.187_3307                                                                                                     |
+| ^             | ConfigDB       | Master         | hc01      | 192.168.220.186_3306                                                                                                     |
+| ^             | ^              | Standby Master | hc02      | 192.168.220.187_3306                                                                                                     |
+| DR Center     | Compute Node   | Master         | HotDB-03  | 192.168.220.188_3323_3325                                                                                                |
+| ^             | ^              | Slave          | HotDB-04  | 192.168.220.189_3323_3325                                                                                                |
+| ^             | Data Source    | Master         | ds03      | 192.168.220.188_3307                                                                                                     |
+| ^             | ^              | Standby Master | ds04      | 192.168.220.189_3307<br>(Configured as master-master, however the actual replication relation is set up as master-slave) |
+| ^             | ConfigDB       | Master         | hc03      | 192.168.220.188_3306                                                                                                     |
+| ^             | ^              | Standby Master | hc04      | 192.168.220.189_3306<br>(Configured as master-master, however the actual replication relation is set up as master-slave) |
 
 > !Note
 >
@@ -337,12 +337,12 @@ Please refer to the relevant parameter adjustment instructions in the chapter [D
 
 This section will introduce the setup of ConfigDB replication relations. The deployment architecture is as follows:
 
-| IDC Type | Component Type | Role | Code Name | Connection Information |
-|----------|----------------|------|-----------|------------------------|
-| Master Center | ConfigDB | Master | hc01 | 192.168.220.186_3306 |
-| ^ | ^ | Standby Master | hc02 | 192.168.220.187_3306 |
-| DR Center | ConfigDB | Master | hc03 | 192.168.220.188_3306 |
-| ^ | ^ | Standby Master<br>(Actually master-slave replication relation) | hc04 | 192.168.220.189_3306 |
+| IDC Type      | Component Type | Role                                                           | Code Name | Connection Information |
+|---------------|----------------|----------------------------------------------------------------|-----------|------------------------|
+| Master Center | ConfigDB       | Master                                                         | hc01      | 192.168.220.186_3306   |
+| ^             | ^              | Standby Master                                                 | hc02      | 192.168.220.187_3306   |
+| DR Center     | ConfigDB       | Master                                                         | hc03      | 192.168.220.188_3306   |
+| ^             | ^              | Standby Master<br>(Actually master-slave replication relation) | hc04      | 192.168.220.189_3306   |
 
 The ConfigDB is essentially a standard MySQL instance, so under this deployment architecture, the order of setting up the ConfigDB should be:
 
@@ -514,12 +514,12 @@ When deploying a DR center on the basis of a running cluster, the steps of setti
 
 **Deployment architecture for reference is as follows:**
 
-| IDC Type | Component Type | Role | Code Name | Connection Information |
-|----------|----------------|------|-----------|------------------------|
-| Master Center | ConfigDB | Master | hc01 | 192.168.220.186_3306 |
-| ^ | ^ | Standby master | hc02 | 192.168.220.187_3306 |
-| DR Center | ConfigDB | Master | hc03 | 192.168.220.188_3306 |
-| ^ | ^ | Standby master<br>(Actually master-slave replication relation) | hc04 | 192.168.220.189_3306 |
+| IDC Type      | Component Type | Role                                                           | Code Name | Connection Information |
+|---------------|----------------|----------------------------------------------------------------|-----------|------------------------|
+| Master Center | ConfigDB       | Master                                                         | hc01      | 192.168.220.186_3306   |
+| ^             | ^              | Standby master                                                 | hc02      | 192.168.220.187_3306   |
+| DR Center     | ConfigDB       | Master                                                         | hc03      | 192.168.220.188_3306   |
+| ^             | ^              | Standby master<br>(Actually master-slave replication relation) | hc04      | 192.168.220.189_3306   |
 
 **The detailed steps are as follows:**
 
@@ -673,15 +673,15 @@ The deployment environment examination not only supports the current active cent
 
 - Several examination items for the current standby center are skipped due to the inability to connect to the service port. The skipped items are listed as follows:
 
-| Examination Dimensions | Examination Items | Examination Details |
-|------------------------|-------------------|---------------------|
+| Examination Dimensions | Examination Items                 | Examination Details                                                          |
+|------------------------|-----------------------------------|------------------------------------------------------------------------------|
 | Software Configuration | High Availability of Compute Node | The compute node service port and management port can be normally connected. |
-| ^ | ^ | Connection to the compute node service port via VIP is normal. |
-| ^ | ^ | Compute Node Mode |
-| ^ | Basic function verification | Data Source High Availability Switch |
-| ^ | ^ | Compute Node High Availability Switch |
-| ^ | ^ | Backup Program |
-| ^ | ^ | 10s Performance Test |
+| ^                      | ^                                 | Connection to the compute node service port via VIP is normal.               |
+| ^                      | ^                                 | Compute Node Mode                                                            |
+| ^                      | Basic function verification       | Data Source High Availability Switch                                         |
+| ^                      | ^                                 | Compute Node High Availability Switch                                        |
+| ^                      | ^                                 | Backup Program                                                               |
+| ^                      | ^                                 | 10s Performance Test                                                         |
 
 ### Configuration
 
@@ -1338,20 +1338,20 @@ All MySQL instance versions are 5.7.25, GTID enabled, and semi-synchronous repli
 
 The actual connection information corresponding to each component is listed as follows:
 
-| IDC Type | Component Type | Role | Code Name | Connection Information |
-|----------|----------------|------|-----------|------------------------|
-| Master Center | Compute Node | Master | HotDB-01 | 192.168.220.181_3323_3325 |
-| ^ | ^ | Slave | HotDB-02 | 192.168.220.182_3323_3325 |
-| ^ | Data Source | Master | ds01 | 192.168.220.181_3307 |
-| ^ | ^ | Master-master | ds02 | 192.168.220.182_3307 |
-| ^ | ConfigDB | Master | hc01 | 192.168.220.181_3306 |
-| ^ | ^ | Master-master | hc02 | 192.168.220.182_3306 |
-| DR Center | Compute Node | Master | HotDB-03 | 192.168.220.183_3323_3325 |
-| ^ | ^ | Master-master | HotDB-04 | 192.168.220.184_3323_3325 |
-| ^ | Data Source | Master | ds03 | 192.168.220.183_3307 |
-| ^ | ^ | Master-master | ds04 | 192.168.220.184_3307 |
-| ^ | ConfigDB | Master | hc03 | 192.168.220.183_3306 |
-| ^ | ^ | Master-master | hc04 | 192.168.220.184_3306 |
+| IDC Type      | Component Type | Role          | Code Name | Connection Information    |
+|---------------|----------------|---------------|-----------|---------------------------|
+| Master Center | Compute Node   | Master        | HotDB-01  | 192.168.220.181_3323_3325 |
+| ^             | ^              | Slave         | HotDB-02  | 192.168.220.182_3323_3325 |
+| ^             | Data Source    | Master        | ds01      | 192.168.220.181_3307      |
+| ^             | ^              | Master-master | ds02      | 192.168.220.182_3307      |
+| ^             | ConfigDB       | Master        | hc01      | 192.168.220.181_3306      |
+| ^             | ^              | Master-master | hc02      | 192.168.220.182_3306      |
+| DR Center     | Compute Node   | Master        | HotDB-03  | 192.168.220.183_3323_3325 |
+| ^             | ^              | Master-master | HotDB-04  | 192.168.220.184_3323_3325 |
+| ^             | Data Source    | Master        | ds03      | 192.168.220.183_3307      |
+| ^             | ^              | Master-master | ds04      | 192.168.220.184_3307      |
+| ^             | ConfigDB       | Master        | hc03      | 192.168.220.183_3306      |
+| ^             | ^              | Master-master | hc04      | 192.168.220.184_3306      |
 
 > !Note
 >

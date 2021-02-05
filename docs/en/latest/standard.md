@@ -156,15 +156,15 @@ This chapter will briefly introduce the summary of functions which are added, pr
 
 This section will introduce the new compute node parameters added and optimized in Compute Node -- V2.5.6, as listed below:
 
-| Parameter name of compute node | Description of compute node parameters | Default value | Reload is valid or not | Version supported |   |
-|--------------------------------|----------------------------------------|---------------|------------------------|-------------------|---|
-| [enableOracleFunction](#enableoraclefunction) | Whether to parse Oracle functions first | false | N | 2.5.6 |   |
-| [lockWaitTimeout](#lockwaittimeout) | Timeout for obtaining metadata lock (s) | 31536000 | Y | Synchronized downward to 2.5.3 |   |
-| [operateMode](#operatemode) | Compute node working mode | 0 | Y | Newly added in 2.5.6 |   |
-| [maxReconnectConfigDBTimes](#maxreconnectconfigdbtimes) | Maximum number of retries to connect to the ConfigDB | 3 | Y | 2.5.6 |   |
-| [sslUseSM4](#sslusesm4) | Whether to support SM4 | No | Y | Synchronized downward to 2.5.5 |   |
-| [haMode](#hamode) | Added status: 4: master center in cluster mode | 5: DR center in cluster mode | 0 | N | 2.5.6 |
-| [crossDbXa](#crossdbxa) | Whether XA transactions are adopted in cross-LogicDB | false | N | 2.5.5 |   |
+| Parameter name of compute node                          | Description of compute node parameters               | Default value                | Reload is valid or not | Version supported              |       |
+|---------------------------------------------------------|------------------------------------------------------|------------------------------|------------------------|--------------------------------|-------|
+| [enableOracleFunction](#enableoraclefunction)           | Whether to parse Oracle functions first              | false                        | N                      | 2.5.6                          |       |
+| [lockWaitTimeout](#lockwaittimeout)                     | Timeout for obtaining metadata lock (s)              | 31536000                     | Y                      | Synchronized downward to 2.5.3 |       |
+| [operateMode](#operatemode)                             | Compute node working mode                            | 0                            | Y                      | Newly added in 2.5.6           |       |
+| [maxReconnectConfigDBTimes](#maxreconnectconfigdbtimes) | Maximum number of retries to connect to the ConfigDB | 3                            | Y                      | 2.5.6                          |       |
+| [sslUseSM4](#sslusesm4)                                 | Whether to support SM4                               | No                           | Y                      | Synchronized downward to 2.5.5 |       |
+| [haMode](#hamode)                                       | Added status: 4: master center in cluster mode       | 5: DR center in cluster mode | 0                      | N                              | 2.5.6 |
+| [crossDbXa](#crossdbxa)                                 | Whether XA transactions are adopted in cross-LogicDB | false                        | N                      | 2.5.5                          |       |
 
 ## Installation deployment and upgrading of HotDB Server
 
@@ -730,14 +730,14 @@ In Distributed Transactional Database system, in case of deadlock between two da
 
 The operations in the following table, describe the deadlock process of two data nodes in distributed system. Session 1 and Session 2 execute DELETE operation respectively on the two data nodes:
 
-| Session 1 | Session 2 |   |
-|-----------|-----------|---|
-| Session 1 Start transaction | `start transaction;` |   |
-| Session 2 Start transaction | 　 | `start transaction;` |
-| Session 1 Execute DELETE statement on data node where DNID = 15 | `delete from customer where dnid=15 and id=1;` |   |
-| Session 2 Execute DELETE statement on data node where DNID = 13 | `delete from customer where dnid=13 and id=4;` |   |
-| Session 1 Execute DELETE statement on data node where DNID = 13; DELETE operation will be blocked by Session 2 | `delete from customer where dnid=13 and id=4;` |   |
-| Session 2 Execute DELETE statement on data node where DNID = 15; this operation will be blocked by Session 1; since Session 1 is blocked by Session 2, and Session 2 is also blocked by Session 1, therefore, there will be deadlock at this time | `delete from customer where dnid=15 and id=1;` |   |
+| Session 1                                                                                                                                                                                                                                         | Session 2                                      |                      |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------|----------------------|
+| Session 1 Start transaction                                                                                                                                                                                                                       | `start transaction;`                           |                      |
+| Session 2 Start transaction                                                                                                                                                                                                                       |                                                | `start transaction;` |
+| Session 1 Execute DELETE statement on data node where DNID = 15                                                                                                                                                                                   | `delete from customer where dnid=15 and id=1;` |                      |
+| Session 2 Execute DELETE statement on data node where DNID = 13                                                                                                                                                                                   | `delete from customer where dnid=13 and id=4;` |                      |
+| Session 1 Execute DELETE statement on data node where DNID = 13; DELETE operation will be blocked by Session 2                                                                                                                                    | `delete from customer where dnid=13 and id=4;` |                      |
+| Session 2 Execute DELETE statement on data node where DNID = 15; this operation will be blocked by Session 1; since Session 1 is blocked by Session 2, and Session 2 is also blocked by Session 1, therefore, there will be deadlock at this time | `delete from customer where dnid=15 and id=1;` |                      |
 
 Under the above condition, Session 1 and Session 2 are mutually blocked, thus there will be deadlock. Since the deadlock occurs between two data sources of data node, MySQL can't detect existence of the deadlock.
 
@@ -896,17 +896,17 @@ HotDB Server has two kinds of users, one is Compute Node User who operates data,
 
 LogicDB must be accessed with granted compute node user privilege. Compute node provides LogicDB with operating privilege similar to that of MySQL, as follow:
 
-| Privilege type | Executable SQL statement |
-|----------------|--------------------------|
-| CREATE | CREATE TABLE,CREATE INDEX |
-| DROP | DROP TABLE,DROP INDEX,TRUNCATE TABLE,RENAME TABLE |
-| ALTER | ALTER TABLE,RENAME TABLE |
-| SELECT | SELECT,INSERT...SELECT |
-| UPDATE | UPDATE |
-| DELETE | DELETE,REPLACE |
-| INSERT | INSERT,REPLACE,INSERT...SELECT |
-| SUPER | management port statement, /*!HotDB:dnid=?*/ |
-| FILE | SELECT...INTO OUTFILE,LOAD DATA |
+| Privilege type | Executable SQL statement                          |
+|----------------|---------------------------------------------------|
+| CREATE         | CREATE TABLE,CREATE INDEX                         |
+| DROP           | DROP TABLE,DROP INDEX,TRUNCATE TABLE,RENAME TABLE |
+| ALTER          | ALTER TABLE,RENAME TABLE                          |
+| SELECT         | SELECT,INSERT...SELECT                            |
+| UPDATE         | UPDATE                                            |
+| DELETE         | DELETE,REPLACE                                    |
+| INSERT         | INSERT,REPLACE,INSERT...SELECT                    |
+| SUPER          | management port statement, /*!HotDB:dnid=?*/      |
+| FILE           | SELECT...INTO OUTFILE,LOAD DATA                   |
 
 **Description of SUPER privilege:**
 
@@ -1303,14 +1303,14 @@ It's shown in the result that for the JOIN_Z table in LogicDBDB_T, among master/
 - result: if checking result is YES, it means that the table is consistent between master/slave data sources; if NO, it means that the table is inconsistent between master/slave data sources, and meanwhile, inconsistency information will be output in info; UNKNOWN means unknown error, which may have the condition of table structure inconsistency, and master/slave replication interruption may also occur in UNKNOWN.
 - info: In case of master/slave data consistency, there is no information output; in case of master/slave data inconsistency, there will be several kinds of information as follow:
 
-| A large amount of data inconsistency in table | Table: ... in datanode: ... exist a large amount of data inconsistency |
-|-----------------------------------------------|------------------------------------------------------------------------|
-| Some data inconsistency in table | Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows' Primary Key (...): |
-| Standby Slave Table doesn't exist | exist data inconsistency, because DS: ... Table '...' doesn't exist |
-| Index of table doesn't exist | DN: ... not exsit index of table:... |
-| Master/slave failure detection (for example the Slave Slave_SQL_Running: NO state) | DN: ... ERROR! Check your replication. |
-| Master/slave delay exceeds 10S | DN: ... delay too much,can't check master-slave data consistency |
-| Delay exceeds 2S | Table: ... in datanode: ... exist a large amount of data inconsistency |
+| A large amount of data inconsistency in table                                      | Table: ... in datanode: ... exist a large amount of data inconsistency                                                |
+|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| Some data inconsistency in table                                                   | Table : ... in datanode: ... exist data inconsistency where ID in range:...;and inconsistent rows' Primary Key (...): |
+| Standby Slave Table doesn't exist                                                  | exist data inconsistency, because DS: ... Table '...' doesn't exist                                                   |
+| Index of table doesn't exist                                                       | DN: ... not exsit index of table:...                                                                                  |
+| Master/slave failure detection (for example the Slave Slave_SQL_Running: NO state) | DN: ... ERROR! Check your replication.                                                                                |
+| Master/slave delay exceeds 10S                                                     | DN: ... delay too much,can't check master-slave data consistency                                                      |
+| Delay exceeds 2S                                                                   | Table: ... in datanode: ... exist a large amount of data inconsistency                                                |
 
 ### Global AUTO_INCREMENT
 
@@ -2243,26 +2243,26 @@ In order to satisfy the demand for business development and application data gro
 
 Parameters involved are as follows:
 
-| Parameters | Instructions | Reference value | Whether the reloading is valid |
-|------------|--------------|-----------------|--------------------------------|
-| haMode | High availability mode: 0: master and slave; 1: cluster | In cluster environment, the parameter value is 1 | yes |
-| serverId | Cluster node number 1-N (number of nodes), unique in the cluster and N < = total number of nodes in the cluster | The serverID should start from 1 and should not be repeated continuously in the cluster | yes |
-| clusterName | Cluster group name | HotDB-Cluster | yes |
-| clusterSize | Total number of cluster nodes | The default value is 3, which is configured according to the actual number of nodes | yes |
-| clusterNetwork | Network segment of cluster | 192.168.200.0/24, same network segment as cluster IP | yes |
-| clusterHost | IP address of this node | 192.168.200.1, matched according to the specific IP | yes |
-| clusterPort | Cluster communication port | 3326 by default | yes |
+| Parameters     | Instructions                                                                                                    | Reference value                                                                         | Whether the reloading is valid |
+|----------------|-----------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|--------------------------------|
+| haMode         | High availability mode: 0: master and slave; 1: cluster                                                         | In cluster environment, the parameter value is 1                                        | yes                            |
+| serverId       | Cluster node number 1-N (number of nodes), unique in the cluster and N < = total number of nodes in the cluster | The serverID should start from 1 and should not be repeated continuously in the cluster | yes                            |
+| clusterName    | Cluster group name                                                                                              | HotDB-Cluster                                                                           | yes                            |
+| clusterSize    | Total number of cluster nodes                                                                                   | The default value is 3, which is configured according to the actual number of nodes     | yes                            |
+| clusterNetwork | Network segment of cluster                                                                                      | 192.168.200.0/24, same network segment as cluster IP                                    | yes                            |
+| clusterHost    | IP address of this node                                                                                         | 192.168.200.1, matched according to the specific IP                                     | yes                            |
+| clusterPort    | Cluster communication port                                                                                      | 3326 by default                                                                         | yes                            |
 
 ###### Expand from HA mode to multi-node mode
 
 Expand from HA mode to multi-node mode is mainly about how to switch keepalived to LVS. This section mainly describes the expansion operation of HA to cluster. The information of components involved is as follows:
 
-| Role | Connection information | Name |
-|------|------------------------|------|
-| Master compute node | 192.168.210.67_3323_3325 | HotDB_01 |
-| Slave compute node | 192.168.210.68_3325 | HotDB_02 |
-| LVS service | 192.168.210.136 | VIP:192.168.210.218 |
-| New compute node | 192.168.210.134 | HotDB_03 |
+| Role                | Connection information   | Name                |
+|---------------------|--------------------------|---------------------|
+| Master compute node | 192.168.210.67_3323_3325 | HotDB_01            |
+| Slave compute node  | 192.168.210.68_3325      | HotDB_02            |
+| LVS service         | 192.168.210.136          | VIP:192.168.210.218 |
+| New compute node    | 192.168.210.134          | HotDB_03            |
 
 ![](assets/standard/image83.png)
 
@@ -2342,13 +2342,13 @@ The adaptation mode is the same as"[Expand compute nodes in cluster mode](#expan
 
 This section mainly describes the operation of expanding compute nodes in cluster mode. The information of involved components is as follows:
 
-| Role | Connection information | Name |
-|------|------------------------|------|
-| Master compute node | 192.168.210.157_3323_3325 | HotDB_01 |
-| Slave compute node | 192.168.210.156_3323_3325 | HotDB_02 |
-| Slave compute node | 192.168.210.155_3323_3325 | HotDB_03 |
-| Master/slave LVS service | 192.168.210.135/137 | VIP:192.168.210.216 |
-| New compute node | 192.168.210.134 | HotDB_04 |
+| Role                     | Connection information    | Name                |
+|--------------------------|---------------------------|---------------------|
+| Master compute node      | 192.168.210.157_3323_3325 | HotDB_01            |
+| Slave compute node       | 192.168.210.156_3323_3325 | HotDB_02            |
+| Slave compute node       | 192.168.210.155_3323_3325 | HotDB_03            |
+| Master/slave LVS service | 192.168.210.135/137       | VIP:192.168.210.216 |
+| New compute node         | 192.168.210.134           | HotDB_04            |
 
 **Step 1: add a new compute node to LVS server**
 
@@ -2413,13 +2413,13 @@ The number of compute nodes can be reduced by compute node reduction function. A
 
 Parameters involved are as follows:
 
-| Parameters | Instructions | Reference value | Whether the reloading is valid |
-|------------|--------------|-----------------|--------------------------------|
-| haMode | High availibity: 0: master/slave；1: cluster | In cluster environment, the parameter value is 1. | Yes |
-| HaState | Master / slave role configuration in HA mode. | Configuration of primary compute node: master, configuration of standby compute node: backup. | Yes |
-| haNodeHost | The connection information of the current active compute node in the high availability mode. | The configuration format is IP: PORT | Yes |
-|   |   |   |   |
-|   |   | 192.168.200.1:3325 |   |
+| Parameters | Instructions                                                                                 | Reference value                                                                               | Whether the reloading is valid |
+|------------|----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|--------------------------------|
+| haMode     | High availibity: 0: master/slave；1: cluster                                                 | In cluster environment, the parameter value is 1.                                             | Yes                            |
+| HaState    | Master / slave role configuration in HA mode.                                                | Configuration of primary compute node: master, configuration of standby compute node: backup. | Yes                            |
+| haNodeHost | The connection information of the current active compute node in the high availability mode. | The configuration format is IP: PORT                                                          | Yes                            |
+|            |                                                                                              |                                                                                               |                                |
+|            |                                                                                              | 192.168.200.1:3325                                                                            |                                |
 
 ###### Reduce from cluster mode to HA mode
 
@@ -2620,16 +2620,21 @@ mysql> select * from customer where id in (77,67,52,20);
 +----+---------+------------+------------+------------+------+-------------+------+
 
 | id | name | telephone | provinceid | province | city | address | **DNID** |
+|----|------|-----------|------------|----------|------|---------|----------|
 
 +----+---------+------------+------------+------------+------+-------------+------+
 
 | 52 | 马深圳 | 13912340052 | 7 | Guangdong | 深圳 | 某某街某某号 | 13 |
+|----|--------|-------------|---|-----------|------|--------------|----|
 
 | 77 | 郝上海 | 13912340077 | 25 | Shanghai | 上海 | 某某街某某号 | 14 |
+|----|--------|-------------|----|----------|------|--------------|----|
 
 | 20 | 许重庆 | 13912340020 | 4 | Chongqing | 重庆 | 某某街某某号 | 12 |
+|----|--------|-------------|---|-----------|------|--------------|----|
 
 | 67 | 岑南昌 | 13912340067 | 17 | Jiangxi | 南昌 | 某某街某某号 | 15 |
+|----|--------|-------------|----|---------|------|--------------|----|
 
 +----+---------+------------+------------+------------+------+-------------+------+
 
@@ -2648,14 +2653,18 @@ mysql> select * from tb_quan;
 +------+-----+-------+----------+
 
 | id | a | b | **DNID** |
+|----|---|---|----------|
 
 +------+-----+-------+----------+
 
 | 1 | 1 | 1.10 | **GLOBAL** |
+|---|---|------|------------|
 
 | 2 | 2 | 1.20 | **GLOBAL** |
+|---|---|------|------------|
 
 | 3 | 3 | 1.30 | **GLOBAL** |
+|---|---|------|------------|
 
 +------+-----+-------+----------+
 
@@ -2670,16 +2679,21 @@ mysql> select * from customer where id in (77,67,52,20);
 +----+---------+------------+------------+------------+------+-------------+
 
 | id | name | telephone | provinceid | province | city | address |
+|----|------|-----------|------------|----------|------|---------|
 
 +----+---------+------------+------------+------------+------+-------------+
 
 | 52 | 马深圳 | 13912340052 | 7 | Guangdong | 深圳 | 某某街某某号 |
+|----|--------|-------------|---|-----------|------|--------------|
 
 | 77 | 郝上海 | 13912340077 | 25 | Shanghai | 上海 | 某某街某某号 |
+|----|--------|-------------|----|----------|------|--------------|
 
 | 20 | 许重庆 | 13912340020 | 4 | Chongqing | 重庆 | 某某街某某号 |
+|----|--------|-------------|---|-----------|------|--------------|
 
 | 67 | 岑南昌 | 13912340067 | 17 | Jiangxi | 南昌 | 某某街某某号 |
+|----|--------|-------------|----|---------|------|--------------|
 
 +----+---------+------------+------------+------------+------+-------------+
 
@@ -2765,10 +2779,12 @@ hotdb> /*!hotdb:dsid=nobinlog:22*/show variables like 'wait_timeout';
 +---------------+-------+
 
 | Variable_name | Value |
+|---------------|-------|
 
 +---------------+-------+
 
 | wait_timeout | 1200 |
+|--------------|------|
 
 +---------------+-------+
 
@@ -2799,24 +2815,33 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 +---------------+-------+
 
 | Variable_name | Value |
+|---------------|-------|
 
 +---------------+-------+
 
 | wait_timeout | 1200 |
+|--------------|------|
 
 | wait_timeout | 1200 |
+|--------------|------|
 
 | wait_timeout | 1200 |
+|--------------|------|
 
 | wait_timeout | 1200 |
+|--------------|------|
 
 | wait_timeout | 1200 |
+|--------------|------|
 
 | wait_timeout | 1200 |
+|--------------|------|
 
 | wait_timeout | 1200 |
+|--------------|------|
 
 | wait_timeout | 1200 |
+|--------------|------|
 
 8 rows in set (0.00 sec)
 
@@ -3011,18 +3036,24 @@ mysql> explain select id,name,telephone from customer;
 +----------+------------------------------------------+
 
 | DATANODE | SQL |
+|----------|-----|
 
 +----------+------------------------------------------+
 
 | 1 | SELECT id, name, telephone FROM customer |
+|---|------------------------------------------|
 
 | 2 | SELECT id, name, telephone FROM customer |
+|---|------------------------------------------|
 
 | 3 | SELECT id, name, telephone FROM customer |
+|---|------------------------------------------|
 
 | 4 | SELECT id, name, telephone FROM customer |
+|---|------------------------------------------|
 
 | 5 | SELECT id, name, telephone FROM customer |
+|---|------------------------------------------|
 
 +----------+------------------------------------------+
 
@@ -3037,10 +3068,12 @@ mysql> /*!hotdb:dnid=13*/explain select * from customer;
 +----+-------------+----------+------+---------------+------+---------+-----+------+------+
 
 | id | select_type | table | type | possible_keys | key | key_len | ref | rows | Extra |
+|----|-------------|-------|------|---------------|-----|---------|-----|------|-------|
 
 +----+-------------+----------+------+---------------+------+---------+-----+------+------+
 
 | 1 | SIMPLE | customer | NULL | NULL | NULL | NULL | NULL | 53 | NULL |
+|---|--------|----------|------|------|------|------|------|----|------|
 
 +----+-------------+----------+------+---------------+------+---------+-----+------+------+
 
@@ -3088,25 +3121,25 @@ When NDB SQL mode starts, NDB SQL logic could be used only after meeting the fol
 
 For the following SQL type statements, the compute node doesn't support itself, but supports Query after NDB SQL is enabled
 
-| MySQL statement type | Clause type | Function | Description |
-|----------------------|-------------|----------|-------------|
-| SELECT | INNER/LEFT JOIN/RIGHT JOIN WHERE | Operation Expression | column1+column2、column1-column2、column1*column2、column1/column2 |
-| ^ | ^ | ^ | <=> or <> |
-| ^ | ^ | \% or MOD | Only support column% constant; not support column1% column2 |
-| ^ | ^ | RAND() | 2.3 Not support all rand() related Syntax, including group by rand(), order by rand() |
-| ^ | ^ | / or DIV | Only support column div constant; not support column1 div column2 |
-| ^ | ^ | INNER/LEFT JOIN/RIGHT JOIN ON | IN/IS NOT NULL/IS NULL/BETWEEN...AND/LIKE |
-| ^ | ^ | ^ | <=> or <> |
-| ^ | ^ | ^ | XOR |
-| ^ | ^ | ^ | CAST() |
-| ^ | ^ | CONCAT() | Not support concat() to serve as JOIN condition in Operation Expression (on Clause condition), or as association condition in where Clause |
-| ^ | ^ | CASE...WHEN...END | Only support Field of the table judged single by CASE WHEN; not support conditional judgement of multi-table Field, such as: CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias |
-| ^ | Function | MIN(MIN(column_name))\ | Nested Function not supported |
-| ^ | ^ | ^ | ABS(MAX()) |
-| ^ | ^ | Multi-table (above three tables) Query | Mixed LEFT/INNER/NATURAL JOIN\ |
-| ^ | ^ | ^ | Single NATURAL JOIN |
-| ^ | ^ | Subquery | Query Operational Condition (any, all) |
-| ^ | ^ | ^ | Nested Multi-layer Association Subquery |
+| MySQL statement type | Clause type                      | Function                               | Description                                                                                                                                                                                                  |
+|----------------------|----------------------------------|----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| SELECT               | INNER/LEFT JOIN/RIGHT JOIN WHERE | Operation Expression                   | column1+column2、column1-column2、column1*column2、column1/column2                                                                                                                                           |
+| ^                    | ^                                | ^                                      | <=> or <>                                                                                                                                                                                                    |
+| ^                    | ^                                | \% or MOD                              | Only support column% constant; not support column1% column2                                                                                                                                                  |
+| ^                    | ^                                | RAND()                                 | 2.3 Not support all rand() related Syntax, including group by rand(), order by rand()                                                                                                                        |
+| ^                    | ^                                | / or DIV                               | Only support column div constant; not support column1 div column2                                                                                                                                            |
+| ^                    | ^                                | INNER/LEFT JOIN/RIGHT JOIN ON          | IN/IS NOT NULL/IS NULL/BETWEEN...AND/LIKE                                                                                                                                                                    |
+| ^                    | ^                                | ^                                      | <=> or <>                                                                                                                                                                                                    |
+| ^                    | ^                                | ^                                      | XOR                                                                                                                                                                                                          |
+| ^                    | ^                                | ^                                      | CAST()                                                                                                                                                                                                       |
+| ^                    | ^                                | CONCAT()                               | Not support concat() to serve as JOIN condition in Operation Expression (on Clause condition), or as association condition in where Clause                                                                   |
+| ^                    | ^                                | CASE...WHEN...END                      | Only support Field of the table judged single by CASE WHEN; not support conditional judgement of multi-table Field, such as: CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias |
+| ^                    | Function                         | MIN(MIN(column_name))\                 | Nested Function not supported                                                                                                                                                                                |
+| ^                    | ^                                | ^                                      | ABS(MAX())                                                                                                                                                                                                   |
+| ^                    | ^                                | Multi-table (above three tables) Query | Mixed LEFT/INNER/NATURAL JOIN\                                                                                                                                                                               |
+| ^                    | ^                                | ^                                      | Single NATURAL JOIN                                                                                                                                                                                          |
+| ^                    | ^                                | Subquery                               | Query Operational Condition (any, all)                                                                                                                                                                       |
+| ^                    | ^                                | ^                                      | Nested Multi-layer Association Subquery                                                                                                                                                                      |
 
 In case of table structure non-geometry type Space Type Field and json type Field in the table structure, then the Query SQL originally not supported is still not supported;
 
@@ -3158,53 +3191,53 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 
 #### Value type
 
-| MySQL data type | Support status | Description |
-|-----------------|----------------|-------------|
-| ^ | BIT | Support |
-| ^ | TINYINT | Support |
-| ^ | SMALLINT | Support |
-| ^ | MEDIUMINT | Support |
-| ^ | INT | Support |
-| ^ | INTEGER | Support |
-| ^ | BIGINT | Support |
-| SERIAL | Support | Synchronous with BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE |
-| SERIAL DEFAULT VALUE | Support | Synonymous with NOT NULL AUTO_INCREMENT UNIQUE |
-| REAL | Not support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-| DOUBLE | Not support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-| FLOAT | Not support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-| ^ | DECIMAL | Support |
-| ^ | NUMERIC | Support |
+| MySQL data type      | Support status | Description                                                                                  |
+|----------------------|----------------|----------------------------------------------------------------------------------------------|
+| ^                    | BIT            | Support                                                                                      |
+| ^                    | TINYINT        | Support                                                                                      |
+| ^                    | SMALLINT       | Support                                                                                      |
+| ^                    | MEDIUMINT      | Support                                                                                      |
+| ^                    | INT            | Support                                                                                      |
+| ^                    | INTEGER        | Support                                                                                      |
+| ^                    | BIGINT         | Support                                                                                      |
+| SERIAL               | Support        | Synchronous with BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE                              |
+| SERIAL DEFAULT VALUE | Support        | Synonymous with NOT NULL AUTO_INCREMENT UNIQUE                                               |
+| REAL                 | Not support    | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
+| DOUBLE               | Not support    | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
+| FLOAT                | Not support    | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
+| ^                    | DECIMAL        | Support                                                                                      |
+| ^                    | NUMERIC        | Support                                                                                      |
 
 #### Date and time type
 
 | MySQL data type | Support status | Description |
 |-----------------|----------------|-------------|
-| ^ | DATE | Support |
-| ^ | TIME | Support |
-| ^ | TIMESTAMP | Support |
-| ^ | ^ | Support |
-| ^ | DATETIME | Support |
-| ^ | ^ | Support |
-| ^ | YEAR | Support |
+| ^               | DATE           | Support     |
+| ^               | TIME           | Support     |
+| ^               | TIMESTAMP      | Support     |
+| ^               | ^              | Support     |
+| ^               | DATETIME       | Support     |
+| ^               | ^              | Support     |
+| ^               | YEAR           | Support     |
 
 #### Character string type
 
-| MySQL data type | Support status | Description |
-|-----------------|----------------|-------------|
-| ^ | CHAR | Support |
-| ^ | VARCHAR | Support |
-| ^ | BINARY | Support |
-| ^ | VARBINARY | Support |
-| TINYBLOB | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-| BLOB | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-| MEDIUMBLOB | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-| LONGBLOB | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-| TINYTEXT | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-| TEXT | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-| MEDIUMTEXT | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-| LONGTEXT | Support | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
-| ^ | ENUM | Support |
-| ^ | SET | Support |
+| MySQL data type | Support status | Description                                                                                  |
+|-----------------|----------------|----------------------------------------------------------------------------------------------|
+| ^               | CHAR           | Support                                                                                      |
+| ^               | VARCHAR        | Support                                                                                      |
+| ^               | BINARY         | Support                                                                                      |
+| ^               | VARBINARY      | Support                                                                                      |
+| TINYBLOB        | Support        | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
+| BLOB            | Support        | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
+| MEDIUMBLOB      | Support        | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
+| LONGBLOB        | Support        | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
+| TINYTEXT        | Support        | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
+| TEXT            | Support        | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
+| MEDIUMTEXT      | Support        | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
+| LONGTEXT        | Support        | It's forbidden from being set as associate field type of sharding key and Parent/Child Table |
+| ^               | ENUM           | Support                                                                                      |
+| ^               | SET            | Support                                                                                      |
 
 #### Space type
 
@@ -3212,44 +3245,46 @@ Compute node supports use Space typespatial_type when Create Table; it supports 
 
 #### Other types
 
-| MySQL data type | Support status | Description |
-|-----------------|----------------|-------------|
-| JSON | Support | 　It's forbidden from being used either as sharding key, Parent/Child Table associated Field, or as join Field |
+| MySQL data type | Support status | Description                                                                                                  |
+|-----------------|----------------|--------------------------------------------------------------------------------------------------------------|
+| JSON            | Support        | It's forbidden from being used either as sharding key, Parent/Child Table associated Field, or as join Field |
 
 ### Support of HotDB Server toward character set
 
 HotDB Server supports relevant setting of Character Set, and the Character Set and Collation Set supported at present are as follow:
 
 | Collation | Charset |
+|-----------|---------|
 +--------------------------+---------+
-| latin1_swedish_ci | latin1 |
-| latin1_bin | latin1 |
-| gbk_chinese_ci | gbk |
-| gbk_bin | gbk |
-| utf8_general_ci | utf8 |
-| utf8_bin | utf8 |
+| latin1_swedish_ci  | latin1  |
+|--------------------|---------|
+| latin1_bin         | latin1  |
+| gbk_chinese_ci     | gbk     |
+| gbk_bin            | gbk     |
+| utf8_general_ci    | utf8    |
+| utf8_bin           | utf8    |
 | utf8mb4_general_ci | utf8mb4 |
-| utf8mb4_bin | utf8mb4 |
+| utf8mb4_bin        | utf8mb4 |
 +--------------------+---- ------------+
 
 The Syntax associated with the Character Set is as follow, HotDB Server could also make synchronous Support, and the functions are consistent with that of MySQL:
 
-| Function classification | Syntax related |
-|-------------------------|----------------|
-| `CREATE TABLE` | `col_name {CHAR|VARCHAR|TEXT} (col_length) [CHARACTER SET charset_name] [COLLATE collation_name] col_name {ENUM | SET} (val_list) [CHARACTER SET charset_name] [COLLATE collation_name]` |
-| `ALTER TABLE` | `ALTER TABLE tbl_name CONVERT TO CHARACTER SET charset_name [COLLATE collation_name];` |
-| ^ | `ALTER TABLE tbl_name DEFAULT CHARACTER SET charset_name [COLLATE collation_name];` |
-| ^ | `ALTER TABLE tbl_name MODIFY col_name column_definition CHARACTER SET charset_name [COLLATE collation_name];` |
-| `SET` | `SET NAMES 'charset_name' [COLLATE 'collation_name']` |
-| ^ | `SET CHARACTER SET charset_name` |
-| ^ | `set [session] {character_set_client|character_set_results|character_set_connection|collation_connection} = xxx;` |
-| `WITH` | `With ORDER BY: SELECT k FROM t1 ORDER BY k COLLATE latin1_swedish_ci;` |
-| ^ | `With AS: SELECT k COLLATE latin1_swedish_ci AS k1 FROM t1 ORDER BY k1;` |
-| ^ | `With GROUP BY: SELECT k FROM t1 GROUP BY k COLLATE latin1_swedish_ci;` |
-| ^ | `With aggregate functions: SELECT MAX(k COLLATE latin1_swedish_ci) FROM t1;` |
-| ^ | `With DISTINCT: SELECT DISTINCT k COLLATE latin1_swedish_ci FROM t1;` |
-| ^ | `With WHERE: SELECT * FROM k WHERE a='a' COLLATE utf8_bin;` |
-| ^ | `With HAVING: SELECT * FROM k WHERE a='a' having a='a' COLLATE utf8_bin order by id;` |
+| Function classification | Syntax related                                                                                                                                                                           |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `CREATE TABLE`          | `col_name {CHAR|VARCHAR|TEXT} (col_length) [CHARACTER SET charset_name] [COLLATE collation_name] col_name {ENUM | SET} (val_list) [CHARACTER SET charset_name] [COLLATE collation_name]` |
+| `ALTER TABLE`           | `ALTER TABLE tbl_name CONVERT TO CHARACTER SET charset_name [COLLATE collation_name];`                                                                                                   |
+| ^                       | `ALTER TABLE tbl_name DEFAULT CHARACTER SET charset_name [COLLATE collation_name];`                                                                                                      |
+| ^                       | `ALTER TABLE tbl_name MODIFY col_name column_definition CHARACTER SET charset_name [COLLATE collation_name];`                                                                            |
+| `SET`                   | `SET NAMES 'charset_name' [COLLATE 'collation_name']`                                                                                                                                    |
+| ^                       | `SET CHARACTER SET charset_name`                                                                                                                                                         |
+| ^                       | `set [session] {character_set_client|character_set_results|character_set_connection|collation_connection} = xxx;`                                                                        |
+| `WITH`                  | `With ORDER BY: SELECT k FROM t1 ORDER BY k COLLATE latin1_swedish_ci;`                                                                                                                  |
+| ^                       | `With AS: SELECT k COLLATE latin1_swedish_ci AS k1 FROM t1 ORDER BY k1;`                                                                                                                 |
+| ^                       | `With GROUP BY: SELECT k FROM t1 GROUP BY k COLLATE latin1_swedish_ci;`                                                                                                                  |
+| ^                       | `With aggregate functions: SELECT MAX(k COLLATE latin1_swedish_ci) FROM t1;`                                                                                                             |
+| ^                       | `With DISTINCT: SELECT DISTINCT k COLLATE latin1_swedish_ci FROM t1;`                                                                                                                    |
+| ^                       | `With WHERE: SELECT * FROM k WHERE a='a' COLLATE utf8_bin;`                                                                                                                              |
+| ^                       | `With HAVING: SELECT * FROM k WHERE a='a' having a='a' COLLATE utf8_bin order by id;`                                                                                                    |
 
 ## Function and operator support
 
@@ -3257,352 +3292,352 @@ The Syntax associated with the Character Set is as follow, HotDB Server could al
 
 This document only lists some functions upon special treatment, and if to know all functions supported by the compute node, please obtain the official *HotDB Server-v2.5.3 Latest List of Functions*.
 
-| **Function name** | **Support status** | **Intercept or not** | **Description** |
-|-------------------|--------------------|----------------------|-----------------|
-| [ABS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [ACOS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [ADDDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [ADDTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [AES_DECRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [AES_ENCRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [AND, &&](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | Support | No | 　 |
-| [Area()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html) | Support | No | 　 |
-| [AsBinary(), AsWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html) | Support | No | 　 |
-| [ASCII()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [ASIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html) | Support | No | 　 |
-| [:=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html) | Not support | Yes | 　 |
-| [AsText(), AsWKT()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html) | Support | No | 　 |
-| [ATAN2(), ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [AVG()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
-| [BENCHMARK()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Not support | Yes | 　 |
-| [BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [BIN()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [BINARY](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html) | Support | No | 　 |
-| [BIT_AND()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
-| [BIT_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
-| [BIT_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [BIT_OR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
-| [BIT_XOR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
-| [&](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
-| [\~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
-| [|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
-| [\^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
-| [Buffer()](http://dev.mysql.com/doc/refman/5.6/en/spatial-operator-functions.html) | Support | No | 　 |
-| [CASE](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html) | Support | No | 　 |
-| [CAST()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html) | Support | No | 　 |
-| [CEIL()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [CEILING()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [Centroid()](http://dev.mysql.com/doc/refman/5.6/en/gis-multipolygon-property-functions.html) | Support | No | 　 |
-| [CHAR_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [CHAR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [CHARACTER_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [CHARSET()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | 　 |
-| [COALESCE()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [COERCIBILITY()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | 　 |
-| [COLLATION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | 　 |
-| [COMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [CONCAT_WS()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [CONNECTION_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | connection_id of front-end session with the compute node |
-| [Contains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
-| [CONV()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [CONVERT_TZ()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [CONVERT()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html) | Support | No | Whether Sharding Table or Global Table, compute node doesn't support CONVERT (value, type) writing mode, and it only supports CONVERT (value using Character Set); |
-| [COS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [COT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [COUNT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
-| COUNT(DISTINCT) | Support | No | 　 |
-| [CRC32()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [Crosses()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html) | Support | No | 　 |
-| CURDATE() | Support | No | 　 |
-| [CURDATE(), CURRENT_DATE](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [CURRENT_ROLE()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html) | Not support | Yes | Compute node doesn't support new role function of MySQL8.0 |
-| [CURRENT_TIME(), CURRENT_TIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [CURRENT_USER(), CURRENT_USER](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | Return the current LogicDB username |
-| [CURTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [DATABASE()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | Return database name of the current compute node |
-| [DATE_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [DATE_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [DATE_SUB()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [DATEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [DAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [DAYNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [DAYOFMONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [DAYOFWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [DAYOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [DECODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [DEFAULT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [DEGREES()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [DES_DECRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [DES_ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [Dimension()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
-| [Disjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
-| [DIV](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
-| [/](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
-| [ELT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [ENCODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [EndPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
-| [Envelope()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
-| [<=>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [Equals()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
-| [EXP()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [EXPORT_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [ExteriorRing()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html) | Support | No | 　 |
-| [EXTRACT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [ExtractValue()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html) | Support | No | 　 |
-| [FIELD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [FIND_IN_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [FLOOR()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [FOUND_ROWS()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Not support | Yes | 　 |
-| [FROM_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [FROM_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [FROM_UNIXTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [GeomCollFromText(),GeometryCollectionFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
-| [GeomCollFromWKB(),GeometryCollectionFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
-| [GeometryCollection()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
-| [GeometryN()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html) | Support | No | 　 |
-| [GeometryType()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
-| [GeomFromText(), GeometryFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
-| [GeomFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
-| [GET_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [GET_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
-| [GLength()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
-| [>=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [GREATEST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [GROUP_CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
-| [GROUPING()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html) | Not support | Yes | New function of MySQL8.0 |
-| [GTID_SUBSET()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html) | Support | No | 　 |
-| [GTID_SUBTRACT()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html) | Support | No | 　 |
-| [HEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [HOUR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [IF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html) | Support | No | 　 |
-| [IFNULL()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html) | Support | No | 　 |
-| [IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [INET_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [INET_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [INET6_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [INET6_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [INSERT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [INSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [InteriorRingN()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html) | Support | No | 　 |
-| [Intersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
-| [INTERVAL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [IS_FREE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
-| [IS_IPV4_COMPAT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [IS_IPV4_MAPPED()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [IS_IPV4()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [IS_IPV6()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [IS NOT NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [IS NOT](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [IS NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [IS_USED_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
-| [IS](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [IsClosed()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
-| [IsEmpty()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
-| [ISNULL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [IsSimple()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
-| [JSON_ARRAYAGG(col_or_expr) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg) | Not support | Yes | New function of MySQL8.0 and 5.7 |
-| [JSON_OBJECTAGG(key, value) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg) | Not support | Yes | New function of MySQL8.0 and 5.7 |
-| [JSON_PRETTY(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-pretty) | Not support | Yes | New function of MySQL8.0 and 5.7 |
-| [JSON_STORAGE_FREE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free) | Not support | Yes | New function of MySQL8.0 |
-| [JSON_STORAGE_SIZE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free) | Not support | Yes | New function of MySQL8.0 and 5.7 |
-| [JSON_MERGE_PATCH(json_doc, json_doc[, json_doc] ...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch) | Not support | Yes | New function of MySQL8.0 and 5.7 |
-| [JSON_TABLE(expr, path COLUMNS (column_list) [AS] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html#function_json-table) | Not support | Yes | New function of MySQL8.0 |
-| [LAST_DAY](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [LAST_INSERT_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | 　 |
-| [LCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [LEAST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [<<](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
-| [LEFT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [<=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [<](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html) | Support | No | 　 |
-| [LineFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
-| [LineFromWKB(), LineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
-| [LineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
-| [LN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [LOAD_FILE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Not support | Yes | 　 |
-| [LOCALTIME(), LOCALTIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [LOCALTIMESTAMP, LOCALTIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [LOCATE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [LOG10()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [LOG2()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [LOG()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [LOWER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [LPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [LTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [MAKE_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [MAKEDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [MAKETIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [MASTER_POS_WAIT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
-| [MATCH](http://dev.mysql.com/doc/refman/5.6/en/fulltext-search.html) | Support | No | 　 |
-| [MAX()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
-| [MBRContains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
-| [MBRDisjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
-| [MBREqual() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
-| [MBRIntersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
-| [MBROverlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
-| [MBRTouches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
-| [MBRWithin()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html) | Support | No | 　 |
-| [MD5()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [MICROSECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [MID()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
-| [MIN()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
-| [MINUTE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [MLineFromText(),MultiLineStringFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
-| [MLineFromWKB(),MultiLineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
-| [MOD()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [% or MOD](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
-| [MONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [MONTHNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [MPointFromText(),MultiPointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
-| [MPointFromWKB(), MultiPointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
-| [MPolyFromText(),MultiPolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
-| [MPolyFromWKB(),MultiPolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
-| [MultiLineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
-| [MultiPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
-| [MultiPolygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
-| [NAME_CONST()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [NOT BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [!=, <>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [NOT IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html) | Support | No | 　 |
-| [NOT LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html) | Support | No | 　 |
-| [NOT REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html) | Support | No | 　 |
-| [NOT, !](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | Support | No | 　 |
-| [NOW()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [NULLIF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html) | Support | No | 　 |
-| [NumGeometries()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html) | Support | No | 　 |
-| [NumInteriorRings()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html) | Support | No | 　 |
-| [NumPoints()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
-| [OCT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [OCTET_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [\|\|, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | Support | No | 　 |
-| [ORD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [Overlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
-| [PASSWORD()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [PERIOD_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [PERIOD_DIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [PI()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [+](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
-| [Point()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
-| [PointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
-| [PointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
-| [PointN()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
-| [PolyFromText(), PolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html) | Support | No | 　 |
-| [PolyFromWKB(), PolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html) | Support | No | 　 |
-| [Polygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html) | Support | No | 　 |
-| [POSITION()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [POW()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [POWER()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [PROCEDURE ANALYSE()](http://dev.mysql.com/doc/refman/5.6/en/procedure-analyse.html) | Not support | Yes | 　 |
-| [PS_CURRENT_THREAD_ID()](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html) | Not support | Yes | New function of MySQL8.0 |
-| [PS_THREAD_ID(connection_id)](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html) | Not support | Yes | New function of MySQL8.0 |
-| [QUARTER()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [QUOTE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [RADIANS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [RAND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | In join, the Sharding Table doesn't support any rand Syntax |
-| [RANDOM_BYTES()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html) | Support | No | 　 |
-| [RELEASE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
-| [REPEAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [REPLACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [REVERSE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [>>](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support | No | 　 |
-| [RIGHT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [RLIKE](http://dev.mysql.com/doc/refman/5.6/en/regexp.html) | Support | No | 　 |
-| [ROLES_GRAPHML()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html) | Not support | Yes | New function of MySQL8.0 |
-| [ROUND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [ROW_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Not support | Yes | 　 |
-| [RPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [RTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [SCHEMA()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | 1. select schema() return to LogicDB name; 2. show tables from information_schema; compute node is not supported, Query result is null; |
-| [SEC_TO_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [SECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [SESSION_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | select session_user(); the Query result is not information of the current user login the LogicDB but the user information of LogicDB associated node |
-| [SHA1(), SHA()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [SHA2()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [SIGN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [SIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [SLEEP()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Not support | Yes | 　 |
-| [SOUNDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [SOUNDS LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [SPACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [SQL_THREAD_WAIT_AFTER_GTIDS()(deprecated 5.6.9)](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html) | Not support | Yes | 　 |
-| [SQRT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [SRID()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html) | Support | No | 　 |
-| [StartPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html) | Support | No | 　 |
-| [STD()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
-| [STDDEV_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
-| [STDDEV_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
-| [STDDEV()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
-| [STR_TO_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [STRCMP()](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html) | Support | No | 　 |
-| [SUBDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [SUBSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [SUBSTRING_INDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [SUBSTRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [SUBTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [SUM()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Support | No | 　 |
-| [SYSDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | (Notice: SYSDATE of the test server adds parameter, making it equal to now(), therefore, there will be no difference in latency, in order to avoid Master/Slave data inconsistency) |
-| [SYSTEM_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | The Query result is not user information of LogicDB, but random user information of LogicDB associated node |
-| [TAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [TIME_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [TIME_TO_SEC()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [TIMEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [*](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
-| [TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [TIMESTAMPADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [TIMESTAMPDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [TO_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [TO_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [TO_SECONDS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [Touches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html) | Support | No | 　 |
-| [TRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [TRUNCATE()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html) | Support | No | 　 |
-| [UCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html) | Support | No | 　 |
-| [UNCOMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [UNCOMPRESSED_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [UNHEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [UNIX_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [UpdateXML()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html) | Support | No | 　 |
-| [UPPER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | select user(); the Query result is information of the current user of LogicDB |
-| [UTC_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [UTC_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [UTC_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [UUID_SHORT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [UUID()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [VALIDATE_PASSWORD_STRENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html) | Support | No | 　 |
-| [VALUES()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html) | Support | No | 　 |
-| [VAR_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
-| [VAR_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
-| [VARIANCE()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html) | Not support | Yes | 　 |
-| [VERSION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html) | Support | No | The Query result shows the version of compute node |
-| [WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html) | Not support | Yes | 　 |
-| [WEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [WEEKDAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [WEEKOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [WEIGHT_STRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html) | Support | No | 　 |
-| [Window Functions](https://dev.mysql.com/doc/refman/8.0/en/window-functions.html) | Not support | Yes | New function of MySQL8.0 |
-| [Within()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html) | Support | No | 　 |
-| [X()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html) | Support | No | 　 |
-| [XOR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | Support | No | 　 |
-| [Y()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html) | Support | No | 　 |
-| [YEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
-| [YEARWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html) | Support | No | 　 |
+| **Function name**                                                                                                                                          | **Support status**                                           | **Intercept or not**                                                 | **Description**                                                                                                                                                                     |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [ABS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ACOS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ADDDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ADDTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [AES_DECRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [AES_ENCRYPT()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [AND, &&](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Area()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [AsBinary(), AsWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ASCII()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ASIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [:=](http://dev.mysql.com/doc/refman/5.6/en/assignment-operators.html)                                                                                     | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [AsText(), AsWKT()](http://dev.mysql.com/doc/refman/5.6/en/gis-format-conversion-functions.html)                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ATAN2(), ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ATAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [AVG()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [BENCHMARK()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                           | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [BIN()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [BINARY](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [BIT_AND()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [BIT_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [BIT_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [BIT_OR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                 | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [BIT_XOR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [&](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [\~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [                                                                                                                                                          | ](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support                                                              | No                                                                                                                                                                                  |
+| [\^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Buffer()](http://dev.mysql.com/doc/refman/5.6/en/spatial-operator-functions.html)                                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CASE](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CAST()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CEIL()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CEILING()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Centroid()](http://dev.mysql.com/doc/refman/5.6/en/gis-multipolygon-property-functions.html)                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CHAR_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CHAR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CHARACTER_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CHARSET()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [COALESCE()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [COERCIBILITY()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [COLLATION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [COMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CONCAT_WS()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CONNECTION_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                       | Support                                                      | No                                                                   | connection_id of front-end session with the compute node                                                                                                                            |
+| [Contains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CONV()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CONVERT_TZ()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CONVERT()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                    | Support                                                      | No                                                                   | Whether Sharding Table or Global Table, compute node doesn't support CONVERT (value, type) writing mode, and it only supports CONVERT (value using Character Set);                  |
+| [COS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [COT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [COUNT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                  | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| COUNT(DISTINCT)                                                                                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CRC32()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Crosses()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html)                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| CURDATE()                                                                                                                                                  | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CURDATE(), CURRENT_DATE](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CURRENT_ROLE()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html)                                                                       | Not support                                                  | Yes                                                                  | Compute node doesn't support new role function of MySQL8.0                                                                                                                          |
+| [CURRENT_TIME(), CURRENT_TIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [CURRENT_USER(), CURRENT_USER](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                          | Support                                                      | No                                                                   | Return the current LogicDB username                                                                                                                                                 |
+| [CURTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DATABASE()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                            | Support                                                      | No                                                                   | Return database name of the current compute node                                                                                                                                    |
+| [DATE_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DATE_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DATE_SUB()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DATEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DAYNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DAYOFMONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DAYOFWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DAYOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DECODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DEFAULT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DEGREES()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DES_DECRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DES_ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Dimension()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                  | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Disjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [DIV](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [/](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ELT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ENCODE()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ENCRYPT() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [EndPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Envelope()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [<=>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Equals()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [EXP()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [EXPORT_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ExteriorRing()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [EXTRACT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ExtractValue()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [FIELD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [FIND_IN_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [FLOOR()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [FOUND_ROWS()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                          | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [FROM_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [FROM_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [FROM_UNIXTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GeomCollFromText(),GeometryCollectionFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GeomCollFromWKB(),GeometryCollectionFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GeometryCollection()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GeometryN()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html)                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GeometryType()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GeomFromText(), GeometryFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GeomFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GET_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GET_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                          | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [GLength()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [>=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GREATEST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GROUP_CONCAT()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GROUPING()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html)                                                                         | Not support                                                  | Yes                                                                  | New function of MySQL8.0                                                                                                                                                            |
+| [GTID_SUBSET()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [GTID_SUBTRACT()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [HEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [HOUR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IFNULL()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [INET_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [INET_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [INET6_ATON()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [INET6_NTOA()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [INSERT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [INSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [InteriorRingN()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Intersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [INTERVAL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IS_FREE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                      | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [IS_IPV4_COMPAT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IS_IPV4_MAPPED()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IS_IPV4()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IS_IPV6()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IS NOT NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IS NOT](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IS NULL](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IS_USED_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                      | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [IS](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IsClosed()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IsEmpty()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ISNULL()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [IsSimple()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [JSON_ARRAYAGG(col_or_expr) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                         | Not support                                                  | Yes                                                                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_OBJECTAGG(key, value) [over_clause]](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_json-arrayagg)                         | Not support                                                  | Yes                                                                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_PRETTY(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-pretty)                                          | Not support                                                  | Yes                                                                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_STORAGE_FREE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                              | Not support                                                  | Yes                                                                  | New function of MySQL8.0                                                                                                                                                            |
+| [JSON_STORAGE_SIZE(json_val)](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free)                              | Not support                                                  | Yes                                                                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_MERGE_PATCH(json_doc, json_doc[, json_doc] ...)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch) | Not support                                                  | Yes                                                                  | New function of MySQL8.0 and 5.7                                                                                                                                                    |
+| [JSON_TABLE(expr, path COLUMNS (column_list) [AS] alias)](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html#function_json-table)           | Not support                                                  | Yes                                                                  | New function of MySQL8.0                                                                                                                                                            |
+| [LAST_DAY](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LAST_INSERT_ID()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LEAST()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [<<](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LEFT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [<=](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [<](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LineFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LineFromWKB(), LineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LOAD_FILE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [LOCALTIME(), LOCALTIME](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LOCALTIMESTAMP, LOCALTIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LOCATE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LOG10()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LOG2()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LOG()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LOWER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [LTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MAKE_SET()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MAKEDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MAKETIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MASTER_POS_WAIT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                   | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [MATCH](http://dev.mysql.com/doc/refman/5.6/en/fulltext-search.html)                                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MAX()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MBRContains()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MBRDisjoint()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MBREqual() (deprecated 5.7.6)](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MBRIntersects()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MBROverlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MBRTouches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MBRWithin()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mysql-specific.html)                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MD5()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                  | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MICROSECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MID()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MIN()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MINUTE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MLineFromText(),MultiLineStringFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MLineFromWKB(),MultiLineStringFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MOD()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [% or MOD](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MONTH()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MONTHNAME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MPointFromText(),MultiPointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MPointFromWKB(), MultiPointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MPolyFromText(),MultiPolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MPolyFromWKB(),MultiPolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MultiLineString()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MultiPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [MultiPolygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [NAME_CONST()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [NOT BETWEEN ... AND ...](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [!=, <>](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [NOT IN()](http://dev.mysql.com/doc/refman/5.6/en/comparison-operators.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [NOT LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [NOT REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [NOT, !](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [NOW()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [NULLIF()](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [NumGeometries()](http://dev.mysql.com/doc/refman/5.6/en/gis-geometrycollection-property-functions.html)                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [NumInteriorRings()](http://dev.mysql.com/doc/refman/5.6/en/gis-polygon-property-functions.html)                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [NumPoints()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [OCT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [OCTET_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [\                                                                                                                                                         | \                                                            | , OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | Support                                                                                                                                                                             |
+| [ORD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Overlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [PASSWORD()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [PERIOD_ADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [PERIOD_DIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [PI()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [+](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Point()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [PointFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [PointFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [PointN()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                                  | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [PolyFromText(), PolygonFromText()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkt-functions.html)                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [PolyFromWKB(), PolygonFromWKB()](http://dev.mysql.com/doc/refman/5.6/en/gis-wkb-functions.html)                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Polygon()](http://dev.mysql.com/doc/refman/5.6/en/gis-mysql-specific-functions.html)                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [POSITION()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [POW()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [POWER()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [PROCEDURE ANALYSE()](http://dev.mysql.com/doc/refman/5.6/en/procedure-analyse.html)                                                                       | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [PS_CURRENT_THREAD_ID()](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html)                                                        | Not support                                                  | Yes                                                                  | New function of MySQL8.0                                                                                                                                                            |
+| [PS_THREAD_ID(connection_id)](https://dev.mysql.com/doc/refman/8.0/en/performance-schema-functions.html)                                                   | Not support                                                  | Yes                                                                  | New function of MySQL8.0                                                                                                                                                            |
+| [QUARTER()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [QUOTE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [RADIANS()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [RAND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support                                                      | No                                                                   | In join, the Sharding Table doesn't support any rand Syntax                                                                                                                         |
+| [RANDOM_BYTES()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [REGEXP](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [RELEASE_LOCK()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                      | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [REPEAT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [REPLACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                  | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [REVERSE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                  | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [>>](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [RIGHT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [RLIKE](http://dev.mysql.com/doc/refman/5.6/en/regexp.html)                                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ROLES_GRAPHML()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html)                                                                      | Not support                                                  | Yes                                                                  | New function of MySQL8.0                                                                                                                                                            |
+| [ROUND()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [ROW_COUNT()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                           | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [RPAD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [RTRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SCHEMA()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                              | Support                                                      | No                                                                   | 1. select schema() return to LogicDB name; 2. show tables from information_schema; compute node is not supported, Query result is null;                                             |
+| [SEC_TO_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SECOND()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SESSION_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                        | Support                                                      | No                                                                   | select session_user(); the Query result is not information of the current user login the LogicDB but the user information of LogicDB associated node                                |
+| [SHA1(), SHA()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SHA2()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SIGN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SIN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SLEEP()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                             | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [SOUNDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                  | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SOUNDS LIKE](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SPACE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SQL_THREAD_WAIT_AFTER_GTIDS()(deprecated 5.6.9)](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                              | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [SQRT()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                               | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SRID()](http://dev.mysql.com/doc/refman/5.6/en/gis-general-property-functions.html)                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [StartPoint()](http://dev.mysql.com/doc/refman/5.6/en/gis-linestring-property-functions.html)                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [STD()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                    | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [STDDEV_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                             | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [STDDEV_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                            | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [STDDEV()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                 | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [STR_TO_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [STRCMP()](http://dev.mysql.com/doc/refman/5.6/en/string-comparison-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SUBDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SUBSTR()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SUBSTRING_INDEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SUBSTRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SUBTIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SUM()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [SYSDATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support                                                      | No                                                                   | (Notice: SYSDATE of the test server adds parameter, making it equal to now(), therefore, there will be no difference in latency, in order to avoid Master/Slave data inconsistency) |
+| [SYSTEM_USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                         | Support                                                      | No                                                                   | The Query result is not user information of LogicDB, but random user information of LogicDB associated node                                                                         |
+| [TAN()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TIME_FORMAT()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TIME_TO_SEC()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TIMEDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [*](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TIMESTAMPADD()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TIMESTAMPDIFF()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TO_BASE64()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TO_DAYS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TO_SECONDS()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Touches()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-object-shapes.html)                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TRIM()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [TRUNCATE()](http://dev.mysql.com/doc/refman/5.6/en/mathematical-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [UCASE()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [-](http://dev.mysql.com/doc/refman/5.6/en/arithmetic-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [UNCOMPRESS()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [UNCOMPRESSED_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                  | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [UNHEX()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [UNIX_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [UpdateXML()](http://dev.mysql.com/doc/refman/5.6/en/xml-functions.html)                                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [UPPER()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                    | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [USER()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                                | Support                                                      | No                                                                   | select user(); the Query result is information of the current user of LogicDB                                                                                                       |
+| [UTC_DATE()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [UTC_TIME()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [UTC_TIMESTAMP()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [UUID_SHORT()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [UUID()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [VALIDATE_PASSWORD_STRENGTH()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [VALUES()](http://dev.mysql.com/doc/refman/5.6/en/miscellaneous-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [VAR_POP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [VAR_SAMP()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                               | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [VARIANCE()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                               | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [VERSION()](http://dev.mysql.com/doc/refman/5.6/en/information-functions.html)                                                                             | Support                                                      | No                                                                   | The Query result shows the version of compute node                                                                                                                                  |
+| [WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS()](http://dev.mysql.com/doc/refman/5.6/en/gtid-functions.html)                                                          | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
+| [WEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [WEEKDAY()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                           | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [WEEKOFYEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                        | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [WEIGHT_STRING()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Window Functions](https://dev.mysql.com/doc/refman/8.0/en/window-functions.html)                                                                          | Not support                                                  | Yes                                                                  | New function of MySQL8.0                                                                                                                                                            |
+| [Within()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                     | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [X()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [XOR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html)                                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [Y()](http://dev.mysql.com/doc/refman/5.6/en/gis-point-property-functions.html)                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [YEAR()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                              | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [YEARWEEK()](http://dev.mysql.com/doc/refman/5.6/en/date-and-time-functions.html)                                                                          | Support                                                      | No                                                                   |                                                                                                                                                                                     |
 
 ### MERGE_RESULT
 
@@ -3694,27 +3729,27 @@ DELETE FROM t PARTITION(p0);
 
 ##### Single-node DELETE statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |
+| MySQL statement type | Clause type        | Function | Support status | Description                                                                                                                |
 |----------------------|--------------------|----------|----------------|----------------------------------------------------------------------------------------------------------------------------|
-| DELETE | PARTITION | 　 | Support | 　 |
-| ^ | ORDER BY | 　 | Support | 　 |
-| ^ | LIMIT | 　 | Support | 　 |
-| ^ | WHERE | dnid | Support | 1. dnid in DML where Clause shall be a necessary requirement, and it is not supported if not being a necessary requirement |
-| ^ | ^ | ^ | ^ | 2. Global Table does not support use dnid. |
-| ^ | ^ | Function | Support | 　 |
-| ^ | Multi-table DELETE | 　 | Support |   |
+| DELETE               | PARTITION          |          | Support        |                                                                                                                            |
+| ^                    | ORDER BY           |          | Support        |                                                                                                                            |
+| ^                    | LIMIT              |          | Support        |                                                                                                                            |
+| ^                    | WHERE              | dnid     | Support        | 1. dnid in DML where Clause shall be a necessary requirement, and it is not supported if not being a necessary requirement |
+| ^                    | ^                  | ^        | ^              | 2. Global Table does not support use dnid.                                                                                 |
+| ^                    | ^                  | Function | Support        |                                                                                                                            |
+| ^                    | Multi-table DELETE |          | Support        |                                                                                                                            |
 
 ##### Cross-node DELETE statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|-------------|----------|----------------|-------------|
-| DELETE | PARTITION | 　 | Support |   |
-| ^ | ORDER BY DESC | ASC | 　 | Support |
-| ^ | LIMIT | 　 | Support |   |
-| ^ | ORDER BY ... LIMIT ... | Support | Parent/Child Table is not supported |   |
-| ^ | ORDER BY case sensitive of Field value | 　 | Support |   |
-| ^ | WHERE | Function in WHERE | Support |   |
-| ^ | JOIN |   | Support | Scenarios with temporary tables are not supported |
+| MySQL statement type | Clause type                            | Function          | Support status                      | Description                                       |
+|----------------------|----------------------------------------|-------------------|-------------------------------------|---------------------------------------------------|
+| DELETE               | PARTITION                              |                   | Support                             |                                                   |
+| ^                    | ORDER BY DESC                          | ASC               |                                     | Support                                           |
+| ^                    | LIMIT                                  |                   | Support                             |                                                   |
+| ^                    | ORDER BY ... LIMIT ...                 | Support           | Parent/Child Table is not supported |                                                   |
+| ^                    | ORDER BY case sensitive of Field value |                   | Support                             |                                                   |
+| ^                    | WHERE                                  | Function in WHERE | Support                             |                                                   |
+| ^                    | JOIN                                   |                   | Support                             | Scenarios with temporary tables are not supported |
 
 In cross-node DELETE statement, the following Multi-table statement is not supported:
 
@@ -3738,25 +3773,25 @@ USING table_references
 
 ##### Single-node INSERT statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|-------------|----------|----------------|-------------|
-| INSERT | INSERT ... SELECT ... | Single-node simple single-table Query | Support |   |
-| ^ | ^ | Single-node JOIN | Support |   |
-| ^ | ^ | Single-node Subquery | Support |   |
-| ^ | ^ | Single-node UNION/UNION ALL | Support |   |
-| ^ | IGNORE | 　 | Support |   |
-| ^ | PARTITION | 　 | Support |   |
-| ^ | ON DUPLICATE KEY UPDATE | 　 | Support |   |
-| ^ | INSERT INTO table_name(columns... ) VALUES(values...) | 　 | Support |   |
-| ^ | INSERT INTO ... VALUES() | 　 | Support |   |
-| ^ | INSERT INTO ... SET | 　 | Support |   |
-| ^ | Sharding Table Splitting-free Field | 　 | Not support |   |
-| ^ | Sharding Table Splitting Field value is NULL | 　 | Support | NULL value parameter needs to be configured in Sharding Function |
-| ^ | Child Table Non-Associated Field value | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
-| ^ | Child Table Associated Field value is NULL | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
-| ^ | INSERT BATCH | Sharding Table | Support |   |
-| ^ | ^ | Global Table | Support |   |
-| ^ | ^ | Child Table | Conditional limit | Associated field of Parent Table is not supported if it is not sharding key. |
+| MySQL statement type | Clause type                                           | Function                              | Support status    | Description                                                                  |
+|----------------------|-------------------------------------------------------|---------------------------------------|-------------------|------------------------------------------------------------------------------|
+| INSERT               | INSERT ... SELECT ...                                 | Single-node simple single-table Query | Support           |                                                                              |
+| ^                    | ^                                                     | Single-node JOIN                      | Support           |                                                                              |
+| ^                    | ^                                                     | Single-node Subquery                  | Support           |                                                                              |
+| ^                    | ^                                                     | Single-node UNION/UNION ALL           | Support           |                                                                              |
+| ^                    | IGNORE                                                |                                       | Support           |                                                                              |
+| ^                    | PARTITION                                             |                                       | Support           |                                                                              |
+| ^                    | ON DUPLICATE KEY UPDATE                               |                                       | Support           |                                                                              |
+| ^                    | INSERT INTO table_name(columns... ) VALUES(values...) |                                       | Support           |                                                                              |
+| ^                    | INSERT INTO ... VALUES()                              |                                       | Support           |                                                                              |
+| ^                    | INSERT INTO ... SET                                   |                                       | Support           |                                                                              |
+| ^                    | Sharding Table Splitting-free Field                   |                                       | Not support       |                                                                              |
+| ^                    | Sharding Table Splitting Field value is NULL          |                                       | Support           | NULL value parameter needs to be configured in Sharding Function             |
+| ^                    | Child Table Non-Associated Field value                |                                       | Not support       | INSERT operation of child table data must meet foreign key condition         |
+| ^                    | Child Table Associated Field value is NULL            |                                       | Not support       | INSERT operation of child table data must meet foreign key condition         |
+| ^                    | INSERT BATCH                                          | Sharding Table                        | Support           |                                                                              |
+| ^                    | ^                                                     | Global Table                          | Support           |                                                                              |
+| ^                    | ^                                                     | Child Table                           | Conditional limit | Associated field of Parent Table is not supported if it is not sharding key. |
 
 - INSERT INTO...SELECT...
 
@@ -3822,14 +3857,14 @@ INSERT BATCH refers to the mode of writing single INSERT statement into multi-ro
 INSERT INTO ... table_name VALUES(),VALUES(),VALUES();
 ```
 
-| MySQL statement type | Clause type | Function | Support status | Description |
+| MySQL statement type | Clause type           | Function                             | Support status | Description                                                           |
 |----------------------|-----------------------|--------------------------------------|----------------|-----------------------------------------------------------------------|
-| INSERT | INSERT ... SELECT ... | Cross-node simple single-table Query | Support |   |
-| ^ | ^ | Cross-node JOIN | Not support |   |
-| ^ | ^ | Cross-node UNION | Not support |   |
-| INSERT BATCH | Child Table |   | Support | JOIN Field of Parent Table is not supported if not being sharding key |
-| ^ | Global Table |   | Support |   |
-| ^ | Sharding Table |   | Support |   |
+| INSERT               | INSERT ... SELECT ... | Cross-node simple single-table Query | Support        |                                                                       |
+| ^                    | ^                     | Cross-node JOIN                      | Not support    |                                                                       |
+| ^                    | ^                     | Cross-node UNION                     | Not support    |                                                                       |
+| INSERT BATCH         | Child Table           |                                      | Support        | JOIN Field of Parent Table is not supported if not being sharding key |
+| ^                    | Global Table          |                                      | Support        |                                                                       |
+| ^                    | Sharding Table        |                                      | Support        |                                                                       |
 
 **Special instructions for INSERT BATCH:**
 
@@ -3837,47 +3872,47 @@ For INSERT BATCH in a transaction, if parts succeed and parts failed, it will au
 
 #### LOAD DATA statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|-------------|----------|----------------|-------------|
-| LOAD DATA | `LOAD DATA ... INFILE ... INTO TABLE` |   | Support | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege. |
-| ^ | ^ | ^ | ^ | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the imported file must be uploaded to the fixed path on the current active compute node server: `/usr/local/hotdb/hotdb-server/HotDB-TEMP`. |
-| ^ | LOW_PRIORITY |   | Not support |   |
-| ^ | CONCURRENT |   | Not support |   |
-| ^ | LOCAL |   | Not support |   |
-| ^ | REPLACE |   | Support |   |
-| ^ | IGNORE |   | Support |   |
-| ^ | PARTITION |   | Not support |   |
-| ^ | CHARACTER SET |   | Not support |   |
-| ^ | `{FIELDS | COLUMNS} [TERMINATED BY 'string'] [[OPTIONALLY] ENCLOSED BY 'char'] [ESCAPED BY 'char']` |   | Support |   |
-| ^ | `LINES STARTING BY 'string'` |   | Not support |   |
-| ^ | `LINES TERMINATED BY 'string'` |   | Support |   |
-| ^ | Import the specified field |   | Support |   |
-| ^ | `SET` |   | Support |   |
-| ^ | `IGNORE number {LINES | ROWS}` |   | Support |   |
+| MySQL statement type | Clause type                                                                                         | Function | Support status | Description                                                                                                                                                                                                                                                   |
+|----------------------|-----------------------------------------------------------------------------------------------------|----------|----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| LOAD DATA            | `LOAD DATA ... INFILE ... INTO TABLE`                                                               |          | Support        | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                               |
+| ^                    | ^                                                                                                   | ^        | ^              | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the imported file must be uploaded to the fixed path on the current active compute node server: `/usr/local/hotdb/hotdb-server/HotDB-TEMP`. |
+| ^                    | LOW_PRIORITY                                                                                        |          | Not support    |                                                                                                                                                                                                                                                               |
+| ^                    | CONCURRENT                                                                                          |          | Not support    |                                                                                                                                                                                                                                                               |
+| ^                    | LOCAL                                                                                               |          | Not support    |                                                                                                                                                                                                                                                               |
+| ^                    | REPLACE                                                                                             |          | Support        |                                                                                                                                                                                                                                                               |
+| ^                    | IGNORE                                                                                              |          | Support        |                                                                                                                                                                                                                                                               |
+| ^                    | PARTITION                                                                                           |          | Not support    |                                                                                                                                                                                                                                                               |
+| ^                    | CHARACTER SET                                                                                       |          | Not support    |                                                                                                                                                                                                                                                               |
+| ^                    | `{FIELDS | COLUMNS} [TERMINATED BY 'string'] [[OPTIONALLY] ENCLOSED BY 'char'] [ESCAPED BY 'char']` |          | Support        |                                                                                                                                                                                                                                                               |
+| ^                    | `LINES STARTING BY 'string'`                                                                        |          | Not support    |                                                                                                                                                                                                                                                               |
+| ^                    | `LINES TERMINATED BY 'string'`                                                                      |          | Support        |                                                                                                                                                                                                                                                               |
+| ^                    | Import the specified field                                                                          |          | Support        |                                                                                                                                                                                                                                                               |
+| ^                    | `SET`                                                                                               |          | Support        |                                                                                                                                                                                                                                                               |
+| ^                    | `IGNORE number {LINES | ROWS}`                                                                      |          | Support        |                                                                                                                                                                                                                                                               |
 
 #### REPLACE statement
 
 ##### Single-node REPLACE statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|--------------------------------------------------------|---------------------------------------|---------------------|------------------------------------------------------------------------------|
-| REPALCE | `REPLACE ... SELECT ...` | Single-node simple single-table Query | Support |   |
-| ^ | ^ | Single-node JOIN | Support |   |
-| ^ | ^ | Single-node Subquery | Support |   |
-| ^ | ^ | Single-node UNION/UNION ALL | Support |   |
-| ^ | IGNORE | 　 | Support |   |
-| ^ | PARTITION | 　 | Support |   |
-| ^ | ON DUPLICATE KEY UPDATE | 　 | Support |   |
-| ^ | `REPLACE INTO table_name(columns... ) VALUES(values...)` | 　 | Support |   |
-| ^ | `REPALCE INTO ... VALUES()` | 　 | Support |   |
-| ^ | `REPLACE INTO ... SET` | 　 | Support |   |
-| ^ | Sharding table has no sharding key | 　 | Not support |   |
-| ^ | Sharding table sharding key value is NULL | 　 | Support | NULL value parameter needs to be configured in Sharding Function parameter |
-| ^ | Child table has no related field value | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
-| ^ | Child table related field value is NULL | 　 | Not support | INSERT operation of child table data must meet foreign key condition |
-| ^ | REPLACE BATCH | Sharding Table | Support |   |
-| ^ | ^ | Global Table | Support |   |
-| ^ | ^ | Child Table | Conditional support | Associated field of Parent Table is not supported if it is not sharding key. |
+| MySQL statement type | Clause type                                              | Function                              | Support status      | Description                                                                  |
+|----------------------|----------------------------------------------------------|---------------------------------------|---------------------|------------------------------------------------------------------------------|
+| REPALCE              | `REPLACE ... SELECT ...`                                 | Single-node simple single-table Query | Support             |                                                                              |
+| ^                    | ^                                                        | Single-node JOIN                      | Support             |                                                                              |
+| ^                    | ^                                                        | Single-node Subquery                  | Support             |                                                                              |
+| ^                    | ^                                                        | Single-node UNION/UNION ALL           | Support             |                                                                              |
+| ^                    | IGNORE                                                   |                                       | Support             |                                                                              |
+| ^                    | PARTITION                                                |                                       | Support             |                                                                              |
+| ^                    | ON DUPLICATE KEY UPDATE                                  |                                       | Support             |                                                                              |
+| ^                    | `REPLACE INTO table_name(columns... ) VALUES(values...)` |                                       | Support             |                                                                              |
+| ^                    | `REPALCE INTO ... VALUES()`                              |                                       | Support             |                                                                              |
+| ^                    | `REPLACE INTO ... SET`                                   |                                       | Support             |                                                                              |
+| ^                    | Sharding table has no sharding key                       |                                       | Not support         |                                                                              |
+| ^                    | Sharding table sharding key value is NULL                |                                       | Support             | NULL value parameter needs to be configured in Sharding Function parameter   |
+| ^                    | Child table has no related field value                   |                                       | Not support         | INSERT operation of child table data must meet foreign key condition         |
+| ^                    | Child table related field value is NULL                  |                                       | Not support         | INSERT operation of child table data must meet foreign key condition         |
+| ^                    | REPLACE BATCH                                            | Sharding Table                        | Support             |                                                                              |
+| ^                    | ^                                                        | Global Table                          | Support             |                                                                              |
+| ^                    | ^                                                        | Child Table                           | Conditional support | Associated field of Parent Table is not supported if it is not sharding key. |
 
 
 
@@ -3891,110 +3926,110 @@ REPLACE BATCH refers to the mode of writing single REPLACE statement into multip
 REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 ```
 
-| MySQL statement type | Clause type | Function | Support status | Description |
+| MySQL statement type | Clause type              | Function                             | Support status                                                         | Description |
 |----------------------|--------------------------|--------------------------------------|------------------------------------------------------------------------|-------------|
-| REPLACE | `REPLACE ... SELECT ...` | Cross-node simple single-table Query | Support |   |
-|   | ^ | Cross-node JOIN | Not support |   |
-|   | ^ | Cross-node UNION | Not support |   |
-| REPLACE BATCH | Child Table | Support | JOIN Field of Parent Table is not supported if it is not sharding key. |   |
-|   | ^ | Global Table | Support |   |
-|   | ^ | Sharding Table | Support |   |
+| REPLACE              | `REPLACE ... SELECT ...` | Cross-node simple single-table Query | Support                                                                |             |
+|                      | ^                        | Cross-node JOIN                      | Not support                                                            |             |
+|                      | ^                        | Cross-node UNION                     | Not support                                                            |             |
+| REPLACE BATCH        | Child Table              | Support                              | JOIN Field of Parent Table is not supported if it is not sharding key. |             |
+|                      | ^                        | Global Table                         | Support                                                                |             |
+|                      | ^                        | Sharding Table                       | Support                                                                |             |
 
 #### SELECT statement
 
 ##### Single-node SELECT statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |   |
-|----------------------|--------------------|---------------------------------------------------------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
-| SELECT | JOIN | LEFT JOIN | Support |   |   |
-| ^ | ^ | INNER JOIN | Support |   |   |
-| ^ | ^ | RIGHT JOIN | Support |   |   |
-| ^ | ^ | CROSS JOIN | Support |   |   |
-| ^ | ^ | Ordinary JOIN (Multi-table Query without JOIN key word) | Support |   |   |
-| ^ | ^ | PARTITION Table | Support | 　 |   |
-| ^ | ^ | Mixed JOIN of single table type | Support | 　 |   |
-| ^ | ^ | Mixed JOIN of multi-table type | Support | 　 |   |
-| ^ | Subquery | JOIN | Support | 　 |   |
-| ^ | ^ | IFNULL/NULLIF | Support | 　 |   |
-| ^ | ^ | UNION/UNION ALL | Support |   |   |
-| ^ | ^ | IS NULL/IS NOT NULL | Support |   |   |
-| ^ | ^ | PARTITION Table | Support | 　 |   |
-| ^ | ^ | Select from where Expression | Support |   |   |
-| ^ | ^ | Select select Expression | Support |   |   |
-| ^ | ^ | SELECT FROM SELECT Expression | Support | NDB service is used and NDB limit requirements are met in compute nodes. |   |
-| ^ | UNION/UNION ALL | Simple single-table Query | Support | 　 |   |
-| ^ | ^ | JOIN | Support |   |   |
-| ^ | ^ | Subquery | Support | The same Support Syntax as Subquery |   |
-| ^ | ^ | Having Aggregate Function | Support |   |   |
-| ^ | ^ | PARTITION Table | Support | 　 |   |
-| ^ | DISTINCTROW | 　 | Support | 　 |   |
-| ^ | DISTINCT | 　 | Support |   |   |
-| ^ | SELECT INTO | 　 | Not support | 　 |   |
-| ^ | STRAIGHT_JOIN | 　 | Support | 　 |   |
-| ^ | SQL_NO_CACHE | 　 | Support | 　 |   |
-| ^ | PARTITION | 　 | Support | 　 |   |
-| ^ | WHERE | dnid | Support | 1. After set show_dnid=1, do not support where condition with dnid; |   |
-| ^ | ^ | ^ | ^ | 2. dnid and Other conditions use or association, and only take dnid Condition; |   |
-| ^ | ^ | ^ | ^ | 3. Not support SELECT Clause with dnid Expression, for example: select dnid=4 from dml_a_jwy; |   |
-| ^ | ^ | Function | Support | Please refer to Function Description |   |
-| ^ | GROUP BY ASC | DESC WITH ROLLUP | 　 | Support |   |
-| ^ | HAVING | 　 | Support | 　 |   |
-| ^ | ORDER BY ASC | DESC | 　 | Support | 　 |
-| ^ | LIMIT n,m | 　 | Support | 　 |   |
-| ^ | PROCEDURE | 　 | Not support | 　 |   |
-| ^ | INTO OUTFILE | 　 | Support | 　1. It is required that the database user of the compute node who executes the statement has the FILE privilege. |   |
-| ^ | ^ | ^ | ^ | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |   |
-| ^ | ^ | ^ | ^ | 3. If the cluster is switched during the export, the data output can still be normal. |   |
-| ^ | INTO DUMPFILE | 　 | Not support | 　 |   |
-| ^ | INTO Variable | 　 | Not support | 　 |   |
-| ^ | FOR UPDATE | 　 | Support | Not support collocation with NOWAIT or SKIP LOCKED |   |
-| ^ | LOCK IN SHARE MODE | 　 | Support | The same as FOR SHARE function of MySQL8.0, in order to guarantee downward compatibility, it's still reserved and supported |   |
-| ^ | FOR SHARE |   | Support | Support use on data source of MySQL8.0 and above, Not support collocation with NOWAIT or SKIP LOCKED |   |
-| ^ | Function | Including Aggregate Function | Support | Support complex operation beyond bracket of single-table Aggregate Function |   |
-| ^ | DUAL | 　 | Support | 　 |   |
-| ^ | FORCE INDEX | 　 | Support | 　 |   |
-| ^ | USING INDEX | 　 | Support | 　 |   |
-| ^ | IGNORE INDEX | 　 | Support | 　 |   |
+| MySQL statement type | Clause type        | Function                                                | Support status | Description                                                                                                                                                                                                                                                 |  |
+|----------------------|--------------------|---------------------------------------------------------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--|
+| SELECT               | JOIN               | LEFT JOIN                                               | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | INNER JOIN                                              | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | RIGHT JOIN                                              | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | CROSS JOIN                                              | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | Ordinary JOIN (Multi-table Query without JOIN key word) | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | PARTITION Table                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | Mixed JOIN of single table type                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | Mixed JOIN of multi-table type                          | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | Subquery           | JOIN                                                    | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | IFNULL/NULLIF                                           | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | UNION/UNION ALL                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | IS NULL/IS NOT NULL                                     | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | PARTITION Table                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | Select from where Expression                            | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | Select select Expression                                | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | SELECT FROM SELECT Expression                           | Support        | NDB service is used and NDB limit requirements are met in compute nodes.                                                                                                                                                                                    |  |
+| ^                    | UNION/UNION ALL    | Simple single-table Query                               | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | JOIN                                                    | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | Subquery                                                | Support        | The same Support Syntax as Subquery                                                                                                                                                                                                                         |  |
+| ^                    | ^                  | Having Aggregate Function                               | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ^                  | PARTITION Table                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | DISTINCTROW        |                                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | DISTINCT           |                                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | SELECT INTO        |                                                         | Not support    |                                                                                                                                                                                                                                                             |  |
+| ^                    | STRAIGHT_JOIN      |                                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | SQL_NO_CACHE       |                                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | PARTITION          |                                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | WHERE              | dnid                                                    | Support        | 1. After set show_dnid=1, do not support where condition with dnid;                                                                                                                                                                                         |  |
+| ^                    | ^                  | ^                                                       | ^              | 2. dnid and Other conditions use or association, and only take dnid Condition;                                                                                                                                                                              |  |
+| ^                    | ^                  | ^                                                       | ^              | 3. Not support SELECT Clause with dnid Expression, for example: select dnid=4 from dml_a_jwy;                                                                                                                                                               |  |
+| ^                    | ^                  | Function                                                | Support        | Please refer to Function Description                                                                                                                                                                                                                        |  |
+| ^                    | GROUP BY ASC       | DESC WITH ROLLUP                                        |                | Support                                                                                                                                                                                                                                                     |  |
+| ^                    | HAVING             |                                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | ORDER BY ASC       | DESC                                                    |                | Support                                                                                                                                                                                                                                                     |  |
+| ^                    | LIMIT n,m          |                                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | PROCEDURE          |                                                         | Not support    |                                                                                                                                                                                                                                                             |  |
+| ^                    | INTO OUTFILE       |                                                         | Support        | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                             |  |
+| ^                    | ^                  | ^                                                       | ^              | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |  |
+| ^                    | ^                  | ^                                                       | ^              | 3. If the cluster is switched during the export, the data output can still be normal.                                                                                                                                                                       |  |
+| ^                    | INTO DUMPFILE      |                                                         | Not support    |                                                                                                                                                                                                                                                             |  |
+| ^                    | INTO Variable      |                                                         | Not support    |                                                                                                                                                                                                                                                             |  |
+| ^                    | FOR UPDATE         |                                                         | Support        | Not support collocation with NOWAIT or SKIP LOCKED                                                                                                                                                                                                          |  |
+| ^                    | LOCK IN SHARE MODE |                                                         | Support        | The same as FOR SHARE function of MySQL8.0, in order to guarantee downward compatibility, it's still reserved and supported                                                                                                                                 |  |
+| ^                    | FOR SHARE          |                                                         | Support        | Support use on data source of MySQL8.0 and above, Not support collocation with NOWAIT or SKIP LOCKED                                                                                                                                                        |  |
+| ^                    | Function           | Including Aggregate Function                            | Support        | Support complex operation beyond bracket of single-table Aggregate Function                                                                                                                                                                                 |  |
+| ^                    | DUAL               |                                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | FORCE INDEX        |                                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | USING INDEX        |                                                         | Support        |                                                                                                                                                                                                                                                             |  |
+| ^                    | IGNORE INDEX       |                                                         | Support        |                                                                                                                                                                                                                                                             |  |
 
 ##### Cross-node SELECT statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |
+| MySQL statement type | Clause type                                       | Function                            | Support status  | Description                                                                                                                                                                                                                                                 |
 |----------------------|---------------------------------------------------|-------------------------------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| SELECT | LIMIT n,m | 　 | Support | 　 |
-| ^ | ORDER BY | 　 | Support | 　 |
-| ^ | `ORDER BY LIMIT n,m` | 　 | Support | 　 |
-| ^ | `GROUP BY ASC | DESC WITH ROLLUP` | 　 | Support | 　 |
-| ^ | `GROUP BY ORDER BY LIMIT m,n` | 　 | Support | 　 |
-| ^ | `GROUP BY/ORDER BY` case sensitive of Field value | 　 | Support | 　 |
-| ^ | Aggregate Function | Aggregate Function in SELECT Clause | Support | 　 |
-| ^ | ^ | Aggregate Function in HAVING Clause | Support | 　 |
-| ^ | ^ | COUNT(DISTINCT) | Support | 　 |
-| ^ | DISTINCT | 　 | Support | 　 |
-| ^ | INTO | 　 | Not support | 　 |
-| ^ | WHERE | Function | Support | 　 |
-| ^ | PARTITION | 　 | Support | 　 |
-| ^ | HAVING | 　 | Support | 　 |
-| ^ | PROCEDURE | 　 | Not support | 　 |
-| ^ | INTO OUTFILE | 　 | Support | 　　1. It is required that the database user of the compute node who executes the statement has the FILE privilege. |
-| ^ | ^ | ^ | ^ | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |
-| ^ | ^ | ^ | ^ | 3. If the cluster is switched during the export, the data output can still be normal. |
-| ^ | INTO DUMPFILE | 　 | Not support | 　 |
-| ^ | INTO Variable | 　 | Not support | 　 |
-| ^ | FOR UPDATE | 　 | Support | 　 |
-| ^ | LOCK IN SHARE MODE | 　 | Support | 　 |
-| ^ | FORCE INDEX | 　 | Support | 　 |
-| ^ | USING INDEX | 　 | Support | 　 |
-| ^ | IGNORE INDEX | 　 | Support | 　 |
-| ^ | STRAIGHT_JOIN | 　 | Support | 　 |
-| ^ | JOIN | 　 | Limited support | Please refer to [Cross-node JOIN](#cross-node-join); For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes. |
-| ^ | Subquery | JOIN | Support | 　 |
-| ^ | ^ | IFNULL/NULLIF | Support |   |
-| ^ | ^ | UNION/UNION ALL | Support |   |
-| ^ | ^ | IS NULL /IS NOT NULL | Support |   |
-| ^ | ^ | PARTITION Table | Support |   |
-| ^ | ^ | AVG/SUM/MIN/MAX Function | Support |   |
-| ^ | ^ | Horizontal derived table | Not support | New function of MySQL8.0 |
-| ^ | UNION/UNION ALL | join | Support |   |
+| SELECT               | LIMIT n,m                                         |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | ORDER BY                                          |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | `ORDER BY LIMIT n,m`                              |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | `GROUP BY ASC | DESC WITH ROLLUP`                 |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | `GROUP BY ORDER BY LIMIT m,n`                     |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | `GROUP BY/ORDER BY` case sensitive of Field value |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | Aggregate Function                                | Aggregate Function in SELECT Clause | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | ^                                                 | Aggregate Function in HAVING Clause | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | ^                                                 | COUNT(DISTINCT)                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | DISTINCT                                          |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | INTO                                              |                                     | Not support     |                                                                                                                                                                                                                                                             |
+| ^                    | WHERE                                             | Function                            | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | PARTITION                                         |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | HAVING                                            |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | PROCEDURE                                         |                                     | Not support     |                                                                                                                                                                                                                                                             |
+| ^                    | INTO OUTFILE                                      |                                     | Support         | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                             |
+| ^                    | ^                                                 | ^                                   | ^               | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: /usr/local/hotdb/hotdb-server/HotDB-TEMP. |
+| ^                    | ^                                                 | ^                                   | ^               | 3. If the cluster is switched during the export, the data output can still be normal.                                                                                                                                                                       |
+| ^                    | INTO DUMPFILE                                     |                                     | Not support     |                                                                                                                                                                                                                                                             |
+| ^                    | INTO Variable                                     |                                     | Not support     |                                                                                                                                                                                                                                                             |
+| ^                    | FOR UPDATE                                        |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | LOCK IN SHARE MODE                                |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | FORCE INDEX                                       |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | USING INDEX                                       |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | IGNORE INDEX                                      |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | STRAIGHT_JOIN                                     |                                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | JOIN                                              |                                     | Limited support | Please refer to [Cross-node JOIN](#cross-node-join); For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes.                                                  |
+| ^                    | Subquery                                          | JOIN                                | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | ^                                                 | IFNULL/NULLIF                       | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | ^                                                 | UNION/UNION ALL                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | ^                                                 | IS NULL /IS NOT NULL                | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | ^                                                 | PARTITION Table                     | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | ^                                                 | AVG/SUM/MIN/MAX Function            | Support         |                                                                                                                                                                                                                                                             |
+| ^                    | ^                                                 | Horizontal derived table            | Not support     | New function of MySQL8.0                                                                                                                                                                                                                                    |
+| ^                    | UNION/UNION ALL                                   | join                                | Support         |                                                                                                                                                                                                                                                             |
 
 
 
@@ -4002,216 +4037,216 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 
 ##### Single-node UPDATE statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |
+| MySQL statement type | Clause type            | Function | Support status | Description                                                                                                                                                                                                                                                                                                      |
 |----------------------|------------------------|----------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| UPDATE | LOW_PRIORITY | 　 | Support | 　 |
-| ^ | IGNORE | 　 | Support | 　 |
-| ^ | ORDER BY | 　 | Support | 　 |
-| ^ | LIMIT n | 　 | Support | 　 |
-| ^ | SET |   | Support | 1. It is allowed to update the sharding key, but it is required that the change of the value of the sharding key will not affect the data routing, that is, the modified value of the sharding key and the value before the modification are routed to the same node, otherwise the execution is not successful. |
-| ^ | ^ | ^ | ^ | 2. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3. |
-| ^ | ^ | ^ | ^ | 3. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1; |
-| ^ | WHERE | dnid | Support | When dnid serves as or Condition in DML where Condition, only dnid Condition is judged, while other limit conditions will be ignored |
-| ^ | ^ | Function | Support | 　 |
-| ^ | Function | 　 | Support | 　 |
-| ^ | Multi-table associated | 　 | Support | 　 |
+| UPDATE               | LOW_PRIORITY           |          | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | IGNORE                 |          | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | ORDER BY               |          | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | LIMIT n                |          | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | SET                    |          | Support        | 1. It is allowed to update the sharding key, but it is required that the change of the value of the sharding key will not affect the data routing, that is, the modified value of the sharding key and the value before the modification are routed to the same node, otherwise the execution is not successful. |
+| ^                    | ^                      | ^        | ^              | 2. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3.                                                          |
+| ^                    | ^                      | ^        | ^              | 3. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1;                                                                                                                                                                       |
+| ^                    | WHERE                  | dnid     | Support        | When dnid serves as or Condition in DML where Condition, only dnid Condition is judged, while other limit conditions will be ignored                                                                                                                                                                             |
+| ^                    | ^                      | Function | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | Function               |          | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | Multi-table associated |          | Support        |                                                                                                                                                                                                                                                                                                                  |
 
 ##### Cross-node UPDATE statement
 
-| MySQL statement type | Clause type | Function | Support status | Description |
-|----------------------|------------------------------------------|------------------------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| UPDATE | `ORDER BY DESC|ASC` | 　 | Support | 　 |
-| ^  | `LIMIT n` | 　 | Support | 　 |
-| ^  | `ORDER BY DESC|ASC LIMIT n,m` | 　 | Support | Parent/Child Table is not supported |
-| ^  | `ORDER BY` case sensitive of Field value | 　 | Support | 　 |
-| ^  | WHERE | 　 | Support | 　 |
-| ^  | SET | 　 | Support | 　1. It is allowed to update the sharding key, but it is required that the change of the value of the sharding key will not affect the data routing, that is, the modified value of the sharding key and the value before the modification are routed to the same node, otherwise the execution is not successful. |
-| ^  | ^ |   |   | 2. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3. |
-| ^  | ^ |   |   | 3. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1; |
-| ^  | ^ | Function in SET Clause | Support |   |
-| ^  | Function in WHERE | 　 | Support | 　 |
-| ^  | PARTITION | 　 | Support | 　 |
-| ^  | JOIN | 　 | Support | 　 |
+| MySQL statement type | Clause type                              | Function               | Support status | Description                                                                                                                                                                                                                                                                                                      |
+|----------------------|------------------------------------------|------------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| UPDATE               | `ORDER BY DESC|ASC`                      |                        | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `LIMIT n`                                |                        | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `ORDER BY DESC|ASC LIMIT n,m`            |                        | Support        | Parent/Child Table is not supported                                                                                                                                                                                                                                                                              |
+| ^                    | `ORDER BY` case sensitive of Field value |                        | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | WHERE                                    |                        | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | SET                                      |                        | Support        | 1. It is allowed to update the sharding key, but it is required that the change of the value of the sharding key will not affect the data routing, that is, the modified value of the sharding key and the value before the modification are routed to the same node, otherwise the execution is not successful. |
+| ^                    | ^                                        |                        |                | 2. The parent-child table is not allowed to use expression statement to update the associated fields of the parent-child table, even if the change of the value of the sharding key will not affect the data routing, such as SET id=id or SET id=id+3.                                                          |
+| ^                    | ^                                        |                        |                | 3. It is not supported to update a sharding key multiple times by one statement, for example: UPDATE table1 SET id =31, id=41 WHERE id =1;                                                                                                                                                                       |
+| ^                    | ^                                        | Function in SET Clause | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | Function in WHERE                        |                        | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | PARTITION                                |                        | Support        |                                                                                                                                                                                                                                                                                                                  |
+| ^                    | JOIN                                     |                        | Support        |                                                                                                                                                                                                                                                                                                                  |
 
 #### Cross-node JOIN
 
-| Primary function | Secondary function | Tertiary function | Support status | Description |
+| Primary function | Secondary function                     | Tertiary function                      | Support status  | Description                                                                                                                                                                                                                                                                      |
 |------------------|----------------------------------------|----------------------------------------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| INNER/ | UNION ALL | 　 | Support | 　 |
-| LEFT JON |   |   |   |   |
-| ^ | UNION | 　 | Support | 　 |
-| ^ | HAVING | Unconditional Field | Not support | SELECT Clause must contain HAVING Filter Field, so does MySQL |
-| ^ | ^ | COUNT(*) | Support |   |
-| ^ | ^ | AVG() | Support |   |
-| ^ | ^ | MAX() | Support |   |
-| ^ | ^ | MIN() | Support |   |
-| ^ | ^ | SUM() | Support |   |
-| ^ | ^ | 别名 | Support | 　 |
-| ^ | ^ | Alias |   |   |
-| ^ | ORDER BY | Single Field | Support | 　 |
-| ^ | ^ | Multiple Field in the same order | Support | `order by column_name1 desc, column_name2 desc` |
-| ^ | ^ | Multiple Fields in different orders | Support | `order by column_name1 desc, column_name2 asc` |
-| ^ | ^ | Field Alias | Support | The Alias can't be the same with the Field Name in the Table |
-| ^ | ^ | Field value Case | Support | 　 |
-| ^ | ^ | ENUM type | Support |   |
-| ^ | ^ | Function | Support |   |
-| ^ | OR |   | Limited support | Condition in which Cross-node JOIN supports can transfer to in Condition; |
-| ^ | ^ | ^ | ^ | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes. |
-| ^ | WHERE | OR condition of different fields | Limited support | a=x and b=x or c=x not supported, only support the condition that OR Expression is sub-node of AND Expression, and the condition that there is only one or Expression, for example: select xxx from a,b where (c1 OR c2) and c3 and (c4 OR c5 OR c6) and c7..AND cN.. statement: |
-| ^ | ^ | ^ | ^ | Among which, every condition (C1, C2, etc.) in OR Clause only supports `table.column [=|<|<=|>|>=|!=] value` or `IS [NOT] NULL` or specific value (0/1/TRUE/FALSE/character string, etc.); |
-| ^ | ^ | ^ | ^ | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes. |
-| ^ | ^ | or Condition of Single Field | Limited support | or Expression in left join which is not sub-node of and Expression is not supported; |
-| ^ | ^ | ^ | ^ | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes. |
-| ^ | ^ | IN | Support | 　 |
-| ^ | ^ | AND | Support | 　 |
-| ^ | ^ | IS NOT NULL | Support | 　 |
-| ^ | ^ | IS NULL | Support | 　 |
-| ^ | ^ | BETWEEN ... AND ... | Support | 　 |
-| ^ | ^ | >、>= 、< 、<= | Support | 　 |
-| ^ | ^ | NOW() and other constant Expression | Support | column1 > NOW() or column1 > DATE_ADD(NOW(), INTERVAL +3 day ) |
-| ^ | ^ | Operation Expression | Special support | column1=column2+1(Support of using NDB and meeting NDB limit) |
-| ^ | ^ | LIKE | Support | 　 |
-| ^ | GROUP BY | Single Field | Support | 　 |
-| ^ | ^ | Multiple Field | Support | 　 |
-| ^ | ^ | ORDER BY NULL | Support | 　 |
-| ^ | ^ | WITH ROLLUP | Support | 　 |
-| ^ | ^ | Field Alias | Support | The Alias can't be the same with the Field name in the Table Name |
-| ^ | ^ | Field value Case | Support | 　 |
-| ^ | FORCE INDEX |   | Support | 　 |
-| ^ | USING INDEX |   | Support | 　 |
-| ^ | IGNORE INDEX |   | Support | 　 |
-| ^ | AVG | AVG() | Support | Not support nested Function, `AVG(SUM(column_name))` |
-| ^ | ^ | AVG() | Support | 　 |
-| ^ | ^ | AVG(IFNULL()) | Support | 　 |
-| ^ | ^ | AVG(*column1-column2*) | Support | Only support operation of single-table columns, Multi-table Field is not supported; operation of Multi-table Field has been intercepted |
-| ^ | COUNT | COUNT DISTINCT | Support | 　 |
-| ^ | ^ | COUNT() | Support | 　 |
-| ^ | ^ | COUNT(*) | Support | 　 |
-| ^ | ^ | COUNT(1) | Support | 　 |
-| ^ | MIN | MIN() | Support | Nested Function is not supported |
-| ^ | MAX | MAX() | Support | Nested Function is not supported |
-| ^ | SUM | SUM() | Support | 　 |
-| ^ | ^ | SUM(CASE ... WHEN...) | Support | Only support Field judged as single table by CASE WHEN, and the CASE WHEN Field must have Table Alias |
-| ^ | ^ | SUM(IFNULL()) | Support | Procedure Control Function |
-| ^ | ^ | SUM(*column1*-*column2*) | Support | Only support operation of single-table columns, Multi-table Field is not supported; operation of Multi-table Field has been intercepted |
-| ^ | INTO OUTFILE |   | Support | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege. |
-| ^ | ^ | ^ | ^ | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: `/usr/local/hotdb/hotdb-server/HotDB-TEMP`. |
-| ^ | ^ | ^ | ^ | 3. If the cluster is switched during the export, the data output can still be normal. |
-| ^ | FOR UPDATE |   | Not support | 　 |
-| ^ | LOCK IN SHARE MODE |   | Not support | 　 |
-| ^ | Subquery |   | Support | See [SELECT statement](#select-statement) |
-| ^ | Table Alias |   | Support | Support using the Table Alias where a.column or select a.column |
-| ^ | ON Clause | Single = | Support | 　 |
-| ^ | ^ | <=> | Special support | Support of using NDB and meeting NDB limit |
-| ^ | ^ | != <> | Support | 　 |
-| ^ | ^ | >= > <= < | Support | 　 |
-| ^ | ^ | Multiple>= > <= <Condition | Support | 　 |
-| ^ | ^ | Multiple and = Condition | Support | 　 |
-| ^ | ^ | IN | Support | When LEFT JOIN, the Left Table Field using IN condition to filter is not supported in ON condition |
-| ^ | ^ | IS NOT NULL | Support | When LEFT JOIN, the Left Table Field using IS NOT NULL condition to filter is not supported in ON condition |
-| ^ | ^ | IS NULL | Support | When LEFT JOIN, the Left Table or Right Table Field using IS NULL condition to filter is not supported in ON condition |
-| ^ | ^ | BETWEEN ... AND ... | Support | When LEFT JOIN, the Left Table Field using BETWEEN ... AND... condition to filter is not supported in ON condition |
-| ^ | ^ | LIKE | Support | When LEFT JOIN, the Left Table Field using LIKE condition to filter is not supported in ON condition |
-| ^ | ^ | Or Condition | Special support | Support of using NDB and meeting NDB limit |
-| ^ | ^ | Mathematical Expression | Special support | Support of using NDB and meeting NDB limit, such as: column1=column2+1 |
-| ^ | SELECT Clause | Show Null Column | Support | SELECT '' AS A FROM ... Query result could show accurate null column |
-| ^ | ^ | STRAIGHT_JOIN | Support |   |
-| ^ | Function | UNIX_TIMESTAMP() | Support |   |
-| ^ | ^ | NOW() | Support |   |
-| ^ | ^ | DATE_FORMAT() | Support |   |
-| ^ | ^ | DATE_ADD() | Support |   |
-| ^ | ^ | DATEDIFF() | Support |   |
-| ^ | ^ | FROM_UNIXTIME() | Support |   |
-| ^ | ^ | CONVERT | Support |   |
-| ^ | ^ | SUBSTRING_INDEX() | Support |   |
-| ^ | ^ | SUBSTRING() | Support | 　 |
-| ^ | ^ | TRIM() | Support | 　 |
-| ^ | ^ | RTRIM() | Support | 　 |
-| ^ | ^ | LTRIM() | Support | 　 |
-| ^ | ^ | UCASE() | Support | 　 |
-| ^ | ^ | UPPER() | Support | 　 |
-| ^ | ^ | FLOOR() | Support | 　 |
-| ^ | ^ | \% or MOD | Support | Only support column% constant; Not support column1%column2 |
-| ^ | ^ | RAND() | Special support | Support of using NDB and meeting NDB limit |
-| ^ | ^ | TRUNCATE() | Support | 　 |
-| ^ | ^ | / or DIV | Support | Only support column div constant; Not support column1 div column2 |
-| ^ | ^ | ABS() | Support | 　 |
-| ^ | ^ | LENGTH() | Support | 　 |
-| ^ | ^ | CONCAT() | Support | Not support concat() to serve as JOIN condition (on Clause condition) in Operation Expression, or as association condition in where Clause |
-| ^ | ^ | CAST() | Support | 　 |
-| ^ | ^ | IF() | Support | 　 |
-| ^ | ^ | IFNULL | Support | 　 |
-| ^ | ^ | CASE...WHEN...END | Support | Only support the Field judged as single table by CASE WHEN; Not support condition judgment of Multi-table Field, such as: `CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias` |
-| ^ | ^ | DISTINCT | Support | 　 |
-| ^ | USING(column) |   | Support |   |
-| ^ | PARTITION |   | Support | 　 |
-| ^ | LIMIT | LIMIT n,m | Support | 　 |
-| ^ | ^ | LIMIT n | Support | 　 |
-| ^ | Multi-table (above three tables) Query | Single LEFT JOIN | Support | 　 |
-| ^ | ^ | Single INNER JION | Support | 　 |
-| ^ | ^ | Single NATURAL JOIN | Special support | Support of using NDB and meeting NDB limit |
-| ^ | ^ | Mixed LEFT/INNER JOIN/RIGHT JOIN | Support | 　 |
-| ^ | ^ | Mixed LEFT/INNER/NATURAL JOIN | Special support | Support of using NDB and meeting NDB limit |
-| ^ | ^ | table a ... join (table b,table c) ... | Support | left join, right join does not support in of on condition |
-| ^ | NATURAL JOIN |   | Special support | Support of using NDB and meeting NDB limit |
-| ^ | Table of different nodes JOIN |   | Support |   |
-| JOIN | UPDATE ... JOIN |   | Support | 　 |
-|   | DELETE ... JOIN |   | Support | 　 |
+| INNER/           | UNION ALL                              |                                        | Support         |                                                                                                                                                                                                                                                                                  |
+| LEFT JON         |                                        |                                        |                 |                                                                                                                                                                                                                                                                                  |
+| ^                | UNION                                  |                                        | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | HAVING                                 | Unconditional Field                    | Not support     | SELECT Clause must contain HAVING Filter Field, so does MySQL                                                                                                                                                                                                                    |
+| ^                | ^                                      | COUNT(*)                               | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | AVG()                                  | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | MAX()                                  | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | MIN()                                  | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | SUM()                                  | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | 别名                                   | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | Alias                                  |                 |                                                                                                                                                                                                                                                                                  |
+| ^                | ORDER BY                               | Single Field                           | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | Multiple Field in the same order       | Support         | `order by column_name1 desc, column_name2 desc`                                                                                                                                                                                                                                  |
+| ^                | ^                                      | Multiple Fields in different orders    | Support         | `order by column_name1 desc, column_name2 asc`                                                                                                                                                                                                                                   |
+| ^                | ^                                      | Field Alias                            | Support         | The Alias can't be the same with the Field Name in the Table                                                                                                                                                                                                                     |
+| ^                | ^                                      | Field value Case                       | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | ENUM type                              | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | Function                               | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | OR                                     |                                        | Limited support | Condition in which Cross-node JOIN supports can transfer to in Condition;                                                                                                                                                                                                        |
+| ^                | ^                                      | ^                                      | ^               | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes.                                                                                                                            |
+| ^                | WHERE                                  | OR condition of different fields       | Limited support | a=x and b=x or c=x not supported, only support the condition that OR Expression is sub-node of AND Expression, and the condition that there is only one or Expression, for example: select xxx from a,b where (c1 OR c2) and c3 and (c4 OR c5 OR c6) and c7..AND cN.. statement: |
+| ^                | ^                                      | ^                                      | ^               | Among which, every condition (C1, C2, etc.) in OR Clause only supports `table.column [=|<|<=|>|>=|!=] value` or `IS [NOT] NULL` or specific value (0/1/TRUE/FALSE/character string, etc.);                                                                                       |
+| ^                | ^                                      | ^                                      | ^               | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes.                                                                                                                            |
+| ^                | ^                                      | or Condition of Single Field           | Limited support | or Expression in left join which is not sub-node of and Expression is not supported;                                                                                                                                                                                             |
+| ^                | ^                                      | ^                                      | ^               | For some JOIN SQL not supported by compute nodes, they can be supported when NDB service is used and NDB limit requirements are met in compute nodes.                                                                                                                            |
+| ^                | ^                                      | IN                                     | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | AND                                    | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | IS NOT NULL                            | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | IS NULL                                | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | BETWEEN ... AND ...                    | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | >、>= 、< 、<=                         | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | NOW() and other constant Expression    | Support         | column1 > NOW() or column1 > DATE_ADD(NOW(), INTERVAL +3 day )                                                                                                                                                                                                                   |
+| ^                | ^                                      | Operation Expression                   | Special support | column1=column2+1(Support of using NDB and meeting NDB limit)                                                                                                                                                                                                                    |
+| ^                | ^                                      | LIKE                                   | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | GROUP BY                               | Single Field                           | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | Multiple Field                         | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | ORDER BY NULL                          | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | WITH ROLLUP                            | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | Field Alias                            | Support         | The Alias can't be the same with the Field name in the Table Name                                                                                                                                                                                                                |
+| ^                | ^                                      | Field value Case                       | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | FORCE INDEX                            |                                        | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | USING INDEX                            |                                        | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | IGNORE INDEX                           |                                        | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | AVG                                    | AVG()                                  | Support         | Not support nested Function, `AVG(SUM(column_name))`                                                                                                                                                                                                                             |
+| ^                | ^                                      | AVG()                                  | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | AVG(IFNULL())                          | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | AVG(*column1-column2*)                 | Support         | Only support operation of single-table columns, Multi-table Field is not supported; operation of Multi-table Field has been intercepted                                                                                                                                          |
+| ^                | COUNT                                  | COUNT DISTINCT                         | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | COUNT()                                | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | COUNT(*)                               | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | COUNT(1)                               | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | MIN                                    | MIN()                                  | Support         | Nested Function is not supported                                                                                                                                                                                                                                                 |
+| ^                | MAX                                    | MAX()                                  | Support         | Nested Function is not supported                                                                                                                                                                                                                                                 |
+| ^                | SUM                                    | SUM()                                  | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | SUM(CASE ... WHEN...)                  | Support         | Only support Field judged as single table by CASE WHEN, and the CASE WHEN Field must have Table Alias                                                                                                                                                                            |
+| ^                | ^                                      | SUM(IFNULL())                          | Support         | Procedure Control Function                                                                                                                                                                                                                                                       |
+| ^                | ^                                      | SUM(*column1*-*column2*)               | Support         | Only support operation of single-table columns, Multi-table Field is not supported; operation of Multi-table Field has been intercepted                                                                                                                                          |
+| ^                | INTO OUTFILE                           |                                        | Support         | 1. It is required that the database user of the compute node who executes the statement has the FILE privilege.                                                                                                                                                                  |
+| ^                | ^                                      | ^                                      | ^               | 2. When the compute node is in cluster mode, no matter on which server in the cluster this statement is executed, the exported file must be uploaded to the fixed path on the current active compute node server: `/usr/local/hotdb/hotdb-server/HotDB-TEMP`.                    |
+| ^                | ^                                      | ^                                      | ^               | 3. If the cluster is switched during the export, the data output can still be normal.                                                                                                                                                                                            |
+| ^                | FOR UPDATE                             |                                        | Not support     |                                                                                                                                                                                                                                                                                  |
+| ^                | LOCK IN SHARE MODE                     |                                        | Not support     |                                                                                                                                                                                                                                                                                  |
+| ^                | Subquery                               |                                        | Support         | See [SELECT statement](#select-statement)                                                                                                                                                                                                                                        |
+| ^                | Table Alias                            |                                        | Support         | Support using the Table Alias where a.column or select a.column                                                                                                                                                                                                                  |
+| ^                | ON Clause                              | Single =                               | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | <=>                                    | Special support | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
+| ^                | ^                                      | != <>                                  | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | >= > <= <                              | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | Multiple>= > <= <Condition             | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | Multiple and = Condition               | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | IN                                     | Support         | When LEFT JOIN, the Left Table Field using IN condition to filter is not supported in ON condition                                                                                                                                                                               |
+| ^                | ^                                      | IS NOT NULL                            | Support         | When LEFT JOIN, the Left Table Field using IS NOT NULL condition to filter is not supported in ON condition                                                                                                                                                                      |
+| ^                | ^                                      | IS NULL                                | Support         | When LEFT JOIN, the Left Table or Right Table Field using IS NULL condition to filter is not supported in ON condition                                                                                                                                                           |
+| ^                | ^                                      | BETWEEN ... AND ...                    | Support         | When LEFT JOIN, the Left Table Field using BETWEEN ... AND... condition to filter is not supported in ON condition                                                                                                                                                               |
+| ^                | ^                                      | LIKE                                   | Support         | When LEFT JOIN, the Left Table Field using LIKE condition to filter is not supported in ON condition                                                                                                                                                                             |
+| ^                | ^                                      | Or Condition                           | Special support | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
+| ^                | ^                                      | Mathematical Expression                | Special support | Support of using NDB and meeting NDB limit, such as: column1=column2+1                                                                                                                                                                                                           |
+| ^                | SELECT Clause                          | Show Null Column                       | Support         | SELECT '' AS A FROM ... Query result could show accurate null column                                                                                                                                                                                                             |
+| ^                | ^                                      | STRAIGHT_JOIN                          | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | Function                               | UNIX_TIMESTAMP()                       | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | NOW()                                  | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | DATE_FORMAT()                          | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | DATE_ADD()                             | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | DATEDIFF()                             | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | FROM_UNIXTIME()                        | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | CONVERT                                | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | SUBSTRING_INDEX()                      | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | SUBSTRING()                            | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | TRIM()                                 | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | RTRIM()                                | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | LTRIM()                                | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | UCASE()                                | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | UPPER()                                | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | FLOOR()                                | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | \% or MOD                              | Support         | Only support column% constant; Not support column1%column2                                                                                                                                                                                                                       |
+| ^                | ^                                      | RAND()                                 | Special support | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
+| ^                | ^                                      | TRUNCATE()                             | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | / or DIV                               | Support         | Only support column div constant; Not support column1 div column2                                                                                                                                                                                                                |
+| ^                | ^                                      | ABS()                                  | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | LENGTH()                               | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | CONCAT()                               | Support         | Not support concat() to serve as JOIN condition (on Clause condition) in Operation Expression, or as association condition in where Clause                                                                                                                                       |
+| ^                | ^                                      | CAST()                                 | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | IF()                                   | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | IFNULL                                 | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | CASE...WHEN...END                      | Support         | Only support the Field judged as single table by CASE WHEN; Not support condition judgment of Multi-table Field, such as: `CASE WHEN column_name1=xx THEN column_name2 END; CASE WHEN must use table alias`                                                                      |
+| ^                | ^                                      | DISTINCT                               | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | USING(column)                          |                                        | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | PARTITION                              |                                        | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | LIMIT                                  | LIMIT n,m                              | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | LIMIT n                                | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | Multi-table (above three tables) Query | Single LEFT JOIN                       | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | Single INNER JION                      | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | Single NATURAL JOIN                    | Special support | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
+| ^                | ^                                      | Mixed LEFT/INNER JOIN/RIGHT JOIN       | Support         |                                                                                                                                                                                                                                                                                  |
+| ^                | ^                                      | Mixed LEFT/INNER/NATURAL JOIN          | Special support | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
+| ^                | ^                                      | table a ... join (table b,table c) ... | Support         | left join, right join does not support in of on condition                                                                                                                                                                                                                        |
+| ^                | NATURAL JOIN                           |                                        | Special support | Support of using NDB and meeting NDB limit                                                                                                                                                                                                                                       |
+| ^                | Table of different nodes JOIN          |                                        | Support         |                                                                                                                                                                                                                                                                                  |
+| JOIN             | UPDATE ... JOIN                        |                                        | Support         |                                                                                                                                                                                                                                                                                  |
+|                  | DELETE ... JOIN                        |                                        | Support         |                                                                                                                                                                                                                                                                                  |
 
 ### DDL statement
 
 #### ALTER statement
 
-| MySQL statement type | Clause type | Support status | Description |
+| MySQL statement type | Clause type                                                           | Support status                                                            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 |----------------------|-----------------------------------------------------------------------|---------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ^ | `ALTER TABLE` | ADD COLUMN | Support |
-| ^ | `ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY` | Support | Support `ADD UNIQUE [index_name][index_type]index_col_name` |
-| ^ | `ADD FOREIGN KEY` for child table(s) | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: `ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails` |
-| ^ |   | `ADD SPATIAL [INDEX|KEY]` | Support |
-| ^ |   | `ADD CONSTRAINT [CONSTRAINT [symbol]] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY` | Support |
-| ^ | `ADD CONSTRAINT [CONSTRAINT [symbol]] FOREIGN KEY` for child table(s) | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails |
-| ^ | `ALGORITHM` | Support | New INSTANT of MySQL8.0, and INSTANT is used by default |
-| ^ | `ALTER COLUMN` | Support |   |
-| ^ | `LOCK` | Support |   |
-| ^ | `MODIFY/CHANGE [COLUMN]` | Support |   |
-| ^ | `DROP COLUMN` | Support |   |
-| ^ | `DROP PRIMARY KEY/KEY/INDEX/FOREIGN KEY` | Support |   |
-| ^ | `DISABLE KEYS` | Support |   |
-| ^ | `ENABLE KEYS` | Support |   |
-| ^ | `DISCARD TABLESPACE` | Not support |   |
-| ^ | `IMPORT TABLESPACE` | Not support |   |
-| ^ | `ADD/DROP/TRUNCATE PARTITION` | Support |   |
-| ^ | `GENERATED COLUMNS` | Support | New function of MySQL8.0 and 5.7 |
-| ^ | `SECONDARY INDEXES` | Support | New function of MySQL8.0 and 5.7 |
-| ^ | `CHECK` | Support | New function of MySQL8.0 |
-| ALTER | `VIEW` | Support | Supported in V2.5.6 and above |
+| ^                    | `ALTER TABLE`                                                         | ADD COLUMN                                                                | Support                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ^                    | `ADD PRIMARY KEY/UNIQUE/FOREIGN KEY/FULLTEXT/INDEX/KEY`               | Support                                                                   | Support `ADD UNIQUE [index_name][index_type]index_col_name`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ^                    | `ADD FOREIGN KEY` for child table(s)                                  | Partial Support                                                           | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: `ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails` |
+| ^                    |                                                                       | `ADD SPATIAL [INDEX|KEY]`                                                 | Support                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ^                    |                                                                       | `ADD CONSTRAINT [CONSTRAINT [symbol]] PRIMARY KEY/UNIQUE KEY/FOREIGN KEY` | Support                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ^                    | `ADD CONSTRAINT [CONSTRAINT [symbol]] FOREIGN KEY` for child table(s) | Partial Support                                                           | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails   |
+| ^                    | `ALGORITHM`                                                           | Support                                                                   | New INSTANT of MySQL8.0, and INSTANT is used by default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ^                    | `ALTER COLUMN`                                                        | Support                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `LOCK`                                                                | Support                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `MODIFY/CHANGE [COLUMN]`                                              | Support                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `DROP COLUMN`                                                         | Support                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `DROP PRIMARY KEY/KEY/INDEX/FOREIGN KEY`                              | Support                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `DISABLE KEYS`                                                        | Support                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `ENABLE KEYS`                                                         | Support                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `DISCARD TABLESPACE`                                                  | Not support                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `IMPORT TABLESPACE`                                                   | Not support                                                               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `ADD/DROP/TRUNCATE PARTITION`                                         | Support                                                                   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `GENERATED COLUMNS`                                                   | Support                                                                   | New function of MySQL8.0 and 5.7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ^                    | `SECONDARY INDEXES`                                                   | Support                                                                   | New function of MySQL8.0 and 5.7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ^                    | `CHECK`                                                               | Support                                                                   | New function of MySQL8.0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ALTER                | `VIEW`                                                                | Support                                                                   | Supported in V2.5.6 and above                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 
 #### CREATE statement
 
-| MySQL statement type | Clause type | Support status | Description |
+| MySQL statement type | Clause type                      | Support status  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 |----------------------|----------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `CREATE DATABASE` | 　 | Support | Create database is supported in V2.5.6 and above. The function instructions can be seen at the bottom of the table. |
-| `CREATE EVENT` | 　 | Forbidden | 　 |
-| `CREATE FUNCTION` | 　 | Limited | Supported in single node　 |
-| `CREATE INDEX` | `FOREIGN KEY` | Support | 　 |
-| ^ | `UNIQUE` | Support |   |
-| ^ | `FOREIGN KEY for child table(s)` | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: `ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails` |
-| ^ | `FULLTEXT` | Support | 　 |
-| ^ | `SPATIAL` | Support | 　 |
-| ^ | `ALGORITHM` | Support | 　 |
-| ^ | `LOCK` | Support | 　 |
-| ^ | `FUNCTIONAL KEYS` | Support | New function of MySQL8.0 |
-| `CREATE TABLE` | `CREATE TEMPORARY TABLE` | Forbidden | SQL Parser supports this Syntax, not supports Temporary Table function |
-| ^ | `CREATE TABLE [IF NOT EXISTS]` | Support | 　 |
-| ^ | `CREATE TABLE LIKE` | Support | 　 |
-| ^ | `CREATE TABLE AS SELECT ...` | Support | 1. The data source user is required to have CREATE TEMPORARY TABLE privilege. |
-| ^ | ^ | ^ | 2. It is required that the CREATE table and the SELECT table are associated with at least one same data node, otherwise the execution is unsuccessful: `ERROR 10215 (HY000): [LOADTEST1] no overlapping datanode.` |
-| ^ | ^ | ^ | 3. `CREATE TABLE ... IGNORE SELECT` and `CREATE TABLE ... REPLACE SELECT` are not supported. |
-| ^ | `GENERATED COLUMNS` | Support | New function of MySQL8.0 and 5.7 |
-| ^ | `SECONDARY INDEXES` | Support | New function of MySQL8.0 and 5.7 |
-| ^ | `CHECK` | Support | New function of MySQL8.0 |
-| `CREATE TRIGGER` | 　 | Support | 　At present, it only supports single-node, and need CREATE privilege granted, internal statement does not verify the privilege, DEFINER related is not supported at present, related Field show the current user when show triggers |
-| `CREATE VIEW` | 　 | Support | 　 |
+| `CREATE DATABASE`    |                                  | Support         | Create database is supported in V2.5.6 and above. The function instructions can be seen at the bottom of the table.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `CREATE EVENT`       |                                  | Forbidden       |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `CREATE FUNCTION`    |                                  | Limited         | Supported in single node                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `CREATE INDEX`       | `FOREIGN KEY`                    | Support         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `UNIQUE`                         | Support         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `FOREIGN KEY for child table(s)` | Partial Support | When the non-sharding key is used as the foreign key associated field, foreign key reference between parent and child tables cannot be guaranteed when crossing nodes. That is to say, in MySQL, if the foreign key values of the parent table and the child table are equal, the data can be inserted after they are matched. In the distributed environment, however, when the non-sharding key is used as the foreign key associated field, the foreign key values corresponding to the parent table cannot be found in the data source of the final route of the child table, for the nodes routed by the foreign key associated field of the child table are inconsistent with the routed nodes of the sharding key of the parent table, hence the insertion failed: `ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails` |
+| ^                    | `FULLTEXT`                       | Support         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `SPATIAL`                        | Support         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `ALGORITHM`                      | Support         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `LOCK`                           | Support         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `FUNCTIONAL KEYS`                | Support         | New function of MySQL8.0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `CREATE TABLE`       | `CREATE TEMPORARY TABLE`         | Forbidden       | SQL Parser supports this Syntax, not supports Temporary Table function                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ^                    | `CREATE TABLE [IF NOT EXISTS]`   | Support         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `CREATE TABLE LIKE`              | Support         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                    | `CREATE TABLE AS SELECT ...`     | Support         | 1. The data source user is required to have CREATE TEMPORARY TABLE privilege.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| ^                    | ^                                | ^               | 2. It is required that the CREATE table and the SELECT table are associated with at least one same data node, otherwise the execution is unsuccessful: `ERROR 10215 (HY000): [LOADTEST1] no overlapping datanode.`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ^                    | ^                                | ^               | 3. `CREATE TABLE ... IGNORE SELECT` and `CREATE TABLE ... REPLACE SELECT` are not supported.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ^                    | `GENERATED COLUMNS`              | Support         | New function of MySQL8.0 and 5.7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ^                    | `SECONDARY INDEXES`              | Support         | New function of MySQL8.0 and 5.7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ^                    | `CHECK`                          | Support         | New function of MySQL8.0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `CREATE TRIGGER`     |                                  | Support         | At present, it only supports single-node, and need CREATE privilege granted, internal statement does not verify the privilege, DEFINER related is not supported at present, related Field show the current user when show triggers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `CREATE VIEW`        |                                  | Support         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 
 `CREATE DATABASE` is used to create LogicDB, the usage is as follows:
 
@@ -4247,75 +4282,75 @@ create database if not exists zjj_d3 default datanode '1,4';
 
 #### DROP statement
 
-| MySQL statement type | Clause type | Support status | Description |
+| MySQL statement type | Clause type                                  | Support status | Description                                     |
 |----------------------|----------------------------------------------|----------------|-------------------------------------------------|
-| `DROP DATABASE` | 　 | Forbidden |   |
-| `DROP EVENT` | 　 | Forbidden |   |
-| `DROP FUNCTION` | 　 | Forbidden |   |
-| `DROP INDEX` | `UNIQUE` | Support |   |
-| ^ | Regular index `KEY` | Support |   |
-| ^ | `FOREIGN KEY` | Support |   |
-| ^ | `FULLTEXT` | Support |   |
-| ^ | `SPATIAL` | Support |   |
-| ^ | `ALGORITHM` | Support |   |
-| ^ | `LOCK` | Support |   |
-| `DROP TABLE` | `DROP [TEMPORARY] TABLE [IF EXISTS]` | Forbidden |   |
-| ^ | `DROP TABLE` | Support |   |
-| ^ | `DROP TABLE` multi-table | Support | Multi-table must be guaranteed in the same node |
-| ^ | `DROP TABLE table_name [RESTRICT | CASCADE]` | Support |   |
-| `DROP TRIGGER` | 　 | Support | DROP privilege shall be granted |
-| `DROP VIEW` | 　 | Support |   |
+| `DROP DATABASE`      |                                              | Forbidden      |                                                 |
+| `DROP EVENT`         |                                              | Forbidden      |                                                 |
+| `DROP FUNCTION`      |                                              | Forbidden      |                                                 |
+| `DROP INDEX`         | `UNIQUE`                                     | Support        |                                                 |
+| ^                    | Regular index `KEY`                          | Support        |                                                 |
+| ^                    | `FOREIGN KEY`                                | Support        |                                                 |
+| ^                    | `FULLTEXT`                                   | Support        |                                                 |
+| ^                    | `SPATIAL`                                    | Support        |                                                 |
+| ^                    | `ALGORITHM`                                  | Support        |                                                 |
+| ^                    | `LOCK`                                       | Support        |                                                 |
+| `DROP TABLE`         | `DROP [TEMPORARY] TABLE [IF EXISTS]`         | Forbidden      |                                                 |
+| ^                    | `DROP TABLE`                                 | Support        |                                                 |
+| ^                    | `DROP TABLE` multi-table                     | Support        | Multi-table must be guaranteed in the same node |
+| ^                    | `DROP TABLE table_name [RESTRICT | CASCADE]` | Support        |                                                 |
+| `DROP TRIGGER`       |                                              | Support        | DROP privilege shall be granted                 |
+| `DROP VIEW`          |                                              | Support        |                                                 |
 
 #### TRUNCATE AND RENAME statement
 
-| MySQL statement type | Clause type | Support status | Description |
+| MySQL statement type | Clause type | Support status | Description                                                                                                                                                                                                                                                                          |
 |----------------------|-------------|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `RENAME TABLE` | 　 | Support | 1. RENAME multiple tables is supported, but these tables are required to be on the same node. Otherwise, the execution will fail and an error will be reported: ERROR 10042 (HY000): unsupported to rename multi table with different datanodes. |
-| ^ | ^ | ^ | 2. The target table of RENAME does not need to be added with the table configuration in advance. If you add the table configuration to the new table, you need to ensure that the configuration of the new table is consistent with the old table, otherwise RENAME will not succeed |
-| ^ | ^ | ^ | Note: database users of the compute node need to have ALTER and DROP privileges of the old table, and CREATE and INSERT privileges on the new table.　 |
-| `TRUNCATE TABLE` | 　 | Support | 　 |
+| `RENAME TABLE`       |             | Support        | 1. RENAME multiple tables is supported, but these tables are required to be on the same node. Otherwise, the execution will fail and an error will be reported: ERROR 10042 (HY000): unsupported to rename multi table with different datanodes.                                     |
+| ^                    | ^           | ^              | 2. The target table of RENAME does not need to be added with the table configuration in advance. If you add the table configuration to the new table, you need to ensure that the configuration of the new table is consistent with the old table, otherwise RENAME will not succeed |
+| ^                    | ^           | ^              | Note: database users of the compute node need to have ALTER and DROP privileges of the old table, and CREATE and INSERT privileges on the new table.                                                                                                                                 |
+| `TRUNCATE TABLE`     |             | Support        |                                                                                                                                                                                                                                                                                      |
 
 ### Transaction management and locking statement
 
-| Statement type | Transaction statement | Statement parameter | Status | Description |
+| Statement type                        | Transaction statement      | Statement parameter               | Status      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 |---------------------------------------|----------------------------|-----------------------------------|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Transaction management | `START TRANSACTION` | No parameter | Support |   |
-| ^  | ^ | `WITH CONSISTENT SNAPSHOT` | Support |   |
-| ^  | ^ | `READ WRITE` | Support |   |
-| ^  | ^ | `READ ONLY` | Support |   |
-| ^  | `BEGIN` |   | Support |   |
-| ^  | `COMMIT` |   | Support |   |
-| ^  | `COMMIT` | `[AND [NO] CHAIN] [[NO] RELEASE]` | Support |   |
-| ^  | `ROLLBACK` |   | Support |   |
-| ^  | `ROLLBACK` | `[AND [NO] CHAIN] [[NO] RELEASE]` | Support |   |
-| ^  | `SET autocommit` | `0|1` | Support |   |
-| `SAVEPOINT` | `SAVEPOINT` |   | Support |   |
-| ^  | `ROLLBACK ... TO ...` |   | Support |   |
-| ^  | `RELEASE SAVEPOINT` |   | Support |   |
-| `LOCK` | `LOCK TABLES` | `READ [LOCAL]` | Forbidden |   |
-| ^  |  ^ | `[LOW_PRIORITY] WRITE` | Forbidden |   |
-| ^  | `UNLOCK TABLES` |   | Forbidden |   |
-| ^  | `LOCK INSTANCE FOR BACKUP` |   | Forbidden |   |
-| ^  | `UNLOCK INSTANCE` |   | Forbidden |   |
-| Transaction isolation level statement | `SET SESSION TRANSACTION` | `REPEATABLE READ` | Support | Fully supported in XA mode. In general mode, partial commit may be read. |
-| ^  | ^  | `READ COMMITTED` | Support | Read&write inconsistency may exist in general mode; In XA mode, it is not supported in v.2.5.5 below, and it is supported in v.2.5.5 and above. In v.2.5.5 and above, however, strong read-write consistency will not be guaranteed under multiple cross-node queries. That is, for SQL such as select and insert select, if one SQL is converted to multiple SQL statements, the SQL execution result may be incorrect at this isolation level. Refer to the description of [data strong consistency](#data-strong-consistency-xa-transaction) (XA transaction) |
-| ^  |  ^ | `READ UNCOMMITTED` | Not support |   |
-| ^  |  ^ | `SERIALIZABLE` | Support | Fully supported in XA mode. In general mode, partial commit may be read. |
-| ^  | `SET GLOBAL TRANSACTION` | `REPEATABLE READ` | Not support | Not support SET GLOBAL mode, only support SET SESSION |
-| ^  |  ^ | `READ COMMITTED` | Not support | Not support SET GLOBAL mode, only support SET SESSION |
-| ^  |  ^ | `READ UNCOMMITTED` | Not support |   |
-| ^  |  ^ | `SERIALIZABLE` | Not support |   |
-| ^  | `SET SESSION TRANSACTION` | `READ ONLY` | Support |   |
-| ^  |  ^ | `READ WRITE` | Support |   |
-| ^  | `SET GLOBAL TRANSACTION` | `READ ONLY` | Not support |   |
-| ^  |  ^ | `READ WRITE` | Not support |   |
-| Distributed transaction | `XA START|BEGIN ...` | `[JOIN|RESUME]` | Forbidden |   |
-| ^  | `XA END` | `[SUSPEND [FOR MIGRATE]]` | Forbidden |   |
-| ^  | `XA PREPARE` |   | Forbidden |   |
-| ^  | `XA COMMIT` | `[ONE PHASE]` | Forbidden |   |
-| ^  | `XA ROLLBACK` |   | Forbidden |   |
-| ^  | `XA RECOVER` |   | Forbidden |   |
-| ^  | `XA RECOVER` | `[CONVERT XID]` | Forbidden | New parameter of 5.7 |
+| Transaction management                | `START TRANSACTION`        | No parameter                      | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | ^                          | `WITH CONSISTENT SNAPSHOT`        | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | ^                          | `READ WRITE`                      | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | ^                          | `READ ONLY`                       | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `BEGIN`                    |                                   | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `COMMIT`                   |                                   | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `COMMIT`                   | `[AND [NO] CHAIN] [[NO] RELEASE]` | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `ROLLBACK`                 |                                   | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `ROLLBACK`                 | `[AND [NO] CHAIN] [[NO] RELEASE]` | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `SET autocommit`           | `0|1`                             | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `SAVEPOINT`                           | `SAVEPOINT`                |                                   | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `ROLLBACK ... TO ...`      |                                   | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `RELEASE SAVEPOINT`        |                                   | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `LOCK`                                | `LOCK TABLES`              | `READ [LOCAL]`                    | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | ^                          | `[LOW_PRIORITY] WRITE`            | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `UNLOCK TABLES`            |                                   | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `LOCK INSTANCE FOR BACKUP` |                                   | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `UNLOCK INSTANCE`          |                                   | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Transaction isolation level statement | `SET SESSION TRANSACTION`  | `REPEATABLE READ`                 | Support     | Fully supported in XA mode. In general mode, partial commit may be read.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ^                                     | ^                          | `READ COMMITTED`                  | Support     | Read&write inconsistency may exist in general mode; In XA mode, it is not supported in v.2.5.5 below, and it is supported in v.2.5.5 and above. In v.2.5.5 and above, however, strong read-write consistency will not be guaranteed under multiple cross-node queries. That is, for SQL such as select and insert select, if one SQL is converted to multiple SQL statements, the SQL execution result may be incorrect at this isolation level. Refer to the description of [data strong consistency](#data-strong-consistency-xa-transaction) (XA transaction) |
+| ^                                     | ^                          | `READ UNCOMMITTED`                | Not support |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | ^                          | `SERIALIZABLE`                    | Support     | Fully supported in XA mode. In general mode, partial commit may be read.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ^                                     | `SET GLOBAL TRANSACTION`   | `REPEATABLE READ`                 | Not support | Not support SET GLOBAL mode, only support SET SESSION                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ^                                     | ^                          | `READ COMMITTED`                  | Not support | Not support SET GLOBAL mode, only support SET SESSION                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ^                                     | ^                          | `READ UNCOMMITTED`                | Not support |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | ^                          | `SERIALIZABLE`                    | Not support |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `SET SESSION TRANSACTION`  | `READ ONLY`                       | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | ^                          | `READ WRITE`                      | Support     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `SET GLOBAL TRANSACTION`   | `READ ONLY`                       | Not support |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | ^                          | `READ WRITE`                      | Not support |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Distributed transaction               | `XA START|BEGIN ...`       | `[JOIN|RESUME]`                   | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `XA END`                   | `[SUSPEND [FOR MIGRATE]]`         | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `XA PREPARE`               |                                   | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `XA COMMIT`                | `[ONE PHASE]`                     | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `XA ROLLBACK`              |                                   | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `XA RECOVER`               |                                   | Forbidden   |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ^                                     | `XA RECOVER`               | `[CONVERT XID]`                   | Forbidden   | New parameter of 5.7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 ### Other MySQL statements
 
@@ -4323,51 +4358,51 @@ create database if not exists zjj_d3 default datanode '1,4';
 
 HotDB Server only supports Storage Procedure, Custom Function statement in vertical table. (i.e. the LogicDB only associate one data node).
 
-| Statement type | SQL statement | Support status | Description |
+| Statement type                             | SQL statement                                                                     | Support status | Description                   |
 |--------------------------------------------|-----------------------------------------------------------------------------------|----------------|-------------------------------|
-| Storage Procedure | `BEGIN ... END ...` | Limited | Can be used in vertical table |
-|  ^ | `DECLARE` | Limited |   |
-|  ^ | `CASE` | Limited |   |
-|  ^ | `IF` | Limited |   |
-|  ^ | `ITRATE` | Limited |   |
-|  ^ | `LEAVE` | Limited |   |
-|  ^ | `LOOP` | Limited |   |
-|  ^ | `REPEAT` | Limited |   |
-|  ^ | `RETURN` | Limited |   |
-|  ^ | `WHILE` | Limited |   |
-|  ^ | `CURSOR` | Limited |   |
-|  ^ | `DECLARE ... CONDITION...` | Limited |   |
-|  ^ | `DECLARE ... HANDLER ...` | Limited |   |
-|  ^ | `GET DIAGNOSTICS` | Limited |   |
-|  ^ | `RESIGNAL` | Limited |   |
-|  ^ | `SIGNAL` | Limited |   |
-| Plugin and User-Defined Function statement | `CREATE [AGGREGATE] FUNCTION function_name RETURNS {STRING|INTEGER|REAL|DECIMAL}` | Limited |   |
-|  ^ | `SONAME shared_library_name` |   |   |
-|  ^ | `DROP FUNCTION` | Limited |   |
-|  ^ | `INSTALL PLUGIN` | Forbidden |   |
-|  ^ | `UNINSTALL PLUGIN` | Forbidden |   |
+| Storage Procedure                          | `BEGIN ... END ...`                                                               | Limited        | Can be used in vertical table |
+| ^                                          | `DECLARE`                                                                         | Limited        |                               |
+| ^                                          | `CASE`                                                                            | Limited        |                               |
+| ^                                          | `IF`                                                                              | Limited        |                               |
+| ^                                          | `ITRATE`                                                                          | Limited        |                               |
+| ^                                          | `LEAVE`                                                                           | Limited        |                               |
+| ^                                          | `LOOP`                                                                            | Limited        |                               |
+| ^                                          | `REPEAT`                                                                          | Limited        |                               |
+| ^                                          | `RETURN`                                                                          | Limited        |                               |
+| ^                                          | `WHILE`                                                                           | Limited        |                               |
+| ^                                          | `CURSOR`                                                                          | Limited        |                               |
+| ^                                          | `DECLARE ... CONDITION...`                                                        | Limited        |                               |
+| ^                                          | `DECLARE ... HANDLER ...`                                                         | Limited        |                               |
+| ^                                          | `GET DIAGNOSTICS`                                                                 | Limited        |                               |
+| ^                                          | `RESIGNAL`                                                                        | Limited        |                               |
+| ^                                          | `SIGNAL`                                                                          | Limited        |                               |
+| Plugin and User-Defined Function statement | `CREATE [AGGREGATE] FUNCTION function_name RETURNS {STRING|INTEGER|REAL|DECIMAL}` | Limited        |                               |
+| ^                                          | `SONAME shared_library_name`                                                      |                |                               |
+| ^                                          | `DROP FUNCTION`                                                                   | Limited        |                               |
+| ^                                          | `INSTALL PLUGIN`                                                                  | Forbidden      |                               |
+| ^                                          | `UNINSTALL PLUGIN`                                                                | Forbidden      |                               |
 
 #### Prepare SQL Statement
 
-| Statement type | SQL statement | Support status | Description |
+| Statement type        | SQL statement                 | Support status | Description |
 |-----------------------|-------------------------------|----------------|-------------|
-| Prepare SQL Statement | `PREPARE ... FROM ...` | Support |   |
-| ^ | `EXECUTE ...` | Support |   |
-| ^ | `{DEALLOCATE | DROP} PREPARE` | Support |   |
+| Prepare SQL Statement | `PREPARE ... FROM ...`        | Support        |             |
+| ^                     | `EXECUTE ...`                 | Support        |             |
+| ^                     | `{DEALLOCATE | DROP} PREPARE` | Support        |             |
 
 #### User management statement
 
 HotDB Server realizes a set of its own username and privilege management system, which could be merely operated on the Distributed Transactional Database Management Platform page. SQL statements of MySQL database user management are all Forbidden.
 
-| Statement type | SQL statement | Support status | Description |
-|---------------------------|---------------|----------------|-------------|
-| User management statement | `ALTER USER` | Forbidden |   |
-| ^ | `CREATE USER` | Support |   |
-| ^ | `DROP USER` | Support |   |
-| ^ | `GRANT` | Support |   |
-| ^ | `RENAME USER` | Forbidden |   |
-| ^ | `REVOKE` | Support |   |
-| ^ | `SET PASSWORD` | Forbidden |   |
+| Statement type            | SQL statement  | Support status | Description |
+|---------------------------|----------------|----------------|-------------|
+| User management statement | `ALTER USER`   | Forbidden      |             |
+| ^                         | `CREATE USER`  | Support        |             |
+| ^                         | `DROP USER`    | Support        |             |
+| ^                         | `GRANT`        | Support        |             |
+| ^                         | `RENAME USER`  | Forbidden      |             |
+| ^                         | `REVOKE`       | Support        |             |
+| ^                         | `SET PASSWORD` | Forbidden      |             |
 
 Support the use of SQL statements to CREATE / DROP user and to GRANT / REVOKE user when the compute node version is higher than 2.5.6.
 
@@ -4553,85 +4588,85 @@ Notes on REVOKE:
 
 #### Table maintenance statement
 
-| Statement type | SQL statement | Support status | Description |
-|-----------------------------|----------------|----------------|-------------|
-| Table maintenance statement | `ANALYZE TABLE` | Forbidden |   |
-| ^ | `CHECK TABLE` | Forbidden |   |
-| ^ | `CHECKSUM TABLE` | Forbidden |   |
-| ^ | `OPTIMIZE TABLE` | Forbidden |   |
-| ^ | `REPAIR TABLE` | Forbidden |   |
+| Statement type              | SQL statement    | Support status | Description |
+|-----------------------------|------------------|----------------|-------------|
+| Table maintenance statement | `ANALYZE TABLE`  | Forbidden      |             |
+| ^                           | `CHECK TABLE`    | Forbidden      |             |
+| ^                           | `CHECKSUM TABLE` | Forbidden      |             |
+| ^                           | `OPTIMIZE TABLE` | Forbidden      |             |
+| ^                           | `REPAIR TABLE`   | Forbidden      |             |
 
 #### SET statement
 
-| Statement type | SQL statement | Support status | Description |   |
-|----------------|---------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
-| SET statement | `SET GLOBAL` | Not support | 　 |   |
-| ^  | `SET SESSION` | Partial support | Such as: `SET SESSION TRANSACTION/SET TX_READONLY/SET NAMES`, etc. |   |
-| ^  | `SET @@global.` | Not support | 　 |   |
-| ^  | `SET @@session.` | Not support | 　 |   |
-| ^  | `SET @@` | Not support | 　 |   |
-| ^  | `SET ROLE` | Forbidden | Compute node does not support new role function of MySQL8.0 |   |
-| ^  | User Custom Variable | Support | Only support recall under single-node |   |
-| ^  | `SET CHARACTER SET` | Support | Only support: `CHARACTER_SET_CLIENT`, `CHARACTER_SET_CONNECTION`, `CHARACTER_SET_RESULTS` |   |
-| ^  | `SET NAMES` | Support | 　 |   |
-| ^  | `SET TRANSACTION ISOLATION LEVEL` | Support | Under ordinary mode, the level supported is `REPEATABLE READ`, `READ COMMITTED`, `SERIALIZABLE`<br>XA mode only supports `REPEATABLE READ`, `SERIALIZABLE` |   |
+| Statement type | SQL statement                     | Support status  | Description                                                                                                                                                |  |
+|----------------|-----------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|--|
+| SET statement  | `SET GLOBAL`                      | Not support     |                                                                                                                                                            |  |
+| ^              | `SET SESSION`                     | Partial support | Such as: `SET SESSION TRANSACTION/SET TX_READONLY/SET NAMES`, etc.                                                                                         |  |
+| ^              | `SET @@global.`                   | Not support     |                                                                                                                                                            |  |
+| ^              | `SET @@session.`                  | Not support     |                                                                                                                                                            |  |
+| ^              | `SET @@`                          | Not support     |                                                                                                                                                            |  |
+| ^              | `SET ROLE`                        | Forbidden       | Compute node does not support new role function of MySQL8.0                                                                                                |  |
+| ^              | User Custom Variable              | Support         | Only support recall under single-node                                                                                                                      |  |
+| ^              | `SET CHARACTER SET`               | Support         | Only support: `CHARACTER_SET_CLIENT`, `CHARACTER_SET_CONNECTION`, `CHARACTER_SET_RESULTS`                                                                  |  |
+| ^              | `SET NAMES`                       | Support         |                                                                                                                                                            |  |
+| ^              | `SET TRANSACTION ISOLATION LEVEL` | Support         | Under ordinary mode, the level supported is `REPEATABLE READ`, `READ COMMITTED`, `SERIALIZABLE`<br>XA mode only supports `REPEATABLE READ`, `SERIALIZABLE` |  |
 
 #### SHOW statement
 
-| Statement type | SQL statement | Support status | Description |
+| Statement type | SQL statement                                                                 | Support status | Description                                                                                                  |
 |----------------|-------------------------------------------------------------------------------|----------------|--------------------------------------------------------------------------------------------------------------|
-| SHOW statement | `SHOW AUTHORS` | Support | 　 |
-| ^ | `SHOW BINARY LOGS` | Support | 　 |
-| ^ | `SHOW BINLOG EVENTS` | Support | 　 |
-| ^ | `SHOW CHARACTER SET` | Support | 　 |
-| ^ | `SHOW COLLATION` | Support | 　 |
-| ^ | `SHOW FIELDS FROM` | Support | 　 |
-| ^ | `SHOW COLUMNS FROM|IN tbl_name` | Support | 　 |
-| ^ | `SHOW FULL COLUMNS FROM|IN tbl_name` | Support | 　 |
-| ^ | `SHOW CONTRIBUTORS` | Support | 　 |
-| ^ | `SHOW CREATE DATABASE` | Support | 　 |
-| ^ | `SHOW CREATE EVENT` | Support | 　 |
-| ^ | `SHOW CREATE FUNCTION` | Support | 　 |
-| ^ | `SHOW CREATE PROCEDURE` | Support | 　 |
-| ^ | `SHOW CREATE TABLE` | Support | 　 |
-| ^ | `SHOW CREATE TRIGGER` | Support | 　 |
-| ^ | `SHOW CREATE VIEW` | Support | 　 |
-| ^ | `SHOW DATABASES` | Support | 　 |
-| ^ | `SHOW ENGINES` | Support | 　 |
-| ^ | `SHOW ERRORS` | Support |   |
-| ^ | `SHOW EVENTS` | Support | 　 |
-| ^ | `SHOW FUNCTION STATUS` | Support | 　 |
-| ^ | `SHOW GRANTS` | Support | Show privilege control condition of the compute node |
-| ^ | `SHOW INDEX FROM db_name.table_name` | Support | 　 |
-| ^ | `SHOW INDEX FROM table_name WHERE...` | Support | 　 |
-| ^ | `SHOW MASTER STATUS` | Support | 　 |
-| ^ | `SHOW OPEN TABLES` | Support | Show uniform null set |
-| ^ | `SHOW PLUGINS` | Support | 　 |
-| ^ | `SHOW PRIVILEGES` | Support | 　 |
-| ^ | `SHOW PROCEDURE STATUS` | Support | 　 |
-| ^ | `SHOW PROCESSLIST` | Support | Show connection condition of the compute node |
-| ^ | `SHOW PROFILES` | Support | 　 |
-| ^ | `SHOW RELAYLOG EVENTS [IN 'log_name'] [FROM pos] [LIMIT [offset,] row_count]` | Support | 　 |
-| ^ | `SHOW SLAVE HOSTS` | Support | 　 |
-| ^ | `SHOW SLAVE STATUS` | Support | 　 |
-| ^ | `SHOW GLOBAL STATUS` | Support | 　 |
-| ^ | `SHOW SESSION STATUS` | Support | 　 |
-| ^ | `SHOW STATUS` | Support |   |
-| ^ | `SHOW TABLE STATUS` | Support | 　 |
-| ^ | `SHOW FULL TABLES` | Support | 　 |
-| ^ | `SHOW TABLES` | Support | 　 |
-| ^ | `SHOW TRIGGERS` | Support | 　 |
-| ^ | `SHOW GLOBAL|SESSION VARIABLES` | Support | 　 |
-| ^ | `SHOW WARNINGS` | Support |   |
-| ^ | `Show HOTDB tables` | Support | Support `[{FROM | IN} db_name] [LIKE 'pattern' | WHERE expr]`, Show sharding information of the compute node |
+| SHOW statement | `SHOW AUTHORS`                                                                | Support        |                                                                                                              |
+| ^              | `SHOW BINARY LOGS`                                                            | Support        |                                                                                                              |
+| ^              | `SHOW BINLOG EVENTS`                                                          | Support        |                                                                                                              |
+| ^              | `SHOW CHARACTER SET`                                                          | Support        |                                                                                                              |
+| ^              | `SHOW COLLATION`                                                              | Support        |                                                                                                              |
+| ^              | `SHOW FIELDS FROM`                                                            | Support        |                                                                                                              |
+| ^              | `SHOW COLUMNS FROM|IN tbl_name`                                               | Support        |                                                                                                              |
+| ^              | `SHOW FULL COLUMNS FROM|IN tbl_name`                                          | Support        |                                                                                                              |
+| ^              | `SHOW CONTRIBUTORS`                                                           | Support        |                                                                                                              |
+| ^              | `SHOW CREATE DATABASE`                                                        | Support        |                                                                                                              |
+| ^              | `SHOW CREATE EVENT`                                                           | Support        |                                                                                                              |
+| ^              | `SHOW CREATE FUNCTION`                                                        | Support        |                                                                                                              |
+| ^              | `SHOW CREATE PROCEDURE`                                                       | Support        |                                                                                                              |
+| ^              | `SHOW CREATE TABLE`                                                           | Support        |                                                                                                              |
+| ^              | `SHOW CREATE TRIGGER`                                                         | Support        |                                                                                                              |
+| ^              | `SHOW CREATE VIEW`                                                            | Support        |                                                                                                              |
+| ^              | `SHOW DATABASES`                                                              | Support        |                                                                                                              |
+| ^              | `SHOW ENGINES`                                                                | Support        |                                                                                                              |
+| ^              | `SHOW ERRORS`                                                                 | Support        |                                                                                                              |
+| ^              | `SHOW EVENTS`                                                                 | Support        |                                                                                                              |
+| ^              | `SHOW FUNCTION STATUS`                                                        | Support        |                                                                                                              |
+| ^              | `SHOW GRANTS`                                                                 | Support        | Show privilege control condition of the compute node                                                         |
+| ^              | `SHOW INDEX FROM db_name.table_name`                                          | Support        |                                                                                                              |
+| ^              | `SHOW INDEX FROM table_name WHERE...`                                         | Support        |                                                                                                              |
+| ^              | `SHOW MASTER STATUS`                                                          | Support        |                                                                                                              |
+| ^              | `SHOW OPEN TABLES`                                                            | Support        | Show uniform null set                                                                                        |
+| ^              | `SHOW PLUGINS`                                                                | Support        |                                                                                                              |
+| ^              | `SHOW PRIVILEGES`                                                             | Support        |                                                                                                              |
+| ^              | `SHOW PROCEDURE STATUS`                                                       | Support        |                                                                                                              |
+| ^              | `SHOW PROCESSLIST`                                                            | Support        | Show connection condition of the compute node                                                                |
+| ^              | `SHOW PROFILES`                                                               | Support        |                                                                                                              |
+| ^              | `SHOW RELAYLOG EVENTS [IN 'log_name'] [FROM pos] [LIMIT [offset,] row_count]` | Support        |                                                                                                              |
+| ^              | `SHOW SLAVE HOSTS`                                                            | Support        |                                                                                                              |
+| ^              | `SHOW SLAVE STATUS`                                                           | Support        |                                                                                                              |
+| ^              | `SHOW GLOBAL STATUS`                                                          | Support        |                                                                                                              |
+| ^              | `SHOW SESSION STATUS`                                                         | Support        |                                                                                                              |
+| ^              | `SHOW STATUS`                                                                 | Support        |                                                                                                              |
+| ^              | `SHOW TABLE STATUS`                                                           | Support        |                                                                                                              |
+| ^              | `SHOW FULL TABLES`                                                            | Support        |                                                                                                              |
+| ^              | `SHOW TABLES`                                                                 | Support        |                                                                                                              |
+| ^              | `SHOW TRIGGERS`                                                               | Support        |                                                                                                              |
+| ^              | `SHOW GLOBAL|SESSION VARIABLES`                                               | Support        |                                                                                                              |
+| ^              | `SHOW WARNINGS`                                                               | Support        |                                                                                                              |
+| ^              | `Show HOTDB tables`                                                           | Support        | Support `[{FROM | IN} db_name] [LIKE 'pattern' | WHERE expr]`, Show sharding information of the compute node |
 
 #### HotDB PROFILE
 
-| Statement type | SQL statement | Support status | Description |
-|----------------|---------------|----------------|-------------|
-| SET statement | `set hotdb_profiling={0|1|on|off}` | Support | Support `set [session] hotdb_profiling` |
-| SHOW statement | `show hotdb_profiles` | Support |  |
-| ^ | `show hotdb_profile for query N [relative time|real time]` | Support | N represents the SQL id executed |
+| Statement type | SQL statement                                              | Support status | Description                             |
+|----------------|------------------------------------------------------------|----------------|-----------------------------------------|
+| SET statement  | `set hotdb_profiling={0|1|on|off}`                         | Support        | Support `set [session] hotdb_profiling` |
+| SHOW statement | `show hotdb_profiles`                                      | Support        |                                         |
+| ^              | `show hotdb_profile for query N [relative time|real time]` | Support        | N represents the SQL id executed        |
 
 **Function Description:** this function is limited to Session level only
 
@@ -4706,20 +4741,20 @@ Note: Description of the status column:
 
 #### Other MySQL management statement
 
-| Statement type | SQL statement | Support status | Description |
+| Statement type              | SQL statement               | Support status | Description                         |
 |-----------------------------|-----------------------------|----------------|-------------------------------------|
-| Other management statements | `BINLOG 'str'` | Forbidden |   |
-| ^ | `CACHE INDEX` | Forbidden |   |
-| ^ | `KILL [CONNECTION | QUERY]` | Support |   |
-| ^ | `LOAD INDEX INTO CACHE` | Forbidden |   |
-| ^ | `RESET MASTER` | Forbidden |   |
-| ^ | `RESET QUERY CACHE` | Forbidden |   |
-| ^ | `RESET SLAVE` | Forbidden |   |
-| MySQL Utility Statements | `DESCRIBE | DESC` | Support |   |
-| ^ | `EXPLAIN` | Support | Please refer to [EXPLAIN](#explain) |
-| ^ | `EXPLAIN EXTENDED` | Not support |   |
-| ^ | `HELP` | Not support |   |
-| ^ | `USE` | Support |   |
+| Other management statements | `BINLOG 'str'`              | Forbidden      |                                     |
+| ^                           | `CACHE INDEX`               | Forbidden      |                                     |
+| ^                           | `KILL [CONNECTION | QUERY]` | Support        |                                     |
+| ^                           | `LOAD INDEX INTO CACHE`     | Forbidden      |                                     |
+| ^                           | `RESET MASTER`              | Forbidden      |                                     |
+| ^                           | `RESET QUERY CACHE`         | Forbidden      |                                     |
+| ^                           | `RESET SLAVE`               | Forbidden      |                                     |
+| MySQL Utility Statements    | `DESCRIBE | DESC`           | Support        |                                     |
+| ^                           | `EXPLAIN`                   | Support        | Please refer to [EXPLAIN](#explain) |
+| ^                           | `EXPLAIN EXTENDED`          | Not support    |                                     |
+| ^                           | `HELP`                      | Not support    |                                     |
+| ^                           | `USE`                       | Support        |                                     |
 
 The use method of KILL statement is the same with that of MySQL KILL statement. KILL will simultaneously disable the front-end connection of the compute node, and data source connection of MySQL database.
 
@@ -4731,92 +4766,92 @@ Show description of the parameters without special treatment: when show_dnid=1, 
 
 The following parameter are of special processing, the for its specific show results, please see the Show description:
 
-| MySQL VARIABLES | Show description |
+| MySQL VARIABLES            | Show description                                                                                                                                        |
 |----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `BIND_ADDRESS` | **Always show** |
-| `TX_ISOLATION` | REPEATABLE-READ is default. If it is session, show session's value. This parameter was removed in MySQL8.0, and was replaced with transaction_isolation |
-| `TRANSACTION_ISOLATION` | New parameter of MySQL8.0, used for replacing tx_isalation |
-| `AUTO_INCREMENT_OFFSET` | Show 1 at present |
-| `CHARACTER_SET_CONNECTION` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
-| `CHARACTER_SET_RESULTS` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
-| `MAX_CONNECTIONS` | Show according to actual configuration of the compute node |
-| `MAX_USER_CONNECTIONS` | Show according to actual configuration of the compute node |
-| `MAX_JOIN_SIZE` | Only support set session max_join_size=xxx, show according to set value of the compute node |
-| `CHARACTER_SET_SERVER` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
-| `VERSION_COMMENT` | HotDB Server by Hotpu Tech |
-| `INTERACTIVE_TIMEOUT` | 172800 |
-| `SERVER_UUID` | Always show 00000000-0000-0000-0000-0000000000    |
-| `TX_READ_ONLY` | OFF is default. If it is session, show session status. This parameter was removed in MySQL8.0, and was replaced with transaction_ready_only |
-| `TRANSACTION_READ_ONLY` | New parameter of MySQL8.0, used for replacing tx_read_only |
-| `PORT` | Show according to the configured service port value |
-| `AUTOCOMMIT` | ON is default. If it is session, show session status. |
-| `HOSTNAME` | MySQL5.7, show as Hostname of the compute node server |
-| `COLLATION_DATABASE` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
-| `CHARACTER_SET_DATABASE` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
-| `PROTOCOL_VERSION` | Show according to practical Communication Protocol Version used by the compute node |
-| `READ_ONLY` | Set according to the practical mode used by the compute node |
-| `VERSION` | For MySQL Version No. - HotDB Server Version No., show according to the practical one used by the compute node |
-| `COLLATION_SERVER` | At present, only support: latin1_swedish_ci latin1_bin gbk_chinese_ci gbk_bin utf8_general_ci utf8_bin utf8mb4_general_ci utf8mb4_bin |
-| `SOCKET` | Show Null Character String |
-| `SERVER_ID` | Show 0 |
-| `WAIT_TIMEOUT` | 172800 |
-| `SSL_CIPHER` | Return Null Character String |
-| `COLLATION_CONNECTION` | At present, only support: latin1_swedish_ci latin1_bin gbk_chinese_ci gbk_bin utf8_general_ci utf8_bin  utf8mb4_general_ci utf8mb4_bin |
-| `FOREIGN_KEY_CHECKS` | Show ON |
-| `CHARACTER_SET_CLIENT` | Only support utf8/gbk/latin1/utf8mb4 Character Set |
-| `TIME_ZONE` | Show SYSTEM |
-| `MAX_ALLOWED_PACKET` | Compute node control, Default: 64M |
-| `ADMIN_ADDRESS` | Always show Null Character String, new of MySQL8.0 |
-| `INNODB_BUFFER_POOL_SIZE` | Sum of all nodes under the LogicDB, Master/Slave node is counted as master node |
+| `BIND_ADDRESS`             | **Always show**                                                                                                                                         |
+| `TX_ISOLATION`             | REPEATABLE-READ is default. If it is session, show session's value. This parameter was removed in MySQL8.0, and was replaced with transaction_isolation |
+| `TRANSACTION_ISOLATION`    | New parameter of MySQL8.0, used for replacing tx_isalation                                                                                              |
+| `AUTO_INCREMENT_OFFSET`    | Show 1 at present                                                                                                                                       |
+| `CHARACTER_SET_CONNECTION` | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                                      |
+| `CHARACTER_SET_RESULTS`    | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                                      |
+| `MAX_CONNECTIONS`          | Show according to actual configuration of the compute node                                                                                              |
+| `MAX_USER_CONNECTIONS`     | Show according to actual configuration of the compute node                                                                                              |
+| `MAX_JOIN_SIZE`            | Only support set session max_join_size=xxx, show according to set value of the compute node                                                             |
+| `CHARACTER_SET_SERVER`     | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                                      |
+| `VERSION_COMMENT`          | HotDB Server by Hotpu Tech                                                                                                                              |
+| `INTERACTIVE_TIMEOUT`      | 172800                                                                                                                                                  |
+| `SERVER_UUID`              | Always show 00000000-0000-0000-0000-0000000000                                                                                                          |
+| `TX_READ_ONLY`             | OFF is default. If it is session, show session status. This parameter was removed in MySQL8.0, and was replaced with transaction_ready_only             |
+| `TRANSACTION_READ_ONLY`    | New parameter of MySQL8.0, used for replacing tx_read_only                                                                                              |
+| `PORT`                     | Show according to the configured service port value                                                                                                     |
+| `AUTOCOMMIT`               | ON is default. If it is session, show session status.                                                                                                   |
+| `HOSTNAME`                 | MySQL5.7, show as Hostname of the compute node server                                                                                                   |
+| `COLLATION_DATABASE`       | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                                      |
+| `CHARACTER_SET_DATABASE`   | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                                      |
+| `PROTOCOL_VERSION`         | Show according to practical Communication Protocol Version used by the compute node                                                                     |
+| `READ_ONLY`                | Set according to the practical mode used by the compute node                                                                                            |
+| `VERSION`                  | For MySQL Version No. - HotDB Server Version No., show according to the practical one used by the compute node                                          |
+| `COLLATION_SERVER`         | At present, only support: latin1_swedish_ci latin1_bin gbk_chinese_ci gbk_bin utf8_general_ci utf8_bin utf8mb4_general_ci utf8mb4_bin                   |
+| `SOCKET`                   | Show Null Character String                                                                                                                              |
+| `SERVER_ID`                | Show 0                                                                                                                                                  |
+| `WAIT_TIMEOUT`             | 172800                                                                                                                                                  |
+| `SSL_CIPHER`               | Return Null Character String                                                                                                                            |
+| `COLLATION_CONNECTION`     | At present, only support: latin1_swedish_ci latin1_bin gbk_chinese_ci gbk_bin utf8_general_ci utf8_bin  utf8mb4_general_ci utf8mb4_bin                  |
+| `FOREIGN_KEY_CHECKS`       | Show ON                                                                                                                                                 |
+| `CHARACTER_SET_CLIENT`     | Only support utf8/gbk/latin1/utf8mb4 Character Set                                                                                                      |
+| `TIME_ZONE`                | Show SYSTEM                                                                                                                                             |
+| `MAX_ALLOWED_PACKET`       | Compute node control, Default: 64M                                                                                                                      |
+| `ADMIN_ADDRESS`            | Always show Null Character String, new of MySQL8.0                                                                                                      |
+| `INNODB_BUFFER_POOL_SIZE`  | Sum of all nodes under the LogicDB, Master/Slave node is counted as master node                                                                         |
 
-| Status Name | Show description |
-|-------------|------------------|
-| `Compression` | All OFF (compute node does not support Compression Protocol for the time being) |
-| `Innodb_buffer_pool_dump_status` | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB |
-| `Innodb_buffer_pool_load_status` | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB |
-| `Innodb_have_atomic_builtins` | If there is OFF among all nodes under LogicDB, then it is OFF; if there are all ON, then it is ON |
-| `Innodb_page_size` | Take the value of the first node of LogicDB |
-| `Innodb_row_lock_time_avg` | Take simple average of all nodes under the LogicDB |
-| `Innodb_row_lock_time_max` | Take Max Value of all nodes under the LogicDB |
-| `Last_query_cost` | Always 0.000000 |
-| `Last_query_partial_plans` | Always 0 |
-| `Max_used_connections` | Take Max Value of all nodes under the LogicDB |
-| `Slave_heartbeat_period` | Take Max Value of all nodes under the LogicDB |
-| `Slave_last_heartbeat` | For date type value, take Min Value of all nodes under the LogicDB; if they are all Null Character String, then it is Null Character String |
-| `Slave_running` | If there is OFF among all nodes under LogicDB, then it is OFF, if they are all ON, then it is ON |
-| `Ssl_cipher` | Always return Null Character String |
-| `Ssl_cipher_list` | Always return Null Character String |
-| `Ssl_ctx_verify_depth` | Take the value of the first node of LogicDB |
-| `Ssl_ctx_verify_mode` | Take the value of the first node of LogicDB |
-| `Ssl_default_timeout` | Take the value of the first node of LogicDB |
-| `Ssl_server_not_after` | Always return Null Character String |
-| `Ssl_server_not_before` | Always return Null Character String |
-| `Ssl_session_cache_mode` | Take the value of the first node of LogicDB |
-| `Ssl_verify_depth` | Take the value of the first node of LogicDB |
-| `Ssl_verify_mode` | Take the value of the first node of LogicDB |
-| `Ssl_version` | Take the value of the first node of LogicDB |
-| `Tc_log_page_size` | Take the value of the first node of LogicDB |
-| `Uptime` | Take Max Value of all nodes under the LogicDB |
-| `Uptime_since_flush_status` | Take Max Value of all nodes under the LogicDB |
-| `Caching_sha2_password_rsa_public_key` | Always show Null Character String, new of MySQL8.0 |
-| `Current_tls_ca` | Always show Null Character String, new of MySQL8.0 |
-| `Current_tls_capath` | Always show Null Character String, new of MySQL8.0 |
-| `Current_tls_cert` | Always show Null Character String, new of MySQL8.0 |
-| `Current_tls_cipher` | Always show Null Character String, new of MySQL8.0 |
-| `Current_tls_ciphersuites` | Always show Null Character String, new of MySQL8.0 |
-| `Current_tls_crl` | Always show Null Character String, new of MySQL8.0 |
-| `Current_tls_crlpath` | Always show Null Character String, new of MySQL8.0 |
-| `Current_tls_key` | Always show Null Character String, new of MySQL8.0 |
-| `Current_tls_version` | Always show Null Character String, new of MySQL8.0 |
-| `group_replication_primary_member` | Always show Null Character String, new of MySQL8.0 |
-| `mecab_charset` | The first of LogicDB, New of MySQL8.0 |
-| `Performance_schema_session_connect_attrs_longest_seen` | Max of LogicDB, New of MySQL8.0 |
-| `Rpl_semi_sync_master_clients` | Always show 0, New of MySQL8.0 |
-| `Rpl_semi_sync_master_net_avg_wait_time` | Average of LogicDB, New of MySQL8.0 |
-| `Rpl_semi_sync_master_status` | Always show ON, New of MySQL8.0 |
-| `Rpl_semi_sync_master_tx_avg_wait_time` | Average of LogicDB, New of MySQL8.0 |
-| `Rpl_semi_sync_slave_status` | Always show ON, New of MySQL8.0 |
-| `Rsa_public_key` | Always show Null Character String, New of MySQL8.0 |
+| Status Name                                             | Show description                                                                                                                            |
+|---------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| `Compression`                                           | All OFF (compute node does not support Compression Protocol for the time being)                                                             |
+| `Innodb_buffer_pool_dump_status`                        | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB                                |
+| `Innodb_buffer_pool_load_status`                        | The first status which is not ended with Not Started, otherwise, take the value of the first node of LogicDB                                |
+| `Innodb_have_atomic_builtins`                           | If there is OFF among all nodes under LogicDB, then it is OFF; if there are all ON, then it is ON                                           |
+| `Innodb_page_size`                                      | Take the value of the first node of LogicDB                                                                                                 |
+| `Innodb_row_lock_time_avg`                              | Take simple average of all nodes under the LogicDB                                                                                          |
+| `Innodb_row_lock_time_max`                              | Take Max Value of all nodes under the LogicDB                                                                                               |
+| `Last_query_cost`                                       | Always 0.000000                                                                                                                             |
+| `Last_query_partial_plans`                              | Always 0                                                                                                                                    |
+| `Max_used_connections`                                  | Take Max Value of all nodes under the LogicDB                                                                                               |
+| `Slave_heartbeat_period`                                | Take Max Value of all nodes under the LogicDB                                                                                               |
+| `Slave_last_heartbeat`                                  | For date type value, take Min Value of all nodes under the LogicDB; if they are all Null Character String, then it is Null Character String |
+| `Slave_running`                                         | If there is OFF among all nodes under LogicDB, then it is OFF, if they are all ON, then it is ON                                            |
+| `Ssl_cipher`                                            | Always return Null Character String                                                                                                         |
+| `Ssl_cipher_list`                                       | Always return Null Character String                                                                                                         |
+| `Ssl_ctx_verify_depth`                                  | Take the value of the first node of LogicDB                                                                                                 |
+| `Ssl_ctx_verify_mode`                                   | Take the value of the first node of LogicDB                                                                                                 |
+| `Ssl_default_timeout`                                   | Take the value of the first node of LogicDB                                                                                                 |
+| `Ssl_server_not_after`                                  | Always return Null Character String                                                                                                         |
+| `Ssl_server_not_before`                                 | Always return Null Character String                                                                                                         |
+| `Ssl_session_cache_mode`                                | Take the value of the first node of LogicDB                                                                                                 |
+| `Ssl_verify_depth`                                      | Take the value of the first node of LogicDB                                                                                                 |
+| `Ssl_verify_mode`                                       | Take the value of the first node of LogicDB                                                                                                 |
+| `Ssl_version`                                           | Take the value of the first node of LogicDB                                                                                                 |
+| `Tc_log_page_size`                                      | Take the value of the first node of LogicDB                                                                                                 |
+| `Uptime`                                                | Take Max Value of all nodes under the LogicDB                                                                                               |
+| `Uptime_since_flush_status`                             | Take Max Value of all nodes under the LogicDB                                                                                               |
+| `Caching_sha2_password_rsa_public_key`                  | Always show Null Character String, new of MySQL8.0                                                                                          |
+| `Current_tls_ca`                                        | Always show Null Character String, new of MySQL8.0                                                                                          |
+| `Current_tls_capath`                                    | Always show Null Character String, new of MySQL8.0                                                                                          |
+| `Current_tls_cert`                                      | Always show Null Character String, new of MySQL8.0                                                                                          |
+| `Current_tls_cipher`                                    | Always show Null Character String, new of MySQL8.0                                                                                          |
+| `Current_tls_ciphersuites`                              | Always show Null Character String, new of MySQL8.0                                                                                          |
+| `Current_tls_crl`                                       | Always show Null Character String, new of MySQL8.0                                                                                          |
+| `Current_tls_crlpath`                                   | Always show Null Character String, new of MySQL8.0                                                                                          |
+| `Current_tls_key`                                       | Always show Null Character String, new of MySQL8.0                                                                                          |
+| `Current_tls_version`                                   | Always show Null Character String, new of MySQL8.0                                                                                          |
+| `group_replication_primary_member`                      | Always show Null Character String, new of MySQL8.0                                                                                          |
+| `mecab_charset`                                         | The first of LogicDB, New of MySQL8.0                                                                                                       |
+| `Performance_schema_session_connect_attrs_longest_seen` | Max of LogicDB, New of MySQL8.0                                                                                                             |
+| `Rpl_semi_sync_master_clients`                          | Always show 0, New of MySQL8.0                                                                                                              |
+| `Rpl_semi_sync_master_net_avg_wait_time`                | Average of LogicDB, New of MySQL8.0                                                                                                         |
+| `Rpl_semi_sync_master_status`                           | Always show ON, New of MySQL8.0                                                                                                             |
+| `Rpl_semi_sync_master_tx_avg_wait_time`                 | Average of LogicDB, New of MySQL8.0                                                                                                         |
+| `Rpl_semi_sync_slave_status`                            | Always show ON, New of MySQL8.0                                                                                                             |
+| `Rsa_public_key`                                        | Always show Null Character String, New of MySQL8.0                                                                                          |
 
 ### Special functions of compute node syntax
 
@@ -5144,18 +5179,18 @@ mysql> show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 
 **The command contains parameters and its description:**
 
-| Parameter | Description | Type |
-|-----------|-------------|------|
+| Parameter | Description                                             | Type   |
+|-----------|---------------------------------------------------------|--------|
 | `pattern` | Optional, Fuzzy Query Expression, Match rule_name Field | STRING |
-| `expr` | Optional, Fuzzy Query Expression, Match Specified Field | STRING |
+| `expr`    | Optional, Fuzzy Query Expression, Match Specified Field | STRING |
 
 **The result contains Field and its Description:**
 
-| Column name | Description | Value type/Range |
-|-------------|-------------|------------------|
-| `datanode_id` | Node ID | INTEGER |
-| `datanode_name` | Node name | STRING |
-| `datanode_type` | 0: Master/Slave; 1: MGR | INTEGER |
+| Column name     | Description             | Value type/Range |
+|-----------------|-------------------------|------------------|
+| `datanode_id`   | Node ID                 | INTEGER          |
+| `datanode_name` | Node name               | STRING           |
+| `datanode_type` | 0: Master/Slave; 1: MGR | INTEGER          |
 
 For example:
 
@@ -5198,19 +5233,19 @@ mysql> show hotdb functions;
 
 **The command contains parameters and its description:**
 
-| Parameter | Description | Type |
-|-----------|-------------|------|
+| Parameter | Description                                                 | Type   |
+|-----------|-------------------------------------------------------------|--------|
 | `pattern` | Optional, Fuzzy Query Expression, Match function_name Field | STRING |
-| `expr` | Optional, Fuzzy Query Expression, Match function_name Field | STRING |
+| `expr`    | Optional, Fuzzy Query Expression, Match function_name Field | STRING |
 
 **The result contains Field and its Description:**
 
-| Column name | Description | Value type/Range |
-|-------------|-------------|------------------|
-| `function_id` | Sharding Function ID | INTEGER |
-| `function_name` | Sharding Function name | STRING |
-| `function_type` | Sharding Type | STRING |
-| `auto_generated` | Auto-generated configuration of HotDB or not (1: Auto Generated, Other: Non-auto Generated) | INTEGER |
+| Column name      | Description                                                                                 | Value type/Range |
+|------------------|---------------------------------------------------------------------------------------------|------------------|
+| `function_id`    | Sharding Function ID                                                                        | INTEGER          |
+| `function_name`  | Sharding Function name                                                                      | STRING           |
+| `function_type`  | Sharding Type                                                                               | STRING           |
+| `auto_generated` | Auto-generated configuration of HotDB or not (1: Auto Generated, Other: Non-auto Generated) | INTEGER          |
 
 For example:
 
@@ -5265,17 +5300,17 @@ mysql> show hotdb function infos [WHERE expr];
 
 **The command contains parameters and its description:**
 
-| Parameter | Description | Type |
-|-----------|-------------|------|
-| `expr` | Optional, Fuzzy Query Expression, Match Specified Field | STRING |
+| Parameter | Description                                             | Type   |
+|-----------|---------------------------------------------------------|--------|
+| `expr`    | Optional, Fuzzy Query Expression, Match Specified Field | STRING |
 
 **The result contains Field and its Description:**
 
-| Column name | Description | Value type/Range |
-|-------------|-------------|------------------|
-| `function_id` | Sharding Function ID | INTEGER |
-| `column_value` | Sharding Key value | STRING |
-| `datanode_id` | Data node id | INTEGER |
+| Column name    | Description          | Value type/Range |
+|----------------|----------------------|------------------|
+| `function_id`  | Sharding Function ID | INTEGER          |
+| `column_value` | Sharding Key value   | STRING           |
+| `datanode_id`  | Data node id         | INTEGER          |
 
 For example:
 
@@ -5324,20 +5359,20 @@ mysql> show hotdb rules [LIKE 'pattern' | WHERE expr];
 
 **The command contains parameters and its description:**
 
-| Parameter | Description | Type |
-|-----------|-------------|------|
+| Parameter | Description                                             | Type   |
+|-----------|---------------------------------------------------------|--------|
 | `pattern` | Optional, Fuzzy Query Expression, Match rule_name Field | STRING |
-| `expr` | Optional, Fuzzy Query Expression, Match rule_name Field | STRING |
+| `expr`    | Optional, Fuzzy Query Expression, Match rule_name Field | STRING |
 
 **The result contains Field and its Description:**
 
-| Column name | Description | Value type/Range |
-|-------------|-------------|------------------|
-| `rule_id` | Sharding Function ID | INTEGER |
-| `rule_name` | Sharding Function name | STRING |
-| `rule_column` | Sharding Key Name | STRING |
-| `function_id` | Sharding Type ID | INTEGER |
-| `auto_generated` | Auto-generated configuration of HotDB or not (1: Auto Generated, Other: Non-auto Generated) | INTEGER |
+| Column name      | Description                                                                                 | Value type/Range |
+|------------------|---------------------------------------------------------------------------------------------|------------------|
+| `rule_id`        | Sharding Function ID                                                                        | INTEGER          |
+| `rule_name`      | Sharding Function name                                                                      | STRING           |
+| `rule_column`    | Sharding Key Name                                                                           | STRING           |
+| `function_id`    | Sharding Type ID                                                                            | INTEGER          |
+| `auto_generated` | Auto-generated configuration of HotDB or not (1: Auto Generated, Other: Non-auto Generated) | INTEGER          |
 
 For example:
 
@@ -5429,81 +5464,81 @@ INFORMATION_SCHEMA database provides information and data of the existing comput
 
 This chapter lists the tables and its special processing contents in INFORMATION_SCHEMA supported by the compute node, as follows:
 
-| Table name | Special processing |
-|------------|--------------------|
-| `character_sets` | Only return the Character Set and Collation Set data supported by the compute node |
-| `collations` | Only return the Character Set and Collation Set data supported by the compute node |
-| `collation_character_set_applicability` | Only return the Character Set and Collation Set data supported by the compute node |
-| `columns` | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
-| `column_privileges` | Return Null Set |
-| `engines` | Only return innodb |
-| `events` | Return Null Set |
-| `files` | Return Null Set |
-| `global_status` | The same as result of show global status |
-| `global_variables` | The same as result of show global variables |
-| `innodb_buffer_page` | Return Null Set |
-| `innodb_buffer_page_lru` | Return Null Set |
-| `innodb_buffer_pool_stats` | Return Null Set |
-| `innodb_cmp` | Return Null Set |
-| `innodb_cmpmem` | Return Null Set |
-| `innodb_cmpmem_reset` | Return Null Set |
-| `innodb_cmp_per_index` | Return Null Set |
-| `innodb_cmp_per_index_reset` | Return Null Set |
-| `innodb_cmp_reset` | Return Null Set |
-| `innodb_ft_being_deleted` | Return Null Set |
-| `innodb_ft_config` | Return Null Set |
-| `innodb_ft_default_stopword` | Return Null Set |
-| `innodb_ft_deleted` | Return Null Set |
-| `innodb_ft_index_cache` | Return Null Set |
-| `innodb_ft_index_table` | Return Null Set |
-| `innodb_locks` | Return Null Set |
-| `innodb_lock_waits` | Return Null Set |
-| `innodb_metrics` | Return Null Set |
-| `innodb_sys_columns` | Return Null Set |
-| `innodb_sys_datafiles` | Return Null Set |
-| `innodb_sys_fields` | Return Null Set |
-| `innodb_sys_foreign` | Return Null Set |
-| `innodb_sys_foreign_cols` | Return Null Set |
-| `innodb_sys_indexes` | Return Null Set |
-| `innodb_sys_tables` | Return Null Set |
-| `innodb_sys_tablespaces` | Return Null Set |
-| `innodb_sys_tablestats` | Return Null Set |
-| `innodb_trx` | Return Null Set |
-| `key_column_usage` | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
-| `optimizer_trace` | Return Null Set |
-| `parameters` | Return Null Set |
-| `partitions` | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys'). Sequencing and grouped queries of tables is supported. |
-| `plugins` | Return Null Set |
-| `processlist` | The returned result and server command show that processlist is consistent |
-| `profiling` | Return Null Set |
-| `referential_constraints` | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
-| `routines` | Return Null Set |
-| `schemata` | Return LogicDB related information |
-| `schema_privileges` | Return Null Set |
-| `session_status` | The same as the result of show session status |
-| `session_variables` | The same as the result of show session variables |
-| `statistics` | The compute node will show after making de-repetition or sum processing of statistics information of all nodes under the LogicDB. The return result does not include information of the system database ('mysql','information_schema','performance_schema','sys') |
-| `tables` | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
-| `tablespaces` | Return Null Set |
-| `table_constraints` | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
-| `table_privileges` | Return Null Set |
-| `triggers` | Return Null Set |
-| `user_privileges` | Return Null Set |
-| `views` | Return Null Set |
+| Table name                              | Special processing                                                                                                                                                                                                                                                                                    |
+|-----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `character_sets`                        | Only return the Character Set and Collation Set data supported by the compute node                                                                                                                                                                                                                    |
+| `collations`                            | Only return the Character Set and Collation Set data supported by the compute node                                                                                                                                                                                                                    |
+| `collation_character_set_applicability` | Only return the Character Set and Collation Set data supported by the compute node                                                                                                                                                                                                                    |
+| `columns`                               | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')                                                         |
+| `column_privileges`                     | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `engines`                               | Only return innodb                                                                                                                                                                                                                                                                                    |
+| `events`                                | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `files`                                 | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `global_status`                         | The same as result of show global status                                                                                                                                                                                                                                                              |
+| `global_variables`                      | The same as result of show global variables                                                                                                                                                                                                                                                           |
+| `innodb_buffer_page`                    | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_buffer_page_lru`                | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_buffer_pool_stats`              | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_cmp`                            | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_cmpmem`                         | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_cmpmem_reset`                   | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_cmp_per_index`                  | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_cmp_per_index_reset`            | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_cmp_reset`                      | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_ft_being_deleted`               | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_ft_config`                      | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_ft_default_stopword`            | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_ft_deleted`                     | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_ft_index_cache`                 | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_ft_index_table`                 | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_locks`                          | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_lock_waits`                     | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_metrics`                        | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_sys_columns`                    | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_sys_datafiles`                  | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_sys_fields`                     | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_sys_foreign`                    | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_sys_foreign_cols`               | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_sys_indexes`                    | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_sys_tables`                     | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_sys_tablespaces`                | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_sys_tablestats`                 | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `innodb_trx`                            | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `key_column_usage`                      | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')                                                         |
+| `optimizer_trace`                       | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `parameters`                            | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `partitions`                            | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys'). Sequencing and grouped queries of tables is supported. |
+| `plugins`                               | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `processlist`                           | The returned result and server command show that processlist is consistent                                                                                                                                                                                                                            |
+| `profiling`                             | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `referential_constraints`               | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')                                                         |
+| `routines`                              | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `schemata`                              | Return LogicDB related information                                                                                                                                                                                                                                                                    |
+| `schema_privileges`                     | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `session_status`                        | The same as the result of show session status                                                                                                                                                                                                                                                         |
+| `session_variables`                     | The same as the result of show session variables                                                                                                                                                                                                                                                      |
+| `statistics`                            | The compute node will show after making de-repetition or sum processing of statistics information of all nodes under the LogicDB. The return result does not include information of the system database ('mysql','information_schema','performance_schema','sys')                                     |
+| `tables`                                | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')                                                         |
+| `tablespaces`                           | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `table_constraints`                     | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys')                                                         |
+| `table_privileges`                      | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `triggers`                              | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `user_privileges`                       | Return Null Set                                                                                                                                                                                                                                                                                       |
+| `views`                                 | Return Null Set                                                                                                                                                                                                                                                                                       |
 
 In order to be compatible with the data source above MySQL 8.0, conduct the following special processing for the New contents of MySQL8.0:
 
-| Table Name | Special processing |
-|------------|--------------------|
-| `check_constraints` | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
-| `column_statistics` | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
-| `keywords` | Return Null Set |
-| `resource_groups` | Return Null Set |
-| `st_geometry_columns` | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
-| `st_spatial_reference_systems` | No special processing |
-| `st_units_of_measure` | No special processing |
-| `view_table_usage` | Return Null Set |
-| `view_routine_usage` | Return Null Set |
+| Table Name                     | Special processing                                                                                                                                                                                                                            |
+|--------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `check_constraints`            | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
+| `column_statistics`            | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
+| `keywords`                     | Return Null Set                                                                                                                                                                                                                               |
+| `resource_groups`              | Return Null Set                                                                                                                                                                                                                               |
+| `st_geometry_columns`          | If a table is distributed on multiple nodes, the compute node will return columns information on a selected node. The return result does not include information of system database ('mysql','information_schema','performance_schema','sys') |
+| `st_spatial_reference_systems` | No special processing                                                                                                                                                                                                                         |
+| `st_units_of_measure`          | No special processing                                                                                                                                                                                                                         |
+| `view_table_usage`             | Return Null Set                                                                                                                                                                                                                               |
+| `view_routine_usage`           | Return Null Set                                                                                                                                                                                                                               |
 
 ## Compute node parameter explanation
 
@@ -5513,14 +5548,14 @@ During the use process, the compute node has maintained many system configuratio
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | adaptiveProcessor |
-| Visible or not | Hidden |
-| Description of parameters | Control whether the startup service is Automatic Adaptation or not. |
-| Default value | true |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.5 |
+| Property                       | Value                                                               |
+|--------------------------------|---------------------------------------------------------------------|
+| Parameter value                | adaptiveProcessor                                                   |
+| Visible or not                 | Hidden                                                              |
+| Description of parameters      | Control whether the startup service is Automatic Adaptation or not. |
+| Default value                  | true                                                                |
+| Whether Reload is valid or not | No                                                                  |
+| Min Compatible Version         | 2.4.5                                                               |
 
 **Parameter Setting:**
 
@@ -5602,14 +5637,14 @@ Only when the compute node is under pressure could it reach the Automatic Adapta
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | allowRCWithoutReadConsistentInXA |
-| Visible or not | No |
-| Description of parameters | RC isolation level that does not gurantee strong read-write consistency is allowed in XA mode |
-| Default value | 0 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.9 |
+| Property                       | Value                                                                                         |
+|--------------------------------|-----------------------------------------------------------------------------------------------|
+| Parameter value                | allowRCWithoutReadConsistentInXA                                                              |
+| Visible or not                 | No                                                                                            |
+| Description of parameters      | RC isolation level that does not gurantee strong read-write consistency is allowed in XA mode |
+| Default value                  | 0                                                                                             |
+| Whether Reload is valid or not | Yes                                                                                           |
+| Min Compatible Version         | 2.4.9                                                                                         |
 
 **Parameter Setting:**
 
@@ -5638,15 +5673,15 @@ When the parameter allowRCWithoutReadConsistentInXA is set to 1, the isolation l
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | autoIncrement |
-| Visible or not | Yes |
-| Description of parameters | Management platform v.2.5.4 below: adopt Global Auto-Incremental serial number or not |
-| ^ | Management platform v.2.5.4 and above: Global Auto-Incremental serial number mode |
-| Default value | 1 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                                                 |
+|--------------------------------|---------------------------------------------------------------------------------------|
+| Parameter value                | autoIncrement                                                                         |
+| Visible or not                 | Yes                                                                                   |
+| Description of parameters      | Management platform v.2.5.4 below: adopt Global Auto-Incremental serial number or not |
+| ^                              | Management platform v.2.5.4 and above: Global Auto-Incremental serial number mode     |
+| Default value                  | 1                                                                                     |
+| Whether Reload is valid or not | Yes                                                                                   |
+| Min Compatible Version         | 2.4.3                                                                                 |
 
 **Parameter Effect:**
 
@@ -5658,14 +5693,14 @@ In version 2.5.3 and below, only true or false can be set. Setting as true is eq
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | badConnAfterContinueGet |
-| Visible or not | No |
-| Description of parameters | Continue to obtain connection or not |
-| Default value | true |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                |
+|--------------------------------|--------------------------------------|
+| Parameter value                | badConnAfterContinueGet              |
+| Visible or not                 | No                                   |
+| Description of parameters      | Continue to obtain connection or not |
+| Default value                  | true                                 |
+| Whether Reload is valid or not | Yes                                  |
+| Min Compatible Version         | 2.4.3                                |
 
 **Parameter Setting:**
 
@@ -5681,14 +5716,14 @@ After compute node obtaining connection from the connection pool and having cond
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | badConnAfterFastCheckAllIdle |
-| Visible or not | No |
-| Description of parameters | When broken back-end connection is obtained, whether to check all idle connections rapidly or not |
-| Default value | true |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                                                             |
+|--------------------------------|---------------------------------------------------------------------------------------------------|
+| Parameter value                | badConnAfterFastCheckAllIdle                                                                      |
+| Visible or not                 | No                                                                                                |
+| Description of parameters      | When broken back-end connection is obtained, whether to check all idle connections rapidly or not |
+| Default value                  | true                                                                                              |
+| Whether Reload is valid or not | Yes                                                                                               |
+| Min Compatible Version         | 2.4.3                                                                                             |
 
 **Parameter Setting:**
 
@@ -5704,32 +5739,32 @@ When broken back-end connection is obtained, the connection pool of the compute 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | bakUrl |
-| Visible or not | Yes |
-| Description of parameters | Slave configDB address |
-| Default value | jdbc:mysql://127.0.0.1:3306/hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.4 |
+| Property                       | Value                                    |
+|--------------------------------|------------------------------------------|
+| Parameter value                | bakUrl                                   |
+| Visible or not                 | Yes                                      |
+| Description of parameters      | Slave configDB address                   |
+| Default value                  | jdbc:mysql://127.0.0.1:3306/hotdb_config |
+| Whether Reload is valid or not | Yes                                      |
+| Min Compatible Version         | 2.4.4                                    |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | bakUsername |
-| Visible or not | Yes |
-| Description of parameters | Slave configDB username |
-| Default value | hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.4 |
+| Property                       | Value                   |
+|--------------------------------|-------------------------|
+| Parameter value                | bakUsername             |
+| Visible or not                 | Yes                     |
+| Description of parameters      | Slave configDB username |
+| Default value                  | hotdb_config            |
+| Whether Reload is valid or not | Yes                     |
+| Min Compatible Version         | 2.4.4                   |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | bakPassword |
-| Visible or not | Yes |
-| Description of parameters | Slave configDB password |
-| Default value | hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.4 |
+| Property                       | Value                   |
+|--------------------------------|-------------------------|
+| Parameter value                | bakPassword             |
+| Visible or not                 | Yes                     |
+| Description of parameters      | Slave configDB password |
+| Default value                  | hotdb_config            |
+| Whether Reload is valid or not | Yes                     |
+| Min Compatible Version         | 2.4.4                   |
 
 **Parameter Effect:**
 
@@ -5766,14 +5801,14 @@ description: NULL
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | checkConnLastUsedTime |
-| Visible or not | No |
-| Description of parameters | Max allowed interval time of last use by the back-end connection. If exceeded, it will check whether this connection is valid or not, unit: ms |
-| Default value | 3000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                                                                                                          |
+|--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| Parameter value                | checkConnLastUsedTime                                                                                                                          |
+| Visible or not                 | No                                                                                                                                             |
+| Description of parameters      | Max allowed interval time of last use by the back-end connection. If exceeded, it will check whether this connection is valid or not, unit: ms |
+| Default value                  | 3000                                                                                                                                           |
+| Whether Reload is valid or not | Yes                                                                                                                                            |
+| Min Compatible Version         | 2.4.3                                                                                                                                          |
 
 **Parameter Setting:**
 
@@ -5798,14 +5833,14 @@ mysql> show @@session;
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | CheckConnValid |
-| Visible or not | No |
-| Description of parameters | Whether to check whether the back-end connection is valid or not |
-| Default value | true |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                            |
+|--------------------------------|------------------------------------------------------------------|
+| Parameter value                | CheckConnValid                                                   |
+| Visible or not                 | No                                                               |
+| Description of parameters      | Whether to check whether the back-end connection is valid or not |
+| Default value                  | true                                                             |
+| Whether Reload is valid or not | Yes                                                              |
+| Min Compatible Version         | 2.4.3                                                            |
 
 **Parameter Setting:**
 
@@ -5823,14 +5858,14 @@ When obtaining connection from the connection pool, check availability of the co
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | checkConnValidTimeout |
-| Visible or not | No |
-| Description of parameters | At the time of checking validity of back-end connection, max timeout, unit: ms |
-| Default value | 500 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                                          |
+|--------------------------------|--------------------------------------------------------------------------------|
+| Parameter value                | checkConnValidTimeout                                                          |
+| Visible or not                 | No                                                                             |
+| Description of parameters      | At the time of checking validity of back-end connection, max timeout, unit: ms |
+| Default value                  | 500                                                                            |
+| Whether Reload is valid or not | Yes                                                                            |
+| Min Compatible Version         | 2.4.3                                                                          |
 
 **Parameter Setting:**
 
@@ -5844,16 +5879,16 @@ At the time of checking validity of back-end connection, when the checking time 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | checkMySQLParamInterval |
-| Visible or not | No |
-| Description of parameters | Interval time of checking MySQL Parameter Setting (Unit: ms) |
-| Default value | 600000 |
-| Min value | 1000 |
-| Max value | 86400000 |
-| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                        |
+|--------------------------------|--------------------------------------------------------------|
+| Parameter value                | checkMySQLParamInterval                                      |
+| Visible or not                 | No                                                           |
+| Description of parameters      | Interval time of checking MySQL Parameter Setting (Unit: ms) |
+| Default value                  | 600000                                                       |
+| Min value                      | 1000                                                         |
+| Max value                      | 86400000                                                     |
+| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above                       |
+| Min Compatible Version         | 2.4.3                                                        |
 
 **Parameter Setting:**
 
@@ -5869,14 +5904,14 @@ Check whether interval time of MySQL Parameter Setting is reasonable or not. The
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | checkUpdate |
-| Visible or not | No |
-| Description of parameters | Whether to intercept update operation of the sharding key or not |
-| Default value | true |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                            |
+|--------------------------------|------------------------------------------------------------------|
+| Parameter value                | checkUpdate                                                      |
+| Visible or not                 | No                                                               |
+| Description of parameters      | Whether to intercept update operation of the sharding key or not |
+| Default value                  | true                                                             |
+| Whether Reload is valid or not | Yes                                                              |
+| Min Compatible Version         | 2.4.3                                                            |
 
 **Parameter Effect:**
 
@@ -5912,14 +5947,14 @@ mysql> select * from ss where a='aa';
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | clientFoundRows |
-| Visible or not | No |
-| Description of parameters | Use found rows to replace the affected rows in OK package |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.9（abandoned in v.2.5.5） |
+| Property                       | Value                                                     |
+|--------------------------------|-----------------------------------------------------------|
+| Parameter value                | clientFoundRows                                           |
+| Visible or not                 | No                                                        |
+| Description of parameters      | Use found rows to replace the affected rows in OK package |
+| Default value                  | false                                                     |
+| Whether Reload is valid or not | Yes                                                       |
+| Min Compatible Version         | 2.4.9（abandoned in v.2.5.5）                             |
 
 **Parameter Setting:**
 
@@ -5945,14 +5980,14 @@ jdbc is committed useAffectedRows=true, the actual number of rows affected will 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | clusterElectionTimeoutMs |
-| Visible or not | No |
-| Description of parameters | Cluster Election Timeout (ms) |
-| Default value | 2000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3 |
+| Property                       | Value                         |
+|--------------------------------|-------------------------------|
+| Parameter value                | clusterElectionTimeoutMs      |
+| Visible or not                 | No                            |
+| Description of parameters      | Cluster Election Timeout (ms) |
+| Default value                  | 2000                          |
+| Whether Reload is valid or not | Yes                           |
+| Min Compatible Version         | 2.5.3                         |
 
 **Parameter Setting:**
 
@@ -5970,14 +6005,14 @@ This parameter is used for setting Cluster Election Timeout of the compute node,
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | clusterHeartbeatTimeoutMs |
-| Visible or not | No |
-| Description of parameters | Cluster Heartbeat Timeout (ms) |
-| Default value | 5000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3 |
+| Property                       | Value                          |
+|--------------------------------|--------------------------------|
+| Parameter value                | clusterHeartbeatTimeoutMs      |
+| Visible or not                 | No                             |
+| Description of parameters      | Cluster Heartbeat Timeout (ms) |
+| Default value                  | 5000                           |
+| Whether Reload is valid or not | Yes                            |
+| Min Compatible Version         | 2.5.3                          |
 
 **Parameter Setting:**
 
@@ -5995,14 +6030,14 @@ This parameter is used for setting Cluster Heartbeat Timeout of the compute node
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | clusterHost |
-| Visible or not | Yes |
-| Description of parameters | IP of the current node |
-| Default value | 192.168.200.1 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value                  |
+|--------------------------------|------------------------|
+| Parameter value                | clusterHost            |
+| Visible or not                 | Yes                    |
+| Description of parameters      | IP of the current node |
+| Default value                  | 192.168.200.1          |
+| Whether Reload is valid or not | No                     |
+| Min Compatible Version         | 2.5.0                  |
 
 **Parameter Setting:**
 
@@ -6020,14 +6055,14 @@ This parameter shall be set consistent with the actual IP of the compute node (c
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | clusterName |
-| Visible or not | Yes |
-| Description of parameters | Cluster Group Name |
-| Default value | HotDB-Cluster |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value              |
+|--------------------------------|--------------------|
+| Parameter value                | clusterName        |
+| Visible or not                 | Yes                |
+| Description of parameters      | Cluster Group Name |
+| Default value                  | HotDB-Cluster      |
+| Whether Reload is valid or not | No                 |
+| Min Compatible Version         | 2.5.0              |
 
 **Parameter Setting:**
 
@@ -6045,14 +6080,14 @@ Specify the name of the group added after cluster startup, and this parameter of
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | clusterNetwork |
-| Visible or not | Yes |
-| Description of parameters | Cluster Network Segment |
-| Default value | 192.168.200.0/24 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value                   |
+|--------------------------------|-------------------------|
+| Parameter value                | clusterNetwork          |
+| Visible or not                 | Yes                     |
+| Description of parameters      | Cluster Network Segment |
+| Default value                  | 192.168.200.0/24        |
+| Whether Reload is valid or not | No                      |
+| Min Compatible Version         | 2.5.0                   |
 
 **Parameter Setting:**
 
@@ -6070,14 +6105,14 @@ This parameter is the network segment of the whole cluster, and it's limited tha
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | clusterPacketTimeoutMs |
-| Visible or not | No |
-| Description of parameters | Failure time of inter-cluster communication packet (ms) |
-| Default value | 5000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3 |
+| Property                       | Value                                                   |
+|--------------------------------|---------------------------------------------------------|
+| Parameter value                | clusterPacketTimeoutMs                                  |
+| Visible or not                 | No                                                      |
+| Description of parameters      | Failure time of inter-cluster communication packet (ms) |
+| Default value                  | 5000                                                    |
+| Whether Reload is valid or not | Yes                                                     |
+| Min Compatible Version         | 2.5.3                                                   |
 
 **Parameter Setting:**
 
@@ -6095,14 +6130,14 @@ This parameter is used for setting Cluster Packet Timeout, and generally modific
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | clusterPort |
-| Visible or not | Yes |
-| Description of parameters | Cluster Communication Port |
-| Default value | 3326 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value                      |
+|--------------------------------|----------------------------|
+| Parameter value                | clusterPort                |
+| Visible or not                 | Yes                        |
+| Description of parameters      | Cluster Communication Port |
+| Default value                  | 3326                       |
+| Whether Reload is valid or not | No                         |
+| Min Compatible Version         | 2.5.0                      |
 
 **Parameter Setting:**
 
@@ -6120,14 +6155,14 @@ Thed default value 3326 specifies the port of listening cluster information. Thi
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | clusterSize |
-| Visible or not | Yes |
-| Description of parameters | Total number of nodes in cluster |
-| Default value | 3 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value                            |
+|--------------------------------|----------------------------------|
+| Parameter value                | clusterSize                      |
+| Visible or not                 | Yes                              |
+| Description of parameters      | Total number of nodes in cluster |
+| Default value                  | 3                                |
+| Whether Reload is valid or not | No                               |
+| Min Compatible Version         | 2.5.0                            |
 
 **Parameter Setting:**
 
@@ -6145,14 +6180,14 @@ This parameter is total number of compute node in cluster. If haMode is set as 1
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | clusterStartedPacketTimeoutMs |
-| Visible or not | No |
-| Description of parameters | Failure Time of Cluster Started Broadcast Packet (ms) |
-| Default value | 5000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3 |
+| Property                       | Value                                                 |
+|--------------------------------|-------------------------------------------------------|
+| Parameter value                | clusterStartedPacketTimeoutMs                         |
+| Visible or not                 | No                                                    |
+| Description of parameters      | Failure Time of Cluster Started Broadcast Packet (ms) |
+| Default value                  | 5000                                                  |
+| Whether Reload is valid or not | Yes                                                   |
+| Min Compatible Version         | 2.5.3                                                 |
 
 **Parameter Setting:**
 
@@ -6170,41 +6205,41 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | configMGR |
-| Visible or not | Yes |
-| Description of parameters | Whether configDB uses MGR or not |
-| Default value | false |
-| Whether Reload is valid or not | YesY |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value                            |
+|--------------------------------|----------------------------------|
+| Parameter value                | configMGR                        |
+| Visible or not                 | Yes                              |
+| Description of parameters      | Whether configDB uses MGR or not |
+| Default value                  | false                            |
+| Whether Reload is valid or not | YesY                             |
+| Min Compatible Version         | 2.5.0                            |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | bak1Url |
-| Visible or not | Yes |
-| Description of parameters | MGR configDB address |
-| Default value | Null |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value                |
+|--------------------------------|----------------------|
+| Parameter value                | bak1Url              |
+| Visible or not                 | Yes                  |
+| Description of parameters      | MGR configDB address |
+| Default value                  | Null                 |
+| Whether Reload is valid or not | Yes                  |
+| Min Compatible Version         | 2.5.0                |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | bak1Username |
-| Visible or not | Yes |
-| Description of parameters | MGR configDB username |
-| Default value | Null |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value                 |
+|--------------------------------|-----------------------|
+| Parameter value                | bak1Username          |
+| Visible or not                 | Yes                   |
+| Description of parameters      | MGR configDB username |
+| Default value                  | Null                  |
+| Whether Reload is valid or not | Yes                   |
+| Min Compatible Version         | 2.5.0                 |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | bak1Password |
-| Visible or not | Yes |
-| Description of parameters | MGR configDB password |
-| Default value | Null |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value                 |
+|--------------------------------|-----------------------|
+| Parameter value                | bak1Password          |
+| Visible or not                 | Yes                   |
+| Description of parameters      | MGR configDB password |
+| Default value                  | Null                  |
+| Whether Reload is valid or not | Yes                   |
+| Min Compatible Version         | 2.5.0                 |
 
 **Parameter Effect:**
 
@@ -6221,14 +6256,14 @@ configMGR and bak1Url and bak1Username and bak1Password are supporting parameter
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | crossDbXa |
-| Visible or not | No |
-| Description of parameters | Whether XA transactions are adopted in cross-LogicDB |
-| Default value | false |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.5 |
+| Property                       | Value                                                |
+|--------------------------------|------------------------------------------------------|
+| Parameter value                | crossDbXa                                            |
+| Visible or not                 | No                                                   |
+| Description of parameters      | Whether XA transactions are adopted in cross-LogicDB |
+| Default value                  | false                                                |
+| Whether Reload is valid or not | No                                                   |
+| Min Compatible Version         | 2.5.5                                                |
 
 **Parameter Setting:**
 
@@ -6340,14 +6375,14 @@ Result: `select * from B.b;` execute normally.
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | cryptMandatory |
-| Visible or not | Yes |
-| Description of parameters | Mandatory password encryption or not |
-| Default value | False |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                |
+|--------------------------------|--------------------------------------|
+| Parameter value                | cryptMandatory                       |
+| Visible or not                 | Yes                                  |
+| Description of parameters      | Mandatory password encryption or not |
+| Default value                  | False                                |
+| Whether Reload is valid or not | Yes                                  |
+| Min Compatible Version         | 2.4.3                                |
 
 **Parameter Setting:**
 
@@ -6370,16 +6405,16 @@ It's used for setting whether to make mandatory password identification or not w
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | dataNodeIdleCheckPeriod |
-| Visible or not | Yes |
-| Description of parameters | Default Data Node Idle Check Period (S) |
-| Default value | 120 |
-| Min value | 1 |
-| Max value | 3600 |
-| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                   |
+|--------------------------------|-----------------------------------------|
+| Parameter value                | dataNodeIdleCheckPeriod                 |
+| Visible or not                 | Yes                                     |
+| Description of parameters      | Default Data Node Idle Check Period (S) |
+| Default value                  | 120                                     |
+| Min value                      | 1                                       |
+| Max value                      | 3600                                    |
+| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above  |
+| Min Compatible Version         | 2.4.3                                   |
 
 **Parameter Setting:**
 
@@ -6397,16 +6432,16 @@ For example: Conduct on large concurrent insert operation on the 3323 service po
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | deadlockCheckPeriod |
-| Visible or not | Yes |
-| Description of parameters | Deadlock Check Period (Ms), 0 means Disable |
-| Default value | 3000 |
-| Min value | 0 |
-| Max value | 100000 |
-| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                       |
+|--------------------------------|---------------------------------------------|
+| Parameter value                | deadlockCheckPeriod                         |
+| Visible or not                 | Yes                                         |
+| Description of parameters      | Deadlock Check Period (Ms), 0 means Disable |
+| Default value                  | 3000                                        |
+| Min value                      | 0                                           |
+| Max value                      | 100000                                      |
+| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above      |
+| Min Compatible Version         | 2.4.3                                       |
 
 **Parameter Effect:**
 
@@ -6432,14 +6467,14 @@ ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | defaultMaxLimit |
-| Visible or not | No |
-| Description of parameters | default max limit |
-| Default value | 0 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value             |
+|--------------------------------|-------------------|
+| Parameter value                | defaultMaxLimit   |
+| Visible or not                 | No                |
+| Description of parameters      | default max limit |
+| Default value                  | 0                 |
+| Whether Reload is valid or not | Yes               |
+| Min Compatible Version         | 2.4.3             |
 
 defaultMaxLimit parameter configuration in Server.xml is configured as follow:
 
@@ -6488,14 +6523,14 @@ mysql> show processlist;
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | dropTableRetentionTime |
-| Visible or not | Yes |
-| Description of parameters | dropTableRetentionTime, 0 by default, no retention |
-| Default value | 0 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.2 |
+| Property                       | Value                                              |
+|--------------------------------|----------------------------------------------------|
+| Parameter value                | dropTableRetentionTime                             |
+| Visible or not                 | Yes                                                |
+| Description of parameters      | dropTableRetentionTime, 0 by default, no retention |
+| Default value                  | 0                                                  |
+| Whether Reload is valid or not | Yes                                                |
+| Min Compatible Version         | 2.5.2                                              |
 
 **Parameter Setting:**
 
@@ -6513,32 +6548,32 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | drBakUrl |
-| Visible or not | Yes |
-| Description of parameters | Slave ConfigDB address of DR center |
-| Default value | jdbc:mysql://127.0.0.1:3306/hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3.1 |
+| Property                       | Value                                    |
+|--------------------------------|------------------------------------------|
+| Parameter value                | drBakUrl                                 |
+| Visible or not                 | Yes                                      |
+| Description of parameters      | Slave ConfigDB address of DR center      |
+| Default value                  | jdbc:mysql://127.0.0.1:3306/hotdb_config |
+| Whether Reload is valid or not | Yes                                      |
+| Min Compatible Version         | 2.5.3.1                                  |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | drBakUsername |
-| Visible or not | Yes |
-| Description of parameters | Slave ConfigDB username of DR center |
-| Default value | hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3.1 |
+| Property                       | Value                                |
+|--------------------------------|--------------------------------------|
+| Parameter value                | drBakUsername                        |
+| Visible or not                 | Yes                                  |
+| Description of parameters      | Slave ConfigDB username of DR center |
+| Default value                  | hotdb_config                         |
+| Whether Reload is valid or not | Yes                                  |
+| Min Compatible Version         | 2.5.3.1                              |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | drBakPassword |
-| Visible or not | Yes |
-| Description of parameters | Slave ConfigDB password of DR center |
-| Default value | hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3.1 |
+| Property                       | Value                                |
+|--------------------------------|--------------------------------------|
+| Parameter value                | drBakPassword                        |
+| Visible or not                 | Yes                                  |
+| Description of parameters      | Slave ConfigDB password of DR center |
+| Default value                  | hotdb_config                         |
+| Whether Reload is valid or not | Yes                                  |
+| Min Compatible Version         | 2.5.3.1                              |
 
 **Parameter Effect:**
 
@@ -6554,32 +6589,32 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | drUrl |
-| Visible or not | Yes |
-| Description of parameters | ConfigDB address of DR center |
-| Default value | jdbc:mysql://127.0.0.1:3306/hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3.1 |
+| Property                       | Value                                    |
+|--------------------------------|------------------------------------------|
+| Parameter value                | drUrl                                    |
+| Visible or not                 | Yes                                      |
+| Description of parameters      | ConfigDB address of DR center            |
+| Default value                  | jdbc:mysql://127.0.0.1:3306/hotdb_config |
+| Whether Reload is valid or not | Yes                                      |
+| Min Compatible Version         | 2.5.3.1                                  |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | drUsername |
-| Visible or not | Yes |
-| Description of parameters | ConfigDB usernameof DR center |
-| Default value | hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3.1 |
+| Property                       | Value                         |
+|--------------------------------|-------------------------------|
+| Parameter value                | drUsername                    |
+| Visible or not                 | Yes                           |
+| Description of parameters      | ConfigDB usernameof DR center |
+| Default value                  | hotdb_config                  |
+| Whether Reload is valid or not | Yes                           |
+| Min Compatible Version         | 2.5.3.1                       |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | drPassword |
-| Visible or not | Yes |
-| Description of parameters | ConfigDB passwordof DR center |
-| Default value | hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3.1 |
+| Property                       | Value                         |
+|--------------------------------|-------------------------------|
+| Parameter value                | drPassword                    |
+| Visible or not                 | Yes                           |
+| Description of parameters      | ConfigDB passwordof DR center |
+| Default value                  | hotdb_config                  |
+| Whether Reload is valid or not | Yes                           |
+| Min Compatible Version         | 2.5.3.1                       |
 
 **Parameter Effect:**
 
@@ -6595,14 +6630,14 @@ drUrl, drUsername and drPassword are supporting parameters, among which drUrl re
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | enableCursor |
-| Visible or not | Yes |
-| Description of parameters | Allow PREPARE statement to obtain data via CURSOR or not |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.6 |
+| Property                       | Value                                                    |
+|--------------------------------|----------------------------------------------------------|
+| Parameter value                | enableCursor                                             |
+| Visible or not                 | Yes                                                      |
+| Description of parameters      | Allow PREPARE statement to obtain data via CURSOR or not |
+| Default value                  | false                                                    |
+| Whether Reload is valid or not | Yes                                                      |
+| Min Compatible Version         | 2.4.6                                                    |
 
 **Parameter Setting:**
 
@@ -6620,14 +6655,14 @@ Allow PREPARE to obtain data content via Cursor or not (jdbcURl:useCursorFetch=t
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | enableFlowControl |
-| Visible or not | Yes |
-| Description of parameters | Enable data source flow control or not |
-| Default value | False |
+| Property                       | Value                                  |
+|--------------------------------|----------------------------------------|
+| Parameter value                | enableFlowControl                      |
+| Visible or not                 | Yes                                    |
+| Description of parameters      | Enable data source flow control or not |
+| Default value                  | False                                  |
 | Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.5 |
+| Min Compatible Version         | 2.4.5                                  |
 
 **Parameter Effect:**
 
@@ -6663,36 +6698,36 @@ mysql> show @@datasource;
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | enableHeartbeat |
-| Visible or not | Yes |
-| Description of parameters | Enable Heartbeat or not, Yes: true, No: false |
-| Default value | true |
-| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                         |
+|--------------------------------|-----------------------------------------------|
+| Parameter value                | enableHeartbeat                               |
+| Visible or not                 | Yes                                           |
+| Description of parameters      | Enable Heartbeat or not, Yes: true, No: false |
+| Default value                  | true                                          |
+| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above        |
+| Min Compatible Version         | 2.4.3                                         |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | heartbeatPeriod |
-| Visible or not | Yes |
-| Description of parameters | Heartbeat Period (S) |
-| Default value | 2 |
-| Max value | 60 |
-| Min value | 1 |
+| Property                       | Value                                  |
+|--------------------------------|----------------------------------------|
+| Parameter value                | heartbeatPeriod                        |
+| Visible or not                 | Yes                                    |
+| Description of parameters      | Heartbeat Period (S)                   |
+| Default value                  | 2                                      |
+| Max value                      | 60                                     |
+| Min value                      | 1                                      |
 | Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.3 |
+| Min Compatible Version         | 2.4.3                                  |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | heartbeatTimeoutMs |
-| Visible or not | Yes |
-| Description of parameters | Heartbeat Timeout (Ms) |
-| Default value | 500 |
-| Max value | 10000 |
-| Min value | 100 |
+| Property                       | Value                                  |
+|--------------------------------|----------------------------------------|
+| Parameter value                | heartbeatTimeoutMs                     |
+| Visible or not                 | Yes                                    |
+| Description of parameters      | Heartbeat Timeout (Ms)                 |
+| Default value                  | 500                                    |
+| Max value                      | 10000                                  |
+| Min value                      | 100                                    |
 | Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.3 |
+| Min Compatible Version         | 2.4.3                                  |
 
 The default value of Heartbeat Check Period is 2s, that is Periodical Heartbeat Check is executed every 2s. The default value of Heartbeat Timeout is 500ms.
 
@@ -6718,25 +6753,25 @@ For Heartbeat Timeout under the condition that Heartbeat is enabled, in case of 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | enableLatencyCheck |
-| Visible or not | Yes |
-| Description of parameters | Enable master/slave latency check or not |
-| Default value | true |
-| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.5 |
+| Property                       | Value                                    |
+|--------------------------------|------------------------------------------|
+| Parameter value                | enableLatencyCheck                       |
+| Visible or not                 | Yes                                      |
+| Description of parameters      | Enable master/slave latency check or not |
+| Default value                  | true                                     |
+| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above   |
+| Min Compatible Version         | 2.4.5                                    |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | latencyCheckPeriod |
-| Visible or not | Yes |
-| Description of parameters | Master/Slave Latency Check Period (ms) |
-| Default value | 500 |
-| Max value | 1000 |
-| Min value | 100 |
+| Property                       | Value                                  |
+|--------------------------------|----------------------------------------|
+| Parameter value                | latencyCheckPeriod                     |
+| Visible or not                 | Yes                                    |
+| Description of parameters      | Master/Slave Latency Check Period (ms) |
+| Default value                  | 500                                    |
+| Max value                      | 1000                                   |
+| Min value                      | 100                                    |
 | Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.5 |
+| Min Compatible Version         | 2.4.5                                  |
 
 The default value of Master/Slave Latency Check Period is 500ms, that is, the periodical check executes master/slave latency check every 500ms.
 
@@ -6765,14 +6800,14 @@ mysql> show @@latency;
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | enableListener |
-| Visible or not | Yes |
-| Description of parameters | Enable Listener mode or not. |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.5 |
+| Property                       | Value                        |
+|--------------------------------|------------------------------|
+| Parameter value                | enableListener               |
+| Visible or not                 | Yes                          |
+| Description of parameters      | Enable Listener mode or not. |
+| Default value                  | false                        |
+| Whether Reload is valid or not | Yes                          |
+| Min Compatible Version         | 2.5.5                        |
 
 **Parameter Setting:**
 
@@ -6817,16 +6852,16 @@ Please refer to the description of [linear expansion](#linear-expansion) for pre
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | enableOracleFunction |
-| Visible or not | No |
-| Description of parameters | Support oracle function or not |
-| Default value | false |
-| Max value | / |
-| Min value | / |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.6 |
+| Property                       | Value                          |
+|--------------------------------|--------------------------------|
+| Parameter value                | enableOracleFunction           |
+| Visible or not                 | No                             |
+| Description of parameters      | Support oracle function or not |
+| Default value                  | false                          |
+| Max value                      | /                              |
+| Min value                      | /                              |
+| Whether Reload is valid or not | Yes                            |
+| Min Compatible Version         | 2.5.6                          |
 
 **Parameter Setting:**
 
@@ -6888,14 +6923,14 @@ ERROR 10010 (HY000): expect VIEW. lexer state: token=IDENTIFIER, sqlLeft=sequenc
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | enableSleep |
-| Visible or not | Yes |
-| Description of parameters | Whether SLEEP Function is allowed or not |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                    |
+|--------------------------------|------------------------------------------|
+| Parameter value                | enableSleep                              |
+| Visible or not                 | Yes                                      |
+| Description of parameters      | Whether SLEEP Function is allowed or not |
+| Default value                  | false                                    |
+| Whether Reload is valid or not | Yes                                      |
+| Min Compatible Version         | 2.4.3                                    |
 
 **Parameter Setting:**
 
@@ -6932,14 +6967,14 @@ mysql> select sleep(2);
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | enableSSL |
-| Visible or not | Yes |
-| Description of parameters | Whether to enable SSL connection function |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.5 |
+| Property                       | Value                                     |
+|--------------------------------|-------------------------------------------|
+| Parameter value                | enableSSL                                 |
+| Visible or not                 | Yes                                       |
+| Description of parameters      | Whether to enable SSL connection function |
+| Default value                  | false                                     |
+| Whether Reload is valid or not | Yes                                       |
+| Min Compatible Version         | 2.5.5                                     |
 
 **Parameter Effect:**
 
@@ -6953,14 +6988,14 @@ This parameter is used to set whether the compute node is allowed to connect usi
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | enableSubquery |
-| Visible or not | No |
-| Description of parameters | Whether Subquery under special scenarios is allowed or not |
-| Default value | true |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                      |
+|--------------------------------|------------------------------------------------------------|
+| Parameter value                | enableSubquery                                             |
+| Visible or not                 | No                                                         |
+| Description of parameters      | Whether Subquery under special scenarios is allowed or not |
+| Default value                  | true                                                       |
+| Whether Reload is valid or not | Yes                                                        |
+| Min Compatible Version         | 2.4.3                                                      |
 
 **Parameter Effect:**
 
@@ -6992,13 +7027,14 @@ mysql> select * from test3 where id in (select id from test31);
 
 **Description of parameter:**
 
-| Property                   | Value               |
-| Parameter value                | enableWatchdog          |
-| Visible or not                 | Yes                     |
-| Description of parameters      | Enable Watchdog or not  |
-| Default value                  | False                   |
+| Property                       | Value                                  |
+|--------------------------------|----------------------------------------|
+| Parameter value                | enableWatchdog                         |
+| Visible or not                 | Yes                                    |
+| Description of parameters      | Enable Watchdog or not                 |
+| Default value                  | False                                  |
 | Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version         | 2.4.5                   |
+| Min Compatible Version         | 2.4.5                                  |
 
 **Parameter Setting:**
 
@@ -7057,14 +7093,14 @@ You could view check information of data source switch via log:
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | enableXA |
-| Visible or not | Yes |
-| Description of parameters | Apply XA TRANSACTION or not |
-| Default value | False |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                       |
+|--------------------------------|-----------------------------|
+| Parameter value                | enableXA                    |
+| Visible or not                 | Yes                         |
+| Description of parameters      | Apply XA TRANSACTION or not |
+| Default value                  | False                       |
+| Whether Reload is valid or not | No                          |
+| Min Compatible Version         | 2.4.3                       |
 
 **Parameter Effect:**
 
@@ -7076,14 +7112,14 @@ Using the external XA TRANSACTION provided by MySQL, the compute node could solv
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | errorsPermittedInTransaction |
-| Visible or not | Yes |
-| Description of parameters | Whether error is allowed in transaction or not |
-| Default value | False |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                          |
+|--------------------------------|------------------------------------------------|
+| Parameter value                | errorsPermittedInTransaction                   |
+| Visible or not                 | Yes                                            |
+| Description of parameters      | Whether error is allowed in transaction or not |
+| Default value                  | False                                          |
+| Whether Reload is valid or not | Yes                                            |
+| Min Compatible Version         | 2.4.3                                          |
 
 **Parameter Effect:**
 
@@ -7159,14 +7195,14 @@ mysql> select * from ss where id=1;
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | failoverAutoresetslave |
-| Visible or not | Yes |
-| Description of parameters | When failover, auto reset the master/slave replication relation or not |
-| Default value | false |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.3 |
+| Property                       | Value                                                                  |
+|--------------------------------|------------------------------------------------------------------------|
+| Parameter value                | failoverAutoresetslave                                                 |
+| Visible or not                 | Yes                                                                    |
+| Description of parameters      | When failover, auto reset the master/slave replication relation or not |
+| Default value                  | false                                                                  |
+| Whether Reload is valid or not | No                                                                     |
+| Min Compatible Version         | 2.5.3                                                                  |
 
 **Parameter Setting:**
 
@@ -7182,14 +7218,14 @@ This parameter is used for guaranteeing data accuracy after data source failover
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | frontConnectionTrxIsoLevel |
-| Visible or not | No |
-| Description of parameters | Front-end connection default isolation level |
-| Default value | 2 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.5 |
+| Property                       | Value                                        |
+|--------------------------------|----------------------------------------------|
+| Parameter value                | frontConnectionTrxIsoLevel                   |
+| Visible or not                 | No                                           |
+| Description of parameters      | Front-end connection default isolation level |
+| Default value                  | 2                                            |
+| Whether Reload is valid or not | Yes                                          |
+| Min Compatible Version         | 2.4.5                                        |
 
 **Parameter Setting:**
 
@@ -7209,16 +7245,16 @@ It's used for setting user isolation level of front-end connection of the comput
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | frontWriteBlockTimeout |
-| Visible or not | Yes |
-| Description of parameters | Front-end Connection Write Block Timeout |
-| Default value | 10000ms |
-| Min value | 2000ms |
-| Max value | 60000ms |
-| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.5 |
+| Property                       | Value                                    |
+|--------------------------------|------------------------------------------|
+| Parameter value                | frontWriteBlockTimeout                   |
+| Visible or not                 | Yes                                      |
+| Description of parameters      | Front-end Connection Write Block Timeout |
+| Default value                  | 10000ms                                  |
+| Min value                      | 2000ms                                   |
+| Max value                      | 60000ms                                  |
+| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above   |
+| Min Compatible Version         | 2.4.5                                    |
 
 **Parameter Effect:**
 
@@ -7234,16 +7270,16 @@ Great network latency or unreachable network from the compute node to the client
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | generatePrefetchCostRatio |
-| Visible or not | No |
-| Description of parameters | 触发提前预取的已消耗比例 |
-| Default value | 90 |
-| Min value | 50 |
-| Max value | 100 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.4 |
+| Property                       | Value                     |
+|--------------------------------|---------------------------|
+| Parameter value                | generatePrefetchCostRatio |
+| Visible or not                 | No                        |
+| Description of parameters      | 触发提前预取的已消耗比例  |
+| Default value                  | 90                        |
+| Min value                      | 50                        |
+| Max value                      | 100                       |
+| Whether Reload is valid or not | Yes                       |
+| Min Compatible Version         | 2.5.4                     |
 
 **参数设置: **
 
@@ -7261,14 +7297,14 @@ Great network latency or unreachable network from the compute node to the client
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | globalUniqueConstraint |
-| Visible or not | No |
-| Description of parameters | Whether enable Global Unique Constraint for the new tables by default or not |
-| Default value | false |
-| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.5.2 |
+| Property                       | Value                                                                        |
+|--------------------------------|------------------------------------------------------------------------------|
+| Parameter value                | globalUniqueConstraint                                                       |
+| Visible or not                 | No                                                                           |
+| Description of parameters      | Whether enable Global Unique Constraint for the new tables by default or not |
+| Default value                  | false                                                                        |
+| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above                                       |
+| Min Compatible Version         | 2.5.2                                                                        |
 
 **Parameter Setting:**
 
@@ -7288,14 +7324,14 @@ To Enable Global Unique Constraint guarantees that the column with Unique Constr
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | haMode |
-| Visible or not | Yes |
-| Description of parameters | High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center 4:Cluster in master center, 5:Cluster in DR center |
-| Default value | 0 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value                                                                                                                                |
+|--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| Parameter value                | haMode                                                                                                                               |
+| Visible or not                 | Yes                                                                                                                                  |
+| Description of parameters      | High-availability mode, 0:HA, 1:Cluster, 2:HA in master center, 3:HA in DR center 4:Cluster in master center, 5:Cluster in DR center |
+| Default value                  | 0                                                                                                                                    |
+| Whether Reload is valid or not | Yes                                                                                                                                  |
+| Min Compatible Version         | 2.5.0                                                                                                                                |
 
 **Parameter Setting:**
 
@@ -7317,23 +7353,23 @@ In HotDB Server 2.5.6 and above, haMode can be set to 0,1,2,3,4,5. Among them, 4
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | haState |
-| Visible or not | Yes |
-| Description of parameters | Master node: master; Slave node: backup |
-| Default value | master |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                   |
+|--------------------------------|-----------------------------------------|
+| Parameter value                | haState                                 |
+| Visible or not                 | Yes                                     |
+| Description of parameters      | Master node: master; Slave node: backup |
+| Default value                  | master                                  |
+| Whether Reload is valid or not | No                                      |
+| Min Compatible Version         | 2.4.3                                   |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | haNodeHost |
-| Visible or not | Yes |
-| Description of parameters | HA role, Other node IP:PORT |
-| Default value | (Null) |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                       |
+|--------------------------------|-----------------------------|
+| Parameter value                | haNodeHost                  |
+| Visible or not                 | Yes                         |
+| Description of parameters      | HA role, Other node IP:PORT |
+| Default value                  | (Null)                      |
+| Whether Reload is valid or not | No                          |
+| Min Compatible Version         | 2.4.3                       |
 
 hastate and haNodeHost are supporting parameters. When hastate is master node, haNodeHost is null; when hastate is slave node, haNodeHost could be configured as connection information of management port of end node, i.e. IP:PORT. This group of parameters are applicable to Compute Node High Availability environment, while this parameter could be ignored in compute node service. For details, please refer to the [Installation and Deployment](installation-and-deployment.md) document. If the cluster mode haMode is enabled as 1, then this parameter shall set other node IP:PORT; PORT is the communication port, and separate multiple nodes by comma (refer to Reference Value Setting).
 
@@ -7358,16 +7394,16 @@ For example, 192.168.210.22:3326,192.168.210.23:3326 and 192.168.210.24:3326 bel
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | highCostSqlConcurrency |
-| Visible or not | No |
-| Description of parameters | Number of high cost statement concurrencies |
-| Default value | 32 |
-| Min value | 0 |
-| Max value | 1024 |
-| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                       |
+|--------------------------------|---------------------------------------------|
+| Parameter value                | highCostSqlConcurrency                      |
+| Visible or not                 | No                                          |
+| Description of parameters      | Number of high cost statement concurrencies |
+| Default value                  | 32                                          |
+| Min value                      | 0                                           |
+| Max value                      | 1024                                        |
+| Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above      |
+| Min Compatible Version         | 2.4.3                                       |
 
 **Parameter Effect:**
 
@@ -7402,23 +7438,23 @@ mysql> show @@debug;
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | idcId |
-| Visible or not | Yes |
-| Description of parameters | ID of IDC, 1:master center,2:DR center |
-| Default value | 0 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3.1 |
+| Property                       | Value                                  |
+|--------------------------------|----------------------------------------|
+| Parameter value                | idcId                                  |
+| Visible or not                 | Yes                                    |
+| Description of parameters      | ID of IDC, 1:master center,2:DR center |
+| Default value                  | 0                                      |
+| Whether Reload is valid or not | Yes                                    |
+| Min Compatible Version         | 2.5.3.1                                |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | idcNodeHost |
-| Visible or not | Yes |
-| Description of parameters | connection information of another IDC |
-| Default value | 192.168.200.1:3325,192.168.200.1:3325 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3.1 |
+| Property                       | Value                                 |
+|--------------------------------|---------------------------------------|
+| Parameter value                | idcNodeHost                           |
+| Visible or not                 | Yes                                   |
+| Description of parameters      | connection information of another IDC |
+| Default value                  | 192.168.200.1:3325,192.168.200.1:3325 |
+| Whether Reload is valid or not | Yes                                   |
+| Min Compatible Version         | 2.5.3.1                               |
 
 **Parameter Effect:**
 
@@ -7435,14 +7471,14 @@ For example, set idcId as 1 in server.xml of the master center, idcNodeHost for 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | idleTimeout |
-| Visible or not | No |
-| Description of parameters | Front-end idle connection timeout time |
-| Default value | 28800 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                  |
+|--------------------------------|----------------------------------------|
+| Parameter value                | idleTimeout                            |
+| Visible or not                 | No                                     |
+| Description of parameters      | Front-end idle connection timeout time |
+| Default value                  | 28800                                  |
+| Whether Reload is valid or not | No                                     |
+| Min Compatible Version         | 2.4.3                                  |
 
 **Parameter Setting:**
 
@@ -7516,14 +7552,14 @@ If it is set to 0, the front-end idle connection will never time out, and the co
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | joinable |
-| Visible or not | Yes |
-| Description of parameters | Allow JOIN Query or not, Yes: true, No: false |
-| Default value | true |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                         |
+|--------------------------------|-----------------------------------------------|
+| Parameter value                | joinable                                      |
+| Visible or not                 | Yes                                           |
+| Description of parameters      | Allow JOIN Query or not, Yes: true, No: false |
+| Default value                  | true                                          |
+| Whether Reload is valid or not | Yes                                           |
+| Min Compatible Version         | 2.4.3                                         |
 
 **Parameter Effect:**
 
@@ -7560,16 +7596,16 @@ mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept lim
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | joinBatchSize |
-| Visible or not | Yes |
-| Description of parameters | At equi-join query, record number of equi-join queries turning into IN queries per batch |
-| Default value | 1000 |
-| Min value | 100 |
-| Max value | 100000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                                                    |
+|--------------------------------|------------------------------------------------------------------------------------------|
+| Parameter value                | joinBatchSize                                                                            |
+| Visible or not                 | Yes                                                                                      |
+| Description of parameters      | At equi-join query, record number of equi-join queries turning into IN queries per batch |
+| Default value                  | 1000                                                                                     |
+| Min value                      | 100                                                                                      |
+| Max value                      | 100000                                                                                   |
+| Whether Reload is valid or not | Yes                                                                                      |
+| Min Compatible Version         | 2.4.3                                                                                    |
 
 **Parameter Effect:**
 
@@ -7602,16 +7638,16 @@ View actual execution result of general_log as follow:
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | joinCacheSize |
-| Visible or not | No |
-| Description of parameters | Off-heap memory size of JOIN cache (M) |
-| Default value | 32 |
-| Min value | 0 |
-| Max value | 128 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                  |
+|--------------------------------|----------------------------------------|
+| Parameter value                | joinCacheSize                          |
+| Visible or not                 | No                                     |
+| Description of parameters      | Off-heap memory size of JOIN cache (M) |
+| Default value                  | 32                                     |
+| Min value                      | 0                                      |
+| Max value                      | 128                                    |
+| Whether Reload is valid or not | Yes                                    |
+| Min Compatible Version         | 2.4.3                                  |
 
 **Parameter Effect:**
 
@@ -7636,16 +7672,16 @@ root> ll
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | joinLoopSize |
-| Visible or not | Yes |
-| Description of parameters | JOIN Query times per batch of each node when using BNL algorithm |
-| Default value | 1000 |
-| Min value | 100 |
-| Max value | 10000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                            |
+|--------------------------------|------------------------------------------------------------------|
+| Parameter value                | joinLoopSize                                                     |
+| Visible or not                 | Yes                                                              |
+| Description of parameters      | JOIN Query times per batch of each node when using BNL algorithm |
+| Default value                  | 1000                                                             |
+| Min value                      | 100                                                              |
+| Max value                      | 10000                                                            |
+| Whether Reload is valid or not | Yes                                                              |
+| Min Compatible Version         | 2.4.3                                                            |
 
 **Parameter Effect:**
 
@@ -7673,14 +7709,14 @@ View actual execution result of general_log:
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | keyStore |
-| Visible or not | Yes |
-| Description of parameters | Path to the data certificate .jks file for TLS connection |
-| Default value | server.jks |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.5 |
+| Property                       | Value                                                     |
+|--------------------------------|-----------------------------------------------------------|
+| Parameter value                | keyStore                                                  |
+| Visible or not                 | Yes                                                       |
+| Description of parameters      | Path to the data certificate .jks file for TLS connection |
+| Default value                  | server.jks                                                |
+| Whether Reload is valid or not | Yes                                                       |
+| Min Compatible Version         | 2.5.5                                                     |
 
 **Parameter setting:**
 
@@ -7696,14 +7732,14 @@ This parameter is used to set the path to the data certificate .jks file for con
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | keyStorePass |
-| Visible or not | Yes |
-| Description of parameters | Password of the data certificate .jks file for TLS connection |
-| Default value | BB5A70F75DD5FEB214A5623DD171CEEB |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.5 |
+| Property                       | Value                                                         |
+|--------------------------------|---------------------------------------------------------------|
+| Parameter value                | keyStorePass                                                  |
+| Visible or not                 | Yes                                                           |
+| Description of parameters      | Password of the data certificate .jks file for TLS connection |
+| Default value                  | BB5A70F75DD5FEB214A5623DD171CEEB                              |
+| Whether Reload is valid or not | Yes                                                           |
+| Min Compatible Version         | 2.5.5                                                         |
 
 **Parameter setting:**
 
@@ -7719,16 +7755,16 @@ This parameter is used to set the password of the data certificate .jks file for
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | lockWaitTimeout |
-| Visible or not | Yes |
-| Description of parameters | Timeout for obtaining metadata lock (s) |
-| Default value | 31536000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.3 |
-| Max value | 31536000 |
-| Min value | 1 |
+| Property                       | Value                                   |
+|--------------------------------|-----------------------------------------|
+| Parameter value                | lockWaitTimeout                         |
+| Visible or not                 | Yes                                     |
+| Description of parameters      | Timeout for obtaining metadata lock (s) |
+| Default value                  | 31536000                                |
+| Whether Reload is valid or not | Yes                                     |
+| Min Compatible Version         | 2.5.3                                   |
+| Max value                      | 31536000                                |
+| Min value                      | 1                                       |
 
 **Parameter Setting:**
 
@@ -7750,16 +7786,16 @@ session B execute: if the set value of lockWaitTimeout is exceeded, the followin
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | masterSourceInitWaitTimeout |
-| Visible or not | No |
-| Description of parameters | When start, Master Data Source Initialization Timeout in data node |
-| Default value | 300 |
-| Min value | 0 |
-| Max value | 600 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                              |
+|--------------------------------|--------------------------------------------------------------------|
+| Parameter value                | masterSourceInitWaitTimeout                                        |
+| Visible or not                 | No                                                                 |
+| Description of parameters      | When start, Master Data Source Initialization Timeout in data node |
+| Default value                  | 300                                                                |
+| Min value                      | 0                                                                  |
+| Max value                      | 600                                                                |
+| Whether Reload is valid or not | Yes                                                                |
+| Min Compatible Version         | 2.4.3                                                              |
 
 **Parameter Effect:**
 
@@ -7777,16 +7813,16 @@ Causes for data source timeout are: beyond limit of the system or database conne
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | maxAllowedPacket |
-| Visible or not | No |
-| Description of parameters | Max data packet allowed to be received |
-| Default value | 65536 |
-| Min value | 1 |
-| Max value | 1048576 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.5 |
+| Property                       | Value                                  |
+|--------------------------------|----------------------------------------|
+| Parameter value                | maxAllowedPacket                       |
+| Visible or not                 | No                                     |
+| Description of parameters      | Max data packet allowed to be received |
+| Default value                  | 65536                                  |
+| Min value                      | 1                                      |
+| Max value                      | 1048576                                |
+| Whether Reload is valid or not | Yes                                    |
+| Min Compatible Version         | 2.4.5                                  |
 
 **Parameter Effect:**
 
@@ -7812,28 +7848,28 @@ mysql> show variables like '%allowed%;
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | maxConnections |
-| Visible or not | Yes |
-| Description of parameters | Front-end Max Connections |
-| Default value | 5000 |
-| Min value | 300000 |
-| Max value | 1 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.4 |
+| Property                       | Value                     |
+|--------------------------------|---------------------------|
+| Parameter value                | maxConnections            |
+| Visible or not                 | Yes                       |
+| Description of parameters      | Front-end Max Connections |
+| Default value                  | 5000                      |
+| Min value                      | 300000                    |
+| Max value                      | 1                         |
+| Whether Reload is valid or not | Yes                       |
+| Min Compatible Version         | 2.4.4                     |
 
 
-| Property | Value |
-|----------|-------|
-| Parameter value | maxUserConnections |
-| Visible or not | Yes |
-| Description of parameters | User Front-end Max Connections, 0 means no limit |
-| Default value | 0 |
-| Min value | 300000 |
-| Max value | 0 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.4 |
+| Property                       | Value                                            |
+|--------------------------------|--------------------------------------------------|
+| Parameter value                | maxUserConnections                               |
+| Visible or not                 | Yes                                              |
+| Description of parameters      | User Front-end Max Connections, 0 means no limit |
+| Default value                  | 0                                                |
+| Min value                      | 300000                                           |
+| Max value                      | 0                                                |
+| Whether Reload is valid or not | Yes                                              |
+| Min Compatible Version         | 2.4.4                                            |
 
 **Parameter Effect:**
 
@@ -7884,14 +7920,14 @@ mysql> show variables like '%max_user_connections%;
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | maxIdleTransactionTimeout |
-| Visible or not | Yes |
-| Description of parameters | Non-committed Idle Transaction Timeout (ms) |
-| Default value | 86400000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.1 |
+| Property                       | Value                                       |
+|--------------------------------|---------------------------------------------|
+| Parameter value                | maxIdleTransactionTimeout                   |
+| Visible or not                 | Yes                                         |
+| Description of parameters      | Non-committed Idle Transaction Timeout (ms) |
+| Default value                  | 86400000                                    |
+| Whether Reload is valid or not | Yes                                         |
+| Min Compatible Version         | 2.5.1                                       |
 
 **Parameter Setting:**
 
@@ -7915,16 +7951,16 @@ When the parameter is set as 0, it means never timeout, that is, no limit for CO
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | maxJoinSize |
-| Visible or not | Yes |
-| Description of parameters | Row limits in JOIN query cache (M: Million, K:  Thousand) |
-| Default value | 10M |
-| Min value | 1K |
-| Max value | 1000M |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                     |
+|--------------------------------|-----------------------------------------------------------|
+| Parameter value                | maxJoinSize                                               |
+| Visible or not                 | Yes                                                       |
+| Description of parameters      | Row limits in JOIN query cache (M: Million, K:  Thousand) |
+| Default value                  | 10M                                                       |
+| Min value                      | 1K                                                        |
+| Max value                      | 1000M                                                     |
+| Whether Reload is valid or not | Yes                                                       |
+| Min Compatible Version         | 2.4.3                                                     |
 
 **Parameter Effect:**
 
@@ -7982,16 +8018,16 @@ ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | maxLatencyForRWSplit |
-| Visible or not | Yes |
-| Description of parameters | Max Latency of Readable Standby Slave in Read/write splitting |
-| Default value | 1000ms |
-| Min value | 200 |
-| Max value | 10000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.5 |
+| Property                       | Value                                                         |
+|--------------------------------|---------------------------------------------------------------|
+| Parameter value                | maxLatencyForRWSplit                                          |
+| Visible or not                 | Yes                                                           |
+| Description of parameters      | Max Latency of Readable Standby Slave in Read/write splitting |
+| Default value                  | 1000ms                                                        |
+| Min value                      | 200                                                           |
+| Max value                      | 10000                                                         |
+| Whether Reload is valid or not | Yes                                                           |
+| Min Compatible Version         | 2.4.5                                                         |
 
 **Parameter Effect:**
 
@@ -8033,14 +8069,14 @@ mysql> select * from cd;
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | maxNotInSubquery |
-| Visible or not | Hidden |
-| Description of parameters | Max number of not in in subquery |
-| Default value | 20000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.9 |
+| Property                       | Value                            |
+|--------------------------------|----------------------------------|
+| Parameter value                | maxNotInSubquery                 |
+| Visible or not                 | Hidden                           |
+| Description of parameters      | Max number of not in in subquery |
+| Default value                  | 20000                            |
+| Whether Reload is valid or not | Yes                              |
+| Min Compatible Version         | 2.4.9                            |
 
 **Parameter Setting:**
 
@@ -8100,16 +8136,16 @@ config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql)
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | maxReconnectConfigDBTimes |
-| Visible or not | No |
-| Description of parameters | Max times of reconnecting ConfigDB |
-| Default value | 3 |
-| Max value | 1000 |
-| Min value | 0 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.4 |
+| Property                       | Value                              |
+|--------------------------------|------------------------------------|
+| Parameter value                | maxReconnectConfigDBTimes          |
+| Visible or not                 | No                                 |
+| Description of parameters      | Max times of reconnecting ConfigDB |
+| Default value                  | 3                                  |
+| Max value                      | 1000                               |
+| Min value                      | 0                                  |
+| Whether Reload is valid or not | Yes                                |
+| Min Compatible Version         | 2.5.4                              |
 
 **Parameter Setting:**
 
@@ -8127,16 +8163,16 @@ The parameter can prevent long time consumption for configDB connection during t
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | maxSqlRecordLength |
-| Visible or not | Yes |
-| Description of parameters | Max length of SQL statement record in SQL execution statistics |
-| Default value | 1000 |
-| Min value | 1000 |
-| Max value | 16000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.5 |
+| Property                       | Value                                                          |
+|--------------------------------|----------------------------------------------------------------|
+| Parameter value                | maxSqlRecordLength                                             |
+| Visible or not                 | Yes                                                            |
+| Description of parameters      | Max length of SQL statement record in SQL execution statistics |
+| Default value                  | 1000                                                           |
+| Min value                      | 1000                                                           |
+| Max value                      | 16000                                                          |
+| Whether Reload is valid or not | Yes                                                            |
+| Min Compatible Version         | 2.4.5                                                          |
 
 **Parameter Effect:**
 
@@ -8150,32 +8186,32 @@ When the length of the executed SQL statement exceeds the set length, it will be
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | ndbSqlAddr |
-| Visible or not | Yes |
-| Description of parameters | NDB SQL-end IP address |
-| Default value | localhost:3329 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.2 |
+| Property                       | Value                  |
+|--------------------------------|------------------------|
+| Parameter value                | ndbSqlAddr             |
+| Visible or not                 | Yes                    |
+| Description of parameters      | NDB SQL-end IP address |
+| Default value                  | localhost:3329         |
+| Whether Reload is valid or not | No                     |
+| Min Compatible Version         | 2.5.2                  |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | ndbSqlUser |
-| Visible or not | Yes |
-| Description of parameters | NDB SQL front-end username |
-| Default value | root |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.2 |
+| Property                       | Value                      |
+|--------------------------------|----------------------------|
+| Parameter value                | ndbSqlUser                 |
+| Visible or not                 | Yes                        |
+| Description of parameters      | NDB SQL front-end username |
+| Default value                  | root                       |
+| Whether Reload is valid or not | No                         |
+| Min Compatible Version         | 2.5.2                      |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | ndbSqlPass |
-| Visible or not | Yes |
-| Description of parameters | NDB SQL front-end password |
-| Default value | root |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.2 |
+| Property                       | Value                      |
+|--------------------------------|----------------------------|
+| Parameter value                | ndbSqlPass                 |
+| Visible or not                 | Yes                        |
+| Description of parameters      | NDB SQL front-end password |
+| Default value                  | root                       |
+| Whether Reload is valid or not | No                         |
+| Min Compatible Version         | 2.5.2                      |
 
 **Parameter Setting:**
 
@@ -8191,14 +8227,14 @@ ndbSqlAddr, ndbSqlUser, ndbSqlPass are supporting parameters: ndbSqlAddr is phys
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | ndbSqlDataAddr |
-| Visible or not | Yes |
-| Description of parameters | IP address and port receiving NDB SQL connection |
-| Default value | 127.0.0.1:3327 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.2 |
+| Property                       | Value                                            |
+|--------------------------------|--------------------------------------------------|
+| Parameter value                | ndbSqlDataAddr                                   |
+| Visible or not                 | Yes                                              |
+| Description of parameters      | IP address and port receiving NDB SQL connection |
+| Default value                  | 127.0.0.1:3327                                   |
+| Whether Reload is valid or not | No                                               |
+| Min Compatible Version         | 2.5.2                                            |
 
 **Parameter Setting:**
 
@@ -8212,14 +8248,14 @@ The connection from NDB SQL to compute node, that is the communication port from
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | ndbSqlMode |
-| Visible or not | Yes |
-| Description of parameters | Mode used by NDB SQL node (NDB execution mode: none: Forbidden NDB function, the default value; local: NDB SQL server and compute node server are on the same computer) |
-| Default value | none |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.2 |
+| Property                       | Value                                                                                                                                                                   |
+|--------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Parameter value                | ndbSqlMode                                                                                                                                                              |
+| Visible or not                 | Yes                                                                                                                                                                     |
+| Description of parameters      | Mode used by NDB SQL node (NDB execution mode: none: Forbidden NDB function, the default value; local: NDB SQL server and compute node server are on the same computer) |
+| Default value                  | none                                                                                                                                                                    |
+| Whether Reload is valid or not | No                                                                                                                                                                      |
+| Min Compatible Version         | 2.5.2                                                                                                                                                                   |
 
 **Parameter Setting:**
 
@@ -8233,23 +8269,23 @@ none: the default value, representing Forbidden NDB function; local: NDB SQL ser
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | ndbSqlVersion |
-| Visible or not | Yes |
-| Description of parameters | NDB SQL Version Number |
-| Default value | 5.7.24 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.2 |
+| Property                       | Value                  |
+|--------------------------------|------------------------|
+| Parameter value                | ndbSqlVersion          |
+| Visible or not                 | Yes                    |
+| Description of parameters      | NDB SQL Version Number |
+| Default value                  | 5.7.24                 |
+| Whether Reload is valid or not | No                     |
+| Min Compatible Version         | 2.5.2                  |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | ndbVersion |
-| Visible or not | Yes |
-| Description of parameters | NDB Engine Version Number |
-| Default value | 7.5.12 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.2 |
+| Property                       | Value                     |
+|--------------------------------|---------------------------|
+| Parameter value                | ndbVersion                |
+| Visible or not                 | Yes                       |
+| Description of parameters      | NDB Engine Version Number |
+| Default value                  | 7.5.12                    |
+| Whether Reload is valid or not | No                        |
+| Min Compatible Version         | 2.5.2                     |
 
 **Parameter Setting:**
 
@@ -8264,14 +8300,14 @@ ndbSqlVersion and ndbVersion are of corresponding relation, and please refer to 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | operateMode |
-| Visible or not | No |
-| Description of parameters | Operating mode of compute node |
-| Default value | 0 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.6 |
+| Property                       | Value                          |
+|--------------------------------|--------------------------------|
+| Parameter value                | operateMode                    |
+| Visible or not                 | No                             |
+| Description of parameters      | Operating mode of compute node |
+| Default value                  | 0                              |
+| Whether Reload is valid or not | Yes                            |
+| Min Compatible Version         | 2.5.6                          |
 
 **Parameter Setting:**
 
@@ -8335,16 +8371,16 @@ In debug mode, the compute node will force to enable the parameters related to t
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | parkPeriod |
-| Visible or not | Yes |
-| Description of parameters | Thread Dormancy Period at the idle time of Message System (ns) |
-| Default value | 100000 |
-| Min value | 1000000 |
-| Max value | 1000 |
-| Whether Reload is valid or not | N for v.2.4.5 Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                          |
+|--------------------------------|----------------------------------------------------------------|
+| Parameter value                | parkPeriod                                                     |
+| Visible or not                 | Yes                                                            |
+| Description of parameters      | Thread Dormancy Period at the idle time of Message System (ns) |
+| Default value                  | 100000                                                         |
+| Min value                      | 1000000                                                        |
+| Max value                      | 1000                                                           |
+| Whether Reload is valid or not | N for v.2.4.5 Y for v.2.4.7 and above                          |
+| Min Compatible Version         | 2.4.3                                                          |
 
 **Parameter Setting:**
 
@@ -8362,14 +8398,14 @@ This parameter is used for adjusting sleep time of cost message queue thread at 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | pingLogCleanPeriod |
-| Visible or not | Hidden |
-| Description of parameters | Ping Log Clean Period, 3 by default |
-| Default value | 3 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.9 |
+| Property                       | Value                               |
+|--------------------------------|-------------------------------------|
+| Parameter value                | pingLogCleanPeriod                  |
+| Visible or not                 | Hidden                              |
+| Description of parameters      | Ping Log Clean Period, 3 by default |
+| Default value                  | 3                                   |
+| Whether Reload is valid or not | Yes                                 |
+| Min Compatible Version         | 2.4.9                               |
 
 **Parameter Setting:**
 
@@ -8387,14 +8423,14 @@ pingLogCleanPeriod parameter is 3 by default, with the optional unit being Hour,
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | pingLogCleanPeriodUnit |
-| Visible or not | Hidden |
-| Description of parameters | Unit of ping log clean period, 2 by default, 0: Hour, 1: Day, 2: Month |
-| Default value | 2 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.9 |
+| Property                       | Value                                                                  |
+|--------------------------------|------------------------------------------------------------------------|
+| Parameter value                | pingLogCleanPeriodUnit                                                 |
+| Visible or not                 | Hidden                                                                 |
+| Description of parameters      | Unit of ping log clean period, 2 by default, 0: Hour, 1: Day, 2: Month |
+| Default value                  | 2                                                                      |
+| Whether Reload is valid or not | Yes                                                                    |
+| Min Compatible Version         | 2.4.9                                                                  |
 
 **Parameter Setting:**
 
@@ -8412,14 +8448,14 @@ pingLogCleanPeriodUnit parameter is 2 by default, meaning that the unit of ping 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | pingPeriod |
-| Visible or not | Hidden |
-| Description of parameters | ping server period, Unit: s, 3600s by default, min 300s |
-| Default value | 3600 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.9 |
+| Property                       | Value                                                   |
+|--------------------------------|---------------------------------------------------------|
+| Parameter value                | pingPeriod                                              |
+| Visible or not                 | Hidden                                                  |
+| Description of parameters      | ping server period, Unit: s, 3600s by default, min 300s |
+| Default value                  | 3600                                                    |
+| Whether Reload is valid or not | Yes                                                     |
+| Min Compatible Version         | 2.4.9                                                   |
 
 **Parameter Setting:**
 
@@ -8443,14 +8479,14 @@ In the detection process, for a certain IP address, the program will automatical
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | prefetchBatchInit |
-| Visible or not | Yes |
-| Description of parameters | The initial value of the auto-incremental batch size |
-| Default value | 100 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.4 |
+| Property                       | Value                                                |
+|--------------------------------|------------------------------------------------------|
+| Parameter value                | prefetchBatchInit                                    |
+| Visible or not                 | Yes                                                  |
+| Description of parameters      | The initial value of the auto-incremental batch size |
+| Default value                  | 100                                                  |
+| Whether Reload is valid or not | Yes                                                  |
+| Min Compatible Version         | 2.5.4                                                |
 
 **Parameter Setting:**
 
@@ -8468,16 +8504,16 @@ The initial value can be configured within the upper and lower limits of the aut
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | prefetchBatchMax |
-| Visible or not | Yes |
-| Description of parameters | The upper limit of the auto-incremental batch size |
-| Default value | 10000 |
-| Min value | 10 |
-| Max value | 100000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.4 |
+| Property                       | Value                                              |
+|--------------------------------|----------------------------------------------------|
+| Parameter value                | prefetchBatchMax                                   |
+| Visible or not                 | Yes                                                |
+| Description of parameters      | The upper limit of the auto-incremental batch size |
+| Default value                  | 10000                                              |
+| Min value                      | 10                                                 |
+| Max value                      | 100000                                             |
+| Whether Reload is valid or not | Yes                                                |
+| Min Compatible Version         | 2.5.4                                              |
 
 
 **Parameter Setting:**
@@ -8494,16 +8530,16 @@ The upper limit of the auto-incremental batch size. If 1000 is set, the maximum 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | prefetchBatchMin |
-| Visible or not | Yes |
-| Description of parameters | The lower limit of the auto-incremental batch size |
-| Default value | 10 |
-| Min value | 2 |
-| Max value | 1000 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.4 |
+| Property                       | Value                                              |
+|--------------------------------|----------------------------------------------------|
+| Parameter value                | prefetchBatchMin                                   |
+| Visible or not                 | Yes                                                |
+| Description of parameters      | The lower limit of the auto-incremental batch size |
+| Default value                  | 10                                                 |
+| Min value                      | 2                                                  |
+| Max value                      | 1000                                               |
+| Whether Reload is valid or not | Yes                                                |
+| Min Compatible Version         | 2.5.4                                              |
 
 **Parameter Setting:**
 
@@ -8519,16 +8555,16 @@ The lower limit of the auto-incremental prefetch batch size. If 100 is set, the 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | prefetchValidTimeout |
-| Visible or not | Yes |
-| Description of parameters | The valid timeout time of prefetch(seconds) |
-| Default value | 10 |
-| Min value | 3 |
-| Max value | 86400 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.4 |
+| Property                       | Value                                       |
+|--------------------------------|---------------------------------------------|
+| Parameter value                | prefetchValidTimeout                        |
+| Visible or not                 | Yes                                         |
+| Description of parameters      | The valid timeout time of prefetch(seconds) |
+| Default value                  | 10                                          |
+| Min value                      | 3                                           |
+| Max value                      | 86400                                       |
+| Whether Reload is valid or not | Yes                                         |
+| Min Compatible Version         | 2.5.4                                       |
 
 **Parameter Setting:**
 
@@ -8544,16 +8580,16 @@ The valid timeout time of prefetching the auto-incremental batch. When set as 0,
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | processorExecutor |
-| Visible or not | Yes |
-| Description of parameters | Number of threads of processors |
-| Default value | 4 |
-| Min value | 2 |
-| Max value | 8 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                           |
+|--------------------------------|---------------------------------|
+| Parameter value                | processorExecutor               |
+| Visible or not                 | Yes                             |
+| Description of parameters      | Number of threads of processors |
+| Default value                  | 4                               |
+| Min value                      | 2                               |
+| Max value                      | 8                               |
+| Whether Reload is valid or not | No                              |
+| Min Compatible Version         | 2.4.3                           |
 
 **Parameter Setting:**
 
@@ -8571,16 +8607,16 @@ Log in to 3325 port, execute the show @@threadpool; command, and then you could 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | processors |
-| Visible or not | Yes |
-| Description of parameters | Number of processors |
-| Default value | 8 |
-| Min value | 4 |
-| Max value | 128 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                |
+|--------------------------------|----------------------|
+| Parameter value                | processors           |
+| Visible or not                 | Yes                  |
+| Description of parameters      | Number of processors |
+| Default value                  | 8                    |
+| Min value                      | 4                    |
+| Max value                      | 128                  |
+| Whether Reload is valid or not | No                   |
+| Min Compatible Version         | 2.4.3                |
 
 **Parameter Setting:**
 
@@ -8598,14 +8634,14 @@ Log in to 3325 port, execute `show @@threadpool;` command, and then you could vi
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | readOnly |
-| Visible or not | No |
-| Description of parameters | readOnly mode or not |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.8 |
+| Property                       | Value                |
+|--------------------------------|----------------------|
+| Parameter value                | readOnly             |
+| Visible or not                 | No                   |
+| Description of parameters      | readOnly mode or not |
+| Default value                  | false                |
+| Whether Reload is valid or not | Yes                  |
+| Min Compatible Version         | 2.4.8                |
 
 **Parameter Setting:**
 
@@ -8633,14 +8669,14 @@ ERROR 1289 (HY000): Command not allowed in Read-Only mode.
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordAuditlog |
-| Visible or not | No |
-| Description of parameters | Record audit log |
-| Default value | true |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value            |
+|--------------------------------|------------------|
+| Parameter value                | recordAuditlog   |
+| Visible or not                 | No               |
+| Description of parameters      | Record audit log |
+| Default value                  | true             |
+| Whether Reload is valid or not | Yes              |
+| Min Compatible Version         | 2.5.0            |
 
 **Parameter Setting:**
 
@@ -8658,14 +8694,14 @@ recordAuditlog enables audit log or not. This parameter is used for controlling 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordCrossDNJoin |
-| Visible or not | No |
-| Description of parameters | Record cross-node JOIN in log |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                         |
+|--------------------------------|-------------------------------|
+| Parameter value                | recordCrossDNJoin             |
+| Visible or not                 | No                            |
+| Description of parameters      | Record cross-node JOIN in log |
+| Default value                  | false                         |
+| Whether Reload is valid or not | Yes                           |
+| Min Compatible Version         | 2.4.7                         |
 
 **Parameter Setting:**
 
@@ -8700,14 +8736,14 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordDDL |
-| Visible or not | No |
-| Description of parameters | Record DDL statement in log |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                       |
+|--------------------------------|-----------------------------|
+| Parameter value                | recordDDL                   |
+| Visible or not                 | No                          |
+| Description of parameters      | Record DDL statement in log |
+| Default value                  | false                       |
+| Whether Reload is valid or not | Yes                         |
+| Min Compatible Version         | 2.4.7                       |
 
 **Parameter Setting:**
 
@@ -8736,14 +8772,14 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordDeadLockSQL |
-| Visible or not | No |
-| Description of parameters | The log records the statement triggering deadlock |
-| Default value | true |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                                             |
+|--------------------------------|---------------------------------------------------|
+| Parameter value                | recordDeadLockSQL                                 |
+| Visible or not                 | No                                                |
+| Description of parameters      | The log records the statement triggering deadlock |
+| Default value                  | true                                              |
+| Whether Reload is valid or not | Yes                                               |
+| Min Compatible Version         | 2.4.7                                             |
 
 **Parameter Setting:**
 
@@ -8768,14 +8804,14 @@ recordDeadLockSQL log records the statement triggering deadlock:
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordHotDBErrors |
-| Visible or not | No |
-| Description of parameters | The log records error message returned by HotDB |
-| Default value | true |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.8 |
+| Property                       | Value                                           |
+|--------------------------------|-------------------------------------------------|
+| Parameter value                | recordHotDBErrors                               |
+| Visible or not                 | No                                              |
+| Description of parameters      | The log records error message returned by HotDB |
+| Default value                  | true                                            |
+| Whether Reload is valid or not | Yes                                             |
+| Min Compatible Version         | 2.4.8                                           |
 
 **Parameter Setting:**
 
@@ -8799,14 +8835,14 @@ For example: when executing Create statement by user without create privilege, t
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordHotDBWarnings |
-| Visible or not | No |
-| Description of parameters | The log records the warning message returned by the compute node |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                                                            |
+|--------------------------------|------------------------------------------------------------------|
+| Parameter value                | recordHotDBWarnings                                              |
+| Visible or not                 | No                                                               |
+| Description of parameters      | The log records the warning message returned by the compute node |
+| Default value                  | false                                                            |
+| Whether Reload is valid or not | Yes                                                              |
+| Min Compatible Version         | 2.4.7                                                            |
 
 **Parameter Setting:**
 
@@ -8835,14 +8871,14 @@ View `logs/sql.log` of the compute node installation directory
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordLimitOffsetWithoutOrderby |
-| Visible or not | No |
-| Description of parameters | The log records the limit statement without orderby |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                                               |
+|--------------------------------|-----------------------------------------------------|
+| Parameter value                | recordLimitOffsetWithoutOrderby                     |
+| Visible or not                 | No                                                  |
+| Description of parameters      | The log records the limit statement without orderby |
+| Default value                  | false                                               |
+| Whether Reload is valid or not | Yes                                                 |
+| Min Compatible Version         | 2.4.7                                               |
 
 **Parameter Setting:**
 
@@ -8873,14 +8909,14 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordMySQLErrors |
-| Visible or not | No |
-| Description of parameters | The log records error message returned by MySQL |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                                           |
+|--------------------------------|-------------------------------------------------|
+| Parameter value                | recordMySQLErrors                               |
+| Visible or not                 | No                                              |
+| Description of parameters      | The log records error message returned by MySQL |
+| Default value                  | false                                           |
+| Whether Reload is valid or not | Yes                                             |
+| Min Compatible Version         | 2.4.7                                           |
 
 **Parameter Setting:**
 
@@ -8910,14 +8946,14 @@ View `logs/hotdb.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordMySQLWarnings |
-| Visible or not | Hidden |
-| Description of parameters | The log records the warning message returned by MySQL |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                                                 |
+|--------------------------------|-------------------------------------------------------|
+| Parameter value                | recordMySQLWarnings                                   |
+| Visible or not                 | Hidden                                                |
+| Description of parameters      | The log records the warning message returned by MySQL |
+| Default value                  | false                                                 |
+| Whether Reload is valid or not | Yes                                                   |
+| Min Compatible Version         | 2.4.7                                                 |
 
 **Parameter Setting:**
 
@@ -8950,14 +8986,14 @@ View `logs/sql.log` of compute node installation directory,
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordSql |
-| Visible or not | Yes |
-| Description of parameters | Make statistics of SQL execution condition or not |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                             |
+|--------------------------------|---------------------------------------------------|
+| Parameter value                | recordSql                                         |
+| Visible or not                 | Yes                                               |
+| Description of parameters      | Make statistics of SQL execution condition or not |
+| Default value                  | false                                             |
+| Whether Reload is valid or not | Yes                                               |
+| Min Compatible Version         | 2.4.3                                             |
 
 **Parameter Setting:**
 
@@ -9024,14 +9060,14 @@ crc: 321944166562
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordSqlAuditlog |
-| Visible or not | No |
-| Description of parameters | Record SQL audit log. |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.5 |
+| Property                       | Value                 |
+|--------------------------------|-----------------------|
+| Parameter value                | recordSqlAuditlog     |
+| Visible or not                 | No                    |
+| Description of parameters      | Record SQL audit log. |
+| Default value                  | false                 |
+| Whether Reload is valid or not | Yes                   |
+| Min Compatible Version         | 2.5.5                 |
 
 **Parameter Setting:**
 
@@ -9049,14 +9085,14 @@ For example, execute DDL on the server of compute node and view the log output.
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordSqlAuditlog |
-| Visible or not | No |
-| Description of parameters | Record SQL audit log. |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.5 |
+| Property                       | Value                 |
+|--------------------------------|-----------------------|
+| Parameter value                | recordSqlAuditlog     |
+| Visible or not                 | No                    |
+| Description of parameters      | Record SQL audit log. |
+| Default value                  | false                 |
+| Whether Reload is valid or not | Yes                   |
+| Min Compatible Version         | 2.5.5                 |
 
 
 **Parameter Setting:**
@@ -9100,14 +9136,14 @@ For example, execute DDL on the server of compute node and view the log output.
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordSQLIntercepted |
-| Visible or not | No |
-| Description of parameters | The log records the intercepted statement |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                                     |
+|--------------------------------|-------------------------------------------|
+| Parameter value                | recordSQLIntercepted                      |
+| Visible or not                 | No                                        |
+| Description of parameters      | The log records the intercepted statement |
+| Default value                  | false                                     |
+| Whether Reload is valid or not | Yes                                       |
+| Min Compatible Version         | 2.4.7                                     |
 
 **Parameter Setting:**
 
@@ -9131,14 +9167,14 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordSQLKeyConflict |
-| Visible or not | No |
-| Description of parameters | The log records the statement with Primary Key conflict and violating foreign key constraint |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                                                                                        |
+|--------------------------------|----------------------------------------------------------------------------------------------|
+| Parameter value                | recordSQLKeyConflict                                                                         |
+| Visible or not                 | No                                                                                           |
+| Description of parameters      | The log records the statement with Primary Key conflict and violating foreign key constraint |
+| Default value                  | false                                                                                        |
+| Whether Reload is valid or not | Yes                                                                                          |
+| Min Compatible Version         | 2.4.7                                                                                        |
 
 **Parameter Setting:**
 
@@ -9182,14 +9218,14 @@ insert into vtab001 values(1,'aaa');
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordSQLSyntaxError |
-| Visible or not | No |
-| Description of parameters | The log records statement with Syntax error |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                                       |
+|--------------------------------|---------------------------------------------|
+| Parameter value                | recordSQLSyntaxError                        |
+| Visible or not                 | No                                          |
+| Description of parameters      | The log records statement with Syntax error |
+| Default value                  | false                                       |
+| Whether Reload is valid or not | Yes                                         |
+| Min Compatible Version         | 2.4.7                                       |
 
 **Parameter Setting:**
 
@@ -9219,14 +9255,14 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordSQLUnsupported |
-| Visible or not | No |
-| Description of parameters | The log records the statement not supported |
-| Default value | true |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                                       |
+|--------------------------------|---------------------------------------------|
+| Parameter value                | recordSQLUnsupported                        |
+| Visible or not                 | No                                          |
+| Description of parameters      | The log records the statement not supported |
+| Default value                  | true                                        |
+| Whether Reload is valid or not | Yes                                         |
+| Min Compatible Version         | 2.4.7                                       |
 
 **Parameter Setting:**
 
@@ -9264,14 +9300,14 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordSubQuery |
-| Visible or not | No |
-| Description of parameters | The log records Subquery |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                    |
+|--------------------------------|--------------------------|
+| Parameter value                | recordSubQuery           |
+| Visible or not                 | No                       |
+| Description of parameters      | The log records Subquery |
+| Default value                  | false                    |
+| Whether Reload is valid or not | Yes                      |
+| Min Compatible Version         | 2.4.7                    |
 
 **Parameter Setting:**
 
@@ -9301,14 +9337,14 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | recordUNION |
-| Visible or not | No |
-| Description of parameters | The log records UNION |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.7 |
+| Property                       | Value                 |
+|--------------------------------|-----------------------|
+| Parameter value                | recordUNION           |
+| Visible or not                 | No                    |
+| Description of parameters      | The log records UNION |
+| Default value                  | false                 |
+| Whether Reload is valid or not | Yes                   |
+| Min Compatible Version         | 2.4.7                 |
 
 **Parameter Setting:**
 
@@ -9338,14 +9374,14 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | routeByRelativeCol |
-| Visible or not | No |
-| Description of parameters | It does not include the route via Secondary Index Field at the time of sharding key |
-| Default value | false |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.2 |
+| Property                       | Value                                                                               |
+|--------------------------------|-------------------------------------------------------------------------------------|
+| Parameter value                | routeByRelativeCol                                                                  |
+| Visible or not                 | No                                                                                  |
+| Description of parameters      | It does not include the route via Secondary Index Field at the time of sharding key |
+| Default value                  | false                                                                               |
+| Whether Reload is valid or not | No                                                                                  |
+| Min Compatible Version         | 2.5.2                                                                               |
 
 **Parameter Setting:**
 
@@ -9363,14 +9399,14 @@ This function is OFF by default, that is, it does not route via Secondary Index 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | serverId |
-| Visible or not | Yes |
-| Description of parameters | Cluster node number 1-N (number of nodes), unique in cluster |
-| Default value | 1 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.5.0 |
+| Property                       | Value                                                        |
+|--------------------------------|--------------------------------------------------------------|
+| Parameter value                | serverId                                                     |
+| Visible or not                 | Yes                                                          |
+| Description of parameters      | Cluster node number 1-N (number of nodes), unique in cluster |
+| Default value                  | 1                                                            |
+| Whether Reload is valid or not | No                                                           |
+| Min Compatible Version         | 2.5.0                                                        |
 
 **Parameter Setting:**
 
@@ -9388,23 +9424,23 @@ It is used for dividing connection communication ID among the nodes in the clust
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | service port |
-| Visible or not | Yes |
-| Description of parameters | service port |
-| Default value | 3323 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value        |
+|--------------------------------|--------------|
+| Parameter value                | service port |
+| Visible or not                 | Yes          |
+| Description of parameters      | service port |
+| Default value                  | 3323         |
+| Whether Reload is valid or not | No           |
+| Min Compatible Version         | 2.4.3        |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | management port |
-| Visible or not | Yes |
-| Description of parameters | management port |
-| Default value | 3325 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value           |
+|--------------------------------|-----------------|
+| Parameter value                | management port |
+| Visible or not                 | Yes             |
+| Description of parameters      | management port |
+| Default value                  | 3325            |
+| Whether Reload is valid or not | No              |
+| Min Compatible Version         | 2.4.3           |
 
 **Parameter Effect:**
 
@@ -9416,14 +9452,14 @@ Management port is used to monitor compute node service information and monitori
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | showAllAffectedRowsInGlobalTable |
-| Visible or not | Yes |
-| Description of parameters | Whether Global Table IDU statement shows total number of AffectedRows in all nodes |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                                              |
+|--------------------------------|------------------------------------------------------------------------------------|
+| Parameter value                | showAllAffectedRowsInGlobalTable                                                   |
+| Visible or not                 | Yes                                                                                |
+| Description of parameters      | Whether Global Table IDU statement shows total number of AffectedRows in all nodes |
+| Default value                  | false                                                                              |
+| Whether Reload is valid or not | Yes                                                                                |
+| Min Compatible Version         | 2.4.3                                                                              |
 
 **Parameter Effect:**
 
@@ -9460,14 +9496,14 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | skipDatatypeCheck |
-| Visible or not | No |
-| Description of parameters | Control whether to skip checking of column data type in table structure |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.5 |
+| Property                       | Value                                                                   |
+|--------------------------------|-------------------------------------------------------------------------|
+| Parameter value                | skipDatatypeCheck                                                       |
+| Visible or not                 | No                                                                      |
+| Description of parameters      | Control whether to skip checking of column data type in table structure |
+| Default value                  | false                                                                   |
+| Whether Reload is valid or not | Yes                                                                     |
+| Min Compatible Version         | 2.4.5                                                                   |
 
 **Parameter Setting:**
 
@@ -9507,16 +9543,16 @@ Query OK, 0 rows affected (0.23 sec)
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | socketBacklog |
-| Visible or not | No |
-| Description of parameters | service port Socket backlog |
-| Default value | 1000 |
-| Min value | 1000 |
-| Max value | 4000 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                       |
+|--------------------------------|-----------------------------|
+| Parameter value                | socketBacklog               |
+| Visible or not                 | No                          |
+| Description of parameters      | service port Socket backlog |
+| Default value                  | 1000                        |
+| Min value                      | 1000                        |
+| Max value                      | 4000                        |
+| Whether Reload is valid or not | No                          |
+| Min Compatible Version         | 2.4.3                       |
 
 **Parameter Setting:**
 
@@ -9532,16 +9568,16 @@ Service port socket requires a certain period of time to process socket connecti
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | sqlTimeout |
-| Visible or not | Yes |
-| Description of parameters | Sql Execution Timeout (S) |
-| Default value | 3600 |
-| Min value | 1 |
-| Max value | 28800 |
+| Property                       | Value                                 |
+|--------------------------------|---------------------------------------|
+| Parameter value                | sqlTimeout                            |
+| Visible or not                 | Yes                                   |
+| Description of parameters      | Sql Execution Timeout (S)             |
+| Default value                  | 3600                                  |
+| Min value                      | 1                                     |
+| Max value                      | 28800                                 |
 | Whether Reload is valid or not | N for v.2.4.5 Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.3 |
+| Min Compatible Version         | 2.4.3                                 |
 
 **Parameter Effect:**
 
@@ -9561,14 +9597,14 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | sslUseSM4 |
-| Visible or not | No |
-| Description of parameters | Whether to support SM4 native cipher algorithm |
-| Default value | no |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.5 |
+| Property                       | Value                                          |
+|--------------------------------|------------------------------------------------|
+| Parameter value                | sslUseSM4                                      |
+| Visible or not                 | No                                             |
+| Description of parameters      | Whether to support SM4 native cipher algorithm |
+| Default value                  | no                                             |
+| Whether Reload is valid or not | Yes                                            |
+| Min Compatible Version         | 2.5.5                                          |
 
 **Parameter Setting:**
 
@@ -9594,16 +9630,16 @@ For users, this function can only be viewed through packet capture. Example: if 
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | statisticsUpdatePeriod |
-| Visible or not | Yes |
-| Description of parameters | Command Statistics Persistence Period |
-| Default value | 0 Non-persistence |
-| Min value | 0 |
-| Max value | 3600000 |
+| Property                       | Value                                 |
+|--------------------------------|---------------------------------------|
+| Parameter value                | statisticsUpdatePeriod                |
+| Visible or not                 | Yes                                   |
+| Description of parameters      | Command Statistics Persistence Period |
+| Default value                  | 0 Non-persistence                     |
+| Min value                      | 0                                     |
+| Max value                      | 3600000                               |
 | Whether Reload is valid or not | N for v.2.4.5 Y for v.2.4.7 and above |
-| Min Compatible Version | 2.4.3 |
+| Min Compatible Version         | 2.4.3                                 |
 
 **Parameter Effect:**
 
@@ -9629,14 +9665,14 @@ Empty set (0.03 sec)
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | strategyForRWSplit |
-| Visible or not | Yes |
-| Description of parameters | Enable Read/write splitting or not |
-| Default value | 0 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                              |
+|--------------------------------|------------------------------------|
+| Parameter value                | strategyForRWSplit                 |
+| Visible or not                 | Yes                                |
+| Description of parameters      | Enable Read/write splitting or not |
+| Default value                  | 0                                  |
+| Whether Reload is valid or not | Yes                                |
+| Min Compatible Version         | 2.4.3                              |
 
 **Parameter Effect:**
 
@@ -9761,14 +9797,14 @@ For details, please refer to [Read/write splitting](#readwrite-splitting).
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | switchByLogInFailover |
-| Visible or not | No |
-| Description of parameters | When failover, control whether to determine switch priority by Master_Log_File position of various data sources under the node or not |
-| Default value | false |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.5 |
+| Property                       | Value                                                                                                                                 |
+|--------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| Parameter value                | switchByLogInFailover                                                                                                                 |
+| Visible or not                 | No                                                                                                                                    |
+| Description of parameters      | When failover, control whether to determine switch priority by Master_Log_File position of various data sources under the node or not |
+| Default value                  | false                                                                                                                                 |
+| Whether Reload is valid or not | Yes                                                                                                                                   |
+| Min Compatible Version         | 2.4.5                                                                                                                                 |
 
 **Parameter Setting:**
 
@@ -9789,16 +9825,16 @@ For details, please refer to [Read/write splitting](#readwrite-splitting).
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | switchoverTimeoutForTrans |
-| Visible or not | Yes |
-| Description of parameters | When making Manual Switch, the old transaction Wait Commit Timeout (ms) |
-| Default value | 3000 |
-| Min value | 1800000 |
-| Max value | 0 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                                   |
+|--------------------------------|-------------------------------------------------------------------------|
+| Parameter value                | switchoverTimeoutForTrans                                               |
+| Visible or not                 | Yes                                                                     |
+| Description of parameters      | When making Manual Switch, the old transaction Wait Commit Timeout (ms) |
+| Default value                  | 3000                                                                    |
+| Min value                      | 1800000                                                                 |
+| Max value                      | 0                                                                       |
+| Whether Reload is valid or not | Yes                                                                     |
+| Min Compatible Version         | 2.4.3                                                                   |
 
 **Parameter Setting:**
 
@@ -9886,16 +9922,16 @@ For example:
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | timerExecutor |
-| Visible or not | Yes |
-| Description of parameters | Number of threads of timers |
-| Default value | 4 |
-| Min value | 2 |
-| Max value | 8 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                       |
+|--------------------------------|-----------------------------|
+| Parameter value                | timerExecutor               |
+| Visible or not                 | Yes                         |
+| Description of parameters      | Number of threads of timers |
+| Default value                  | 4                           |
+| Min value                      | 2                           |
+| Max value                      | 8                           |
+| Whether Reload is valid or not | No                          |
+| Min Compatible Version         | 2.4.3                       |
 
 **Parameter Setting:**
 
@@ -9911,14 +9947,14 @@ The parameter [adaptiveProcessor](#adaptiveprocessor) is enabled by default, and
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | timestampProxy |
-| Visible or not | Yes |
-| Description of parameters | TimeProxy mode |
-| Default value | 0 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.1 |
+| Property                       | Value          |
+|--------------------------------|----------------|
+| Parameter value                | timestampProxy |
+| Visible or not                 | Yes            |
+| Description of parameters      | TimeProxy mode |
+| Default value                  | 0              |
+| Whether Reload is valid or not | Yes            |
+| Min Compatible Version         | 2.5.1          |
 
 **Parameter Setting:**
 
@@ -9948,16 +9984,16 @@ This parameter is used for Complete Global Proxy of the table with on update cur
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | unusualSQLMode |
-| Visible or not | No |
-| Description of parameters | Controls the frequency of unusualSQL outputing logs |
-| Default value | 1 |
-| Min value | 0 |
-| Max value | / |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.5 |
+| Property                       | Value                                               |
+|--------------------------------|-----------------------------------------------------|
+| Parameter value                | unusualSQLMode                                      |
+| Visible or not                 | No                                                  |
+| Description of parameters      | Controls the frequency of unusualSQL outputing logs |
+| Default value                  | 1                                                   |
+| Min value                      | 0                                                   |
+| Max value                      | /                                                   |
+| Whether Reload is valid or not | Yes                                                 |
+| Min Compatible Version         | 2.5.5                                               |
 
 **Parameter Setting:**
 
@@ -10079,32 +10115,32 @@ when configured as 0, all counters will be recorded, and logs will be output whe
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | url |
-| Visible or not | Yes |
-| Description of parameters | configDB address |
-| Default value | jdbc:mysql://127.0.0.1:3306/hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                    |
+|--------------------------------|------------------------------------------|
+| Parameter value                | url                                      |
+| Visible or not                 | Yes                                      |
+| Description of parameters      | configDB address                         |
+| Default value                  | jdbc:mysql://127.0.0.1:3306/hotdb_config |
+| Whether Reload is valid or not | Yes                                      |
+| Min Compatible Version         | 2.4.3                                    |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | username |
-| Visible or not | Yes |
-| Description of parameters | configDB username |
-| Default value | hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value             |
+|--------------------------------|-------------------|
+| Parameter value                | username          |
+| Visible or not                 | Yes               |
+| Description of parameters      | configDB username |
+| Default value                  | hotdb_config      |
+| Whether Reload is valid or not | Yes               |
+| Min Compatible Version         | 2.4.3             |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | password |
-| Visible or not | Yes |
-| Description of parameters | configDB password |
-| Default value | hotdb_config |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value             |
+|--------------------------------|-------------------|
+| Parameter value                | password          |
+| Visible or not                 | Yes               |
+| Description of parameters      | configDB password |
+| Default value                  | hotdb_config      |
+| Whether Reload is valid or not | Yes               |
+| Min Compatible Version         | 2.4.3             |
 
 **Parameter Effect:**
 
@@ -10148,14 +10184,14 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | usingAIO |
-| Visible or not | No |
-| Description of parameters | Use AIO or not, Yes |
-| Default value | 0 |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value               |
+|--------------------------------|---------------------|
+| Parameter value                | usingAIO            |
+| Visible or not                 | No                  |
+| Description of parameters      | Use AIO or not, Yes |
+| Default value                  | 0                   |
+| Whether Reload is valid or not | No                  |
+| Min Compatible Version         | 2.4.3               |
 
 **Parameter Setting:**
 
@@ -10181,14 +10217,14 @@ root> tail -n 300 hotdb.log | grep 'aio'
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | version |
-| Visible or not | No |
-| Description of parameters | The version number shown to the public by the compute node |
-| Default value | Synchronize with result of the compute node `show @@version`, for example:5.6.29-HotDB-2.5.1 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                                                        |
+|--------------------------------|----------------------------------------------------------------------------------------------|
+| Parameter value                | version                                                                                      |
+| Visible or not                 | No                                                                                           |
+| Description of parameters      | The version number shown to the public by the compute node                                   |
+| Default value                  | Synchronize with result of the compute node `show @@version`, for example:5.6.29-HotDB-2.5.1 |
+| Whether Reload is valid or not | Yes                                                                                          |
+| Min Compatible Version         | 2.4.3                                                                                        |
 
 **Parameter Effect:**
 
@@ -10231,14 +10267,14 @@ root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | versionComment |
-| Visible or not | No |
-| Description of parameters | Version comment of compute node. |
-| Default value | (None) |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.5.5 |
+| Property                       | Value                            |
+|--------------------------------|----------------------------------|
+| Parameter value                | versionComment                   |
+| Visible or not                 | No                               |
+| Description of parameters      | Version comment of compute node. |
+| Default value                  | (None)                           |
+| Whether Reload is valid or not | Yes                              |
+| Min Compatible Version         | 2.5.5                            |
 
 **Parameter Setting:**
 
@@ -10307,25 +10343,25 @@ Server version: 5.7.23 hotpu
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_back_log) |
-| Visible or not | Yes |
-| Description of parameters | Virtual IP address |
-| Default value | Null |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.8 |
+| Property                       | Value                                                                                       |
+|--------------------------------|---------------------------------------------------------------------------------------------|
+| Parameter value                | [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_back_log) |
+| Visible or not                 | Yes                                                                                         |
+| Description of parameters      | Virtual IP address                                                                          |
+| Default value                  | Null                                                                                        |
+| Whether Reload is valid or not | Yes                                                                                         |
+| Min Compatible Version         | 2.4.8                                                                                       |
 
-| Property | Value |
-|----------|-------|
-| Parameter value | CheckVIPPeriod |
-| Visible or not | Yes |
-| Description of parameters | Check VIP Period |
-| Default value | 500ms |
-| Min value | 10ms |
-| Max value | 1000ms |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.8 |
+| Property                       | Value            |
+|--------------------------------|------------------|
+| Parameter value                | CheckVIPPeriod   |
+| Visible or not                 | Yes              |
+| Description of parameters      | Check VIP Period |
+| Default value                  | 500ms            |
+| Min value                      | 10ms             |
+| Max value                      | 1000ms           |
+| Whether Reload is valid or not | Yes              |
+| Min Compatible Version         | 2.4.8            |
 
 VIP and checkVIPPeriod are supporting parameters; VIP is set as Keepalived virtual IP, and checkVIPPeriod is used for controlling check frequency of virtual IP. When the compute node enables VIP check, if the compute node in slave status founds existence of VIP, then it will execute online automatically; if compute node in master status founds that VIP does not exist, then it will auto offline. This group of parameters are applicable to Compute Node High Availability environment, and it’s recommended making configuration under compute node Master/Slave node environment, and shall be set as actual virtual IP of the current Keepalived. If not set or in case of set error, there will be no processing, while this parameter could be ignored in single compute node
 
@@ -10391,14 +10427,14 @@ Backup compute node:
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | cryptMandatory |
-| Visible or not | No |
-| Description of parameters | When enabled, wait for configDB synchronization or not |
-| Default value | false |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                  |
+|--------------------------------|--------------------------------------------------------|
+| Parameter value                | cryptMandatory                                         |
+| Visible or not                 | No                                                     |
+| Description of parameters      | When enabled, wait for configDB synchronization or not |
+| Default value                  | false                                                  |
+| Whether Reload is valid or not | No                                                     |
+| Min Compatible Version         | 2.4.3                                                  |
 
 **Parameter Setting:**
 
@@ -10435,14 +10471,14 @@ It could be enabled only after waiting for master/slave synchronization
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | waitForSlaveInFailover |
-| Visible or not | Yes |
-| Description of parameters | In failover, whether to wait for the Slave to catch up with replication or not |
-| Default value | true |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                                          |
+|--------------------------------|--------------------------------------------------------------------------------|
+| Parameter value                | waitForSlaveInFailover                                                         |
+| Visible or not                 | Yes                                                                            |
+| Description of parameters      | In failover, whether to wait for the Slave to catch up with replication or not |
+| Default value                  | true                                                                           |
+| Whether Reload is valid or not | Yes                                                                            |
+| Min Compatible Version         | 2.4.3                                                                          |
 
 **Parameter Setting:**
 
@@ -10499,14 +10535,14 @@ When the master/slave data source has replication latency, it could switch to th
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | waitSyncFinishAtStartup |
-| Visible or not | Yes |
-| Description of parameters | When enabled, wait for synchronization of the Master data source or not |
-| Default value | true |
-| Whether Reload is valid or not | No |
-| Min Compatible Version | 2.4.3 |
+| Property                       | Value                                                                   |
+|--------------------------------|-------------------------------------------------------------------------|
+| Parameter value                | waitSyncFinishAtStartup                                                 |
+| Visible or not                 | Yes                                                                     |
+| Description of parameters      | When enabled, wait for synchronization of the Master data source or not |
+| Default value                  | true                                                                    |
+| Whether Reload is valid or not | No                                                                      |
+| Min Compatible Version         | 2.4.3                                                                   |
 
 **Parameter Setting:**
 
@@ -10547,14 +10583,14 @@ Turn off the switch: No other abnormalities, the compute node could be enabled d
 
 **Description of parameter:**
 
-| Property | Value |
-|----------|-------|
-| Parameter value | weightForSlaveRWSplit |
-| Visible or not | Yes |
-| Description of parameters | Read Proportion of the Slave, 50 by default (percentage) |
-| Default value | 50 |
-| Whether Reload is valid or not | Yes |
-| Min Compatible Version | 2.4.4 |
+| Property                       | Value                                                    |
+|--------------------------------|----------------------------------------------------------|
+| Parameter value                | weightForSlaveRWSplit                                    |
+| Visible or not                 | Yes                                                      |
+| Description of parameters      | Read Proportion of the Slave, 50 by default (percentage) |
+| Default value                  | 50                                                       |
+| Whether Reload is valid or not | Yes                                                      |
+| Min Compatible Version         | 2.4.4                                                    |
 
 **Parameter Setting:**
 
