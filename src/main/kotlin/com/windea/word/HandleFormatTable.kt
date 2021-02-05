@@ -32,28 +32,32 @@ private fun handleFile(file: File) {
 	file.writeText(handledText)
 }
 
-private val tableSeparatorRegex = """\+(-+\+)+""".toRegex()
-private var tableStart = false
-private var tableSeparatorStart = false
+private val tableSeparatorRegex = """^\|(-+\|)+$""".toRegex()
+private var isTable = false
 private var tableHeader = ""
+private val tableCache = mutableListOf<List<String>>()
 
 private fun handleText(text: String): String {
 	return text.lineSequence().mapNotNull { line ->
-		if(!tableStart && line.startsWith('|') && line.endsWith('|') && line.count { it == '|' } >= 3) {
-			tableStart = true
-			tableSeparatorStart = true
-			tableHeader = line
-			line
-		}else if(tableSeparatorStart && line.startsWith("|-")){
-			tableSeparatorStart = false
-			buildString{
-				tableHeader.forEach { c->
-					if(c == '|') append('|') else if(c.isChinese()) append("--") else append('-')
-				}
+		if(!isTable && line.isTableLine()) {
+			isTable = true
+			//将表头加入缓存
+			tableCache.add(line.splitToColumns())
+			null
+		}else if(isTable){
+			if(line.isTableLine()){
+				//忽略表格分割线
+				if(line.matches(tableSeparatorRegex)) return@mapNotNull null
+				//将表格行加入缓存
+				tableCache.add(line.splitToColumns())
+				null
+			}else{
+				isTable = false
+				//拼接处理后的表格+之后的一行
+				val table = tableCache.joinToTable()
+				tableCache.clear()
+				table + "\n" + line
 			}
-		}else if(tableStart && !line.startsWith('|')){
-			tableStart = false
-			line
 		}else{
 			line
 		}
@@ -62,4 +66,23 @@ private fun handleText(text: String): String {
 
 private fun Char.isChinese():Boolean{
 	return Character.UnicodeScript.of(this.toInt()) == Character.UnicodeScript.HAN
+}
+
+private fun String.isTableLine():Boolean{
+	return startsWith('|') && endsWith('|') && count { it == '|' } >= 3
+}
+
+private fun String.splitToColumns():List<String>{
+	return split("|") //不能这样！
+}
+
+private fun List<List<String>>.joinToTable():String{
+	val isHeader = true
+	return buildString {
+		for(row in tableCache) {
+			for(column in row) {
+				
+			}
+		}
+	}
 }
