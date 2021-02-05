@@ -144,12 +144,13 @@ function redirectLocation() {
   }
 }
 
-const codeRegex = /(`[^`\r\n]+`)/g
+const codeRegex = /(`[^`\r\n]+`)/g 
+const pipeCharRegex = /\|/g
 
 //需要转义内联代码中的管道符，需要将`ps -ef | grep java`转义为`ps -ef \| grep java`，docsify的bug
 function escapeCode(html) {
   return html.replace(codeRegex, (s, c) => {
-    return c.replaceAll("|", "\\|")
+    return c.replace(pipeCharRegex, "\\|")
   })
 }
 
