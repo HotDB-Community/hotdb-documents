@@ -58,7 +58,3 @@ private fun handleText(text: String): String {
 		}
 	}.joinToString("\n")
 }
-
-private fun Char.isChinese():Boolean{
-	return Character.UnicodeScript.of(this.toInt()) == Character.UnicodeScript.HAN
-}
