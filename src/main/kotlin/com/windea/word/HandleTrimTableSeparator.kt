@@ -32,27 +32,26 @@ private fun handleFile(file: File) {
 	file.writeText(handledText)
 }
 
-private val tableSeparatorRegex = """\+(-+\+)+""".toRegex()
-private var tableStart = false
-private var tableSeparatorStart = false
-private var tableHeader = ""
+private var isTable = false
+private var isTableSeparator = false
+private var tableHeaderCache = ""
 
 private fun handleText(text: String): String {
 	return text.lineSequence().mapNotNull { line ->
-		if(!tableStart && line.startsWith('|') && line.endsWith('|') && line.count { it == '|' } >= 3) {
-			tableStart = true
-			tableSeparatorStart = true
-			tableHeader = line
+		if(!isTable && line.startsWith('|') && line.endsWith('|') && line.count { it == '|' } >= 3) {
+			isTable = true
+			isTableSeparator = true
+			tableHeaderCache = line
 			line
-		}else if(tableSeparatorStart && line.startsWith("|-")){
-			tableSeparatorStart = false
+		}else if(isTableSeparator && line.startsWith("|-")){
+			isTableSeparator = false
 			buildString{
-				tableHeader.forEach { c->
+				tableHeaderCache.forEach { c->
 					if(c == '|') append('|') else if(c.isChinese()) append("--") else append('-')
 				}
 			}
-		}else if(tableStart && !line.startsWith('|')){
-			tableStart = false
+		}else if(isTable && !line.startsWith('|')){
+			isTable = false
 			line
 		}else{
 			line
