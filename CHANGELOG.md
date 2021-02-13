@@ -27,6 +27,7 @@
 * [X] 更新快速开始手册
 * [X] 编写脚本使用正确的长度格式化markdown表格（中文字符的长度为2）
 * [X] 使用正确的长度格式化markdown表格（中文字符的长度为2）
+* [X] 优化页面的插件和js脚本依赖
 * [ ] 润色markdown文档中的内联代码
 * [ ] 修改docsify-glossary插件，允许不同语言的术语表（自行实现）
 * [ ] 编写脚本合并所有文档并生成pdf
@@ -47,8 +48,8 @@
 中文文档（截止时间：2021-01-14 15:00:21）
 
 * `introduce`
-  * [X] `docs/zh/latest/introduce.md` F P
-  * [X] `docs/zh/latest/white-paper.md` F P
+  * [X] `docs/zh/latest/introduce.md` F P C
+  * [X] `docs/zh/latest/white-paper.md` F P C
   * [ ] `docs/zh/latest/whats-new.md` T
 * `quick-start`
   * [X] `docs/zh/latest/quick-start-guide.md` F
@@ -60,7 +61,7 @@
   * [X] `docs/zh/latest/cluster-environment-requirement.md` F C
   * [X] `docs/zh/latest/hardware-config-recommendation.md` F C
 * `hotdb-server`
-  * [X] `docs/zh/latest/standard.md` F
+  * [X] `docs/zh/latest/standard.md` F C
   * [X] `docs/zh/latest/management-port-command.md` L M F C
 * `hotdb-management`
   * [X] `docs/zh/latest/hotdm-management.md` F C
@@ -76,8 +77,8 @@
 英文文档（截止时间：2021-01-14 15:00:21）
 
 * `introduce`
-  * [X] `docs/en/latest/introduce.md` P
-  * [X] `docs/en/latest/white-paper.md` P 
+  * [X] `docs/en/latest/introduce.md` P C
+  * [X] `docs/en/latest/white-paper.md` P C
   * [ ] `docs/en/latest/whats-new.md` T
 * `quick-start`
   * [X] `docs/en/latest/quick-start-guide.md`
@@ -89,7 +90,7 @@
   * [X] `docs/en/latest/cluster-environment-requirement.md` C
   * [X] `docs/en/latest/hardware-config-recommendation.md` C
 * `hotdb-server`
-  * [ ] `docs/en/latest/standard.md` D
+  * [X] `docs/en/latest/standard.md` C
   * [X] `docs/en/latest/management-port-command.md`  C
 * `hotdb-management`
   * [X] `docs/en/latest/hotdm-management.md` C
