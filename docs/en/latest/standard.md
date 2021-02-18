@@ -578,17 +578,17 @@ affiliates. Other names may be trademarks of their respective
 owners.
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 mysql> show @@help;
-+-------------------------------------------+---------------------------------------------------------------------------+
-| statement | description |
-+-------------------------------------------+---------------------------------------------------------------------------+
-| check @@datasource_config | Inspect MySQL parameter configuration information |
-| check @@route [db_name.tb_name | tb_name] | Detect the data routing correctness of Sharding Table |
-| kill @@connection [connection_id] | Close one appointed connection |
-| onlineddl"[DDLSTATEMENT]"| Execution onlineddl |
-| rebuild @@pool | Rebuild currently available datasources of all nodes |
-| reload @@config | Re-load the configuration information |
-| restart @@heartbeat [datanode_id] | Recover the heartbeat detection on the appointed data node |
-| show @@auxtable | Displays the created auxiliary table information |
++-------------------------------------------+------------------------------------------------------------+
+| statement                                 | description                                                |
++-------------------------------------------+------------------------------------------------------------+
+| check @@datasource_config                 | Inspect MySQL parameter configuration information          |
+| check @@route [db_name.tb_name | tb_name] | Detect the data routing correctness of Sharding Table      |
+| kill @@connection [connection_id]         | Close one appointed connection                             |
+| onlineddl"[DDLSTATEMENT]"                 | Execution onlineddl                                        |
+| rebuild @@pool                            | Rebuild currently available datasources of all nodes       |
+| reload @@config                           | Re-load the configuration information                      |
+| restart @@heartbeat [datanode_id]         | Recover the heartbeat detection on the appointed data node |
+| show @@auxtable                           | Displays the created auxiliary table information           |
 ...more contents are omitted, and you could log in to view...
 ```
 
@@ -599,9 +599,9 @@ The user can enter corresponding command to monitor service condition of compute
 
 ```
 mysql> show @@datasource;
-|---------------------------|---------------------------------------------------|
+|----+----+-----------------------+------+--------+-------------+------+--------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
 | dn | ds | name                  | type | status | host        | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
-|---------------------------|---------------------------------------------------|
+|----|----|-----------------------|------|--------|-------------|------|--------|--------|------|------|--------------------|--------------|--------|-------------|-----------------|
 | 17 | 17 | 10.10.0.140_3313_db01 | 1    | 1      | 10.10.0.140 | 3313 | db01   | 0      | 45   | 45   | NULL               | 0/64         | 1      | 8           | 1               |
 ...more contents are omitted, and you could log in to view...
 ```
@@ -613,24 +613,24 @@ The user could also make DESC operation of the table name behind `show @@command
 ```
 mysql> desc datasource;
 +--------------------+----------------------------------------------+
-| filedname | description |
+| filedname          | description                                  |
 +--------------------+----------------------------------------------+
-| dn | Datanode |
-| ds | Datasource |
-| name | Datasource name |
-| type | Datasource type |
-| status | Datasource status |
-| host | Host |
-| port | Port |
-| schema | Physical database name |
-| active | Active connections |
-| idle | Idle connections |
-| size | Total connections |
-| unavailable_reason | Reason for datasource unavailable |
-| flow_control | Remaining available quantity in flow control |
-| idc_id | ID of IDC |
-| listener_id | LISTENER ID(ID of LISTENER) |
-| listener_status | LISTENER STATUS(STATUS of LISTENER) |
+| dn                 | Datanode                                     |
+| ds                 | Datasource                                   |
+| name               | Datasource name                              |
+| type               | Datasource type                              |
+| status             | Datasource status                            |
+| host               | Host                                         |
+| port               | Port                                         |
+| schema             | Physical database name                       |
+| active             | Active connections                           |
+| idle               | Idle connections                             |
+| size               | Total connections                            |
+| unavailable_reason | Reason for datasource unavailable            |
+| flow_control       | Remaining available quantity in flow control |
+| idc_id             | ID of IDC                                    |
+| listener_id        | LISTENER ID(ID of LISTENER)                  |
+| listener_status    | LISTENER STATUS(STATUS of LISTENER)          |
 +--------------------+----------------------------------------------+
 16 rows in set (0.00 sec)
 ```
@@ -639,11 +639,11 @@ The user could also make SELECT operation of the table name behind `show @@comma
 
 ```
 mysql> select * from datasource where dn=11;
-+------+------+-----------------------------+------+--------+----------------+------+---------+--------+------+------+--------------------+--------------+
-| dn | ds | name | type | status | host | port | schema | active | idle | size | unavailable_reason | flow_control |
-+------+------+-----------------------------+------+--------+----------------+------+---------+--------+------+------+--------------------+--------------+
-| 11 | 9 | 192.168.210.70_3310_yds_db1 | 1 | 1 | 192.168.210.70 | 3310 | yds_db1 | 2 | 32 | 34 | NULL | 0/16 |
-+------+------+-----------------------------+------+--------+----------------+------+---------+--------+------+------+--------------------+--------------+
++----+----+-----------------------+------+--------+-------------+------+--------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
+| dn | ds | name                  | type | status | host        | port | schema | active | idle | size | unavailable_reason | flow_control | idc_id | listener_id | listener_status |
++----+----+-----------------------+------+--------+-------------+------+--------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
+| 11 | 11 | 10.10.0.125_3311_db01 | 1    | 1      | 10.10.0.125 | 3311 | db01   | 0      | 43   | 43   | NULL               | 0/64         | 1      | 2           | 1               |
++----+----+-----------------------+------+--------+-------------+------+--------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
 1 row in set (0.00 sec)
 ```
 
@@ -1264,7 +1264,7 @@ sqltext: select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum
 1 row in set (0.00 sec)
 msyql> select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum from table02;
 +------------+
-| sum         |
+| sum        |
 +------------+
 | 1812521567 |
 +------------+
@@ -1285,13 +1285,13 @@ Log in to [management port (3325 Port)](#management-port-information-monitoring)
 
 ```
 mysql> show @@masterslaveconsistency;
-+---------------------------------+---------------------------------+-------+--------+-------------------------------------+
-| db | table | dn | result | info |
-+---------------------------------+---------------------------------+-------+--------+--------------------------------------+
-| DB_T | FB_STUDENT | dn_04 | NO | There is data inconsistency, because data source: 5, table: FB_STUDENT, MySQL error: Table 'db252.fb_student' doesn't exist |
-| DB_A | SP | dn_04 | NO | table: SP has data inconsistency in node: 4, column: ID, distribution interval is: 0-17;, and unique key of the inconsistent line is: (ID):(2),(1) |
-| DB_T | JOIN_Z | | YES | |
-+---------------------------------+---------------------------------+-------+--------+-------------------------------------+
++------+------------+-------+--------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+| db   | table      | dn    | result | info                                                                                                                                               |
++------+------------+-------+--------+----------------------------------------------------------------------------------------------------------------------------------------------------+
+| DB_T | FB_STUDENT | dn_04 | NO     | There is data inconsistency, because data source: 5, table: FB_STUDENT, MySQL error: Table 'db252.fb_student' doesn't exist                        |
+| DB_A | SP         | dn_04 | NO     | table: SP has data inconsistency in node: 4, column: ID, distribution interval is: 0-17;, and unique key of the inconsistent line is: (ID):(2),(1) |
+| DB_T | JOIN_Z     |       | YES    |                                                                                                                                                    |
++------+------------+-------+--------+----------------------------------------------------------------------------------------------------------------------------------------------------+
 3 row in set (0.07 sec)
 ```
 
@@ -1604,12 +1604,12 @@ It will still display that the time_zone is '+8:00':
 ```
 mysql> set time_zone='+0:00';
 mysql> show variables like '%time_zone';
-+------------------+--------+
-| Variable_name | Value |
-+------------------+--------+
-| system_time_zone | CST |
-| time_zone | +08:00 |
-+------------------+--------+
++--------------------+-------+
+| Variable_name      | Value |
++--------------------+-------+
+| system_time_zone   | CST   |
+| time_zone+08:00    |       |
++--------------------+-------+
 2 rows in set (0.09 sec)
 ```
 
@@ -2568,11 +2568,8 @@ While supporting Read/write splitting, compute node could control the master/sla
 Description:
 
 - When the Read/write splitting strategy strategyForRWSplit is configured as 0, it only makes Read/Write on the Active Master, and the setting of weightForSlaveRWSplit Slave Read Proportion is meaningless;
-
 - When Read/write splitting strategy strategyForRWSplit is configured as 1, Active Master participates in Read/Write, the Slave participates in Read, and only in this way could weightForSlaveRWSplit have practical significance. Read proportion of Active Master is 100% ---percentage value of weightForSlaveRWSplit, and the remaining Slaves shares equal distribution of all proportions of weightForSlaveRWSplit setting, for example: if the weightForSlaveRWSplit value is set as 60%, and the existing node is of one-master and two-slave architecture, then the Master Read 40%, while the two Slave Read 30% respectively;
-
 - When Read/write splitting strategy strategyForRWSplit is configured as 2, Active Master only participates in Write, and the Slave participates in Read; all Slave share equal distribution of Read proportion, and for one-master and two-slave architecture, the Slave Read 50% each;
-
 - When Read/write splitting strategy strategyForRWSplit is configured as 3, for Read in transaction before Write, the Slave participates in Read, and the Active Master participates in Write; the Read operations in transaction after Write will be taken over by the Master data source; while the operations beyond the transaction are consistent with that in mode 2.
 
 ## Characteristic functions of HotDB Server
@@ -2585,21 +2582,27 @@ DNID is abbreviation of DATANODE_ID
 
 On compute node, DNID could be used as filter condition in WHERE Clause, and as a Query item in SELECT statement; DNID (data node) of the results of each row could also be displayed in Result Set.
 
-- **Use DNID field in SELECT, UPDATE, DELETE Clauses**
+**(1) Use DNID field in SELECT, UPDATE, DELETE Clauses**
 
+```sql
 SELECT * FROM customer WHERE dnid=1;
+```
 
 If executing this SELECT statement, compute node will return the data of the Sharding Table customer being 1 on DNID.
 
+```sql
 DELETE FROM customer WHERE dnid=1 AND id=3;
+```
 
 If executing this DELETE statement, compute node will delete data of Sharding Table customer with DNID being 1 and Field ID being 3.
 
+```sql
 UPDATE customer SET id=4 WHERE dnid=1 AND name='a';
+```
 
 If executing this DELETE statement, compute node will modify the data of Sharding Table customer with DNID being 1 and Field Name = 'a'.
 
-- **Use DNID as a Query item to execute SELECT statement**
+**(2) Use DNID as a Query item to execute SELECT statement**
 
 ```sql
 SELECT *,dnid FROM tab_name;
@@ -2607,97 +2610,62 @@ SELECT *,dnid FROM tab_name;
 
 If executing this SELECT statement, compute node will display dnid value of all results in the Result Set, and dnid must be placed behind *, otherwise, there will be Syntax Error.
 
-- **Show DNID in Result Set**
+**(3) Show DNID in Result Set**
 
 After log in the compute node, if executing the SET SHOW_DNID=1 statement, compute node will return DNID (data node ID) of results of each row in the SELECT statement.
 
+```
 mysql> set show_dnid=1;
-
 Query OK, 0 rows affected (0.00 sec)
 
 mysql> select * from customer where id in (77,67,52,20);
-
-+----+---------+------------+------------+------------+------+-------------+------+
-
-| id | name | telephone | provinceid | province | city | address | **DNID** |
-|----|------|-----------|------------|----------|------|---------|----------|
-
-+----+---------+------------+------------+------------+------+-------------+------+
-
-| 52 | 马深圳 | 13912340052 | 7 | Guangdong | 深圳 | 某某街某某号 | 13 |
-|----|--------|-------------|---|-----------|------|--------------|----|
-
-| 77 | 郝上海 | 13912340077 | 25 | Shanghai | 上海 | 某某街某某号 | 14 |
-|----|--------|-------------|----|----------|------|--------------|----|
-
-| 20 | 许重庆 | 13912340020 | 4 | Chongqing | 重庆 | 某某街某某号 | 12 |
-|----|--------|-------------|---|-----------|------|--------------|----|
-
-| 67 | 岑南昌 | 13912340067 | 17 | Jiangxi | 南昌 | 某某街某某号 | 15 |
-|----|--------|-------------|----|---------|------|--------------|----|
-
-+----+---------+------------+------------+------------+------+-------------+------+
-
++----+--------+-------------+------------+-----------+------+-------------+------+
+| id | name   | telephone   | provinceid | province  | city | address     | DNID |
++----+--------+-------------+------------+-----------+------+-------------+------+
+| 52 | 马深圳 | 13912340052 | 7          | Guangdong | 深圳 | 某某街某某号| 13   |
+| 77 | 郝上海 | 13912340077 | 25         | Shanghai  | 上海 | 某某街某某号| 14   |
+| 20 | 许重庆 | 13912340020 | 4          | Chongqing | 重庆 | 某某街某某号| 12   |
+| 67 | 岑南昌 | 13912340067 | 17         | Jiangxi   | 南昌 | 某某街某某号| 15   |
++----+--------+-------------+------------+-----------+------+-------------+------+
 4 rows in set (0.00 sec)
+```
 
 The results in above figure show data rows with data node ID as 12, 13, 14, 15 respectively.
 
 When executing SET SHOW_DNID=1 statement, and Query Global Table, compute node will return DNID (GLOBAL) of results of each row in the SELECT statement.
 
+```
 mysql> set show_dnid=1;
-
 Query OK, 0 rows affected (0.00 sec)
 
 mysql> select * from tb_quan;
-
-+------+-----+-------+----------+
-
-| id | a | b | **DNID** |
-|----|---|---|----------|
-
-+------+-----+-------+----------+
-
-| 1 | 1 | 1.10 | **GLOBAL** |
-|---|---|------|------------|
-
-| 2 | 2 | 1.20 | **GLOBAL** |
-|---|---|------|------------|
-
-| 3 | 3 | 1.30 | **GLOBAL** |
-|---|---|------|------------|
-
-+------+-----+-------+----------+
++----+---+------+--------+
+| id | a | b    | DNID   |
++----+---+------+--------+
+| 1  | 1 | 1.10 | GLOBAL |
+| 2  | 2 | 1.20 | GLOBAL |
+| 3  | 3 | 1.30 | GLOBAL |
++----+---+------+--------+
+```
 
 SET SHOW_DNID=0, will cancel showing DNID column in Result Reset.
 
+```
 mysql> set show_dnid=0;
 
 Query OK, 0 rows affected (0.00 sec)
 
 mysql> select * from customer where id in (77,67,52,20);
-
-+----+---------+------------+------------+------------+------+-------------+
-
-| id | name | telephone | provinceid | province | city | address |
-|----|------|-----------|------------|----------|------|---------|
-
-+----+---------+------------+------------+------------+------+-------------+
-
-| 52 | 马深圳 | 13912340052 | 7 | Guangdong | 深圳 | 某某街某某号 |
-|----|--------|-------------|---|-----------|------|--------------|
-
-| 77 | 郝上海 | 13912340077 | 25 | Shanghai | 上海 | 某某街某某号 |
-|----|--------|-------------|----|----------|------|--------------|
-
-| 20 | 许重庆 | 13912340020 | 4 | Chongqing | 重庆 | 某某街某某号 |
-|----|--------|-------------|---|-----------|------|--------------|
-
-| 67 | 岑南昌 | 13912340067 | 17 | Jiangxi | 南昌 | 某某街某某号 |
-|----|--------|-------------|----|---------|------|--------------|
-
-+----+---------+------------+------------+------------+------+-------------+
-
++----+--------+-------------+------------+-----------+------+-------------+
+| id | name   | telephone   | provinceid | province  | city | address     |
++----+--------+-------------+------------+-----------+------+-------------+
+| 52 | 马深圳 | 13912340052 | 7          | Guangdong | 深圳 | 某某街某某号|
+| 77 | 郝上海 | 13912340077 | 25         | Shanghai  | 上海 | 某某街某某号|
+| 20 | 许重庆 | 13912340020 | 4          | Chongqing | 重庆 | 某某街某某号|
+| 67 | 岑南昌 | 13912340067 | 17         | Jiangxi   | 南昌 | 某某街某某号|
++----+--------+-------------+------------+-----------+------+-------------+
 4 rows in set (0.00 sec)
+```
 
 - **Limit for DNID**
 
@@ -2740,16 +2708,13 @@ SHOW [full] HOTDB ｛datasources｝ [LIKE 'pattern' | WHERE expr]
 
 For example:
 
-```sql
+```
 hotdb> show hotdb datasources where datasource_id like '22';
-
-+-------------+---------------+---------------------------+-----------------+--------------
-
-| DATANODE_ID | DATASOURCE_ID | DATASOURCE_NAME | DATASOURCE_TYPE | DATASOURCE_STATUS | HOST | PORT | SCHEMA | IDC_ID |
-
-+-------------+---------------+---------------------------+-----------------+---------------
-
-| 23 | 22 | 192.168.210.41_3308_hotdb157 | 1 | 1 | 192.168.210.41 | 3308 | hotdb157 | 1 |
++-------------+---------------+------------------------------+-----------------+-------------------+----------------+------+----------+--------+
+| DATANODE_ID | DATASOURCE_ID | DATASOURCE_NAME              | DATASOURCE_TYPE | DATASOURCE_STATUS | HOST           | PORT | SCHEMA   | IDC_ID |
++-------------+---------------+------------------------------+-----------------+-------------------+----------------+------+----------+--------+
+| 23          | 22            | 192.168.210.41_3308_hotdb157 | 1               | 1                 | 192.168.210.41 | 3308 | hotdb157 | 1      |
++-------------+---------------+------------------------------+-----------------+-------------------+----------------+------+----------+--------+
 ```
 
 - Specify a specific datasource_id without writing binlog:
@@ -2764,12 +2729,15 @@ For Example:
 
 Create the user hpt on the data source datasource_id=22 without writing binlog.
 
+```
 hotdb> /*!hotdb:dsid=nobinlog:22*/create user 'hpt'@'%' identified by '123456';
 
 Query OK, 0 rows affected (0.00 sec)
+```
 
 Set parameters on the data source datasource_id=22.
 
+```
 hotdb> /*!hotdb:dsid=nobinlog:22*/set wait_timeout=1200;
 
 Query OK, 0 rows affected (0.01 sec)
@@ -2777,22 +2745,18 @@ Query OK, 0 rows affected (0.01 sec)
 hotdb> /*!hotdb:dsid=nobinlog:22*/show variables like 'wait_timeout';
 
 +---------------+-------+
-
 | Variable_name | Value |
-|---------------|-------|
-
 +---------------+-------+
-
-| wait_timeout | 1200 |
-|--------------|------|
-
+| wait_timeout  | 1200  |
 +---------------+-------+
-
 1 row in set (0.01 sec)
+```
 
 - Specify all datasource_ids without writing binlog:
 
+```sql
 /*!hotdb:dsid=nobinlog:all*/SQL to be executed
+```
 
 > !Note
 >
@@ -2802,10 +2766,13 @@ For example:
 
 Update table 1 on all data sources without writing binlog:
 
+```sql
 /*!hotdb:dsid=nobinlog:all*/update table1 set name='hotdb' where id=100;
+```
 
 Set parameters on all data sources.
 
+```
 hotdb> /*!hotdb:dsid=nobinlog:all*/set wait_timeout=1200;
 
 Query OK, 0 rows affected (0.00 sec)
@@ -2813,41 +2780,25 @@ Query OK, 0 rows affected (0.00 sec)
 hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 
 +---------------+-------+
-
 | Variable_name | Value |
-|---------------|-------|
-
 +---------------+-------+
-
-| wait_timeout | 1200 |
-|--------------|------|
-
-| wait_timeout | 1200 |
-|--------------|------|
-
-| wait_timeout | 1200 |
-|--------------|------|
-
-| wait_timeout | 1200 |
-|--------------|------|
-
-| wait_timeout | 1200 |
-|--------------|------|
-
-| wait_timeout | 1200 |
-|--------------|------|
-
-| wait_timeout | 1200 |
-|--------------|------|
-
-| wait_timeout | 1200 |
-|--------------|------|
-
+| wait_timeout  | 1200  |
+| wait_timeout  | 1200  |
+| wait_timeout  | 1200  |
+| wait_timeout  | 1200  |
+| wait_timeout  | 1200  |
+| wait_timeout  | 1200  |
+| wait_timeout  | 1200  |
+| wait_timeout  | 1200  |
++---------------+-------+
 8 rows in set (0.00 sec)
+```
 
 - Specify a specific datasource_id with writing binlog:
 
+```sql
 /*!hotdb:dsid=datasource_id*/SQL to be executed
+```
 
 > !Note
 >
@@ -2855,7 +2806,9 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 
 - Specify all datasource_ids with writing binlog:
 
+```sql
 /*!hotdb:dsid=all*/SQL to be executed
+```
 
 > !Note
 >
@@ -2879,7 +2832,9 @@ Syntax:
 
 For example:
 
+```sql
 /*!hotdb: table = customer:10001*/select * from customer where age > 20;
+```
 
 Use method:
 
@@ -2887,35 +2842,27 @@ Connect compute node (refer to [Log in to compute node and start to use](#log-in
 
 Search customer table on sharding node with dn_id=2
 
+```
 mysql> /*!hotdb: dnid=2*/ select count(*) from customer;
-
-+------------+
-
++----------+
 | count(*) |
-
-+------------+
-
-| 50 |
-
-+------------+
-
++----------+
+| 50       |
++----------+
 1 row in set (0.00 sec)
+```
 
 Search the customer table with provinceid = 1 on sharding node
 
+```
 mysql> /*!hotdb: table=customer:1*/ select count(*) from customer;
-
-+------------+
-
++----------+
 | count(*) |
-
-+------------+
-
-| 11 |
-
-+------------+
-
++----------+
+| 11       |
++----------+
 1 row in set (0.00 sec)
+```
 
 > !Note
 >
@@ -2942,15 +2889,15 @@ mysql> use db_a
 Database changed
 
 mysql> /*!hotdb:dnid=all*/select * From tba;
-+------+-----+
++----+---+
 | id | a |
-+------+-----+
-| 1 | 1 |
-| 2 | 2 |
-| 3 | 3 |
-| 4 | 4 |
-| 5 | 5 |
-+------+-----+
++----+---+
+| 1  | 1 |
+| 2  | 2 |
+| 3  | 3 |
+| 4  | 4 |
+| 5  | 5 |
++----+---+
 5 rows in set, 1 warning (0.01 sec)
 Warning (Code 10041): The current session has been bound to the backend connection associated with the current LogicDB. It is recommended to rebuild the session after use.
 ```
@@ -3031,53 +2978,35 @@ Query OK, 0 rows affected, 1 warning (0.18 sec)
 
 In compute node, EXPLAIN statement is used for showing route plan of SQL statement.
 
+```
 mysql> explain select id,name,telephone from customer;
 
 +----------+------------------------------------------+
-
-| DATANODE | SQL |
-|----------|-----|
-
+| DATANODE | SQL                                      |
 +----------+------------------------------------------+
-
-| 1 | SELECT id, name, telephone FROM customer |
-|---|------------------------------------------|
-
-| 2 | SELECT id, name, telephone FROM customer |
-|---|------------------------------------------|
-
-| 3 | SELECT id, name, telephone FROM customer |
-|---|------------------------------------------|
-
-| 4 | SELECT id, name, telephone FROM customer |
-|---|------------------------------------------|
-
-| 5 | SELECT id, name, telephone FROM customer |
-|---|------------------------------------------|
-
+| 1        | SELECT id, name, telephone FROM customer |
+| 2        | SELECT id, name, telephone FROM customer |
+| 3        | SELECT id, name, telephone FROM customer |
+| 4        | SELECT id, name, telephone FROM customer |
+| 5        | SELECT id, name, telephone FROM customer |
 +----------+------------------------------------------+
-
 5 rows in set (0.01 sec)
+```
 
 DATANODE column is data node ID, and as shown in the above results, this SQL statement will be executed on data node with ID being 1, 2, 3, 4, 5.
 
 If to show execution plan of MySQL in EXPLAIN, you could combine the [HINT](#hint) function in compute node:
 
+```
 mysql> /*!hotdb:dnid=13*/explain select * from customer;
 
-+----+-------------+----------+------+---------------+------+---------+-----+------+------+
-
-| id | select_type | table | type | possible_keys | key | key_len | ref | rows | Extra |
-|----|-------------|-------|------|---------------|-----|---------|-----|------|-------|
-
-+----+-------------+----------+------+---------------+------+---------+-----+------+------+
-
-| 1 | SIMPLE | customer | NULL | NULL | NULL | NULL | NULL | 53 | NULL |
-|---|--------|----------|------|------|------|------|------|----|------|
-
-+----+-------------+----------+------+---------------+------+---------+-----+------+------+
-
++----+-------------+----------+------+---------------+------+---------+------+------+-------+
+| id | select_type | table    | type | possible_keys | key  | key_len | ref  | rows | Extra |
++----+-------------+----------+------+---------------+------+---------+------+------+-------+
+| 1  | SIMPLE      | customer | NULL | NULL          | NULL | NULL    | NULL | 53   | NULL  |
++----+-------------+----------+------+---------------+------+---------+------+------+-------+
 1 row in set (0.00 sec)
+```
 
 **Limit for EXPLAIN**
 
@@ -3255,9 +3184,7 @@ HotDB Server supports relevant setting of Character Set, and the Character Set a
 
 | Collation | Charset |
 |-----------|---------|
-+--------------------------+---------+
 | latin1_swedish_ci  | latin1  |
-|--------------------|---------|
 | latin1_bin         | latin1  |
 | gbk_chinese_ci     | gbk     |
 | gbk_bin            | gbk     |
@@ -3265,7 +3192,6 @@ HotDB Server supports relevant setting of Character Set, and the Character Set a
 | utf8_bin           | utf8    |
 | utf8mb4_general_ci | utf8mb4 |
 | utf8mb4_bin        | utf8mb4 |
-+--------------------+---- ------------+
 
 The Syntax associated with the Character Set is as follow, HotDB Server could also make synchronous Support, and the functions are consistent with that of MySQL:
 
