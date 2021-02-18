@@ -32,7 +32,7 @@ Cluster load-balancing deployment architecture diagram
 
 Refer to the [Hardware Config Recommendation](hardware-config-recommendation.md) document for hardware environment configuration.
 
-Refer to the [Cluster Environment Requirement](cluster-environment-requirement.md) document for cluster running environment configuration requirements and recommendation.
+Refer to the [Cluster Environment Requirement](cluster-environment-recommendation.md) document for cluster running environment configuration requirements and recommendation.
 
 ## Deployment
 

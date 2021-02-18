@@ -63,7 +63,7 @@ If there are other slave data sources in the DR center, the data will be synchro
 
 For the hardware environment configuration recommendation, please refer to the [Hardware Config Recommendation](hardware-config-recommendation.md) document.
 
-For configuration requirements and recommendations of cluster operation environment, refer to the [Cluster Environment Requirement](cluster-environment-requirement.md) document.
+For configuration requirements and recommendations of cluster operation environment, refer to the [Cluster Environment Requirement](cluster-environment-recommendation.md) document.
 
 ### Function premise
 

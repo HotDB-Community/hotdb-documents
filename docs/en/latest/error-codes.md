@@ -243,9 +243,9 @@
 | 10239    | `ER_DATASOURCE_REPL_EXCEPTION`                       | 数据源或者配置库复制关系异常                                 | 2.5.6    |
 | 10240    | `ER_DATASOURCE_LARGE_LATENCY`                        | 数据源或者配置库延迟过大                                     | 2.5.6    |
 | 10241    | `ER_DATASOURCE_IN_FAILOVER`                          | 数据源或者配置库在切换中                                     | 2.5.6    |
-| 10242    | `ER_DR_REPL_CANNOT_CATCHUP`                          | 灾备机房复制无法追上                                         | 2.5.6    |
+| 10242    | `ER_DR_REPL_CANNOT_CATCHUP`                          | 容灾机房复制无法追上                                         | 2.5.6    |
 | 10243    | `ER_RESET_MASTER_BETWEEN_IDC`                        | 清理机房间复制关系失败                                       | 2.5.6    |
-| 10244    | `ER_BUILD_REPL_IN_DR`                                | 重建灾备机房复制关系失败                                     | 2.5.6    |
+| 10244    | `ER_BUILD_REPL_IN_DR`                                | 重建容灾机房复制关系失败                                     | 2.5.6    |
 | 10245    | `ER_RESET_MASTER_IN_BIZ`                             | 清理业务机房内部复制关系失败                                 | 2.5.6    |
 | 10246    | `ER_REBUILD_REPL_BETWEEN_IDC`                        | 重建机房间复制关系失败                                       | 2.5.6    |
 | 10247    | `ER_UPDATE_CONFIG`                                   | 机房切换更新配置失败                                         | 2.5.6    |

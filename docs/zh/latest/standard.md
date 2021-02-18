@@ -4,13 +4,13 @@
 
 此手册基于**分布式事务数据库产品 HotDB Server - V2.5.6版本**编写，主要说明计算节点的基本使用方法及操作流程，供使用者参考与学习。
 
-此手册中部分功能可结合分布式事务数据库平台（以下简称管理平台）共同使用，若需了解管理平台的使用方法，请参考[管理平台](hotdb-management.md)文档。
+此手册中部分功能可结合分布式事务数据库可视化管理平台（以下简称管理平台）共同使用，若需了解管理平台的使用方法，请参考[管理平台](hotdb-management.md)文档。
 
-HotDB Server在2.5.3.1及以上版本时提供基于MySQL原生复制功能解决HotDB Server跨机房容灾问题的解决方案，能够实现跨机房数据同步以及解决跨机房分布式事务数据库服务灾备的问题。此标准文档仅详细介绍HotDB Server在单机房模式的功能与特性，若要了解灾备模式下的功能与特性，请参考[跨机房容灾](cross-idc-disaster-recovery.md)文档。
+HotDB Server在2.5.3.1及以上版本时提供基于MySQL原生复制功能解决HotDB Server跨机房容灾问题的解决方案，能够实现跨机房数据同步以及解决跨机房分布式事务数据库服务容灾的问题。此标准文档仅详细介绍HotDB Server在单机房模式的功能与特性，若要了解容灾模式下的功能与特性，请参考[跨机房容灾部署](cross-idc-disaster-recovery.md)文档。
 
 部分截图的版本细节差异无需特别关注，以文档描述的版本号为准。文档内容较多，建议开启文档结构图，方便阅读。
 
-### HotDB Server 简述
+### 计算节点简述
 
 HotDB Server是一款实现数据容量和性能横向扩展的分布式事务数据库产品，可解决实时交易业务系统的"两大三高"（即大规模用户、大规模数据、高可用、高并发、高吞吐）问题。
 
@@ -136,7 +136,7 @@ mysql> show tables;
 本章节将简单介绍在HotDB Server -- V2.5.6中新增、禁止或删除的功能概要，详细功能使用方法可点击超链接查看详情：
 
 - 支持[计算节点服务数量在线水平扩容/缩容](#计算节点水平弹性伸缩)功能，即在线扩展计算节点实例个数；
-- 基于MySQL复制的跨机房容灾功能支持多计算节点集群模式，详情可查看[跨机房容灾](cross-idc-disaster-recovery.md)文档。
+- 基于MySQL复制的跨机房容灾功能支持多计算节点集群模式，详情可查看[跨机房容灾部署](cross-idc-disaster-recovery.md)文档。
 - 支持直接解析识别部分[Oracle函数以及Sequence语法](#enableoraclefunction)，以减少Oracle迁移至HotDB Server时的业务代码修改量；
 - 支持客户端连接使用SSL+[SM4国密](#sslusesm4)认证安全通道；
 - 优化根据默认分片节点创建[全局表](#全局表)的功能；
@@ -162,14 +162,14 @@ mysql> show tables;
 | [operateMode](#operatemode)                             | 计算节点工作模式                                   | 0        | Y                | 2.5.6新增       |
 | [maxReconnectConfigDBTimes](#maxreconnectconfigdbtimes) | 最大重试连接配置库次数                             | 3        | Y                | 2.5.6           |
 | [sslUseSM4](#sslusesm4)                                 | 是否支持国密算法                                   | False    | Y                | 向下同步至2.5.5 |
-| [haMode](#hamode)                                       | 新增了状态：4：集群模式中心机房5：集群模式灾备机房 | 0        | N                | 2.5.6           |
+| [haMode](#hamode)                                       | 新增了状态：4：集群模式中心机房5：集群模式容灾机房 | 0        | N                | 2.5.6           |
 | [crossDbXa](#crossdbxa)                                 | 跨逻辑库是否采用XA事务                             | false    | N                | 2.5.5           |
 
-## HotDB Server安装部署与升级
+## 计算节点部署升级
 
 ### 服务授权
 
-HotDB Server需要获取正规的授权许可证，方能正常提供服务。如果需要了解如何获取服务授权，请参考[服务授权](service-license.md)文档。
+HotDB Server需要获取正规的授权许可证，方能正常提供服务。如果需要了解如何获取服务授权，请参考[许可授权](service-license.md)文档。
 
 ### 安装部署与升级
 
@@ -177,17 +177,17 @@ HotDB Server需要获取正规的授权许可证，方能正常提供服务。�
 
 ### 配置文件
 
-计算节点的配置文件位于安装目录下的conf目录，文件名称为server.xml。如果需要了解HotDB Server参数，请参考[计算节点参数使用说明](#计算节点参数使用说明)。
+计算节点的配置文件位于安装目录下的conf目录，文件名称为server.xml。如果需要了解HotDB Server参数，请参考[计算节点参数说明](#计算节点参数说明)。
 
 server.xml的部分参数修改后需要重新启动计算节点才能生效，部分参数修改后可通过"[动态加载](#动态加载reload)"生效。
 
-如果第14章[计算节点参数使用说明](#计算节点参数使用说明)中所列参数在server.xml中不存在，则说明该参数使用了默认值；如果想要调整某个参数值或增加某个参数，请在server.xml中增加如下代码，也可以通过管理平台的"配置"->"计算节点参数"页面添加。
+如果第14章[计算节点参数说明](#计算节点参数说明)中所列参数在server.xml中不存在，则说明该参数使用了默认值；如果想要调整某个参数值或增加某个参数，请在server.xml中增加如下代码，也可以通过管理平台的"配置"->"计算节点参数"页面添加。
 
 ```xml
 <property name=" dropTableRetentionTime">0</property><!--被删除表保留时长,默认为0,不保留-->
 ```
 
-## 快速配置HotDB Server
+## 计算节点快速配置
 
 本节将描述快速配置分布式事务数据HotDB Server的方法。本节仅介绍必要的配置功能，用于达到快速入门的目的。如果需要了解更多的配置功能，请参考[管理平台](hotdb-management.md)文档。
 
@@ -279,7 +279,7 @@ show databases;
 
 添加存储节点组可以更方便地添加或修改一组具有相同参数值的存储节点。
 
-登录分布式事务数据库平台页面，选择"配置"->"节点管理"->"存储节点组"->"添加组"：
+登录分布式事务数据库可视化管理平台页面，选择"配置"->"节点管理"->"存储节点组"->"添加组"：
 
 ![](assets/standard/image10.png)
 
@@ -477,7 +477,7 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 也可对customer分片表执行DELETE、UPDATE、SELECT等操作。
 
-## HotDB Server运行相关
+## 计算节点运行相关
 
 ### 计算节点启动说明
 
@@ -491,7 +491,7 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 - 节点异常：例如数据节点无法正常连接或无法正常初始化等
 - 授权异常：例如USB-Key服务异常，授权节点超出限制，授权过期等
 - XA异常：例如XA RECOVER失败等
-- 端口被占用：例如端口已被其他程序占用，或者启动了多个HotDB服务等
+- 端口被占用：例如端口已被其他程序占用，或者启动了多个计算节点服务等
 - 复制异常：例如配置了启动时等待复制追上，实际数据节点的复制一直存在延迟，无法追上等
 - 集群异常：例如集群无法达成共识，启动时存在网络分区，各节点时间不同步等
 
@@ -571,7 +571,7 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 ### 管理端信息监控
 
-HotDB Server为客户提供了一套功能完善、操作便捷的信息监控、统计与服务管理功能。用户可以通过MySQL Client登录计算节点的监控管理端查看详细信息，详细说明请参考[管理端命令](management-port-command.md)文档。
+HotDB Server为客户提供了一套功能完善、操作便捷的信息监控、统计与服务管理功能。用户可以通过MySQL Client登录计算节点的监控管理端查看详细信息，详细说明请参考[计算节点管理命令](management-port-command.md)文档。
 
 #### 管理端命令
 
@@ -693,7 +693,7 @@ mysql> select * from datasource where dn=11;
 
 当压测结束后，这些连接不会立即销毁，会等到空闲检测周期检测：如果空闲状态（即管理端show @@backend标记为Idle状态）的连接大于512 ，则销毁多余的连接到512个；如果小于512 就保持原样。
 
-若需要空闲连接状态回到初始化状态，可以在计算节点运行过程中，参考[管理端命令](management-port-command.md)文档重建连接池rebuild @@pool 相关章节重建连接池，即恢复到初始连接状态。
+若需要空闲连接状态回到初始化状态，可以在计算节点运行过程中，参考[计算节点管理命令](management-port-command.md)文档重建连接池rebuild @@pool 相关章节重建连接池，即恢复到初始连接状态。
 
 ### 磁盘空间使用限制
 
@@ -717,7 +717,7 @@ mysql> select * from datasource where dn=11;
 
 ### 动态加载（RELOAD）
 
-计算节点可在不重启服务的情况下，在线加载配置信息。通过"动态加载"功能可立即生效的参数请参考[计算节点参数使用说明](#计算节点参数使用说明)。
+计算节点可在不重启服务的情况下，在线加载配置信息。通过"动态加载"功能可立即生效的参数请参考[计算节点参数说明](#计算节点参数说明)。
 
 动态加载有两种方式，一种是登录[管理端（3325）](#管理端信息监控)执行：`reload @@config`命令；一种是登录管理平台，点击菜单栏右上角"动态加载"按钮，将新增配置项目动态加载到计算节点中进行使用。如下图所示：
 
@@ -729,7 +729,7 @@ mysql> select * from datasource where dn=11;
 
 ### 配置校验
 
-登录管理平台，选择"配置"->[配置校验](#配置校验)进入配置校验面板，点击"开始校验"按钮，将校验分布式事务数据库平台中[配置校验](#配置校验)菜单中的配置项。如下图所示：
+登录管理平台，选择"配置"->[配置校验](#配置校验)进入配置校验面板，点击"开始校验"按钮，将校验分布式事务数据库可视化管理平台中[配置校验](#配置校验)菜单中的配置项。如下图所示：
 
 ![](assets/standard/image31.png)
 
@@ -906,11 +906,11 @@ ERROR 1064 (HY000): Intercepted by sql firewall, because: not allowed to execute
 </Loggers>
 ```
 
-## 安全
+## 访问安全
 
-### 用户与权限
+### 权限体系
 
-HotDB Server有两类用户，一类是计算节点数据库用户，用于操作数据，执行SELECT，UPDATE，DELETE，INSERT等SQL语句。另一类是分布式事务数据库平台用户，用于管理配置信息。此章节将着重介绍计算节点用户相关内容。
+HotDB Server有两类用户，一类是计算节点数据库用户，用于操作数据，执行SELECT，UPDATE，DELETE，INSERT等SQL语句。另一类是分布式事务数据库可视化管理平台用户，用于管理配置信息。此章节将着重介绍计算节点用户相关内容。
 
 计算节点数据库用户必须被赋予逻辑库的权限，才能访问逻辑库。计算节点提供了类似于MySQL的操作权限，如下：
 
@@ -956,7 +956,7 @@ SUPER权限不指定特定逻辑库。只有持有SUPER权限的user可以执行
 
 权限之间相互独立，拥有表的UPDATE权限，并不代表拥有该表的SELECT权限；拥有SUPER权限，并不代表拥有表的操作权限。另，TRIGGER相关的权限目前未单独维护，遵循权限规则为：CREATE TRIGGER 需要 CREATE 权限、DROP TRIGGER 需要 DROP权限、TRIGGER内部语句不验证权限、DEFINER 相关全去除、SHOW TRIGGERS时相关字段为当前用户。
 
-### SSL认证
+### 通信认证
 
 简介：SSL（Secure Socket Layer 安全套接层）是HTTPS下的一个协议加密层，有1、2、3三个版本，目前只使用SSL 3.0。IETF对SSL进行标准化后，在3.0版本的基础上发布了TLS1.0（Transport Layer Security 安全传输层协议）。TLS协议目前有1.0、1.1、1.2、1.3四个版本。
 
@@ -1121,7 +1121,7 @@ jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/u
 >
 > 对于某些版本的Navicat可能在勾选验证CA证书名后无法连接，比如提示错误："2026 SSL connection error: ASN: bad other signature confirmation"，这可能是该版本的动态链接库不兼容，需要将其目录下的`libmysql.dll`替换为MySQL Workbench中的同名文件，或者更新到更高的版本，参考[链接](https://www.heidisql.com/forum.php?t=19494)。
 
-## 数据迁移、备份与恢复
+## 备份恢复
 
 ### 使用mysqldump备份
 
@@ -1151,7 +1151,7 @@ HotDB Server支持mysqldump功能，用法同MySQL一样。
 
 #### mysqlbinlog - 处理二进制日志文件的实用程序
 
-计算节点支持mysqlbinlog命令，mysqlbinlog命令能够解析binlog文件用于同步增量数据，从而减少了将单机MySQL数据迁移至计算节点时的停机时间。使用mysqlbinlog连接远程mysql实例获取binlog文件并解析出其中的SQL语句，然后交由计算节点执行，从而将某个数据库的增量数据导入到计算节点某个逻辑库下。首先，登入到[管理端口](#管理端信息监控)（默认端口为3325），执行dbremapping命令添加数据库映射关系，关于dbremapping命令用法，请参考[管理端命令](management-port-command.md)文档。
+计算节点支持mysqlbinlog命令，mysqlbinlog命令能够解析binlog文件用于同步增量数据，从而减少了将单机MySQL数据迁移至计算节点时的停机时间。使用mysqlbinlog连接远程mysql实例获取binlog文件并解析出其中的SQL语句，然后交由计算节点执行，从而将某个数据库的增量数据导入到计算节点某个逻辑库下。首先，登入到[管理端口](#管理端信息监控)（默认端口为3325），执行dbremapping命令添加数据库映射关系，关于dbremapping命令用法，请参考[计算节点管理命令](management-port-command.md)文档。
 
 ```sql
 dbremapping @@add@期望被导入的数据库名:逻辑库名
@@ -1169,7 +1169,7 @@ mysqlbinlog -R -h主机名 -P端口号 -v --base64-output=decode-rows --skip-gti
 
 例如希望将192.168.200.77:3306中的物理库db01导入计算节点192.168.210.30中的逻辑库logicdb01：
 
-1. 先至192.168.210.30登入到[管理端口3325](#数据一致性保障)，执行：
+1. 先至192.168.210.30登入到[管理端口3325](#数据强一致)，执行：
 
 ```sql
 dbremapping @@add@db01:logicdb01
@@ -1290,7 +1290,7 @@ msyql> select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum f
 
 其结果（1812521567）与在计算节点执行结果一致，则table02表数据大概率一致。
 
-## 数据一致性保障
+## 数据强一致
 
 ### 主从数据一致性检查
 
@@ -1723,7 +1723,7 @@ create table test02(id not null auto_increment primary key,a char(8),b decimal(4
 
 ![](assets/standard/image54.png)
 
-若表结构为已创建的表，全局唯一约束修改为开启状态后，点击动态加载并刷新页面，若出现如下图提示，说明需要到管理端口执行unique @@create，检查此表唯一约束键的历史数据，返回结果是唯一后，计算节点自动创建辅助索引，全局唯一约束方能生效，此命令详情请参考[管理端命令](management-port-command.md)文档：
+若表结构为已创建的表，全局唯一约束修改为开启状态后，点击动态加载并刷新页面，若出现如下图提示，说明需要到管理端口执行unique @@create，检查此表唯一约束键的历史数据，返回结果是唯一后，计算节点自动创建辅助索引，全局唯一约束方能生效，此命令详情请参考[计算节点管理命令](management-port-command.md)文档：
 
 ![](assets/standard/image55.png)
 
@@ -1836,7 +1836,7 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 
 ## 高可用服务
 
-此章节主要描述了单机房模式下的计算节点集群的高可用服务，若要了解灾备模式下的高可用服务，请参考[跨机房容灾](cross-idc-disaster-recovery.md)文档。
+此章节主要描述了单机房模式下的计算节点集群的高可用服务，若要了解容灾模式下的高可用服务，请参考[跨机房容灾部署](cross-idc-disaster-recovery.md)文档。
 
 ### 高可用服务
 
@@ -1934,9 +1934,9 @@ INFO [$NIOREACTOR-6-RW] (Heartbeat.java:502) -heartbeat continue success twice f
 
 如果是网络故障、服务器宕机，掉电等，则记录Network is unreachable
 
-如果网络可达，MySQL服务停止，没有响应，则记录MySQL Service Stopped
+如果网络可达，存储节点服务停止，没有响应，则记录MySQL Service Stopped
 
-如果MySQL服务开启，但是响应出现异常，则记录MySQL Service Exception
+如果存储节点服务开启，但是响应出现异常，则记录MySQL Service Exception
 
 例如：存储节点服务关掉时，整个切换过程提示如下：
 
@@ -2613,7 +2613,7 @@ HotDB Server读写分离对应用研发者和数据库管理员完全透明，�
 >
 > 在未使用HINT做读写分离的情况下， "可分离的读请求"主要指：自动提交的读请求与显式只读事务中的读请求。其余读请求均为"不可分离的读请求"。例如非自动提交事务中的读请求。
 
-## HotDB Server 特色功能
+## 计算节点特色功能
 
 HotDB Server在基于分布式事务数据库设计的基础上，提供了一些扩展的功能，方便进行使用和管理。
 
@@ -2738,7 +2738,7 @@ DNID只适用于SELECT，UPDATE，DELETE的简单单表语句；并且，DNID只
 /*!hotdb:dnid = 1*/select * from customer where age > 20;
 ```
 
-该语句将在数据库节点1上执行。用户可以通过分布式事务数据库平台中的"数据节点"页面，找到数据节点ID为1的存储节点名称，并在"存储节点"页面中搜索指定的存储节点名称，即可定位到实际的MySQL数据库。
+该语句将在数据库节点1上执行。用户可以通过分布式事务数据库可视化管理平台中的"数据节点"页面，找到数据节点ID为1的存储节点名称，并在"存储节点"页面中搜索指定的存储节点名称，即可定位到实际的MySQL数据库。
 
 **(6) 在HINT中使用DSID(存储节点ID)：**
 
@@ -2807,7 +2807,7 @@ hotdb> /*!hotdb:dsid=nobinlog:22*/show variables like 'wait_timeout';
 
 > !Note
 >
-> all为所有存储节点(包括灾备模式下灾备机房存储节点)，此语法不会将执行的语句记入二进制日志文件binlog中。
+> all为所有存储节点(包括容灾模式下容灾机房存储节点)，此语法不会将执行的语句记入二进制日志文件binlog中。
 
 示例：
 
@@ -2859,7 +2859,7 @@ hotdb> /*!hotdb:dsid=nobinlog:all*/show variables like 'wait_timeout';
 
 > !Note
 >
-> all为所有存储节点(包括灾备模式下灾备机房存储节点)，此语法会将执行的语句记入二进制日志文件binlog中，同时写binlog可能存在导致具有复制关系的存储节点复制异常、GTID位置错乱的情况，使用时需谨慎。
+> all为所有存储节点(包括容灾模式下容灾机房存储节点)，此语法会将执行的语句记入二进制日志文件binlog中，同时写binlog可能存在导致具有复制关系的存储节点复制异常、GTID位置错乱的情况，使用时需谨慎。
 
 > !Note
 >
@@ -3163,7 +3163,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 - 若源表出现主备数据不一致情况，使用alter修改分片字段时会直接跳过检测依旧执行（建议执行前人工通过管理平台进行主备数据一致性检测）；
 - 源表开启全局唯一约束后，使用alter修改分片字段时要求源表唯一约束字段的历史数据必须唯一；
 
-## 数据类型与字符集支持
+## 数据类型与字符集
 
 ### 计算节点对数据类型的支持
 
@@ -3259,7 +3259,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 | ^             | `With WHERE: SELECT * FROM k WHERE a='a' COLLATE utf8_bin;`                                                                                                                              |
 | ^             | `With HAVING: SELECT * FROM k WHERE a='a' having a='a' COLLATE utf8_bin order by id;`                                                                                                    |
 
-## 函数与操作符支持
+## 函数与操作符
 
 ### 计算节点对函数的支持
 
@@ -3295,7 +3295,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 | [BIT_XOR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                | 不支持                                                       | 是                                                                   |                                                                                                           |
 | [&](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                             | 支持                                                         | 否                                                                   |                                                                                                           |
 | [~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                             | 支持                                                         | 否                                                                   |                                                                                                           |
-| [                                                                                                                                                          | ](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | 支持                                                                 | 否                                                                                                        |
+| [\|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | 支持                                                                 | 否                                                                                                        |   |
 | [^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                             | 支持                                                         | 否                                                                   |                                                                                                           |
 | [Buffer()](http://dev.mysql.com/doc/refman/5.6/en/spatial-operator-functions.html)                                                                         | 支持                                                         | 否                                                                   |                                                                                                           |
 | [CASE](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                 | 支持                                                         | 否                                                                   |                                                                                                           |
@@ -3495,7 +3495,7 @@ Query OK, 0 rows affected (2 min 2.27 sec)
 | [OCT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | 支持                                                         | 否                                                                   |                                                                                                           |
 | [OCTET_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                             | 支持                                                         | 否                                                                   |                                                                                                           |
 | [OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                      | 支持                                                         | 否                                                                   |                                                                                                           |
-| [\                                                                                                                                                         | \                                                            | , OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | 支持                                                                                                      |
+| [\|\| , OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | 支持                                                                                                      |   |
 | [ORD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | 支持                                                         | 否                                                                   |                                                                                                           |
 | [Overlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                   | 支持                                                         | 否                                                                   |                                                                                                           |
 | [PASSWORD()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                             | 支持                                                         | 否                                                                   |                                                                                                           |
@@ -4348,7 +4348,7 @@ HotDB Server当前仅支持垂直库（即逻辑库仅关联一个数据节点�
 
 #### 用户管理语句
 
-HotDB Server实现了一套自己的用户名与权限管理的系统，可以优先在分布式事务数据库平台页面上操作即可。若使用同MySQL数据库用户管理类同的SQL语句，部分可以支持。
+HotDB Server实现了一套自己的用户名与权限管理的系统，可以优先在分布式事务数据库可视化管理平台页面上操作即可。若使用同MySQL数据库用户管理类同的SQL语句，部分可以支持。
 
 | 语句类型     | SQL语句        | 支持状态 | 说明                         |
 |--------------|----------------|----------|------------------------------|
@@ -4943,7 +4943,7 @@ Query OK, 0 rows affected (0.09 sec)
 
 - `functionid | functionname | functiontype` - 为具体指定的分片函数ID、分片函数名称、分片函数类型
 - `shardcolumnname` - 为指定的分片字段
-- `datanodeid` - 节点ID，可以逗号间隔，且支持区间形式指定，如:'1,3,4,5-10,12-40'，节点ID可登录分布式事务数据库平台页面，选择"配置"->"节点管理"查看，也可以登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)show hotdb datanodes;查看：
+- `datanodeid` - 节点ID，可以逗号间隔，且支持区间形式指定，如:'1,3,4,5-10,12-40'，节点ID可登录分布式事务数据库可视化管理平台页面，选择"配置"->"节点管理"查看，也可以登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)show hotdb datanodes;查看：
 
 ```
 mysql> show hotdb datanodes;
@@ -5502,7 +5502,7 @@ INFORMATION_SCHEMA库提供当前计算节点的信息与数据，例如数据�
 | `view_table_usage`             | 返回空集                   |
 | `view_routine_usage`           | 返回空集                   |
 
-## 计算节点参数使用说明
+## 计算节点参数说明
 
 计算节点使用过程中，维护了许多系统配置参数，本文描述这些参数如何使用以及对功能带来什么影响。每个参数都有一个默认值，可以在服务启动时在server.xml配置文件中修改，也可以登录管理平台在参数配置页面进行修改。这些参数大多数可以在运行时使用动态加载（reload @@config）操作动态更改，无需停止并重新启动服务。部分参数也可以使用set方式修改。
 
@@ -6502,7 +6502,7 @@ server.xml中dropTableRetentionTime参数配置：
 |----------------|------------------------------------------|
 | 参数值         | drBakUrl                                 |
 | 是否可见       | 是                                       |
-| 参数说明       | 灾备机房从配置库地址                     |
+| 参数说明       | 容灾机房从配置库地址                     |
 | 默认值         | jdbc:mysql://127.0.0.1:3306/hotdb_config |
 | Reload是否生效 | 是                                       |
 | 最低兼容版本   | 2.5.3.1                                  |
@@ -6511,7 +6511,7 @@ server.xml中dropTableRetentionTime参数配置：
 |----------------|------------------------|
 | 参数值         | drBakUsername          |
 | 是否可见       | 是                     |
-| 参数说明       | 灾备机房从配置库用户名 |
+| 参数说明       | 容灾机房从配置库用户名 |
 | 默认值         | hotdb_config           |
 | Reload是否生效 | 是                     |
 | 最低兼容版本   | 2.5.3.1                |
@@ -6520,19 +6520,19 @@ server.xml中dropTableRetentionTime参数配置：
 |----------------|----------------------|
 | 参数值         | drBakPassword        |
 | 是否可见       | 是                   |
-| 参数说明       | 灾备机房从配置库密码 |
+| 参数说明       | 容灾机房从配置库密码 |
 | 默认值         | hotdb_config         |
 | Reload是否生效 | 是                   |
 | 最低兼容版本   | 2.5.3.1              |
 
 **参数作用：**
 
-drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机房配置库高可用功能。当灾备机房切换为当前主机房时，若使用配置库高可用，则需要设置为对应从配置库的信息且保证主从配置库实例的复制关系正常，且互为主备。当灾备机房切换为当前主机房时，主配置库发生故障时会自动切换到从配置库，此时配置库的高可用切换可参考中心机房从配置库参数[bakUrl & bakUsername & bakPassword](#bakUrl-bakUsername-bakPassword)的描述。
+drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于容灾机房配置库高可用功能。当容灾机房切换为当前主机房时，若使用配置库高可用，则需要设置为对应从配置库的信息且保证主从配置库实例的复制关系正常，且互为主备。当容灾机房切换为当前主机房时，主配置库发生故障时会自动切换到从配置库，此时配置库的高可用切换可参考中心机房从配置库参数[bakUrl & bakUsername & bakPassword](#bakUrl-bakUsername-bakPassword)的描述。
 
 ```xml
-<property name="drBakUrl">jdbc:mysql://192.168.240.77:3316/hotdb_config</property><!-- 灾备机房从配置库地址 -->
-<property name="drBakUsername">hotdb_config</property><!-- 灾备机房从配置库用户名 -->
-<property name="drBakPassword">hotdb_config</property><!-- 灾备机房从配置库密码 -->
+<property name="drBakUrl">jdbc:mysql://192.168.240.77:3316/hotdb_config</property><!-- 容灾机房从配置库地址 -->
+<property name="drBakUsername">hotdb_config</property><!-- 容灾机房从配置库用户名 -->
+<property name="drBakPassword">hotdb_config</property><!-- 容灾机房从配置库密码 -->
 ```
 
 #### drUrl & drUsername & drPassword
@@ -6543,7 +6543,7 @@ drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机�
 |----------------|------------------------------------------|
 | 参数值         | drUrl                                    |
 | 是否可见       | 是                                       |
-| 参数说明       | 灾备机房配置库地址                       |
+| 参数说明       | 容灾机房配置库地址                       |
 | 默认值         | jdbc:mysql://127.0.0.1:3306/hotdb_config |
 | Reload是否生效 | 是                                       |
 | 最低兼容版本   | 2.5.3.1                                  |
@@ -6552,7 +6552,7 @@ drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机�
 |----------------|----------------------|
 | 参数值         | drUsername           |
 | 是否可见       | 是                   |
-| 参数说明       | 灾备机房配置库用户名 |
+| 参数说明       | 容灾机房配置库用户名 |
 | 默认值         | hotdb_config         |
 | Reload是否生效 | 是                   |
 | 最低兼容版本   | 2.5.3.1              |
@@ -6561,19 +6561,19 @@ drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于灾备机�
 |----------------|--------------------|
 | 参数值         | drPassword         |
 | 是否可见       | 是                 |
-| 参数说明       | 灾备机房配置库密码 |
+| 参数说明       | 容灾机房配置库密码 |
 | 默认值         | hotdb_config       |
 | Reload是否生效 | 是                 |
 | 最低兼容版本   | 2.5.3.1            |
 
 **参数作用：**
 
-drUrl,drUsername,drPassword属于配套参数，,drUrl是指灾备机房计算节点配置信息的配置库路径，drUsername,drPassword是指连接该物理库的用户名密码，该配置库用于存储灾备机房配置信息。可参考与中心机房配置库相关参数[url & username & password](#url-username-password)。
+drUrl,drUsername,drPassword属于配套参数，,drUrl是指容灾机房计算节点配置信息的配置库路径，drUsername,drPassword是指连接该物理库的用户名密码，该配置库用于存储容灾机房配置信息。可参考与中心机房配置库相关参数[url & username & password](#url-username-password)。
 
 ```xml
-<property name="drUrl">jdbc:mysql://192.168.240.76:3316/hotdb_config</property><!-- 灾备机房配置库地址 -->
-<property name="drUsername">hotdb_config</property><!-- 灾备机房配置库用户名 -->
-<property name="drPassword">hotdb_config</property><!-- 灾备机房配置库密码 -->
+<property name="drUrl">jdbc:mysql://192.168.240.76:3316/hotdb_config</property><!-- 容灾机房配置库地址 -->
+<property name="drUsername">hotdb_config</property><!-- 容灾机房配置库用户名 -->
+<property name="drPassword">hotdb_config</property><!-- 容灾机房配置库密码 -->
 ```
 
 #### enableCursor
@@ -7277,7 +7277,7 @@ server.xml中globalUniqueConstraint参数配置 如下配置：
 |----------------|---------------------------------------------------------------------------------------------------------|
 | 参数值         | haMode                                                                                                  |
 | 是否可见       | 是                                                                                                      |
-| 参数说明       | 高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房 |
+| 参数说明       | 高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式容灾机房，4：集群模式中心机房，5：集群模式容灾机房 |
 | 默认值         | 0                                                                                                       |
 | Reload是否生效 | 是                                                                                                      |
 | 最低兼容版本   | 2.5.0                                                                                                   |
@@ -7287,16 +7287,16 @@ server.xml中globalUniqueConstraint参数配置 如下配置：
 server.xml中haMode参数配置 如下配置：
 
 ```xml
-<property name="haMode">0</property><!-- 高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式灾备机房，4：集群模式中心机房，5：集群模式灾备机房 -->
+<property name="haMode">0</property><!-- 高可用模式， 0:HA, 1:集群, 2:HA模式中心机房, 3:HA模式容灾机房，4：集群模式中心机房，5：集群模式容灾机房 -->
 ```
 
 **参数作用：**
 
 在HotDB Server 2.5.3.1以下版本中，haMode默认为0。该参数设置为0时，表示当前计算节点集群使用单节点或高可用模式，而集群的相关参数可忽略。该参数设置为1时，集群的相关参数必填且计算节点将以集群模式运行。
 
-在HotDB Server 2.5.3.1及以上版本中，haMode可设置为0,1,2,3。对于单机房模式下的计算节点集群，与低版本的使用方法相同，将haMode设置为0或1，表示单机房模式下的单节点、高可用以及集群模式。对于灾备模式下的计算节点集群，在中心机房将此参数设置为2，在灾备机房将此参数设置为3，表示灾备模式下的单节点或高可用模式。灾备模式的计算节点集群不支持集群模式。
+在HotDB Server 2.5.3.1及以上版本中，haMode可设置为0,1,2,3。对于单机房模式下的计算节点集群，与低版本的使用方法相同，将haMode设置为0或1，表示单机房模式下的单节点、高可用以及集群模式。对于容灾模式下的计算节点集群，在中心机房将此参数设置为2，在容灾机房将此参数设置为3，表示容灾模式下的单节点或高可用模式。容灾模式的计算节点集群不支持集群模式。
 
-在HotDB Server 2.5.6及以上版本中，haMode可设置为0,1,2,3,4,5。其中4为开启灾备模式后，计算节点为多计算节点集群模式的中心机房；5为开启灾备模式后，计算节点为多计算节点集群模式的灾备机房。
+在HotDB Server 2.5.6及以上版本中，haMode可设置为0,1,2,3,4,5。其中4为开启容灾模式后，计算节点为多计算节点集群模式的中心机房；5为开启容灾模式后，计算节点为多计算节点集群模式的容灾机房。
 
 #### haState & haNodeHost
 
@@ -7414,7 +7414,7 @@ mysql> show @@debug;
 |----------------|--------------------------------|
 | 参数值         | idcId                          |
 | 是否可见       | 是                             |
-| 参数说明       | 机房ID, 1:中心机房，2:灾备机房 |
+| 参数说明       | 机房ID, 1:中心机房，2:容灾机房 |
 | 默认值         | 0                              |
 | Reload是否生效 | 是                             |
 | 最低兼容版本   | 2.5.3.1                        |
@@ -7430,12 +7430,12 @@ mysql> show @@debug;
 
 **参数作用：**
 
-当开启灾备模式后，则需要配置参数idcId和idcNodeHost。idcId配置机房ID，当前默认设置为1表示中心机房，设置为2表示灾备机房。idcNodeHost填写另一个机房的所有计算节点连接信息，配置格式为IP:PORT，计算节点之间以英文逗号分隔，例：192.168.200.186:3325,192.168.200.187:3325。
+当开启容灾模式后，则需要配置参数idcId和idcNodeHost。idcId配置机房ID，当前默认设置为1表示中心机房，设置为2表示容灾机房。idcNodeHost填写另一个机房的所有计算节点连接信息，配置格式为IP:PORT，计算节点之间以英文逗号分隔，例：192.168.200.186:3325,192.168.200.187:3325。
 
-例如，在中心机房server.xml中设置idcId为1，idcNodeHost填写灾备机房所有计算节点信息；在灾备机房server.xml中设置idcId为2，idcNodeHost填写中心机房所有计算节点信息。
+例如，在中心机房server.xml中设置idcId为1，idcNodeHost填写容灾机房所有计算节点信息；在容灾机房server.xml中设置idcId为2，idcNodeHost填写中心机房所有计算节点信息。
 
 ```xml
-<property name="idcId">2</property><!-- 机房ID, 1:中心机房，2:灾备机房 -->
+<property name="idcId">2</property><!-- 机房ID, 1:中心机房，2:容灾机房 -->
 <property name="idcNodeHost">192.168.220.188:3325,192.168.220.189:3325</property><!-- 另一个机房的连接信息（Computer node info in the other IDC）-->
 ```
 
@@ -10612,7 +10612,7 @@ mysql> select * from vrab001;
 
 ## 附录
 
-### HotDB Server注意事项
+### 计算节点注意事项
 
 #### JDBC版本建议
 

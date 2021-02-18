@@ -4,7 +4,7 @@
 
 HotDB Server集群部署对服务器、操作系统、依赖软件等有一定要求，不符合要求的环境部署出来的集群可能无法使用或不满足使用要求。建议部署前详细了解HotDB Server集群部署对环境的[要求说明](#环境说明)。
 
-此文档将详细描述普通模式下，如何部署一套HotDB Server集群。若要了解开启灾备模式后，相较于普通模式，需要特殊注意的地方，请参考[跨机房容灾](cross-idc-disaster-recovery.md)文档中的[安装部署](cross-idc-disaster-recovery.md#安装部署)章节。
+此文档将详细描述普通模式下，如何部署一套HotDB Server集群。若要了解开启容灾模式后，相较于普通模式，需要特殊注意的地方，请参考[跨机房容灾部署](cross-idc-disaster-recovery.md)文档中的[安装部署](cross-idc-disaster-recovery.md#安装部署)章节。
 
 ### 部署架构示意图
 
@@ -32,7 +32,7 @@ HotDB Server集群部署对服务器、操作系统、依赖软件等有一定�
 
 硬件环境配置推荐参考[硬件环境配置推荐](hardware-config-recommendation.md)文档。
 
-集群运行环境配置要求与推荐参考[集群环境要求](cluster-environment-requirement.md)文档。
+集群运行环境配置要求与推荐参考[集群环境要求](cluster-environment-recommendation.md)文档。
 
 ## 部署
 
@@ -116,7 +116,7 @@ rpm -q glibc |egrep 'glibc.*i.86.*'
 
 3. **服务授权**
 
-HotDB Server能正常启动并提供服务需要通过热璞数据库正规的授权许可，可理解为需要license。具体服务授权说明请参考[服务授权](service-license.md)文档。
+HotDB Server能正常启动并提供服务需要通过热璞数据库正规的授权许可，可理解为需要license。具体服务授权说明请参考[许可授权](service-license.md)文档。
 
 4. **安装计算节点**
 
@@ -900,7 +900,7 @@ Keepalived 的 VIP 此时已在192.168.200.191服务器上
 
 #### NDB SQL服务
 
-NDB SQL服务可用于在分布式环境下帮助计算节点完成相对复杂的SQL查询语句计算。关于NDB SQL服务详细介绍可参考[标准](standard.md)文档中说明。目前NDB SQL服务支持使用一键部署安装脚本方式与管理平台的[集群部署](#集群部署)、[单机部署](#单机部署)功能自动部署方式进行安装。以下将介绍通过脚本方式对NDB SQL服务的安装部署。
+NDB SQL服务可用于在分布式环境下帮助计算节点完成相对复杂的SQL查询语句计算。关于NDB SQL服务详细介绍可参考[计算节点标准操作](standard.md)文档中说明。目前NDB SQL服务支持使用一键部署安装脚本方式与管理平台的[集群部署](#集群部署)、[单机部署](#单机部署)功能自动部署方式进行安装。以下将介绍通过脚本方式对NDB SQL服务的安装部署。
 
 1. **手动安装前须知**
 
