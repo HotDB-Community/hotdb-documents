@@ -1,4 +1,4 @@
-# Management Port Command
+# HOtDB Server Management Command
 
 ## New commands in V2.5.6
 

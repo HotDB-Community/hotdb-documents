@@ -1,4 +1,4 @@
-# Standard
+# HotDB Server Standard Operations
 
 ## Basic information
 

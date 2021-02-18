@@ -1,4 +1,4 @@
-# Cluster Environment Requirement
+# Cluster Environment Recommendation
 
 ## Distributed Transactional Database HotDB Server - Cluster Configuration Reference
 

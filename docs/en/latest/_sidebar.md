@@ -6,15 +6,15 @@
 * **Quick Start**
   * [Quick Start Guide](quick-start-guide.md)
   <!--* [Basic Operations](basic-operations.md)-->
-* **Installation, Deployment and Update**
+* **Deployment and Update**
   * [Installation and Deployment](installation-and-deployment.md)
   * [Service License](service-license.md)
   * [Manual Update](manual-update.md)
-  * [Cluster Environment Requirement](cluster-environment-recommendation.md)
+  * [Cluster Environment Recommendation](cluster-environment-recommendation.md)
   * [Hardware Config Recommendation](hardware-config-recommendation.md)
 * **HotDB Server Tutorial**
-  * [Standard](standard.md)
-  * [Management Port Command](management-port-command.md)
+  * [HotDB Server Standard Operations](standard.md)
+  * [HOtDB Server Management Command](management-port-command.md)
 * **HotDB Management Tutorial**
   * [HotDB Management](hotdb-management.md)
   * [Intelligent Inspection](intelligent-inspection.md)
