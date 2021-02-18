@@ -22,18 +22,20 @@ HotDB Server is a relational distributed transactional database product which re
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
-<div class="readme-toc-col-title">Installation, Deployment and Update</div>
+<div class="readme-toc-col-title">Deployment and Update</div>
 
 * [Installation and Deployment](installation-and-deployment.md)
 * [Service License](service-license.md)
 * [Manual Update](manual-update.md)
+* [Cluster Environment Recommendation](cluster-environment-recommendation.md)
+* [Hardware Config Recommendation](hardware-config-recommendation.md)
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
 <div class="readme-toc-col-title">HotDB Server Tutorial</div>
 
-* [Standard](standard.md)
-* [Management Port Command](management-port-command.md)
+* [HotDB Server Standard Operations](standard.md)
+* [HOtDB Server Management Command](management-port-command.md)
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
