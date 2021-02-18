@@ -81,7 +81,7 @@ private fun String.splitToColumns(): List<String> {
 	var isCode = false
 	var isEscape = false
 	for(char in chars) {
-		if(char == '\\' && !isEscape) isEscape=true else if(isEscape) isEscape = false
+		if(char == '\\' && !isEscape) isEscape=true
 		if(char == '`') isCode = !isCode
 		if(char == '|' &&!isEscape && !isCode){
 			columnChars.add(charList)
@@ -89,6 +89,7 @@ private fun String.splitToColumns(): List<String> {
 		}else{
 			charList.add(char)
 		}
+		if(isEscape) isEscape = false
 	}
 	return columnChars.map { String(it.toCharArray()).trim() }
 }

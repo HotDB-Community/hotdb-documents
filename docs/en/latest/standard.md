@@ -3321,9 +3321,9 @@ This document only lists some functions upon special treatment, and if to know a
 | [BIT_OR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                 | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
 | [BIT_XOR()](http://dev.mysql.com/doc/refman/5.6/en/group-by-functions.html)                                                                                | Not support                                                  | Yes                                                                  |                                                                                                                                                                                     |
 | [&](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
-| [\~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
-| [                                                                                                                                                          | ](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support                                                              | No                                                                                                                                                                                  |
-| [\^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [~](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
+| [\|](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html) | Support                                                              | No                                                                                                                                                                                  |   |
+| [^](http://dev.mysql.com/doc/refman/5.6/en/bit-functions.html)                                                                                            | Support                                                      | No                                                                   |                                                                                                                                                                                     |
 | [Buffer()](http://dev.mysql.com/doc/refman/5.6/en/spatial-operator-functions.html)                                                                         | Support                                                      | No                                                                   |                                                                                                                                                                                     |
 | [CASE](http://dev.mysql.com/doc/refman/5.6/en/control-flow-functions.html)                                                                                 | Support                                                      | No                                                                   |                                                                                                                                                                                     |
 | [CAST()](http://dev.mysql.com/doc/refman/5.6/en/cast-functions.html)                                                                                       | Support                                                      | No                                                                   |                                                                                                                                                                                     |
@@ -3522,7 +3522,7 @@ This document only lists some functions upon special treatment, and if to know a
 | [OCT()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
 | [OCTET_LENGTH()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
 | [OLD_PASSWORD() (deprecated 5.6.5)](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
-| [\                                                                                                                                                         | \                                                            | , OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | Support                                                                                                                                                                             |
+| [\|\|, OR](http://dev.mysql.com/doc/refman/5.6/en/logical-operators.html) | Support   | No |   |
 | [ORD()](http://dev.mysql.com/doc/refman/5.6/en/string-functions.html)                                                                                      | Support                                                      | No                                                                   |                                                                                                                                                                                     |
 | [Overlaps()](http://dev.mysql.com/doc/refman/5.6/en/spatial-relation-functions-mbr.html)                                                                   | Support                                                      | No                                                                   |                                                                                                                                                                                     |
 | [PASSWORD()](http://dev.mysql.com/doc/refman/5.6/en/encryption-functions.html)                                                                             | Support                                                      | No                                                                   |                                                                                                                                                                                     |
@@ -4985,19 +4985,19 @@ For Create Table according to this Syntax Rule, pay attention to several points 
 - `shardcolumnname` is specified sharding key
 - `datanodeid` is node ID, which could be separated by comma, and support specification in interval form, such as: '1,3,4,5-10,12-40', the node ID could log in to Distributed Transactional Database Management Platform page, and select"Configuration"->"Node Management"to view, and could also log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function) to show hotdb datanodes; view:
 
-```sql
+```
 mysql> show hotdb datanodes;
-+---------------+----------------+-----------------+
++-------------+---------------+---------------+
 | datanode_id | datanode_name | datanode_type |
-+---------------+----------------+-----------------+
-| 9 | dn_01 | 0 |
-| 11 | dn_02 | 0 |
-| 13 | dn_03 | 0 |
-| 15 | dn_04 | 0 |
-| 19 | dn_failover | 0 |
-| 20 | dn_rmb_01 | 0 |
++-------------+---------------+---------------+
+| 9           | dn_01         | 0             |
+| 11          | dn_02         | 0             |
+| 13          | dn_03         | 0             |
+| 15          | dn_04         | 0             |
+| 19          | dn_failover   | 0             |
+| 20          | dn_rmb_01     | 0             |
++-------------+---------------+---------------+
 6 rows in set (0.00 sec)
-+---------------+----------------+-----------------+
 ```
 
 Function Type only support auto_crc32/auto_mod; if other types are used, it will prompt: ERROR:The fucntiontype can only be auto_crc32/auto_mod.
@@ -5024,26 +5024,25 @@ Tables with similar table structure could use the same Sharding Function, and th
 
 ```sql
 CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY {ruleid | rulename} 'ruleid/rulename' [on datanode 'datanodes'] (......
-dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 ```
 
 Log in to compute node [service port Use Command](#related-command-of-create-table-using-existing-sharding-function), show hotdb rules; and show hotdb functions; you could see the Sharding Function associated with its sharding Function
 
 ```
 mysql> show hotdb rules;
-+---------+--------------------------------------------------------+-------------+-------------+----------------+
-| rule_id | rule_name | rule_column | function_id | auto_generated |
-+---------+--------------------------------------------------------+-------------+-------------+----------------+
-| 17 | AUTO_GENERATE_3_ROUTE1_TB | A | 1 | 1 |
-+---------+--------------------------------------------------------+-------------+-------------+----------------+
++---------+---------------------------+-------------+-------------+----------------+
+| rule_id | rule_name                 | rule_column | function_id | auto_generated |
++---------+---------------------------+-------------+-------------+----------------+
+| 17      | AUTO_GENERATE_3_ROUTE1_TB | A           | 1           | 1              |
++---------+---------------------------+-------------+-------------+----------------+
 21 rows in set (0.01 sec)
 
 mysql> show hotdb functions;
-+-------------+---------------------+---------------+----------------+
-| function_id | function_name | **function_type** | auto_generated |
-+-------------+---------------------+---------------+----------------+
-| 1 | test_route1 | ROUTE | 1 |
-+-------------+---------------------+---------------+----------------+
++-------------+---------------+--------------+----------------+
+| function_id | function_name | function_typ | auto_generated |
++-------------+---------------+--------------+----------------+
+| 1           | test_route1   | ROUTE        | 1              |
++-------------+---------------+--------------+----------------+
 13 rows in set (0.01 sec)
 ```
 
