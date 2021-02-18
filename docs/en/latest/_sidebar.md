@@ -1,6 +1,6 @@
 <!--* README-->
 * **About**
-  * [Introduce](introduce.md)
+  * [Product Introduce](introduce.md)
   * [Product White Paper](white-paper.md)
   <!--* [What's New](whats-new.md)-->
 * **Quick Start**
@@ -10,7 +10,7 @@
   * [Installation and Deployment](installation-and-deployment.md)
   * [Service License](service-license.md)
   * [Manual Update](manual-update.md)
-  * [Cluster Environment Requirement](cluster-environment-requirement.md)
+  * [Cluster Environment Requirement](cluster-environment-recommendation.md)
   * [Hardware Config Recommendation](hardware-config-recommendation.md)
 * **HotDB Server Tutorial**
   * [Standard](standard.md)

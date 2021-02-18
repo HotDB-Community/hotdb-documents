@@ -1,5 +1,5 @@
 关于
-[简介](introduce.md)文档
+[产品简介](introduce.md)文档
 [产品白皮书](white-paper.md)文档
 [What's New](whats-new.md)文档
 
@@ -7,23 +7,23 @@
 [快速上手指南](quick-start-guide.md)文档
 [基本操作](basic-operations.md)文档
 
-安装、部署和升级
+部署升级
 [安装部署](installation-and-deployment.md)文档
-[服务授权](service-license.md)文档
-[手动升级](manual-update.md)文档
-[集群环境要求说明](cluster-environment-requirement.md)文档
+[许可授权](service-license.md)文档
+[版本升级](manual-update.md)文档
+[集群环境推荐](cluster-environment-requirement.md)文档
 [硬件配置推荐](hardware-config-recommendation.md)文档
 
 计算节点操作手册
-[标准](standard.md)文档
-[管理端命令](management-port-command.md)文档
+[计算节点标准操作](standard.md)文档
+[计算节点管理命令](management-port-command.md)文档
 
-管理平台运维手册
+管理平台操作手册
 [管理平台](hotdb-management.md)文档
 [智能巡检](intelligent-inspection.md)文档
 
-容灾功能使用手册
-[跨机房容灾](cross-idc-disaster-recovery.md)文档
+容灾操作手册
+[跨机房容灾部署](cross-idc-disaster-recovery.md)文档
 [可视化机房](visual-idc.md)文档
 
 附录

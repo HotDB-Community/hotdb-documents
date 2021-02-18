@@ -1497,7 +1497,7 @@ tx_isolation
 max_allowed_packet
 ```
 
-详细使用方法及要求请参考[标准](standard.md)文档的MySQL服务端参数校验章节。
+详细使用方法及要求请参考[计算节点标准操作](standard.md)文档的MySQL服务端参数校验章节。
 
 ### `check @@datasource_config_new` - 检查MySQL参数配置信息{#check-datasource_config_new}
 
@@ -1591,7 +1591,7 @@ online;
 
 在一个完整且正常的HotDB Server高可用环境，如果手动向备计算节点发送online命令，会导致备计算节点启动3323，并且向主计算节点发送offline命令，进而主计算节点服务端口3323关闭。但是在当前的状态下，keepalived不会发生vip飘移（因为主管理端口3325还可用），这将导致计算节点数据服务实质上变得不可用。因此，如果用户在不清楚高可用体系的运作方式、或者不知道此缺陷的存在的情况下，手动操作备计算节点的online，有很大风险导致业务故障！
 
-开启灾备模式下，灾备机房的主备计算节点在服务未发生机房级别切换之前，均为备用状态，且仅管理端（默认端口3325）提供服务。因此灾备机房的主备计算节点在服务未发生机房级别切换之前，均禁用online命令。为区别于中心机房的切换操作，当执行online命令时，会提示如下：
+开启容灾模式下，容灾机房的主备计算节点在服务未发生机房级别切换之前，均为备用状态，且仅管理端（默认端口3325）提供服务。因此容灾机房的主备计算节点在服务未发生机房级别切换之前，均禁用online命令。为区别于中心机房的切换操作，当执行online命令时，会提示如下：
 
 ```
 mysql> online;
@@ -1600,7 +1600,7 @@ ERROR 10192 (HY000): access denied. online is not allowed in a DR HotDB Server.
 
 ### `online_dr` - 切换机房
 
-开启灾备模式下，灾备机房的主计算节点不参与中心机房HA高可用切换，除可执行一些show命令以外，只能执行此命令切换机房：
+开启容灾模式下，容灾机房的主计算节点不参与中心机房HA高可用切换，除可执行一些show命令以外，只能执行此命令切换机房：
 
 ```
 mysql> online_dr;
@@ -1608,7 +1608,7 @@ mysql> online_dr;
 Query OK, 1 row affected (5 min 4.35 sec)
 ```
 
-当计算节点发生机房级别切换后，即灾备机房的主计算节点提供服务时，若此时灾备机房主计算节点也发生故障，可执行enable_online；命令之后，再执行online_dr命令启动灾备机房备计算节点。此时灾备机房备计算节点可自动开启服务端口（默认3323）继续服务。
+当计算节点发生机房级别切换后，即容灾机房的主计算节点提供服务时，若此时容灾机房主计算节点也发生故障，可执行enable_online；命令之后，再执行online_dr命令启动容灾机房备计算节点。此时容灾机房备计算节点可自动开启服务端口（默认3323）继续服务。
 
 ```
 mysql> enable_online;
@@ -1736,7 +1736,7 @@ mysql> stop @@heartbeat 1:-1;
 Query OK, 1 row affected (0.00 sec)
 ```
 
-## 灾备模式机房切换相关控制语句
+## 容灾模式机房切换相关控制语句
 
 该章节下描述的命令，用户只需知晓即可，主要用于管理平台进行切换机房过程中与计算节点服务做交互判断时所用。日常使用过程中，禁止人工调用。
 
@@ -1746,7 +1746,7 @@ Query OK, 1 row affected (0.00 sec)
 disable_election;
 ```
 
-一般在灾备模式下切换机房时会用到，用于控制正在提供服务的机房内部计算节点集群不做选举，以免发生计算节点切换，影响机房切换最终结果。
+一般在容灾模式下切换机房时会用到，用于控制正在提供服务的机房内部计算节点集群不做选举，以免发生计算节点切换，影响机房切换最终结果。
 
 ### `enable_election` - 允许集群选举{#enable_election}
 
@@ -1760,7 +1760,7 @@ enable_election;
 disable_non_query_command;
 ```
 
-此命令为灾备模式下机房切换时的内部调用命令，一旦调用，则计算节点实例仅允许查询，切换成功后再释放非查询命令。
+此命令为容灾模式下机房切换时的内部调用命令，一旦调用，则计算节点实例仅允许查询，切换成功后再释放非查询命令。
 
 ### `enable_non_query_command` - 允许非查询命令{#enable_non_query_command}
 
@@ -1794,7 +1794,7 @@ online_dr_check;
 
 ### `online_dr_process` - 机房切换进度{#online_dr_process}
 
-该命令用于查看灾备模式中在切换中的机房的切换进度，例如：
+该命令用于查看容灾模式中在切换中的机房的切换进度，例如：
 
 ![](assets/management-port-command/image85.png)
 
@@ -1803,7 +1803,7 @@ online_dr_check;
 | 列名         | 说明                                                                                                                                                                                                            | 值类型/范围 |
 |--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
 | `process`    | 处理过程，0-8                                                                                                                                                                                                   | `INTEGER`   |
-| `error`      | 错误信息（错误格式：`srcDs1:dstDs1,srcDs2:dstDs2,...;errormsg`或者`ds,ds:ds,...;errormsg`，存储节点格式：`datanodeID_datasourceID_datasourceIP_port_dbname`，如果包含，则src代表原中心机房，dst代表原灾备机房） | `STRING`    |
+| `error`      | 错误信息（错误格式：`srcDs1:dstDs1,srcDs2:dstDs2,...;errormsg`或者`ds,ds:ds,...;errormsg`，存储节点格式：`datanodeID_datasourceID_datasourceIP_port_dbname`，如果包含，则src代表原中心机房，dst代表原容灾机房） | `STRING`    |
 | `error_code` | 错误码 status 状态，1表示完成，0表示未完成                                                                                                                                                                      | `INTEGER`   |
 | `status`     | 状态，1代表完成，0表示未完成                                                                                                                                                                                    | `INTEGER`   |
 
@@ -1947,7 +1947,7 @@ releasehold ddl;
 
 ### 全局唯一约束相关
 
-若要了解关于全局唯一约束相关内容，请参考[标准](standard.md)文档。
+若要了解关于全局唯一约束相关内容，请参考[计算节点标准操作](standard.md)文档。
 
 #### `check @@history_unique` - 检查唯一键的历史数据唯一性{#check-history_unique}
 

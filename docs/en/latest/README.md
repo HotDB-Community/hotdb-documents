@@ -9,7 +9,7 @@ HotDB Server is a relational distributed transactional database product which re
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
 <div class="readme-toc-col-title">About</div>
 
-* [Introduce](introduce.md)
+* [Product Introduce](introduce.md)
 * [Product White Paper](white-paper.md)
 <!--* [What's New](whats-new.md)-->
 
