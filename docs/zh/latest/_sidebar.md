@@ -10,7 +10,7 @@
   * [安装部署](installation-and-deployment.md)
   * [服务授权](service-license.md)
   * [手动升级](manual-update.md)
-  * [集群环境要求说明](cluster-environment-requirement.md)
+  * [ 集群环境要求说明](cluster-environment-requirement.md)
   * [硬件配置推荐](hardware-config-recommendation.md)
 * **计算节点操作手册**
   * [标准](standard.md)
