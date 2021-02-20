@@ -19,8 +19,8 @@
   * [HotDB Management](hotdb-management.md)
   * [Intelligent Inspection](intelligent-inspection.md)
 * **Disaster recovery Tutorial**
-  * [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md)
-  * [Visual IDC](visual-idc.md) 
+  * [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md)
+  * [Cross IDC Disaster Recovery Management](visual-idc.md) 
 * **Appendix**
   * [Glossary](glossary.md)
   * [Parameter Explanation](parameters.md)

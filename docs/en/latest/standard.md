@@ -6,7 +6,7 @@ This Manual is compiled based on **Distributed Transactional Database Product Ho
 
 Some functions in this manual could be used in combination with distributed transactional database management platform (hereinafter referred to as management platform), and if to know use method of management platform, please refer to [HotDB Management](hotdb-management.md) document.
 
-HotDB Server V.2.5.3.1 and above provide a solution based on MySQL native replication function to solve the problem of HotDB Server cross-IDC disaster recovery, which can realize the cross-IDC data synchronization function and solve the problem of cross-IDC distributed transactional database service disaster recovery. This document only describes the functions and features of HotDB Server in general mode in detail. To understand the functions and features in disaster recovery mode, please refer to the [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md) document.
+HotDB Server V.2.5.3.1 and above provide a solution based on MySQL native replication function to solve the problem of HotDB Server cross-IDC disaster recovery, which can realize the cross-IDC data synchronization function and solve the problem of cross-IDC distributed transactional database service disaster recovery. This document only describes the functions and features of HotDB Server in general mode in detail. To understand the functions and features in disaster recovery mode, please refer to the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document.
 
 Special attention may not be paid to difference in version details of some screenshots, and the version number described in the document shall prevail. Since there are many contents in the document, it's recommended opening document map for the convenience of reading.
 
@@ -136,7 +136,7 @@ If to know detailed use method of the management platform, please refer to [HotD
 This chapter will briefly introduce the summary of functions which are added, prohibited or deleted in HotDB Server -- V2.5.6. For detailed function usage, click the hyperlink to view the details:
 
 - Support [the online expansion/reduction of compute node services](#compute-node-auto-scaling), that is, the number of online compute node instances;
-- Multi-node mode is supported for the cross-IDC disaster recovery function. For more details, please refer to the [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md) document.
+- Multi-node mode is supported for the cross-IDC disaster recovery function. For more details, please refer to the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document.
 - Support direct parsing and identifying some [Oracle functions and Sequence syntax](#enableoraclefunction) to reduce the amount of code modification when Oracle migrates to HotDB Server;
 - Support direct parsing and identifying of some Oracle functions and Sequence syntax to reduce the amount of code modification when Oracle migrates to HotDB Server;
 - Support SSL + [SM4](#sslusesm4) for client connection;
@@ -1781,7 +1781,7 @@ After failover, IO thread between the original Master/Slave will be suspended, a
 
 ## High availability service
 
-This chapter mainly describes the high availability service of the computing node cluster in the single-IDC mode. To understand the high availability service in the DR mode, please refer to the [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md) document.
+This chapter mainly describes the high availability service of the computing node cluster in the single-IDC mode. To understand the high availability service in the DR mode, please refer to the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document.
 
 ### High availability service
 

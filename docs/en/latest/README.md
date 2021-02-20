@@ -48,8 +48,8 @@ HotDB Server is a relational distributed transactional database product which re
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
 <div class="readme-toc-col-title">Disaster recovery Tutorial</div>
 
-* [Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md)
-* [Visual IDC](visual-idc.md)
+* [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md)
+* [Cross IDC Disaster Recovery Management](visual-idc.md)
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4readme-toc-col">

@@ -49,7 +49,7 @@ HotDB Server是一款实现数据容量和性能横向扩展的交易关系型�
 <div class="readme-toc-col-title">容灾操作手册</div>
 
 * [跨机房容灾部署](cross-idc-disaster-recovery.md)
-* [可视化机房](visual-idc.md)
+* [跨机房容灾管理](visual-idc.md)
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4readme-toc-col">
