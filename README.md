@@ -16,4 +16,5 @@
 
 相关链接：
 
-[官方网站](https://www.hotdb.com)
+* [官方网站](https://www.hotdb.com)
+* [参考文档](https://hotdb-community.github.io/hotdb-documents#/zh/)
