@@ -20,7 +20,7 @@
   * [智能巡检](intelligent-inspection.md)
 * **容灾操作手册**
   * [跨机房容灾部署](cross-idc-disaster-recovery.md)
-  * [可视化机房](visual-idc.md)
+  * [跨机房容灾管理](visual-idc.md)
 * **附录**
   * [名词解释](glossary.md)
   * [参数说明](parameters.md)

@@ -1,4 +1,4 @@
-# Cross IDC Disaster Recovery
+# Cross IDC Disaster Recovery Deployment
 
 ## Basic Information
 
@@ -1433,7 +1433,7 @@ After the manual switching and failover of all data sources and ConfigDBs, the c
 
 ### IDC Failure
 
-This section mainly describes precautions and instructions when master center fails in the IDC level, DR center is switched as the active IDC and provides services during a compute node cluster is providing services normally, taken the compute node cluster in the master/slave mode as an example. This description mainly describes the steps of manual switching and repair of IDC. If automatic switching, repair and removal of the IDC through the management platform is wanted, on the basis of ensuring that the management platform version is 2.5.6 and above, you can refer to the [Visual IDC](visual-idc.md) document.
+This section mainly describes precautions and instructions when master center fails in the IDC level, DR center is switched as the active IDC and provides services during a compute node cluster is providing services normally, taken the compute node cluster in the master/slave mode as an example. This description mainly describes the steps of manual switching and repair of IDC. If automatic switching, repair and removal of the IDC through the management platform is wanted, on the basis of ensuring that the management platform version is 2.5.6 and above, you can refer to the [Cross IDC Disaster Recovery Management](visual-idc.md) document.
 
 #### Master center fails and DR center is switched as the active IDC
 

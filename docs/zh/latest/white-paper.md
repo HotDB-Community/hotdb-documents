@@ -12,7 +12,7 @@
 
 DRDS(Distributed Relational Database Service)即分布式关系型数据库服务，是指物理上分散的多个关系型数据存储单元通过计算机网络连接起来组成一个逻辑上统一的数据库服务。分布式事务数据库的基本思想是将原来集中式数据库中的数据分散存储到多个数据存储节点上，以获取更大的存储容量和更高的并发访问量。
 
-## 分布式事务数据库
+## 产品简介
 
 ### HotDB Server
 
@@ -704,7 +704,7 @@ HotDB Server产品以及配套的管理平台支持中文与英文两种语言�
 
 ![](assets/white-paper/image65.png)
 
-## HotDB Server部署配置
+## 产品部署配置
 
 ![](assets/white-paper/image66.png)
 

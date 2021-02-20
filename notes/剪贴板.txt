@@ -24,7 +24,7 @@
 
 容灾操作手册
 [跨机房容灾部署](cross-idc-disaster-recovery.md)文档
-[可视化机房](visual-idc.md)文档
+[跨机房容灾管理](visual-idc.md)文档
 
 附录
 [名词解释](glossary.md)文档
@@ -58,8 +58,8 @@ HotDB Management Tutorial
 [Intelligent Inspection](intelligent-inspection.md) document
 
 Disaster recovery Tutorial 
-[Cross IDC Disaster Recovery](cross-idc-disaster-recovery.md) document
-[Visual IDC](visual-idc.md) document
+[Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document
+[Cross IDC Disaster Recovery Management](visual-idc.md) document
  
 Appendix 
 [Glossary](glossary.md) document

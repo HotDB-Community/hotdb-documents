@@ -12,7 +12,7 @@ In recent years, the international information security situation has become inc
 
 Distributed Relational Database Service, or DRDS, refers to a logically unified database service composed of multiple physically distributed relational data sources connected by computer network. The basic idea of distributed transactional database is to store the data in the original centralized database on multiple data sources, so as to obtain larger storage capacity and higher concurrency access.
 
-## Distributed Transactional Database
+## Product Introduce
 
 ### HotDB Server
 
@@ -707,7 +707,7 @@ HotDB Server products and supporting management platform support both Chinese an
 
 ![](assets/white-paper/image65.png)
 
-## HotDB Server Deployment and Configuration
+## Product Deployment and Configuration
 
 ![](assets/white-paper/image66.png)
 
