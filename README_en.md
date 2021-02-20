@@ -16,4 +16,5 @@ Directory Structure:
 
 Related Links:
 
-[Official Website](https://www.hotdb.com)
+* [Official Website](https://www.hotdb.com)
+* [Reference documents](https://hotdb-community.github.io/hotdb-documents/#/en/)

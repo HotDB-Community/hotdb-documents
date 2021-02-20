@@ -129,6 +129,10 @@ window.$docsify = {
   fileUrl: ""
 }
 
+window.onload = function(){
+  redirectLocation()
+}
+
 //地址重定向
 function redirectLocation() {
   let url = window.location.href
