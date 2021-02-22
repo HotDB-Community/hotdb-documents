@@ -13,29 +13,29 @@
 | 10009    | `ER_HANDLE_DATA`                                     | 处理SQL异常                                                  | 2.5.1    |
 | 10010    | `ER_NOT_SUPPORTED`                                   | 未支持的语句                                                 | 2.5.1    |
 | 10011    | `ER_PART_NODE_COMMIT`                                | 部分节点提交                                                 | 2.5.1    |
-| 10012    | `ER_WARN_FIELD_TYPE_IS_BINARY`                       | 分片字段或父子表 为二进制字段                                | 2.5.1    |
+| 10012    | `ER_WARN_FIELD_TYPE_IS_BINARY`                       | 分片字段或父子表为二进制字段                                | 2.5.1    |
 | 10013    | `ER_DATABASES_PARAM_DIFFER`                          | MySQL参数检查中所有数据库不一致                              | 2.5.1    |
-| 10014    | `ER_SLAVE_IS_READONLY_SWITCH_TO`                     | MySQL参数检查中从机 read_Only = ON 且 配置切换规则           | 2.5.1    |
-| 10015    | `ER_MASTER_IS_READONLY`                              | MySQL参数检查中主机 read_Only = ON                           | 2.5.1    |
+| 10014    | `ER_SLAVE_IS_READONLY_SWITCH_TO`                     | MySQL参数检查中从机read_Only=ON且配置切换规则           | 2.5.1    |
+| 10015    | `ER_MASTER_IS_READONLY`                              | MySQL参数检查中主机read_Only=ON                           | 2.5.1    |
 | 10016    | `ER_WARN_STRING_CHANGE_NUMBERIC_TYPE`                | 分片字段 列类型 字符串类型修改为数值型                       | 2.5.1    |
 | 10017    | `ER_WARN_TIMES_DIFFERENCE_IS_TOO_LARGE`              | MySQL数据源与HotDB时间差异过大                               | 2.5.1    |
 | 10018    | `ER_WARN_JOIN_COLUMN_TYPES_DIFFER`                   | 父表与子表join列类型不一致                                   | 2.5.1    |
-| 10019    | `ER_PARAM_COMPLETION_TYPE_DIFFER`                    | MySQL变量completion_type 类型不为NO_CHAIN                    | 2.5.1    |
-| 10020    | `ER_PARAM_DIV_PRECISION_INCREMENT_DIFFER`            | MySQL变量div_precision_increment 所有节点值不一致            | 2.5.1    |
-| 10021    | `ER_PARAM_INNODB_ROLLBACK_ON_TIMEOUT_DIFFER`         | MySQL变量innodb_rollback_on_timeout 类型不为ON               | 2.5.1    |
-| 10022    | `ER_WARN_SLAVE_IS_READONLY_NO_SWITCH_TO`             | MySQL参数检查 从机 read_Only = ON 但未配置切换规则           | 2.5.1    |
-| 10023    | `ER_MYSQL_TIMES_DIFFERENCE_IS_TOO_LARGE`             | MySQL与HotDB服务器时间间隔 太大(大于3秒)                     | 2.5.1    |
-| 10024    | `ER_WARN_MYSQL_TIMES_DIFFERENCE_IS_WARN`             | MySQL与HotDB服务器时间间隔 有点大(0.5～3秒)                  | 2.5.1    |
-| 10025    | `ER_PARAM_AUTOCOMMIT_DIFFER`                         | MySQL变量autocommit 所有节点值不一致                         | 2.5.1    |
-| 10026    | `ER_PARAM_TX_ISOLATION_DIFFER`                       | MySQL变量tx_isolation 所有节点值不一致                       | 2.5.1    |
-| 10027    | `ER_WARN_PARAM_TX_ISOLATION_TO_LOW`                  | MySQL变量tx_isolation 所有节点值一致,但值低于REPEATABLE-READ | 2.5.1    |
-| 10028    | `ER_WARN_INNODB_ROLLBACK_ON_TIMEOUT_NOT_ON`          | 数据源MySQL变量innodb_rollback_on_timeout 类型全部不为ON     | 2.5.1    |
+| 10019    | `ER_PARAM_COMPLETION_TYPE_DIFFER`                    | MySQL变量completion_type类型不为NO_CHAIN                    | 2.5.1    |
+| 10020    | `ER_PARAM_DIV_PRECISION_INCREMENT_DIFFER`            | MySQL变量div_precision_increment所有节点值不一致            | 2.5.1    |
+| 10021    | `ER_PARAM_INNODB_ROLLBACK_ON_TIMEOUT_DIFFER`         | MySQL变量innodb_rollback_on_timeout类型不为ON               | 2.5.1    |
+| 10022    | `ER_WARN_SLAVE_IS_READONLY_NO_SWITCH_TO`             | MySQL参数检查从机read_Only=ON但未配置切换规则           | 2.5.1    |
+| 10023    | `ER_MYSQL_TIMES_DIFFERENCE_IS_TOO_LARGE`             | MySQL与HotDB服务器时间间隔太大(大于3秒)                     | 2.5.1    |
+| 10024    | `ER_WARN_MYSQL_TIMES_DIFFERENCE_IS_WARN`             | MySQL与HotDB服务器时间间隔有点大(0.5～3秒)                  | 2.5.1    |
+| 10025    | `ER_PARAM_AUTOCOMMIT_DIFFER`                         | MySQL变量autocommit所有节点值不一致                         | 2.5.1    |
+| 10026    | `ER_PARAM_TX_ISOLATION_DIFFER`                       | MySQL变量tx_isolation所有节点值不一致                       | 2.5.1    |
+| 10027    | `ER_WARN_PARAM_TX_ISOLATION_TO_LOW`                  | MySQL变量tx_isolation所有节点值一致,但值低于REPEATABLE-READ | 2.5.1    |
+| 10028    | `ER_WARN_INNODB_ROLLBACK_ON_TIMEOUT_NOT_ON`          | 数据源MySQL变量innodb_rollback_on_timeout类型全部不为ON     | 2.5.1    |
 | 10029    | `ER_NOT_PASS_SQL_FIREWALL`                           | 无法通过SQL拦截器                                            | 2.5.1    |
 | 10030    | `ER_ACCESS_DENIED_WHITE_LIST`                        | 无法通过白名单                                               | 2.5.1    |
 | 10031    | `ER_LIMITOFFSET_WITHOUT_ORDERBY`                     | 无Order by的limit offset                                     | 2.5.1    |
 | 10032    | `ER_CREATE_WITHOUT_PRIMARY_AND_UNIQUE_KEY`           | 无主键或唯一键的建表语句                                     | 2.5.1    |
 | 10033    | `ER_RISKY_TRX_ISOLATION`                             | 使用了可能不一致的隔离级别                                   | 2.5.1    |
-| 10034    | `ER_WARN_HOTDB_MAX_ALLOWED_PACKET_GREATERTHAN_MYSQL` | HotDB的最大包默认值大于数据源 变量max_allowed_packet         | 2.5.1    |
+| 10034    | `ER_WARN_HOTDB_MAX_ALLOWED_PACKET_GREATERTHAN_MYSQL` | HotDB的最大包默认值大于数据源变量max_allowed_packet         | 2.5.1    |
 | 10035    | `ER_FAILOVER_NOT_AlLOWED`                            | MGR不允许手动切换数据源                                      | 2.5.1    |
 | 10036    | `ER_NO_FAILOVER_CONFIG`                              | 未配置切换规则                                               | 2.5.1    |
 | 10037    | `ER_DATANODE_IN_TRANSFER`                            | 数据节点正在进行迁移                                         | 2.5.1    |
@@ -196,8 +196,8 @@
 | 10192    | `ER_PERMISSION_DENIED`                               | 操作由于权限问题被拒绝                                       | 2.5.1    |
 | 10193    | `ER_PARAM_EXPLICIT_TIME_DIFFER`                      | MySQL变量explicit_defaults_for_timestamp所有节点值不一致     | 2.5.1    |
 | 10194    | `ER_ILLEGAL_MYSQL_VERSION`                           | MySQL版本不合法                                              | 2.5.1    |
-| 10195    | `ER_WARN_BINDED_SESSION_CONNECTION`                  | warn 级别, 绑定连接会话                                      | 2.5.1    |
-| 10196    | `ER_INFO_BINDED_SESSION_CHANGEDATABASE`              | info 级别, 绑定连接会话换库                                  | 2.5.1    |
+| 10195    | `ER_WARN_BINDED_SESSION_CONNECTION`                  | warn级别, 绑定连接会话                                      | 2.5.1    |
+| 10196    | `ER_INFO_BINDED_SESSION_CHANGEDATABASE`              | info级别, 绑定连接会话换库                                  | 2.5.1    |
 | 10197    | `ER_CONFIG_MS_INCONSISTENT`                          | 配置库不一致                                                 | 2.5.2    |
 | 10198    | `ER_AUX_INITED_EXCEPTION`                            | 辅助表初始化异常                                             | 2.5.2    |
 | 10199    | `ER_AUX_UNIQUEKEY_CONFLICT`                          | 全局唯一键冲突                                               | 2.5.2    |
