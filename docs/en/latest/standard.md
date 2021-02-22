@@ -596,7 +596,6 @@ mysql> show @@help;
 
 The user can enter corresponding command to monitor service condition of compute node, such as showing the data source information:
 
-
 ```
 mysql> show @@datasource;
 |----+----+-----------------------+------+--------+-------------+------+--------+--------+------+------+--------------------+--------------+--------+-------------+-----------------+
@@ -1312,9 +1311,9 @@ It's shown in the result that for the JOIN_Z table in LogicDBDB_T, among master/
 | Master/slave delay exceeds 10S                                                     | DN: ... delay too much,can't check master-slave data consistency                                                      |
 | Delay exceeds 2S                                                                   | Table: ... in datanode: ... exist a large amount of data inconsistency                                                |
 
-### Global AUTO_INCREMENT
+### Global Auto Increment Sequence
 
-Global AUTO_INCREMENT, refers to that the AUTO_INCREMENT column of the table makes orderly auto-increment in various nodes of the whole distribution system.
+Global Auto Increment Sequence, refers to that the AUTO_INCREMENT column of the table makes orderly auto-increment in various nodes of the whole distribution system.
 
 HotDB Server provides Global AUTO_INCREMENT support. When the table contains AUTO_INCREMENT column, and in server.xml file, the value of the parameter autoIncrement is set as non-zero (one or two), Global AUTO_INCREMENT of compute node could be used the same as using AUTO_INCRMENT of MySQL:
 
@@ -1586,7 +1585,7 @@ The Non-Deterministic Function will bring some column problems in use, especiall
    - In case of server_id conflict between data source and configDB, compute node will Auto Disable uuid_short() and inform the user of adjusting the server_id manually. You can refer to description in official website of MySQL:\
      <https://dev.mysql.com/doc/refman/5.7/en/replication-options.html>.
 
-### Global Time Zone Support
+### Global Time Zone
 
 In order to guarantee data accuracy, for different time zones are set due to existence of different data source servers, and thus resulting in data error of the time type in database, HotDB Server provided support for Global Time Zone, including:
 
@@ -9923,8 +9922,6 @@ This parameter is used for Complete Global Proxy of the table with on update cur
 **Parameter Setting:**
 
 unusualSQLMode is a hidden parameter. To enable it, you need to add it through the management platform "More parameters" and execute “reload”, or manually add it to server.xml. The default value of the parameter is 1, configured as follows:
-
-<!--TODO 注释不完整-->
 
 ```xml
 <property name="unusualSQLMode">1</property><!-- Controls the frequency of unusualSQL outputing logs -->
