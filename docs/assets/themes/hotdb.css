@@ -840,3 +840,11 @@ a>code {
   color: inherit;
   font-size: inherit;
 }
+
+thead tr td{
+  /*表格标题居中显示*/
+  text-align: center; 
+  /*表格标题强制不换行*/
+  word-break: keep-all;
+  white-space: nowrap;
+}

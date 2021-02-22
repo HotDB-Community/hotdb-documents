@@ -24,7 +24,7 @@ HotDB Server提供数据库服务自动切换功能，可有效地解决数据�
 
 与计算节点配套使用的管理平台（也称为HotDB Management）也是产品重要组成部分。
 
-#### HotDB Server组件架构
+#### 计算节点组件架构
 
 ![](assets/standard/image3.png)
 
@@ -521,7 +521,7 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 >
 > 如果主库可以连接，则使用主库，此节点可用。如果主库无法连接，则该节点不可用
 
-### MySQL服务端参数校验
+### 存储节点服务端参数校验
 
 为了保证数据的一致性，计算节点在启动的时候，将对MySQL存储节点实例的参数进行校验。针对不同的参数，如果参数配置不符合校验规则，计算节点将报告警告信息，或者不能启动。计算节点对MySQL存储节点实例的参数要求有两种：一种是所有的存储节点实例的参数需一致；另一种是所有的存储节点实例的参数必须为固定值。
 
@@ -1330,9 +1330,9 @@ mysql> show @@masterslaveconsistency;
 | 主从延迟超过10S                                   | `DN：... delay too much,can't check master-slave data consistency`                                                                   |
 | 延迟超过2S                                        | `Replication latency is more than 2s, Master-Slave consistency detection result may be incorrect or cannot be detected in datanode:` |
 
-### 全局AUTO_INCREMENT
+### 全局自增序列
 
-全局AUTO_INCREMENT，是指表的AUTO_INCREMENT列在整个分布式系统中的各个节点间有序自增。HotDB Server提供全局AUTO_INCREMENT的支持，当表中包含AUTO_INCREMENT列，并且在server.xml文件中，将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为非0（1或2)）时，即可以像使用MySQL的AUTO_INCRMENT一样使用计算节点的全局AUTO_INCREMENT。配置示例如：
+全局自增序列，是指表的AUTO_INCREMENT列在整个分布式系统中的各个节点间有序自增。HotDB Server提供全局AUTO_INCREMENT的支持，当表中包含AUTO_INCREMENT列，并且在server.xml文件中，将参数[autoIncrement](#allowrcwithoutreadconsistentinxa)设置为非0（1或2)）时，即可以像使用MySQL的AUTO_INCRMENT一样使用计算节点的全局AUTO_INCREMENT。配置示例如：
 
 ```xml
 <property name="autoIncrement">1</property>
@@ -1600,7 +1600,7 @@ XA模式下，当开启读写分离时：无法保证隔离级别正确性，但
    - 当SELECT/INSERT/UPDATE/DELETE语句中出现uuid()或uuid_short()时，计算节点按照标准的UUIDv1算法代理唯一值；
    - 当存储节点和配置库的server_id冲突时，计算节点自动禁用uuid_short()并告知用户手动调整server_id。可参考MySQL官网说明：<https://dev.mysql.com/doc/refman/5.7/en/replication-options.html>。
 
-### 全局时区支持
+### 全局时区
 
 为保证数据的正确性，针对不同存储节点服务器存在设置不同时区，导致数据库中时间类型的数据错误的问题，HotDB Server 提供对全局时区的支持，包括：
 
@@ -5637,7 +5637,7 @@ server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
 **参数作用：**
 
-控制表的自增序列是否可以在分布式环境下全局自增，功能参见具体[全局自增](#全局auto_increment)章节描述。在2.5.4及以上版本，该参数设置范围为：0、1、2；
+控制表的自增序列是否可以在分布式环境下全局自增，功能参见具体[全局自增](#全局自增序列)章节描述。在2.5.4及以上版本，该参数设置范围为：0、1、2；
 
 在2.5.3及以下版本，只能设置为true或false。设置为true等同于设置为1；设置为false等同于设置为0。
 
