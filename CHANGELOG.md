@@ -61,18 +61,18 @@
 * `install-deploy-update`
   * [X] `docs/zh/latest/install-and-deploy.md` F C
   * [X] `docs/zh/latest/service-license.md` F C
-  * [X] `docs/zh/latest/manual-update.md` F C
+  * [X] `docs/zh/latest/version-update.md` F C
   * [X] `docs/zh/latest/cluster-environment-requirement.md` F C
   * [X] `docs/zh/latest/hardware-config-recommendation.md` F C
 * `hotdb-server`
-  * [X] `docs/zh/latest/standard.md` F C
-  * [X] `docs/zh/latest/management-port-command.md` L M F C
+  * [X] `docs/zh/latest/hotdb-server-standard-operations.md` F C
+  * [X] `docs/zh/latest/hotdb-server-management-commands.md` L M F C
 * `hotdb-management`
   * [X] `docs/zh/latest/hotdm-management.md` F C
   * [X] `docs/zh/latest/intelligent-inspection.md` L F C
 * `idc`
-  * [X] `docs/zh/latest/cross-idc-disaster-recovery.md` F C
-  * [X] `docs/zh/latest/visual-idc.md` L F C
+  * [X] `docs/zh/latest/cross-idc-disaster-recovery-deployment.md` F C
+  * [X] `docs/zh/latest/cross-idc-disaster-recovery-management.md` L F C
 * `appendix`
   * [X] `docs/zh/latest/glossary.md` F C
   * [X] `docs/zh/latest/parameters.md` F C
@@ -90,18 +90,18 @@
 * `install-deploy-update`
   * [X] `docs/en/latest/install-and-deploy.md` C
   * [X] `docs/en/latest/service-license.md` C
-  * [X] `docs/en/latest/manual-update.md` C
+  * [X] `docs/en/latest/version-update.md` C
   * [X] `docs/en/latest/cluster-environment-requirement.md` C
   * [X] `docs/en/latest/hardware-config-recommendation.md` C
 * `hotdb-server`
-  * [X] `docs/en/latest/standard.md` C
-  * [X] `docs/en/latest/management-port-command.md`  C
+  * [X] `docs/en/latest/hotdb-server-standard-operations.md` C
+  * [X] `docs/en/latest/hotdb-server-management-commands.md`  C
 * `hotdb-management`
   * [X] `docs/en/latest/hotdm-management.md` C
   * [X] `docs/en/latest/intelligent-inspection.md` C
 * `idc`
-  * [X] `docs/en/latest/cross-idc-disaster-recovery.md` C
-  * [X] `docs/en/latest/visual-idc.md` C
+  * [X] `docs/en/latest/cross-idc-disaster-recovery-deployment.md` C
+  * [X] `docs/en/latest/cross-idc-disaster-recovery-management.md` C
 * `appendix`
   * [X] `docs/en/latest/glossary.md` C
   * [X] `docs/en/latest/parameters.md` C

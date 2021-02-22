@@ -26,7 +26,7 @@ HotDB Server是一款实现数据容量和性能横向扩展的交易关系型�
 
 * [安装部署](installation-and-deployment.md)
 * [许可授权](service-license.md)
-* [版本升级](manual-update.md)
+* [版本升级](version-update.md)
 * [集群环境推荐](cluster-environment-recommendation.md)
 * [硬件配置推荐](hardware-config-recommendation.md)
 
@@ -34,8 +34,8 @@ HotDB Server是一款实现数据容量和性能横向扩展的交易关系型�
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
 <div class="readme-toc-col-title">计算节点操作手册</div>
 
-* [计算节点标准操作](standard.md)
-* [计算节点管理命令](management-port-command.md)
+* [计算节点标准操作](hotdb-server-standard-operations.md)
+* [计算节点管理命令](hotdb-server-management-commands.md)
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
@@ -48,8 +48,8 @@ HotDB Server是一款实现数据容量和性能横向扩展的交易关系型�
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
 <div class="readme-toc-col-title">容灾操作手册</div>
 
-* [跨机房容灾部署](cross-idc-disaster-recovery.md)
-* [跨机房容灾管理](visual-idc.md)
+* [跨机房容灾部署](cross-idc-disaster-recovery-deployment.md)
+* [跨机房容灾管理](cross-idc-disaster-recovery-management.md)
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4readme-toc-col">

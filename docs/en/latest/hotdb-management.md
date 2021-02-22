@@ -30,7 +30,7 @@ This chapter will briefly introduce the newly added or optimized functions in Ho
 
 This document describes the operation of the distributed transactional database platform (hereinafter referred to as HotDB Management). HotDB Management is a configuration, monitoring and O&M tool used with the distributed transactional database (HotDB Server). It is simple and easy to use, and can easily configure the database, table and sharding function of distributed transactional database and provide multi-dimensional monitoring information and abundant O＆M functions to help users reduce the usage threshold and improve work efficiency.
 
-This document mainly describes the configuration operation process and related functions of HotDB Management, aiming at reducing the difficulties in the use process and reducing the communication costs. This document is prepared based on the current identification version of HotDB Management and provides descriptions based on the normal deployment environment of HotDB Server and HotDB Management. Some screenshots contain the HotDB Management versions and the detailed differences which need no special attention, and the version number described in this document shall prevail. This document can be read in conjunction with the supporting [Standard](standard.md) document to quickly understand key function points.
+This document mainly describes the configuration operation process and related functions of HotDB Management, aiming at reducing the difficulties in the use process and reducing the communication costs. This document is prepared based on the current identification version of HotDB Management and provides descriptions based on the normal deployment environment of HotDB Server and HotDB Management. Some screenshots contain the HotDB Management versions and the detailed differences which need no special attention, and the version number described in this document shall prevail. This document can be read in conjunction with the supporting [Standard](hotdb-server-standard-operations.md) document to quickly understand key function points.
 
 ## Instructions for use
 
@@ -227,7 +227,7 @@ The cluster management page displays the compute node clusters deployed or added
 - Data Source: It displays the running status of all data sources in the compute node cluster.
 - Deployment Environment Grade: The compute node cluster that successfully performed the "[Deployment Environment Examination](#deployment-environment-examination)" function will display the latest examination grade.
 - Cluster Operation: If the cluster is added by the "Cluster Deployment" function on the current management platform, the \[Deployment Topology] button will be displayed in the cluster operation bar. Click to view the component topology framework of the deployed cluster; if the cluster mode is "Master/Slave Node", the operation column will display the \[Rebuilding] or \[Switch] button according to whether the current high availability rebuilding environment of the cluster meets the switching conditions.
-- Buttons of \[Switch the active center], \[Remove the IDC], \[Repair the IDC] can be seen in the cluster with DR mode enabled and conditions satisfied. You can refer to the [Cross IDC Disaster Recovery Management](visual-idc.md) document.
+- Buttons of \[Switch the active center], \[Remove the IDC], \[Repair the IDC] can be seen in the cluster with DR mode enabled and conditions satisfied. You can refer to the [Cross IDC Disaster Recovery Management](cross-idc-disaster-recovery-management.md) document.
 
 ![](assets/hotdb-management/image15.png)
 
@@ -238,7 +238,7 @@ The cluster management page displays the compute node clusters deployed or added
 - More->Start Monitoring: Restart the monitoring of compute node clusters whose monitoring has been stopped (the cluster name is displayed on a red background)
 - More->Stop Monitoring: If the monitoring of compute node clusters under monitoring is stopped, HotDB Management will stop monitoring the cluster status. The cluster not under monitoring cannot be viewed by the user when logging into the general user role page.
 - More->Delete Cluster: Delete the managed compute node cluster on the page.
-- More->IDC Switching Drill: you can refer to the [Cross IDC Disaster Recovery Management](visual-idc.md) document.
+- More->IDC Switching Drill: you can refer to the [Cross IDC Disaster Recovery Management](cross-idc-disaster-recovery-management.md) document.
 
 #### Add cluster
 
@@ -286,7 +286,7 @@ When the number of existing compute node clusters (including those with stopped 
 
 > !Note
 > 
-> for more notes on DR mode and multi-node mode, you can refer to the supporting documents including [Installation and Deployment](installation-and-deployment.md), [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md).
+> for more notes on DR mode and multi-node mode, you can refer to the supporting documents including [Installation and Deployment](installation-and-deployment.md), [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md).
 
 #### High availability switch
 
@@ -394,11 +394,11 @@ Notes for high availability reconstruction:
 
 #### Switching, removal and repair of IDC
 
-With DR mode enabled, the visualized switching, removal and repair of IDC can be performed in the qualified clusters by the management platform. For details, you can refer to the [Cross IDC Disaster Recovery Management](visual-idc.md) document.
+With DR mode enabled, the visualized switching, removal and repair of IDC can be performed in the qualified clusters by the management platform. For details, you can refer to the [Cross IDC Disaster Recovery Management](cross-idc-disaster-recovery-management.md) document.
 
 #### IDC switching drill
 
-With DR mode enabled, the visualized IDC switching drill can be performed in the qualified clusters by the management platform. For details, you can refer to the [Cross IDC Disaster Recovery Management](visual-idc.md) document.
+With DR mode enabled, the visualized IDC switching drill can be performed in the qualified clusters by the management platform. For details, you can refer to the [Cross IDC Disaster Recovery Management](cross-idc-disaster-recovery-management.md) document.
 
 ### Single Component Deployment
 
@@ -1196,7 +1196,7 @@ For general users logging in for the first time, HotDB Management forces the pas
 
 ### Cluster selection
 
-General users enter the Cluster Selection page after logging into HotDB Management successfully. If the DR mode is enabled, please refer to the chapter "Compute node cluster selection" in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document for the display and explanation of the cluster selection page.
+General users enter the Cluster Selection page after logging into HotDB Management successfully. If the DR mode is enabled, please refer to the chapter "Compute node cluster selection" in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document for the display and explanation of the cluster selection page.
 
 The compute node cluster displayed is the compute node cluster with access or control privilege owned by the login user. Click on a specific cluster to enter the cluster for viewing and management operations. When the cluster compute node and configDB are running normally, the page icon is green (as shown below) and the cluster can be accessed normally.
 
@@ -1363,7 +1363,7 @@ Configuration is the function developed by the management platform for visual co
 
 The node management menu mainly provides users with the management of data source groups, data nodes and data sources, including basic addition, deletion and modification. It can also set up the replication relation or high-availability switching rules of the underlying data sources for the configured data nodes.
 
-If the DR mode is enabled, please refer to the [Node management](cross-idc-disaster-recovery.md#node-management) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document for the node management function display and operation explanations
+If the DR mode is enabled, please refer to the [Node management](cross-idc-disaster-recovery-deployment.md#node-management) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document for the node management function display and operation explanations
 
 **Function Entry:** 
 
@@ -1746,7 +1746,7 @@ Auto Sharding can add sharding tables of AUTO_CRC32 and AUTO_MOD types and AUTO_
 
 **Step 2:** Fill in the sharding key used by the sharding table
 
-**Step 3:** Check "Open Global Unique Constraint" by default. For a specific description of global unique constraint, please refer to the relevant chapter of [Standard](standard.md) document.
+**Step 3:** Check "Open Global Unique Constraint" by default. For a specific description of global unique constraint, please refer to the relevant chapter of [Standard](hotdb-server-standard-operations.md) document.
 
 **Step 4:** Select the sharding mode, which is Auto Sharding by default.
 
@@ -1854,7 +1854,7 @@ HotDB Server after V2.4.6 dropped HASH (including HASH23) and AUTO sharding func
 
 **Data migration description:** 
 
-It is recommended migrating the table data to a new sharding function table if there are tables which historically cite HASH (including HASH23) and AUTO sharding functions in the system. Table data migration can be performed manually or using the sharding plan online modification command provided by the management port. For details, please refer to [Management Port Command](management-port-command.md) document.
+It is recommended migrating the table data to a new sharding function table if there are tables which historically cite HASH (including HASH23) and AUTO sharding functions in the system. Table data migration can be performed manually or using the sharding plan online modification command provided by the management port. For details, please refer to [Management Port Command](hotdb-server-management-commands.md) document.
 
 ### Sharding function
 
@@ -2144,7 +2144,7 @@ When the sharding key is of string type and the sharding type is AUTO or HASH, H
 
 Config checking mainly provides checking for the related configuration of compute nodes to prevent abnormal operation caused by manual setting error or offline modification of the related configuration of compute nodes.
 
-DR mode explanation: when the DR mode is enabled, please refer to the [Config checking](cross-idc-disaster-recovery.md#configuration-checking) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document for the relevant logical explanations of configuration checking.
+DR mode explanation: when the DR mode is enabled, please refer to the [Config checking](cross-idc-disaster-recovery-deployment.md#configuration-checking) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document for the relevant logical explanations of configuration checking.
 
 **Function Entry:**
 
@@ -2290,7 +2290,7 @@ HotDB Management automatically backs up the current configDB before restore to e
 
 "Parameter Configuration" is a function of Management Platform to provide users with visual configuration compute node server.xml parameter.
 
-**DR mode explanation:** when the DR mode is enabled, please refer to the [Parameter configuration](cross-idc-disaster-recovery.md#dr-center-parameter-configuration) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document for the relevant logical explanations of the parameter configuration.
+**DR mode explanation:** when the DR mode is enabled, please refer to the [Parameter configuration](cross-idc-disaster-recovery-deployment.md#dr-center-parameter-configuration) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document for the relevant logical explanations of the parameter configuration.
 
 Function entry: log in to the management platform, enter the "Configuration -> Parameter configuration" page.
 
@@ -2540,7 +2540,7 @@ The servers that "Stop Monitoring" do not display the server resource status in 
 
 HotDB Management fully displays the physical and logic components such as front-end application, logicDB, compute node, data node, data source in the cluster in a visual mode. The QPS and connections on the component is dynamically generated through the front-end application connection pool and the back-end database connection pool information. [Logic Topological Graph](#logic-topological-graph) enables users to quickly understand the running status of the whole cluster and help users achieve efficient operation and maintenance.
 
-**DR mode explanation:** when the DR mode is enabled, please refer to the [Logic topological graph](cross-idc-disaster-recovery.md#logic-topological-graph) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document for the relevant logical explanations of the logic topological graph.
+**DR mode explanation:** when the DR mode is enabled, please refer to the [Logic topological graph](cross-idc-disaster-recovery-deployment.md#logic-topological-graph) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document for the relevant logical explanations of the logic topological graph.
 
 #### Topological graph component description
 
@@ -2686,7 +2686,7 @@ It supports zooming on the view by mouse cursor scrolling or page page zooming b
 
 Physical topological graph mainly displays the relation between cluster components and servers from the perspective of server. At the same time, the usage of server resources and the running health of cluster component services can be viewed. Before using, it is necessary to configure the available SSH connection information for the cluster server. Otherwise, only the relation between the current server and the cluster component can be viewed, and the status of the server and the component program cannot be viewed.
 
-**DR mode explanation:** when the DR mode is enabled, please refer to the [Physical topological graph](#physical-topological-graph) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document for the relevant logical explanations of the physical topological graph.
+**DR mode explanation:** when the DR mode is enabled, please refer to the [Physical topological graph](#physical-topological-graph) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document for the relevant logical explanations of the physical topological graph.
 
 **(1) Overview of physical topological graph**
 
@@ -3889,7 +3889,7 @@ If the recovery fails, the backup or recovery operation is executed again after 
 
 When a data source in the cluster needs version upgrade or server configuration upgrade and it needs to migrate the data source data to a new data source, copy the data of the old data source to the new data source manually, establish the replication, and then migrate the data source using data source migration.
 
-DR mode explanation: when the DR mode is enabled, please refer to the [Data source migration](cross-idc-disaster-recovery.md#data-source-migration) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document for the relevant logical explanations of the data source migration.
+DR mode explanation: when the DR mode is enabled, please refer to the [Data source migration](cross-idc-disaster-recovery-deployment.md#data-source-migration) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document for the relevant logical explanations of the data source migration.
 
 #### Data source migration preparation
 
@@ -4514,7 +4514,7 @@ After executing the batch password modification tasks, the modification results 
 
 When a data source or a compute node ConfigDB is running in a "master-master" or "master-slave" architecture, there may be problems of inconsistent data between the master and slave data sources due to replication latencys or other exceptions. HotDB Management supports finding hidden problem of data inconsistency through the "Master/Slave Data Consistency Detection" tool.
 
-**DR mode explanation:** when the DR mode is enabled, please refer to the [Master/Slave data consistency detection](cross-idc-disaster-recovery.md#masterslave-data-consistency-detection) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document for the relevant logical explanations of the master/slave data consistency detection.
+**DR mode explanation:** when the DR mode is enabled, please refer to the [Master/Slave data consistency detection](cross-idc-disaster-recovery-deployment.md#masterslave-data-consistency-detection) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document for the relevant logical explanations of the master/slave data consistency detection.
 
 #### Start a detection
 
@@ -5081,7 +5081,7 @@ The following is a description of all compute node log types:
 | SQLSYNTAXERROR            | Record log information related to errors of executed SQL statements                                                                                                                                                   |
 | SQLUNSUPPORTED            | Record SQL statements that are not supported by the compute node, such as unsupported global function indexes                                                                                                         |
 | SUBQUERY                  | Record SQL statement of the subquery                                                                                                                                                                                  |
-| SWITCHSOURCE              | Record log information related to the data correctness guarantee after failover. For details, please refer to the Data Correctness Guarantee after Failover chapter of the [Standard](standard.md) document           |
+| SWITCHSOURCE              | Record log information related to the data correctness guarantee after failover. For details, please refer to the Data Correctness Guarantee after Failover chapter of the [Standard](hotdb-server-standard-operations.md) document           |
 | TIMER                     | Record log information related to the timer, such as error information for delayed detection, completion of ONLINE operation executed by checkVIP timer, etc.                                                         |
 | TRANSFER                  | Record log information related to data source migration, such as detecting whether the UUID of data source migration is empty or has been used                                                                        |
 | UNION                     | Record SQL statement of the UNION query                                                                                                                                                                               |
@@ -5202,7 +5202,7 @@ Input the username and password (the username and password are of the [database 
 
 Enter SQL query statements, which can be entered up to three at a time. Click \[Execute] to view the performance tracking comparison results. If the input SQL statement is not a SELECT statement or fails execution, an error message will be displayed.
 
-The execution plan will display the relative time point and time consumption (μ s) of each step. For details, please refer to the HotDB Profiles related sections in the [Standard](standard.md) document.
+The execution plan will display the relative time point and time consumption (μ s) of each step. For details, please refer to the HotDB Profiles related sections in the [Standard](hotdb-server-standard-operations.md) document.
 
 ![](assets/hotdb-management/image458.png)
 
@@ -5214,7 +5214,7 @@ Click \[View execution time graph] to view the visualized results of execution p
 
 HotDB Management supports the alert of faults or abnormalities that occur during cluster operations by emails. The current monitoring scope of email alerts includes: compute node and data source failure or switching, compute node service resource status, compute node server status, data source related monitoring, system periodical task detection, and license authorization monitoring.
 
-DR mode explanation: when the DR mode is enabled, please refer to the [Notification strategy](cross-idc-disaster-recovery.md#notification-strategy) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document for the relevant logical explanations of the notification strategy.
+DR mode explanation: when the DR mode is enabled, please refer to the [Notification strategy](cross-idc-disaster-recovery-deployment.md#notification-strategy) chapter in the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document for the relevant logical explanations of the notification strategy.
 
 #### Add notification strategy
 

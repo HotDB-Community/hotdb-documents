@@ -6,7 +6,7 @@ This Manual is compiled based on **Distributed Transactional Database Product Ho
 
 Some functions in this manual could be used in combination with distributed transactional database management platform (hereinafter referred to as management platform), and if to know use method of management platform, please refer to [HotDB Management](hotdb-management.md) document.
 
-HotDB Server V.2.5.3.1 and above provide a solution based on MySQL native replication function to solve the problem of HotDB Server cross-IDC disaster recovery, which can realize the cross-IDC data synchronization function and solve the problem of cross-IDC distributed transactional database service disaster recovery. This document only describes the functions and features of HotDB Server in general mode in detail. To understand the functions and features in disaster recovery mode, please refer to the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document.
+HotDB Server V.2.5.3.1 and above provide a solution based on MySQL native replication function to solve the problem of HotDB Server cross-IDC disaster recovery, which can realize the cross-IDC data synchronization function and solve the problem of cross-IDC distributed transactional database service disaster recovery. This document only describes the functions and features of HotDB Server in general mode in detail. To understand the functions and features in disaster recovery mode, please refer to the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document.
 
 Special attention may not be paid to difference in version details of some screenshots, and the version number described in the document shall prevail. Since there are many contents in the document, it's recommended opening document map for the convenience of reading.
 
@@ -26,11 +26,11 @@ The management platform in compatible use of compute node (also known as HotDB M
 
 #### Component architecture of HotDB Server
 
-![](assets/standard/image3.png)
+![](assets/hotdb-server-standard-operations/image3.png)
 
 Figure 1.1.1-1 Functional component architecture diagram of HotDB Server
 
-![](assets/standard/image4.png)
+![](assets/hotdb-server-standard-operations/image4.png)
 
 Figure 1.1.1-2 Component architecture diagram of HotDB Server
 
@@ -125,7 +125,7 @@ Management platform provides the compute node with configuration of user informa
 
 For example: `http://192.168.200.191:3324/login`, the accesss page is shown as follow:
 
-![](assets/standard/image5.png)
+![](assets/hotdb-server-standard-operations/image5.png)
 
 Both manager username and password are: admin by default, while other user accounts are created by the manager user, with the initial password being: `service_hotdb@hotdb.com`.
 
@@ -136,7 +136,7 @@ If to know detailed use method of the management platform, please refer to [HotD
 This chapter will briefly introduce the summary of functions which are added, prohibited or deleted in HotDB Server -- V2.5.6. For detailed function usage, click the hyperlink to view the details:
 
 - Support [the online expansion/reduction of compute node services](#compute-node-auto-scaling), that is, the number of online compute node instances;
-- Multi-node mode is supported for the cross-IDC disaster recovery function. For more details, please refer to the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document.
+- Multi-node mode is supported for the cross-IDC disaster recovery function. For more details, please refer to the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document.
 - Support direct parsing and identifying some [Oracle functions and Sequence syntax](#enableoraclefunction) to reduce the amount of code modification when Oracle migrates to HotDB Server;
 - Support direct parsing and identifying of some Oracle functions and Sequence syntax to reduce the amount of code modification when Oracle migrates to HotDB Server;
 - Support SSL + [SM4](#sslusesm4) for client connection;
@@ -214,7 +214,7 @@ Click"Cluster Deployment and Configuration"->"Add Compute Node Cluster"on comput
 
 After entry, click Test, and if connection succeeded, this compute node cluster could be assigned to the management platform user for configuration management.
 
-![](assets/standard/image6.png)
+![](assets/hotdb-server-standard-operations/image6.png)
 
 ### Add management platform user
 
@@ -222,7 +222,7 @@ Management platform user is the user who Manage, Configure, Monitor and Detect c
 
 Log in to management platform, and on the Management Platform User page, click"Add New User", enter username, and assign control privilege of compute node cluster. After completing the Add operation, the user could manage the compute node after login.
 
-![](assets/standard/image7.png)
+![](assets/hotdb-server-standard-operations/image7.png)
 
 ### Create MySQL database and data source user
 
@@ -254,7 +254,7 @@ show databases;
 
 Log in to management platform page, select"Configuration"->"LogicDB"->[Add LogicDB](#add-logicdb). Click"√", save the configuration, and the LogicDB is successfully added.
 
-![](assets/standard/image8.png)
+![](assets/hotdb-server-standard-operations/image8.png)
 
 ### Grant user LogicDB privilege
 
@@ -266,7 +266,7 @@ Log in to the management platform page, select"Configuration"->"Database User Ma
 >
 > After the management platform is installed, the system creates a platform user named root (password is root) by default.
 
-![](assets/standard/image9.png)
+![](assets/hotdb-server-standard-operations/image9.png)
 
 ### Add data source group
 
@@ -274,7 +274,7 @@ Add Data Source Group could make it more convenient to Add or Modify a group of 
 
 Log in to Distributed Transactional Database Management Platform page, select"Configuration"->"Node Management"->"Data Source Group"->"Add Group":
 
-![](assets/standard/image10.png)
+![](assets/hotdb-server-standard-operations/image10.png)
 
 The parameters include:
 
@@ -295,7 +295,7 @@ According to business scenarios, select those with the same parameter value as a
 
 When Add Node, the data source group is applied on several data sources, which will Autofill the preset parameter value of the group; when Edit a parameter of the group, the parameter of all data sources in the group will be Edited in batches.
 
-![](assets/standard/image11.png)
+![](assets/hotdb-server-standard-operations/image11.png)
 
 ### Add data node and data source
 
@@ -303,17 +303,17 @@ In this case, six MySQL instances are divided into three groups (three shardings
 
 Log in to management platform page, select"Configuration"->"Node Management"->"Add Node":
 
-![](assets/standard/image12.png)
+![](assets/hotdb-server-standard-operations/image12.png)
 
 Either Add Data Node and its corresponding Data Source in batches or Add Data Source to existing Data Node is available, and only Add of Data Node and Data Source in batches is introduced here, and the operation is displayed as follow:
 
 1. Fill in parameters of Data Node added: In this case, the Number of Data Nodes is 3, and the Data Node Type is Master-Master (other types could also be selected). In this case, Data Source Group selects not to use group, and you could also select to use the [Data Source Group](#add-data-source-group) added in previous section from the drop-down menu, and then Add in batches or Edit similar parameters. Without special requirements, the Node Prefix, Number of Encoding Bits and Start Encoding could use the default value. After filling in the parameters, click \[Generate].
 
-![](assets/standard/image13.png)
+![](assets/hotdb-server-standard-operations/image13.png)
 
 2. Fill in Data Source Configuration Parameters according to the prompt message.
 
-![](assets/standard/image14.png)![](assets/standard/image15.png)
+![](assets/hotdb-server-standard-operations/image14.png)![](assets/hotdb-server-standard-operations/image15.png)
 
 Parameters include:
 
@@ -336,11 +336,11 @@ Parameters include:
 
 Click \[...] to unfold more parameters, including:
 
-![](assets/standard/image16.png)
+![](assets/hotdb-server-standard-operations/image16.png)
 
 3. After completing the parameters, click \[Connection Test] to verify that the entry is accurate and after all data sources are successfully connected, click \[Save and Return], thus 3 data nodes and their respective corresponding 6 data sources have been successfully added.
 
-![](assets/standard/image17.png)
+![](assets/hotdb-server-standard-operations/image17.png)
 
 ### Add sharding function
 
@@ -348,7 +348,7 @@ The purpose of Add Sharding Function is to provide route method and algorithm of
 
 Log in to Management Platform page, select"Configuration"->"Sharding Function"->"Add Sharding Function".
 
-![](assets/standard/image18.png)
+![](assets/hotdb-server-standard-operations/image18.png)
 
 According to business scenarios, enter configuration parameters, including:
 
@@ -358,11 +358,11 @@ According to business scenarios, enter configuration parameters, including:
 - Data Node: select Sharding Data Node
 - Value Range: enter full Value Range of sharding key, and the management platform will compute the Step Length automatically in combination of the Number of Nodes selected
 
-![](assets/standard/image19.png)
+![](assets/hotdb-server-standard-operations/image19.png)
 
 Click \[Preview] to view the generated results, and click \[Modify] to modify the Value Range or Data Node, in order to solve data skew problem.
 
-![](assets/standard/image20.png)
+![](assets/hotdb-server-standard-operations/image20.png)
 
 Click \[Save and Return] to add sharding function.
 
@@ -370,7 +370,7 @@ Click \[Save and Return] to add sharding function.
 
 Log in to Management Platform page, select"Configuration"->"Table Configuration"->"Add Table Configuration"
 
-![](assets/standard/image21.png)
+![](assets/hotdb-server-standard-operations/image21.png)
 
 According to business scenarios, after selecting the Table Type, enter the configuration parameters. In this case, under the Sharding Table page, add the parameter configuration as follow:
 
@@ -380,7 +380,7 @@ According to business scenarios, after selecting the Table Type, enter the confi
 - Data Node: select Sharding Data Node. in this case, the [Data Node](#add-data-node-and-data-source) added in previous section shall be selected
 - Please Fill in Table Name: enter"customer", when Add multiple tables but different sharding keys,"customer:provinceid"could be entered.
 
-![](assets/standard/image22.png)
+![](assets/hotdb-server-standard-operations/image22.png)
 
 Click \[Save], and Customer Auto Sharding Table is successfully added. Note: The Sharding Function cited in this table is AUTO_CRC32 type (for difference of the sharding types AUTO_MOD and AUTO_CRC32, the"Mode Declaration"in the page could be viewed).
 
@@ -394,7 +394,7 @@ Log in to Management Platform page, select"Configuration"->[Config Checking](#co
 
 Click [Reload](#reload) in the page, if it's promoted"Reload Succeeded"in the page, then the configuration information has taken effect successfully in the compute node:
 
-![](assets/standard/image23.png)
+![](assets/hotdb-server-standard-operations/image23.png)
 
 ### Log in to compute node and start to use
 
@@ -439,11 +439,11 @@ Compute node will Create Customer Table in various data nodes. You can log in to
 
 Or find the [Table Configuration](#add-table-configuration) added in previous section on the"Configuration"->"Table Configuration"page, and click \[Not Created] in the Table Structure column to jump to Ordinary DDL page.
 
-![](assets/standard/image24.png)
+![](assets/hotdb-server-standard-operations/image24.png)
 
 Enter [LogicDB Username Password](#grant-user-logicdb-privilege), and after selecting Test LogicDB, enter Create Table statement, click \[Execute] to Add Table Structure.
 
-![](assets/standard/image25.png)
+![](assets/hotdb-server-standard-operations/image25.png)
 
 After the Sharding Table Customer is successfully created, you could execute the following SQL statements in Compute Node, and write in data:
 
@@ -524,13 +524,13 @@ As for following parameters of MySQL data source service port, they are required
 
    - If innodb_rollback_on_timeout parameters are all off, then compute node allows successful load, but the behavior of the compute node equals to the transaction rollback method when innodb_rollback_on_timeout parameter is on, and the following prompts will be given at the time of Config Checking:
 
-   ![](assets/standard/image26.png)
+   ![](assets/hotdb-server-standard-operations/image26.png)
 
    And at the time of Reload, the log output will be: innodb_rollback_on_timeout=off is not supported, HotDB behavior will be equivalent to innodb_rollback_on_timeout = on.
 
    - If innodb_rollback_on_timeout parameter data sources are inconsistent, Reload will fail, and there will be prompt as follow at the time of Config Checking:
 
-   ![](assets/standard/image27.png)
+   ![](assets/hotdb-server-standard-operations/image27.png)
 
    And at the time of Reload, the data source being off will have log output: MySQL variables 'innodb_rollback_on_timeout' is not consistent, the current value is OFF ,neet to bu changed to ON, and the data source being on will have log output: MySQL variables 'innodb_rollback_on_timeout' is not consistent, the current value is ON
 
@@ -556,11 +556,11 @@ If the above parameters are configured inconsistent between the data sources, co
 
 Considering that sending super-large SQL by Client may threaten HotDB Server (no practical case has yet been discovered at present), HotDB Server could be configured with MAX_ALLOWED_PACKET the same as MySQL, to control the max packet size of SQL sent to compute node by Client, and the parameter could be preset in server.xml via parameter name maxAllowedPacket, if maxAllowedPacket of compute node has its default value bigger than MySQL, the log will give warning prompt, and Config Checking on the management platform will also give prompt:
 
-![](assets/standard/image28.png)
+![](assets/hotdb-server-standard-operations/image28.png)
 
 ### Management port information monitoring
 
-HotDB Server provides the customer a set of information monitoring, statistics and service management functions which are perfect and easy to operate. The user could log in to monitoring management port of compute node via MySQL Client to view the detailed information, please refer to [Management Port Command](management-port-command.md) document.
+HotDB Server provides the customer a set of information monitoring, statistics and service management functions which are perfect and easy to operate. The user could log in to monitoring management port of compute node via MySQL Client to view the detailed information, please refer to [Management Port Command](hotdb-server-management-commands.md) document.
 
 #### Management port command
 
@@ -683,7 +683,7 @@ At this time, if there is a 2048 Concurrent Pressurizing Scenario to impose pres
 
 After Pressurizing, these connections will not be destroyed immediately. Instead, they will wait until examination by Idle Examination Period: if Idle (that is the management port `show @@backend` is marked as Idle) connections are bigger than 512, then the connections shall be destroyed to 512; if smaller than 512, they will be kept intact;
 
-If to make Idle Connections back to Initial Connections, then during running process of compute node, you could rebuild connection pool by referring to rebuild connection pool `rebuild @@pool` related chapters in [Management Port Command](management-port-command.md) document, then Initial Connections status shall be recovered.
+If to make Idle Connections back to Initial Connections, then during running process of compute node, you could rebuild connection pool by referring to rebuild connection pool `rebuild @@pool` related chapters in [Management Port Command](hotdb-server-management-commands.md) document, then Initial Connections status shall be recovered.
 
 ### Limit on use of disk space
 
@@ -703,23 +703,23 @@ Compute node could make Online Reload of configuration information without re-en
 
 There are two Reload methods, one is to log in to [[management port (3325)]{.ul}](#management-port-information-monitoring) to execute: `reload @@config` command; the other is to log in to management platform, click [Reload](#reload) button on top right corner of the menu bar, and reload the new configuration items to the compute node for use. As shown in the following figure:
 
-![](assets/standard/image29.png)
+![](assets/hotdb-server-standard-operations/image29.png)
 
 In order to guarantee that compute node makes accurate loading of configuration information, before executing Reload, configuration information could be checked first. During Reload process, in case of master/slave configDB, master/slave data source switching, it will give prompt to the user and provide two optional schemes: force to stop switch and cancel reload.
 
-![](assets/standard/image30.png)
+![](assets/hotdb-server-standard-operations/image30.png)
 
 ### Config Checking
 
 Log in to management platform, select"Configuration"->[Config Checking](#config-checking) to enter the Config Checking panel, click"Start Checking"button, and then it will check the configuration items in [Config Checking](#config-checking) menu of Distributed Transactional Database Management Platform, as shown in the following figure:
 
-![](assets/standard/image31.png)
+![](assets/hotdb-server-standard-operations/image31.png)
 
 As shown in the above figure, all configuration items have passed the checking normally.
 
 In case of inaccurate configuration items, modify correspondingly according to the error prompt:
 
-![](assets/standard/image32.png)
+![](assets/hotdb-server-standard-operations/image32.png)
 
 When executing `reload @@config` command to reload via compute node management port, Config Checking will be conducted first as well by default, and successful reload is allowed only after the checking passed.
 
@@ -923,15 +923,15 @@ When granting privilege for compute node user, in addition to SUPER privilege, o
 
 - Global privilege: the user with Global Privilege has the privilege to specify all objects under LogicDB. For example: if check Global privilege: SELECT, UPDATE, INSERT, CREATE, and click Save, then the current user could make S/U/I/C operation toward all LogicDB and tables.
 
-![](assets/standard/image33.png)
+![](assets/hotdb-server-standard-operations/image33.png)
 
 - LogicDB privilege: the user with LogicDB Privilege has the privilege to specify all objects under LogicDB.
 
-![](assets/standard/image34.png)
+![](assets/hotdb-server-standard-operations/image34.png)
 
 - Table privilege: Table privilege is also divided into Table privilege Allowed and Table privilege Denied. The user with Table privilege Allowed owns the privilege to check the table; the user with Table privilege Denied owns all privileges other than check privilege toward the table; for example: check Table privilege Denied: SELECT, UPDATE, INSERT, CREATE, and click Save, then the current user can't make S/U/I/C operation of the table, but has the privilege to DELETE, DROP, ALTER.
 
-![](assets/standard/image35.png)
+![](assets/hotdb-server-standard-operations/image35.png)
 
 SUPER privilege doesn't specify specific LogicDB. Only the user with SUPER privilege could execute management port statements, please refer to the chapter [management port Information Monitoring](#management-port-information-monitoring) for detailed functions of management port.
 
@@ -953,7 +953,7 @@ Please refer to the [official MySQL documents](https://dev.mysql.com/doc/refman/
 mysql_ssl_rsa_setup --datadir=/usr/local/crt/
 ```
 
-![](assets/standard/image36.png)
+![](assets/hotdb-server-standard-operations/image36.png)
 
 Among them, the secret keys required by the client are: ca.pem, client-cert.pem, client-key.pem;
 
@@ -963,7 +963,7 @@ The secret keys required by HotDB are: ca.pem 、server-cert.pem 、server-key.p
 >
 > the certificate generated by the MySQL command cannot be CA certified, please refer to the link: <https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html>
 
-![](assets/standard/image37.png)
+![](assets/hotdb-server-standard-operations/image37.png)
 
 If you need to generate a self-signed certificate capable of CA authentication, you need to use openssl. Please refer to the following steps:
 
@@ -990,7 +990,7 @@ openssl pkcs12 -export -out server.pfx -inkey server-key.pem -in server-cert.pem
 
 Enter password SDcrtest
 
-![](assets/standard/image38.png)
+![](assets/hotdb-server-standard-operations/image38.png)
 
 2. Convert pfx to jks file using keytool provided by Java:
 
@@ -1000,7 +1000,7 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 
 Enter password SDcrtest
 
-![](assets/standard/image39.png)
+![](assets/hotdb-server-standard-operations/image39.png)
 
 #### Configuration of TLS secret key
 
@@ -1026,7 +1026,7 @@ Parameter description: the password in the key file that comes with the program 
 
 The configured parameters are as follows:
 
-![](assets/standard/image40.png)
+![](assets/hotdb-server-standard-operations/image40.png)
 
 Users have no need to restart the compute node service for the parameter modification, for server.jks documents will be read again during dynamic loading. If SSL-related logic initialization fails, the dynamic loading will not fail, though the subsequent SSL connections cannot be established normally. Non-SSL connections will not be affected.
 
@@ -1034,15 +1034,15 @@ Users have no need to restart the compute node service for the parameter modific
 >
 > - If the compute node cannot find any available `server.jks` file, the following error messages will be output when starting or synchronously loading.
 >
-> ![](assets/standard/image41.png)
+> ![](assets/hotdb-server-standard-operations/image41.png)
 >
 > - If the `keyStorePass` configuration is wrong, the following error messages will be output during startup or synchronously loading.
 >
-> ![](assets/standard/image42.png)
+> ![](assets/hotdb-server-standard-operations/image42.png)
 >
 > - If the certificate configuration is wrong, the following error messages will be output during login
 >
-> ![](assets/standard/image43.png)
+> ![](assets/hotdb-server-standard-operations/image43.png)
 
 #### TLS connection login
 
@@ -1054,11 +1054,11 @@ For MySQL clients, users can specify a secret key file to connect using the foll
 mysql -ujing01 -p123456 -h192.168.240.117 -P3323 --ssl-ca=/usr/local/crt/ca.pem --ssl-cert=/usr/local/crt/client-cert.pem --ssl-key=/usr/local/crt/client-key.pem --ssl-mode=verify_ca
 ```
 
-![](assets/standard/image44.png)
+![](assets/hotdb-server-standard-operations/image44.png)
 
 Check whether SSL is enabled:
 
-![](assets/standard/image45.png)
+![](assets/hotdb-server-standard-operations/image45.png)
 
 ##### JDBC
 
@@ -1070,7 +1070,7 @@ For JDBC, the corresponding key file is also required. Please refer to the [Offi
 keytool -importcert -alias MySQLCACert -file ca.pem -keystore truststore
 ```
 
-![](assets/standard/image46.png)
+![](assets/hotdb-server-standard-operations/image46.png)
 
 The truststore file is used for JDBC connection:
 
@@ -1085,7 +1085,7 @@ openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name"mysqlclie
 keytool -importkeystore -srckeystore client-keystore.p12 -srcstoretype pkcs12 -destkeystore keystore -deststoretype JKS
 ```
 
-![](assets/standard/image47.png)
+![](assets/hotdb-server-standard-operations/image47.png)
 
 The truststore file is used for JDBC connection:
 
@@ -1097,7 +1097,7 @@ jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/u
 
 For Navicat and other similar clients, users can configure the relevant file location in the client settings to connect:
 
-![](assets/standard/image48.png)
+![](assets/hotdb-server-standard-operations/image48.png)
 
 > !Note
 >
@@ -1133,7 +1133,7 @@ If specified parameters are not used, there may be problem of time difference, a
 
 #### mysqlbinlog - utility program processing binary log files
 
-Compute node supports parsing mysqlbinlog syntax to synchronize incremental data, in order to reduce downtime for migrating standalone MySQL data to compute node. Use mysqlbinlog to execute SQL statement of a certain binlog file in MySQL connection, so as to import data from a certain database to a certain LogicDB of compute node. Firstly, log in to [management port](#management-port-information-monitoring) (default port: 3325), execute dbremapping command to Add database mapping relation, and for use method of dbremapping command, please refer to [Management Port Command](management-port-command.md) document.
+Compute node supports parsing mysqlbinlog syntax to synchronize incremental data, in order to reduce downtime for migrating standalone MySQL data to compute node. Use mysqlbinlog to execute SQL statement of a certain binlog file in MySQL connection, so as to import data from a certain database to a certain LogicDB of compute node. Firstly, log in to [management port](#management-port-information-monitoring) (default port: 3325), execute dbremapping command to Add database mapping relation, and for use method of dbremapping command, please refer to [Management Port Command](hotdb-server-management-commands.md) document.
 
 ```sql
 dbremapping @@add@ database name: LogicDB name expected to be imported
@@ -1553,9 +1553,9 @@ When the compute node version is 2.5.6 and above, if the front end is disconnect
 2020-10-30 15:42:29.859 [INFO] [CONNECTION] [$NIOExecutor-2-10] cn.hotpu.hotdb.server.b(3599) - [thread=$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT] will be closed because a kill command.
 ```
 
-![](assets/standard/image49.png)
+![](assets/hotdb-server-standard-operations/image49.png)
 
-![](assets/standard/image50.png)
+![](assets/hotdb-server-standard-operations/image50.png)
 
 > !Important
 >
@@ -1629,7 +1629,7 @@ You could either modify the following parameter in server.xml or modify the para
 <property name="globalUniqueConstraint">false</property><!-- Global unique constraints enable on newly added table by default or not -->
 ```
 
-![](assets/standard/image51.png)
+![](assets/hotdb-server-standard-operations/image51.png)
 
 > !Note
 >
@@ -1641,7 +1641,7 @@ At the time of Add Table Configuration, it could Enable/Disable Global Unique Co
 
 1. When Add Table Configuration on the management platform, Enable/Disable status of Global Unique Constraint will be displayed by default according to compute node parameter, which could also be manually modified:
 
-![](assets/standard/image52.png)
+![](assets/hotdb-server-standard-operations/image52.png)
 
 Both Vertical Sharding Table and Global Table have no such exit, because no special treatment is required for Unique Constraint. After Add Table and Configuration, it could be used after using Create Table statement to Add Table Structure.
 
@@ -1702,11 +1702,11 @@ create table test02(id not null auto_increment primary key,a char(8),b decimal(4
 
 1. Table Configuration could be modified on Table Configuration Management page on the Management Platform:
 
-![](assets/standard/image53.png)
+![](assets/hotdb-server-standard-operations/image53.png)
 
-If the Table Structure is Created Table, then after Modify the Global Unique Constraint to Enable status, click Reload and refresh the page, if the prompt as in the figure below appears, it means that unique @@create shall be executed on management port, and check history data of the Unique Constraint Key of the table, and after the return result is unique, the compute node will Auto Create secondary index, only in this way could Global Unique Constraint take effect, for details of this command, please refer to [Management Port Command](management-port-command.md) document:
+If the Table Structure is Created Table, then after Modify the Global Unique Constraint to Enable status, click Reload and refresh the page, if the prompt as in the figure below appears, it means that unique @@create shall be executed on management port, and check history data of the Unique Constraint Key of the table, and after the return result is unique, the compute node will Auto Create secondary index, only in this way could Global Unique Constraint take effect, for details of this command, please refer to [Management Port Command](hotdb-server-management-commands.md) document:
 
-![](assets/standard/image54.png)
+![](assets/hotdb-server-standard-operations/image54.png)
 
 2. Use GLOBAL_UNIQUE Syntax in the compute node via ALTER TABLE, enable Global Unique, and similarly, if appearing warning message, it means that it could take effect only after executing `unique @@create`:
 
@@ -1726,11 +1726,11 @@ mysql> show warnings;
 
 At the time of Online Change of Sharding Plan, you could also Enable or Disable Global Unique Constraint manually for the table after change.
 
-![](assets/standard/image55.png)
+![](assets/hotdb-server-standard-operations/image55.png)
 
 After Enable, the Modification Plan Pre-detection will detect whether history data of Unique Constraint Key of the table is unique or not, if yes, then Test Passed.
 
-![](assets/standard/image56.png)
+![](assets/hotdb-server-standard-operations/image56.png)
 
 #### Locate by secondary index when querying
 
@@ -1773,14 +1773,14 @@ After failover, IO thread between the original Master/Slave will be suspended, a
 >
 > And the Master/Slave Status in the management platform will display Abnormal, and the Pre-click display is as the prompt message in the figure:
 >
-> ![](assets/standard/image57.png)
+> ![](assets/hotdb-server-standard-operations/image57.png)
 >
 > If after failover completed, the Master Active and Standby Slave neither Switch GTID or have transaction not received, but this parameter is disabled, then the compute node will also record warning log at warning level as follow:
 > `DBA is required to deal with the new master, which is the original slave before switching and decide whether to stop replication or continue replication regardless. In addition, there is risk of data error caused by automatic reconnection of replication after manual or unexpected restart of the new master.`
 
 ## High availability service
 
-This chapter mainly describes the high availability service of the computing node cluster in the single-IDC mode. To understand the high availability service in the DR mode, please refer to the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document.
+This chapter mainly describes the high availability service of the computing node cluster in the single-IDC mode. To understand the high availability service in the DR mode, please refer to the [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document.
 
 ### High availability service
 
@@ -1812,31 +1812,31 @@ Assuming that the data node"dn_08"has already existed, Add Master data source an
 
 In the following operation, generate a data node"dn_08", and add a Master data source"ds_failover_master"and a slave data source"ds_failover_slave"for this data node:
 
-![](assets/standard/image58.png)
+![](assets/hotdb-server-standard-operations/image58.png)
 
 "Automatic Adaptation Switching Rule"could be directly checked, when Add Node, make Automatic Adaptation of failover priority at the same time. Or, on the management platform page, select"Configuration"->"Node Management"->"High Availability Setting"->"Switching Rule"->"Add Switch Rule", select"dn_08"from drop-down box of data node, select Master data source"ds_failover_master from drop-down box of data source, select"ds_failover_slave"from drop-down box of standby data source, and select High in Failover Priority:
 
-![](assets/standard/image59.png)
+![](assets/hotdb-server-standard-operations/image59.png)
 
 Or click"Auto Adaptation", select dn_08 node, and then Save.
 
-![](assets/standard/image60.png)
+![](assets/hotdb-server-standard-operations/image60.png)
 
 Build master/slave replication relation:
 
 Although a pair of master/slave data sources have been added under node dn_08, if the 2 data sources haven't been built master/slave replication relation in practice, then at this time, you could select"dn_08"node in"Configuration"->"Node Management"->"High Availability Setting"->"Master/Slave Build".
 
-![](assets/standard/image61.png)
+![](assets/hotdb-server-standard-operations/image61.png)
 
 After clicking"Start Build", the system will build master/slave replication relation for the data source automatically. After Build succeeded, the Master/Slave status is the list will display normally:
 
-![](assets/standard/image62.png)
+![](assets/hotdb-server-standard-operations/image62.png)
 
 ##### Manual Switch
 
 In"Configuration"->"Node Management", click \[Switch] of a data node, thus Manual Switch could be completed:
 
-![](assets/standard/image63.png)
+![](assets/hotdb-server-standard-operations/image63.png)
 
 If being Master - Slave, select the data source with highest priority for Switch, and after Switch, the compute node will set the original master and the other Slaves of the original master as Unavailable, which can no longer be switched.
 
@@ -2063,7 +2063,7 @@ HotDB Server supports node autonomy of multiple compute node cluster. Hereinafte
 
 HotDB Server supports load-balancing: you could select LVS and other means to distribute SQL request. The application client could have access to database service of HotDB Server via VIP of LVS, and at the same time, use transparency and service un-interruption are guaranteed. It could also use the remaining load-balancing plans for processing, for example F5 plus Custom Test; apply the mode of direct connection compute node, but replace node in case of abnormality, etc.
 
-![](assets/standard/image64.png)
+![](assets/hotdb-server-standard-operations/image64.png)
 
 ##### Startup description
 
@@ -2076,21 +2076,21 @@ sh hotdb_server start
 
 View start status of HotDB Server:
 
-![](assets/standard/image65.png)
+![](assets/hotdb-server-standard-operations/image65.png)
 
 After compute node is enabled, it doesn't enable service port, and will set its role status as Started for the time being. After all compute nodes in the cluster start, one compute node of them will become Primary, while the remaining compute nodes will become Secondary, and all compute nodes have their data service port open, and then the whole cluster comes into normal running status, for example:
 
 Primary node:
 
-![](assets/standard/image66.png)
+![](assets/hotdb-server-standard-operations/image66.png)
 
 Secondary node:
 
-![](assets/standard/image67.png)
+![](assets/hotdb-server-standard-operations/image67.png)
 
 View management port 3325 status:
 
-![](assets/standard/image68.png)
+![](assets/hotdb-server-standard-operations/image68.png)
 
 When Primary service is abnormal, one from the remaining Secondary will become the new Primary, and the original Primary will be kicked out of the cluster.
 
@@ -2101,15 +2101,15 @@ cd /usr/local/hotdb-2.5.0/hotdb-server/bin
 sh hotdb_server stop
 ```
 
-![](assets/standard/image69.png)
+![](assets/hotdb-server-standard-operations/image69.png)
 
 New Primary:
 
-![](assets/standard/image70.png)
+![](assets/hotdb-server-standard-operations/image70.png)
 
 View management port status:
 
-![](assets/standard/image71.png)
+![](assets/hotdb-server-standard-operations/image71.png)
 
 If the original Primary service restarts (equivalent to Add of new node), for the Primary node found to be enabled at present, new node will join the cluster to be Secondary.
 
@@ -2120,17 +2120,17 @@ cd /usr/local/hotdb-2.5.0/hotdb-server/bin
 sh hotdb_server start
 ```
 
-![](assets/standard/image72.png)
+![](assets/hotdb-server-standard-operations/image72.png)
 
-![](assets/standard/image73.png)
+![](assets/hotdb-server-standard-operations/image73.png)
 
 View management port status:
 
-![](assets/standard/image74.png)
+![](assets/hotdb-server-standard-operations/image74.png)
 
 After multiple compute node cluster starts, by accessing to the database service via VIP, transparent load-balancing could be realized, and uninterrupted service could be guaranteed.
 
-![](assets/standard/image75.png)
+![](assets/hotdb-server-standard-operations/image75.png)
 
 Notices for multiple compute node cluster:
 
@@ -2168,11 +2168,11 @@ After the Listener deployment is completed, the configuration of Listener can be
 
 Take adding a group of data nodes with master-master type as an example:
 
-![](assets/standard/image76.png)
+![](assets/hotdb-server-standard-operations/image76.png)
 
 In steps 1-4, fill in the host name and port number of the data source, connection user and password, database, etc. according to the previous rules. If the group of data sources needs to bind Listener, fill in the Listener related information in step 5.
 
-![](assets/standard/image77.png)
+![](assets/hotdb-server-standard-operations/image77.png)
 
 The rules are as follows:
 
@@ -2182,7 +2182,7 @@ The rules are as follows:
 
 After filling is achieved, click Connection Test, and click Save and Return after passing the test.
 
-In dynamic loading, if the status on the node management list is ![](assets/standard/image78.png), it means that the Listener can be connected; if the status is ![](assets/standard/image79.png), it means that the Listener cannot be connected. You should check whether enableXA is true and enableListener is true.
+In dynamic loading, if the status on the node management list is ![](assets/hotdb-server-standard-operations/image78.png), it means that the Listener can be connected; if the status is ![](assets/hotdb-server-standard-operations/image79.png), it means that the Listener cannot be connected. You should check whether enableXA is true and enableListener is true.
 
 Verify whether the Listener service is enabled or not: execute show @@datasource on port 3325 to view.
 
@@ -2192,17 +2192,17 @@ This method is suitable for adding Listener configuration based on existing data
 
 On the node management page, take dn_26 as an example:
 
-![](assets/standard/image80.png)
+![](assets/hotdb-server-standard-operations/image80.png)
 
 Click the icon *i* in the operation bar, i.e. information, to enter the data source management page.
 
-![](assets/standard/image81.png)
+![](assets/hotdb-server-standard-operations/image81.png)
 
 For a data source that is not bound to a Listener, the last three items are empty by default.
 
 Click Edit to add information about the Listener.
 
-![](assets/standard/image82.png)
+![](assets/hotdb-server-standard-operations/image82.png)
 
 The rules are as follows:
 
@@ -2212,7 +2212,7 @@ The rules are as follows:
 
 After filling is achieved, click Connection Test, and click Save and Return after passing the test.
 
-In dynamic loading, if the status on the node management list is ![](assets/standard/image78.png), it means that the Listener can be connected; if the status is ![](assets/standard/image79.png), it means that the Listener cannot be connected. You should check whether enableXA is true and enableListener is true.
+In dynamic loading, if the status on the node management list is ![](assets/hotdb-server-standard-operations/image78.png), it means that the Listener can be connected; if the status is ![](assets/hotdb-server-standard-operations/image79.png), it means that the Listener cannot be connected. You should check whether enableXA is true and enableListener is true.
 
 Verify whether the Listener service is enabled or not: execute show @@datasource on port 3325 to view.
 
@@ -2263,13 +2263,13 @@ Expand from HA mode to multi-node mode is mainly about how to switch keepalived 
 | LVS service         | 192.168.210.136          | VIP:192.168.210.218 |
 | New compute node    | 192.168.210.134          | HotDB_03            |
 
-![](assets/standard/image83.png)
+![](assets/hotdb-server-standard-operations/image83.png)
 
 **Step 1: Disable standby compute node / standby keepalived service**
 
 Disable keepalived and compute node service of HotDB_02
 
-![](assets/standard/image84.png)
+![](assets/hotdb-server-standard-operations/image84.png)
 
 **Step 2: Deploy and enable LVS**
 
@@ -2303,19 +2303,19 @@ service keepalived start
 
 For HotDB_01 parameters, refer to the configuration of selected area:
 
-![](assets/standard/image85.png)
+![](assets/hotdb-server-standard-operations/image85.png)
 
 For HotDB_02 parameters, refer to the configuration of selected area:
 
-![](assets/standard/image86.png)
+![](assets/hotdb-server-standard-operations/image86.png)
 
 For HotDB_03 parameters, refer to the configuration of selected area:
 
-![](assets/standard/image87.png)
+![](assets/hotdb-server-standard-operations/image87.png)
 
 2. Executes `reload @@config HotDB_01` at the management end of HotDB_01, and execute show @@cluster you can see HotDB_01 join the cluster as PRIMARY.
 
-![](assets/standard/image88.png)
+![](assets/hotdb-server-standard-operations/image88.png)
 
 3. Disable keepalived service of HotDB_01
 
@@ -2323,19 +2323,19 @@ For HotDB_03 parameters, refer to the configuration of selected area:
 service keepalived stop
 ```
 
-![](assets/standard/image89.png)
+![](assets/hotdb-server-standard-operations/image89.png)
 
 4. Start HotDB_02, HotDB_03, and then execute show @@cluster at the management end of HotDB_01; you can see that all cluster members have joined.
 
-![](assets/standard/image90.png)
+![](assets/hotdb-server-standard-operations/image90.png)
 
 **Step 4: Adaptation adjustment of management platform**
 
 The adaptation mode is the same as"[Expand compute nodes in cluster mode](#expand-compute-nodes-in-cluster-mode)". Edit the cluster of compute nodes to add new compute nodes and convert the HA mode to cluster mode, as shown in the following figure:
 
-![](assets/standard/image91.png)
+![](assets/hotdb-server-standard-operations/image91.png)
 
-![](assets/standard/image92.png)
+![](assets/hotdb-server-standard-operations/image92.png)
 
 ###### Expand compute nodes in cluster mode
 
@@ -2359,7 +2359,7 @@ ipvsadm -a -t 192.168.210.216:3323 -r 192.168.210.134
 
 2. Add the service info of HotDB_04 to keepalived.conf of the master/slave LVS, as shown in the following figure:
 
-![](assets/standard/image93.png)
+![](assets/hotdb-server-standard-operations/image93.png)
 
 **Step 2: configure LVS for the new compute node server**
 
@@ -2376,17 +2376,17 @@ Information: --lvs-vip-with-perfix: VIP of current cluster
 
 1. Modify the value of ClusterSize in server.xml of all compute node servers（HotDB_01/HotDB_02/HotDB_03/HotDB_04）to ensure that the value of ClusterSize is equal to the actual number of cluster members (here is 4). Other parameters require no adjustment, but it should be noted that the values of clusterName, clusterSize, clusterNetwork, clusterPort are consistent in the same cluster.
 
-![](assets/standard/image94.png)
+![](assets/hotdb-server-standard-operations/image94.png)
 
 2. Adjust other cluster parameters in server.xml and start the service in the new compute node server (HotDB_04), as shown in the following figure:
 
-![](assets/standard/image95.png)
+![](assets/hotdb-server-standard-operations/image95.png)
 
 **Step 4: Reload the configuration**
 
 Execute reload @@config at the the management end of the primary compute node(HotDB_01), you can see HotDB_04 join the cluster:
 
-![](assets/standard/image96.png)
+![](assets/hotdb-server-standard-operations/image96.png)
 
 **Step5: Adaption adjustment of management platform**
 
@@ -2394,7 +2394,7 @@ Enter the"Cluster management"->"Compute node cluster"page to bring the newly add
 
 Edit the compute node cluster, and add the newly introduced compute nodes via the"+"button in the operation bar on the right side of the compute node. After saving, the management platform will automatically identify the compute node mode according to the number of compute nodes, as shown in the following figure:
 
-![](assets/standard/image97.png)
+![](assets/hotdb-server-standard-operations/image97.png)
 
 **Notes:**
 
@@ -2424,13 +2424,13 @@ Parameters involved are as follows:
 
 This section mainly describes the operation of reducing a cluster that normally provides services to HA mode. The components involved are consistent with the[Eexpand from HA mode to multi-node mode.](#expand-from-ha-mode-to-multi-node-mode).
 
-![](assets/standard/image92.png)
+![](assets/hotdb-server-standard-operations/image92.png)
 
 **Step 1: disable the standby compute node service**
 
 Disable the compute node services of HotDB_02 and HotDB_03. This process will trigger cluster election. If there is a pressure measurement task at this time, it will flash off and return to normal in a few seconds.
 
-![](assets/standard/image98.png)
+![](assets/hotdb-server-standard-operations/image98.png)
 
 **Step 2: deploy keepalived and adjust the compute node configuration**
 
@@ -2454,21 +2454,21 @@ sh hotdbinstall_v*.sh --dry-run=no --install-keepalived=backup --keepalived-vip-
 
 3. Modify server.xml of HotDB_01、HotDB_02 compute nodes. Configure relevant parameters as HA mode, as in the following figure:
 
-![](assets/standard/image99.png)
+![](assets/hotdb-server-standard-operations/image99.png)
 
-![](assets/standard/image100.png)
+![](assets/hotdb-server-standard-operations/image100.png)
 
 4. Enable keepalived of HotDB_01, until the VIP of keepalived is mounted。
 
-![](assets/standard/image101.png)
+![](assets/hotdb-server-standard-operations/image101.png)
 
 5. Execute `reload @@config` at management port end of HotDB_01 to make the remaining compute nodes become the master compute nodes in HA mode.
 
-![](assets/standard/image102.png)
+![](assets/hotdb-server-standard-operations/image102.png)
 
 At this time, if there is a pressure measurement task, it will flash off and return to normal after a few seconds.
 
-![](assets/standard/image103.png)
+![](assets/hotdb-server-standard-operations/image103.png)
 
 **Step 3: Disable LVS service on LVS server**
 
@@ -2497,17 +2497,17 @@ rm -rf lvsrs
 
 Enable HotDB_02 and keepalived service.
 
-![](assets/standard/image104.png)
+![](assets/hotdb-server-standard-operations/image104.png)
 
 **Step 6: Adaptation adjustment of management platform**
 
 The adaptation mode is the same as"[Expand compute nodes in cluster mode](#expand-compute-nodes-in-cluster-mode)". Edit the cluster of compute nodes to delete the reduced compute nodes and convert the cluster mode to HA mode, as shown in the following figure:
 
-![](assets/standard/image105.png)
+![](assets/hotdb-server-standard-operations/image105.png)
 
-![](assets/standard/image106.png)
+![](assets/hotdb-server-standard-operations/image106.png)
 
-![](assets/standard/image107.png)
+![](assets/hotdb-server-standard-operations/image107.png)
 
 **Notes: **
 
@@ -4195,11 +4195,11 @@ create database if not exists zjj_d3 default datanode '1,4';
 
 - Associate non-existent data nodes
 
-![](assets/standard/image108.png)
+![](assets/hotdb-server-standard-operations/image108.png)
 
 - When the character set is specified, a warning will be given as follows
 
-![](assets/standard/image109.png)
+![](assets/hotdb-server-standard-operations/image109.png)
 
 > !Note
 >
@@ -4349,19 +4349,19 @@ When CREATE USER, the execution user must have super privilege. NULL password cr
 
 - When the execution user does not have super privilege. it will prompt:
 
-![](assets/standard/image110.png)
+![](assets/hotdb-server-standard-operations/image110.png)
 
 - When creating with NULL password, it will prompt:
 
-![](assets/standard/image111.png)
+![](assets/hotdb-server-standard-operations/image111.png)
 
 - If the user name exceeds the limit, it will prompt:
 
-![](assets/standard/image112.png)
+![](assets/hotdb-server-standard-operations/image112.png)
 
 - When creating user repeatedly, it will prompt:
 
-![](assets/standard/image113.png)
+![](assets/hotdb-server-standard-operations/image113.png)
 
 ##### DROP USER
 
@@ -4381,11 +4381,11 @@ When DROP USER, the execution user must have super privilege.
 
 - When the execution user does not have super privilege, it will prompt:
 
-![](assets/standard/image114.png)
+![](assets/hotdb-server-standard-operations/image114.png)
 
 - When deleting a non-existent user, it will prompt:
 
-![](assets/standard/image115.png)
+![](assets/hotdb-server-standard-operations/image115.png)
 
 ##### GRANT
 
@@ -4442,27 +4442,27 @@ Notes on GRANT:
 
 - When the user who GRANTs does not have super privilege, it will prompt:
 
-![](assets/standard/image116.png)
+![](assets/hotdb-server-standard-operations/image116.png)
 
 - User is created synchronously when GRANT.
 
-![](assets/standard/image117.png)
+![](assets/hotdb-server-standard-operations/image117.png)
 
 - User is created synchronously when GRANT without password, it will prompt:
 
-![](assets/standard/image118.png)
+![](assets/hotdb-server-standard-operations/image118.png)
 
 - super must be granted global management privilege, and node-level and table-level grant is not supported.
 
-![](assets/standard/image119.png)
+![](assets/hotdb-server-standard-operations/image119.png)
 
 - file must be granted global privilege, and node-level and table-level grant is not supported.
 
-![](assets/standard/image120.png)
+![](assets/hotdb-server-standard-operations/image120.png)
 
 - all can not be used with other privileges at the same time. It can only be granted separately.
 
-![](assets/standard/image121.png)
+![](assets/hotdb-server-standard-operations/image121.png)
 
 ##### REVOKE
 
@@ -4487,29 +4487,29 @@ Notes on REVOKE:
 
 - When the user who REVOKEs does not have super privilege, it will prompt:
 
-![](assets/standard/image122.png)
+![](assets/hotdb-server-standard-operations/image122.png)
 
 - REVOKE of some privileges is supported:
 
-![](assets/standard/image123.png)
+![](assets/hotdb-server-standard-operations/image123.png)
 
 - REVOKE of all privileges is supported:
 
-![](assets/standard/image124.png)
+![](assets/hotdb-server-standard-operations/image124.png)
 
 - REVOKE of node-level privileges is supported:
 
-![](assets/standard/image125.png)
+![](assets/hotdb-server-standard-operations/image125.png)
 
 - REVOKE of table-level privileges is supported:
 
-![](assets/standard/image126.png)
+![](assets/hotdb-server-standard-operations/image126.png)
 
 - If you REVOKE a privilege and use it again, error will be reported as follows:
 
-![](assets/standard/image127.png)
+![](assets/hotdb-server-standard-operations/image127.png)
 
-![](assets/standard/image128.png)
+![](assets/hotdb-server-standard-operations/image128.png)
 
 #### Table maintenance statement
 
@@ -4790,7 +4790,7 @@ By default, the compute node could Create Table only after making appropriate Ta
 
 1. Log in to Distributed Transactional Database Management Platform, select"Configuration"->"LogicDB", set LogicDB default node
 
-![](assets/standard/image129.png)
+![](assets/hotdb-server-standard-operations/image129.png)
 
 - By default on the management platform, after Reload of LogicDB Configuration, table could be directly created by Create statement (without being defined on the management platform any longer), configuration will be generated automatically after Create Table (including table configuration and Sharding Function, etc.)
 
@@ -4798,7 +4798,7 @@ By default, the compute node could Create Table only after making appropriate Ta
 
 - If to change the default node of LogicDB in later period, it will have no influence on tables created before change, and only applies the new LogicDB node to the new tables added after change
 
-![](assets/standard/image130.png)
+![](assets/hotdb-server-standard-operations/image130.png)
 
 2. Log in to compute node to select"test001"LogicDB, and Create Table, create succeeded
 
@@ -4815,7 +4815,7 @@ Database changed
 mysql> create table test02(id not null auto_increment primary key,a char(8),b decimal(4,2),c int);
 ```
 
-![](assets/standard/image131.png)
+![](assets/hotdb-server-standard-operations/image131.png)
 
 - For Sharding Table automatically created, selection sequence of sharding key is: Primary Key Field -> Unique Key Field ->the 1^st^ Integer Field (BIGINT, INT, MEDIUMINT, SMALLINT, TINYINT) ->after taking the Integer Field, take the Character String Type Field (CHAR, VARCHAR ), and in case of no appropriate one after taking all types above, a Field will be randomly selected as the Sharding Key by default.
 
@@ -4829,7 +4829,7 @@ Notice: This function is only recommended to be used when contacting customer fo
 
 Add Sharding Function on the management platform, and reload.
 
-![](assets/standard/image132.png)
+![](assets/hotdb-server-standard-operations/image132.png)
 
 Use [service port command](#related-command-of-create-table-using-existing-sharding-function) to view functionid | functionname| functiontype| ruleid | rulename and other information of Sharding Function, and Create Table according to relevant Field information.
 
@@ -4902,7 +4902,7 @@ mysql> CREATE TABLE match1_tb shard by functionname 'test_match1' using column '
 Query OK, 0 rows affected (0.09 sec)
 ```
 
-![](assets/standard/image133.png)
+![](assets/hotdb-server-standard-operations/image133.png)
 
 For Create Table according to this Syntax Rule, pay attention to several points below:
 
@@ -4978,7 +4978,7 @@ mysql> CREATE TABLE rt_table shard by ruleid '30'(id INT UNSIGNED NOT NULL AUTO_
 Query OK, 0 rows affected (0.07 sec)
 ```
 
-![](assets/standard/image134.png)
+![](assets/hotdb-server-standard-operations/image134.png)
 
 For Create Table according to this Syntax Rule, pay attention to several points below:
 
@@ -5035,7 +5035,7 @@ mysql> CREATE TABLE tb_vertical shard by vertical on datanode'2'(id INT UNSIGNED
 Query OK, 0 rows affected(0.07 sec)
 ```
 
-![](assets/standard/image135.png)
+![](assets/hotdb-server-standard-operations/image135.png)
 
 When datanode is not specified
 
@@ -5071,7 +5071,7 @@ mysql> CREATE TABLE tb_quan shard by global(id int not null auto_increment prima
 Query OK, 0 rows affected (0.07 sec)
 ```
 
-![](assets/standard/image136.png)
+![](assets/hotdb-server-standard-operations/image136.png)
 
 global in syntax rules means creating a global table. The 'datanodeid' is the node ID, which can be separated by English commas and can be specified in the form of interval, such as 1, 3, 4, 5-10, 12-40. The nodes of the global table with sharidng functions created by global should include all nodes under the LogicDB.
 
@@ -5894,11 +5894,11 @@ When the version is 2.5.5 below, this parameter is used to judge the execution s
 
 For example: jdbc is committed useAffectedRows=false, the number of rows matched will be returned.
 
-![](assets/standard/image138.png)
+![](assets/hotdb-server-standard-operations/image138.png)
 
 jdbc is committed useAffectedRows=true, the actual number of rows affected will be returned.
 
-![](assets/standard/image139.png)
+![](assets/hotdb-server-standard-operations/image139.png)
 
 #### clusterElectionTimeoutMs
 
@@ -6235,7 +6235,7 @@ select count(*) from B.b;
 
 Result: the results of `count (*)` doesn't have to be all 0 or 1000
 
-![](assets/standard/image140.png)
+![](assets/hotdb-server-standard-operations/image140.png)
 
 **Scenario 2: when crossDbXa is enabled, strong data consistency is guaranteed:**
 
@@ -6263,7 +6263,7 @@ select count(*) from B.b;
 
 Result: the results of Count (*) be 0 or 1000
 
-![](assets/standard/image141.png)
+![](assets/hotdb-server-standard-operations/image141.png)
 
 **Scenario 3: when crossDbXa is disabled, error will be reported when a node is added to the transaction:**
 
@@ -6278,7 +6278,7 @@ select * from B.b;
 
 Result: execute `select * from B.b;` will report an error.
 
-![](assets/standard/image142.png)
+![](assets/hotdb-server-standard-operations/image142.png)
 
 **Scenario 4: when crossDbXa is enabled, execute normally when a node is added to the transaction:**
 
@@ -6293,7 +6293,7 @@ select * from B.b;
 
 Result: `select * from B.b;` execute normally.
 
-![](assets/standard/image143.png)
+![](assets/hotdb-server-standard-operations/image143.png)
 
 #### cryptMandatory
 
@@ -7700,11 +7700,11 @@ This parameter is used to set the timeout (s) for obtaining metadata lock. The v
 
 session A execute:
 
-![](assets/standard/image144.png)
+![](assets/hotdb-server-standard-operations/image144.png)
 
 session B execute: if the set value of lockWaitTimeout is exceeded, the following prompt will be given:
 
-![](assets/standard/image145.png)
+![](assets/hotdb-server-standard-operations/image145.png)
 
 #### masterSourceInitWaitTimeout
 
@@ -8104,7 +8104,7 @@ This parameter refers to the max length of SQL statistics in Slow Query Log Anal
 
 When the length of the executed SQL statement exceeds the set length, it will be cut out automatically, and replaced with ellipsis…, as shown in the following figure:
 
-![](assets/standard/image146.png)
+![](assets/hotdb-server-standard-operations/image146.png)
 
 #### ndbSqlAddr & ndbSqlUser & ndb SqlPass
 
@@ -8268,13 +8268,13 @@ recordSqlAuditlog
 
 operateMode is a hidden parameter, and the default mode is normal mode, that is, operateMode=0. When the compute node is started, the corresponding log will be output in hotdb.log as follows:
 
-![](assets/standard/image147.png)
+![](assets/hotdb-server-standard-operations/image147.png)
 
 In normal mode, the compute nodes will start according to the parameter configuration of server.xml, and not be affected by operateMode.
 
 When it is set to performance mode, that is, modifying server.xml, adding operateMode =1 parameter configuration, then make it work by executing reload @@config in 3325 port, and the compute node will output the corresponding information in hotdb.log as follows:
 
-![](assets/standard/image148.png)
+![](assets/hotdb-server-standard-operations/image148.png)
 
 In performance mode, the compute node will initially force to disable the parameters that affect the performance of compute nodes, for example:
 
@@ -8284,7 +8284,7 @@ recordSql=false,recordSQLSyntaxError=false,recordCrossDNJoin=false,recordUNION=f
 
 When it is debug mode, the compute node will output the corresponding information in hotdb.log, as follows:
 
-![](assets/standard/image149.png)
+![](assets/hotdb-server-standard-operations/image149.png)
 
 In debug mode, the compute node will force to enable the parameters related to the debug function, for example:
 
@@ -8931,9 +8931,9 @@ Make statistics of SQL execution condition or not.
 
 1. View via the Slow Query Log Analysis page on the management platform
    - OFF status
-     ![](assets/standard/image150.png)
+     ![](assets/hotdb-server-standard-operations/image150.png)
    - ON status
-     ![](assets/standard/image151.png)
+     ![](assets/hotdb-server-standard-operations/image151.png)
 
 2. View statistics of SQL execution via server configDB
 
@@ -9542,13 +9542,13 @@ sslUseSM4 in server.xml is configure as follows:
 
 If enableSSL and sslUseSM4 in server.xml are enabled, the client can access the compute node in the encrypted state of native cipher algorithm.
 
-![](assets/standard/image152.png)
+![](assets/hotdb-server-standard-operations/image152.png)
 
 For users, this function can only be viewed through packet capture. Example: if you see the number of an encrypted suite (0xff01) defined by HotDB Server SM4 in TLS handshake package through packet capture, it indicates that SM4 encryption and decryption suite has taken effect.
 
-![](assets/standard/image153.png)
+![](assets/hotdb-server-standard-operations/image153.png)
 
-![](assets/standard/image154.png)
+![](assets/hotdb-server-standard-operations/image154.png)
 
 #### statisticsUpdatePeriod
 
@@ -9583,7 +9583,7 @@ mysql> select * from tid;
 Empty set (0.03 sec)
 ```
 
-![](assets/standard/image155.png)
+![](assets/hotdb-server-standard-operations/image155.png)
 
 #### strategyForRWSplit
 

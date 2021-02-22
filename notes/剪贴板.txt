@@ -10,21 +10,21 @@
 部署升级
 [安装部署](installation-and-deployment.md)文档
 [许可授权](service-license.md)文档
-[版本升级](manual-update.md)文档
+[版本升级](version-update.md)文档
 [集群环境推荐](cluster-environment-requirement.md)文档
 [硬件配置推荐](hardware-config-recommendation.md)文档
 
 计算节点操作手册
-[计算节点标准操作](standard.md)文档
-[计算节点管理命令](management-port-command.md)文档
+[计算节点标准操作](hotdb-server-standard-operations.md)文档
+[计算节点管理命令](hotdb-server-management-commands.md)文档
 
 管理平台操作手册
 [管理平台](hotdb-management.md)文档
 [智能巡检](intelligent-inspection.md)文档
 
 容灾操作手册
-[跨机房容灾部署](cross-idc-disaster-recovery.md)文档
-[跨机房容灾管理](visual-idc.md)文档
+[跨机房容灾部署](cross-idc-disaster-recovery-deployment.md)文档
+[跨机房容灾管理](cross-idc-disaster-recovery-management.md)文档
 
 附录
 [名词解释](glossary.md)文档
@@ -45,21 +45,21 @@ Quick Start
 Installation, Deployment and Update 
 [Installation and Deployment](installation-and-deployment.md) document
 [Service License](service-license.md) document
-[Manual Update](manual-update.md) document
+[Manual Update](version-update.md) document
 [Cluster Environment Requirement](cluster-environment-requirement.md) document
 [Hardware Config Recommendation](hardware-config-recommendation.md) document
 
 HotDB Server Tutorial 
-[Standard](standard.md) document
-[Management Port Command](management-port-command.md) document
+[Standard](hotdb-server-standard-operations.md) document
+[Management Port Command](hotdb-server-management-commands.md) document
 
 HotDB Management Tutorial 
 [HotDB Management](hotdb-management.md) document
 [Intelligent Inspection](intelligent-inspection.md) document
 
 Disaster recovery Tutorial 
-[Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md) document
-[Cross IDC Disaster Recovery Management](visual-idc.md) document
+[Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md) document
+[Cross IDC Disaster Recovery Management](cross-idc-disaster-recovery-management.md) document
  
 Appendix 
 [Glossary](glossary.md) document
