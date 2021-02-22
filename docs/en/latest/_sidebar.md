@@ -9,18 +9,18 @@
 * **Deployment and Update**
   * [Installation and Deployment](installation-and-deployment.md)
   * [Service License](service-license.md)
-  * [Manual Update](manual-update.md)
+  * [Version Update](version-update.md)
   * [Cluster Environment Recommendation](cluster-environment-recommendation.md)
   * [Hardware Config Recommendation](hardware-config-recommendation.md)
 * **HotDB Server Tutorial**
-  * [HotDB Server Standard Operations](standard.md)
-  * [HOtDB Server Management Command](management-port-command.md)
+  * [HotDB Server Standard Operations](hotdb-server-standard-operations.md)
+  * [HotDB Server Management Commands](hotdb-server-management-commands.md)
 * **HotDB Management Tutorial**
   * [HotDB Management](hotdb-management.md)
   * [Intelligent Inspection](intelligent-inspection.md)
 * **Disaster recovery Tutorial**
-  * [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md)
-  * [Cross IDC Disaster Recovery Management](visual-idc.md) 
+  * [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md)
+  * [Cross IDC Disaster Recovery Management](cross-idc-disaster-recovery-management.md) 
 * **Appendix**
   * [Glossary](glossary.md)
   * [Parameter Explanation](parameters.md)

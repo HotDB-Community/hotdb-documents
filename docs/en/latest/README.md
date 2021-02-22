@@ -26,7 +26,7 @@ HotDB Server is a relational distributed transactional database product which re
 
 * [Installation and Deployment](installation-and-deployment.md)
 * [Service License](service-license.md)
-* [Manual Update](manual-update.md)
+* [Manual Update](version-update.md)
 * [Cluster Environment Recommendation](cluster-environment-recommendation.md)
 * [Hardware Config Recommendation](hardware-config-recommendation.md)
 
@@ -34,8 +34,8 @@ HotDB Server is a relational distributed transactional database product which re
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
 <div class="readme-toc-col-title">HotDB Server Tutorial</div>
 
-* [HotDB Server Standard Operations](standard.md)
-* [HOtDB Server Management Command](management-port-command.md)
+* [HotDB Server Standard Operations](hotdb-server-standard-operations.md)
+* [HOtDB Server Management Command](hotdb-server-management-commands.md)
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
@@ -48,8 +48,8 @@ HotDB Server is a relational distributed transactional database product which re
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
 <div class="readme-toc-col-title">Disaster recovery Tutorial</div>
 
-* [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery.md)
-* [Cross IDC Disaster Recovery Management](visual-idc.md)
+* [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md)
+* [Cross IDC Disaster Recovery Management](cross-idc-disaster-recovery-management.md)
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4readme-toc-col">

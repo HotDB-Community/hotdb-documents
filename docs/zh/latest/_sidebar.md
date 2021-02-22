@@ -9,18 +9,18 @@
 * **部署升级**
   * [安装部署](installation-and-deployment.md)
   * [许可授权](service-license.md)
-  * [版本升级](manual-update.md)
+  * [版本升级](version-update.md)
   * [ 集群环境推荐](cluster-environment-recommendation.md)
   * [硬件配置推荐](hardware-config-recommendation.md)
 * **计算节点操作手册**
-  * [计算节点标准操作](standard.md)
-  * [计算节点管理命令](management-port-command.md)
+  * [计算节点标准操作](hotdb-server-standard-operations.md)
+  * [计算节点管理命令](hotdb-server-management-commands.md)
 * **管理平台操作手册**
   * [管理平台](hotdb-management.md)
   * [智能巡检](intelligent-inspection.md)
 * **容灾操作手册**
-  * [跨机房容灾部署](cross-idc-disaster-recovery.md)
-  * [跨机房容灾管理](visual-idc.md)
+  * [跨机房容灾部署](cross-idc-disaster-recovery-deployment.md)
+  * [跨机房容灾管理](cross-idc-disaster-recovery-management.md)
 * **附录**
   * [名词解释](glossary.md)
   * [参数说明](parameters.md)
