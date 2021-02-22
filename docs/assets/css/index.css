@@ -21,9 +21,17 @@ pre > code {
   background-color: #fff !important;
   display: block !important;
 }
-.navicon {
+.mobile .sidebar .navicon{
+  width: 100%;
+  margin: 0 0 0 15px;
+  padding: 0;
+}
+.navicon{
   height: 60px !important;
   float: left !important;
+}
+.navicon > img {
+  height: 60px !important;
 }
 .app-nav > ul {
   height: 60px !important;

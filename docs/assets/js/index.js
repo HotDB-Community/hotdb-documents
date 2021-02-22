@@ -113,12 +113,13 @@ window.$docsify = {
         window.$docsify.fileName = `/${vm.route.file}`
         //绑定windows.$docsify.fileUrl，以#开始，没有文件后缀名
         window.$docsify.fileUrl = `#/${vm.route.path}`
-
+        
         //预处理markdown
         return resolveFootNote(resolveAnchor(escapeCode(html)))
       })
       hook.doneEach(function() {
         $(document).ready(function() {
+          bindServiceCssClass()
           bindFootNote()
         })
       })
@@ -146,6 +147,12 @@ function redirectLocation() {
   } else if(url.endsWith("/#/en")) {
     window.location.replace(`${url}/latest/`)
   }
+}
+
+//绑定判断设备的css class
+function bindServiceCssClass(){
+  const isMobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(navigator.userAgent)
+  if(isMobile) $("body").addClass("mobile")
 }
 
 const codeRegex = /(`[^`\r\n]+`)/g 

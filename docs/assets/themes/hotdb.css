@@ -103,7 +103,8 @@ li input[type=checkbox] {
 .app-nav li, .app-nav ul {
   display: inline-block;
   list-style: none;
-  margin: 0
+  margin: 0;
+  padding: 0;
 }
 .app-nav a {
   color: inherit;
@@ -225,11 +226,15 @@ main.hidden {
   position: static
 }
 .sidebar .sidebar-nav {
-  line-height: 2em;
+  line-height: 2rem;
   padding-bottom: 40px
 }
 .sidebar li.collapse .app-sub-sidebar {
   display: none
+}
+.sidebar div{
+  margin: 0 0 0 15px;
+  padding: 0;
 }
 .sidebar ul {
   margin: 0 0 0 15px;

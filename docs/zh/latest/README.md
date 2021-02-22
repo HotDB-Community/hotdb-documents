@@ -6,7 +6,7 @@ HotDB Server是一款实现数据容量和性能横向扩展的交易关系型�
 
 <div class="container-fluid readme-toc">
 <div class="row readme-toc-row">
-<div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
+<div class="col-md-4 col-lg-4 col-xl-4 readme-toc-col">
 <div class="readme-toc-col-title">关于</div>
 
 * [产品简介](introduce.md)
@@ -14,14 +14,14 @@ HotDB Server是一款实现数据容量和性能横向扩展的交易关系型�
 <!--* [What's New](whats-new.md)-->
 
 </div>
-<div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
+<div class="col-md-4 col-lg-4 col-xl-4 readme-toc-col">
 <div class="readme-toc-col-title">上手指南</div>
 
 * [快速上手指南](quick-start-guide.md)
 <!--* [基本操作](basic-operations.md)-->
 
 </div>
-<div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
+<div class="col-md-4 col-lg-4 col-xl-4 readme-toc-col">
 <div class="readme-toc-col-title">部署升级</div>
 
 * [安装部署](installation-and-deployment.md)
@@ -31,28 +31,28 @@ HotDB Server是一款实现数据容量和性能横向扩展的交易关系型�
 * [硬件配置推荐](hardware-config-recommendation.md)
 
 </div>
-<div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
+<div class="col-md-4 col-lg-4 col-xl-4 readme-toc-col">
 <div class="readme-toc-col-title">计算节点操作手册</div>
 
 * [计算节点标准操作](hotdb-server-standard-operations.md)
 * [计算节点管理命令](hotdb-server-management-commands.md)
 
 </div>
-<div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
+<div class="col-md-4 col-lg-4 col-xl-4 readme-toc-col">
 <div class="readme-toc-col-title">管理平台操作手册</div>
 
 * [管理平台](hotdb-management.md)
 * [智能巡检](intelligent-inspection.md)
 
 </div>
-<div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">
+<div class="col-md-4 col-lg-4 col-xl-4 readme-toc-col">
 <div class="readme-toc-col-title">容灾操作手册</div>
 
 * [跨机房容灾部署](cross-idc-disaster-recovery-deployment.md)
 * [跨机房容灾管理](cross-idc-disaster-recovery-management.md)
 
 </div>
-<div class="col-sm-4 col-md-4 col-lg-4readme-toc-col">
+<div class="col-md-4 col-lg-4 col-xl-4 readme-toc-col">
 <div class="readme-toc-col-title">附录</div>
 
 * [名词解释](glossary.md)
