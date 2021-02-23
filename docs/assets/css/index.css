@@ -131,21 +131,11 @@ pre > code {
   width: 40em;
 }
 
-/*topbar*/
+/*移动端宽度更宽*/
 
-.topbar {
-  overflow: auto;
+.mobile .markdown-section{
+  max-width: 95%;
 }
-.topbar p{
-  line-height: 30px;
-  margin: 10px 0 10px 0 !important;
-}
-.topbar-link {
-  text-decoration: underline;
-  cursor: pointer;
-  padding: 5px 5px 4px 5px;
-}
-.topbar-link .fa{
-  width: 15px !important;
-  height: 15px !important;
-}
+
+/*bootstrap你干了啥！*/
+
