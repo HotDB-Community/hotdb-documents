@@ -1,0 +1,16 @@
+.topbar {
+  overflow: auto;
+}
+.topbar p{
+  line-height: 30px;
+  margin: 10px 0 10px 0 !important;
+}
+.topbar-link {
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 5px 5px 4px 5px;
+}
+.topbar-link .fa{
+  width: 15px !important;
+  height: 15px !important;
+}

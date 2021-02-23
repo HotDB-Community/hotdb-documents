@@ -104,6 +104,7 @@ window.$docsify = {
 
       hook.init(function() {
         redirectLocation()
+        bindServiceCssClass()
       })
 
       hook.beforeEach(function(html) {
@@ -119,7 +120,6 @@ window.$docsify = {
       })
       hook.doneEach(function() {
         $(document).ready(function() {
-          bindServiceCssClass()
           bindFootNote()
         })
       })
@@ -127,11 +127,13 @@ window.$docsify = {
   ],
 
   fileName: "",
-  fileUrl: ""
+  fileUrl: "",
+  isMobile: false
 }
 
 window.onload = function(){
   redirectLocation()
+  bindServiceCssClass()
 }
 
 //地址重定向
@@ -152,7 +154,10 @@ function redirectLocation() {
 //绑定判断设备的css class
 function bindServiceCssClass(){
   const isMobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(navigator.userAgent)
-  if(isMobile) $("body").addClass("mobile")
+  if(isMobile) {
+    document.querySelector("body").classList.add("mobile")
+    window.$docsify.isMobile = true
+  }
 }
 
 const codeRegex = /(`[^`\r\n]+`)/g 
