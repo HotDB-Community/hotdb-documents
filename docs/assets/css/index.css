@@ -14,24 +14,26 @@ pre > code {
   height: 80px !important;
   margin: 0 0 0 0 !important;
   top: 0;
-  padding: 10px 75px 10px 75px !important;
   z-index: 100 !important;
   border-bottom: 1px solid rgba(0, 0, 0, .07) !important;
   transition: transform .25s ease-out !important;
   background-color: #fff !important;
   display: block !important;
 }
-.mobile .sidebar .navicon{
-  width: 100%;
-  margin: 0 0 0 15px;
-  padding: 0;
+.web .app-nav{
+  padding: 10px 80px 10px 30px !important;
+}
+.mobile .app-nav{
+  padding: 10px 80px 10px 30px !important;
 }
 .navicon{
   height: 60px !important;
-  float: left !important;
+  padding: 5px 0 !important;
+  margin: 0 0 !important;
+  float: left;
 }
 .navicon > img {
-  height: 60px !important;
+  height: 50px !important;
 }
 .app-nav > ul {
   height: 60px !important;
@@ -130,12 +132,3 @@ pre > code {
 .tooltip{
   width: 40em;
 }
-
-/*移动端宽度更宽*/
-
-.mobile .markdown-section{
-  max-width: 95%;
-}
-
-/*bootstrap你干了啥！*/
-

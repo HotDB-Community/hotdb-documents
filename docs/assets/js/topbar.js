@@ -38,20 +38,25 @@ window.$docsify.plugins.push(
 //添加topbar
 function createTopBar() {
   return `<div class="topbar">
-        <p style="float: right">
-          <a class="topbar-link" href="${window.$docsify.topbar.downloadUrl}"  target="_blank"
+        <ul>
+		<li>
+          <a href="${window.$docsify.topbar.downloadUrl}"  target="_blank"
            title="${getText(window.$docsify.topbar.downloadTitle)}">
             ${getText(window.$docsify.topbar.downloadText)}
           </a class="topbar-link">
-          <a class="topbar-link" href="${window.$docsify.topbar.editUrl}${window.$docsify.fileName}" target="_blank"
+		</li>
+		<li>
+          <a href="${window.$docsify.topbar.editUrl}${window.$docsify.fileName}" target="_blank"
            title="${getText(window.$docsify.topbar.editTitle)}">
             ${getText(window.$docsify.topbar.editText)}
           </a class="topbar-link">
-          <a class="topbar-link" href="${window.$docsify.topbar.issuesUrl}" target="_blank"
+		</li>
+		<li>
+          <a href="${window.$docsify.topbar.issuesUrl}" target="_blank"
            title="${getText(window.$docsify.topbar.issuesTitle)}">
             ${getText(window.$docsify.topbar.issuesText)}
           </a>
-        </p>
+		</li>
       </div>`
 }
 
