@@ -15,7 +15,7 @@ window.$docsify = {
   //onlyCover: true,
   loadSidebar: true,
   loadNavbar: true,
-  mergeNavbar: true,
+  //mergeNavbar: true,
   maxLevel: 3,
   subMaxLevel: 3,
   notFoundPage: true,
@@ -28,19 +28,13 @@ window.$docsify = {
     },
     path: "auto",
     placeholder: {
-      "/zh/": "搜索",
-      "/en/": "Search"
+      "/zh/": "搜索文档",
+      "/en/": "Search Document"
     }
   },
   pagination: {
-    previousText: {
-      "/zh/": "上一章节",
-      "/en/": "Previous Chapter",
-    },
-    nextText: {
-      "/zh/": "下一章节",
-      "/en/": "Next Chapter",
-    },
+    previousText: "Prev",
+    nextText: "Next",
     crossChapter: true,
     crossChapterText: true
   },
@@ -154,9 +148,12 @@ function redirectLocation() {
 //绑定判断设备的css class
 function bindServiceCssClass(){
   const isMobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(navigator.userAgent)
+  const bodyElement = document.querySelector("body")
   if(isMobile) {
-    document.querySelector("body").classList.add("mobile")
+    bodyElement.classList.add("mobile")
     window.$docsify.isMobile = true
+  }else{
+	bodyElement.classList.add("web")  
   }
 }
 

@@ -1,16 +1,23 @@
 .topbar {
-  overflow: auto;
+   height: 30px;
 }
-.topbar p{
+.topbar ul{
+  padding: 0 0 !important;
+  margin: 0 0 !important;
+  display: inline-block;
+}
+.topbar li{
+  list-style: none;
+  height: 30px;
   line-height: 30px;
-  margin: 10px 0 10px 0 !important;
-}
-.topbar-link {
-  text-decoration: underline;
   cursor: pointer;
+  display: inline-block;
+}
+.topbar a {
+  text-decoration: underline;
   padding: 5px 5px 4px 5px;
 }
-.topbar-link .fa{
+.topbar a .fa{
   width: 15px !important;
   height: 15px !important;
 }
