@@ -28,7 +28,7 @@ HotDB Server is fully transparent to the application, and operations including u
 
 **High Performance**
 
-The single node throughput of compute node can reach more than 100000 TPS and 300000 QPS, and the concurrency number can reach 4096 or above.
+The throughput of compute node can reach more than 100000 connection amount, 100000 concurrency amount, 100000 TPS and 300000 QPS.
 
 ## Core Functions
 
