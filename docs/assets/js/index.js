@@ -130,14 +130,26 @@ window.onload = function(){
   bindServiceCssClass()
 }
 
+//推断语言区域
+function inferLocale(){
+  const locale = navigator.language
+  if(locale.startsWith("zh")){
+    return "zh"
+  }else if(locale.startsWith("en")){
+    return "en"
+  }else {
+    return "en"
+  }
+}
+
 //地址重定向
 function redirectLocation() {
   let url = window.location.href
   if(url.charAt(url.length - 1) === "/") url = url.substring(0, url.length - 1)
   if(url.indexOf("/#") === -1) {
-    window.location.replace(`${url}/#/zh/latest/`)
+    window.location.replace(`${url}/#/${inferLocale()}/latest/`)
   } else if(url.endsWith("/#")) {
-    window.location.replace(`${url}/zh/latest/`)
+    window.location.replace(`${url}/${inferLocale()}/latest/`)
   } else if(url.endsWith("/#/zh")) {
     window.location.replace(`${url}/latest/`)
   } else if(url.endsWith("/#/en")) {
