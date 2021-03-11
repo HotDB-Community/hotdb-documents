@@ -232,7 +232,7 @@ main.hidden {
   line-height: 2rem;
   padding-bottom: 40px
 }
-.sidebar li.collapse .app-sub-sidebar {
+.sidebar li.sidebar-collapse .app-sub-sidebar {
   display: none
 }
 .sidebar div{
