@@ -16,8 +16,8 @@ window.$docsify = {
   loadSidebar: true,
   loadNavbar: true,
   //mergeNavbar: true,
-  maxLevel: 3,
-  subMaxLevel: 3,
+  maxLevel: 4,
+  subMaxLevel: 4,
   notFoundPage: true,
   topMargin: 80,
 
