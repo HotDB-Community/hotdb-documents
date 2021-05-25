@@ -31,6 +31,7 @@
 * [X] 修复BUG：bootstrap源码问题导致点击已打开的侧边栏导航，这个导航会被隐藏而非单纯的折叠
 * [X] 调整表格显示：表格标题栏文字居中，尽可能不换行
 * [X] 修复bootstrap和docsify的坑爹兼容性问题
+* [ ] 使用postMessenge向官网发送fileUrl（以#开头的文档地址，参考：[cnblogs](https://www.cnblogs.com/dolphinX/p/3464056.html)）
 * [ ] 调整表格相关行的合并（？）
 * [ ] ［长期］文档的文本修订和润色
 * [ ] 润色markdown文档中的内联代码`  
