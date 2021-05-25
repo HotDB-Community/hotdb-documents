@@ -32,13 +32,13 @@
 * [X] 调整表格显示：表格标题栏文字居中，尽可能不换行
 * [X] 修复bootstrap和docsify的坑爹兼容性问题
 * [ ] 使用postMessenge向官网发送fileUrl（以#开头的文档地址，参考：[cnblogs](https://www.cnblogs.com/dolphinX/p/3464056.html)）
-* [ ] 调整表格相关行的合并（？）
-* [ ] ［长期］文档的文本修订和润色
-* [ ] 润色markdown文档中的内联代码`  
-* [ ] ~~修改docsify-glossary插件，允许不同语言的术语表（自行实现）~~
+* [ ] 调整表格相关行的合并
+* [ ] 润色markdown文档中的内联代码
 * [ ] 编写脚本合并所有文档并生成pdf
 * [ ] 编写脚本从markdown生成toc
 * [ ] 编写脚本为markdown的每个标题添加正确的序号
+
+* [ ] ［长期］文档的文本修订和润色
 
 # 检查Markdown文档
 
@@ -108,9 +108,3 @@
   * [X] `docs/en/latest/glossary.md` C
   * [X] `docs/en/latest/parameters.md` C
   * [X] `docs/en/latest/error-codes.md` C
-  
-# 问题
-
-* 参数说明，allowRCWithoutReadConsistentInXA，中英文不一致
-* 计算节点错误码 英文，未翻译
-* 适配问题：chrome浏览器+1366X768大小屏幕，有滑动条的表格，拖到最右边看不到右侧边框（我怎么知道为什么）
