@@ -157,9 +157,9 @@ function redirectLocation() {
     window.location.replace(`${url}/#/${inferLocale()}/${latestVersion}/`)
   } else if(url.endsWith("/#")) {
     window.location.replace(`${url}/${inferLocale()}/${latestVersion}/`)
-  } else if(url.endsWith("/#/zh")) {
+  } else if(url.endsWith("/#/zh") || url.endsWith("/#/zh/latest")) {
     window.location.replace(`${url}/${latestVersion}/`)
-  } else if(url.endsWith("/#/en")) {
+  } else if(url.endsWith("/#/en") || url.endsWith("/#/en/latest")) {
     window.location.replace(`${url}/${latestVersion}/`)
   }
 }
