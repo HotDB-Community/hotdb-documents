@@ -108,14 +108,14 @@ window.$docsify = {
         window.$docsify.fileName = `/${vm.route.file}`
         //绑定windows.$docsify.fileUrl，以#开始，没有文件后缀名
         window.$docsify.fileUrl = `#/${vm.route.path}`
-        
+
         //通过postMessage向官网发送消息
         //const message = {
         //  fileName: window.$docsify.fileName,
         //  fileUrl: window.$docsify.fileUrl
         //} 
         //window.postMessage(message,officialWebsiteUrl)
-        
+
         //预处理markdown
         return resolveFootNote(resolveAnchor(escapeCode(html)))
       })
@@ -132,19 +132,19 @@ window.$docsify = {
   isMobile: false
 }
 
-window.onload = function(){
+window.onload = function() {
   redirectLocation()
   bindServiceCssClass()
 }
 
 //推断语言区域
-function inferLocale(){
+function inferLocale() {
   const locale = navigator.language
-  if(locale.startsWith("zh")){
+  if(locale.startsWith("zh")) {
     return "zh"
-  }else if(locale.startsWith("en")){
+  } else if(locale.startsWith("en")) {
     return "en"
-  }else {
+  } else {
     return "en"
   }
 }
@@ -157,26 +157,30 @@ function redirectLocation() {
     window.location.replace(`${url}/#/${inferLocale()}/${latestVersion}/`)
   } else if(url.endsWith("/#")) {
     window.location.replace(`${url}/${inferLocale()}/${latestVersion}/`)
-  } else if(url.endsWith("/#/zh") || url.endsWith("/#/zh/latest")) {
+  } else if(url.endsWith("/#/zh")) {
     window.location.replace(`${url}/${latestVersion}/`)
-  } else if(url.endsWith("/#/en") || url.endsWith("/#/en/latest")) {
+  } else if(url.endsWith("/#/zh/latest")) {
+    window.location.replace(`${url.substring(0, url.length - 7)}/${latestVersion}/`)
+  } else if(url.endsWith("/#/en")) {
+    window.location.replace(`${url.substring(0, url.length - 7)}/${latestVersion}/`)
+  } else if(url.endsWith("/#/en/latest")) {
     window.location.replace(`${url}/${latestVersion}/`)
   }
 }
 
 //绑定判断设备的css class
-function bindServiceCssClass(){
+function bindServiceCssClass() {
   const isMobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(navigator.userAgent)
   const bodyElement = document.querySelector("body")
   if(isMobile) {
     bodyElement.classList.add("mobile")
     window.$docsify.isMobile = true
-  }else{
-	bodyElement.classList.add("web")  
+  } else {
+    bodyElement.classList.add("web")
   }
 }
 
-const codeRegex = /(`[^`\r\n]+`)/g 
+const codeRegex = /(`[^`\r\n]+`)/g
 const pipeCharRegex = /\|/g
 
 //需要转义内联代码中的管道符，需要将`ps -ef | grep java`转义为`ps -ef \| grep java`，docsify的bug
