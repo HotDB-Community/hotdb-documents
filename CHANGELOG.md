@@ -31,6 +31,7 @@
 * [X] 修复BUG：bootstrap源码问题导致点击已打开的侧边栏导航，这个导航会被隐藏而非单纯的折叠
 * [X] 调整表格显示：表格标题栏文字居中，尽可能不换行
 * [X] 修复bootstrap和docsify的坑爹兼容性问题
+* [ ] 将latest版本改为2.5.6.1版本
 * [ ] 使用postMessenge向官网发送fileUrl（以#开头的文档地址，参考：[cnblogs](https://www.cnblogs.com/dolphinX/p/3464056.html)）
 * [ ] 调整表格相关行的合并
 * [ ] 润色markdown文档中的内联代码
@@ -38,73 +39,6 @@
 * [ ] 编写脚本从markdown生成toc
 * [ ] 编写脚本为markdown的每个标题添加正确的序号
 
+***
+ 
 * [ ] ［长期］文档的文本修订和润色
-
-# 检查Markdown文档
-
-> * D - 原文档已过时
-> * T - 待编写
-> * L - 优化列表
-> * F - 适用代码块codeFence
-> * M - 必要的单词/命令标注为代码
-> * P - 润色，适用警告框（NOTE/TIP/WARNING等）、尾注等特殊语法
-> * C - 中英文对比校对
-> * 任务状态 - 是否已经具有良好的浏览效果
-
-中文文档（截止时间：2021-01-14 15:00:21）
-
-* `introduce`
-  * [X] `docs/zh/latest/introduce.md` F P C
-  * [X] `docs/zh/latest/white-paper.md` F P C
-  * [ ] `docs/zh/latest/whats-new.md` T
-* `quick-start`
-  * [X] `docs/zh/latest/quick-start-guide.md` F
-  * [ ] `docs/zh/latest/basic-operations.md` T
-* `install-deploy-update`
-  * [X] `docs/zh/latest/install-and-deploy.md` F C
-  * [X] `docs/zh/latest/service-license.md` F C
-  * [X] `docs/zh/latest/version-update.md` F C
-  * [X] `docs/zh/latest/cluster-environment-requirement.md` F C
-  * [X] `docs/zh/latest/hardware-config-recommendation.md` F C
-* `hotdb-server`
-  * [X] `docs/zh/latest/hotdb-server-standard-operations.md` F C
-  * [X] `docs/zh/latest/hotdb-server-management-commands.md` L M F C
-* `hotdb-management`
-  * [X] `docs/zh/latest/hotdm-management.md` F C
-  * [X] `docs/zh/latest/intelligent-inspection.md` L F C
-* `idc`
-  * [X] `docs/zh/latest/cross-idc-disaster-recovery-deployment.md` F C
-  * [X] `docs/zh/latest/cross-idc-disaster-recovery-management.md` L F C
-* `appendix`
-  * [X] `docs/zh/latest/glossary.md` F C
-  * [X] `docs/zh/latest/parameters.md` F C
-  * [X] `docs/zh/latest/error-codes.md` F C
-
-英文文档（截止时间：2021-01-14 15:00:21）
-
-* `introduce`
-  * [X] `docs/en/latest/introduce.md` P C
-  * [X] `docs/en/latest/white-paper.md` P C
-  * [ ] `docs/en/latest/whats-new.md` T
-* `quick-start`
-  * [X] `docs/en/latest/quick-start-guide.md`
-  * [ ] `docs/en/latest/basic-operations.md` T
-* `install-deploy-update`
-  * [X] `docs/en/latest/install-and-deploy.md` C
-  * [X] `docs/en/latest/service-license.md` C
-  * [X] `docs/en/latest/version-update.md` C
-  * [X] `docs/en/latest/cluster-environment-requirement.md` C
-  * [X] `docs/en/latest/hardware-config-recommendation.md` C
-* `hotdb-server`
-  * [X] `docs/en/latest/hotdb-server-standard-operations.md` C
-  * [X] `docs/en/latest/hotdb-server-management-commands.md`  C
-* `hotdb-management`
-  * [X] `docs/en/latest/hotdm-management.md` C
-  * [X] `docs/en/latest/intelligent-inspection.md` C
-* `idc`
-  * [X] `docs/en/latest/cross-idc-disaster-recovery-deployment.md` C
-  * [X] `docs/en/latest/cross-idc-disaster-recovery-management.md` C
-* `appendix`
-  * [X] `docs/en/latest/glossary.md` C
-  * [X] `docs/en/latest/parameters.md` C
-  * [X] `docs/en/latest/error-codes.md` C
