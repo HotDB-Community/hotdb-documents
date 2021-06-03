@@ -4,27 +4,28 @@
 
 This chapter will briefly introduce the newly added or optimized functions in HotDB Management V2.5.6. Please go to the specific function menu for details.
 
-- Add new functions including [visualized switching, repair, removal of IDC and IDC switching drill](#switching-removal-and-repair-of-idc) to improve the reliability and ease of use of IDC operation and reduce the operation and maintenance cost of cross-IDC operation;
-- Add the function of [Intelligent Inspection](#intelligent-inspection), which helps with the cluster inspection in database;
-- Add the function of [Platform Configuration Ddata Management](#platform-configuration-data-management). The management platform ConfigDB is able to support high availability switching and backup and restore of ConfigDB;
-- Add functions such as "Disable", "Comment", "Online time" in [User Management](#user-management);
-- Optimize the configuration function of some sharding functions, so that the [MATCH](#match) and [ROUTE](#route) type are able to support prefix/infix/suffix matching, and the [RANGE](#range) type to support the maximum and minimum boundary value matching;
-- Optimize the function of [Upgrade Center](#upgrade-center) to match the new JDK version in v.2.5.6 and the self-developed license;
-- Optimize the function of [Add New Table Configuration](#add-new-table-configuration): when adding new table configuration, all data nodes under the LogicDB will be associated by default;
-- Optimize the function of [Alert Type](#alert-type-description) in History Events, and add cluster election or switching reminders;
-- Optimize the function of [Update License](#upgrade-center) to adapt to the new self-developed encrypted authorization plan;
-- Optimize the [master/slave consistency detection](#masterslave-data-consistency-detection), and give a prompt to the tables that are not configured with switching functions or whose data sources are unavailable;
-- Optimize the function of [Config Checking](#config-checking), add checking item of whether to configure switching functions, and give warnings for the data nodes with replication relations that are not configured with switching functions;
-- Add the identification of whether the data of data sources are consistent on the data nodes in the [Logic Topological Graph](#logic-topological-graph);
-- Optimize the [high availability switching](#masterslave-switch) function of data source, and do compatibility processing for master_delay replication latency. Add "switching" button, you can cancel the switching task halfway via the button;
-- The [Topological Graph Alert Setting](#periodical-plan) is compatible with master_delay configuration to make it within the alert range. Besides, add "Reset" button to the Topological Graph Alert Setting and Monitoring Panel Setting to restore the default configuration;
-- Optimize the page of [Compute Node Cluster Management](#compute-node-cluster) to unfold/hide more deployment info and improve the page access rate;
-- Optimize the function of [data unique constraint detection](#data-unique-constraint-detection) to make it compatible with prefix unique index;
-- Set the entrance for data sharding route periodical detection plan, data unique constraint periodical detection plan in the [Periodical Plan](#periodical-detection-setting) of the management platform;
-- Optimize the [user privilege](#database-user-management) table page, so that the privilege info of LogicDB can be directly seen on the page;
-- Optimize the function of [OEM Management](#oem-management), remove the original menu, and access it by hyperlink (also applicable to v.2.5.5);
-- Enhance the password strength of [database users](#database-user-management) (the password of database users shall be no less than 8 digits and must be composed of numbers and letters).
-- Add the function of [platform license management](#license-management), to limit the number of cluster groups of available compute nodes and the number of available compute nodes for each group of compute nodes.
+- Add new functions including [visualized switching, repair, removal of IDC and IDC switching drill](#switching-removal-and-repair-of-idc) to improve the reliability and ease of use of IDC operation and reduce the operation and maintenance cost of cross-IDC operation
+- Add the function of [Intelligent Inspection](#intelligent-inspection), which helps with the cluster inspection in database
+- Add the function of [Platform Configuration Ddata Management](#platform-configuration-data-management). The management platform ConfigDB is able to support high availability switching and backup and restore of ConfigDB
+- Add functions such as "Disable", "Comment", "Online time" in [User Management](#user-management)
+- Optimize the configuration function of some sharding functions, so that the [MATCH](#match) and [ROUTE](#route) type are able to support prefix/infix/suffix matching, and the [RANGE](#range) type to support the maximum and minimum boundary value matching
+- Optimize the function of [Upgrade Center](#upgrade-center) to match the new JDK version in v.2.5.6 and the self-developed license
+- Optimize the function of [Add New Table Configuration](#add-new-table-configuration): when adding new table configuration, all data nodes under the LogicDB will be associated by default
+- Optimize the function of [Alert Type](#alert-type-description) in History Events, and add cluster election or switching reminders
+- Optimize the function of [Update License](#upgrade-center) to adapt to the new self-developed encrypted authorization plan
+- Optimize the [master/slave consistency detection](#masterslave-data-consistency-detection), and give a prompt to the tables that are not configured with switching functions or whose data sources are unavailable
+- Optimize the function of [Config Checking](#config-checking), add checking item of whether to configure switching functions, and give warnings for the data nodes with replication relations that are not configured with switching functions
+- Add the identification of whether the data of data sources are consistent on the data nodes in the [Logic Topological Graph](#logic-topological-graph)
+- Optimize the [high availability switching](#masterslave-switch) function of data source, and do compatibility processing for master_delay replication latency. Add "switching" button, you can cancel the switching task halfway via the button
+- The [Topological Graph Alert Setting](#periodical-plan) is compatible with master_delay configuration to make it within the alert range. Besides, add "Reset" button to the Topological Graph Alert Setting and Monitoring Panel Setting to restore the default configuration
+- Optimize the page of [Compute Node Cluster Management](#compute-node-cluster) to unfold/hide more deployment info and improve the page access rate
+- Optimize the function of [data unique constraint detection](#data-unique-constraint-detection) to make it compatible with prefix unique index
+- Set the entrance for data sharding route periodical detection plan, data unique constraint periodical detection plan in the [Periodical Plan](#periodical-detection-setting) of the management platform
+- Optimize the [user privilege](#database-user-management) table page, so that the privilege info of LogicDB can be directly seen on the page
+- Optimize the function of [OEM Management](#oem-management), remove the original menu, and access it by hyperlink (also applicable to v.2.5.5)
+- Enhance the password strength of [database users](#database-user-management) (the password of database users shall be no less than 8 digits and must be composed of numbers and letters)
+- Add the function of [platform license management](#license-management), to limit the number of cluster groups of available compute nodes and the number of available compute nodes for each group of compute nodes
+- Optimized execution of [Online DDL](#online-ddl) and [Sharding Plan Online Modification](#sharding-plan-online-modification): the master/slave data consistency detection can be skipped
 
 ## Preface
 
@@ -4038,6 +4039,8 @@ As with Ordinary DDL, it needs to enter username and password to connect to the 
 
 Currently, the number of columns in single table created by table creation statement of the interface shall not exceed 4096, and the maximum byte in the input box shall not exceed 65535.
 
+If "skip master-slave data consistency detection during the execution" is checked, the master-slave data consistency detection will not be performed before online DDL execution. It is not checked by default.
+
 ![](assets/hotdb-management/image369.png)
 
 All executed online change records can be viewed in the online change history record. "Online Change Statement under Execution" is used to view the online DDL task under execution and the progress of the task under execution. "Online Change Statement History Execution Record" is used to view the online DDL that has been executed.
@@ -4056,11 +4059,11 @@ Enter the SQL statement that needs to be parsed, and click \[Execution] to view 
 
 This function is the same as the execution of EXPLAIN command on the server (3323 by default).
 
-### Online change of sharding plan
+### Sharding Plan Online Modification
 
 It provides online change support for the table type, sharding function, sharding key, and data node to which the sharding belongs of business tables in four dimensions. Business tables will not be locked during the change, and normal IUD operations can be performed on the table.
 
-#### Online change of sharding plan
+#### Sharding Plan Online Modification
 
 ![](assets/hotdb-management/image371.png)
 
@@ -4099,6 +4102,8 @@ Select the logicDB where the modification table is located and the table name to
 Modification plan can choose the target "Table Type" (child table is not supported currently), "Sharding Key" (when the table type is sharding table), "Sharding Mode" (when the table type is sharding table), and "Data Node".
 
 If "Open Global Unique Constraint" is checked, it needs to ensure that the unique constraint key values in the source table must be unique.
+
+Click the \[Start Modification Task] button on the “Management->Online Change of Sharding Plan” page to enter the “Start Modification Task” configuration page.
 
 #### Modification plan pre-detection
 
@@ -4823,33 +4828,31 @@ Example 1: If a table has 1000 lines in the simulated pressure measurement envir
 
 ![](assets/hotdb-management/image439.png)
 
-- The page displays the results of the most recent successful recommendation, and the newly started record will overwrite the previous record.
+The page displays the results of the most recent successful recommendation, and the newly started record will overwrite the previous record.
 
-- Click the "More" button to filter the page record by "Number of Lines with Simulated Pressure Measurement" and "Estimated Number of Lines for Production".
+Click the "More" button to filter the page record by "Number of Lines with Simulated Pressure Measurement" and "Estimated Number of Lines for Production".
 
-- Tables to be viewed can be filtered out using page filtering condition. Records of repeated original sharding plan and generated plan can also be filtered by checking the "De-repetition Display of Original Sharding Plan and Generated Plan".
+Tables to be viewed can be filtered out using page filtering condition. Records of repeated original sharding plan and generated plan can also be filtered by checking the "De-repetition Display of Original Sharding Plan and Generated Plan".
 
-- By default, three sets of recommend plans are generated. In general, the first one is optimal, and the latter two are alternatives.
+By default, three sets of recommend plans are generated. In general, the first one is optimal, and the latter two are alternatives.
 
-- The generated plan includes the recommended table types: sharding table (representing the sharding table) + sharding key, and global table. When a sharding table is recommended, the plan does not include the sharding rule which needs to be selected by the user.
+The generated plan includes the recommended table types: sharding table (representing the sharding table) + sharding key, and global table. When a sharding table is recommended, the plan does not include the sharding rule which needs to be selected by the user.
 
-- Records with "Table Status" of "Pressure Unmeasured (not subjected to full simulated pressure measurement)" will be highlighted by the page. The recommended plan for this type of table **is not recommended** because it is not subjected to full simulated pressure measurement.
+Records with "Table Status" of "Pressure Unmeasured (not subjected to full simulated pressure measurement)" will be highlighted by the page. The recommended plan for this type of table **is not recommended** because it is not subjected to full simulated pressure measurement.
 
-- The records in the page can be directly exported to the local. Click the \[Export] button to export the records to be exported or all records.
+The records in the page can be directly exported to the local. Click the \[Export] button to export the records to be exported or all records.
 
-- For tables that need to modify the table sharding plan, the sharding plan modification can be directly completed by clicking \[Online Modification].
+For tables that need to modify the table sharding plan, the sharding plan modification can be directly completed by clicking \[Online Modification].
 
 **Online modification notes:**
 
 - Click \[Online Modification] to check the table record that needs to be modified, and click to directly link to the "Management -> Online Change of Sharding Plan" function page.
-
 - If the record checked is a parent table, the table structure is not created, and the table has been deleted, online modification cannot be performed.
-
 - If to adopt the generated sharding plan, all tables are recommended using one of the plans, and the recommended plan and the alternative plan cannot be adopted alternatively.
-
 - It is recommended to modify the sharding plan of tables with a JOIN correlation online in batches.
+- If "skip master-slave data consistency detection during the execution" is checked, the master-slave data consistency detection will be skipped for sharding plan modification. It is not checked by default.
 
-- When choosing a recommended plan, attention shall be paid to that some SQLs may not be executed. Click the \[Unsupported SQL] button to view the SQL that may be unexecutable in the plan.
+When choosing a recommended plan, attention shall be paid to that some SQLs may not be executed. Click the \[Unsupported SQL] button to view the SQL that may be unexecutable in the plan.
 
 #### Influencing factors of sharding plan recommendation
 

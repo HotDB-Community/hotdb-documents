@@ -1884,7 +1884,39 @@ mysql> onlineddl "alter table mytb add column cl1 varchar(90) default '1'";
 
 > !Note
 > 
-> when online modifying table structure, the data table structures on each sharding shall be consistent, and the data table to be modified has unique index.
+> When online modifying table structure, the data table structures on each sharding shall be consistent, and the data table to be modified has unique index.
+
+### `onlineddl_nocheck` - OnlineDDL操作前不进行主备一致性检测
+
+This command ensures that the read and write of online business will not be blocked and the database is able to provide data access service during the modification of data table structure. No master-slave data consistency detection will be performed before execution. The statement is:
+
+```sql
+onlineddl_nocheck "[DDLSTATEMENT]";
+```
+
+For example:
+
+```
+mysql> onlineddl_nocheck "alter table mytb add column cl1 varchar(90) default '1'";
+```
+
+> !Note
+> 
+> When online modifying table structure, the data table structures on each sharding shall be consistent, and the data table to be modified has unique index.
+
+### `check @@commandstatus cmd` - 检测是否支持接口
+
+This command is used to view whether command `cmd` is supported by server. For example: 
+
+```sql
+check @@commandstatus onlineddl_nocheck;
+```
+
+Parameter description:
+
+| Parameter | Description | Type |
+|---|---|---|
+| support |	Whether to support | 0 means not support<br>1 means support |
 
 ### `file @@list` - Obtain the files under the conf directory and its final modification time
 

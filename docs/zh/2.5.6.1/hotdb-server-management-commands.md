@@ -1875,7 +1875,7 @@ Query OK, 0 rows affected (0.00 sec)
 
 此命令保证了在对数据表结构修改时，不会堵塞线上业务的读写，数据库依然可以提供正常的数据访问服务，语法：
 
-```
+```sql
 onlineddl "[DDLSTATEMENT]";
 ```
 
@@ -1888,6 +1888,38 @@ mysql> onlineddl "alter table mytb add column cl1 varchar(90) default '1'";
 > !Note
 > 
 > 在线修改表结构时，各分片上的数据表结构需要一致，并且需要修改的数据表有唯一索引。
+
+### `onlineddl_nocheck` - OnlineDDL操作前不进行主备一致性检测
+
+此命令保证了在对数据表结构修改时，不会堵塞线上业务的读写，数据库依然可以提供正常的数据访问服务，但在执行前，不进行主备一致性检测，语法：
+
+```sql
+onlineddl_nocheck "[DDLSTATEMENT]";
+```
+
+例如：
+
+```
+mysql> onlineddl_nocheck "alter table mytb add column cl1 varchar(90) default '1'";
+```
+
+> !Note
+> 
+> 在线修改表结构时，各分片上的数据表结构需要一致，并且需要修改的数据表有唯一索引。
+
+### `check @@commandstatus cmd` - 检测是否支持接口
+
+此命令用于查看命令`cmd`是否被server支持，例如：
+
+```sql
+check @@commandstatus onlineddl_nocheck;
+```
+
+结果包含字段及其说明：
+
+| 列名	| 说明	| 值类型/范围 |
+|---|---|---|
+| support | 是否支持 | 0表示不支持<br>1表示支持 |
 
 ### `file @@list` - 获取conf目录下文件及其最后修改时间
 
