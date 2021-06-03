@@ -1,11 +1,11 @@
 const repositoryUrl = "https://github.com/HotDB-Community/hotdb-documents"
 const officialWebsiteUrl = "https://www.hotdb.com"
+const latestVersion = "2.5.6.1"
 
 window.$docsify = {
-  name: "HotDB Documents",
   nameLink: {
-    "/zh/": "#/zh/latest/",
-    "/en/": "#/en/latest/"
+    "/zh/": `#/zh/${latestVersion}/`,
+    "/en/": `#/en/${latestVersion}/`
   },
   repo: repositoryUrl,
   routeMode: "history",
@@ -16,7 +16,6 @@ window.$docsify = {
   //onlyCover: true,
   loadSidebar: true,
   loadNavbar: true,
-  //mergeNavbar: true,
   maxLevel: 4,
   subMaxLevel: 4,
   notFoundPage: true,
@@ -155,13 +154,13 @@ function redirectLocation() {
   let url = window.location.href
   if(url.charAt(url.length - 1) === "/") url = url.substring(0, url.length - 1)
   if(url.indexOf("/#") === -1) {
-    window.location.replace(`${url}/#/${inferLocale()}/latest/`)
+    window.location.replace(`${url}/#/${inferLocale()}/${latestVersion}/`)
   } else if(url.endsWith("/#")) {
-    window.location.replace(`${url}/${inferLocale()}/latest/`)
+    window.location.replace(`${url}/${inferLocale()}/${latestVersion}/`)
   } else if(url.endsWith("/#/zh")) {
-    window.location.replace(`${url}/latest/`)
+    window.location.replace(`${url}/${latestVersion}/`)
   } else if(url.endsWith("/#/en")) {
-    window.location.replace(`${url}/latest/`)
+    window.location.replace(`${url}/${latestVersion}/`)
   }
 }
 

@@ -4,7 +4,7 @@
 
 * [Official Website](https://www.hotdb.com)
 * Version
-  * [latest (v2.5.6)](/en/latest/) 
+  * [2.5.6.1](../../en/2.5.6.1/)
 * 语言 / Language
-  * [中文](/zh/latest/)
-  * [English](/en/latest/)
+  * [中文](../../zh/2.5.6.1/)
+  * [English](../../en/2.5.6.1/)
