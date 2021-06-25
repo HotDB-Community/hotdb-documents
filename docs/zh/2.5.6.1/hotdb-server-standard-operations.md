@@ -6153,6 +6153,153 @@ server.xml中clusterStartedPacketTimeoutMs参数配置 如下配置：
 
 该参数用于设置集群Started广播包失效时间，一般不建议修改，可根据实际网络质量情况进行适度调整。集群Started广播包是指在集群启动时的一个针对网段广播的包。
 
+#### columnPrivilegeDenied
+
+**参数说明：**
+
+| Property | Value |
+|---|---|
+| 参数值 | columnPrivilegeDenied |
+| 是否可见 | 隐藏 |
+| 参数说明 | 控制表中的列拒绝权限，优先级高于其他权限 |
+| 默认值 | （空） |
+| Reload是否生效 | 是 |
+| 最低兼容版本 | 2.5.5 |
+
+**参数设置：**
+
+```xml
+<property name="columnPrivilegeDenied">列拒绝权限内容</property><!--控制表中的列拒绝权限，优先级高于其他权限，默认为空-->
+```
+
+内容格式：
+
+```
+‘user_name’@‘host_name’.logicDB.tableName[privilegeType(columnName,columnName)];‘user_name’@‘host_name’.logicDB.tableName[privilegeType(columnName,columnName),privilegeType(columnName,columnName)];....
+```
+
+**详细说明：**
+
+* ‘user_name'@‘host_name'：由用户名+主机名组成，可以填写具体用户（例如‘zhangsan'@‘127.0.0.1'或‘lisi'@‘%'或‘wangwu'@‘192.168.210.129'），也可以填写*（代表所有用户）；
+* logicDB：逻辑库名，可以填写具体逻辑库（例如hotdb），也可以填写*（代表所有逻辑库）；
+* tableName：表名，可以具体表（例如sbtest1），也可以填写*（代表所有表）；
+* privilegeType：权限类型，列权限目前可控制类型包括：INSERT,SELECT,UPDATE（不区分大小写），可以只填写一种权限类型，也可以填写多种权限类型，两种权限类型之间用,隔开；
+* columnName：列名 ，若是主键字段可以使用“_PRIMARY_”代替，若是唯一键字段可以使用“_UNIQUE_”代替。同一个权限类型下可以只填写一个列名，也可以填写多个列名，两个列名之间用,隔开；
+* 为了保证能够被识别和分类，采用.[](),;符号间隔；
+* 当配置的列拒绝权限生效后，执行SQL涉及被控制的列时，不符合权限要求的有错误提示，同时hotdb.log会输出相应日志信息；
+* 用户可通过服务端口执行show grants查看被拒绝的列权限类型；
+
+**示例1：**不允许用户‘ztm'@‘192.168.210.129'对逻辑库d1中sbtest1表的c列有select权限
+
+以OLTP场景标准表sbtest1为例，则可配置：
+
+```
+<property name="columnPrivilegeDenied">'ztm'@'192.168.210.129'.d1.sbtest1[select(c)]</property><!--控制表中的列拒绝权限，优先级高于其他权限-->
+```
+
+动态加载成功后，立即生效，在服务端口执行sql验证：
+
+```
+ztm@192.168.210.130:(none) 5.7.25 01:37:23> use d1
+Database changed
+ztm@192.168.210.130:d1 5.7.25 02:20:37> select c from sbtest1;
+ERROR 1143 (HY000): SELECT command denied to user 'ztm'@'192.168.210.129' for column 'c' in table 'sbtest1'
+ztm@192.168.210.130:d1 5.7.25 02:22:33> show grants for 'ztm'@'192.168.210.129';
++-----------------------------------------------------------+
+| Grants for ztm                                            |
++-----------------------------------------------------------+
+| 'ztm'@'192.168.210.129'.d1.sbtest1[select(c)]             |
++-----------------------------------------------------------+
+```
+
+此时hotdb.log会输出相应内容：
+
+```
+2021-06-25 14:22:33.465 [INFO] [SQL] [$NIOExecutor-1-2] cn.hotpu.hotdb.server.b(1140) - Error in SQL:[select c from sbtest1] from connection:[[thread=$NIOExecutor-1-2,id=702,user=ztm,host=192.168.210.129,port=3323,localport=47832,schema=D1,[{_os:linux-glibc2.12}, {_client_name:libmysql}, {_pid:32094}, {_client_version:5.7.25}, {_platform:x86_64}, {program_name:mysql}]]] cn.hotpu.hotdb.b.c: 1143: SELECT command denied to user 'ztm'@'192.168.210.129' for column 'c' in table 'sbtest1'
+2021-06-25 14:22:33.466 [INFO] [HOTDBERROR] [Unusual-Logger-1] cn.hotpu.hotdb.server.b(286) - sql: select c from sbtest1, err: SELECT command denied to user 'ztm'@'192.168.210.129' for column 'c' in table 'sbtest1' from connection [thread=Unusual-Logger-1,id=702,user=ztm,host=192.168.210.129,port=3323,localport=47832,schema=D1,[{_os:linux-glibc2.12}, {_client_name:libmysql}, {_pid:32094}, {_client_version:5.7.25}, {_platform:x86_64}, {program_name:mysql}]]
+```
+
+**示例2：**不允许用户‘ztm'@‘%'对逻辑库d1中sbtest1表主键所在列有select、insert、update权限
+
+以OLTP场景标准表sbtest1为例，则可配置：
+
+```
+<property name="columnPrivilegeDenied">'ztm'@'%'.d1.sbtest1[select(id),insert(_primary_),update(_unique_)]</property><!--控制表中的列拒绝权限，优先级高于其他权限-->
+```
+
+由于sbtest1表中id既是主键，也是唯一键，故可以使用_primary_或者_unique_来表示。动态加载成功后，立即生效，在服务端口执行sql验证：
+
+```
+ztm@192.168.210.130:(none) 5.7.25 01:47:10> use d1
+Database changed
+ztm@192.168.210.130:d1 5.7.25 01:47:17> select id from sbtest1;
+ERROR 1143 (HY000): SELECT command denied to user 'ztm'@'%' for column 'id' in table 'sbtest1'
+ztm@192.168.210.130:d1 5.7.25 01:47:49> insert into sbtest1(id) values(1000);
+ERROR 1143 (HY000): INSERT command denied to user 'ztm'@'%' for column 'id' in table 'sbtest1'
+ztm@192.168.210.130:d1 5.7.25 01:48:16> update sbtest1 set id=id+1 where k=1;
+ERROR 1143 (HY000): UPDATE command denied to user 'ztm'@'%' for column 'id' in table 'sbtest1'
+```
+
+**示例3：**不允许用户‘ztm'@‘127.0.0.1'对逻辑库d1中sbtest1表所有列有select、insert、update权限，不允许用户‘root'@‘%'对逻辑库d2中sbtest4表所有列有select、insert、update权限，不允许用户‘ztm'@‘192.168.210.129'对逻辑库d3中sbtest8表所有列有select、insert、update权限
+
+以OLTP场景标准表sbtest1~sbtest10为例，则可配置：
+
+```
+<property name="columnPrivilegeDenied">'ztm'@'127.0.0.1'.d1.sbtest1[select(id,k,c,pad),insert(_primary_,k,c,pad),update(_unique_,k,c,pad)];'root'@'%'.d2.sbtest4[select(id,k,c,pad),insert(_primary_,k,c,pad),update(_unique_,k,c,pad)];'ztm'@'192.168.210.129'.d3.sbtest8[select(id,k,c,pad),insert(_primary_,k,c,pad),update(_unique_,k,c,pad)]</property><!--控制表中的列拒绝权限，优先级高于其他权限-->
+```
+
+由于sbtest1表中id既是主键，也是唯一键，故可以使用_primary_或者_unique_来表示。动态加载成功后，立即生效，在服务端口执行sql验证：
+
+```
+root@127.0.0.1:(none) 5.7.25 02:01:10> use d2
+Database changed
+root@127.0.0.1:d2 5.7.25 02:01:20> select id from sbtest4;
+ERROR 1143 (HY000): SELECT command denied to user 'root'@'%' for column 'id' in table 'sbtest4'
+root@127.0.0.1:d2 5.7.25 02:01:25> select k from sbtest4;
+ERROR 1143 (HY000): SELECT command denied to user 'root'@'%' for column 'k' in table 'sbtest4'
+root@127.0.0.1:d2 5.7.25 02:01:43> select c from sbtest4;
+ERROR 1143 (HY000): SELECT command denied to user 'root'@'%' for column 'c' in table 'sbtest4'
+root@127.0.0.1:d2 5.7.25 02:01:47> select pad from sbtest4;
+ERROR 1143 (HY000): SELECT command denied to user 'root'@'%' for column 'pad' in table 'sbtest4'
+root@127.0.0.1:d2 5.7.25 02:01:52> insert into sbtest4 values(10000,88,uuid(),uuid());
+ERROR 1143 (HY000): INSERT command denied to user 'root'@'%' for column 'id' in table 'sbtest4'
+root@127.0.0.1:d2 5.7.25 02:02:16> insert into sbtest4(id) values(10000);
+ERROR 1143 (HY000): INSERT command denied to user 'root'@'%' for column 'id' in table 'sbtest4'
+root@127.0.0.1:d2 5.7.25 02:02:44> insert into sbtest4(k) values(88);
+ERROR 1143 (HY000): INSERT command denied to user 'root'@'%' for column 'k' in table 'sbtest4'
+root@127.0.0.1:d2 5.7.25 02:02:53> insert into sbtest4(c) values(uuid());
+ERROR 1143 (HY000): INSERT command denied to user 'root'@'%' for column 'c' in table 'sbtest4'
+root@127.0.0.1:d2 5.7.25 02:03:02> insert into sbtest4(pad) values(uuid());
+ERROR 1143 (HY000): INSERT command denied to user 'root'@'%' for column 'pad' in table 'sbtest4'
+```
+
+**示例4：**不允许所有用户对所有逻辑库中所有表pad列有select、insert、update权限
+
+以OLTP场景标准表sbtest1~sbtest10为例，则可配置：
+
+```
+<property name="columnPrivilegeDenied">*.*.*[select(pad),insert(pad),update(pad)]</property><!--控制表中的列拒绝权限，优先级高于其他权限-->
+```
+
+动态加载成功后，立即生效，在服务端口执行sql验证：
+
+```
+ztm@192.168.210.130:(none) 5.7.25 02:09:01> use d1;
+Database changed
+ztm@192.168.210.130:d1 5.7.25 02:09:11> select pad from sbtest1;
+ERROR 1143 (HY000): SELECT command denied to user 'ztm'@'192.168.210.129' for column 'pad' in table 'sbtest1'
+ztm@192.168.210.130:d1 5.7.25 02:09:21> select pad from sbtest2;
+ERROR 1143 (HY000): SELECT command denied to user 'ztm'@'192.168.210.129' for column 'pad' in table 'sbtest2'
+ztm@192.168.210.130:d1 5.7.25 02:09:25> select pad from sbtest3;
+ERROR 1143 (HY000): SELECT command denied to user 'ztm'@'192.168.210.129' for column 'pad' in table 'sbtest3'
+ztm@192.168.210.130:d1 5.7.25 02:09:28> select pad from d2.sbtest4;
+ERROR 1143 (HY000): SELECT command denied to user 'ztm'@'192.168.210.129' for column 'pad' in table 'sbtest4'
+ztm@192.168.210.130:d1 5.7.25 02:09:40> insert into sbtest3(pad) values(uuid());
+ERROR 1143 (HY000): INSERT command denied to user 'ztm'@'192.168.210.129' for column 'pad' in table 'sbtest3'
+ztm@192.168.210.130:d1 5.7.25 02:10:07> update sbtest2 set pad=uuid() where id=1;
+ERROR 1143 (HY000): UPDATE command denied to user 'ztm'@'192.168.210.129' for column 'pad' in table 'sbtest2'
+```
+
 #### configMGR & bak1Url & bak1Username & bak1Password
 
 **参数说明：**
