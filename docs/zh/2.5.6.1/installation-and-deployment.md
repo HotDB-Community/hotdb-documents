@@ -691,17 +691,17 @@ HA计算节点部署示意图
 主计算节点192.168.200.190上`server.xml`配置修改
 
 ```xml
-<property name="haState">master</property>< HA 角色，主节点：master，备节点：backup>
-<property name="haNodeHost"></property><HA 角色，其他节点 IP:PORT>
-<property name="VIP">192.168.200.140</property><虚拟IP地址>
+<property name="haState">master</property><!--HA 角色，主节点：master，备节点：backup-->
+<property name="haNodeHost"></property><!--HA 角色，其他节点 IP:PORT-->
+<property name="VIP">192.168.200.140</property><!--虚拟IP地址-->
 ```
 
 备计算节点192.168.200.191上server.xml配置修改
 
 ```xml
-<property name="haState">backup</property>< HA 角色，主节点：master，备节点：backup>
-<property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
-<property name="VIP">192.168.200.140</property><虚拟IP地址>
+<property name="haState">backup</property><!--HA 角色，主节点：master，备节点：backup-->
+<property name="haNodeHost">192.168.200.190:3325</property><!--HA 角色，其他节点 IP:PORT-->
+<property name="VIP">192.168.200.140</property><!--虚拟IP地址-->
 ```
 
 > !Info
