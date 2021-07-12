@@ -6639,6 +6639,41 @@ server.xml中dropTableRetentionTime参数配置：
 
 2.5.5，dropTableRetentionTime参数默认为0，表示不保留被DROP的表，执行DROP TABLE语句将立即删除表；dropTableRetentionTime大于0时，单位以小时计算，保留被DROP的表到设置时长，超过设置时长后自动删除被保留的表。例如dropTableRetentionTime=24表示保留被DROP的表，24小时后再删除被保留的表。
 
+#### ddlForDbNeedSuper
+
+**参数说明：**
+
+| Property       | Value                                    |
+| -------------- | ---------------------------------------- |
+| 参数值         | ddlForDbNeedSuper                        |
+| 是否可见       | 否                                       |
+| 参数说明       | DATABASE的DDL语句是否需要额外的SUPER权限 |
+| 默认值         | false                                    |
+| Reload是否生效 | 是                                       |
+| 最低兼容版本   | 2.5.6                                    |
+
+**参数设置：**
+
+ddlForDbNeedSuper参数针对DATABASE的DDL语句是否需要配置额外的SUPER权限。
+
+```xml
+<property name="ddlForDbNeedSuper">true</property><!--针对DATABASE的DDL语句是否需要额外的SUPER权限(Does DDL for database require extra SUPER privilege) -->
+```
+
+**参数作用：**
+
+以创建逻辑库为例，设置成true时，需要同时拥有super权限和create全局权限才支持建库，否则创建报错：
+
+![img](assets/clip_image002.jpg)
+
+设置成false时，只需要create全局权限即可建库：
+
+![img](assets/clip_image004.jpg)
+
+若设置成false时，未配置create 全局权限也会创建失败：
+
+![img](assets/clip_image006.jpg)
+
 #### drBakUrl & drBakUsername & drBakPassword
 
 **参数说明：**
@@ -7084,13 +7119,13 @@ mysql> select sleep(2);
 **参数说明：**
 
 | Property       | Value                          |
-|----------------|--------------------------------|
+| -------------- | ------------------------------ |
 | 参数值         | enableSubquery                 |
 | 是否可见       | 否                             |
 | 参数说明       | 是否允许特殊场景下的子查询通过 |
 | 默认值         | true                           |
 | Reload是否生效 | 是                             |
-| 最低兼容版本   | 2.4.3                          |
+| 最低兼容版本   | 2.4.3（2.5.6版本废弃）         |
 
 **参数作用：**
 
@@ -7201,6 +7236,50 @@ mysql> select * from test3 where id in (select id from test31);
 XA模式指强一致模式。在分布式事务数据库系统中，数据被拆分后，同一个事务会操作多个数据节点，产生跨库事务。在跨库事务中，事务被提交后，若事务在其中一个数据节点COMMIT成功，而在另一个数据节点COMMIT失败；已经完成COMMIT操作的数据节点，数据已被持久化，无法再修改；而COMMIT操作失败的数据节点，数据已丢失，导致数据节点间的数据不一致。
 
 计算节点利用MySQL提供的外部XA事务，可解决跨库事务场景中，数据的强一致性：要么所有节点的事务都COMMIT，要么所有的节点都ROLLBACK，以及提供完全正确的SERIALIZABLE和REPEATABLE-READ隔离级别支持。请参考[数据强一致性(XA事务)章节](#数据强一致性xa事务)
+
+#### enableRownum
+
+**参数说明：**
+
+| Property       | Value                             |
+| -------------- | --------------------------------- |
+| 参数值         | enableRownum                      |
+| 是否可见       | 是                                |
+| 参数说明       | 控制是否开启rownum功能，为1时开启 |
+| 默认值         | 0                                 |
+| Reload是否生效 | 是                                |
+| 最低兼容版本   | 2.5.6                             |
+
+**参数设置：**
+
+server.xml中clientFoundRows参数配置 如下配置：
+
+```xml
+<property name="enableRownum">0</property>
+```
+
+**参数作用：**
+
+rownum用以对结果各行生成序列号。在WHERE条件中，可以对结果数量进行控制。但rownum在HotDB Server当前支持有限，需注意以下情况：
+
+* 只支持DQL语句（含水平分片表、垂直表、全局表）
+* 只能位于SELECT或WHERE后，一个SELECT子句中，只能出现一次rownum，即不支持同时使用
+* 在WHERE条件中，仅支持位于WHERE条件的最外层，并且是一个AND条件的分支，只支持rownum使用比较操作符（`>、>=、<、<=、=、！=`）与长整型数值比较
+* 不支持在函数内部使用
+
+举例说明rownum分别位于SELECT和WHERE后的使用：
+
+```sql
+SELECT * FROM (SELECT rownum,* FROM join_cross_a_cxd WHERE adnid in (101,102)) WHERE adnid=101;
+```
+
+![img](assets/clip_image002-1626058193879.jpg)
+
+```sql
+SELECT * FROM join_cross_a_cxd a INNER JOIN join_cross_b_jwy b ON a.adnid=b.adnid WHERE rownum >= 1 ORDER BY a.id;
+```
+
+![img](assets/clip_image004-1626058193880.jpg)
 
 #### errorsPermittedInTransaction
 
