@@ -1290,6 +1290,39 @@ msyql> select sum(crc32(concat(ifnull(id,'NULL'),ifnull(name,'NULL')))) as sum f
 
 其结果（1812521567）与在计算节点执行结果一致，则table02表数据大概率一致。
 
+### 使用mydumper备份/myloader恢复
+
+#### mydumper备份
+
+HotDB Server支持mydumper多线程备份工具，前提需要在server.xml中新增参数并执行动态加载：
+
+```xml
+<property name="skipFTWRLAndUnlockTables">1</property><!--对FTWRL语句的响应方式的开关-->
+```
+
+使用mydumper从计算节点导出数据前，先创建备份文件存放目录，执行命令可参考如下：
+
+```shell
+mkdir -p /usr/local/mydumper
+mydumper -h 192.168.210.130 -P 3323 -u root -p root -G -E -R -t 4 -c -o /usr/local/mydumper
+```
+
+备份完成后，在对应存放目录下可见备份文件格式如下：
+
+![](assets/hotdb-server-standard-operations/image156.png)
+
+更多详细参数请参考`mydumper --help`
+
+#### 2.1.2. myloader恢复
+
+使用myloader恢复数据，执行命令参考如下：
+
+```shell
+myloader -u root -p root -P 33236 -h 192.168.210.130 -B hotdb -d /usr/local/mydumper
+```
+
+更多详细参数请参考`myloader --help`
+
 ## 数据强一致
 
 ### 主从数据一致性检查
@@ -1527,7 +1560,7 @@ mysql> insert into test values(null,1);
 > ERROR 10212 (HY000): auto_increment column must be bigint
 > ```
 
-### 数据强一致性（XA事务）
+### 数据强一致性（XA事务）{#xa事务}
 
 在分布式事务数据库系统中，数据被拆分后，同一个事务可能会操作多个数据节点，产生跨库事务。在跨库事务中，事务被提交后，若事务在其中一个数据节点COMMIT成功，而另一个数据节点COMMIT失败；已经完成COMMIT操作的数据节点，数据已被持久化，无法再修改；而COMMIT操作失败的数据节点，数据已丢失，这种情况会导致数据节点间的数据不一致。
 
@@ -9993,7 +10026,7 @@ mysql> select * from ss;
 9 rows in set (0.00 sec)
 ```
 
-详细使用方法请参考[读写分离](#高可用服务)。
+详细使用方法请参考[读写分离](#读写分离)。
 
 #### switchByLogInFailover
 
@@ -10087,11 +10120,11 @@ server.xml的switchoverTimeoutForTrans参数设置 如下图:
 
    ```
    mysql> begin;
-
+   
    Query OK, 0 rows affected (0.00 sec)
-
+   
    mysql> insert into TEST_001 values(2);
-
+   
    Query OK, 0 rows affected (0.00 sec)
    ```
 
@@ -10099,7 +10132,7 @@ server.xml的switchoverTimeoutForTrans参数设置 如下图:
 
    ```
    mysql> select * from TEST_001;
-
+   
    ERROR 2013 (HY000): Lost connection to MySQL server during query
    ERROR 2016 (HY000): MySQL server has gone away
    No connection. Trying to reconnect...
@@ -10111,7 +10144,7 @@ server.xml的switchoverTimeoutForTrans参数设置 如下图:
 
    ```
    mysql> select * from TEST_001;
-
+   
    +----+
    | id |
    +----+

@@ -1456,7 +1456,7 @@ onlinemodifyrulecontinue db.tablename;
 此命令用于取消当前正在进行的任务：
 
 ```sql
-onlinemodifyrulecancle db.tablename;
+onlinemodifyrulecancel db.tablename;
 ```
 
 如果同一批次的某张表被取消变更，则该批次的所有表都会被取消分片方案的变更，如下图所示：

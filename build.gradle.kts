@@ -4,18 +4,14 @@ plugins {
 
 buildscript {
 	repositories {
-		maven("https://dl.bintray.com/kotlin/kotlin-eap")
 		maven("https://maven.aliyun.com/nexus/content/groups/public")
 		mavenCentral()
-		jcenter()
 	}
 }
 
 repositories {
-	maven("https://dl.bintray.com/kotlin/kotlin-eap")
 	maven("https://maven.aliyun.com/nexus/content/groups/public")
 	mavenCentral()
-	jcenter()
 }
 
 group = "com.windea"
