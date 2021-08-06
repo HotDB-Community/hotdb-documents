@@ -4935,8 +4935,8 @@ mysql> show hotdb rules;
 水平分片表创建语法如下：
 
 ```sql
-CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {functionid | functionname} 'functionid | functionname' USING COLUMN 'shardcolumnname' **（table define...）**
-CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid' **（table define...）**
+CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY {functionid | functionname} 'functionid | functionname' USING COLUMN 'shardcolumnname' (table define...)
+CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY {functiontype} 'functiontype' USING COLUMN 'shardcolumnname' on datanode 'datanodeid' (table define...)
 ```
 
 同时也可以将SHARD BY 之后的关键字放置表定义之后（垂直分片表、全局表亦同），示例：
@@ -4947,10 +4947,7 @@ CREATE TABLE [IF NOT EXISTS] tbl_name (table define...) SHARD BY {functiontype} 
 
 水平分片表创建语法说明：
 
-```sql
-SHARD BY {FUNCTIONID | FUNCTIONNAME | FUNCTIONTYPE}：指分片函数ID、分片函数名称、分片函数类型的关键字。
-```
-
+- `SHARD BY {FUNCTIONID | FUNCTIONNAME | FUNCTIONTYPE}` - 指分片函数ID、分片函数名称、分片函数类型的关键字。
 - `functionid_value | functionname_value | functiontype_value` - 指具体的分片函数ID、分片函数名称、分片函数类型的值。
 - `USING COLUMN` - 指分片列的关键字。
 - `shardcolumnname` - 指具体的分片列的列名。
@@ -4975,7 +4972,7 @@ Query OK, 0 rows affected (0.09 sec)
 
 - `functionid | functionname | functiontype` - 为具体指定的分片函数ID、分片函数名称、分片函数类型
 - `shardcolumnname` - 为指定的分片字段
-- `datanodeid` - 节点ID，可以逗号间隔，且支持区间形式指定，如:'1,3,4,5-10,12-40'，节点ID可登录分布式事务数据库可视化管理平台页面，选择"配置"->"节点管理"查看，也可以登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)show hotdb datanodes;查看：
+- `datanodeid` - 节点ID，可以逗号间隔，且支持区间形式指定，如:'1,3,4,5-10,12-40'，节点ID可登录分布式事务数据库可视化管理平台页面，选择"配置"->"节点管理"查看，也可以登录计算节点[服务端口使用命令](#使用已有分片规则建表相关命令)执行`show hotdb datanodes;`查看：
 
 ```
 mysql> show hotdb datanodes;
@@ -5091,7 +5088,7 @@ Query OK, 0 rows affected (0.13 sec)
 创建垂直分片表语法：
 
 ```
-CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY vertical on datanode 'datanodeid'(.....
+CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY vertical on datanode 'datanodeid'(...)
 ```
 
 语法说明：
@@ -5127,7 +5124,7 @@ ERROR 10090 (HY000): Can only specify one datanodes.
 创建全局表语法如下：
 
 ```sql
-CREATE  TABLE [IF NOT EXISTS] tbl_name SHARD BY global on datanode 'datanodeid'(.....
+CREATE TABLE [IF NOT EXISTS] tbl_name SHARD BY global [on datanode 'datanodeid'](...)
 ```
 
 语法说明：
