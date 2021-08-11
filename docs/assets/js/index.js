@@ -1,6 +1,11 @@
 const repositoryUrl = "https://github.com/HotDB-Community/hotdb-documents"
-const officialWebsiteUrl = "https://www.hotdb.com"
 const latestVersion = "2.5.6.1"
+
+const columnLineRegex = /[ \t]*\|(.*)\|[ \t]*/g
+const codeRegex = /(`[^`\r\n]+`)/g
+const anchorRegex = /([^\r\n]*?){#([^\r\n}]+)}/g
+const footNoteRegex = /\[\^(\d+)](?!: )/g
+const footNoteReferenceRegex = /^\[\^(\d+)]:\s*(.*)$/gm
 
 window.$docsify = {
   nameLink: {
@@ -83,11 +88,15 @@ window.$docsify = {
 
   markdown: {
     renderer: {
-      //rowspan和colspan的渲染器
+      //渲染rowspan和colspan
       tablecell(content, flags) {
-        if(content === "^") return `<td class="rowspan"></td>`
-        else if(content === "<") return `<td class="colspan"></td>>`
-        else return `<td>${content}</td>`
+        if(content === "^") {
+          return `<td class="rowspan"></td>`
+        } else if(content === "<"){
+          return `<td class="colspan"></td>>`
+        } else {
+          return `<td>${content}</td>`
+        }
       }
     }
   },
@@ -98,7 +107,7 @@ window.$docsify = {
 
       hook.init(function() {
         redirectLocation()
-        bindServiceCssClass()
+        bindDeviceCssClass()
       })
 
       hook.beforeEach(function(html) {
@@ -108,17 +117,17 @@ window.$docsify = {
         window.$docsify.fileName = `/${vm.route.file}`
         //绑定windows.$docsify.fileUrl，以#开始，没有文件后缀名
         window.$docsify.fileUrl = `#/${vm.route.path}`
-
-        //通过postMessage向官网发送消息
-        //const message = {
-        //  fileName: window.$docsify.fileName,
-        //  fileUrl: window.$docsify.fileUrl
-        //} 
-        //window.postMessage(message,officialWebsiteUrl)
-
+        
         //预处理markdown
-        return resolveFootNote(resolveAnchor(escapeCode(html)))
+        html = escapeInCode(html)
+        html = resolveAnchor(html)
+        html = resolveFootNote(html)
+        return html
       })
+      hook.afterEach(function(html, next) {
+        //console.log(html)
+        next(html)
+      });
       hook.doneEach(function() {
         $(document).ready(function() {
           bindFootNote()
@@ -134,7 +143,7 @@ window.$docsify = {
 
 window.onload = function() {
   redirectLocation()
-  bindServiceCssClass()
+  bindDeviceCssClass()
 }
 
 //推断语言区域
@@ -169,7 +178,7 @@ function redirectLocation() {
 }
 
 //绑定判断设备的css class
-function bindServiceCssClass() {
+function bindDeviceCssClass() {
   const isMobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(navigator.userAgent)
   const bodyElement = document.querySelector("body")
   if(isMobile) {
@@ -180,17 +189,14 @@ function bindServiceCssClass() {
   }
 }
 
-const codeRegex = /(`[^`\r\n]+`)/g
-const pipeCharRegex = /\|/g
-
-//需要转义内联代码中的管道符，需要将`ps -ef | grep java`转义为`ps -ef \| grep java`，docsify的bug
-function escapeCode(html) {
-  return html.replace(codeRegex, (s, c) => {
-    return c.replace(pipeCharRegex, "\\|")
+//需要转义表格单元格中的内联代码中的管道符
+function escapeInCode(html) {
+  return html.replace(columnLineRegex,(s,content)=>{
+    return content.replace(codeRegex,(ss,c)=>{
+      return c.replace("|","\\|")
+    })
   })
 }
-
-const anchorRegex = /([^\r\n]*?){#([^\r\n}]+)}/g
 
 //解析markdown锚点，绑定heading的id
 function resolveAnchor(html) {
@@ -200,18 +206,14 @@ function resolveAnchor(html) {
   })
 }
 
-const footNoteRegex = /\[\^(\d+)](?!: )/g
-
-const footNoteReferenceRegex = /^\[\^(\d+)]:\s*(.*)$/gm
-
-//解析markdown尾注，生成bootstrap4 tooltip
+//解析markdown尾注，生成bootstrap4的tooltip
 function resolveFootNote(html) {
   const footNotes = {}
-  return html.replace(footNoteReferenceRegex, (s, p1, p2) => {
-    footNotes[p1] = p2
+  return html.replace(footNoteReferenceRegex, (s, id, text) => {
+    footNotes[id] = text
     return ""
-  }).replace(footNoteRegex, (s, p1) => {
-    return `<a href="javascript:void(0);" data-toggle="tooltip" title="${footNotes[p1]}">[${p1}]</a>`
+  }).replace(footNoteRegex, (s, id) => {
+    return `<a href="javascript:void(0);" data-toggle="tooltip" title="${footNotes[id]}">[${id}]</a>`
   })
 }
 
