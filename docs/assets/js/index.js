@@ -1,18 +1,11 @@
-const repositoryUrl = "https://github.com/HotDB-Community/hotdb-documents"
 const latestVersion = "2.5.6.1"
-
-const columnLineRegex = /[ \t]*\|(.*)\|[ \t]*/g
-const codeRegex = /(`[^`\r\n]+`)/g
-const anchorRegex = /([^\r\n]*?){#([^\r\n}]+)}/g
-const footNoteRegex = /\[\^(\d+)](?!: )/g
-const footNoteReferenceRegex = /^\[\^(\d+)]:\s*(.*)$/gm
 
 window.$docsify = {
   nameLink: {
     "/zh/": `#/zh/${latestVersion}/`,
     "/en/": `#/en/${latestVersion}/`
   },
-  repo: repositoryUrl,
+  repo: "https://github.com/HotDB-Community/hotdb-documents",
   routeMode: "history",
   relativePath: true,
   auto2top: true,
@@ -85,77 +78,66 @@ window.$docsify = {
       className: "important"
     }
   },
+}
 
-  markdown: {
-    renderer: {
-      //渲染rowspan和colspan
-      tablecell(content, flags) {
-        if(content === "^") {
-          return `<td class="rowspan"></td>`
-        } else if(content === "<"){
-          return `<td class="colspan"></td>>`
-        } else {
-          return `<td>${content}</td>`
-        }
+const columnLineRegex = /[ \t]*\|(.*)\|[ \t]*/g
+const codeRegex = /(`[^`\r\n]+`)/g
+const anchorRegex = /([^\r\n]*?){#([^\r\n}]+)}/g
+const footNoteRegex = /\[\^(\d+)](?!: )/g
+const footNoteReferenceRegex = /^\[\^(\d+)]:\s*(.*)$/gm
+
+window.$docsify.fileName = ""
+window.$docsify.fileUrl = ""
+window.$docsify.isMobile = false
+
+window.$docsify.markdown = {
+  renderer: {
+    //渲染rowspan和colspan
+    tablecell(content, flags) {
+      if(content === "^") {
+        return `<td class="rowspan"></td>`
+      } else if(content === "<") {
+        return `<td class="colspan"></td>>`
+      } else {
+        return `<td>${content}</td>`
       }
     }
-  },
-
-  plugins: [
-    function(hook, vm) {
-      //console.log(vm)
-
-      hook.init(function() {
-        redirectLocation()
-        bindDeviceCssClass()
-      })
-
-      hook.beforeEach(function(html) {
-        //console.log(html)
-
-        //绑定window.$docsify.fileName，以斜线开始
-        window.$docsify.fileName = `/${vm.route.file}`
-        //绑定windows.$docsify.fileUrl，以#开始，没有文件后缀名
-        window.$docsify.fileUrl = `#/${vm.route.path}`
-        
-        //预处理markdown
-        html = escapeInCode(html)
-        html = resolveAnchor(html)
-        html = resolveFootNote(html)
-        return html
-      })
-      hook.afterEach(function(html, next) {
-        //console.log(html)
-        next(html)
-      });
-      hook.doneEach(function() {
-        $(document).ready(function() {
-          bindFootNote()
-        })
-      })
-    }
-  ],
-
-  fileName: "",
-  fileUrl: "",
-  isMobile: false
+  }
 }
+
+window.$docsify.plugins = [
+  function(hook, vm) {
+    hook.init(function() {
+      redirectLocation()
+      bindDeviceCssClass()
+    })
+
+    hook.beforeEach(function(html) {
+      //绑定window.$docsify.fileName，以斜线开始
+      window.$docsify.fileName = `/${vm.route.file}`
+      //绑定windows.$docsify.fileUrl，以#开始，没有文件后缀名
+      window.$docsify.fileUrl = `#/${vm.route.path}`
+
+      //预处理markdown
+      html = escapeInCode(html)
+      html = resolveAnchor(html)
+      html = resolveFootNote(html)
+      return html
+    })
+    hook.afterEach(function(html, next) {
+      next(html)
+    })
+    hook.doneEach(function() {
+      $(document).ready(function() {
+        bindFootNote()
+      })
+    })
+  }
+]
 
 window.onload = function() {
   redirectLocation()
   bindDeviceCssClass()
-}
-
-//推断语言区域
-function inferLocale() {
-  const locale = navigator.language
-  if(locale.startsWith("zh")) {
-    return "zh"
-  } else if(locale.startsWith("en")) {
-    return "en"
-  } else {
-    return "en"
-  }
 }
 
 //地址重定向
@@ -177,6 +159,18 @@ function redirectLocation() {
   }
 }
 
+//推断语言区域
+function inferLocale() {
+  const locale = navigator.language
+  if(locale.startsWith("zh")) {
+    return "zh"
+  } else if(locale.startsWith("en")) {
+    return "en"
+  } else {
+    return "en"
+  }
+}
+
 //绑定判断设备的css class
 function bindDeviceCssClass() {
   const isMobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(navigator.userAgent)
@@ -191,9 +185,9 @@ function bindDeviceCssClass() {
 
 //需要转义表格单元格中的内联代码中的管道符
 function escapeInCode(html) {
-  return html.replace(columnLineRegex,(s,content)=>{
-    return content.replace(codeRegex,(ss,c)=>{
-      return c.replace("|","\\|")
+  return html.replace(columnLineRegex, (s, content) => {
+    return content.replace(codeRegex, (ss, c) => {
+      return c.replace("|", "\\|")
     })
   })
 }

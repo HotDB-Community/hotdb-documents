@@ -9,7 +9,7 @@ window.$docsify.topbar = {
     "/zh/": "下载整合的PDF文档",
     "/en/": "Download integrated pdf document"
   },
-  editUrl: `${repositoryUrl}/blob/master/docs`,
+  editUrl: `https://github.com/HotDB-Community/hotdb-documents/blob/master/docs`,
   editText: {
     "/zh/": "<i class='fa fa-edit'></i> 编辑文档",
     "/en/": "<i class='fa fa-edit'></i> Edit Document"
@@ -18,7 +18,7 @@ window.$docsify.topbar = {
     "/zh/": "在Github上编辑文档",
     "/en/": "Edit document on Github"
   },
-  issuesUrl: `${repositoryUrl}/issues`,
+  issuesUrl: `https://github.com/HotDB-Community/hotdb-documents/issues`,
     issuesText: {
     "/zh/": "<i class='fa fa-comment'></i> 反馈问题",
     "/en/": "<i class='fa fa-comment'></i> Report Issues"
@@ -40,24 +40,24 @@ window.$docsify.plugins.push(
 function createTopBar() {
   return `<div class="topbar">
         <ul>
-		<li>
+		    <li>
           <a href="${window.$docsify.topbar.downloadUrl}"  target="_blank"
            title="${getText(window.$docsify.topbar.downloadTitle)}">
             ${getText(window.$docsify.topbar.downloadText)}
           </a class="topbar-link">
-		</li>
-		<li>
+		    </li>
+		    <li>
           <a href="${window.$docsify.topbar.editUrl}${window.$docsify.fileName}" target="_blank"
            title="${getText(window.$docsify.topbar.editTitle)}">
             ${getText(window.$docsify.topbar.editText)}
           </a class="topbar-link">
-		</li>
-		<li>
+		    </li>
+		    <li>
           <a href="${window.$docsify.topbar.issuesUrl}" target="_blank"
            title="${getText(window.$docsify.topbar.issuesTitle)}">
             ${getText(window.$docsify.topbar.issuesText)}
           </a>
-		</li>
+		    </li>
       </div>`
 }
 
