@@ -19,7 +19,7 @@ window.$docsify.topbar = {
     "/en/": "Edit document on Github"
   },
   issuesUrl: `https://github.com/HotDB-Community/hotdb-documents/issues`,
-    issuesText: {
+  issuesText: {
     "/zh/": "<i class='fa fa-comment'></i> 反馈问题",
     "/en/": "<i class='fa fa-comment'></i> Report Issues"
   },
@@ -32,7 +32,13 @@ window.$docsify.topbar = {
 window.$docsify.plugins.push(
   function(hook) {
     hook.afterEach(function(html) {
-      return createTopBar() + html
+      const locales = window.$docsify.locales
+      const fileUrl = window.$docsify.fileUrl
+      if(locales.some(it=> fileUrl.indexOf(it) !== -1)) {
+        return createTopBar() + html
+      }else{
+        return html
+      }
     })
   })
 
@@ -47,7 +53,7 @@ function createTopBar() {
           </a class="topbar-link">
 		    </li>
 		    <li>
-          <a href="${window.$docsify.topbar.editUrl}${window.$docsify.fileName}" target="_blank"
+          <a href="${window.$docsify.topbar.editUrl}/${window.$docsify.filePath}" target="_blank"
            title="${getText(window.$docsify.topbar.editTitle)}">
             ${getText(window.$docsify.topbar.editText)}
           </a class="topbar-link">

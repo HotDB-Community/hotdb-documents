@@ -1,9 +1,6 @@
 window.$docsify = {
   version: "2.5.6.1",
-  nameLink: {
-    "/zh/": `#/zh/${this.version}/`,
-    "/en/": `#/en/${this.version}/`
-  },
+  locales: ["zh","en"],
   repo: "https://github.com/HotDB-Community/hotdb-documents",
   routeMode: "history",
   relativePath: true,
@@ -21,12 +18,14 @@ window.$docsify = {
   search: {
     noData: {
       "/zh/": "没有结果！",
-      "/en/": "No results!"
+      "/en/": "No results!",
+      "/": "没有结果！"
     },
     path: "auto",
     placeholder: {
       "/zh/": "搜索文档",
-      "/en/": "Search Document"
+      "/en/": "Search Document",
+      "/": "搜索文档"
     }
   },
   pagination: {
@@ -45,25 +44,29 @@ window.$docsify = {
     note: {
       label: {
         "/zh/": "注意",
-        "/en/": "Note"
+        "/en/": "Note",
+        "/": "注意"
       }
     },
     tip: {
       label: {
         "/zh/": "提示",
-        "/en/": "Tip"
+        "/en/": "Tip",
+        "/": "提示"
       }
     },
     warning: {
       label: {
         "/zh/": "警告",
-        "/en/": "Warning"
+        "/en/": "Warning",
+        "/": "警告"
       }
     },
     info: {
       label: {
         "/zh/": "说明",
-        "/en/": "Information"
+        "/en/": "Information",
+        "/": "说明"
       },
       icon: "fa fa-info-circle",
       className: "info"
@@ -71,7 +74,8 @@ window.$docsify = {
     important: {
       label: {
         "/zh/": "特别说明",
-        "/en/": "Important Information"
+        "/en/": "Important Information",
+        "/": "特别说明"
       },
       icon: "fa fa-info-circle",
       className: "important"

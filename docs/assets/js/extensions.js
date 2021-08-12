@@ -94,7 +94,7 @@ window.onload = function() {
   bindDeviceCssClass()
 }
 
-window.$docsify.fileName = ""
+window.$docsify.filePath = ""
 window.$docsify.fileUrl = ""
 window.$docsify.isMobile = false
 
@@ -120,10 +120,10 @@ window.$docsify.plugins = [
       bindDeviceCssClass()
     })
     hook.beforeEach(function(html) {
-      //绑定window.$docsify.fileName，以斜线开始
-      window.$docsify.fileName = `/${vm.route.file}`
-      //绑定windows.$docsify.fileUrl，以#开始，没有文件后缀名
-      window.$docsify.fileUrl = `#/${vm.route.path}`
+      //绑定window.$docsify.filePath
+      window.$docsify.filePath = vm.route.file
+      //绑定windows.$docsify.fileUrl
+      window.$docsify.fileUrl = vm.route.path
 
       //预处理markdown
       let isCodeFence = false
