@@ -354,12 +354,6 @@ body.sticky .sidebar, body.sticky .sidebar-toggle {
 .markdown-section tr:last-child td {
   border-bottom: 1px solid #ddd;
 }
-.markdown-section td.rowspan{
-  border-top: 1px solid #fff;
-}
-.markdown-section td.colspan{
-  border-left: 1px solid #fff;
-}
 .markdown-section tr:nth-child(2n) {
   background-color: #f8f8f8;
 }
