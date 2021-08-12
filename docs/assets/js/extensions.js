@@ -163,27 +163,26 @@ function redirectLocation() {
     window.location.replace(`${url}/#/${locale}/${latestVersionSuffix}`)
   } else if(url.endsWith("/#")) {
     window.location.replace(`${url}/${locale}/${latestVersionSuffix}`)
-  } else if(url.endsWith("/#/zh")) {
-    window.location.replace(`${url}/${latestVersionSuffix}`)
-  } else if(url.endsWith("/#/zh/latest")) {
-    window.location.replace(`${url.substring(0, url.length - 7)}/${latestVersionSuffix}`)
-  } else if(url.endsWith("/#/en")) {
-    window.location.replace(`${url.substring(0, url.length - 7)}/${latestVersionSuffix}`)
-  } else if(url.endsWith("/#/en/latest")) {
-    window.location.replace(`${url}/${latestVersionSuffix}`)
+  } else{
+    const locales = window.$docsify.locales
+    locales.forEach(it=>{
+      if(url.endsWith(`/#/${it}`)){
+        window.location.replace(`${url}/${latestVersionSuffix}`)
+      }else if(url.endsWith(`/#/${it}/latest`)){
+        window.location.replace(`${url.substring(0, url.length - 7)}/${latestVersionSuffix}`)
+      }
+    })
   }
 }
 
 //推断语言区域
 function inferLocale() {
+  const locales = window.$docsify.locales
   const locale = navigator.language
-  if(locale.startsWith("zh")) {
-    return "zh"
-  } else if(locale.startsWith("en")) {
-    return "en"
-  } else {
-    return "en"
-  }
+  locales.forEach(it =>{
+    if(locale.startsWith(it)) return it
+  })
+  return "zh"
 }
 
 //绑定判断设备的css class

@@ -1,6 +1,6 @@
 window.$docsify = {
   version: "2.5.6.1",
-  locales: ["zh","en"],
+  locales: ["zh", "en"],
   repo: "https://github.com/HotDB-Community/hotdb-documents",
   routeMode: "history",
   relativePath: true,
@@ -35,9 +35,9 @@ window.$docsify = {
     crossChapterText: true
   },
   copyCode: {
-    buttonText: 'Copy Code',
-    errorText: 'Error',
-    successText: 'Copied'
+    buttonText: "Copy Code",
+    errorText: "Error",
+    successText: "Copied"
   },
   "flexible-alerts": {
     style: 'callout', //flat, callout
