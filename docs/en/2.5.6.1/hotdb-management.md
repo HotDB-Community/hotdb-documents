@@ -1855,7 +1855,7 @@ HotDB Server after V2.4.6 dropped HASH (including HASH23) and AUTO sharding func
 
 **Data migration description:** 
 
-It is recommended migrating the table data to a new sharding function table if there are tables which historically cite HASH (including HASH23) and AUTO sharding functions in the system. Table data migration can be performed manually or using the sharding plan online modification command provided by the management port. For details, please refer to [Management Port Command](hotdb-server-management-commands.md) document.
+It is recommended migrating the table data to a new sharding function table if there are tables which historically cite HASH (including HASH23) and AUTO sharding functions in the system. Table data migration can be performed manually or using the sharding plan online modification command provided by the management port. For details, please refer to [Management Port Command](hotdb-server-manager-commands.md) document.
 
 ### Sharding function
 

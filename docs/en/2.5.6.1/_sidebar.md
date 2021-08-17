@@ -14,7 +14,7 @@
   * [Hardware Config Recommendation](hardware-config-recommendation.md)
 * **HotDB Server Tutorial**
   * [HotDB Server Standard Operations](hotdb-server-standard-operations.md)
-  * [HotDB Server Management Commands](hotdb-server-management-commands.md)
+  * [HotDB Server Management Commands](hotdb-server-manager-commands.md)
 * **HotDB Management Tutorial**
   * [HotDB Management](hotdb-management.md)
   * [Intelligent Inspection](intelligent-inspection.md)

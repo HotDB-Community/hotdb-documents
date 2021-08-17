@@ -35,7 +35,7 @@ HotDB Server is a relational distributed transactional database product which re
 <div class="readme-toc-col-title">HotDB Server Tutorial</div>
 
 * [HotDB Server Standard Operations](hotdb-server-standard-operations.md)
-* [HOtDB Server Management Command](hotdb-server-management-commands.md)
+* [HOtDB Server Management Command](hotdb-server-manager-commands.md)
 
 </div>
 <div class="col-sm-4 col-md-4 col-lg-4 readme-toc-col">

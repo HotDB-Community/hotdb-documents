@@ -14,7 +14,7 @@
   * [硬件配置推荐](hardware-config-recommendation.md)
 * **计算节点操作手册**
   * [计算节点标准操作](hotdb-server-standard-operations.md)
-  * [计算节点管理命令](hotdb-server-management-commands.md)
+  * [计算节点管理命令](hotdb-server-manager-commands.md)
 * **管理平台操作手册**
   * [管理平台](hotdb-management.md)
   * [智能巡检](intelligent-inspection.md)

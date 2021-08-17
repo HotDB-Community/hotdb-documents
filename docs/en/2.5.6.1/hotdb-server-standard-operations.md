@@ -560,7 +560,7 @@ Considering that sending super-large SQL by Client may threaten HotDB Server (no
 
 ### Management port information monitoring
 
-HotDB Server provides the customer a set of information monitoring, statistics and service management functions which are perfect and easy to operate. The user could log in to monitoring management port of compute node via MySQL Client to view the detailed information, please refer to [Management Port Command](hotdb-server-management-commands.md) document.
+HotDB Server provides the customer a set of information monitoring, statistics and service management functions which are perfect and easy to operate. The user could log in to monitoring management port of compute node via MySQL Client to view the detailed information, please refer to [Management Port Command](hotdb-server-manager-commands.md) document.
 
 #### Management port command
 
@@ -683,7 +683,7 @@ At this time, if there is a 2048 Concurrent Pressurizing Scenario to impose pres
 
 After Pressurizing, these connections will not be destroyed immediately. Instead, they will wait until examination by Idle Examination Period: if Idle (that is the management port `show @@backend` is marked as Idle) connections are bigger than 512, then the connections shall be destroyed to 512; if smaller than 512, they will be kept intact;
 
-If to make Idle Connections back to Initial Connections, then during running process of compute node, you could rebuild connection pool by referring to rebuild connection pool `rebuild @@pool` related chapters in [Management Port Command](hotdb-server-management-commands.md) document, then Initial Connections status shall be recovered.
+If to make Idle Connections back to Initial Connections, then during running process of compute node, you could rebuild connection pool by referring to rebuild connection pool `rebuild @@pool` related chapters in [Management Port Command](hotdb-server-manager-commands.md) document, then Initial Connections status shall be recovered.
 
 ### Limit on use of disk space
 
@@ -1133,7 +1133,7 @@ If specified parameters are not used, there may be problem of time difference, a
 
 #### mysqlbinlog - utility program processing binary log files
 
-Compute node supports parsing mysqlbinlog syntax to synchronize incremental data, in order to reduce downtime for migrating standalone MySQL data to compute node. Use mysqlbinlog to execute SQL statement of a certain binlog file in MySQL connection, so as to import data from a certain database to a certain LogicDB of compute node. Firstly, log in to [management port](#management-port-information-monitoring) (default port: 3325), execute dbremapping command to Add database mapping relation, and for use method of dbremapping command, please refer to [Management Port Command](hotdb-server-management-commands.md) document.
+Compute node supports parsing mysqlbinlog syntax to synchronize incremental data, in order to reduce downtime for migrating standalone MySQL data to compute node. Use mysqlbinlog to execute SQL statement of a certain binlog file in MySQL connection, so as to import data from a certain database to a certain LogicDB of compute node. Firstly, log in to [management port](#management-port-information-monitoring) (default port: 3325), execute dbremapping command to Add database mapping relation, and for use method of dbremapping command, please refer to [Management Port Command](hotdb-server-manager-commands.md) document.
 
 ```sql
 dbremapping @@add@ database name: LogicDB name expected to be imported
@@ -1704,7 +1704,7 @@ create table test02(id not null auto_increment primary key,a char(8),b decimal(4
 
 ![](assets/hotdb-server-standard-operations/image53.png)
 
-If the Table Structure is Created Table, then after Modify the Global Unique Constraint to Enable status, click Reload and refresh the page, if the prompt as in the figure below appears, it means that unique @@create shall be executed on management port, and check history data of the Unique Constraint Key of the table, and after the return result is unique, the compute node will Auto Create secondary index, only in this way could Global Unique Constraint take effect, for details of this command, please refer to [Management Port Command](hotdb-server-management-commands.md) document:
+If the Table Structure is Created Table, then after Modify the Global Unique Constraint to Enable status, click Reload and refresh the page, if the prompt as in the figure below appears, it means that unique @@create shall be executed on management port, and check history data of the Unique Constraint Key of the table, and after the return result is unique, the compute node will Auto Create secondary index, only in this way could Global Unique Constraint take effect, for details of this command, please refer to [Management Port Command](hotdb-server-manager-commands.md) document:
 
 ![](assets/hotdb-server-standard-operations/image54.png)
 

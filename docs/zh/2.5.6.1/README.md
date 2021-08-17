@@ -35,7 +35,7 @@ HotDB Server是一款实现数据容量和性能横向扩展的交易关系型�
 <div class="readme-toc-col-title">计算节点操作手册</div>
 
 * [计算节点标准操作](hotdb-server-standard-operations.md)
-* [计算节点管理命令](hotdb-server-management-commands.md)
+* [计算节点管理命令](hotdb-server-manager-commands.md)
 
 </div>
 <div class="col-md-4 col-lg-4 col-xl-4 readme-toc-col">

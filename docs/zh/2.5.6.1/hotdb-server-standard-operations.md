@@ -571,7 +571,7 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 ### 管理端信息监控
 
-HotDB Server为客户提供了一套功能完善、操作便捷的信息监控、统计与服务管理功能。用户可以通过MySQL Client登录计算节点的监控管理端查看详细信息，详细说明请参考[计算节点管理命令](hotdb-server-management-commands.md)文档。
+HotDB Server为客户提供了一套功能完善、操作便捷的信息监控、统计与服务管理功能。用户可以通过MySQL Client登录计算节点的监控管理端查看详细信息，详细说明请参考[计算节点管理命令](hotdb-server-manager-commands.md)文档。
 
 #### 管理端命令
 
@@ -693,7 +693,7 @@ mysql> select * from datasource where dn=11;
 
 当压测结束后，这些连接不会立即销毁，会等到空闲检测周期检测：如果空闲状态（即管理端show @@backend标记为Idle状态）的连接大于512 ，则销毁多余的连接到512个；如果小于512 就保持原样。
 
-若需要空闲连接状态回到初始化状态，可以在计算节点运行过程中，参考[计算节点管理命令](hotdb-server-management-commands.md)文档重建连接池rebuild @@pool 相关章节重建连接池，即恢复到初始连接状态。
+若需要空闲连接状态回到初始化状态，可以在计算节点运行过程中，参考[计算节点管理命令](hotdb-server-manager-commands.md)文档重建连接池rebuild @@pool 相关章节重建连接池，即恢复到初始连接状态。
 
 ### 磁盘空间使用限制
 
@@ -1151,7 +1151,7 @@ HotDB Server支持mysqldump功能，用法同MySQL一样。
 
 #### mysqlbinlog - 处理二进制日志文件的实用程序
 
-计算节点支持mysqlbinlog命令，mysqlbinlog命令能够解析binlog文件用于同步增量数据，从而减少了将单机MySQL数据迁移至计算节点时的停机时间。使用mysqlbinlog连接远程mysql实例获取binlog文件并解析出其中的SQL语句，然后交由计算节点执行，从而将某个数据库的增量数据导入到计算节点某个逻辑库下。首先，登入到[管理端口](#管理端信息监控)（默认端口为3325），执行dbremapping命令添加数据库映射关系，关于dbremapping命令用法，请参考[计算节点管理命令](hotdb-server-management-commands.md)文档。
+计算节点支持mysqlbinlog命令，mysqlbinlog命令能够解析binlog文件用于同步增量数据，从而减少了将单机MySQL数据迁移至计算节点时的停机时间。使用mysqlbinlog连接远程mysql实例获取binlog文件并解析出其中的SQL语句，然后交由计算节点执行，从而将某个数据库的增量数据导入到计算节点某个逻辑库下。首先，登入到[管理端口](#管理端信息监控)（默认端口为3325），执行dbremapping命令添加数据库映射关系，关于dbremapping命令用法，请参考[计算节点管理命令](hotdb-server-manager-commands.md)文档。
 
 ```sql
 dbremapping @@add@期望被导入的数据库名:逻辑库名
@@ -1754,7 +1754,7 @@ create table test02(id not null auto_increment primary key,a char(8),b decimal(4
 
 ![](assets/hotdb-server-standard-operations/image54.png)
 
-若表结构为已创建的表，全局唯一约束修改为开启状态后，点击动态加载并刷新页面，若出现如下图提示，说明需要到管理端口执行unique @@create，检查此表唯一约束键的历史数据，返回结果是唯一后，计算节点自动创建辅助索引，全局唯一约束方能生效，此命令详情请参考[计算节点管理命令](hotdb-server-management-commands.md)文档：
+若表结构为已创建的表，全局唯一约束修改为开启状态后，点击动态加载并刷新页面，若出现如下图提示，说明需要到管理端口执行unique @@create，检查此表唯一约束键的历史数据，返回结果是唯一后，计算节点自动创建辅助索引，全局唯一约束方能生效，此命令详情请参考[计算节点管理命令](hotdb-server-manager-commands.md)文档：
 
 ![](assets/hotdb-server-standard-operations/image55.png)
 
