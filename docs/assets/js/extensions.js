@@ -1,7 +1,7 @@
 //BUG 为什么extensions不生效？
 //BUG window.$docsify.markdown = function(){...} 会使":id=foo"这样的语法不生效
 
-const tablecell = {
+const renderer = {
   //渲染rowspan和colspan
   tablecell(content, flags) {
     if(content === "^") {
@@ -99,11 +99,11 @@ window.$docsify.fileUrl = ""
 window.$docsify.isMobile = false
 
 window.$docsify.markdown = {
-  renderer: tablecell
+  renderer: renderer
 }
 
 //window.$docsify.markdown = function(marked, render) {
-//  marked.use({renderer: tablecell})
+//  marked.use({renderer: renderer})
 //  marked.use({extensions: [anchor]})
 //  marked.use({extensions: [descriptionlist,description]})
 //  console.log(marked.Lexer.rules)

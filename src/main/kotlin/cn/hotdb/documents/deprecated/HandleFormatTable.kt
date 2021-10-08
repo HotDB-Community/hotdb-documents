@@ -1,4 +1,4 @@
-package com.windea.word
+package cn.hotdb.documents
 
 import java.io.*
 import java.util.*
