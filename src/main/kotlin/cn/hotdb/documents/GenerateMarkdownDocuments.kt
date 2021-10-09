@@ -16,8 +16,6 @@ private fun generateMarkdown(file: File) {
         }
         "doc" -> {
             //需要先转为docx
-            //val newFile = convertDocToDocx(file)
-            //convertToMarkdown(newFile)
         }
         "xlsx" -> {
             //需要先转为csv
@@ -27,24 +25,6 @@ private fun generateMarkdown(file: File) {
         }
     }
 }
-
-//private const val wordconv = "\"C:/Program Files (x86)/Microsoft Office/root/Office16/wordconv.exe\""
-//
-//private fun convertDocToDocx(file: File): File {
-//    val inputPath = file.absolutePath
-//    val outputPath = file.absolutePath + "x"
-//
-//    //使用wordconv将doc转化为docx
-//    //好像没用
-//    val command = "$wordconv -oice -nme $inputPath $outputPath"
-//    val result = Runtime.getRuntime().exec(command)
-//    result.waitFor()
-//    println("Generate docx file '$outputPath' from doc file '$inputPath'.")
-//    println(command)
-//    printResult(result)
-//    println()
-//    return File(outputPath)
-//}
 
 private const val pandoc = "pandoc"
 
