@@ -14,16 +14,12 @@ repositories {
 	mavenCentral()
 }
 
-group = "com.windea"
+group = "cn.hotdb"
 version = "1.0"
 
 dependencies {
-	//标准库
 	implementation(kotlin("stdlib-jdk8"))
 	testImplementation(kotlin("test-junit"))
-	//序列化
-	//implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.2")
-	//implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.2")
 }
 
 tasks {
