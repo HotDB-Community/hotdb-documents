@@ -3,7 +3,8 @@
   * [产品简介](introduce.md)
   * [产品白皮书](white-paper.md)
   <!--* [What's New](whats-new.md)-->
-* **上手指南**
+* **入门**
+  * [开始](./)
   * [快速上手指南](quick-start-guide.md)
   <!--* [基本操作](basic-operations.md)-->
 * **部署升级**

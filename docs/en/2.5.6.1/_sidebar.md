@@ -3,7 +3,8 @@
   * [Product Introduce](introduce.md)
   * [Product White Paper](white-paper.md)
   <!--* [What's New](whats-new.md)-->
-* **Quick Start**
+* **Introdution**
+  * [Getting Started](./)
   * [Quick Start Guide](quick-start-guide.md)
   <!--* [Basic Operations](basic-operations.md)-->
 * **Deployment and Update**
@@ -20,7 +21,7 @@
   * [Intelligent Inspection](intelligent-inspection.md)
 * **Disaster recovery Tutorial**
   * [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md)
-  * [Cross IDC Disaster Recovery Management](cross-idc-disaster-recovery-management.md) 
+  * [Cross IDC Disaster Recovery Management](cross-idc-disaster-recovery-management.md)
 * **Appendix**
   * [Glossary](glossary.md)
   * [Parameter Explanation](parameters.md)
