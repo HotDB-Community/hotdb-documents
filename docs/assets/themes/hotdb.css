@@ -350,6 +350,12 @@ body.sticky .sidebar, body.sticky .sidebar-toggle {
   border-bottom: none;
   padding: 6px 13px;
 }
+.markdown-section td.rowspan {
+  border-top: 1px solid #fff;
+}
+.markdown-section td.colspan {
+  border-left: 1px solid #fff;
+}
 .markdown-section tr:last-child td {
   border-bottom: 1px solid #ddd;
 }
