@@ -15,11 +15,6 @@ body {
   transition: transform .25s ease-out !important;
   background-color: #fff !important;
   display: block !important;
-}
-.web .app-nav{
-  padding: 10px 80px 10px 30px !important;
-}
-.mobile .app-nav{
   padding: 10px 80px 10px 30px !important;
 }
 .navicon{

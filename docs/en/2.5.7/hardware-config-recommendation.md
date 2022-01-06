@@ -1,1 +1,2 @@
-Updating...
+<!--Updating...-->
+[](../2.5.6.1/hardware-config-recommendation.md ':include')

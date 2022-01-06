@@ -89,15 +89,6 @@ const renderer = {
 //  }
 //}
 
-window.onload = function() {
-  redirectLocation()
-  bindDeviceCssClass()
-}
-
-window.$docsify.filePath = ""
-window.$docsify.fileUrl = ""
-window.$docsify.isMobile = false
-
 window.$docsify.markdown = {
   renderer: renderer
 }
@@ -117,13 +108,10 @@ window.$docsify.plugins = [
   function(hook, vm) {
     hook.init(function() {
       redirectLocation()
-      bindDeviceCssClass()
     })
     hook.beforeEach(function(html) {
-      //绑定window.$docsify.filePath
-      window.$docsify.filePath = vm.route.file
-      //绑定windows.$docsify.fileUrl
-      window.$docsify.fileUrl = vm.route.path
+      redirectLocation()
+      bindProperties(vm)
 
       //预处理markdown
       let isCodeFence = false
@@ -154,7 +142,7 @@ window.$docsify.plugins = [
 
 //地址重定向
 function redirectLocation() {
-  let latestVersion = window.$docsify.version
+  let latestVersion = window.$docsify.properties.latestVersion
   let latestVersionSuffix = latestVersion ? latestVersion + "/" : ""
   let locale = inferLocale()
   let url = window.location.href
@@ -175,6 +163,17 @@ function redirectLocation() {
   }
 }
 
+function bindProperties(vm) {
+  //绑定自定义属性
+  const properties = window.$docsify.properties
+  properties.filePath = vm.route.file //格式：xxx/xxx.md
+  properties.fileUrl = "#" + vm.route.path //格式：#/xxx/xxx
+  const strs = properties.filePath.split("/");
+  properties.fileName = strs.length > 1 ? strs[strs.length -1] : null;
+  properties.language = strs.length > 1 ? strs[0] : null;
+  properties.version = strs.length > 2 ? strs[1] : null;
+}
+
 //推断语言区域
 function inferLocale() {
   const locales = window.$docsify.locales
@@ -183,18 +182,6 @@ function inferLocale() {
     if(locale.startsWith(it)) return it
   })
   return "zh"
-}
-
-//绑定判断设备的css class
-function bindDeviceCssClass() {
-  const isMobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(navigator.userAgent)
-  const bodyElement = document.querySelector("body")
-  if(isMobile) {
-    bodyElement.classList.add("mobile")
-    window.$docsify.isMobile = true
-  } else {
-    bodyElement.classList.add("web")
-  }
 }
 
 //需要转义表格单元格中的内联代码中的管道符

@@ -33,7 +33,7 @@ window.$docsify.plugins.push(
   function(hook) {
     hook.afterEach(function(html) {
       const locales = window.$docsify.locales
-      const fileUrl = window.$docsify.fileUrl
+      const fileUrl = window.$docsify.properties.fileUrl
       if(locales.some(it=> fileUrl.indexOf(it) !== -1)) {
         return createTopBar() + html
       }else{
@@ -53,7 +53,7 @@ function createTopBar() {
           </a class="topbar-link">
 		    </li>
 		    <li>
-          <a href="${window.$docsify.topbar.editUrl}/${window.$docsify.filePath}" target="_blank"
+          <a href="${window.$docsify.topbar.editUrl}/${window.$docsify.properties.filePath}" target="_blank"
            title="${getText(window.$docsify.topbar.editTitle)}">
             ${getText(window.$docsify.topbar.editText)}
           </a class="topbar-link">

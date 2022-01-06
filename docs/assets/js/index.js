@@ -1,5 +1,5 @@
 window.$docsify = {
-  version: "2.5.6.1",
+  version: "1.0.0",
   locales: ["zh", "en"],
   repo: "https://github.com/HotDB-Community/hotdb-documents",
   routeMode: "history",
@@ -14,6 +14,36 @@ window.$docsify = {
   subMaxLevel: 4,
   notFoundPage: true,
   topMargin: 80,
+
+  properties: {
+    latestVersion: "2.5.7",
+    fileName: null,
+    filePath: null,
+    fileUrl: null,
+    language: null,
+    version: null
+  },
+
+  vueGlobalOptions: {
+    data(){
+      return {
+        ...window.$docsify.properties
+      }
+    },
+    computed(){
+      return {}
+    },
+    methods(){
+      return {
+        fileUrlWithLanguage(language){
+          return this.fileUrl.replace(this.language, language)
+        },
+        fileUrlWithVersion(version){
+          return this.fileUrl.replace(this.version, version)
+        },
+      }
+    }
+  },
 
   search: {
     noData: {
