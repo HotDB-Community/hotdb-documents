@@ -1,4 +1,4 @@
-<img class="coverpage-logo" src="assets/navicon-colorful.png" alt="logo"/>
+<img class="coverpage-logo" src="/assets/navicon-colorful.png" alt="logo"/>
 
 # HotDB Server参考手册
 

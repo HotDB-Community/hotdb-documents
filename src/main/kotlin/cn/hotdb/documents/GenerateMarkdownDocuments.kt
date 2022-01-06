@@ -3,19 +3,19 @@ package cn.hotdb.documents
 import java.io.File
 
 /*
-* 将documents目录下的非markdown文档转换为markdown文档，并保存到对应的./markdown子目录下
-*
-* * 使用pandoc进行转换
-* * 可以直接转换的文件类型：docx csv
-* * 需要间接转换的文件类型：pdf doc xls xlsx
-*/
+ * 将documents目录下的非markdown文档转换为markdown文档，并保存到对应的./markdown子目录下
+ *
+ * * 使用pandoc进行转换
+ * * 可以直接转换的文件类型：docx csv
+ * * 需要间接转换的文件类型：pdf doc xls xlsx
+ */
 
 fun main() {
     val rootDir = "documents"
-    File(rootDir).walk().filter { it.isFile && !it.name.startsWith("~$") }.forEach { generateMarkdown(it) }
+    File(rootDir).walk().filter { it.isFile && !it.name.startsWith("~$") }.forEach { generateMarkdownFile(it) }
 }
 
-private fun generateMarkdown(file: File) {
+private fun generateMarkdownFile(file: File) {
     when (file.extension) {
         "pdf" -> {
             //需要先转为docx（暂时使用迅捷pdf转换器进行转换）
@@ -27,14 +27,14 @@ private fun generateMarkdown(file: File) {
             //需要先转为csv（暂时使用excel进行转换）
         }
         "docx", "csv" -> {
-            convertToMarkdown(file)
+            convertToMarkdownFile(file)
         }
     }
 }
 
 private const val pandoc = "pandoc"
 
-private fun convertToMarkdown(file: File) {
+private fun convertToMarkdownFile(file: File) {
     val extension = file.extension
     val inputPath = file.absolutePath
     val outputDir = file.parentFile.absolutePath + File.separator + "markdown"
@@ -59,4 +59,3 @@ private fun printResult(result: Process) {
     if (output.isNotEmpty()) println(output)
     if (error.isNotEmpty()) println(error)
 }
-

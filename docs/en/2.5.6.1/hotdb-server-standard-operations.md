@@ -142,7 +142,7 @@ This chapter will briefly introduce the summary of functions which are added, pr
 - Support SSL + [SM4](#sslusesm4) for client connection;
 - Optimized function of creating [global tables](#global-table) according to the default sharding node;
 - Add parameter [operateMode](#operatemode) to meet one-click configuration of parameter combination under different scenarios, such as performance maximization, debugging mode, etc;
-- Support [modification of sharding key](#online-modification-of-sharding-key) directly through SQL statements (alter table... change shard column...);
+- Support [modification of sharding key](#online-modification-of-sharding-key) directly through SQL statements (`alter table... change shard column...`);
 - Optimized [deadlock check](#deadlock-check) logic: control whether to roll back the transaction and start new transactions when deadlock occurs according to MySQL version number;
 - Optimized log record of disconnection in [XA mode](#use-xa-transaction). You can analyze whether the transaction needs to be redone through the log;
 - Optimized logic of role exchange after the failure of [data sources](#high-availability-of-data-node)/[ConfigDBs](#configdb-high-availability) or manual switching, and logic of reloading without changing the service of the original master;
@@ -3087,9 +3087,10 @@ alter table table_name change shard column new_column；
 
 For example, modify the sharding key id of source table sbtest1 to k, and execute:
 
+```
 root@127.0.0.1:hotdb 5.7.25 06:44:26> alter table sbtest1 change shard column k;
-
 Query OK, 0 rows affected (2 min 2.27 sec)
+```
 
 #### Restrictions on use
 
