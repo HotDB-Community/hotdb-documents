@@ -892,7 +892,7 @@ ERROR 1064 (HY000): Intercepted by sql firewall, because: not allowed to execute
     <Policies>
       <SizeBasedTriggeringPolicy size="100 MB"/>
     </Policies>
-    <!-- 只记录 unusual sql 日志 -->
+    <!-- 只记录unusual sql日志 -->
     <filters>
       <MarkerFilter marker="UNUSUALSQL" onMatch="ACCEPT" onMismatch="DENY"></MarkerFilter>
     </filters>
@@ -3759,15 +3759,6 @@ DELETE FROM t PARTITION(p0);
 
 ```sql
 DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
-tbl_name[.*] [, tbl_name[.*]] ...
-FROM table_references
-[WHERE where_condition]
-```
-
-或者：
-
-```sql
-DELETE [LOW_PRIORITY] [QUICK] [IGNORE]
 FROM tbl_name[.*] [, tbl_name[.*]] ...
 USING table_references
 [WHERE where_condition]
@@ -4082,7 +4073,7 @@ REPLACE INTO ... table_name VALUES(),VALUES(),VALUES();
 | ^              | ^                    | 函数                                   | 支持     |                                                                                                                                                                                                                                                                                                                                                            |
 | ^              | OR                   |                                        | 限制支持 | 跨库JOIN支持能转换成in条件的情况                                                                                                                                                                                                                                                                                                                           |
 | ^              | ^                    | ^                                      | ^        | 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                                                                                                                                                                                                     |
-| ^              | WHERE                | 不同字段OR条件                         | 限制支持 | 类似 a=x and b=x or c=x的形式不支持；仅支持OR表达式为AND表达式的子节点的情况以及不限OR个数的情况，例如：`select xxx from a,b where (a.c1 OR a.c2) and b.c1=100 and (a.c4 OR a.c6)`: 其中OR子句中每个条件(c1、c2等)仅支持`table.column [=|<|<=|>|>=|!=] value`或`IS [NOT] NULL`或具体的值(0/1/TRUE/FALSE/字符串等)； 不支持的部分使用NDB且满足NDB限制的支持 |
+| ^              | WHERE                | 不同字段的OR条件                         | 限制支持 | 类似 a=x and b=x or c=x的形式不支持；仅支持OR表达式为AND表达式的子节点的情况以及不限OR个数的情况，例如：`select xxx from a,b where (a.c1 OR a.c2) and b.c1=100 and (a.c4 OR a.c6)`: 其中OR子句中每个条件(c1、c2等)仅支持`table.column [=|<|<=|>|>=|!=] value`或`IS [NOT] NULL`或具体的值(0/1/TRUE/FALSE/字符串等)； 不支持的部分使用NDB且满足NDB限制的支持 |
 | ^              | ^                    | 单个字段的or条件                       | 限制支持 | left join中的or表达式不为and表达式子节点的不支持                                                                                                                                                                                                                                                                                                           |
 | ^              | ^                    | ^                                      | ^        | 不支持的部分使用NDB且满足NDB限制的支持                                                                                                                                                                                                                                                                                                                     |
 | ^              | ^                    | IN                                     | 支持     |                                                                                                                                                                                                                                                                                                                                                            |
@@ -4746,7 +4737,7 @@ status列说明：
 
 KILL语句与MySQL KILL语句用法一样。KILL会同时关闭计算节点前端连接与存储节点的MySQL数据库的连接。
 
-#### SHOW VARIABLES 和SHOW STATUS
+#### SHOW VARIABLES和SHOW STATUS
 
 HotDB Server对MySQL部分variables及status的显示结果做了支持，可通过相关语法查看计算节点连接的存储节点变量信息。
 
@@ -5903,7 +5894,6 @@ server.xml中手动添加一条checkConnValid的配置
 
 ```
 mysql> update ss set id=13 where a='aa';
-
 ERROR 1064 (HY000): sharding column's value cannot be changed.
 ```
 
@@ -5911,12 +5901,10 @@ ERROR 1064 (HY000): sharding column's value cannot be changed.
 
 ```
 mysql> update ss set id=13 where a='aa';
-
 Query OK, 1 row affected (0.01 sec)
 Rows matched: 1 Changed: 1 Warnings: 0
 
 mysql> select * from ss where a='aa';
-
 +----+----+
 | id | a  |
 +----+----+
@@ -6684,7 +6672,7 @@ server.xml中dropTableRetentionTime参数配置：
 
 **参数设置：**
 
-ddlForDbNeedSuper参数针对DATABASE的DDL语句是否需要配置额外的SUPER权限。
+ddlForDbNeedSuper参数指针对DATABASE的DDL语句是否需要配置额外的SUPER权限。
 
 ```xml
 <property name="ddlForDbNeedSuper">true</property><!--针对DATABASE的DDL语句是否需要额外的SUPER权限(Does DDL for database require extra SUPER privilege) -->

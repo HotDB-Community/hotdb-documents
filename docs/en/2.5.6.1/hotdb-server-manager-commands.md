@@ -1740,7 +1740,7 @@ The commands described in this chapter only need to be known by users. They are 
 ### `disable_election` - Disable election in cluster{#disable_election}
 
 ```sql
- disable_election;
+disable_election;
 ```
 
 Generally used when switching the IDC in the DR mode, this command is used to disable election in the internal cluster of the IDC that is providing services, so as to avoid the occurrence of IDC switching and possible affect on the final result of the IDC switching.

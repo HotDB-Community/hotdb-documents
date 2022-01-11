@@ -291,7 +291,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 若当前已有的计算节点集群数量（包括停止监控和正常监控的）已经达到平台许可证授权的可用计算节点集群组数，则计算节点集群管理页面点击【集群添加】按钮时，3s即逝提醒：`"超过平台授权的可用计算节点集群组数，禁止添加"`
 
- ![](assets/hotdb-management/image22.png)
+![](assets/hotdb-management/image22.png)
 
 > !Note
 >
@@ -1151,11 +1151,11 @@ spring.datasource.bakpassword=hotdb_cloud
 > 5. 若上传的计算节点更新tar包文件名中带有“jdk11”关键词，且文件有效，此时给出“JAVA11版本升级”入口
 > 6. JAVA11版本升级选择“手动上传”，当上传的文件不匹配“OpenJDK11U-jdk_x64_linux_hotspot_11.0.11_9.tar.gz” 时则提示“上传的文件不符合规范，请重新上传”
 >
-> ![](assets/hotdb-management/image110_1.png)
+> ![](assets/hotdb-management/image110-1.png)
 >
 > 7. 与JAVA8版本升级相同，JAVA11版本升级也可选择指定已有安装包存放目录，当在对应的目录下没有找到JDK升级匹配文件时，点击“开始更新”按钮会跳出5秒即逝提醒“JDK版本升级对应的目录下没有找到匹配文件，请重新填写”
 >
-> ![](assets/hotdb-management/image110_2.png)
+> ![](assets/hotdb-management/image110-2.png)
 >
 > - 授权文件升级：V2.5.6版本开始使用自研的授权，授权文件默认在计算节点的keys目录下。升级时需保证该授权可用且授权节点数不小于当前已有的节点数、授权逻辑库数不小于当前已有逻辑库数
 >

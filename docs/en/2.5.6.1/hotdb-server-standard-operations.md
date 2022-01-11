@@ -5846,7 +5846,6 @@ If set true, after updating the sharding key, there will be prompt as follow:
 
 ```
 mysql> update ss set id=13 where a='aa';
-
 ERROR 1064 (HY000): sharding column's value cannot be changed.
 ```
 
@@ -10307,7 +10306,7 @@ Determine corresponding IP:
 
 ```
 virtual_ipaddress {
- 192.168.220.106/24 dev bond0 label bond0:1
+  192.168.220.106/24 dev bond0 label bond0:1
 }
 ```
 
