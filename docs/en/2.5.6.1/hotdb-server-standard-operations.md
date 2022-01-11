@@ -5473,7 +5473,7 @@ During the use process, the compute node has maintained many system configuratio
 
 **Description of parameter:**
 
-| Property                       | Value                                                               |
+| **Property**                       | **Value**                                                               |
 |--------------------------------|---------------------------------------------------------------------|
 | Parameter value                | adaptiveProcessor                                                   |
 | Visible or not                 | Hidden                                                              |
@@ -5562,7 +5562,7 @@ Only when the compute node is under pressure could it reach the Automatic Adapta
 
 **Description of parameter:**
 
-| Property                       | Value                                                                                         |
+| **Property**                       | **Value**                                                                                         |
 |--------------------------------|-----------------------------------------------------------------------------------------------|
 | Parameter value                | allowRCWithoutReadConsistentInXA                                                              |
 | Visible or not                 | No                                                                                            |
@@ -5598,7 +5598,7 @@ When the parameter allowRCWithoutReadConsistentInXA is set to 1, the isolation l
 
 **Description of parameter:**
 
-| Property                       | Value                                                                                 |
+| **Property**                       | **Value**                                                                                 |
 |--------------------------------|---------------------------------------------------------------------------------------|
 | Parameter value                | autoIncrement                                                                         |
 | Visible or not                 | Yes                                                                                   |
@@ -5618,7 +5618,7 @@ In version 2.5.3 and below, only true or false can be set. Setting as true is eq
 
 **Description of parameter:**
 
-| Property                       | Value                                |
+| **Property**                       | **Value**                                |
 |--------------------------------|--------------------------------------|
 | Parameter value                | badConnAfterContinueGet              |
 | Visible or not                 | No                                   |
@@ -5641,7 +5641,7 @@ After compute node obtaining connection from the connection pool and having cond
 
 **Description of parameter:**
 
-| Property                       | Value                                                                                             |
+| **Property**                       | **Value**                                                                                             |
 |--------------------------------|---------------------------------------------------------------------------------------------------|
 | Parameter value                | badConnAfterFastCheckAllIdle                                                                      |
 | Visible or not                 | No                                                                                                |
@@ -5664,7 +5664,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 
 **Description of parameter:**
 
-| Property                       | Value                                    |
+| **Property**                       | **Value**                                    |
 |--------------------------------|------------------------------------------|
 | Parameter value                | bakUrl                                   |
 | Visible or not                 | Yes                                      |
@@ -5673,7 +5673,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 | Whether Reload is valid or not | Yes                                      |
 | Min Compatible Version         | 2.4.4                                    |
 
-| Property                       | Value                   |
+| **Property**                       | **Value**                   |
 |--------------------------------|-------------------------|
 | Parameter value                | bakUsername             |
 | Visible or not                 | Yes                     |
@@ -5682,7 +5682,7 @@ When broken back-end connection is obtained, the connection pool of the compute 
 | Whether Reload is valid or not | Yes                     |
 | Min Compatible Version         | 2.4.4                   |
 
-| Property                       | Value                   |
+| **Property**                       | **Value**                   |
 |--------------------------------|-------------------------|
 | Parameter value                | bakPassword             |
 | Visible or not                 | Yes                     |
@@ -5726,7 +5726,7 @@ description: NULL
 
 **Description of parameter:**
 
-| Property                       | Value                                                                                                                                          |
+| **Property**                       | **Value**                                                                                                                                          |
 |--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
 | Parameter value                | checkConnLastUsedTime                                                                                                                          |
 | Visible or not                 | No                                                                                                                                             |
@@ -5758,7 +5758,7 @@ mysql> show @@session;
 
 **Description of parameter:**
 
-| Property                       | Value                                                            |
+| **Property**                       | **Value**                                                            |
 |--------------------------------|------------------------------------------------------------------|
 | Parameter value                | CheckConnValid                                                   |
 | Visible or not                 | No                                                               |
@@ -5783,7 +5783,7 @@ When obtaining connection from the connection pool, check availability of the co
 
 **Description of parameter:**
 
-| Property                       | Value                                                                          |
+| **Property**                       | **Value**                                                                          |
 |--------------------------------|--------------------------------------------------------------------------------|
 | Parameter value                | checkConnValidTimeout                                                          |
 | Visible or not                 | No                                                                             |
@@ -5804,7 +5804,7 @@ At the time of checking validity of back-end connection, when the checking time 
 
 **Description of parameter:**
 
-| Property                       | Value                                                        |
+| **Property**                       | **Value**                                                        |
 |--------------------------------|--------------------------------------------------------------|
 | Parameter value                | checkMySQLParamInterval                                      |
 | Visible or not                 | No                                                           |
@@ -5829,7 +5829,7 @@ Check whether interval time of MySQL Parameter Setting is reasonable or not. The
 
 **Description of parameter:**
 
-| Property                       | Value                                                            |
+| **Property**                       | **Value**                                                            |
 |--------------------------------|------------------------------------------------------------------|
 | Parameter value                | checkUpdate                                                      |
 | Visible or not                 | No                                                               |
@@ -5871,7 +5871,7 @@ mysql> select * from ss where a='aa';
 
 **Description of parameter:**
 
-| Property                       | Value                                                     |
+| **Property**                       | **Value**                                                     |
 |--------------------------------|-----------------------------------------------------------|
 | Parameter value                | clientFoundRows                                           |
 | Visible or not                 | No                                                        |
@@ -5904,7 +5904,7 @@ jdbc is committed useAffectedRows=true, the actual number of rows affected will 
 
 **Description of parameter:**
 
-| Property                       | Value                         |
+| **Property**                       | **Value**                         |
 |--------------------------------|-------------------------------|
 | Parameter value                | clusterElectionTimeoutMs      |
 | Visible or not                 | No                            |
@@ -5929,7 +5929,7 @@ This parameter is used for setting Cluster Election Timeout of the compute node,
 
 **Description of parameter:**
 
-| Property                       | Value                          |
+| **Property**                       | **Value**                          |
 |--------------------------------|--------------------------------|
 | Parameter value                | clusterHeartbeatTimeoutMs      |
 | Visible or not                 | No                             |
@@ -5954,7 +5954,7 @@ This parameter is used for setting Cluster Heartbeat Timeout of the compute node
 
 **Description of parameter:**
 
-| Property                       | Value                  |
+| **Property**                       | **Value**                  |
 |--------------------------------|------------------------|
 | Parameter value                | clusterHost            |
 | Visible or not                 | Yes                    |
@@ -5979,7 +5979,7 @@ This parameter shall be set consistent with the actual IP of the compute node (c
 
 **Description of parameter:**
 
-| Property                       | Value              |
+| **Property**                       | **Value**              |
 |--------------------------------|--------------------|
 | Parameter value                | clusterName        |
 | Visible or not                 | Yes                |
@@ -6004,7 +6004,7 @@ Specify the name of the group added after cluster startup, and this parameter of
 
 **Description of parameter:**
 
-| Property                       | Value                   |
+| **Property**                       | **Value**                   |
 |--------------------------------|-------------------------|
 | Parameter value                | clusterNetwork          |
 | Visible or not                 | Yes                     |
@@ -6029,7 +6029,7 @@ This parameter is the network segment of the whole cluster, and it's limited tha
 
 **Description of parameter:**
 
-| Property                       | Value                                                   |
+| **Property**                       | **Value**                                                   |
 |--------------------------------|---------------------------------------------------------|
 | Parameter value                | clusterPacketTimeoutMs                                  |
 | Visible or not                 | No                                                      |
@@ -6054,7 +6054,7 @@ This parameter is used for setting Cluster Packet Timeout, and generally modific
 
 **Description of parameter:**
 
-| Property                       | Value                      |
+| **Property**                       | **Value**                      |
 |--------------------------------|----------------------------|
 | Parameter value                | clusterPort                |
 | Visible or not                 | Yes                        |
@@ -6079,7 +6079,7 @@ Thed default value 3326 specifies the port of listening cluster information. Thi
 
 **Description of parameter:**
 
-| Property                       | Value                            |
+| **Property**                       | **Value**                            |
 |--------------------------------|----------------------------------|
 | Parameter value                | clusterSize                      |
 | Visible or not                 | Yes                              |
@@ -6104,7 +6104,7 @@ This parameter is total number of compute node in cluster. If haMode is set as 1
 
 **Description of parameter:**
 
-| Property                       | Value                                                 |
+| **Property**                       | **Value**                                                 |
 |--------------------------------|-------------------------------------------------------|
 | Parameter value                | clusterStartedPacketTimeoutMs                         |
 | Visible or not                 | No                                                    |
@@ -6129,7 +6129,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 
 **Description of parameter:**
 
-| Property                       | Value                            |
+| **Property**                       | **Value**                            |
 |--------------------------------|----------------------------------|
 | Parameter value                | configMGR                        |
 | Visible or not                 | Yes                              |
@@ -6138,7 +6138,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 | Whether Reload is valid or not | YesY                             |
 | Min Compatible Version         | 2.5.0                            |
 
-| Property                       | Value                |
+| **Property**                       | **Value**                |
 |--------------------------------|----------------------|
 | Parameter value                | bak1Url              |
 | Visible or not                 | Yes                  |
@@ -6147,7 +6147,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 | Whether Reload is valid or not | Yes                  |
 | Min Compatible Version         | 2.5.0                |
 
-| Property                       | Value                 |
+| **Property**                       | **Value**                 |
 |--------------------------------|-----------------------|
 | Parameter value                | bak1Username          |
 | Visible or not                 | Yes                   |
@@ -6156,7 +6156,7 @@ This parameter is used for setting Cluster Started Packet Timeout, and generally
 | Whether Reload is valid or not | Yes                   |
 | Min Compatible Version         | 2.5.0                 |
 
-| Property                       | Value                 |
+| **Property**                       | **Value**                 |
 |--------------------------------|-----------------------|
 | Parameter value                | bak1Password          |
 | Visible or not                 | Yes                   |
@@ -6180,7 +6180,7 @@ configMGR and bak1Url and bak1Username and bak1Password are supporting parameter
 
 **Description of parameter:**
 
-| Property                       | Value                                                |
+| **Property**                       | **Value**                                                |
 |--------------------------------|------------------------------------------------------|
 | Parameter value                | crossDbXa                                            |
 | Visible or not                 | No                                                   |
@@ -6299,7 +6299,7 @@ Result: `select * from B.b;` execute normally.
 
 **Description of parameter:**
 
-| Property                       | Value                                |
+| **Property**                       | **Value**                                |
 |--------------------------------|--------------------------------------|
 | Parameter value                | cryptMandatory                       |
 | Visible or not                 | Yes                                  |
@@ -6329,7 +6329,7 @@ It's used for setting whether to make mandatory password identification or not w
 
 **Description of parameter:**
 
-| Property                       | Value                                   |
+| **Property**                       | **Value**                                   |
 |--------------------------------|-----------------------------------------|
 | Parameter value                | dataNodeIdleCheckPeriod                 |
 | Visible or not                 | Yes                                     |
@@ -6356,7 +6356,7 @@ For example: Conduct on large concurrent insert operation on the 3323 service po
 
 **Description of parameter:**
 
-| Property                       | Value                                       |
+| **Property**                       | **Value**                                       |
 |--------------------------------|---------------------------------------------|
 | Parameter value                | deadlockCheckPeriod                         |
 | Visible or not                 | Yes                                         |
@@ -6391,7 +6391,7 @@ ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 
 **Description of parameter:**
 
-| Property                       | Value             |
+| **Property**                       | **Value**             |
 |--------------------------------|-------------------|
 | Parameter value                | defaultMaxLimit   |
 | Visible or not                 | No                |
@@ -6447,7 +6447,7 @@ mysql> show processlist;
 
 **Description of parameter:**
 
-| Property                       | Value                                              |
+| **Property**                       | **Value**                                              |
 |--------------------------------|----------------------------------------------------|
 | Parameter value                | dropTableRetentionTime                             |
 | Visible or not                 | Yes                                                |
@@ -6472,7 +6472,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 
 **Description of parameter:**
 
-| Property                       | Value                                    |
+| **Property**                       | **Value**                                    |
 |--------------------------------|------------------------------------------|
 | Parameter value                | drBakUrl                                 |
 | Visible or not                 | Yes                                      |
@@ -6481,7 +6481,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 | Whether Reload is valid or not | Yes                                      |
 | Min Compatible Version         | 2.5.3.1                                  |
 
-| Property                       | Value                                |
+| **Property**                       | **Value**                                |
 |--------------------------------|--------------------------------------|
 | Parameter value                | drBakUsername                        |
 | Visible or not                 | Yes                                  |
@@ -6490,7 +6490,7 @@ In v.2.5.5, dropTableRetentionTime parameter is 0 by default, meaning not to ret
 | Whether Reload is valid or not | Yes                                  |
 | Min Compatible Version         | 2.5.3.1                              |
 
-| Property                       | Value                                |
+| **Property**                       | **Value**                                |
 |--------------------------------|--------------------------------------|
 | Parameter value                | drBakPassword                        |
 | Visible or not                 | Yes                                  |
@@ -6513,7 +6513,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 
 **Description of parameter:**
 
-| Property                       | Value                                    |
+| **Property**                       | **Value**                                    |
 |--------------------------------|------------------------------------------|
 | Parameter value                | drUrl                                    |
 | Visible or not                 | Yes                                      |
@@ -6522,7 +6522,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 | Whether Reload is valid or not | Yes                                      |
 | Min Compatible Version         | 2.5.3.1                                  |
 
-| Property                       | Value                         |
+| **Property**                       | **Value**                         |
 |--------------------------------|-------------------------------|
 | Parameter value                | drUsername                    |
 | Visible or not                 | Yes                           |
@@ -6531,7 +6531,7 @@ drBakUrl, drBakUsername and drBakPassword are supporting parameters, which are u
 | Whether Reload is valid or not | Yes                           |
 | Min Compatible Version         | 2.5.3.1                       |
 
-| Property                       | Value                         |
+| **Property**                       | **Value**                         |
 |--------------------------------|-------------------------------|
 | Parameter value                | drPassword                    |
 | Visible or not                 | Yes                           |
@@ -6554,7 +6554,7 @@ drUrl, drUsername and drPassword are supporting parameters, among which drUrl re
 
 **Description of parameter:**
 
-| Property                       | Value                                                    |
+| **Property**                       | **Value**                                                    |
 |--------------------------------|----------------------------------------------------------|
 | Parameter value                | enableCursor                                             |
 | Visible or not                 | Yes                                                      |
@@ -6579,7 +6579,7 @@ Allow PREPARE to obtain data content via Cursor or not (jdbcURl:useCursorFetch=t
 
 **Description of parameter:**
 
-| Property                       | Value                                  |
+| **Property**                       | **Value**                                  |
 |--------------------------------|----------------------------------------|
 | Parameter value                | enableFlowControl                      |
 | Visible or not                 | Yes                                    |
@@ -6622,7 +6622,7 @@ mysql> show @@datasource;
 
 **Description of parameter:**
 
-| Property                       | Value                                         |
+| **Property**                       | **Value**                                         |
 |--------------------------------|-----------------------------------------------|
 | Parameter value                | enableHeartbeat                               |
 | Visible or not                 | Yes                                           |
@@ -6631,7 +6631,7 @@ mysql> show @@datasource;
 | Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above        |
 | Min Compatible Version         | 2.4.3                                         |
 
-| Property                       | Value                                  |
+| **Property**                       | **Value**                                  |
 |--------------------------------|----------------------------------------|
 | Parameter value                | heartbeatPeriod                        |
 | Visible or not                 | Yes                                    |
@@ -6642,7 +6642,7 @@ mysql> show @@datasource;
 | Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above |
 | Min Compatible Version         | 2.4.3                                  |
 
-| Property                       | Value                                  |
+| **Property**                       | **Value**                                  |
 |--------------------------------|----------------------------------------|
 | Parameter value                | heartbeatTimeoutMs                     |
 | Visible or not                 | Yes                                    |
@@ -6677,7 +6677,7 @@ For Heartbeat Timeout under the condition that Heartbeat is enabled, in case of 
 
 **Description of parameter:**
 
-| Property                       | Value                                    |
+| **Property**                       | **Value**                                    |
 |--------------------------------|------------------------------------------|
 | Parameter value                | enableLatencyCheck                       |
 | Visible or not                 | Yes                                      |
@@ -6686,7 +6686,7 @@ For Heartbeat Timeout under the condition that Heartbeat is enabled, in case of 
 | Whether Reload is valid or not | N for v.2.4.5, Y for v.2.4.7 and above   |
 | Min Compatible Version         | 2.4.5                                    |
 
-| Property                       | Value                                  |
+| **Property**                       | **Value**                                  |
 |--------------------------------|----------------------------------------|
 | Parameter value                | latencyCheckPeriod                     |
 | Visible or not                 | Yes                                    |
@@ -6724,7 +6724,7 @@ mysql> show @@latency;
 
 **Description of parameter:**
 
-| Property                       | Value                        |
+| **Property**                       | **Value**                        |
 |--------------------------------|------------------------------|
 | Parameter value                | enableListener               |
 | Visible or not                 | Yes                          |
@@ -6776,7 +6776,7 @@ Please refer to the description of [linear expansion](#linear-expansion) for pre
 
 **Description of parameter:**
 
-| Property                       | Value                          |
+| **Property**                       | **Value**                          |
 |--------------------------------|--------------------------------|
 | Parameter value                | enableOracleFunction           |
 | Visible or not                 | No                             |
@@ -6847,7 +6847,7 @@ ERROR 10010 (HY000): expect VIEW. lexer state: token=IDENTIFIER, sqlLeft=sequenc
 
 **Description of parameter:**
 
-| Property                       | Value                                    |
+| **Property**                       | **Value**                                    |
 |--------------------------------|------------------------------------------|
 | Parameter value                | enableSleep                              |
 | Visible or not                 | Yes                                      |
@@ -6891,7 +6891,7 @@ mysql> select sleep(2);
 
 **Description of parameter:**
 
-| Property                       | Value                                     |
+| **Property**                       | **Value**                                     |
 |--------------------------------|-------------------------------------------|
 | Parameter value                | enableSSL                                 |
 | Visible or not                 | Yes                                       |
@@ -6912,7 +6912,7 @@ This parameter is used to set whether the compute node is allowed to connect usi
 
 **Description of parameter:**
 
-| Property                       | Value                                                      |
+| **Property**                       | **Value**                                                      |
 |--------------------------------|------------------------------------------------------------|
 | Parameter value                | enableSubquery                                             |
 | Visible or not                 | No                                                         |
@@ -6951,7 +6951,7 @@ mysql> select * from test3 where id in (select id from test31);
 
 **Description of parameter:**
 
-| Property                       | Value                                  |
+| **Property**                       | **Value**                                  |
 |--------------------------------|----------------------------------------|
 | Parameter value                | enableWatchdog                         |
 | Visible or not                 | Yes                                    |
@@ -7017,7 +7017,7 @@ You could view check information of data source switch via log:
 
 **Description of parameter:**
 
-| Property                       | Value                       |
+| **Property**                       | **Value**                       |
 |--------------------------------|-----------------------------|
 | Parameter value                | enableXA                    |
 | Visible or not                 | Yes                         |
@@ -7036,7 +7036,7 @@ Using the external XA TRANSACTION provided by MySQL, the compute node could solv
 
 **Description of parameter:**
 
-| Property                       | Value                                          |
+| **Property**                       | **Value**                                          |
 |--------------------------------|------------------------------------------------|
 | Parameter value                | errorsPermittedInTransaction                   |
 | Visible or not                 | Yes                                            |
@@ -7119,7 +7119,7 @@ mysql> select * from ss where id=1;
 
 **Description of parameter:**
 
-| Property                       | Value                                                                  |
+| **Property**                       | **Value**                                                                  |
 |--------------------------------|------------------------------------------------------------------------|
 | Parameter value                | failoverAutoresetslave                                                 |
 | Visible or not                 | Yes                                                                    |
@@ -7142,7 +7142,7 @@ This parameter is used for guaranteeing data accuracy after data source failover
 
 **Description of parameter:**
 
-| Property                       | Value                                        |
+| **Property**                       | **Value**                                        |
 |--------------------------------|----------------------------------------------|
 | Parameter value                | frontConnectionTrxIsoLevel                   |
 | Visible or not                 | No                                           |
@@ -7169,7 +7169,7 @@ It's used for setting user isolation level of front-end connection of the comput
 
 **Description of parameter:**
 
-| Property                       | Value                                    |
+| **Property**                       | **Value**                                    |
 |--------------------------------|------------------------------------------|
 | Parameter value                | frontWriteBlockTimeout                   |
 | Visible or not                 | Yes                                      |
@@ -7194,7 +7194,7 @@ Great network latency or unreachable network from the compute node to the client
 
 **Description of parameter:**
 
-| Property                       | Value                     |
+| **Property**                       | **Value**                     |
 |--------------------------------|---------------------------|
 | Parameter value                | generatePrefetchCostRatio |
 | Visible or not                 | No                        |
@@ -7221,7 +7221,7 @@ Great network latency or unreachable network from the compute node to the client
 
 **Description of parameter:**
 
-| Property                       | Value                                                                        |
+| **Property**                       | **Value**                                                                        |
 |--------------------------------|------------------------------------------------------------------------------|
 | Parameter value                | globalUniqueConstraint                                                       |
 | Visible or not                 | No                                                                           |
@@ -7248,7 +7248,7 @@ To Enable Global Unique Constraint guarantees that the column with Unique Constr
 
 **Description of parameter:**
 
-| Property                       | Value                                                                                                                                |
+| **Property**                       | **Value**                                                                                                                                |
 |--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
 | Parameter value                | haMode                                                                                                                               |
 | Visible or not                 | Yes                                                                                                                                  |
@@ -7277,7 +7277,7 @@ In HotDB Server 2.5.6 and above, haMode can be set to 0,1,2,3,4,5. Among them, 4
 
 **Description of parameter:**
 
-| Property                       | Value                                   |
+| **Property**                       | **Value**                                   |
 |--------------------------------|-----------------------------------------|
 | Parameter value                | haState                                 |
 | Visible or not                 | Yes                                     |
@@ -7286,7 +7286,7 @@ In HotDB Server 2.5.6 and above, haMode can be set to 0,1,2,3,4,5. Among them, 4
 | Whether Reload is valid or not | No                                      |
 | Min Compatible Version         | 2.4.3                                   |
 
-| Property                       | Value                       |
+| **Property**                       | **Value**                       |
 |--------------------------------|-----------------------------|
 | Parameter value                | haNodeHost                  |
 | Visible or not                 | Yes                         |
@@ -7318,7 +7318,7 @@ For example, 192.168.210.22:3326,192.168.210.23:3326 and 192.168.210.24:3326 bel
 
 **Description of parameter:**
 
-| Property                       | Value                                       |
+| **Property**                       | **Value**                                       |
 |--------------------------------|---------------------------------------------|
 | Parameter value                | highCostSqlConcurrency                      |
 | Visible or not                 | No                                          |
@@ -7362,7 +7362,7 @@ mysql> show @@debug;
 
 **Description of parameter:**
 
-| Property                       | Value                                  |
+| **Property**                       | **Value**                                  |
 |--------------------------------|----------------------------------------|
 | Parameter value                | idcId                                  |
 | Visible or not                 | Yes                                    |
@@ -7371,7 +7371,7 @@ mysql> show @@debug;
 | Whether Reload is valid or not | Yes                                    |
 | Min Compatible Version         | 2.5.3.1                                |
 
-| Property                       | Value                                 |
+| **Property**                       | **Value**                                 |
 |--------------------------------|---------------------------------------|
 | Parameter value                | idcNodeHost                           |
 | Visible or not                 | Yes                                   |
@@ -7395,7 +7395,7 @@ For example, set idcId as 1 in server.xml of the master center, idcNodeHost for 
 
 **Description of parameter:**
 
-| Property                       | Value                                  |
+| **Property**                       | **Value**                                  |
 |--------------------------------|----------------------------------------|
 | Parameter value                | idleTimeout                            |
 | Visible or not                 | No                                     |
@@ -7476,7 +7476,7 @@ If it is set to 0, the front-end idle connection will never time out, and the co
 
 **Description of parameter:**
 
-| Property                       | Value                                         |
+| **Property**                       | **Value**                                         |
 |--------------------------------|-----------------------------------------------|
 | Parameter value                | joinable                                      |
 | Visible or not                 | Yes                                           |
@@ -7520,7 +7520,7 @@ mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept lim
 
 **Description of parameter:**
 
-| Property                       | Value                                                                                    |
+| **Property**                       | **Value**                                                                                    |
 |--------------------------------|------------------------------------------------------------------------------------------|
 | Parameter value                | joinBatchSize                                                                            |
 | Visible or not                 | Yes                                                                                      |
@@ -7562,7 +7562,7 @@ View actual execution result of general_log as follow:
 
 **Description of parameter:**
 
-| Property                       | Value                                  |
+| **Property**                       | **Value**                                  |
 |--------------------------------|----------------------------------------|
 | Parameter value                | joinCacheSize                          |
 | Visible or not                 | No                                     |
@@ -7596,7 +7596,7 @@ root> ll
 
 **Description of parameter:**
 
-| Property                       | Value                                                            |
+| **Property**                       | **Value**                                                            |
 |--------------------------------|------------------------------------------------------------------|
 | Parameter value                | joinLoopSize                                                     |
 | Visible or not                 | Yes                                                              |
@@ -7633,7 +7633,7 @@ View actual execution result of general_log:
 
 **Description of parameter:**
 
-| Property                       | Value                                                     |
+| **Property**                       | **Value**                                                     |
 |--------------------------------|-----------------------------------------------------------|
 | Parameter value                | keyStore                                                  |
 | Visible or not                 | Yes                                                       |
@@ -7656,7 +7656,7 @@ This parameter is used to set the path to the data certificate .jks file for con
 
 **Description of parameter:**
 
-| Property                       | Value                                                         |
+| **Property**                       | **Value**                                                         |
 |--------------------------------|---------------------------------------------------------------|
 | Parameter value                | keyStorePass                                                  |
 | Visible or not                 | Yes                                                           |
@@ -7679,7 +7679,7 @@ This parameter is used to set the password of the data certificate .jks file for
 
 **Description of parameter:**
 
-| Property                       | Value                                   |
+| **Property**                       | **Value**                                   |
 |--------------------------------|-----------------------------------------|
 | Parameter value                | lockWaitTimeout                         |
 | Visible or not                 | Yes                                     |
@@ -7710,7 +7710,7 @@ session B execute: if the set value of lockWaitTimeout is exceeded, the followin
 
 **Description of parameter:**
 
-| Property                       | Value                                                              |
+| **Property**                       | **Value**                                                              |
 |--------------------------------|--------------------------------------------------------------------|
 | Parameter value                | masterSourceInitWaitTimeout                                        |
 | Visible or not                 | No                                                                 |
@@ -7737,7 +7737,7 @@ Causes for data source timeout are: beyond limit of the system or database conne
 
 **Description of parameter:**
 
-| Property                       | Value                                  |
+| **Property**                       | **Value**                                  |
 |--------------------------------|----------------------------------------|
 | Parameter value                | maxAllowedPacket                       |
 | Visible or not                 | No                                     |
@@ -7772,7 +7772,7 @@ mysql> show variables like '%allowed%;
 
 **Description of parameter:**
 
-| Property                       | Value                     |
+| **Property**                       | **Value**                     |
 |--------------------------------|---------------------------|
 | Parameter value                | maxConnections            |
 | Visible or not                 | Yes                       |
@@ -7784,7 +7784,7 @@ mysql> show variables like '%allowed%;
 | Min Compatible Version         | 2.4.4                     |
 
 
-| Property                       | Value                                            |
+| **Property**                       | **Value**                                            |
 |--------------------------------|--------------------------------------------------|
 | Parameter value                | maxUserConnections                               |
 | Visible or not                 | Yes                                              |
@@ -7844,7 +7844,7 @@ mysql> show variables like '%max_user_connections%;
 
 **Description of parameter:**
 
-| Property                       | Value                                       |
+| **Property**                       | **Value**                                       |
 |--------------------------------|---------------------------------------------|
 | Parameter value                | maxIdleTransactionTimeout                   |
 | Visible or not                 | Yes                                         |
@@ -7875,7 +7875,7 @@ When the parameter is set as 0, it means never timeout, that is, no limit for CO
 
 **Description of parameter:**
 
-| Property                       | Value                                                     |
+| **Property**                       | **Value**                                                     |
 |--------------------------------|-----------------------------------------------------------|
 | Parameter value                | maxJoinSize                                               |
 | Visible or not                 | Yes                                                       |
@@ -7942,7 +7942,7 @@ ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check
 
 **Description of parameter:**
 
-| Property                       | Value                                                         |
+| **Property**                       | **Value**                                                         |
 |--------------------------------|---------------------------------------------------------------|
 | Parameter value                | maxLatencyForRWSplit                                          |
 | Visible or not                 | Yes                                                           |
@@ -7993,7 +7993,7 @@ mysql> select * from cd;
 
 **Description of parameter:**
 
-| Property                       | Value                            |
+| **Property**                       | **Value**                            |
 |--------------------------------|----------------------------------|
 | Parameter value                | maxNotInSubquery                 |
 | Visible or not                 | Hidden                           |
@@ -8060,7 +8060,7 @@ config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql)
 
 **Description of parameter:**
 
-| Property                       | Value                              |
+| **Property**                       | **Value**                              |
 |--------------------------------|------------------------------------|
 | Parameter value                | maxReconnectConfigDBTimes          |
 | Visible or not                 | No                                 |
@@ -8087,7 +8087,7 @@ The parameter can prevent long time consumption for configDB connection during t
 
 **Description of parameter:**
 
-| Property                       | Value                                                          |
+| **Property**                       | **Value**                                                          |
 |--------------------------------|----------------------------------------------------------------|
 | Parameter value                | maxSqlRecordLength                                             |
 | Visible or not                 | Yes                                                            |
@@ -8110,7 +8110,7 @@ When the length of the executed SQL statement exceeds the set length, it will be
 
 **Description of parameter:**
 
-| Property                       | Value                  |
+| **Property**                       | **Value**                  |
 |--------------------------------|------------------------|
 | Parameter value                | ndbSqlAddr             |
 | Visible or not                 | Yes                    |
@@ -8119,7 +8119,7 @@ When the length of the executed SQL statement exceeds the set length, it will be
 | Whether Reload is valid or not | No                     |
 | Min Compatible Version         | 2.5.2                  |
 
-| Property                       | Value                      |
+| **Property**                       | **Value**                      |
 |--------------------------------|----------------------------|
 | Parameter value                | ndbSqlUser                 |
 | Visible or not                 | Yes                        |
@@ -8128,7 +8128,7 @@ When the length of the executed SQL statement exceeds the set length, it will be
 | Whether Reload is valid or not | No                         |
 | Min Compatible Version         | 2.5.2                      |
 
-| Property                       | Value                      |
+| **Property**                       | **Value**                      |
 |--------------------------------|----------------------------|
 | Parameter value                | ndbSqlPass                 |
 | Visible or not                 | Yes                        |
@@ -8151,7 +8151,7 @@ ndbSqlAddr, ndbSqlUser, ndbSqlPass are supporting parameters: ndbSqlAddr is phys
 
 **Description of parameter:**
 
-| Property                       | Value                                            |
+| **Property**                       | **Value**                                            |
 |--------------------------------|--------------------------------------------------|
 | Parameter value                | ndbSqlDataAddr                                   |
 | Visible or not                 | Yes                                              |
@@ -8172,7 +8172,7 @@ The connection from NDB SQL to compute node, that is the communication port from
 
 **Description of parameter:**
 
-| Property                       | Value                                                                                                                                                                   |
+| **Property**                       | **Value**                                                                                                                                                                   |
 |--------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Parameter value                | ndbSqlMode                                                                                                                                                              |
 | Visible or not                 | Yes                                                                                                                                                                     |
@@ -8193,7 +8193,7 @@ none: the default value, representing Forbidden NDB function; local: NDB SQL ser
 
 **Description of parameter:**
 
-| Property                       | Value                  |
+| **Property**                       | **Value**                  |
 |--------------------------------|------------------------|
 | Parameter value                | ndbSqlVersion          |
 | Visible or not                 | Yes                    |
@@ -8202,7 +8202,7 @@ none: the default value, representing Forbidden NDB function; local: NDB SQL ser
 | Whether Reload is valid or not | No                     |
 | Min Compatible Version         | 2.5.2                  |
 
-| Property                       | Value                     |
+| **Property**                       | **Value**                     |
 |--------------------------------|---------------------------|
 | Parameter value                | ndbVersion                |
 | Visible or not                 | Yes                       |
@@ -8224,7 +8224,7 @@ ndbSqlVersion and ndbVersion are of corresponding relation, and please refer to 
 
 **Description of parameter:**
 
-| Property                       | Value                          |
+| **Property**                       | **Value**                          |
 |--------------------------------|--------------------------------|
 | Parameter value                | operateMode                    |
 | Visible or not                 | No                             |
@@ -8295,7 +8295,7 @@ In debug mode, the compute node will force to enable the parameters related to t
 
 **Description of parameter:**
 
-| Property                       | Value                                                          |
+| **Property**                       | **Value**                                                          |
 |--------------------------------|----------------------------------------------------------------|
 | Parameter value                | parkPeriod                                                     |
 | Visible or not                 | Yes                                                            |
@@ -8322,7 +8322,7 @@ This parameter is used for adjusting sleep time of cost message queue thread at 
 
 **Description of parameter:**
 
-| Property                       | Value                               |
+| **Property**                       | **Value**                               |
 |--------------------------------|-------------------------------------|
 | Parameter value                | pingLogCleanPeriod                  |
 | Visible or not                 | Hidden                              |
@@ -8347,7 +8347,7 @@ pingLogCleanPeriod parameter is 3 by default, with the optional unit being Hour,
 
 **Description of parameter:**
 
-| Property                       | Value                                                                  |
+| **Property**                       | **Value**                                                                  |
 |--------------------------------|------------------------------------------------------------------------|
 | Parameter value                | pingLogCleanPeriodUnit                                                 |
 | Visible or not                 | Hidden                                                                 |
@@ -8372,7 +8372,7 @@ pingLogCleanPeriodUnit parameter is 2 by default, meaning that the unit of ping 
 
 **Description of parameter:**
 
-| Property                       | Value                                                   |
+| **Property**                       | **Value**                                                   |
 |--------------------------------|---------------------------------------------------------|
 | Parameter value                | pingPeriod                                              |
 | Visible or not                 | Hidden                                                  |
@@ -8403,7 +8403,7 @@ In the detection process, for a certain IP address, the program will automatical
 
 **Description of parameter:**
 
-| Property                       | Value                                                |
+| **Property**                       | **Value**                                                |
 |--------------------------------|------------------------------------------------------|
 | Parameter value                | prefetchBatchInit                                    |
 | Visible or not                 | Yes                                                  |
@@ -8428,7 +8428,7 @@ The initial value can be configured within the upper and lower limits of the aut
 
 **Description of parameter:**
 
-| Property                       | Value                                              |
+| **Property**                       | **Value**                                              |
 |--------------------------------|----------------------------------------------------|
 | Parameter value                | prefetchBatchMax                                   |
 | Visible or not                 | Yes                                                |
@@ -8454,7 +8454,7 @@ The upper limit of the auto-incremental batch size. If 1000 is set, the maximum 
 
 **Description of parameter:**
 
-| Property                       | Value                                              |
+| **Property**                       | **Value**                                              |
 |--------------------------------|----------------------------------------------------|
 | Parameter value                | prefetchBatchMin                                   |
 | Visible or not                 | Yes                                                |
@@ -8479,7 +8479,7 @@ The lower limit of the auto-incremental prefetch batch size. If 100 is set, the 
 
 **Description of parameter:**
 
-| Property                       | Value                                       |
+| **Property**                       | **Value**                                       |
 |--------------------------------|---------------------------------------------|
 | Parameter value                | prefetchValidTimeout                        |
 | Visible or not                 | Yes                                         |
@@ -8504,7 +8504,7 @@ The valid timeout time of prefetching the auto-incremental batch. When set as 0,
 
 **Description of parameter:**
 
-| Property                       | Value                           |
+| **Property**                       | **Value**                           |
 |--------------------------------|---------------------------------|
 | Parameter value                | processorExecutor               |
 | Visible or not                 | Yes                             |
@@ -8531,7 +8531,7 @@ Log in to 3325 port, execute the show @@threadpool; command, and then you could 
 
 **Description of parameter:**
 
-| Property                       | Value                |
+| **Property**                       | **Value**                |
 |--------------------------------|----------------------|
 | Parameter value                | processors           |
 | Visible or not                 | Yes                  |
@@ -8558,7 +8558,7 @@ Log in to 3325 port, execute `show @@threadpool;` command, and then you could vi
 
 **Description of parameter:**
 
-| Property                       | Value                |
+| **Property**                       | **Value**                |
 |--------------------------------|----------------------|
 | Parameter value                | readOnly             |
 | Visible or not                 | No                   |
@@ -8593,7 +8593,7 @@ ERROR 1289 (HY000): Command not allowed in Read-Only mode.
 
 **Description of parameter:**
 
-| Property                       | Value            |
+| **Property**                       | **Value**            |
 |--------------------------------|------------------|
 | Parameter value                | recordAuditlog   |
 | Visible or not                 | No               |
@@ -8618,7 +8618,7 @@ recordAuditlog enables audit log or not. This parameter is used for controlling 
 
 **Description of parameter:**
 
-| Property                       | Value                         |
+| **Property**                       | **Value**                         |
 |--------------------------------|-------------------------------|
 | Parameter value                | recordCrossDNJoin             |
 | Visible or not                 | No                            |
@@ -8660,7 +8660,7 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property                       | Value                       |
+| **Property**                       | **Value**                       |
 |--------------------------------|-----------------------------|
 | Parameter value                | recordDDL                   |
 | Visible or not                 | No                          |
@@ -8696,7 +8696,7 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property                       | Value                                             |
+| **Property**                       | **Value**                                             |
 |--------------------------------|---------------------------------------------------|
 | Parameter value                | recordDeadLockSQL                                 |
 | Visible or not                 | No                                                |
@@ -8728,7 +8728,7 @@ recordDeadLockSQL log records the statement triggering deadlock:
 
 **Description of parameter:**
 
-| Property                       | Value                                           |
+| **Property**                       | **Value**                                           |
 |--------------------------------|-------------------------------------------------|
 | Parameter value                | recordHotDBErrors                               |
 | Visible or not                 | No                                              |
@@ -8759,7 +8759,7 @@ For example: when executing Create statement by user without create privilege, t
 
 **Description of parameter:**
 
-| Property                       | Value                                                            |
+| **Property**                       | **Value**                                                            |
 |--------------------------------|------------------------------------------------------------------|
 | Parameter value                | recordHotDBWarnings                                              |
 | Visible or not                 | No                                                               |
@@ -8795,7 +8795,7 @@ View `logs/sql.log` of the compute node installation directory
 
 **Description of parameter:**
 
-| Property                       | Value                                               |
+| **Property**                       | **Value**                                               |
 |--------------------------------|-----------------------------------------------------|
 | Parameter value                | recordLimitOffsetWithoutOrderby                     |
 | Visible or not                 | No                                                  |
@@ -8833,7 +8833,7 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property                       | Value                                           |
+| **Property**                       | **Value**                                           |
 |--------------------------------|-------------------------------------------------|
 | Parameter value                | recordMySQLErrors                               |
 | Visible or not                 | No                                              |
@@ -8870,7 +8870,7 @@ View `logs/hotdb.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property                       | Value                                                 |
+| **Property**                       | **Value**                                                 |
 |--------------------------------|-------------------------------------------------------|
 | Parameter value                | recordMySQLWarnings                                   |
 | Visible or not                 | Hidden                                                |
@@ -8910,7 +8910,7 @@ View `logs/sql.log` of compute node installation directory,
 
 **Description of parameter:**
 
-| Property                       | Value                                             |
+| **Property**                       | **Value**                                             |
 |--------------------------------|---------------------------------------------------|
 | Parameter value                | recordSql                                         |
 | Visible or not                 | Yes                                               |
@@ -8984,7 +8984,7 @@ crc: 321944166562
 
 **Description of parameter:**
 
-| Property                       | Value                 |
+| **Property**                       | **Value**                 |
 |--------------------------------|-----------------------|
 | Parameter value                | recordSqlAuditlog     |
 | Visible or not                 | No                    |
@@ -9009,7 +9009,7 @@ For example, execute DDL on the server of compute node and view the log output.
 
 **Description of parameter:**
 
-| Property                       | Value                 |
+| **Property**                       | **Value**                 |
 |--------------------------------|-----------------------|
 | Parameter value                | recordSqlAuditlog     |
 | Visible or not                 | No                    |
@@ -9060,7 +9060,7 @@ For example, execute DDL on the server of compute node and view the log output.
 
 **Description of parameter:**
 
-| Property                       | Value                                     |
+| **Property**                       | **Value**                                     |
 |--------------------------------|-------------------------------------------|
 | Parameter value                | recordSQLIntercepted                      |
 | Visible or not                 | No                                        |
@@ -9091,7 +9091,7 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property                       | Value                                                                                        |
+| **Property**                       | **Value**                                                                                        |
 |--------------------------------|----------------------------------------------------------------------------------------------|
 | Parameter value                | recordSQLKeyConflict                                                                         |
 | Visible or not                 | No                                                                                           |
@@ -9142,7 +9142,7 @@ insert into vtab001 values(1,'aaa');
 
 **Description of parameter:**
 
-| Property                       | Value                                       |
+| **Property**                       | **Value**                                       |
 |--------------------------------|---------------------------------------------|
 | Parameter value                | recordSQLSyntaxError                        |
 | Visible or not                 | No                                          |
@@ -9179,7 +9179,7 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property                       | Value                                       |
+| **Property**                       | **Value**                                       |
 |--------------------------------|---------------------------------------------|
 | Parameter value                | recordSQLUnsupported                        |
 | Visible or not                 | No                                          |
@@ -9224,7 +9224,7 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property                       | Value                    |
+| **Property**                       | **Value**                    |
 |--------------------------------|--------------------------|
 | Parameter value                | recordSubQuery           |
 | Visible or not                 | No                       |
@@ -9261,7 +9261,7 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property                       | Value                 |
+| **Property**                       | **Value**                 |
 |--------------------------------|-----------------------|
 | Parameter value                | recordUNION           |
 | Visible or not                 | No                    |
@@ -9298,7 +9298,7 @@ View `logs/sql.log` of compute node installation directory
 
 **Description of parameter:**
 
-| Property                       | Value                                                                               |
+| **Property**                       | **Value**                                                                               |
 |--------------------------------|-------------------------------------------------------------------------------------|
 | Parameter value                | routeByRelativeCol                                                                  |
 | Visible or not                 | No                                                                                  |
@@ -9323,7 +9323,7 @@ This function is OFF by default, that is, it does not route via Secondary Index 
 
 **Description of parameter:**
 
-| Property                       | Value                                                        |
+| **Property**                       | **Value**                                                        |
 |--------------------------------|--------------------------------------------------------------|
 | Parameter value                | serverId                                                     |
 | Visible or not                 | Yes                                                          |
@@ -9348,7 +9348,7 @@ It is used for dividing connection communication ID among the nodes in the clust
 
 **Description of parameter:**
 
-| Property                       | Value        |
+| **Property**                       | **Value**        |
 |--------------------------------|--------------|
 | Parameter value                | service port |
 | Visible or not                 | Yes          |
@@ -9357,7 +9357,7 @@ It is used for dividing connection communication ID among the nodes in the clust
 | Whether Reload is valid or not | No           |
 | Min Compatible Version         | 2.4.3        |
 
-| Property                       | Value           |
+| **Property**                       | **Value**           |
 |--------------------------------|-----------------|
 | Parameter value                | management port |
 | Visible or not                 | Yes             |
@@ -9376,7 +9376,7 @@ Management port is used to monitor compute node service information and monitori
 
 **Description of parameter:**
 
-| Property                       | Value                                                                              |
+| **Property**                       | **Value**                                                                              |
 |--------------------------------|------------------------------------------------------------------------------------|
 | Parameter value                | showAllAffectedRowsInGlobalTable                                                   |
 | Visible or not                 | Yes                                                                                |
@@ -9420,7 +9420,7 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 **Description of parameter:**
 
-| Property                       | Value                                                                   |
+| **Property**                       | **Value**                                                                   |
 |--------------------------------|-------------------------------------------------------------------------|
 | Parameter value                | skipDatatypeCheck                                                       |
 | Visible or not                 | No                                                                      |
@@ -9467,7 +9467,7 @@ Query OK, 0 rows affected (0.23 sec)
 
 **Description of parameter:**
 
-| Property                       | Value                       |
+| **Property**                       | **Value**                       |
 |--------------------------------|-----------------------------|
 | Parameter value                | socketBacklog               |
 | Visible or not                 | No                          |
@@ -9492,7 +9492,7 @@ Service port socket requires a certain period of time to process socket connecti
 
 **Description of parameter:**
 
-| Property                       | Value                                 |
+| **Property**                       | **Value**                                 |
 |--------------------------------|---------------------------------------|
 | Parameter value                | sqlTimeout                            |
 | Visible or not                 | Yes                                   |
@@ -9521,7 +9521,7 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 **Description of parameter:**
 
-| Property                       | Value                                          |
+| **Property**                       | **Value**                                          |
 |--------------------------------|------------------------------------------------|
 | Parameter value                | sslUseSM4                                      |
 | Visible or not                 | No                                             |
@@ -9554,7 +9554,7 @@ For users, this function can only be viewed through packet capture. Example: if 
 
 **Description of parameter:**
 
-| Property                       | Value                                 |
+| **Property**                       | **Value**                                 |
 |--------------------------------|---------------------------------------|
 | Parameter value                | statisticsUpdatePeriod                |
 | Visible or not                 | Yes                                   |
@@ -9589,7 +9589,7 @@ Empty set (0.03 sec)
 
 **Description of parameter:**
 
-| Property                       | Value                              |
+| **Property**                       | **Value**                              |
 |--------------------------------|------------------------------------|
 | Parameter value                | strategyForRWSplit                 |
 | Visible or not                 | Yes                                |
@@ -9721,7 +9721,7 @@ For details, please refer to [Read/write splitting](#readwrite-splitting).
 
 **Description of parameter:**
 
-| Property                       | Value                                                                                                                                 |
+| **Property**                       | **Value**                                                                                                                                 |
 |--------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
 | Parameter value                | switchByLogInFailover                                                                                                                 |
 | Visible or not                 | No                                                                                                                                    |
@@ -9749,7 +9749,7 @@ For details, please refer to [Read/write splitting](#readwrite-splitting).
 
 **Description of parameter:**
 
-| Property                       | Value                                                                   |
+| **Property**                       | **Value**                                                                   |
 |--------------------------------|-------------------------------------------------------------------------|
 | Parameter value                | switchoverTimeoutForTrans                                               |
 | Visible or not                 | Yes                                                                     |
@@ -9846,7 +9846,7 @@ For example:
 
 **Description of parameter:**
 
-| Property                       | Value                       |
+| **Property**                       | **Value**                       |
 |--------------------------------|-----------------------------|
 | Parameter value                | timerExecutor               |
 | Visible or not                 | Yes                         |
@@ -9871,7 +9871,7 @@ The parameter [adaptiveProcessor](#adaptiveprocessor) is enabled by default, and
 
 **Description of parameter:**
 
-| Property                       | Value          |
+| **Property**                       | **Value**          |
 |--------------------------------|----------------|
 | Parameter value                | timestampProxy |
 | Visible or not                 | Yes            |
@@ -9908,7 +9908,7 @@ This parameter is used for Complete Global Proxy of the table with on update cur
 
 **Description of parameter:**
 
-| Property                       | Value                                               |
+| **Property**                       | **Value**                                               |
 |--------------------------------|-----------------------------------------------------|
 | Parameter value                | unusualSQLMode                                      |
 | Visible or not                 | No                                                  |
@@ -10037,7 +10037,7 @@ when configured as 0, all counters will be recorded, and logs will be output whe
 
 **Description of parameter:**
 
-| Property                       | Value                                    |
+| **Property**                       | **Value**                                    |
 |--------------------------------|------------------------------------------|
 | Parameter value                | url                                      |
 | Visible or not                 | Yes                                      |
@@ -10046,7 +10046,7 @@ when configured as 0, all counters will be recorded, and logs will be output whe
 | Whether Reload is valid or not | Yes                                      |
 | Min Compatible Version         | 2.4.3                                    |
 
-| Property                       | Value             |
+| **Property**                       | **Value**             |
 |--------------------------------|-------------------|
 | Parameter value                | username          |
 | Visible or not                 | Yes               |
@@ -10055,7 +10055,7 @@ when configured as 0, all counters will be recorded, and logs will be output whe
 | Whether Reload is valid or not | Yes               |
 | Min Compatible Version         | 2.4.3             |
 
-| Property                       | Value             |
+| **Property**                       | **Value**             |
 |--------------------------------|-------------------|
 | Parameter value                | password          |
 | Visible or not                 | Yes               |
@@ -10106,7 +10106,7 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 
 **Description of parameter:**
 
-| Property                       | Value               |
+| **Property**                       | **Value**               |
 |--------------------------------|---------------------|
 | Parameter value                | usingAIO            |
 | Visible or not                 | No                  |
@@ -10139,7 +10139,7 @@ root> tail -n 300 hotdb.log | grep 'aio'
 
 **Description of parameter:**
 
-| Property                       | Value                                                                                        |
+| **Property**                       | **Value**                                                                                        |
 |--------------------------------|----------------------------------------------------------------------------------------------|
 | Parameter value                | version                                                                                      |
 | Visible or not                 | No                                                                                           |
@@ -10189,7 +10189,7 @@ root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
 **Description of parameter:**
 
-| Property                       | Value                            |
+| **Property**                       | **Value**                            |
 |--------------------------------|----------------------------------|
 | Parameter value                | versionComment                   |
 | Visible or not                 | No                               |
@@ -10265,7 +10265,7 @@ Server version: 5.7.23 hotpu
 
 **Description of parameter:**
 
-| Property                       | Value                                                                                       |
+| **Property**                       | **Value**                                                                                       |
 |--------------------------------|---------------------------------------------------------------------------------------------|
 | Parameter value                | [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_back_log) |
 | Visible or not                 | Yes                                                                                         |
@@ -10274,7 +10274,7 @@ Server version: 5.7.23 hotpu
 | Whether Reload is valid or not | Yes                                                                                         |
 | Min Compatible Version         | 2.4.8                                                                                       |
 
-| Property                       | Value            |
+| **Property**                       | **Value**            |
 |--------------------------------|------------------|
 | Parameter value                | CheckVIPPeriod   |
 | Visible or not                 | Yes              |
@@ -10349,7 +10349,7 @@ Backup compute node:
 
 **Description of parameter:**
 
-| Property                       | Value                                                  |
+| **Property**                       | **Value**                                                  |
 |--------------------------------|--------------------------------------------------------|
 | Parameter value                | cryptMandatory                                         |
 | Visible or not                 | No                                                     |
@@ -10393,7 +10393,7 @@ It could be enabled only after waiting for master/slave synchronization
 
 **Description of parameter:**
 
-| Property                       | Value                                                                          |
+| **Property**                       | **Value**                                                                          |
 |--------------------------------|--------------------------------------------------------------------------------|
 | Parameter value                | waitForSlaveInFailover                                                         |
 | Visible or not                 | Yes                                                                            |
@@ -10457,7 +10457,7 @@ When the master/slave data source has replication latency, it could switch to th
 
 **Description of parameter:**
 
-| Property                       | Value                                                                   |
+| **Property**                       | **Value**                                                                   |
 |--------------------------------|-------------------------------------------------------------------------|
 | Parameter value                | waitSyncFinishAtStartup                                                 |
 | Visible or not                 | Yes                                                                     |
@@ -10505,7 +10505,7 @@ Turn off the switch: No other abnormalities, the compute node could be enabled d
 
 **Description of parameter:**
 
-| Property                       | Value                                                    |
+| **Property**                       | **Value**                                                    |
 |--------------------------------|----------------------------------------------------------|
 | Parameter value                | weightForSlaveRWSplit                                    |
 | Visible or not                 | Yes                                                      |

@@ -5818,7 +5818,7 @@ INFORMATION_SCHEMA库提供当前计算节点的信息与数据，例如数据�
 
 **参数说明：**
 
-| Property       | Value                      |
+| **Property**       | **Value**                      |
 |----------------|----------------------------|
 | 参数值         | adaptiveProcessor          |
 | 是否可见       | 隐藏不显示                 |
@@ -5903,7 +5903,7 @@ mysql> show @@threadpool;
 
 **参数说明：**
 
-| Property       | Value                                          |
+| **Property**       | **Value**                                          |
 |----------------|------------------------------------------------|
 | 参数值         | allowRCWithoutReadConsistentInXA               |
 | 是否可见       | 否                                             |
@@ -5936,7 +5936,7 @@ server.xml中allowRCWithoutReadConsistentInXA参数配置 如下配置：
 
 **参数说明：**
 
-| Property      |       Value |
+| **Property**      |       Value |
 |---|---|
 | 参数值           |        allowReadConsistentInReadOnly |
 | 是否可见          |       是 |
@@ -5961,7 +5961,7 @@ server.xml中allowReadConsistentInReadOnly参数配置：
 
 **参数说明：**
 
-| Property       | Value                                                                             |
+| **Property**       | **Value**                                                                             |
 |----------------|-----------------------------------------------------------------------------------|
 | 参数值         | autoIncrement                                                                     |
 | 是否可见       | 是                                                                                |
@@ -5980,7 +5980,7 @@ server.xml中allowReadConsistentInReadOnly参数配置：
 
 **参数说明：**
 
-| Property       | Value                   |
+| **Property**       | **Value**                   |
 |----------------|-------------------------|
 | 参数值         | badConnAfterContinueGet |
 | 是否可见       | 否                      |
@@ -6003,7 +6003,7 @@ server.xml中allowReadConsistentInReadOnly参数配置：
 
 **参数说明：**
 
-| Property       | Value                                          |
+| **Property**       | **Value**                                          |
 |----------------|------------------------------------------------|
 | 参数值         | badConnAfterFastCheckAllIdle                   |
 | 是否可见       | 否                                             |
@@ -6026,7 +6026,7 @@ server.xml中allowReadConsistentInReadOnly参数配置：
 
 **参数说明：**
 
-| Property       | Value                                    |
+| **Property**       | **Value**                                    |
 |----------------|------------------------------------------|
 | 参数值         | bakUrl                                   |
 | 是否可见       | 是                                       |
@@ -6035,7 +6035,7 @@ server.xml中allowReadConsistentInReadOnly参数配置：
 | Reload是否生效 | 是                                       |
 | 最低兼容版本   | 2.4.4                                    |
 
-| Property       | Value          |
+| **Property**       | **Value**          |
 |----------------|----------------|
 | 参数值         | bakUsername    |
 | 是否可见       | 是             |
@@ -6044,7 +6044,7 @@ server.xml中allowReadConsistentInReadOnly参数配置：
 | Reload是否生效 | 是             |
 | 最低兼容版本   | 2.4.4          |
 
-| Property       | Value        |
+| **Property**       | **Value**        |
 |----------------|--------------|
 | 参数值         | bakPassword  |
 | 是否可见       | 是           |
@@ -6082,7 +6082,7 @@ description: NULL
 
 **参数说明：**
 
-| Property       | Value                                                                     |
+| **Property**       | **Value**                                                                     |
 |----------------|---------------------------------------------------------------------------|
 | 参数值         | checkConnLastUsedTime                                                     |
 | 是否可见       | 否                                                                        |
@@ -6118,7 +6118,7 @@ mysql> show @@session;
 
 **参数说明：**
 
-| Property       | Value                |
+| **Property**       | **Value**                |
 |----------------|----------------------|
 | 参数值         | CheckConnValid       |
 | 是否可见       | 否                   |
@@ -6143,7 +6143,7 @@ server.xml中手动添加一条checkConnValid的配置
 
 **参数说明：**
 
-| Property       | Value                                       |
+| **Property**       | **Value**                                       |
 |----------------|---------------------------------------------|
 | 参数值         | checkConnValidTimeout                       |
 | 是否可见       | 否                                          |
@@ -6166,7 +6166,7 @@ server.xml中手动添加一条checkConnValid的配置
 
 **参数说明：**
 
-| Property       | Value                                   |
+| **Property**       | **Value**                                   |
 |----------------|-----------------------------------------|
 | 参数值         | checkMySQLParamInterval                 |
 | 是否可见       | 否                                      |
@@ -6191,7 +6191,7 @@ server.xml中手动添加一条checkConnValid的配置
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | checkUpdate                  |
 | 是否可见       | 否                           |
@@ -6256,7 +6256,7 @@ ERROR 10041 (HY000): forbidden operation:INSERT IGNORE ... ON DUPLICATE KEY UPDA
 
 **参数说明：**
 
-| Property       | Value                                 |
+| **Property**       | **Value**                                 |
 |----------------|---------------------------------------|
 | 参数值         | clientFoundRows                       |
 | 是否可见       | 否                                    |
@@ -6289,7 +6289,7 @@ jdbc传入useAffectedRows=true，返回影响行数
 
 **参数说明：**
 
-| Property       | Value                    |
+| **Property**       | **Value**                    |
 |----------------|--------------------------|
 | 参数值         | clusterElectionTimeoutMs |
 | 是否可见       | 否                       |
@@ -6314,7 +6314,7 @@ server.xml中clusterElectionTimeoutMs参数配置 如下配置：
 
 **参数说明：**
 
-| Property       | Value                     |
+| **Property**       | **Value**                     |
 |----------------|---------------------------|
 | 参数值         | clusterHeartbeatTimeoutMs |
 | 是否可见       | 否                        |
@@ -6339,7 +6339,7 @@ server.xml中clusterHeartbeatTimeoutMs参数配置 如下配置：
 
 **参数说明：**
 
-| Property       | Value         |
+| **Property**       | **Value**         |
 |----------------|---------------|
 | 参数值         | clusterHost   |
 | 是否可见       | 是            |
@@ -6364,7 +6364,7 @@ server.xml中clusterHost参数配置 如下配置：
 
 **参数说明：**
 
-| Property       | Value         |
+| **Property**       | **Value**         |
 |----------------|---------------|
 | 参数值         | clusterName   |
 | 是否可见       | 是            |
@@ -6389,7 +6389,7 @@ server.xml中clusterName参数配置 如下配置：
 
 **参数说明：**
 
-| Property       | Value            |
+| **Property**       | **Value**            |
 |----------------|------------------|
 | 参数值         | clusterNetwork   |
 | 是否可见       | 是               |
@@ -6414,7 +6414,7 @@ server.xml中clusterNetwork参数配置 如下配置：
 
 **参数说明：**
 
-| Property       | Value                    |
+| **Property**       | **Value**                    |
 |----------------|--------------------------|
 | 参数值         | clusterPacketTimeoutMs   |
 | 是否可见       | 否                       |
@@ -6439,7 +6439,7 @@ server.xml中clusterPacketTimeoutMs参数配置 如下配置：
 
 **参数说明：**
 
-| Property       | Value        |
+| **Property**       | **Value**        |
 |----------------|--------------|
 | 参数值         | clusterPort  |
 | 是否可见       | 是           |
@@ -6464,7 +6464,7 @@ server.xml中clusterPort参数配置 如下配置：
 
 **参数说明：**
 
-| Property           |         Value |
+| **Property**           |         Value |
 |---|---|
 | 参数值                |          clusterRole |
 | 是否可见               |         是 |
@@ -6489,7 +6489,7 @@ server.xml中clusterPort参数配置 如下配置：
 
 **参数说明：**
 
-| Property       | Value          |
+| **Property**       | **Value**          |
 |----------------|----------------|
 | 参数值         | clusterSize    |
 | 是否可见       | 是             |
@@ -6514,7 +6514,7 @@ server.xml中clusterSize参数配置 如下配置：
 
 **参数说明：**
 
-| Property       | Value                         |
+| **Property**       | **Value**                         |
 |----------------|-------------------------------|
 | 参数值         | clusterStartedPacketTimeoutMs |
 | 是否可见       | 否                            |
@@ -6539,7 +6539,7 @@ server.xml中clusterStartedPacketTimeoutMs参数配置 如下配置：
 
 **参数说明：**
 
-| Property | Value |
+| **Property** | **Value** |
 |---|---|
 | 参数值 | columnPrivilegeDenied |
 | 是否可见 | 隐藏 |
@@ -6686,7 +6686,7 @@ ERROR 1143 (HY000): UPDATE command denied to user 'ztm'@'192.168.210.129' for co
 
 **参数说明：**
 
-| Property       | Value             |
+| **Property**       | **Value**             |
 |----------------|-------------------|
 | 参数值         | configMGR         |
 | 是否可见       | 是                |
@@ -6695,7 +6695,7 @@ ERROR 1143 (HY000): UPDATE command denied to user 'ztm'@'192.168.210.129' for co
 | Reload是否生效 | 是                |
 | 最低兼容版本   | 2.5.0             |
 
-| Property       | Value         |
+| **Property**       | **Value**         |
 |----------------|---------------|
 | 参数值         | bak1Url       |
 | 是否可见       | 是            |
@@ -6704,7 +6704,7 @@ ERROR 1143 (HY000): UPDATE command denied to user 'ztm'@'192.168.210.129' for co
 | Reload是否生效 | 是            |
 | 最低兼容版本   | 2.5.0         |
 
-| Property       | Value           |
+| **Property**       | **Value**           |
 |----------------|-----------------|
 | 参数值         | bak1Username    |
 | 是否可见       | 是              |
@@ -6713,7 +6713,7 @@ ERROR 1143 (HY000): UPDATE command denied to user 'ztm'@'192.168.210.129' for co
 | Reload是否生效 | 是              |
 | 最低兼容版本   | 2.5.0           |
 
-| Property       | Value         |
+| **Property**       | **Value**         |
 |----------------|---------------|
 | 参数值         | bak1Password  |
 | 是否可见       | 是            |
@@ -6737,7 +6737,7 @@ configMGR和bak1Url和bak1Username以及bak1Password属于配套参数，用于M
 
 **参数说明：**
 
-| Property       | Value                  |
+| **Property**       | **Value**                  |
 |----------------|------------------------|
 | 参数值         | crossDbXa              |
 | 是否可见       | 否                     |
@@ -6851,7 +6851,7 @@ select * from B.b;
 
 **参数说明：**
 
-| Property       | Value            |
+| **Property**       | **Value**            |
 |----------------|------------------|
 | 参数值         | cryptMandatory   |
 | 是否可见       | 是               |
@@ -6881,7 +6881,7 @@ select * from B.b;
 
 **参数说明：**
 
-| Property       | Value                          |
+| **Property**       | **Value**                          |
 |----------------|--------------------------------|
 | 参数值         | dataNodeIdleCheckPeriod        |
 | 是否可见       | 是                             |
@@ -6908,7 +6908,7 @@ select * from B.b;
 
 **参数说明：**
 
-| Property       | Value                             |
+| **Property**       | **Value**                             |
 |----------------|-----------------------------------|
 | 参数值         | deadlockCheckPeriod               |
 | 是否可见       | 是                                |
@@ -6941,7 +6941,7 @@ ERROR 1205 (HY000): Lock wait timeout exceeded; try restarting transaction
 
 **参数说明：**
 
-| Property       | Value            |
+| **Property**       | **Value**            |
 |----------------|------------------|
 | 参数值         | defaultMaxLimit  |
 | 是否可见       | 否               |
@@ -6998,7 +6998,7 @@ mysql> show processlist;
 
 **参数说明：**
 
-| Property       | Value                           |
+| **Property**       | **Value**                           |
 |----------------|---------------------------------|
 | 参数值         | dropTableRetentionTime          |
 | 是否可见       | 是                              |
@@ -7025,7 +7025,7 @@ server.xml中dropTableRetentionTime参数配置：
 
 **参数说明：**
 
-| Property       | Value                                    |
+| **Property**       | **Value**                                    |
 | -------------- | ---------------------------------------- |
 | 参数值         | ddlForDbNeedSuper                        |
 | 是否可见       | 否                                       |
@@ -7060,7 +7060,7 @@ ddlForDbNeedSuper参数指针对DATABASE的DDL语句是否需要配置额外的S
 
 **参数说明：**
 
-| Property       | Value                                    |
+| **Property**       | **Value**                                    |
 |----------------|------------------------------------------|
 | 参数值         | drBakUrl                                 |
 | 是否可见       | 是                                       |
@@ -7069,7 +7069,7 @@ ddlForDbNeedSuper参数指针对DATABASE的DDL语句是否需要配置额外的S
 | Reload是否生效 | 是                                       |
 | 最低兼容版本   | 2.5.3.1                                  |
 
-| Property       | Value                  |
+| **Property**       | **Value**                  |
 |----------------|------------------------|
 | 参数值         | drBakUsername          |
 | 是否可见       | 是                     |
@@ -7078,7 +7078,7 @@ ddlForDbNeedSuper参数指针对DATABASE的DDL语句是否需要配置额外的S
 | Reload是否生效 | 是                     |
 | 最低兼容版本   | 2.5.3.1                |
 
-| Property       | Value                |
+| **Property**       | **Value**                |
 |----------------|----------------------|
 | 参数值         | drBakPassword        |
 | 是否可见       | 是                   |
@@ -7101,7 +7101,7 @@ drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于容灾机�
 
 **参数说明：**
 
-| Property       | Value                                    |
+| **Property**       | **Value**                                    |
 |----------------|------------------------------------------|
 | 参数值         | drUrl                                    |
 | 是否可见       | 是                                       |
@@ -7110,7 +7110,7 @@ drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于容灾机�
 | Reload是否生效 | 是                                       |
 | 最低兼容版本   | 2.5.3.1                                  |
 
-| Property       | Value                |
+| **Property**       | **Value**                |
 |----------------|----------------------|
 | 参数值         | drUsername           |
 | 是否可见       | 是                   |
@@ -7119,7 +7119,7 @@ drBakUrl和drBakUsername以及drBakPassword属于配套参数，用于容灾机�
 | Reload是否生效 | 是                   |
 | 最低兼容版本   | 2.5.3.1              |
 
-| Property       | Value              |
+| **Property**       | **Value**              |
 |----------------|--------------------|
 | 参数值         | drPassword         |
 | 是否可见       | 是                 |
@@ -7142,7 +7142,7 @@ drUrl,drUsername,drPassword属于配套参数，,drUrl是指容灾机房计算�
 
 **参数说明：**
 
-| Property       | Value                                 |
+| **Property**       | **Value**                                 |
 |----------------|---------------------------------------|
 | 参数值         | enableCursor                          |
 | 是否可见       | 是                                    |
@@ -7167,7 +7167,7 @@ server.xml的enableCursor参数：
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | enableFlowControl            |
 | 是否可见       | 是                           |
@@ -7210,7 +7210,7 @@ mysql> show @@datasource;
 
 **参数说明：**
 
-| Property       | Value                             |
+| **Property**       | **Value**                             |
 |----------------|-----------------------------------|
 | 参数值         | enableHeartbeat                   |
 | 是否可见       | 是                                |
@@ -7219,7 +7219,7 @@ mysql> show @@datasource;
 | Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y      |
 | 最低兼容版本   | 2.4.3                             |
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | heartbeatPeriod              |
 | 是否可见       | 是                           |
@@ -7230,7 +7230,7 @@ mysql> show @@datasource;
 | Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本   | 2.4.3                        |
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | heartbeatTimeoutMs           |
 | 是否可见       | 是                           |
@@ -7265,7 +7265,7 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | enableLatencyCheck           |
 | 是否可见       | 是                           |
@@ -7274,7 +7274,7 @@ enableHeartbeat设置是否启用心跳检测。heartbeatPeriod设置心跳检�
 | Reload是否生效 | 2.4.5版本为N，2.4.7及以上为Y |
 | 最低兼容版本   | 2.4.5                        |
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | latencyCheckPeriod           |
 | 是否可见       | 是                           |
@@ -7311,7 +7311,7 @@ mysql> show @@latency;
 
 **参数说明：**
 
-| Property       | Value            |
+| **Property**       | **Value**            |
 |----------------|------------------|
 | 参数值         | enableListener   |
 | 是否可见       | 是               |
@@ -7362,7 +7362,7 @@ mysql> show @@datasource;
 
 **参数说明：**
 
-| Property       | Value                  |
+| **Property**       | **Value**                  |
 |----------------|------------------------|
 | 参数值         | enableOracleFunction   |
 | 是否可见       | 否                     |
@@ -7434,7 +7434,7 @@ ERROR 10010 (HY000): expect VIEW. lexer state: token=IDENTIFIER, sqlLeft=sequenc
 
 **参数说明：**
 
-| Property       | Value             |
+| **Property**       | **Value**             |
 |----------------|-------------------|
 | 参数值         | enableSleep       |
 | 是否可见       | 是                |
@@ -7477,7 +7477,7 @@ mysql> select sleep(2);
 
 **参数说明：**
 
-| Property       | Value               |
+| **Property**       | **Value**               |
 |----------------|---------------------|
 | 参数值         | enableSSL           |
 | 是否可见       | 是                  |
@@ -7500,7 +7500,7 @@ mysql> select sleep(2);
 
 **参数说明：**
 
-| Property       | Value                          |
+| **Property**       | **Value**                          |
 | -------------- | ------------------------------ |
 | 参数值         | enableSubquery                 |
 | 是否可见       | 否                             |
@@ -7538,7 +7538,7 @@ mysql> select * from test3 where id in (select id from test31);
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | enableWatchdog               |
 | 是否可见       | 是                           |
@@ -7604,7 +7604,7 @@ mysql> select * from test3 where id in (select id from test31);
 
 **参数说明：**
 
-| Property       | Value          |
+| **Property**       | **Value**          |
 |----------------|----------------|
 | 参数值         | enableXA       |
 | 是否可见       | 是             |
@@ -7623,7 +7623,7 @@ XA模式指强一致模式。在分布式事务数据库系统中，数据被拆
 
 **参数说明：**
 
-| Property       | Value                             |
+| **Property**       | **Value**                             |
 | -------------- | --------------------------------- |
 | 参数值         | enableRownum                      |
 | 是否可见       | 是                                |
@@ -7688,7 +7688,7 @@ SELECT * FROM join_cross_a_cxd a INNER JOIN join_cross_b_jwy b ON a.adnid=b.adni
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | errorsPermittedInTransaction |
 | 是否可见       | 是                           |
@@ -7771,7 +7771,7 @@ mysql> select * from ss where id=1;
 
 **参数说明：**
 
-| Property       | Value                                |
+| **Property**       | **Value**                                |
 |----------------|--------------------------------------|
 | 参数值         | failoverAutoresetslave               |
 | 是否可见       | 是                                   |
@@ -7794,7 +7794,7 @@ mysql> select * from ss where id=1;
 
 **参数说明：**
 
-| Property       | Value                      |
+| **Property**       | **Value**                      |
 |----------------|----------------------------|
 | 参数值         | frontConnectionTrxIsoLevel |
 | 是否可见       | 否                         |
@@ -7821,7 +7821,7 @@ mysql> select * from ss where id=1;
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | frontWriteBlockTimeout       |
 | 是否可见       | 是                           |
@@ -7846,7 +7846,7 @@ mysql> select * from ss where id=1;
 
 **参数说明：**
 
-| Property       | Value                     |
+| **Property**       | **Value**                     |
 |----------------|---------------------------|
 | 参数值         | generatePrefetchCostRatio |
 | 是否可见       | 否                        |
@@ -7873,7 +7873,7 @@ mysql> select * from ss where id=1;
 
 **参数说明：**
 
-| Property       | Value                          |
+| **Property**       | **Value**                          |
 |----------------|--------------------------------|
 | 参数值         | globalUniqueConstraint         |
 | 是否可见       | 否                             |
@@ -7900,7 +7900,7 @@ server.xml中globalUniqueConstraint参数配置 如下配置：
 
 **参数说明：**
 
-| Property       | Value                                                                                                   |
+| **Property**       | **Value**                                                                                                   |
 |----------------|---------------------------------------------------------------------------------------------------------|
 | 参数值         | haMode                                                                                                  |
 | 是否可见       | 是                                                                                                      |
@@ -7929,7 +7929,7 @@ server.xml中haMode参数配置 如下配置：
 
 **参数说明：**
 
-| Property       | Value                                                                                                          |
+| **Property**       | **Value**                                                                                                          |
 |----------------|----------------------------------------------------------------------------------------------------------------|
 | 参数值         | haState                                                                                                        |
 | 是否可见       | 是                                                                                                             |
@@ -7938,7 +7938,7 @@ server.xml中haMode参数配置 如下配置：
 | Reload是否生效 | 否                                                                                                             |
 | 最低兼容版本   | 2.4.3                                                                                                          |
 
-| Property       | Value                                                                                                                                                                             |
+| **Property**       | **Value**                                                                                                                                                                             |
 |----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 参数值         | haNodeHost                                                                                                                                                                        |
 | 是否可见       | 是                                                                                                                                                                                |
@@ -7994,7 +7994,7 @@ haState与haNodeHost属于配套参数。
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | highCostSqlConcurrency       |
 | 是否可见       | 否                           |
@@ -8037,7 +8037,7 @@ mysql> show @@debug;
 
 **参数说明：**
 
-| Property       | Value                          |
+| **Property**       | **Value**                          |
 |----------------|--------------------------------|
 | 参数值         | idcId                          |
 | 是否可见       | 是                             |
@@ -8046,7 +8046,7 @@ mysql> show @@debug;
 | Reload是否生效 | 是                             |
 | 最低兼容版本   | 2.5.3.1                        |
 
-| Property       | Value                                 |
+| **Property**       | **Value**                                 |
 |----------------|---------------------------------------|
 | 参数值         | idcNodeHost                           |
 | 是否可见       | 是                                    |
@@ -8070,7 +8070,7 @@ mysql> show @@debug;
 
 **参数说明：**
 
-| Property       | Value                |
+| **Property**       | **Value**                |
 |----------------|----------------------|
 | 参数值         | idleTimeout          |
 | 是否可见       | 否                   |
@@ -8148,7 +8148,7 @@ Current database: INFORMATION_SCHEMA
 
 **参数说明：**
 
-| Property   | Value                    |
+| **Property**   | **Value**                    |
 | -------------- | ---------------------------- |
 | 参数值         | instanceReadOnly             |
 | 是否可见       | 是                           |
@@ -8180,7 +8180,7 @@ ERROR 1289 (HY000): Command CREATE_DATABASE not allowed in Read-Only mode.
 
 **参数说明：**
 
-| Property       | Value                                 |
+| **Property**       | **Value**                                 |
 |----------------|---------------------------------------|
 | 参数值         | joinable                              |
 | 是否可见       | 是                                    |
@@ -8223,7 +8223,7 @@ mysql> select a.adept from join_a_jwy a join join_b_jwy b on a.adept=b.bdept lim
 
 **参数说明：**
 
-| Property       | Value                                  |
+| **Property**       | **Value**                                  |
 |----------------|----------------------------------------|
 | 参数值         | joinBatchSize                          |
 | 是否可见       | 是                                     |
@@ -8264,7 +8264,7 @@ select b.* from customer_auto_1 a join customer_auto_3 b on a.id=b.id where a.po
 
 **参数说明：**
 
-| Property       | Value                           |
+| **Property**       | **Value**                           |
 |----------------|---------------------------------|
 | 参数值         | joinCacheSize                   |
 | 是否可见       | 否                              |
@@ -8298,7 +8298,7 @@ root> ll
 
 **参数说明：**
 
-| Property       | Value                                   |
+| **Property**       | **Value**                                   |
 |----------------|-----------------------------------------|
 | 参数值         | joinLoopSize                            |
 | 是否可见       | 是                                      |
@@ -8335,7 +8335,7 @@ select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 9000;
 
 **参数说明：**
 
-| Property       | Value                               |
+| **Property**       | **Value**                               |
 |----------------|-------------------------------------|
 | 参数值         | keyStore                            |
 | 是否可见       | 是                                  |
@@ -8358,7 +8358,7 @@ select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 9000;
 
 **参数说明：**
 
-| Property       | Value                                   |
+| **Property**       | **Value**                                   |
 |----------------|-----------------------------------------|
 | 参数值         | keyStorePass                            |
 | 是否可见       | 是                                      |
@@ -8381,7 +8381,7 @@ select * from bn_a_Jwy as a inner join bn_b_jwy as b on a.a=b.a limit 9000;
 
 **参数说明：**
 
-| Property       | Value                       |
+| **Property**       | **Value**                       |
 |----------------|-----------------------------|
 | 参数值         | lockWaitTimeout             |
 | 是否可见       | 是                          |
@@ -8412,7 +8412,7 @@ session B执行：等待超过lockWaitTimeout设置参数值，则给出如下�
 
 **参数说明：**
 
-| Property       | Value                                    |
+| **Property**       | **Value**                                    |
 |----------------|------------------------------------------|
 | 参数值         | masterSourceInitWaitTimeout              |
 | 是否可见       | 否                                       |
@@ -8439,7 +8439,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 
 **参数说明：**
 
-| Property       | Value              |
+| **Property**       | **Value**              |
 |----------------|--------------------|
 | 参数值         | maxAllowedPacket   |
 | 是否可见       | 否                 |
@@ -8473,7 +8473,7 @@ mysql> show variables like '%allowed%;
 
 **参数说明：**
 
-| Property       | Value          |
+| **Property**       | **Value**          |
 |----------------|----------------|
 | 参数值         | maxConnections |
 | 是否可见       | 是             |
@@ -8484,7 +8484,7 @@ mysql> show variables like '%allowed%;
 | Reload是否生效 | 是             |
 | 最低兼容版本   | 2.4.4          |
 
-| Property       | Value                         |
+| **Property**       | **Value**                         |
 |----------------|-------------------------------|
 | 参数值         | maxUserConnections            |
 | 是否可见       | 是                            |
@@ -8540,7 +8540,7 @@ mysql> show variables like '%max_user_connections%;
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | maxIdleTransactionTimeout    |
 | 是否可见       | 是                           |
@@ -8573,7 +8573,7 @@ maxIdleTransactionTimeout参数默认值为86400000毫秒，即24小时，表示
 
 **参数说明：**
 
-| Property       | Value                                   |
+| **Property**       | **Value**                                   |
 |----------------|-----------------------------------------|
 | 参数值         | maxJoinSize                             |
 | 是否可见       | 是                                      |
@@ -8634,7 +8634,7 @@ ERROR 1104 (HY000): The SELECT would examine more than MAX_JOIN_SIZE rows; check
 
 **参数说明：**
 
-| Property       | Value                      |
+| **Property**       | **Value**                      |
 |----------------|----------------------------|
 | 参数值         | maxLatencyForRWSplit       |
 | 是否可见       | 是                         |
@@ -8683,7 +8683,7 @@ mysql> select * from cd;
 
 **参数说明：**
 
-| Property       | Value                  |
+| **Property**       | **Value**                  |
 |----------------|------------------------|
 | 参数值         | maxNotInSubquery       |
 | 是否可见       | 隐藏不显示             |
@@ -8747,7 +8747,7 @@ config | {[enableFlowControl](#enableFlowControl):"true",[recordSql](#recordSql)
 
 **参数说明：**
 
-| Property       | Value                     |
+| **Property**       | **Value**                     |
 |----------------|---------------------------|
 | 参数值         | maxReconnectConfigDBTimes |
 | 是否可见       | 否                        |
@@ -8774,7 +8774,7 @@ server.xml中maxReconnectConfigDBTimes参数如下配置：
 
 **参数说明：**
 
-| Property       | Value                              |
+| **Property**       | **Value**                              |
 |----------------|------------------------------------|
 | 参数值         | maxSqlRecordLength                 |
 | 是否可见       | 是                                 |
@@ -8843,7 +8843,7 @@ ERROR 10185 (HY000): Datasource&apos;s lantecy is too big
 
 **参数说明：**
 
-| Property       | Value           |
+| **Property**       | **Value**           |
 |----------------|-----------------|
 | 参数值         | ndbSqlAddr      |
 | 是否可见       | 是              |
@@ -8852,7 +8852,7 @@ ERROR 10185 (HY000): Datasource&apos;s lantecy is too big
 | Reload是否生效 | 否              |
 | 最低兼容版本   | 2.5.2           |
 
-| Property       | Value             |
+| **Property**       | **Value**             |
 |----------------|-------------------|
 | 参数值         | ndbSqlUser        |
 | 是否可见       | 是                |
@@ -8861,7 +8861,7 @@ ERROR 10185 (HY000): Datasource&apos;s lantecy is too big
 | Reload是否生效 | 否                |
 | 最低兼容版本   | 2.5.2             |
 
-| Property       | Value           |
+| **Property**       | **Value**           |
 |----------------|-----------------|
 | 参数值         | ndbSqlPass      |
 | 是否可见       | 是              |
@@ -8884,7 +8884,7 @@ ndbSqlAddr，ndbSqlUser，ndbSqlPass是配套参数，ndbSqlAddr是NDB SQL节点
 
 **参数说明：**
 
-| Property       | Value                         |
+| **Property**       | **Value**                         |
 |----------------|-------------------------------|
 | 参数值         | ndbSqlDataAddr                |
 | 是否可见       | 是                            |
@@ -8905,7 +8905,7 @@ NDB SQL到计算节点的连接，即计算节点所在服务器IP及NDB SQL到�
 
 **参数说明：**
 
-| Property       | Value                                                                                                   |
+| **Property**       | **Value**                                                                                                   |
 |----------------|---------------------------------------------------------------------------------------------------------|
 | 参数值         | ndbSqlMode                                                                                              |
 | 是否可见       | 是                                                                                                      |
@@ -8926,7 +8926,7 @@ none：为默认值，代表禁用NDB功能；local：NDB服务与计算节点�
 
 **参数说明：**
 
-| Property       | Value         |
+| **Property**       | **Value**         |
 |----------------|---------------|
 | 参数值         | ndbSqlVersion |
 | 是否可见       | 是            |
@@ -8935,7 +8935,7 @@ none：为默认值，代表禁用NDB功能；local：NDB服务与计算节点�
 | Reload是否生效 | 否            |
 | 最低兼容版本   | 2.5.2         |
 
-| Property       | Value         |
+| **Property**       | **Value**         |
 |----------------|---------------|
 | 参数值         | ndbVersion    |
 | 是否可见       | 是            |
@@ -8957,7 +8957,7 @@ ndbSqlVersion与ndbVersion是相对应的关系，具体对应关系可参考MyS
 
 **参数说明：**
 
-| Property       | Value            |
+| **Property**       | **Value**            |
 |----------------|------------------|
 | 参数值         | operateMode      |
 | 是否可见       | 否               |
@@ -9027,7 +9027,7 @@ recordSql=true,recordSQLSyntaxError=true,recordCrossDNJoin=true,recordUNION=true
 
 **参数说明：**
 
-| Property       | Value                            |
+| **Property**       | **Value**                            |
 |----------------|----------------------------------|
 | 参数值         | parkPeriod                       |
 | 是否可见       | 是                               |
@@ -9054,7 +9054,7 @@ server.xml的parkPeriod参数设置 如下图:
 
 **参数说明：**
 
-| Property       | Value                   |
+| **Property**       | **Value**                   |
 |----------------|-------------------------|
 | 参数值         | pingLogCleanPeriod      |
 | 是否可见       | 隐藏不显示              |
@@ -9079,7 +9079,7 @@ pingLogCleanPeriod参数默认为3，单位可选项为小时、天、月，由�
 
 **参数说明：**
 
-| Property       | Value                                            |
+| **Property**       | **Value**                                            |
 |----------------|--------------------------------------------------|
 | 参数值         | pingLogCleanPeriodUnit                           |
 | 是否可见       | 隐藏不显示                                       |
@@ -9104,7 +9104,7 @@ pingLogCleanPeriodUnit参数默认为2，代表ping日志清理周期的单位�
 
 **参数说明：**
 
-| Property       | Value                                       |
+| **Property**       | **Value**                                       |
 |----------------|---------------------------------------------|
 | 参数值         | pingPeriod                                  |
 | 是否可见       | 隐藏不显示                                  |
@@ -9134,7 +9134,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数说明：**
 
-| Property       | Value                  |
+| **Property**       | **Value**                  |
 |----------------|------------------------|
 | 参数值         | prefetchBatchInit      |
 | 是否可见       | 是                     |
@@ -9159,7 +9159,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数说明：**
 
-| Property       | Value                |
+| **Property**       | **Value**                |
 |----------------|----------------------|
 | 参数值         | prefetchBatchMax     |
 | 是否可见       | 是                   |
@@ -9184,7 +9184,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数说明：**
 
-| Property       | Value                |
+| **Property**       | **Value**                |
 |----------------|----------------------|
 | 参数值         | prefetchBatchMin     |
 | 是否可见       | 是                   |
@@ -9209,7 +9209,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | prefetchValidTimeout         |
 | 是否可见       | 是                           |
@@ -9234,7 +9234,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数说明：**
 
-| Property       | Value             |
+| **Property**       | **Value**             |
 |----------------|-------------------|
 | 参数值         | processorExecutor |
 | 是否可见       | 是                |
@@ -9261,7 +9261,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数说明：**
 
-| Property       | Value      |
+| **Property**       | **Value**      |
 |----------------|------------|
 | 参数值         | processors |
 | 是否可见       | 是         |
@@ -9288,7 +9288,7 @@ pingPeriod参数默认为3600，单位秒，该参数主要是控制ping检查�
 
 **参数说明：**
 
-| Property       | Value          |
+| **Property**       | **Value**          |
 |----------------|----------------|
 | 参数值         | readOnly       |
 | 是否可见       | 否             |
@@ -9323,7 +9323,7 @@ ERROR 1289 (HY000): Command not allowed in Read-Only mode.
 
 **参数说明：**
 
-| Property       | Value          |
+| **Property**       | **Value**          |
 |----------------|----------------|
 | 参数值         | recordAuditlog |
 | 是否可见       | 否             |
@@ -9354,7 +9354,7 @@ recordAuditlog参数用于控制是否记录管理端操作信息，开启的情
 
 **参数说明：**
 
-| Property       | Value              |
+| **Property**       | **Value**              |
 |----------------|--------------------|
 | 参数值         | recordCrossDNJoin  |
 | 是否可见       | 否                 |
@@ -9400,7 +9400,7 @@ mysql> SELECT * FROM account a JOIN borrower b;
 
 **参数说明：**
 
-| Property       | Value             |
+| **Property**       | **Value**             |
 |----------------|-------------------|
 | 参数值         | recordDDL         |
 | 是否可见       | 否                |
@@ -9440,7 +9440,7 @@ mysql> create table abc(id int);
 
 **参数说明：**
 
-| Property       | Value                    |
+| **Property**       | **Value**                    |
 |----------------|--------------------------|
 | 参数值         | recordDeadLockSQL        |
 | 是否可见       | 否                       |
@@ -9476,7 +9476,7 @@ recordDeadLockSQL日志中记录引发死锁的语句：
 
 **参数说明：**
 
-| Property       | Value                         |
+| **Property**       | **Value**                         |
 |----------------|-------------------------------|
 | 参数值         | recordHotDBErrors             |
 | 是否可见       | 否                            |
@@ -9511,7 +9511,7 @@ recordHotDBErrors日志中记录计算节点返回的错误信息。
 
 **参数说明：**
 
-| Property       | Value                            |
+| **Property**       | **Value**                            |
 |----------------|----------------------------------|
 | 参数值         | recordHotDBWarnings              |
 | 是否可见       | 否                               |
@@ -9551,7 +9551,7 @@ create table abc(id int);
 
 **参数说明：**
 
-| Property       | Value                           |
+| **Property**       | **Value**                           |
 |----------------|---------------------------------|
 | 参数值         | recordLimitOffsetWithoutOrderby |
 | 是否可见       | 否                              |
@@ -9593,7 +9593,7 @@ mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM 
 
 **参数说明：**
 
-| Property       | Value                         |
+| **Property**       | **Value**                         |
 |----------------|-------------------------------|
 | 参数值         | recordMySQLErrors             |
 | 是否可见       | 否                            |
@@ -9634,7 +9634,7 @@ mysql> select form;
 
 **参数说明：**
 
-| Property       | Value                         |
+| **Property**       | **Value**                         |
 |----------------|-------------------------------|
 | 参数值         | recordMySQLWarnings           |
 | 是否可见       | 隐藏                          |
@@ -9678,7 +9678,7 @@ mysql> update account set Account_number="$!''##";
 
 **参数说明：**
 
-| Property       | Value               |
+| **Property**       | **Value**               |
 |----------------|---------------------|
 | 参数值         | recordSql           |
 | 是否可见       | 是                  |
@@ -9758,7 +9758,7 @@ crc: 321944166562
 
 **参数说明：**
 
-| Property       | Value             |
+| **Property**       | **Value**             |
 |----------------|-------------------|
 | 参数值         | recordSqlAuditlog |
 | 是否可见       | 否                |
@@ -9809,7 +9809,7 @@ server.xml的recordSqlAuditlog参数默认false：
 
 **参数说明：**
 
-| Property       | Value                  |
+| **Property**       | **Value**                  |
 |----------------|------------------------|
 | 参数值         | recordSQLIntercepted   |
 | 是否可见       | 否                     |
@@ -9844,7 +9844,7 @@ recordSQLIntercepted记录被拦截的SQL语句，拦截的语句配置在中间
 
 **参数说明：**
 
-| Property       | Value                                  |
+| **Property**       | **Value**                                  |
 |----------------|----------------------------------------|
 | 参数值         | recordSQLKeyConflict                   |
 | 是否可见       | 否                                     |
@@ -9899,7 +9899,7 @@ mysql> insert into vtab001 values(1,'aaa');
 
 **参数说明：**
 
-| Property       | Value                            |
+| **Property**       | **Value**                            |
 |----------------|----------------------------------|
 | 参数值         | recordSQLSyntaxError             |
 | 是否可见       | 否                               |
@@ -9940,7 +9940,7 @@ SELECT * FROM;
 
 **参数说明：**
 
-| Property       | Value                  |
+| **Property**       | **Value**                  |
 |----------------|------------------------|
 | 参数值         | recordSQLUnsupported   |
 | 是否可见       | 否                     |
@@ -9989,7 +9989,7 @@ mysql> select * into vtab001_bak from vtab001;
 
 **参数说明：**
 
-| Property       | Value            |
+| **Property**       | **Value**            |
 |----------------|------------------|
 | 参数值         | recordSubQuery   |
 | 是否可见       | 否               |
@@ -10030,7 +10030,7 @@ mysql> select * FROM account a WHERE a.Branch_name IN(SELECT b.Branch_name FROM 
 
 **参数说明：**
 
-| Property       | Value           |
+| **Property**       | **Value**           |
 |----------------|-----------------|
 | 参数值         | recordUNION     |
 | 是否可见       | 否              |
@@ -10071,7 +10071,7 @@ mysql> SELECT * FROM trends UNION SELECT * from trends_uint;
 
 **参数说明：**
 
-| Property       | Value                                |
+| **Property**       | **Value**                                |
 |----------------|--------------------------------------|
 | 参数值         | routeByRelativeCol                   |
 | 是否可见       | 否                                   |
@@ -10096,7 +10096,7 @@ server.xml中routeByRelativeCol参数如下配置：
 
 **参数说明：**
 
-| Property       | Value                                |
+| **Property**       | **Value**                                |
 |----------------|--------------------------------------|
 | 参数值         | serverId                             |
 | 是否可见       | 是                                   |
@@ -10121,7 +10121,7 @@ server.xml中serverId参数如下配置：
 
 **参数说明：**
 
-| Property       | Value      |
+| **Property**       | **Value**      |
 |----------------|------------|
 | 参数值         | serverPort |
 | 是否可见       | 是         |
@@ -10130,7 +10130,7 @@ server.xml中serverId参数如下配置：
 | Reload是否生效 | 否         |
 | 最低兼容版本   | 2.4.3      |
 
-| Property       | Value       |
+| **Property**       | **Value**       |
 |----------------|-------------|
 | 参数值         | managerPort |
 | 是否可见       | 是          |
@@ -10149,7 +10149,7 @@ server.xml中serverId参数如下配置：
 
 **参数说明：**
 
-| Property       | Value                                             |
+| **Property**       | **Value**                                             |
 |----------------|---------------------------------------------------|
 | 参数值         | showAllAffectedRowsInGlobalTable                  |
 | 是否可见       | 是                                                |
@@ -10193,7 +10193,7 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 **参数说明：**
 
-| Property       | Value                                  |
+| **Property**       | **Value**                                  |
 |----------------|----------------------------------------|
 | 参数值         | skipDatatypeCheck                      |
 | 是否可见       | 否                                     |
@@ -10238,7 +10238,7 @@ Query OK, 0 rows affected (0.23 sec)
 
 **参数说明：**
 
-| Property       | Value                |
+| **Property**       | **Value**                |
 |----------------|----------------------|
 | 参数值         | socketBacklog        |
 | 是否可见       | 否                   |
@@ -10263,7 +10263,7 @@ Query OK, 0 rows affected (0.23 sec)
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | sqlTimeout                   |
 | 是否可见       | 是                           |
@@ -10289,7 +10289,7 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 **参数说明：**
 
-| Property       | Value            |
+| **Property**       | **Value**            |
 |----------------|------------------|
 | 参数值         | sslUseSM4        |
 | 是否可见       | 否               |
@@ -10322,7 +10322,7 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 **参数说明：**
 
-| Property       | Value                          |
+| **Property**       | **Value**                          |
 |----------------|--------------------------------|
 | 参数值         | statisticsUpdatePeriod         |
 | 是否可见       | 是                             |
@@ -10357,7 +10357,7 @@ Empty set (0.03 sec)
 
 **参数说明：**
 
-| Property       | Value              |
+| **Property**       | **Value**              |
 |----------------|--------------------|
 | 参数值         | strategyForRWSplit |
 | 是否可见       | 是                 |
@@ -10482,7 +10482,7 @@ mysql> select * from ss;
 
 **参数说明：**
 
-| Property       | Value                                                                 |
+| **Property**       | **Value**                                                                 |
 |----------------|-----------------------------------------------------------------------|
 | 参数值         | switchByLogInFailover                                                 |
 | 是否可见       | 否                                                                    |
@@ -10510,7 +10510,7 @@ mysql> select * from ss;
 
 **参数说明：**
 
-| Property       | Value                                    |
+| **Property**       | **Value**                                    |
 |----------------|------------------------------------------|
 | 参数值         | switchoverTimeoutForTrans                |
 | 是否可见       | 是                                       |
@@ -10607,7 +10607,7 @@ server.xml的switchoverTimeoutForTrans参数设置 如下图:
 
 **参数说明：**
 
-| Property       | Value         |
+| **Property**       | **Value**         |
 |----------------|---------------|
 | 参数值         | timerExecutor |
 | 是否可见       | 是            |
@@ -10632,7 +10632,7 @@ server.xml的switchoverTimeoutForTrans参数设置 如下图:
 
 **参数说明：**
 
-| Property       | Value          |
+| **Property**       | **Value**          |
 |----------------|----------------|
 | 参数值         | timestampProxy |
 | 是否可见       | 是             |
@@ -10669,7 +10669,7 @@ timestampProxy参数为0时，代表自动模式，当计算节点检测到存�
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | unusualSQLMode               |
 | 是否可见       | 隐藏不显示                   |
@@ -10793,7 +10793,7 @@ unusualSQLMode属隐藏参数，若要开启，需通过管理平台"更多参�
 
 **参数说明：**
 
-| Property       | Value                                    |
+| **Property**       | **Value**                                    |
 |----------------|------------------------------------------|
 | 参数值         | url                                      |
 | 是否可见       | 是                                       |
@@ -10802,7 +10802,7 @@ unusualSQLMode属隐藏参数，若要开启，需通过管理平台"更多参�
 | Reload是否生效 | 是                                       |
 | 最低兼容版本   | 2.4.3                                    |
 
-| Property       | Value        |
+| **Property**       | **Value**        |
 |----------------|--------------|
 | 参数值         | username     |
 | 是否可见       | 是           |
@@ -10811,7 +10811,7 @@ unusualSQLMode属隐藏参数，若要开启，需通过管理平台"更多参�
 | Reload是否生效 | 是           |
 | 最低兼容版本   | 2.4.3        |
 
-| Property       | Value        |
+| **Property**       | **Value**        |
 |----------------|--------------|
 | 参数值         | password     |
 | 是否可见       | 是           |
@@ -10861,7 +10861,7 @@ The last packet set successfully to the server was 0 milliseconds ago. The drive
 
 **参数说明：**
 
-| Property       | Value       |
+| **Property**       | **Value**       |
 |----------------|-------------|
 | 参数值         | usingAIO    |
 | 是否可见       | 否          |
@@ -10894,7 +10894,7 @@ root> tail -n 300 hotdb.log | grep 'aio'
 
 **参数说明：**
 
-| Property       | Value                                                            |
+| **Property**       | **Value**                                                            |
 |----------------|------------------------------------------------------------------|
 | 参数值         | version                                                          |
 | 是否可见       | 隐藏                                                             |
@@ -10943,7 +10943,7 @@ root@127.0.0.1:(none) 5.6.1-HotDB-2.4.7 04:20:14> select version();
 
 **参数说明：**
 
-| Property       | Value                  |
+| **Property**       | **Value**                  |
 |----------------|------------------------|
 | 参数值         | versionComment         |
 | 是否可见       | 隐藏                   |
@@ -11019,7 +11019,7 @@ Server version: 5.7.23 hotpu
 
 **参数说明：**
 
-| Property       | Value                                                                                       |
+| **Property**       | **Value**                                                                                       |
 |----------------|---------------------------------------------------------------------------------------------|
 | 参数值         | [VIP](https://dev.mysql.com/doc/refman/5.6/en/server-system-variables.html#sysvar_back_log) |
 | 是否可见       | 是                                                                                          |
@@ -11028,7 +11028,7 @@ Server version: 5.7.23 hotpu
 | Reload是否生效 | 是                                                                                          |
 | 最低兼容版本   | 2.4.8                                                                                       |
 
-| Property       | Value          |
+| **Property**       | **Value**          |
 |----------------|----------------|
 | 参数值         | CheckVIPPeriod |
 | 是否可见       | 是             |
@@ -11102,7 +11102,7 @@ virtual_ipaddress {
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | waitConfigSyncFinish         |
 | 是否可见       | 否                           |
@@ -11146,7 +11146,7 @@ virtual_ipaddress {
 
 **参数说明：**
 
-| Property       | Value                          |
+| **Property**       | **Value**                          |
 |----------------|--------------------------------|
 | 参数值         | waitForSlaveInFailover         |
 | 是否可见       | 是                             |
@@ -11210,7 +11210,7 @@ mysql> show @@latency;
 
 **参数说明：**
 
-| Property       | Value                            |
+| **Property**       | **Value**                            |
 |----------------|----------------------------------|
 | 参数值         | waitSyncFinishAtStartup          |
 | 是否可见       | 是                               |
@@ -11258,7 +11258,7 @@ mysql> show @@latency;
 
 **参数说明：**
 
-| Property       | Value                        |
+| **Property**       | **Value**                        |
 |----------------|------------------------------|
 | 参数值         | weightForSlaveRWSplit        |
 | 是否可见       | 是                           |
