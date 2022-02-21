@@ -1,2 +1,2 @@
-<!--Updating...-->
-[](../2.5.6.1/hotdb-management.md ':include')
+Updating...
+<!--[](../2.5.6.1/hotdb-management.md ':include')-->

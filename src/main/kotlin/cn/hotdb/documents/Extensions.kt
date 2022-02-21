@@ -14,5 +14,5 @@ fun Char.isChinese(): Boolean {
     return false
 }
 
-/** 在编辑器中显示的长度。 */
-val String.fixedLength get() = this.fold(0) { r, c -> if (c.isChinese()) r + 2 else r + 1 }
+/** 字符长度。 */
+val String.charLength get() = this.fold(0) { r, c -> if (c.isChinese()) r + 2 else r + 1 }

@@ -1,2 +1,2 @@
-<!--Updating...-->
-[](../2.5.6.1/glossary.md ':include')
+Updating...
+<!--[](../2.5.6.1/glossary.md ':include')-->
