@@ -17,11 +17,11 @@ When the master center is the current active center, the [switch the active cent
 
 When the service port and management port of the master center are both connected normally, and the management port of the DR center is connected normally, the entry page to [switch the active center](#switch-the-active-center) will be shown as:
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image1.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image1.png)
 
 When only the management port of the DR center can be connected, the cluster name will be marked in orange and the entry page to "switch the active center" will be shown as:
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image2.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image2.png)
 
 #### When the DR center is the current active center
 
@@ -31,28 +31,28 @@ When the DR center is the current active center, the "switch the active center" 
 
 When the DR center is the current active center and the service port and management port of the DR center are connected normally, the master center will be provided with the "repair the IDC " entry button:
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image3.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image3.png)
 
 ### Entry to IDC removal
 
 - When the master center is the current active center, and the service port and management port of the master center are connected normally, the DR center will be provided with the "remove the IDC" entry button:
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image4.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image4.png)
 
 - When the DR center is the current acti ve center, and the service port and management port of the DR center are connected normally, the master center will be provided with the " remove the IDC" entry button:
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image5.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image5.png)
 
 ### Other instructions
 
 In HotDB Server V.2.5.6 and above and with DR mode enabled, when more cluster deployment information is unfolded, the original buttons of \[repair the IDC], \[remove the IDC], \[switch] and \[rebuild] will be displayed in a smaller version, and button information will be shown when the cursor moves over the icon.
 
-- Repair the IDC: ![](../../assets/img/en/cross-idc-disaster-recovery-management/image6.png)
-- Remove the IDC: ![](../../assets/img/en/cross-idc-disaster-recovery-management/image7.png)
-- Switch (in the IDC): ![](../../assets/img/en/cross-idc-disaster-recovery-management/image8.png)
-- Rebuild (in the IDC): ![](../../assets/img/en/cross-idc-disaster-recovery-management/image9.png)
+- Repair the IDC: ![](/assets/img/en/cross-idc-disaster-recovery-management/image6.png)
+- Remove the IDC: ![](/assets/img/en/cross-idc-disaster-recovery-management/image7.png)
+- Switch (in the IDC): ![](/assets/img/en/cross-idc-disaster-recovery-management/image8.png)
+- Rebuild (in the IDC): ![](/assets/img/en/cross-idc-disaster-recovery-management/image9.png)
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image10.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image10.png)
 
 ## Switch the active center
 
@@ -64,7 +64,7 @@ To switch the active center mainly includes five steps: cluster information conf
 
 The cluster information confirmation page includes the confirmation of cluster information, backup information and switching results of IDC.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image11.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image11.png)
 
 **Confirm information of compute node cluster**
 
@@ -78,7 +78,7 @@ The cluster information confirmation page includes the confirmation of cluster i
 
 By default, all backup items are checked in the backup information confirmation module of the compute node cluster. You can also select the backup items by yourself. After selecting at least one item, the \[next] button will be opened normally and allow to enter the next step.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image12.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image12.png)
 
 **Confirmation of IDC switching results**
 
@@ -88,7 +88,7 @@ Displays information about the active center and master compute node after switc
 
 The pre-detection of cluster running status, configuration information, replication latency and replication relations of nodes is to ensure the normal running and data accuracy of compute nodes and data sources after the switching. The data backup ensures that the data will not be lost if switching failed.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image13.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image13.png)
 
 **Buttons description**
 
@@ -101,19 +101,19 @@ Detection items must all be passed before taking the next step. Otherwise, manua
 
 1. Abnormal high availability status of compute nodes in the master center .
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image14.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image14.png)
 
 2. The data source in the master center is not available.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image15.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image15.png)
 
 3. Abnormal DR relations of data source.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image16.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image16.png)
 
 4. No master-slave data consistency detection and global data consistency is performed for all data with 24 hours.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image17.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image17.png)
 
 The data backup before switching is mainly to back up the backup items selected in the previous step and store data under the directory `/hotdb-management/databak/cluster number/backup time`.
 
@@ -127,21 +127,21 @@ There are mainly three switching strategies:
 
 The first switching strategy is selected by default.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image18.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image18.png)
 
 #### Officially switch the IDC
 
 Confirm again before the official switching.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image19.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image19.png)
 
 - In this step, you can click the exit button to exit and switch it to an active center task. After the detection, exit will not be allowed.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image20.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image20.png)
 
 If there is a task which is quitted in the detection phase, you can either choose to continue the last task or cancel the previous unfinished task, and start a new task within 24 hours. (when you choose to continue the last task, the page will jump to the phase where the last task is quitted, and when you choose to cancel the previous unfinished task and start a new task, the last unfinished result will be ignored.)
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image21.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image21.png)
 
 The exceptions detected in the process of IDC switching can be handled manually.
 
@@ -149,15 +149,15 @@ Different switching strategies correspond to different switching processes.
 
 1. Reserve the current master center and switch its role to a DR center.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image22.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image22.png)
 
 2. Delete the current master center.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image23.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image23.png)
 
 3. Only switch the current active center to the DR center.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image24.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image24.png)
 
 #### Complete the switching
 
@@ -165,15 +165,15 @@ Operation buttons for the current standby IDC on the final "complete the switchi
 
 - Reserve the master center and exchange roles
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image25.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image25.png)
 
 - Delete the current master center.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image26.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image26.png)
 
 - Only switch the current active center to the DR center.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image27.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image27.png)
 
 ### Abnormal connections of the service port in the master center
 
@@ -181,7 +181,7 @@ Operation buttons for the current standby IDC on the final "complete the switchi
 
 When the connection status of the service port of the master center is abnormal, the service status of the compute node on the cluster information confirmation page changes correspondingly, while others remain consistent with the normal connection page.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image28.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image28.png)
 
 #### Pre-detection and data backup before switching
 
@@ -191,7 +191,7 @@ When the service port of the master center is connected abnormally, some detecti
 
 The data backup remains consistent with the master center of normal service.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image29.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image29.png)
 
 #### Strategy selection for the master center
 
@@ -199,17 +199,17 @@ There are three switching strategies provided on the page, with the second one s
 
 When the master center service cannot be connected, the original master center can be repaired after switching.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image30.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image30.png)
 
 #### Officially switch the IDC
 
 Confirm again before officially switching the IDC. The confirmation is displayed according to the strategy selection.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image31.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image31.png)
 
 - re-detection of necessary conditions is required for the "officially switch the IDC" step. You can click the exit button to exit and switch it to an active center task during the step. After the re-detection step, you cannot exit.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image32.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image32.png)
 
 The exceptions occurred during switching can be processed manually according to the specific information.
 
@@ -217,21 +217,21 @@ Different switching strategies correspond to different switching processes.
 
 1. Delete the master center
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image33.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image33.png)
 
 2. Only switch the current active center to the DR center.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image34.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image34.png)
 
 #### Complete the switching
 
 1. Delete the master center
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image35.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image35.png)
 
 2. Only switch the current active center to the DR center.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image36.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image36.png)
 
 ### Other instructions
 
@@ -247,11 +247,11 @@ After the IDC switching, you can restore the original master center to the DR ce
 
 Before repairing the IDC, it is necessary to ensure the normal service of the compute node in the current active center. Whether the service port or the management port is connected normally or not, the compute node can be repaired.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image37.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image37.png)
 
 ### Selection of repair strategy for the master center
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image38.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image38.png)
 
 There are two repair strategies provided on the page, with the first one selected by default.
 
@@ -259,27 +259,27 @@ It may take a long time to repair the master center. Please be patient.
 
 At least one item shall be selected. Otherwise, you cannot proceed to the next step.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image39.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image39.png)
 
 ### Pre-detection and data backup before repair
 
 - Before the repair of the IDC, the cluster running status, various configuration, and the replication latency and replication relations of nodes should be thoroughly detected to ensure the normal execution of the repair of the IDC.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image40.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image40.png)
 
 - The exceptions detected can be processed manually according to the specific information. You can ignore the steps which have no impact on the repair (generally prompted in orange) and proceed to the next step directly.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image41.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image41.png)
 
 ### Execution of repair strategy for the master center
 
 Confirm again before the repair of the IDC. And the confirmation is displayed according to the strategy selection.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image42.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image42.png)
 
 A re-detection of necessary conditions is required for the official repair of the IDC. You can click the exit button to exit and switch it to an active center task during the step. After the re-detection step, you cannot exit.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image43.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image43.png)
 
 The exceptions detected during the repair can be processed manually according to the specific information.
 
@@ -287,19 +287,19 @@ Different repair strategies have different repair processes.
 
 1. Roles exchange
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image44.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image44.png)
 
 2. Reserve the current role and switch back.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image45.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image45.png)
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image46.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image46.png)
 
 ### Repair complete
 
 After the repair of IDC, you can choose to switch the active center in the current standby center.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image47.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image47.png)
 
 ### Other instructions
 
@@ -315,27 +315,27 @@ When the DR center is the current active center and the service port and the man
 
 Confirm again before removing the IDC. Click the "confirm" button to enter the process of removing the IDC, and click the "Cancel" button to return to the compute node cluster page.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image48.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image48.png)
 
 During the process of removing the IDC, the dynamic loading will be performed twice to the current active center. If you click "yes", the task will be continued; if you click "no", the task will be cancelled, with a 3-second prompt " task cancelled".
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image49.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image49.png)
 
 If the dynamic loading fails, a pop-up prompt "the IDC cannot be removed temporarily" will be shown.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image50.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image50.png)
 
 After the preparation for removing the IDC is completed, confirm again whether to remove the master center. Click "yes" to. Click "no" to cancel the task of removing the IDC. The page will disappear in 3 seconds and prompt "cancel the task of removing the IDC".
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image51.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image51.png)
 
 If removal fails, the specific failure reason will be displayed, and the configuration will be rolled back.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image52.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image52.png)
 
 - If the removal is successful, a 3-second prompt "removed successfully" will be shown and the cluster info will be updated to single-node mode.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image53.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image53.png)
 
 ### Remove the DR center
 
@@ -355,7 +355,7 @@ The operation of removing the IDC will not clear the replication relations of da
 
 Operations including switching the active center, repairing the IDC, removing the IDC, switching (inside the IDC), and rebuilding (inside the IDC) will be recorded in the compute node cluster--> historical records.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image54.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image54.png)
 
 You can search by typing or selecting key words such as compute node name, operation user, access IP, execution content and execution status.
 
@@ -367,7 +367,7 @@ Only when the execution content is "switch the active center" or "repair the IDC
 
 The execution status column records the specific execution status. Hovering over the cursor, the specific status will be displayed, such as execution success, in progress..., halfway exit, and execution failed (failure reason will be marked).
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image55.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image55.png)
 
 Only when the execution content is "switch the active center" or "repair the IDC", the "details" button will be displayed in the operation column.
 
@@ -381,7 +381,7 @@ The IDC switching drill mainly includes five steps: cluster information confirma
 
 In the cluster with DR mode enabled, if the cluster meets the conditions for the IDC switching drill, you can click the \[IDC switching drill] button in the "more" drop-down box to view the animation demonstration of IDC switching.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image58.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image58.png)
 
 ### Drilling conditions
 
@@ -392,17 +392,17 @@ In the cluster with DR mode enabled, if the cluster meets the conditions for the
 - [Switching-related operations](#switch-the-active-center) are allowed in the current cluster;
 - There is no switching task in progress in the current cluster;
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image1.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image1.png)
 
 ### Under normal service of the master center
 
 When the master center and the DR center are serving normally, you can carry out the IDC switching drill.
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image59.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image59.png)
 
 #### Cluster information confirmation
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image60.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image60.png)
 
 This step is divided into three modules: information confirmation of compute node cluster, backup information confirmation of compute node cluster and confirmation of IDC switching results;
 
@@ -416,7 +416,7 @@ The confirmation of IDC switching results module displays the active center and 
 
 #### Pre-detection and data backup before switching
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image61.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image61.png)
 
 This step is divided into two modules: pre-detection before switching and data backup before switching;
 
@@ -428,7 +428,7 @@ Detection items must all be passed before taking the next step. Otherwise, manua
 
 #### Strategy selection for the master center
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image62.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image62.png)
 
 There are mainly three switching strategies: reserve the current master center and switch its role to a DR center; delete the current master center and manage the DR center as in the single-IDC mode; only switch the current active center to the DR center. And decision will be made after the switching.
 
@@ -440,7 +440,7 @@ Only switch the current active center to the DR center. And decision will be mad
 
 #### Officially switch the IDC
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image63.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image63.png)
 
 In this step, you can confirm to start the IDC switching drill or terminate the operation. It should be noted that now it is in the drill mode of IDC switching. No real operations will be performed;
 
@@ -450,13 +450,13 @@ Click "Confirm to perform immediately", the necessary conditions will be re-dete
 
 #### View the animation of IDC switching
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image64.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image64.png)
 
 Click the [view the animation of IDC switching](#view-the-animation-of-idc-switching) button, and view the animation on the popped-up new page. This step is the key step of IDC switching drill, which shows the detailed process of IDC switching through animation;
 
 During the animation, you can click the "replay" button in the upper right corner to replay the animation. The button is available in the entire process;
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image65.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image65.png)
 
 #### Complete the switching
 
@@ -464,15 +464,15 @@ This step mainly displays the results of IDC switching drill based on the previo
 
 When you select the strategy "reserve the current master center and switch its role to a DR center", the switching steps will be as follows:
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image66.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image66.png)
 
 When you select the strategy "delete the current master center and manage the DR center as in the single-IDC mode", the switching steps will be as follows:
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image67.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image67.png)
 
 When you select the strategy "only switch the current active center to the DR center. And decision will be made after the switching", the switching steps will be as follows:
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image68.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image68.png)
 
 Click "Finish" to complete the IDC switching drill and return to the compute node cluster page.
 
@@ -480,11 +480,11 @@ Click "Finish" to complete the IDC switching drill and return to the compute nod
 
 When the service of the master center is abnormal, while the DR center is serving normally, you can carry out the IDC switching drill:
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image69.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image69.png)
 
 #### Cluster information confirmation
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image70.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image70.png)
 
 This step is divided into three modules: information confirmation of compute node cluster, backup information confirmation of compute node cluster and confirmation of IDC switching results;
 
@@ -498,13 +498,13 @@ The \[next] button is only opened after selecting at least one item.
 
 #### Pre-detection and data backup before switching
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image71.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image71.png)
 
 This step is divided into two modules: pre-detection before switching and data backup before switching;
 
 The pre-detection module before switching is mainly to detect the detection items of each IDC in the current cluster. When the service of the master center is abnormal and some detection items cannot be detected, a message in yellow will be given "detection is not available, because the compute node service of the current master center cannot be connected, which however has no impact on the switching.". You can select "ignore this item and continue to the next step" and choose "yes" in the pop-up window, and other items that cannot be detected will be ignored directly;
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image72.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image72.png)
 
 The data backup before switching is mainly to back up the backup items selected in the previous step and store data under the directory /hotdb-management / databak / cluster number / backup time.
 
@@ -512,7 +512,7 @@ Detection items must all be passed before taking the next step. Otherwise, manua
 
 #### Strategy selection for the master center
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image73.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image73.png)
 
 There are mainly three switching strategies: reserve the current master center and switch its role to a DR center; delete the current master center and manage the DR center as in the single-IDC mode; only switch the current active center to the DR center. And decision will be made after the switching.
 
@@ -524,7 +524,7 @@ Only switch the current active center to the DR center. And decision will be mad
 
 #### Officially switch the IDC
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image74.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image74.png)
 
 In this step, you can confirm to start the IDC switching drill or terminate the operation. It should be noted that now it is in the drill mode of IDC switching. No real operations will be performed;
 
@@ -534,7 +534,7 @@ Click "Confirm to perform immediately", the necessary conditions will be re-dete
 
 #### View the animation of IDC switching
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image64.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image64.png)
 
 Click the [view the animation of IDC switching](#view-the-animation-of-idc-switching) button, and view the animation on the popped-up new page. This step is the key step of IDC switching drill, which shows the detailed process of IDC switching through animation;
 
@@ -542,7 +542,7 @@ When the service of the master center is abnormal, the compute node in the left 
 
 During the animation, you can click the "replay" button in the upper right corner to replay the animation. The button is available in the entire process;
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image75.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image75.png)
 
 #### Complete the switching
 
@@ -550,11 +550,11 @@ This step mainly displays the results of IDC switching drill based on the previo
 
 When you select the strategy "reserve the current master center and switch its role to a DR center", the switching steps will be as follows:
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image76.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image76.png)
 
 When you select the strategy "only switch the current active center to the DR center. And decision will be made after the switching", the switching steps will be as follows:
 
-![](../../assets/img/en/cross-idc-disaster-recovery-management/image77.png)
+![](/assets/img/en/cross-idc-disaster-recovery-management/image77.png)
 
 Click "Finish" to complete the IDC switching drill and return to the compute node cluster page.
 

@@ -39,7 +39,7 @@
 
 ### 数据传输架构
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image1.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image1.png)
 
 用户通过中心机房主计算节点的服务端口执行业务SQL操作，计算节点对SQL语句进行解析，根据分片规则判断下发到各个数据节点对应的主存储节点上执行。
 
@@ -77,7 +77,7 @@
 
 此小节将以如下主备计算节点模式的部署架构为例进行部署相关功能说明：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image2.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image2.png)
 
 各组件对应的实际连接信息，列表列举如下，部分截图内容需与之对应：
 
@@ -116,7 +116,7 @@
 1. 通过管理用户登录管理平台后，进入"集群管理 -> 计算节点集群"，点击【集群部署】按钮进入集群部署功能页面。
 2. 选择要部署的计算节点模式后，点击开启【按容灾模式部署】，选择【机房类型】为【中心机房】，点击【参数配置】进入集群部署参数配置页面。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image3.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image3.png)
 
 **(2) 参数配置：**
 
@@ -127,36 +127,36 @@
 - 存储节点和配置库的更多参数中，默认开启GTID和半同步复制，且GTID不允许关闭；
 - 新增【时区设置】模块，增加配置操作系统的时区，以保证部署的组件时区与操作系统时区一致。可填写/usr/share/zoneinfo/系统目录下的有效时区，默认为Asia/Shanghai。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image4.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image4.png)
 
 因此，中心机房参数配置参考如下（[部署架构](#部署架构)）：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image5.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image5.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image6.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image6.png)
 
 **(3) 开始部署：**
 
 1. 点击【检查并保存】，校验配置参数的合法性和完整性，并发送检测脚本到目标服务器上验证是否符合集群部署的硬件要求，不符合要求时会弹窗提示。开始部署前的集群都需要通过【检测并保存】才能进入安装。
 2. 管理平台检查无误后，点击【开始部署】进入安装进程。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image7.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image7.png)
 
 管理平台的安装部署进程中增加步骤【搭建容灾关系】，但在部署中心机房时，此步骤中不做额外操作。故部署中心机房的安装流程与单机房模式下的部署一个集群相同。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image8.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image8.png)
 
 **(4) 集群管理：**
 
 仅部署完成中心机房后，若没有部署或添加容灾机房，开启对此集群的监控后，此中心机房可视为一个单机房模式下的计算节点集群，皆按照单机房模式进行管理。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image9.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image9.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image10.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image10.png)
 
 即，中心机房部署完成后，在集群管理页面进去该机房计算节点详情页面，可以看到此时，该集群的容灾模式为关闭状态。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image11.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image11.png)
 
 此时可以选择通过集群部署功能部署对应容灾机房，也可以手动部署完成容灾机房后，在集群便捷点击【开启容灾模式】，将容灾机房信息添加至该集群管理页面。
 
@@ -171,7 +171,7 @@
 > 
 > 建议在中心机房业务低峰期部署容灾机房，否则可能会影响搭建容灾关系时的数据迁移时间。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image12.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image12.png)
 
 **(2) 参数配置：**{#容灾机房参数配置}
 
@@ -181,15 +181,15 @@
 - 配置库和存储节点的【更多参数】中的参数`--character-set-server`、`--collation-server`、`--innodb-buffer-pool-size-mb`必须与中心机房保持一致；
 - 容灾机房将默认自动生成n个中心机房已有数据节点，且节点生成信息与中心机房一致（在此例子中，即自动生成一个名为dn_01的双主类型的数据节点）。可选择其他存储节点类型，点击【生成】重新生成，但数据节点个数和名称必须与中心机房保持一致；
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image13.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image13.png)
 
 - 时间同步地址和操作系统时区必须与中心机房保持一致。
 
 因此，容灾机房参数配置参考如下（此处可回顾前文提到的[部署架构](#部署架构)，再做参数填写）：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image14.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image14.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image15.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image15.png)
 
 **(3) 开始部署：**
 
@@ -201,19 +201,19 @@
 > 
 > 因涉及数据导入，故若中心机房存储节点数据量较大，可能会存在等待时间较长的情况。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image16.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image16.png)
 
 ##### 集群管理
 
 容灾机房安装部署成功后，在集群管理页面就可以看到一个开启容灾模式且有两套机房的计算节点集群。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image17.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image17.png)
 
-- 机房类型分为中心机房和容灾机房。根据机房状态，在机房类型旁用![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image18.png)图标表示该机房类型为当前主机房；
+- 机房类型分为中心机房和容灾机房。根据机房状态，在机房类型旁用![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image18.png)图标表示该机房类型为当前主机房；
 - 两个机房拥有各自的组件配置信息和部署信息，其中当前备机房不提供【切换】和【重建】的入口，即当前备机房不允许手动切换计算节点；
 - 一个集群中的两个机房暂不提供分开停止监控或开启监控，用户权限也将两个机房视作一个集群，统一管理；
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image19.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image19.png)
 
 - 若删除开启容灾模式的集群，则将同时删除中心机房和容灾机房；
 - 在计算节点集群编辑页面，若【开启容灾模式】为开启状态，则不允许关闭；若为关闭状态， 则允许开启，并将已有集群信息作为中心机房配置信息，并可以为其添加容灾机房的配置信息。
@@ -224,7 +224,7 @@
 
 1. 多计算节点模式的容灾环境部署，必须保证计算节点版本高于（包含）2.5.6，且在集群部署入口处选择"多节点"。在此基础上，可部署容灾模式的中心机房、容灾机房。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image20.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image20.png)
 
 2. 多计算节点集群也需要先部署中心机房之后，再部署容灾机房。
 
@@ -269,7 +269,7 @@ idcNodeHost配置为中心机房的计算节点信息：主机名（IP）+管理
 
 正常部署完成后的多计算节点集群信息，在列表中信息展示示例如下：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image21.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image21.png)
 
 #### 在已运行的集群基础上部署容灾环境
 
@@ -450,34 +450,34 @@ mysql> show tables;
 
 点击【开启容灾模式】，需要填写中心机房和容灾机房两套计算节点信息，分别由两个【计算节点模式】选择器控制计算节点个数。根据不同的计算节点模式进行选择，如果是主备模式则选择主备节点，如果是集群多计算节点模式，则选择多节点。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image22.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image22.png)
 
 > !Note
 > 
 > 1. 在多节点模式下，需添加集群通信端口的配置，若计算节点分布在不同服务器且通信端口一致，则可填写一个端口即可（默认3326），若集群模式下计算节点均部署在同一台或多台服务器上，且端口不同，则需要使用英文逗号将通信端口进行间隔，例如：3326,3327,3328。且该通信端口的顺序需要同其对应的计算节点添加的顺序一一对应。否则在保存校验时会拒绝保存并提醒"计算节点在同一服务器上，通信端口必须与计算节点个数匹配且不能重复"。
 > 2. 若集群多计算节点均部署在同一台服务器上时，其通信端口+服务端口+管理端口均要彼此唯一，不能存在相同的端口组合。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image23.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image23.png)
 
 当添加的计算节点集群模式与真实的计算节点模式不匹配时，配置校验会同步校验出当前状态并给予错误提醒
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image24.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image24.png)
 
 **(2) 配置库：**
 
 若计算节点管理端口可连接，则管理平台会自动获取配置库信息，无需手动配置配置库；若计算节点管理端口不可连接，则管理平台无法获取配置库信息，需要手动添加配置库信息。勾选【手动设置配置库】后，分别填写两个机房的配置库信息。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image25.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image25.png)
 
 **(3) 测试连接：**
 
 点击【测试】测试计算节点连接是否正常。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image26.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image26.png)
 
 连接正常示例图
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image27.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image27.png)
 
 连接异常示例图
 
@@ -488,7 +488,7 @@ mysql> show tables;
 - 配置库复制状态：检测两个机房内部双主（主从）配置库的复制关系是否正常以及两个机房主配置库之间的容灾关系是否正常。若两个机房主配置库之间的容灾关系异常，则不再检测机房内部的配置库复制状态。
 - 元数据一致：两个机房中所有配置库与中心机房当前主配置库的数据是否一致。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image28.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image28.png)
 
 若中心机房故障后，容灾机房切换为当前主机房，此处的【测试】仍会以集群配置状态检测，即检测中心机房的端口连接状态、以当前主机房的当前主配置库为标准检测与其他所有配置库的数据一致性、检测机房内部与机房之间的复制状态等。
 
@@ -621,13 +621,13 @@ mysql> start slave;
 
 若已通过线下手动部署，将容灾机房的计算节点部署成功，则可以通过管理平台，修改已运行集群的容灾模式状态，填入容灾机房配置信息，将容灾机房添加至该集群。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image29.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image29.png)
 
 1. 在集群管理页面中，点击一个已运行的集群名称，进入到计算节点集群编辑页面。
 
 2. 点击【开启容灾模式】，则将已有集群信息作为中心机房配置信息，并为其添加容灾机房的配置信息，详情请参考[集群添加](#计算节点集群添加)。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image30.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image30.png)
 
 ##### 备机房存储节点添加
 
@@ -643,25 +643,25 @@ mysql> start slave;
 
 - 若该用户拥有对一个开启容灾模式的集群的访问或控制权限，且该集群运行正常，则当前主机房显示为绿色，当前备机房显示为蓝色。例如，中心机房为当前主机房，容灾机房为当前备机房，两个机房均连接正常，则显示如下图。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image31.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image31.png)
 
 - 点击任意一个机房模块都将进入对这个集群的同一套监控信息的管理平台。未在此文档特殊提及的页面，都将显示或控制当前主机房的信息。例如，当一个机房故障无法连接并切换到另一个机房后，点击任意一个机房模块，都将进入同一套主要监控当前主机房的管理平台页面。
 
 - 每一个机房模块都将显示自己机房的连接状态。连接状态显示情况与单机房模式的集群相同，包括：计算节点无法连接时，计算节点标红且为异常；配置库无法连接时，底部配置库连接显示异常；部分配置库无法连接时，鼠标移入"部分异常"字样显示具体配置库连接异常信息等
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image32.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image32.png)
 
 上图为中心机房故障，容灾机房切换为当前主机房
 
 - 若中心机房所有计算节点都无法连接，则点击任意机房面板，显示当前中心机房无法提供服务的提示信息。请确保主机房的所有计算节点被关闭后，人工启动容灾机房。若需要启动容灾机房，请参考[中心机房故障后切换至容灾机房](#中心机房故障后切换至容灾机房)。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image33.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image33.png)
 
 - 若人工介入并切换至容灾机房后，则容灾机房为当前主机房，显示为绿色。点击任意机房面板，进入监控容灾机房为当前主机房的管理平台。若人工修复中心机房后，需要重新启动中心机房，请参考[跨机房故障修复和回切](#跨机房故障修复和回切)。
 
 - 集群模式下的计算节点集群选择页面，如下图所示，其状态与主备模式类同：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image34.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image34.png)
 
 ### 部署环境体检
 
@@ -669,7 +669,7 @@ mysql> start slave;
 
 - 点击【发起体检】时，若选择开启容灾模式的集群，则可以继续选择对中心机房或容灾机房进行体检。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image35.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image35.png)
 
 - 对当前备机房的体检项中有若干项由于无法连接服务端口而被跳过检测。被跳过的体检项列举如下：
 
@@ -689,7 +689,7 @@ mysql> start slave;
 
 节点管理页面将同时管理中心机房和容灾机房的所有数据节点和存储节点。要求中心机房与容灾机房添加的数据节点个数一致，名称一一对应。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image36.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image36.png)
 
 **(1) 增加的列表信息说明：**
 
@@ -745,36 +745,36 @@ mysql> start slave;
 - 允许删除任意机房下的存储节点，但若要删除一个数据节点，则必须删除中心机房的数据节点，此时将同时将容灾机房下的对应数据节点也删除，即不允许单独删除容灾机房下的数据节点。
 - 勾选【自动搭建容灾关系】，则会自动为添加的两个机房对应数据节点之间搭建复制关系。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image37.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image37.png)
 
 **(2) 仅添加存储节点：**
 
 - 勾选【仅添加存储节点】可以为中心机房或容灾机房已存在的数据节点添加存储节点。
 - 因仅添加存储节点时，不会影响两个机房数据节点的逻辑架构，故仅添加存储节点时，将不限制任意一个机房模块下的添加的存储节点个数。例如，若希望单独为中心机房的一个数据节点下添加存储节点，将容灾机房模块下自动生成的存储节点删除即可。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image38.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image38.png)
 
 **(3) 添加缺失数据节点：**
 
 点击【添加节点】，当中心机房是当前主机房时，管理平台会检测当前两个机房的逻辑架构是否一致。若检测发现存在中心机房数据节点个数比容灾机房多，则管理平台会要求用户为容灾机房也添加对应节点，否则无法使用添加节点功能。这样的场景适用于为已有的生产环境添加容灾机房后，再单独为容灾机房补全与生产环境对应的数据节点。也可以避免人为在配置库修改节点信息的情况。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image39.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image39.png)
 
 点击【确定】后，管理平台将自动生成容灾机房缺失节点，节点类型与中心机房一致。可以修改【数据节点类型】或【存储节点组】后重新生成，但数据节点名称与个数不能修改，仍然与中心机房保持一致。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image40.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image40.png)
 
 **(4) 导入功能：**
 
 使用导入功能时，需要保证导入的中心机房与容灾机房的数据节点逻辑架构一致，即数据节点个数相同，名称一一对应，否则将导入失败。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image41.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image41.png)
 
 ##### 主从搭建
 
 主从搭建不仅可以为单个机房内的尚未搭建复制关系的存储节点搭建复制关系，还可以为两个机房主存储节点之间搭建容灾关系。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image42.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image42.png)
 
 **(1) 搭建须知：**
 
@@ -788,7 +788,7 @@ mysql> start slave;
 
 搭建过程中的报错信息统一增加机房类型，标识不满足要求的存储节点属于哪个机房。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image43.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image43.png)
 
 若中心机房故障，容灾机房切换成为当前主机房，容灾关系的主从搭建将不提供搭建。
 
@@ -800,7 +800,7 @@ mysql> start slave;
 
 **(1) 添加切换规则：**
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image44.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image44.png)
 
 选择机房类型，为单个机房内的存储节点添加切换规则。
 
@@ -808,7 +808,7 @@ mysql> start slave;
 
 **(2) 自动适配：**
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image45.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image45.png)
 
 选择机房类型，为单个机房内的数据节点自动适配切换规则。自动适配规则不变。
 
@@ -816,7 +816,7 @@ mysql> start slave;
 
 配置校验主要为计算节点相关配置提供校验功能，防止人为错误设置或线下修改计算节点相关配置导致运行异常的问题出现。在容灾模式下，做了如下适配：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image46.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image46.png)
 
 - 与存储节点相关校验的报错信息中增加机房类型，可以明确标识是哪个机房的存储节点校验不通过，由此排查问题。
 - 校验项【存储节点连接正常】修改为warning级别的校验。例如，中心机房或容灾机房任意一个存储节点连接异常，会在配置校验中出现warning提醒，但不影响动态加载。当中心机房或容灾机房故障且作为当前备机房时，此校验项仍会检测两个机房内的所有存储节点是否连接正常，但不影响动态加载。
@@ -825,13 +825,13 @@ mysql> start slave;
 - 在【配置库】中，【配置库连接正常】修改为warning级别的校验，与【存储节点连接正常】类似，检测两个机房内的所有配置库是否连接正常。
 - 在【配置库】中增加一项warning级别的校验项：配置库之间复制状态正常，即单个机房内部配置库复制状态和两个机房主配置库之间的复制状态是否正常。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image47.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image47.png)
 
 #### 计算节点参数配置
 
 计算节点参数配置可以可视化的配置两个机房的计算节点server.xml参数
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image48.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image48.png)
 
 - 计算节点下拉框显示中心机房与容灾机房的所有计算节点，默认将中心机房的主计算节点显示在最顶端
 - 通过计算节点下拉框的计算节点列表来进行计算节点参数配置页面的切换
@@ -840,7 +840,7 @@ mysql> start slave;
 
 若勾选"同步到其它计算节点"，则修改或添加任一计算节点参数，会自动同步到其它所有计算节点。若容灾机房切换为当前主机房，则将同步容灾机房的主计算节点参数。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image50.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image50.png)
 
 > !Note
 > 
@@ -850,7 +850,7 @@ mysql> start slave;
 
 若存在计算节点故障，则计算节点选择框中不再显示已经故障的计算节点
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image51.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image51.png)
 
 **(3) 配置库启用：**
 
@@ -858,13 +858,13 @@ mysql> start slave;
 
 1. 当主配置库发生故障后，计算节点参数配置页面显示如下：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image52.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image52.png)
 
 2. 若确定主配置库已恢复正常且与备配置库数据一致且最新时，可点击[计算节点参数配置](#计算节点参数配置)页面启用按钮对主配置库进行启用。
 
-3. 点击![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image53.png)启用按钮后，再点击【动态加载】按钮，即可将主配置库重新启用
+3. 点击![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image53.png)启用按钮后，再点击【动态加载】按钮，即可将主配置库重新启用
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image54.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image54.png)
 
 注意事项：
 
@@ -872,13 +872,13 @@ mysql> start slave;
 - 当容灾机房为当前备机房时，启用的从配置库时需要确认当前主配置库为可用状态，否则无法启用从配置库，即启用从配置库前必须先启用主配置库
 - 若要启用两个机房中任一一个配置库，需要保证当前机房内与机房间的复制状态都正常。若任一一条复制状态存在异常，动态加载会成功但有告警信息，则如下：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image55.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image55.png)
 
 **(4) 新增参数：**{#新增参数}
 
 1. 配置容灾机房的配置库
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image56.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image56.png)
 
 增加容灾机房配置库配置信息，包括容灾机房主从配置库地址以及对应的用户名和密码。中心机房与容灾机房指机房类型，不随机房状态而改变。
 
@@ -953,19 +953,19 @@ idcNodeHost(另一个机房计算节点信息)：填写另一个机房的所有�
 
 配置库组件始终显示在主拓扑的最左侧。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image57.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image57.png)
 
 - 2.5D主拓扑同样增加配置库组件，功能与主拓扑一致。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image58.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image58.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image59.png)为无状态图标，该图标连接一个或两个配置库![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image60.png)，分别表示单节点配置库和双主配置库。在单机房模式下，若连接三个及以上的配置库，则代表MGR模式的配置库。当所有配置库不可用时，![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image59.png)会显示为橙色。
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image59.png)为无状态图标，该图标连接一个或两个配置库![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image60.png)，分别表示单节点配置库和双主配置库。在单机房模式下，若连接三个及以上的配置库，则代表MGR模式的配置库。当所有配置库不可用时，![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image59.png)会显示为橙色。
 
 与存储节点类似，配置库图标为红色代表存在故障，鼠标移入红色图标可显示故障原因；橙色代表存在复制状态异常，鼠标移入橙色图标可显示复制异常原因。
 
 配置库上显示"复制时延"的监控信息。与存储节点类似，复制时延可以在"设置 ---> 拓扑图报警设置"中的配置库模块下设置复制时延的报警阈值。若当前复制时延超过报警阈值，则"复制时延"悬浮信息会标黄并用向上箭头表示。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image61.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image61.png)
 
 2. 历史信息面板增加配置库监控信息
 
@@ -979,39 +979,39 @@ idcNodeHost(另一个机房计算节点信息)：填写另一个机房的所有�
 
 机房切换的信息可以作为历史信息的分割线。此例中，在机房切换信息以前的历史信息都为中心机房历史信息，切换信息以后的为容灾机房历史信息。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image62.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image62.png)
 
 **(2) 容灾拓扑：**
 
-在主拓扑或2.5D主拓扑页面，点击【![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image63.png)】切换至容灾拓扑，若再次点击则回切至主拓扑或2.5D主拓扑页面。
+在主拓扑或2.5D主拓扑页面，点击【![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image63.png)】切换至容灾拓扑，若再次点击则回切至主拓扑或2.5D主拓扑页面。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image63.png)的角标代表，在容灾拓扑中，容灾机房中的当前为error状态且未修复的组件个数，也就是历史信息面板中当前存在仍未被修复的error信息数，包括实际无法连接的组件数以及两个机房之间的存储节点或配置库复制状态异常。
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image63.png)的角标代表，在容灾拓扑中，容灾机房中的当前为error状态且未修复的组件个数，也就是历史信息面板中当前存在仍未被修复的error信息数，包括实际无法连接的组件数以及两个机房之间的存储节点或配置库复制状态异常。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image64.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image64.png)
 
 若中心机房故障，容灾机房切换为当前主机房，则主拓扑此时显示为容灾机房拓扑图，容灾拓扑的角标仍会显示容灾机房当前error数。
 
 容灾拓扑中从左到右共有六层组件，从左到右1-3层依次表示中心机房的计算节点、数据节点（配置库）和存储节点（配置库）；4-6层依次表示容灾机房的存储节点（配置库）、数据节点（配置库）和计算节点
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image65.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image65.png)
 
 一个机房内部的连线代表含义与主拓扑一致。若容灾机房主配置库或主存储节点服务异常，则容灾机房的对应数据节点下的所有存储节点也置为红色不可用状态且连线为灰色。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image66.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image66.png)
 
 W图为容灾机房配置库服务异常
 
 W两个机房之间的连线，即中心机房当前主存储节点和容灾机房当前主存储节点之间的连线表示容灾状态。若容灾机房状态异常，则机房之间连线为灰色
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image67.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image67.png)
 
 图为容灾机房配置库容灾关系复制异常
 
 中心机房和容灾机房中存在复制时延的存储节点会显示复制时延的监控信息，若复制时延为0，则不显示。复制时延与主拓扑一样，都在"设置 ---> 拓扑图报警设置"中的配置库或存储节点模块下设置报警阈值。
 
-容灾机房的当前主计算节点，会显示容灾时延的监控信息。配置库和存储节点的容灾时延统一在容灾拓扑页面的【![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image68.png)】中设置报警阈值。
+容灾机房的当前主计算节点，会显示容灾时延的监控信息。配置库和存储节点的容灾时延统一在容灾拓扑页面的【![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image68.png)】中设置报警阈值。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image69.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image69.png)
 
 配置库和存储节点显示顺序从上到下依次为：配置库始终显示在最上方、存储节点故障（红色）、存储节点预警（黄色）、复制时延或容灾时延出现预警的存储节点，正常节点显示最下方。
 
@@ -1019,15 +1019,15 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 此时不再检测中心机房主存储节点到容灾机房主存储节点之间的容灾状态，故不显示容灾状态的连线。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image70.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image70.png)
 
 若为多计算节点集群模式下的容灾架构，则界面显示示例图如下，其功能同主备模式类同：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image71.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image71.png)
 
 **(3) 容灾拓扑的历史信息面板：**
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image72.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image72.png)
 
 无论机房是否发生故障，历史信息面板都会监控两个机房的状态信息。若中心机房故障且容灾机房切换为当前主机房，则除了不再监控两个机房之间的容灾关系，仍会检测其他监控信息。
 
@@ -1056,7 +1056,7 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 物理拓扑图增加机房切换的选择器，可查看中心机房或容灾机房的组件与服务器的所属关系，以及服务器资源的使用情况和各组件服务的运行健康状态。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image73.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image73.png)
 
 #### 其他监控项
 
@@ -1064,7 +1064,7 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 计算节点服务器资源可以选择监控中心机房或容灾机房的所有可连接管理端口的计算节点。在【添加监控项】选择要监控的中心机房或容灾机房的计算节点，默认选择当前主机房的主计算节点。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image74.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image74.png)
 
 若计算节点的管理端口无法连接，例如计算节点发生故障或容灾机房计算节点没有开启管理端口时，则无法勾选并监控该计算节点。
 
@@ -1074,13 +1074,13 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 （前提需要在"配置 -> 服务器"中配置服务器的SSH信息）
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image75.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image75.png)
 
 **(3) 网络质量**
 
 可查看跨机房网络质量监控信息，跨机房网络质量拓扑与单机房网络质量拓扑有部分区别。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image76.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image76.png)
 
 页面说明：
 
@@ -1091,7 +1091,7 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 机房切换说明：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image77.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image77.png)
 
 如果发生机房切换，即当前容灾机房的计算节点提供服务，则仅展示容灾机房的网络质量监控状态， 中心机房所有组件均置灰显示不做任何监控。且不存在容灾机房到中心机房的网络连线，同时容灾机房的网络连线关系退化成单机房一致。
 
@@ -1099,11 +1099,11 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 监控信息管理是可以通过计算节点管理端口，查看两个机房的计算节点前后端连接之间的关系及其他有效管理信息等
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image78.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image78.png)
 
 若【查询命令】选择【服务端连接信息：show processlist】，则默认显示当前主机房的主计算节点服务端连接信息：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image79.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image79.png)
 
 ### 管理
 
@@ -1111,17 +1111,17 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 管理平台不提供容灾机房的数据备份功能。若希望将当前主机房的数据备份恢复到另一个机房，可以通过【发起备份】中的【同时备份到远程路径】的勾选框，将当前机房的每个存储节点的备份文件通过scp命令全部传输到一个远程路径后，线下根据存储节点的对应情况，将备份文件一一恢复到对应存储节点。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image80.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image80.png)
 
 #### 一键迁库
 
 管理平台支持将中心机房或容灾机房的存储节点迁移到新的存储节点，并重新搭建容灾关系。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image81.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image81.png)
 
 - 可以通过机房类型，选择迁移中心机房或容灾机房的存储节点，但仍需满足原来的使用迁库功能的前提，例如先需要手动把旧存储节点的数据导入到新存储节点并搭建好从旧存储节点到新存储节点的复制关系等。需要注意的是：配置的目标新数据库实例不能与容灾机房现有实例重合，即检测填写的实例不能与配置库中现有的所有存储节点实例重合。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image82.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image82.png)
 
 - 在【第四步：迁库】中，会对中心机房的当前主存储节点与容灾机房的当前主存储节点搭建复制关系。例如，若中心机房的数据节点进行迁移，管理平台会为中心机房的目标主存储节点和容灾机房的当前主存储节点搭建复制关系。
 
@@ -1131,13 +1131,13 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 主备一致性检测，可支持选择不同机房维度，并对其分别做存储节点、配置库主备数据一致性校验。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image83.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image83.png)
 
 **(1) 选择机房类型：**
 
 机房类型为多选下拉框，即可以选择中心机房或容灾机房或同时选择两个机房。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image84.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image84.png)
 
 选择逻辑库维度或存储节点维度时：
 
@@ -1147,13 +1147,13 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 **(2) 增加配置库维度：**
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image85.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image85.png)
 
 - 选择配置库维度后，选择要检测的配置库地址，并填写并发数（默认为2）
 - 点击【发起检测】，检测所选的配置库与当前主机房的主配置库的数据一致性。
 - 点击【检测结果】查看检测结果详情。若存在不一致，则检测结果中将显示在哪个配置库上对哪一张配置库表的不一致详情。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image86.jpeg)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image86.jpeg)
 
 ### 事件
 
@@ -1165,11 +1165,11 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 邮件所属信息增加：是否开启容灾模式、当前主机房类型以及两个机房的计算节点信息
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image87.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image87.png)
 
 **(2) 存储节点信息监控：**
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image88.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image88.png)
 
 存储节点信息监控中，对于【复制延迟】和【存储节点复制状态】，除了提醒当前主机房内部存储节点异常情况，还增加提醒中心机房当前主存储节点和容灾机房当前主存储节点之间的容灾延迟和容灾状态异常。
 
@@ -1179,11 +1179,11 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 - 容灾延迟对应"监控 -> [智能逻辑拓扑](#智能逻辑拓扑)"中容灾拓扑的容灾时延设置
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image69.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image69.png)
 
 **(3) 配置库信息监控：**
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image89.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image89.png)
 
 增加配置库信息监控中，提醒当前主机房内配置库之间以及两个机房的主配置库之间的复制延迟和复制异常情况
 
@@ -1192,7 +1192,7 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 - 复制延迟对应"设置 -> 拓扑图报警设置"中配置库模块下的复制时延
 - 容灾延迟对应"监控 -> [智能逻辑拓扑](#智能逻辑拓扑)"中容灾拓扑的容灾时延设置
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image69.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image69.png)
 
 #### 其他
 
@@ -1200,13 +1200,13 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 历史事件会显示管理平台记录的当前主机房所发生的历史事件。内容包括：任务执行完成通知、定时检测异常通报、平台触发预警提示等。机房类型显示为该条历史事件发生时的机房类型。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image90.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image90.png)
 
 **(2) 计算节点日志：**
 
 计算节点日志记录中心机房和容灾机房的计算节点在运行过程中产生的日志信息。默认显示当前主机房的主计算节点日志信息，可以多选或查看其他计算节点日志信息。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image91.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image91.png)
 
 ### 其他
 
@@ -1214,19 +1214,19 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 服务器增加机房类型的适配，管理集群中所有组件的服务器SSH信息。配置或添加服务器SSH信息时，需要选择该服务器对应的机房类型。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image92.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image92.png)
 
 #### 存储节点密码
 
 存储节点密码同样增加机房类型的适配，显示所有存储节点对应的机房类型。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image93.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image93.png)
 
 #### 信息收集
 
 管理平台的信息收集工具支持收集两个机房所有组件的用于异常分析的日志与配置文件等。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image94.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image94.png)
 
 若两个机房中存在服务器无法连接，可选择跳过收集该服务器信息或取消收集任务。若两个机房中存在计算节点服务无法连接，可手动输入计算节点安装目录后继续执行收集任务。即机房故障或容灾机房计算节点服务端口未开启，都不影响信息收集任务。
 
@@ -1236,11 +1236,11 @@ W两个机房之间的连线，即中心机房当前主存储节点和容灾机�
 
 选择需要升级的计算节点集群，若该集群开启容灾模式，则集群模式和计算节点将分别用绿色表示中心机房，蓝色表示容灾机房的集群模式和计算节点。上传升级包后点击【开始更新】即进入升级进程。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image95.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image95.png)
 
 升级完成后可查看详细更新日志：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image96.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image96.png)
 
 > !Note
 > 
@@ -1329,7 +1329,7 @@ hc01与hc02之间搭建双主复制关系；hc01与hc03之间搭建主备关系�
 
 图表表示（线条箭头表示数据流向）：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image97.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image97.png)
 
 所有MySQL实例版本均为5.7.25，均开启GTID，所有复制关系均默认开启半同步复制。其他参数配置、系统参数设置与默认安装部署条件等同。
 
@@ -1366,7 +1366,7 @@ hc01与hc02之间搭建双主复制关系；hc01与hc03之间搭建主备关系�
 
 ##### 手动切换
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image98.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image98.png)
 
 进入[集群管理](#集群管理)->"计算节点集群"页面，当手动点击具有主备关系的计算节点组对应的【切换】按钮进行手动计算节点切换操作时，仅在中心机房做切换，对容灾机房计算节点服务无影响。所有中心机房计算节点服务高可用切换、重建操作逻辑同普通单机房模式逻辑一致。
 
@@ -1388,7 +1388,7 @@ hc01与hc02之间搭建双主复制关系；hc01与hc03之间搭建主备关系�
 
 当通过管理平台[节点管理](#存储节点.故障切换)页面点击中心机房对应的【切换】按钮时，计算节点会自动校验当前中心机房主库和双主备库或从库复制关系是否正常以及复制延迟是否在10s以内，符合条件时可切换成功，同时容灾机房主存储节点会自动与切换后的中心机房双主备库或从库搭建复制关系，无需人工介入。即：ds01切换至ds02后，会将ds01与ds03的复制关系清除，ds03作为从机与ds02重新搭建复制关系。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image99.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image99.png)
 
 > !Note
 > 
@@ -1471,11 +1471,11 @@ hc01与hc02之间搭建双主复制关系；hc01与hc03之间搭建主备关系�
 
 第2步：通过管理平台管理员界面的[集群管理](#集群管理)->"计算节点集群"页面删除原容灾模式的集群组；
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image100.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image100.png)
 
 第3步：依旧通过[集群管理](#集群管理)->"计算节点集群"页面的【集群添加】操作，单独添加当前容灾切换后的新计算节点集群，并配置容灾切换后的配置库信息（默认只要计算节点管理端口当前可连接，此处无需手动再做配置）。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image101.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image101.png)
 
 第4步：为普通用户添加新集群组的管理权限
 
@@ -1483,17 +1483,17 @@ hc01与hc02之间搭建双主复制关系；hc01与hc03之间搭建主备关系�
 
 第6步：进入[配置](#配置)->[计算节点参数配置](#计算节点参数配置)页面按如下标红所示，修改相关配置参数：集群模式选择主备，机房ID选择中心机房（此处为[场景二](#场景二原中心机房作为当前容灾机房)做铺垫），配置库连接信息按实际当前配置库信息填写并保存；
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image102.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image102.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image103.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image103.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image104.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image104.png)
 
 第7步：进入[配置](#配置)->[节点管理](#节点管理)页面删除原中心机房存留数据（可选择按IP搜索，也可选择按不可用状态搜索，但需要注意不要误删当前主计算节点集群所用数据）
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image105.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image105.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image106.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image106.png)
 
 第8步：进入当前主机房主配置库，将hotdb_datasource 表内所有的机房ID都更换为1（1代表中心机房，在不开启容灾情况下，无实际意义）
 
@@ -1606,17 +1606,17 @@ select * from hotdb_config_info limit 1,5;
 
 第7步：管理员账户登录管理平台，至[集群管理](#集群管理)->"计算节点集群"页面将容灾模式开启，并配置原中心机房计算节点为当前容灾机房计算节点。测试通过后保存。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image107.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image107.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image108.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image108.png)
 
 第8步：普通账户登录管理平台，选择新添加的容灾集群。
 
 第9步：至[配置](#配置)-> [节点管理](#节点管理)页面添加容灾机房数据节点、存储节点。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image109.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image109.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image110.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image110.png)
 
 第10步：检查当前主机房复制关系以及容灾关系复制状态是否异常， 可以通过[节点管理](#节点管理)以及[配置校验](#配置校验)页面分别查看存储节点、配置库的各项复制状态是否正常。
 
@@ -1751,11 +1751,11 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 
 替换之后的页面显示示例：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image111.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image111.png)
 
 第8步：登录管理平台，将原中心机房（现容灾机房）因机房自动置为不可用存储节点进行启用：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image112.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image112.png)
 
 第9步：检查当前主机房复制关系以及容灾关系复制状态是否异常， 可以通过[节点管理](#节点管理)以及[配置校验](#配置校验)页面分别查看存储节点、配置库的各项复制状态是否正常。
 
@@ -1763,11 +1763,11 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 
 第12步：检查拓扑图及各项监控指标是否正常，以及通过当前主机房计算节点查看管理端`show @@heartbeat`命令出来的结果心跳是否均已在监控状态，且`show @@configurl`、`show @@datanode `均已显示机房角色进行了互换。示例：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image113.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image113.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image114.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image114.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image115.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image115.png)
 
 ##### 特殊说明
 
@@ -1819,19 +1819,19 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 
 建议将所有计算节点、存储节点的服务状态纳入邮件提醒范围，以便及时知晓各核心组件的故障信息。且此次新增配置库复制状态监控，可以在[事件](#事件)-> [通知策略](#通知策略) -> "添加通知策略"页面进行设置。例如下图配置库复制状态检测示例所示：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image116.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image116.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image117.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image117.png)
 
 邮件提醒内容中，会标记具体出现问题的机房类型：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image118.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image118.png)
 
 #### 健康体检
 
 集群正常部署完成后，均建议通过管理平台管理员用户进入[集群管理](#集群管理)->[部署环境体检](#部署环境体检)页面，对中心机房、容灾机房进行环境体检，并按提示，对不合要求的配置进行优化。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image119.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image119.png)
 
 #### 数据备份
 
@@ -1845,7 +1845,7 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 
 建议开始使用时，就在[配置](#配置)-> [服务器](#服务器)页面，将服务器SSH权限配置上，以便通过管理平台协助完成一些简单的运维管理监控操作。
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image120.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image120.png)
 
 #### 主备一致性校验
 
@@ -1887,9 +1887,9 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 
 - 存储节点从机半同步复制设置等待从机返回ack个数与与实际个数不一致（可能导致RPO不为0）：
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image121.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image121.png)
 
-![](../../assets/img/zh/cross-idc-disaster-recovery-deployment/image122.png)
+![](/assets/img/zh/cross-idc-disaster-recovery-deployment/image122.png)
 
 ```
 2019-12-10 12:16:00.634 [WARN] [TIMER] [$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - datasource: 169([id:169,nodeId:43 192.168.220.181:3307/db2531 status:1,charset:utf8mb4])'s RPL_SEMI_SYNC_MASTER_WAIT_FOR_SLAVE_COUNT=2, real slave count=1

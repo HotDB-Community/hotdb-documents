@@ -15,13 +15,13 @@
 
 智能巡检主要包括：巡检结果报告、巡检指标设置、历史巡检记录三个TAB，默认展示巡检结果报告页，且显示最新一次的巡检结果。当无历史巡检结果时，提示："当前暂无任何巡检记录信息，您可以选择立即发起一次巡检任务"。
 
-![](../../assets/img/zh/intelligent-inspection/image1.png)
+![](/assets/img/zh/intelligent-inspection/image1.png)
 
 ### 巡检结果报告
 
 #### 页面展示
 
-![](../../assets/img/zh/intelligent-inspection/image2.png)
+![](/assets/img/zh/intelligent-inspection/image2.png)
 
 页面搜索选项，包括：按主机名模糊搜索、按巡检状态搜索
 
@@ -41,19 +41,19 @@
 
 **(1) 发起巡检**
 
-![](../../assets/img/zh/intelligent-inspection/image3.png)
+![](/assets/img/zh/intelligent-inspection/image3.png)
 
 点击发起巡检，弹出巡检对象选择框
 
 **(2) 巡检对象选择**
 
-![](../../assets/img/zh/intelligent-inspection/image4.png)
+![](/assets/img/zh/intelligent-inspection/image4.png)
 
 勾选需要发起巡检的对象，发起巡检（全选，可快速勾选所有巡检对象）
 
 **(3) 正在巡检**
 
-![](../../assets/img/zh/intelligent-inspection/image5.png)
+![](/assets/img/zh/intelligent-inspection/image5.png)
 
 发起巡检后，会跳转至历史巡检记录页面，并显示当前正在巡检的任务
 
@@ -63,7 +63,7 @@
 
 **(4) 巡检完成**
 
-![](../../assets/img/zh/intelligent-inspection/image6.png)
+![](/assets/img/zh/intelligent-inspection/image6.png)
 
 巡检完成后，『任务状态』会更新为巡检完成
 
@@ -75,7 +75,7 @@
 
 **(5) 取消巡检**
 
-![](../../assets/img/zh/intelligent-inspection/image7.png)
+![](/assets/img/zh/intelligent-inspection/image7.png)
 
 点击强制取消，可取消当前正在巡检的任务
 
@@ -85,13 +85,13 @@
 
 取消后的巡检任务，不会在hotdb-management/data/Inspection目录下生成文件
 
-![](../../assets/img/zh/intelligent-inspection/image8.png)
+![](/assets/img/zh/intelligent-inspection/image8.png)
 
 #### 定时计划
 
 除手动发起巡检任务外，也可以通过添加定时任务自动执行检测。点击『定时计划』可管理当前的定时计划任务。
 
-![](../../assets/img/zh/intelligent-inspection/image9.png)
+![](/assets/img/zh/intelligent-inspection/image9.png)
 
 定时计划最多只能加六条，可按照检测周期选择"每月"、"每季度"、"每年"
 
@@ -103,7 +103,7 @@
 
 #### 导出报告
 
-![](../../assets/img/zh/intelligent-inspection/image10.png)
+![](/assets/img/zh/intelligent-inspection/image10.png)
 
 点击"导出完整巡检报告-仅导出异常或警告数据"，下载的报告只包含警告和异常巡检项
 
@@ -119,7 +119,7 @@
 
 #### 页面展示
 
-![](../../assets/img/zh/intelligent-inspection/image11.png)
+![](/assets/img/zh/intelligent-inspection/image11.png)
 
 显示所有巡检类目的指标，可根据巡检类目模糊匹配搜索
 
@@ -129,7 +129,7 @@
 
 #### 服务器软硬件配置
 
-![](../../assets/img/zh/intelligent-inspection/image12.png)
+![](/assets/img/zh/intelligent-inspection/image12.png)
 
 服务器软硬件配置，存在可配置指标的巡检类目分别为：
 
@@ -143,7 +143,7 @@
 
 #### 服务器资源使用率
 
-![](../../assets/img/zh/intelligent-inspection/image13.png)
+![](/assets/img/zh/intelligent-inspection/image13.png)
 
 服务器软资源使用率，存在可配置指标的巡检类目分别为：
 
@@ -169,7 +169,7 @@
 
 #### 服务器硬件可靠性
 
-![](../../assets/img/zh/intelligent-inspection/image14.png)
+![](/assets/img/zh/intelligent-inspection/image14.png)
 
 服务器软资源使用率，存在可配置指标的巡检类目分别为：
 
@@ -188,7 +188,7 @@
 
 #### 计算节点运行状态和统计信息
 
-![](../../assets/img/zh/intelligent-inspection/image15.png)
+![](/assets/img/zh/intelligent-inspection/image15.png)
 
 计算节点运行状态和统计信息，存在可配置指标的巡检类目分别为：
 
@@ -237,7 +237,7 @@ QPS、前端连接总数、后端连接总数、前端进流量速率、前端�
 
 #### 存储节点运行状态和统计信息
 
-![](../../assets/img/zh/intelligent-inspection/image16.png)
+![](/assets/img/zh/intelligent-inspection/image16.png)
 
 存储节点运行状态和统计信息，存在可配置指标的巡检类目分别为：
 
@@ -266,7 +266,7 @@ QPS、连接数、复制时延
 
 #### 数据校验与检测
 
-![](../../assets/img/zh/intelligent-inspection/image17.png)
+![](/assets/img/zh/intelligent-inspection/image17.png)
 
 数据校验与检测，存在可配置指标的巡检类目分别为：
 
@@ -296,7 +296,7 @@ QPS、连接数、复制时延
 
 #### 其他
 
-![](../../assets/img/zh/intelligent-inspection/image18.png)
+![](/assets/img/zh/intelligent-inspection/image18.png)
 
 其他，存在可配置指标的巡检类目分别为：
 
@@ -335,19 +335,19 @@ QPS、连接数、复制时延
 
 **(1) 发起批量修改**
 
-![](../../assets/img/zh/intelligent-inspection/image19.png)
+![](/assets/img/zh/intelligent-inspection/image19.png)
 
 勾选需要修改的巡检类目，点击"【批量操作】->【批量修改】"
 
 **(2) 批量填写并保存**
 
-![](../../assets/img/zh/intelligent-inspection/image20.png)
+![](/assets/img/zh/intelligent-inspection/image20.png)
 
 批量修改，巡检类目对应的巡检结果匹配规则、巡检结果匹配标准按系统默认值显示，可进行调整
 
 #### 批量重置
 
-![](../../assets/img/zh/intelligent-inspection/image21.png)
+![](/assets/img/zh/intelligent-inspection/image21.png)
 
 勾选需要重置的巡检类目，点击"【批量操作】->【批量重置】"
 
@@ -357,7 +357,7 @@ QPS、连接数、复制时延
 
 #### 页面展示
 
-![](../../assets/img/zh/intelligent-inspection/image22.png)
+![](/assets/img/zh/intelligent-inspection/image22.png)
 
 显示所有历史巡检任务
 
@@ -367,7 +367,7 @@ QPS、连接数、复制时延
 
 #### 查看详情
 
-![](../../assets/img/zh/intelligent-inspection/image23.png)
+![](/assets/img/zh/intelligent-inspection/image23.png)
 
 点击巡检任务列表"【操作】->【详情】"按钮，进入巡检详情页
 
@@ -375,11 +375,11 @@ QPS、连接数、复制时延
 
 点击"返回"按钮，可返回至[历史巡检记录](#历史巡检记录)页面
 
-![](../../assets/img/zh/intelligent-inspection/image24.png)
+![](/assets/img/zh/intelligent-inspection/image24.png)
 
 #### 删除任务
 
-![](../../assets/img/zh/intelligent-inspection/image25.png)
+![](/assets/img/zh/intelligent-inspection/image25.png)
 
 点击巡检任务列表"【操作】->【删除】"按钮，删除巡检任务
 
@@ -387,7 +387,7 @@ QPS、连接数、复制时延
 
 #### 下载报告
 
-![](../../assets/img/zh/intelligent-inspection/image26.png)
+![](/assets/img/zh/intelligent-inspection/image26.png)
 
 点击巡检任务列表"【操作】->【下载】"按钮，下载巡检报告
 
@@ -397,13 +397,13 @@ QPS、连接数、复制时延
 
 **(1) 发起批量删除**
 
-![](../../assets/img/zh/intelligent-inspection/image27.png)
+![](/assets/img/zh/intelligent-inspection/image27.png)
 
 进入"智能巡检->历史巡检记录"页面，点击"删除巡检记录"
 
 **(2) 选择巡检记录删除时间段**
 
-![](../../assets/img/zh/intelligent-inspection/image28.png)
+![](/assets/img/zh/intelligent-inspection/image28.png)
 
 默认选中"三个月之前"，可选择"删除全部"、"自定义时间段"
 
@@ -435,7 +435,7 @@ QPS、连接数、复制时延
 
 ##### 服务器软硬件配置
 
-![](../../assets/img/zh/intelligent-inspection/image29.png)
+![](/assets/img/zh/intelligent-inspection/image29.png)
 
 进入"历史巡检记录->详情->服务器软硬件配置"TAB，查看巡检报告
 
@@ -469,7 +469,7 @@ QPS、连接数、复制时延
 
 ##### 服务器资源使用率
 
-![](../../assets/img/zh/intelligent-inspection/image30.png)
+![](/assets/img/zh/intelligent-inspection/image30.png)
 
 进入"历史巡检记录->详情->服务器资源使用率"TAB页，查看巡检报告
 
@@ -478,7 +478,7 @@ QPS、连接数、复制时延
 
 ##### 服务器硬件可靠性
 
-![](../../assets/img/zh/intelligent-inspection/image31.png)
+![](/assets/img/zh/intelligent-inspection/image31.png)
 
 - 进入"历史巡检记录->详情->服务器硬件可靠性"TAB页，查看巡检报告
 
@@ -576,7 +576,7 @@ QPS、连接数、复制时延
 
 ##### 计算节点运行状态和统计信息
 
-![](../../assets/img/zh/intelligent-inspection/image32.png)
+![](/assets/img/zh/intelligent-inspection/image32.png)
 
 进入"历史巡检记录->详情->计算节点运行状态和统计信息"TAB页查看
 
@@ -648,7 +648,7 @@ QPS、连接数、复制时延
 
 ##### 存储节点运行状态和统计信息
 
-![](../../assets/img/zh/intelligent-inspection/image33.png)
+![](/assets/img/zh/intelligent-inspection/image33.png)
 
 进入"历史巡检记录->详情->存储节点运行状态和统计信息"TAB页查看
 
@@ -698,7 +698,7 @@ QPS、连接数、复制时延
 
 ##### 数据校验与检测
 
-![](../../assets/img/zh/intelligent-inspection/image34.png)
+![](/assets/img/zh/intelligent-inspection/image34.png)
 
 进入"历史巡检记录->详情->数据校验与检测"TAB页查看
 
@@ -746,7 +746,7 @@ QPS、连接数、复制时延
 
 ##### 其他
 
-![](../../assets/img/zh/intelligent-inspection/image35.png)
+![](/assets/img/zh/intelligent-inspection/image35.png)
 
 进入"历史巡检记录->详情->其他"TAB页查看
 

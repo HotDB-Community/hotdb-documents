@@ -27,7 +27,7 @@
 show @@backend;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image3.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image3.png)
 
 或像查询一张普通表一样查询backend：
 
@@ -35,7 +35,7 @@ show @@backend;
 select * from backend where MYSQLID=198865;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image4.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image4.png)
 
 或使用HINT语法：
 
@@ -43,7 +43,7 @@ select * from backend where MYSQLID=198865;
 /*!hotdb:dnid=all*/select * from information_schema.processlist where info!='NULL' and id=198865;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image5.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image5.png)
 
 **结果包含字段及其说明：**
 
@@ -88,7 +88,7 @@ select * from backend where MYSQLID=198865;
 show @@bufferpool;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image6.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image6.png)
 
 **结果包含字段及其说明：**
 
@@ -109,7 +109,7 @@ show @@bufferpool;
 show @@clientquery;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image7.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image7.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -136,7 +136,7 @@ show @@clientquery;
 show @@cluster;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image8.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image8.png)
 
 **结果包含字段及其说明：**
 
@@ -156,7 +156,7 @@ show @@cluster;
 show @@connection;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image9.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image9.png)
 
 **结果包含字段及其说明：**
 
@@ -187,7 +187,7 @@ show @@connection;
 show @@connection_statistics;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image10.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image10.png)
 
 **结果包含字段及其说明：**
 
@@ -211,7 +211,7 @@ show @@connection_statistics;
 show @@database;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image11.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image11.png)
 
 **结果包含字段及其说明：**
 
@@ -227,7 +227,7 @@ show @@database;
 show @@datanode;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image12.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image12.png)
 
 **结果包含字段及其说明：**
 
@@ -261,7 +261,7 @@ show @@datanode;
 show @@datasource;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image13.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image13.png)
 
 **结果包含字段及其说明：**
 
@@ -293,7 +293,7 @@ show @@datasource;
 show @@globaltableconsistency;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image14.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image14.png)
 
 **结果包含字段及其说明：**
 
@@ -323,7 +323,7 @@ show @@globaltableconsistency;
 show @@heartbeat;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image15.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image15.png)
 
 **结果包含字段及其说明：**
 
@@ -354,17 +354,17 @@ show @@heartbeat;
 
 此命令用于查看主从数据库同步是否有延时情况（需要配置故障切换规则才会显示该值），当主从数据发生延时，例如此处设置从机的SQL_DELAY时间：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image16.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image16.png)
 
 ```sql
 show @@latency;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image17.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image17.png)
 
 无延迟则显示：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image18.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image18.png)
 
 **结果包含字段及其说明：**
 
@@ -383,7 +383,7 @@ show @@latency;
 show @@longtransaction;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image19.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image19.png)
 
 长事务判断依据：事务执行时间超过10s,都会判断为长事务，参考规则：
 
@@ -407,11 +407,11 @@ select trx_id, trx_started from information_schema.innodb_trx where trx_started<
 show @@masterslaveconsistency;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image20.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image20.png)
 
 上图结果中显示DN_06节点的主从数据检测不一致。
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image21.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image21.png)
 
 又如上图结果中显示逻辑库LGG中的CC表未定义索引，无法进行一致性检测；DML_A_JWY表结构不一致。
 
@@ -434,7 +434,7 @@ insert into tid values(10),(2);
 insert into tid values(1677870),(233333333);
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image22.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image22.png)
 
 查询结果显示为后端当前使用存储节点表的执行情况:
 
@@ -442,7 +442,7 @@ insert into tid values(1677870),(233333333);
 select * from operation where `TABLE` like '%tid%';
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image23.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image23.png)
 
 **结果包含字段及其说明：**
 
@@ -471,7 +471,7 @@ select * from operation where `TABLE` like '%tid%';
 show @@operation_db;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image24.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image24.png)
 
 **结果包含字段及其说明：**
 
@@ -494,7 +494,7 @@ show @@operation_db;
 show @@operation_dn;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image25.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image25.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -521,7 +521,7 @@ show @@operation_dn;
 show @@operation_ds;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image26.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image26.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -547,7 +547,7 @@ show @@operation_ds;
 show @@operation_table;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image27.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image27.png)
 
 **结果包含字段及其说明：**
 
@@ -570,7 +570,7 @@ show @@operation_table;
 show @@processor;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image28.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image28.png)
 
 **结果包含字段及其说明：**
 
@@ -593,7 +593,7 @@ show @@processor;
 show @@query;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image29.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image29.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -614,7 +614,7 @@ show @@query;
 show @@query_db;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image30.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image30.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -636,7 +636,7 @@ show @@query_db;
 show @@query_tb;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image31.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image31.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -659,7 +659,7 @@ show @@query_tb;
 show @@session;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image32.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image32.png)
 
 **结果包含字段及其说明：**
 
@@ -693,7 +693,7 @@ show @@session;
 show @@tableinfo;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image33.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image33.png)
 
 **结果包含字段及其说明：**
 
@@ -719,7 +719,7 @@ show @@tableinfo;
 show @@tableinfo_db;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image34.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image34.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -737,7 +737,7 @@ show @@tableinfo_db;
 show @@tableinfo_dn;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image35.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image35.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -755,7 +755,7 @@ show @@tableinfo_dn;
 show @@tableinfo_ds;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image36.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image36.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -773,7 +773,7 @@ show @@tableinfo_ds;
 show @@tableinfo_table;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image37.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image37.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -791,7 +791,7 @@ show @@tableinfo_table;
 show @@threadpool;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image38.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image38.png)
 
 **结果包含字段及其说明：**
 
@@ -812,7 +812,7 @@ show @@threadpool;
 show @@transaction;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image39.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image39.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -838,11 +838,11 @@ show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 
 例如：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image40.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image40.png)
 
 又如：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image41.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image41.png)
 
 **结果包含字段及其说明：**
 
@@ -869,13 +869,13 @@ show hotdb functions;
 
 例如：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image42.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image42.png)
 
 又如：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image43.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image43.png)
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image44.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image44.png)
 
 **结果包含字段及其说明：**
 
@@ -902,11 +902,11 @@ show hotdb function infos [WHERE expr];
 
 例如：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image45.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image45.png)
 
 又如：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image46.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image46.png)
 
 **结果包含字段及其说明：**
 
@@ -933,13 +933,13 @@ show hotdb rules [LIKE 'pattern' | WHERE expr];
 
 例如：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image47.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image47.png)
 
 又如：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image48.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image48.png)
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image49.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image49.png)
 
 **结果包含字段及其说明：**
 
@@ -967,7 +967,7 @@ show backupmasterdelay [DNID];
 
 例如：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image50.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image50.png)
 
 **结果包含字段及其说明：**
 
@@ -990,7 +990,7 @@ show backupmasterdelay [DNID];
 show @@config_master_status;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image51.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image51.png)
 
 **结果包含字段及其说明：**
 
@@ -1006,7 +1006,7 @@ show @@config_master_status;
 
 该命令用于显示当前HotDB Server服务器运行状态。内存符合配置`./bin/hotdb-server`中设置的值。
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image52.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image52.png)
 
 例如：
 
@@ -1014,7 +1014,7 @@ show @@config_master_status;
 show @@server;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image53.jpeg)
+![](/assets/img/zh/hotdb-server-manager-commands/image53.jpeg)
 
 **结果包含字段及其说明：**
 
@@ -1044,7 +1044,7 @@ show @@server;
 show @@serversourceusage;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image54.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image54.png)
 
 **结果包含字段及其说明：**
 
@@ -1068,7 +1068,7 @@ show @@serversourceusage;
 show @@systemconfig_memory;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image55.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image55.png)
 
 **结果包含字段及其说明：**
 
@@ -1084,7 +1084,7 @@ show @@systemconfig_memory;
 show @@time_current;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image56.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image56.png)
 
 **结果包含字段及其说明：**
 
@@ -1100,7 +1100,7 @@ show @@time_current;
 show @@time_startup;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image57.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image57.png)
 
 **结果包含字段及其说明：**
 
@@ -1116,7 +1116,7 @@ show @@time_startup;
 show @@usbkey;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image58.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image58.png)
 
 **结果包含字段及其说明：**
 
@@ -1157,7 +1157,7 @@ It is recommended to restart the HotDB server during the low peak period of busi
 show @@version;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image59.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image59.png)
 
 **结果包含字段及其说明：**
 
@@ -1175,7 +1175,7 @@ show @@version;
 show @@ddl;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image60.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image60.png)
 
 **结果包含字段及其说明：**
 
@@ -1196,7 +1196,7 @@ show @@ddl;
 show @@lastsql;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image61.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image61.png)
 
 **结果包含字段及其说明：**
 
@@ -1216,7 +1216,7 @@ show @@lastsql;
 show @@onlineddl;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image62.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image62.png)
 
 **结果包含字段及其说明：**
 
@@ -1237,7 +1237,7 @@ show @@onlineddl;
 show @@tableindex;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image63.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image63.png)
 
 **结果包含字段及其说明：**
 
@@ -1306,7 +1306,7 @@ onlinemodifyrulecheck db.tablename[=functionid,rulecol:datanodes:checkconsistenc
 onlinemodifyrulecheck cpd_test. zx_cvset_signin_result=4,id:1,2:1;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image64.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image64.png)
 
 多表同时进行变更预检时，表与表之间的信息用空格隔开，例如：
 
@@ -1314,7 +1314,7 @@ onlinemodifyrulecheck cpd_test. zx_cvset_signin_result=4,id:1,2:1;
 onlinemodifyrulecheck db.tablename=functionid,rulecol:datanodes:checkconsistency [db.tablename=functionid,rulecol:datanodes:checkconsistency..]
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image65.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image65.png)
 
 1. 用于分片方案在线变更的预检之后，查看预检测结果的命令，例如：
 
@@ -1336,11 +1336,11 @@ onlinemodifyrulecheck db.tablename [db.tablename...]
 
 如下图所示：cpd_test是逻辑库，zx_cvset_signin_result是表名。
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image66.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image66.png)
 
 同时查看多张表的检测结果，表与表之间用空格隔开。
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image67.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image67.png)
 
 #### `onlinemodifyrule`
 
@@ -1371,15 +1371,15 @@ onlinemodifyrule db.tablename=functionid,rulecol:datanodes:源表处理(小时:0
 onlinemodifyrule cpd_test. zx_cvset_signin_result=4,id:1,2:24:1000:T3:7:0;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image68.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image68.png)
 
 多表同时变更时，表与表之间用空格隔开。
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image69.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image69.png)
 
 分片方案变更所采用的`functionid`可在配置库的`hotdb_function`表里查看。
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image70.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image70.png)
 
 > !Important
 > 
@@ -1407,7 +1407,7 @@ onlinemodifyruleprogress db.tablename[,db1.tablename1,..]
 
 如下图所示：`cpd_test`是逻辑库，`cv_live_courseware`和`cv_live_study`是表名。
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image71.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image71.png)
 
 **结果包含字段及其说明：**
 
@@ -1426,7 +1426,7 @@ onlinemodifyruleprogress db.tablename[,db1.tablename1,..]
 
 如果state的返回是waitting,需要用户确认继续执行，忽略不一致的数据，或者取消变更。
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image72.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image72.png)
 
 #### `onlinemodifyrulecontinue`
 
@@ -1445,11 +1445,11 @@ onlinemodifyrulecontinue db.tablename;
 
 如下图所示：执行变更分片方案的过程中，当state是waitting，且存在数据不一致，使用该命令继续执行变更，再次去查看进度的时候是100且state的状态为finish。
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image73.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image73.png)
 
 忽略掉这些不一致的数据，可能会导致数据错误，如下图所示：变更之后数据变少了。
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image74.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image74.png)
 
 #### `onlinemodifyrulecancel`
 
@@ -1461,7 +1461,7 @@ onlinemodifyrulecancel db.tablename;
 
 如果同一批次的某张表被取消变更，则该批次的所有表都会被取消分片方案的变更，如下图所示：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image75.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image75.png)
 
 ## 管理控制语句
 
@@ -1473,7 +1473,7 @@ onlinemodifyrulecancel db.tablename;
 check @@datasource_config;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image76.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image76.png)
 
 **结果包含字段及其说明：**
 
@@ -1507,7 +1507,7 @@ max_allowed_packet
 check @@datasource_config*_new*;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image77.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image77.png)
 
 使用方法和说明可参照[check @@datasource_config](#check-datasource_config)
 
@@ -1528,11 +1528,11 @@ check @@route [db_name.tb_name | tb_name];
 
 数据路由一致结果：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image78.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image78.png)
 
 数据路由不一致结果：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image79.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image79.png)
 
 **结果包含字段及其说明：**
 
@@ -1563,7 +1563,7 @@ mysql> kill @@connection 7;
 Query OK, 1 rows affected (0.00 sec)
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image80.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image80.png)
 
 ### `offline` - HotDB 下线
 
@@ -1573,9 +1573,9 @@ Query OK, 1 rows affected (0.00 sec)
 offline;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image81.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image81.png)
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image82.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image82.png)
 
 ### `online` - HotDB 上线
 
@@ -1585,9 +1585,9 @@ offline;
 online;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image83.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image83.png)
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image84.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image84.png)
 
 在一个完整且正常的HotDB Server高可用环境，如果手动向备计算节点发送online命令，会导致备计算节点启动3323，并且向主计算节点发送offline命令，进而主计算节点服务端口3323关闭。但是在当前的状态下，keepalived不会发生vip飘移（因为主管理端口3325还可用），这将导致计算节点数据服务实质上变得不可用。因此，如果用户在不清楚高可用体系的运作方式、或者不知道此缺陷的存在的情况下，手动操作备计算节点的online，有很大风险导致业务故障！
 
@@ -1796,7 +1796,7 @@ online_dr_check;
 
 该命令用于查看容灾模式中在切换中的机房的切换进度，例如：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image85.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image85.png)
 
 **结果包含字段及其说明：**
 
@@ -1853,7 +1853,7 @@ dbremapping @@add@db01:logic_db02
 
 第二条命令将会覆盖第一条，即最终的结果只有db01到logic_db02的映射关系。可到计算节点配置库的hotdb_config_info表的dbremapping行中查看现有的映射关系：
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image86.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image86.png)
 
 ### `dbremapping @@remove@` - 移除数据库映射关系
 
@@ -1929,7 +1929,7 @@ check @@commandstatus onlineddl_nocheck;
 file @@list;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image87.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image87.png)
 
 **结果包含字段及其说明：**
 
@@ -1945,7 +1945,7 @@ file @@list;
 hold commit;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image88.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image88.png)
 
 ### `hold ddl` - 将所有客户端的连接状态置为HOLD_DDL{#hold-ddl}
 
@@ -1955,7 +1955,7 @@ hold commit;
 hold ddl;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image89.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image89.png)
 
 ### `releasehold commit` - 将HOLD_ALL_COMMIT的连接状态释放
 
@@ -1965,7 +1965,7 @@ hold ddl;
 releasehold commit;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image90.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image90.png)
 
 ### `releasehold ddl` - 将HOLD_DDL的连接状态置为UNHOLD
 
@@ -1975,7 +1975,7 @@ releasehold commit;
 releasehold ddl;
 ```
 
-![](../../assets/img/zh/hotdb-server-manager-commands/image91.png)
+![](/assets/img/zh/hotdb-server-manager-commands/image91.png)
 
 ### 全局唯一约束相关
 

@@ -15,13 +15,13 @@ To initiate an intelligent inspection, the following preconditions shall be sati
 
 Intelligent inspection mainly includes three TABs: patrol report, patrol indicator setting and historical records, among which the patrol report is displayed by default, with the latest patrol result. When there is no historical record, it will prompt: "Currently there is no patrol record. You can choose to start a patrol task immediately."
 
-![](../../assets/img/en/intelligent-inspection/image1.png)
+![](/assets/img/en/intelligent-inspection/image1.png)
 
 ### Patrol report
 
 #### Layout
 
-![](../../assets/img/en/intelligent-inspection/image2.png)
+![](/assets/img/en/intelligent-inspection/image2.png)
 
 - Searching options includes fuzzy search by host name and search by patrol status.
 
@@ -39,19 +39,19 @@ Intelligent inspection mainly includes three TABs: patrol report, patrol indicat
 
 **(1) Start a patrol**
 
-![](../../assets/img/en/intelligent-inspection/image3.png)
+![](/assets/img/en/intelligent-inspection/image3.png)
 
 Click Start a patrol, the patrol object selection box will pop up.
 
 **(2) Patrol object selection**
 
-![](../../assets/img/en/intelligent-inspection/image4.png)
+![](/assets/img/en/intelligent-inspection/image4.png)
 
 Check objects and start patrol.
 
 **(3) On patrol**
 
-![](../../assets/img/en/intelligent-inspection/image5.png)
+![](/assets/img/en/intelligent-inspection/image5.png)
 
 After starting a patrol, you will enter the historical record page and view the patrol tasks that are currently in progress.
 
@@ -61,7 +61,7 @@ When there is a patrol task in progress, a new patrol cannot be started (based o
 
 **(4) Patrol completed**
 
-![](../../assets/img/en/intelligent-inspection/image6.png)
+![](/assets/img/en/intelligent-inspection/image6.png)
 
 Once the patrol is completed, "Task Status" will be updated to patrol completed.
 
@@ -73,7 +73,7 @@ When the patrol is completed, a result file and patrol report generated during t
 
 **(5) Execution cancelled**
 
-![](../../assets/img/en/intelligent-inspection/image7.png)
+![](/assets/img/en/intelligent-inspection/image7.png)
 
 Click "Execution Cancellation" to cancel the current patrol task.
 
@@ -83,13 +83,13 @@ When the task is cancelled successfully, "Task Status" will be updated to "Patro
 
 When the patrol task is cancelled, no files will be generated in "hotdb-management/data/Inspection".
 
-![](../../assets/img/en/intelligent-inspection/image8.png)
+![](/assets/img/en/intelligent-inspection/image8.png)
 
 #### Periodical plan
 
 In addition to manually starting patrol task, you can also add a periodical plan. Click "Periodical Plan" to manage the current periodical plans.
 
-![](../../assets/img/en/intelligent-inspection/image9.png)
+![](/assets/img/en/intelligent-inspection/image9.png)
 
 You can only add six items at most in Periodical Plan, "Monthly", "Quarterly" and "Yearly" can be selected in Patrol dimension.
 
@@ -101,7 +101,7 @@ If there are other patrol tasks are in progress during the execution of Periodic
 
 #### Export the report
 
-![](../../assets/img/en/intelligent-inspection/image10.png)
+![](/assets/img/en/intelligent-inspection/image10.png)
 
 Click "Export -- Export exceptions and warning data", and the downloaded report will only contain patrol items with warnings and exceptions.
 
@@ -119,7 +119,7 @@ In the exported data, the " manually click the Install button to install relevan
 
 #### Layout
 
-![](../../assets/img/en/intelligent-inspection/image11.png)
+![](/assets/img/en/intelligent-inspection/image11.png)
 
 Displays indicators of all patrol categories, and supports fuzzy search by patrol category.
 
@@ -129,7 +129,7 @@ You can change corresponding matching rules by clicking the Edit button of match
 
 #### Server hardware and software configuration
 
-![](../../assets/img/en/intelligent-inspection/image12.png)
+![](/assets/img/en/intelligent-inspection/image12.png)
 
 Patrol categories of the server hardware and software configuration are as follows:
 
@@ -143,7 +143,7 @@ For other patrol categories, the default matching rules is "include", which can 
 
 #### Server resource usage
 
-![](../../assets/img/en/intelligent-inspection/image13.png)
+![](/assets/img/en/intelligent-inspection/image13.png)
 
 Patrol categories of the server resource usage are as follows:
 
@@ -169,7 +169,7 @@ When the matching criteria is displayed in percentage, the minimum value is 0 an
 
 #### Server hardware reliability
 
-![](../../assets/img/en/intelligent-inspection/image14.png)
+![](/assets/img/en/intelligent-inspection/image14.png)
 
 Patrol categories of the server hardware reliability are as follows:
 
@@ -188,7 +188,7 @@ The default value of matching rule is 10 and the minimum value is 0; for other p
 
 #### Compute node running status and statistics
 
-![](../../assets/img/en/intelligent-inspection/image15.png)
+![](/assets/img/en/intelligent-inspection/image15.png)
 
 Patrol categories of the compute node running status and statistics are as follows:
 
@@ -237,7 +237,7 @@ QPS, total front-end connections, total back-end connections, front-end inflow r
 
 #### Data source running status and statistics
 
-![](../../assets/img/en/intelligent-inspection/image16.png)
+![](/assets/img/en/intelligent-inspection/image16.png)
 
 Patrol categories of the data source running status and statistics are as follows:
 
@@ -266,7 +266,7 @@ QPS, connections, replication delay
 
 #### Data verification and detection
 
-![](../../assets/img/en/intelligent-inspection/image17.png)
+![](/assets/img/en/intelligent-inspection/image17.png)
 
 Patrol categories of the data verification and detection are as follows:
 
@@ -296,7 +296,7 @@ Others
 
 #### Others
 
-![](../../assets/img/en/intelligent-inspection/image18.png)
+![](/assets/img/en/intelligent-inspection/image18.png)
 
 Patrol categories of patrol objects are as follows:
 
@@ -335,19 +335,19 @@ Others
 
 **(1) Start batch edit**
 
-![](../../assets/img/en/intelligent-inspection/image19.png)
+![](/assets/img/en/intelligent-inspection/image19.png)
 
 Check and click "Batch Operation" -> "Batch Edit"
 
 **(2) Fill in batches and save**
 
-![](../../assets/img/en/intelligent-inspection/image20.png)
+![](/assets/img/en/intelligent-inspection/image20.png)
 
 The corresponding matching rules and matching criteria of patrol categories display the default value, which can be edited.
 
 #### Batch reset
 
-![](../../assets/img/en/intelligent-inspection/image21.png)
+![](/assets/img/en/intelligent-inspection/image21.png)
 
 Check and click "Batch Operation" -> "Batch Reset".
 
@@ -357,7 +357,7 @@ After the reset, the matching rules and matching criteria will be reset to the s
 
 #### Layout
 
-![](../../assets/img/en/intelligent-inspection/image22.png)
+![](/assets/img/en/intelligent-inspection/image22.png)
 
 Displays all historical patrol tasks.
 
@@ -367,7 +367,7 @@ The "starting type" includes manual and automatic. The automatic type refers to 
 
 #### View the details
 
-![](../../assets/img/en/intelligent-inspection/image23.png)
+![](/assets/img/en/intelligent-inspection/image23.png)
 
 Click "Operation -> \[Details]" to enter the detail page.
 
@@ -375,11 +375,11 @@ The page is basically consistent with the [patrol report](#patrol-report) page.
 
 Click the "return" button to return to the [historical records](#historical-records) page.
 
-![](../../assets/img/en/intelligent-inspection/image24.png)
+![](/assets/img/en/intelligent-inspection/image24.png)
 
 #### Delete the task
 
-![](../../assets/img/en/intelligent-inspection/image25.png)
+![](/assets/img/en/intelligent-inspection/image25.png)
 
 Click "Operation -> \[Delete]" to delete the patrol task.
 
@@ -387,7 +387,7 @@ When the patrol task is deleted, the corresponding file and local patrol report 
 
 #### Download the report
 
-![](../../assets/img/en/intelligent-inspection/image26.png)
+![](/assets/img/en/intelligent-inspection/image26.png)
 
 lick "Operation -> \[Download]" to download the patrol report.
 
@@ -397,13 +397,13 @@ For the operations, you can refer to "patrol report" -> "export the complete rep
 
 **(1) Start a batch deletion**
 
-![](../../assets/img/en/intelligent-inspection/image27.png)
+![](/assets/img/en/intelligent-inspection/image27.png)
 
 - Click "delete inspection record" on the page "Intelligent inspection → historical records".
 
 **(2) Select a period of inspection records you want to delete**
 
-![](../../assets/img/en/intelligent-inspection/image28.png)
+![](/assets/img/en/intelligent-inspection/image28.png)
 
 "Three months ago" is selected by default. You can also select "delete all" or "customize time slot".
 
@@ -435,7 +435,7 @@ The matching is based on patrol results and patrol indicators:
 
 ##### Server hardware and software configuration
 
-![](../../assets/img/en/intelligent-inspection/image29.png)
+![](/assets/img/en/intelligent-inspection/image29.png)
 
 View the patrol report on "Historical records ->Detailed report ->Server hardware and software configuration".
 
@@ -469,7 +469,7 @@ If you have no privilege to view the file, it will prompt in the patrol result t
 
 ##### Server resource usage
 
-![](../../assets/img/en/intelligent-inspection/image30.png)
+![](/assets/img/en/intelligent-inspection/image30.png)
 
 View the patrol report on "Historical records ->Detailed report ->Server resource usage".
 
@@ -478,7 +478,7 @@ View the patrol report on "Historical records ->Detailed report ->Server resourc
 
 ##### Server hardware reliability
 
-![](../../assets/img/en/intelligent-inspection/image31.png)
+![](/assets/img/en/intelligent-inspection/image31.png)
 
 View the patrol report on "Historical records ->Detailed report ->Server hardware reliability".
 
@@ -576,7 +576,7 @@ If the server is a virtual machine, it will prompt in the patrol result that "No
 
 ##### Compute node running status and statistics
 
-![](../../assets/img/en/intelligent-inspection/image32.png)
+![](/assets/img/en/intelligent-inspection/image32.png)
 
 View the patrol report on "Historical records ->Detailed report ->Compute node running status and statistics".
 
@@ -648,7 +648,7 @@ Execute the command `jstat -gc [pid] 1s 10` to obtain the result.
 
 ##### Data source running status and statistics
 
-![](../../assets/img/en/intelligent-inspection/image33.png)
+![](/assets/img/en/intelligent-inspection/image33.png)
 
 View the patrol report on "Historical records ->Detailed report ->Data source running status and statistics".
 
@@ -698,7 +698,7 @@ Displays the data volume of data sources within one year before the patrol time,
 
 ##### Data verification and detection
 
-![](../../assets/img/en/intelligent-inspection/image34.png)
+![](/assets/img/en/intelligent-inspection/image34.png)
 
 View the patrol report on "Historical records ->Detailed report ->Data verification and detection".
 
@@ -746,7 +746,7 @@ Detect whether the configuration in current memory is consistent with the config
 
 ##### Others
 
-![](../../assets/img/en/intelligent-inspection/image35.png)
+![](/assets/img/en/intelligent-inspection/image35.png)
 
 View the patrol report on "Historical records ->Detailed report ->Others".
 

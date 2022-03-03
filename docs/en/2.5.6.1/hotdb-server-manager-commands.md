@@ -27,7 +27,7 @@ This command is used to view the connection between HotDB Server and data source
 show @@backend;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image3.png)
+![](/assets/img/en/hotdb-server-manager-commands/image3.png)
 
 Or query backend as you query a normal table:
 
@@ -35,7 +35,7 @@ Or query backend as you query a normal table:
 select * from backend where MYSQLID=198865;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image4.png)
+![](/assets/img/en/hotdb-server-manager-commands/image4.png)
 
 Or use HINT statement:
 
@@ -43,7 +43,7 @@ Or use HINT statement:
 /*!hotdb:dnid=all*/select * from information_schema.processlist where info!='NULL' and id=198865;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image5.png)
+![](/assets/img/en/hotdb-server-manager-commands/image5.png)
 
 **Fields and their description are contained in the result:**
 
@@ -88,7 +88,7 @@ This command is used to view the status of bufferpool. For example:
 show @@bufferpool;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image6.png)
+![](/assets/img/en/hotdb-server-manager-commands/image6.png)
 
 **Fields and their description are contained in the result:**
 
@@ -109,7 +109,7 @@ This command is used to show the statistics of current client query. For example
 show @@clientquery;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image7.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image7.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -136,7 +136,7 @@ This command is used to view current cluster member status. This command is only
 show @@cluster;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image8.png)
+![](/assets/img/en/hotdb-server-manager-commands/image8.png)
 
 **Fields and their description are contained in the result:**
 
@@ -156,7 +156,7 @@ This command is used to obtain the frontend connection of HotDB Server. For exam
 show @@connection;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image9.png)
+![](/assets/img/en/hotdb-server-manager-commands/image9.png)
 
 **Fields and their description are contained in the result:**
 
@@ -187,7 +187,7 @@ This command is used to obtain current live frontend connection statistics of Ho
 show @@connection_statistics;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image10.png)
+![](/assets/img/en/hotdb-server-manager-commands/image10.png)
 
 **Fields and their description are contained in the result:**
 
@@ -211,7 +211,7 @@ This command is used to show current available LogicDB information, which is equ
 show @@database;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image11.png)
+![](/assets/img/en/hotdb-server-manager-commands/image11.png)
 
 **Fields and their description are contained in the result:**
 
@@ -227,7 +227,7 @@ This command is used to show the node information of current database. For examp
 show @@datasource;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image12.png)
+![](/assets/img/en/hotdb-server-manager-commands/image12.png)
 
 **Fields and their description are contained in the result:**
 
@@ -261,7 +261,7 @@ This command is used to view configuration information and status of current dat
 show @@datasource;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image13.png)
+![](/assets/img/en/hotdb-server-manager-commands/image13.png)
 
 **Fields and their description are contained in the result:**
 
@@ -293,7 +293,7 @@ This command is used to detect the consistency of global table. For example:
 show @@globaltableconsistency;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image14.png)
+![](/assets/img/en/hotdb-server-manager-commands/image14.png)
 
 **Fields and their description are contained in the result:**
 
@@ -323,7 +323,7 @@ The command is used to report the heartbeat status. For example:
 show @@heartbeat;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image15.png)
+![](/assets/img/en/hotdb-server-manager-commands/image15.png)
 
 **Fields and their description are contained in the result:**
 
@@ -354,17 +354,17 @@ show @@heartbeat;
 
 This command is used to view whether there is latency of master/slave database synchronization (the value can be shown only when the failover rule needs to be、 configured). When there is latency of master/slave data, for example, when you set the SQL_DELAY time of standby slave:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image16.png)
+![](/assets/img/en/hotdb-server-manager-commands/image16.png)
 
 ```sql
 show @@latency;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image17.png)
+![](/assets/img/en/hotdb-server-manager-commands/image17.png)
 
 If there is no latency, it shows:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image18.png)
+![](/assets/img/en/hotdb-server-manager-commands/image18.png)
 
 **Fields and their description are contained in the result:**
 
@@ -383,7 +383,7 @@ This command is used to view the information of long transaction. For example:
 show @@longtransaction;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image19.png)
+![](/assets/img/en/hotdb-server-manager-commands/image19.png)
 
 The long transaction is judged based on: transactions executed for more than 10s are all long transactions. Refer to the rules:
 
@@ -407,11 +407,11 @@ This command is used to show the consistency of tables in active master and stan
 show @@masterslaveconsistency;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image20.png)
+![](/assets/img/en/hotdb-server-manager-commands/image20.png)
 
 The above result shows that the master/salve data of DN_06 node is inconsistent.
 
-![](../../assets/img/en/hotdb-server-manager-commands/image21.png)
+![](/assets/img/en/hotdb-server-manager-commands/image21.png)
 
 and the above result shows that the CC table in the LogicDB LGG has no index defined, and consistency cannot be detected; DML_A_JWY table structure is inconsistent.
 
@@ -434,7 +434,7 @@ insert into tid values(10),(2);
 insert into tid values(1677870),(233333333);
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image22.png)
+![](/assets/img/en/hotdb-server-manager-commands/image22.png)
 
 The query result shows the current execution of backend for data source table:
 
@@ -442,7 +442,7 @@ The query result shows the current execution of backend for data source table:
 select * from operation where `TABLE` like '%tid%';
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image23.png)
+![](/assets/img/en/hotdb-server-manager-commands/image23.png)
 
 **Fields and their description are contained in the result:**
 
@@ -471,7 +471,7 @@ This command is used to show statistics of command execution with LogicDB as uni
 show @@operation_db;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image24.png)
+![](/assets/img/en/hotdb-server-manager-commands/image24.png)
 
 **Fields and their description are contained in the result:**
 
@@ -494,7 +494,7 @@ This command is used to show the command execution statistis with data node as u
 show @@operation_dn;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image25.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image25.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -521,7 +521,7 @@ This command is used to show the statistics of command execution with data sourc
 show @@operation_ds;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image26.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image26.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -547,7 +547,7 @@ This command is used to show the command execution statistics with LogicDB as un
 show @@operation_table;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image27.png)
+![](/assets/img/en/hotdb-server-manager-commands/image27.png)
 
 **Fields and their description are contained in the result:**
 
@@ -570,7 +570,7 @@ This command is used to view the thread processing information. For example:
 show @@processor;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image28.png)
+![](/assets/img/en/hotdb-server-manager-commands/image28.png)
 
 **Fields and their description are contained in the result:**
 
@@ -593,7 +593,7 @@ This command is used to show the statistics of frontend command (excluding the M
 show @@query;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image29.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image29.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -614,7 +614,7 @@ This command is used to show statistics of command execution of each LogicDB. Fo
 show @@query_db;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image30.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image30.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -636,7 +636,7 @@ This command is used to show statistics of command execution of each data table.
 show @@query_tb;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image31.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image31.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -659,7 +659,7 @@ This command is used to show current session information. For example:
 show @@session;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image32.png)
+![](/assets/img/en/hotdb-server-manager-commands/image32.png)
 
 **Fields and their description are contained in the result:**
 
@@ -693,7 +693,7 @@ This command is used to view the data information of each data table. For exampl
 show @@tableinfo;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image33.png)
+![](/assets/img/en/hotdb-server-manager-commands/image33.png)
 
 **Fields and their description are contained in the result:**
 
@@ -719,7 +719,7 @@ This command is used to view the data information of table with LogicDB as unit.
 show @@tableinfo_db;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image34.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image34.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -737,7 +737,7 @@ This command is used to view the data information of table with data node as uni
 show @@tableinfo_dn;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image35.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image35.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -755,7 +755,7 @@ This command is used to show the data information of table with data source as u
 show @@tableinfo_ds;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image36.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image36.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -773,7 +773,7 @@ This command is used to show the data information of table with LogicDB as unit.
 show @@tableinfo_table;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image37.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image37.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -791,7 +791,7 @@ This command is used to view the status of threadpool. For example:
 show @@threadpool;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image38.png)
+![](/assets/img/en/hotdb-server-manager-commands/image38.png)
 
 **Fields and their description are contained in the result:**
 
@@ -812,7 +812,7 @@ This command is used to view each LogicDB and count the number of currently comp
 show @@transaction;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image39.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image39.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -838,11 +838,11 @@ show hotdb datanodes [LIKE 'pattern' | WHERE expr];
 
 For example:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image40.png)
+![](/assets/img/en/hotdb-server-manager-commands/image40.png)
 
 For another example:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image41.png)
+![](/assets/img/en/hotdb-server-manager-commands/image41.png)
 
 **Fields and their description are contained in the result:**
 
@@ -869,13 +869,13 @@ show hotdb functions;
 
 For example:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image42.png)
+![](/assets/img/en/hotdb-server-manager-commands/image42.png)
 
 For another example:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image43.png)
+![](/assets/img/en/hotdb-server-manager-commands/image43.png)
 
-![](../../assets/img/en/hotdb-server-manager-commands/image44.png)
+![](/assets/img/en/hotdb-server-manager-commands/image44.png)
 
 **Fields and their description are contained in the result:**
 
@@ -902,11 +902,11 @@ show hotdb function infos [WHERE expr];
 
 For example:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image45.png)
+![](/assets/img/en/hotdb-server-manager-commands/image45.png)
 
 For another example:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image46.png)
+![](/assets/img/en/hotdb-server-manager-commands/image46.png)
 
 **Fields and their description are contained in the result:**
 
@@ -933,13 +933,13 @@ show hotdb rules [LIKE 'pattern' | WHERE expr];
 
 For example:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image47.png)
+![](/assets/img/en/hotdb-server-manager-commands/image47.png)
 
 For another example:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image48.png)
+![](/assets/img/en/hotdb-server-manager-commands/image48.png)
 
-![](../../assets/img/en/hotdb-server-manager-commands/image49.png)
+![](/assets/img/en/hotdb-server-manager-commands/image49.png)
 
 **Fields and their description are contained in the result:**
 
@@ -967,7 +967,7 @@ show backupmasterdelay [DNID];
 
 For example:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image50.png)
+![](/assets/img/en/hotdb-server-manager-commands/image50.png)
 
 **Fields and their description are contained in the result:**
 
@@ -990,7 +990,7 @@ For example:
 show @@config_master_status;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image51.png)
+![](/assets/img/en/hotdb-server-manager-commands/image51.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1006,7 +1006,7 @@ show @@config_master_status;
 
 This command is used to show the running status of current HotDB Server. the memory conforms to the value in the configuration./bin/hotdb-server.
 
-![](../../assets/img/en/hotdb-server-manager-commands/image52.png)
+![](/assets/img/en/hotdb-server-manager-commands/image52.png)
 
 For example:
 
@@ -1014,7 +1014,7 @@ For example:
 show @@server;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image53.jpeg)
+![](/assets/img/en/hotdb-server-manager-commands/image53.jpeg)
 
 **Fields and their description are contained in the result:**
 
@@ -1044,7 +1044,7 @@ This command is used to view the usage of resources of current HotDB Server. For
 show @@serversourceusage;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image54.png)
+![](/assets/img/en/hotdb-server-manager-commands/image54.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1068,7 +1068,7 @@ This command is used to view the memory parameters usage of the current compute 
 show @@systemconfig_memory;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image55.png)
+![](/assets/img/en/hotdb-server-manager-commands/image55.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1084,7 +1084,7 @@ This command is used to view the current time, for example:
 show @@time_current;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image56.png)
+![](/assets/img/en/hotdb-server-manager-commands/image56.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1100,7 +1100,7 @@ This command is used to view the startup time of HotDB Server. For example:
 show @@time_startup;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image57.png)
+![](/assets/img/en/hotdb-server-manager-commands/image57.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1116,7 +1116,7 @@ This command is used to show USB-KEY status (authorization) and detect the excep
 show @@usbkey;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image58.png)
+![](/assets/img/en/hotdb-server-manager-commands/image58.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1157,7 +1157,7 @@ This command is used to view the description of versions of HotDB Server. For ex
 show @@version;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image59.png)
+![](/assets/img/en/hotdb-server-manager-commands/image59.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1175,7 +1175,7 @@ This command is used to show DDL statements of tables. For example:
 show @@ddl;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image60.png)
+![](/assets/img/en/hotdb-server-manager-commands/image60.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1196,7 +1196,7 @@ This command is used to view the last executed SQL information of connection in 
 show @@lastsql;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image61.png)
+![](/assets/img/en/hotdb-server-manager-commands/image61.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1216,7 +1216,7 @@ This command shows the active OnlineDDL statement and its execution speed. The p
 show @@onlineddl;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image62.png)
+![](/assets/img/en/hotdb-server-manager-commands/image62.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1237,7 +1237,7 @@ This command is used to show the index structure of each data table. For example
 show @@tableindex;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image63.png)
+![](/assets/img/en/hotdb-server-manager-commands/image63.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1306,7 +1306,7 @@ As shown below: cpd_test is LogicDB, zx_cvset_signin_result is table name, 4 is 
 onlinemodificationrulecheck cpd_test. zx_cvset_signin_result=4,id:1,2:1;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image64.png)
+![](/assets/img/en/hotdb-server-manager-commands/image64.png)
 
 When multi tables are checked at the same time, information between tables shall be separated by spaces. For example:
 
@@ -1314,7 +1314,7 @@ When multi tables are checked at the same time, information between tables shall
 onlinemodificationrulecheck db.tablename=functionid,rulecol:datanodes:checkconsistency [db.tablename=functionid,rulecol:datanodes:checkconsistency..]
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image65.png)
+![](/assets/img/en/hotdb-server-manager-commands/image65.png)
 
 2. It can be used to view the check result after the sharding plan online modification is checked. For example:
 
@@ -1336,11 +1336,11 @@ View whether the check is finished (if the result value is -1, it means that the
 
 As shown below: cpd_test is LogicDB, zx_cvset_signin_result is table name.
 
-![](../../assets/img/en/hotdb-server-manager-commands/image66.png)
+![](/assets/img/en/hotdb-server-manager-commands/image66.png)
 
 When check results of multi tables are viewed at the same time, tables shall be separated by spaces. For example:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image67.png)
+![](/assets/img/en/hotdb-server-manager-commands/image67.png)
 
 #### onlinemodificationrule
 
@@ -1371,15 +1371,15 @@ As shown below: cpd_test is LogicDB, zx_cvset_signin_result is table name, 4 is 
 onlinemodificationrule cpd_test. zx_cvset_signin_result=4,id:1,2:24:1000:T3:7:0;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image68.png)
+![](/assets/img/en/hotdb-server-manager-commands/image68.png)
 
 When multi tables are modified at the same time, the tables shall be separated by spaces.
 
-![](../../assets/img/en/hotdb-server-manager-commands/image69.png)
+![](/assets/img/en/hotdb-server-manager-commands/image69.png)
 
 The functionid used for sharding plan modification can be viewed in the table hotdb_function in configdb.
 
-![](../../assets/img/en/hotdb-server-manager-commands/image70.png)
+![](/assets/img/en/hotdb-server-manager-commands/image70.png)
 
 > !Important
 > 
@@ -1407,7 +1407,7 @@ onlinemodificationruleprogress db.tablename[,db1.tablename1,..]
 
 As shown below: cpd_test is LogicDB, cv_live_courseware and cv_live_study are table names.
 
-![](../../assets/img/en/hotdb-server-manager-commands/image71.png)
+![](/assets/img/en/hotdb-server-manager-commands/image71.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1426,7 +1426,7 @@ As shown below: cpd_test is LogicDB, cv_live_courseware and cv_live_study are ta
 
 If the state returns to waitting, the user needs to confirm whether to continue it, ignore the inconsistent data or cancel the modification.
 
-![](../../assets/img/en/hotdb-server-manager-commands/image72.png)
+![](/assets/img/en/hotdb-server-manager-commands/image72.png)
 
 #### onlinemodificationrulecontinue
 
@@ -1445,11 +1445,11 @@ onlinemodificationrulecontinue db.tablename;
 
 As shown below: in the process of modifying sharding plan, when the state is waitting, and inconsistent data exits, this command is used to continue the modification, and then view the progress again, the progress is 100 and the state is finish.
 
-![](../../assets/img/en/hotdb-server-manager-commands/image73.png)
+![](/assets/img/en/hotdb-server-manager-commands/image73.png)
 
 Ignoring these inconsistent data may lead to data errors, as shown below: some data is lost after modification.
 
-![](../../assets/img/en/hotdb-server-manager-commands/image74.png)
+![](/assets/img/en/hotdb-server-manager-commands/image74.png)
 
 #### onlinemodificationrulecancel
 
@@ -1461,7 +1461,7 @@ onlinemodificationrulecancle db.tablename;
 
 If the modification of a table in the same batch is cancelled, then the modification of sharding plan of all tables in this batch will be cancelled, as shown below:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image75.png)
+![](/assets/img/en/hotdb-server-manager-commands/image75.png)
 
 ## Management Control Statement
 
@@ -1473,7 +1473,7 @@ This command is used to check the consistency of particular parameter configurat
 check @@datasource_config;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image76.png)
+![](/assets/img/en/hotdb-server-manager-commands/image76.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1507,7 +1507,7 @@ The function of this command is similar to check @@datasource_config. The differ
 check @@datasource_config_new;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image77.png)
+![](/assets/img/en/hotdb-server-manager-commands/image77.png)
 
 Please refer to [check @@datasource_config](#check-datasource_config) for usage and instructions.
 
@@ -1528,11 +1528,11 @@ Parameter description:
 
 When the data routing is consistent, the result is:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image78.png)
+![](/assets/img/en/hotdb-server-manager-commands/image78.png)
 
 When the data routing is inconsistent, the result is:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image79.png)
+![](/assets/img/en/hotdb-server-manager-commands/image79.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1563,7 +1563,7 @@ mysql> kill @@connection 7;
 Query OK, 1 rows affected (0.00 sec)
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image80.png)
+![](/assets/img/en/hotdb-server-manager-commands/image80.png)
 
 ### `offline` - HotDB offline
 
@@ -1573,9 +1573,9 @@ This command is used to close the HotDB Server port and disconnect the frontend 
 offline;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image81.png)
+![](/assets/img/en/hotdb-server-manager-commands/image81.png)
 
-![](../../assets/img/en/hotdb-server-manager-commands/image82.png)
+![](/assets/img/en/hotdb-server-manager-commands/image82.png)
 
 ### `online` - HotDB online
 
@@ -1585,9 +1585,9 @@ If we need to start up the HotDB Server port, we need to run the online in manag
 online;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image83.png)
+![](/assets/img/en/hotdb-server-manager-commands/image83.png)
 
-![](../../assets/img/en/hotdb-server-manager-commands/image84.png)
+![](/assets/img/en/hotdb-server-manager-commands/image84.png)
 
 In a complete and normal HotDB Server high availability environment, if we manually send the command online to slave compute node, the slave compute node may start up 3323, and send the command offline to master compute node, and then the master compute node server port 3323 will be closed. But in the current state, the vip of keepalived will not drift (because master compute port 3325 is still available), then the compute node data service may become unavailable virtually. Therefore, if users manually operate the online of slave compute node without knowing clearly the operation mode of hign availability system or the existence of this defect, there may be a high risk of business failure!
 
@@ -1793,7 +1793,7 @@ online_dr_check;
 
 This command is used to view the progress of IDC switching in the DR mode, for example:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image85.png)
+![](/assets/img/en/hotdb-server-manager-commands/image85.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1850,7 +1850,7 @@ dbremapping @@add@db01:logic_db02
 
 The first command will be overlaid by the second command, that is, only the mapping relation from db01 to logic_db02 exists finally. You can view the existing mapping relations in the line dbremapping of the table hotdb_config_info in compute node ConfigDB:
 
-![](../../assets/img/en/hotdb-server-manager-commands/image86.png)
+![](/assets/img/en/hotdb-server-manager-commands/image86.png)
 
 ### `dbremapping @@remove@` - Remove database mapping relation
 
@@ -1926,7 +1926,7 @@ This command is used to view and obtain the files under the conf directory and i
 mysql> file @@list;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image87.png)
+![](/assets/img/en/hotdb-server-manager-commands/image87.png)
 
 **Fields and their description are contained in the result:**
 
@@ -1942,7 +1942,7 @@ HOLD COMMIT is executed in the monitoring window of the command line of HotDB Se
 hold commit;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image88.png)
+![](/assets/img/en/hotdb-server-manager-commands/image88.png)
 
 ### `hold ddl` - Set connection status of all clients as HOLD_DDL{#hold-ddl}
 
@@ -1952,7 +1952,7 @@ HOLD DDL is executed in the monitoring window of the command line of HotDB Serve
 hold ddl;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image89.png)
+![](/assets/img/en/hotdb-server-manager-commands/image89.png)
 
 ### `releasehold commit` - Release the connection status of HOLD_ALL_COMMIT
 
@@ -1962,7 +1962,7 @@ After execution of [hold commit](#hold-commit), release HOLD status with this co
 releasehold commit;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image90.png)
+![](/assets/img/en/hotdb-server-manager-commands/image90.png)
 
 ### `releasehold ddl` - Set HOLD_DDL connection status as UNHOLD
 
@@ -1972,7 +1972,7 @@ After execution of [hold ddl](#hold-ddl), release HOLD status with this command,
 releasehold ddl;
 ```
 
-![](../../assets/img/en/hotdb-server-manager-commands/image91.png)
+![](/assets/img/en/hotdb-server-manager-commands/image91.png)
 
 ### Global unique constraint
 
