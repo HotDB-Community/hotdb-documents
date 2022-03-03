@@ -43,7 +43,7 @@ HotDB Management contains many special terms. Please read the [Glossary](glossar
 
 HotDB Management is a B/S structure management and control product. The bottom layer connects compute nodes of the distributed transactional database by JDBC mode to provide configuration, monitoring and O&M services for compute nod_es. It connects HotDB Management ConfigDB by JDBC mode, and connects distributed transactional database backup program by TCP/IP mode. The function data interaction of browser is transmitted by JSON mode, and the business logic support is provided by HotDB Management service layer.
 
-![](/assets/img/en/hotdb-management/image1.png)
+![](../../assets/img/en/hotdb-management/image1.png)
 
 ### Access mode
 
@@ -59,7 +59,7 @@ Example: `http://192.168.200.201:3324/login.html`
 
 HotDB Management login page appears after successful connection.
 
-![](/assets/img/en/hotdb-management/image2.png)
+![](../../assets/img/en/hotdb-management/image2.png)
 
 **Login user:** The initial login can use the default built-in management user (**account: admin password: admin**) of HotDB Management to enter the management interface.
 
@@ -67,11 +67,11 @@ HotDB Management login page appears after successful connection.
 
 The admin index page mainly provides the manager user with a global perspective to view the managed cluster basic data, running data, peak data, statistics and configuration data, etc.
 
-![](/assets/img/en/hotdb-management/image3.png)
+![](../../assets/img/en/hotdb-management/image3.png)
 
 ### Cluster switching
 
-![](/assets/img/en/hotdb-management/image4.png)
+![](../../assets/img/en/hotdb-management/image4.png)
 
 The manager user can view the basic data of all compute node clusters with "monitoring enabled" on the index page.
 
@@ -79,7 +79,7 @@ You can switch to the corresponding page of cluster by clicking the tabs of diff
 
 ### Basic data
 
-![](/assets/img/en/hotdb-management/image5.png)
+![](../../assets/img/en/hotdb-management/image5.png)
 
 The basic data includes the cluster configuration and license information, etc.
 
@@ -91,7 +91,7 @@ The basic data includes the cluster configuration and license information, etc.
 
 ### Statistics
 
-![](/assets/img/en/hotdb-management/image6.png)
+![](../../assets/img/en/hotdb-management/image6.png)
 
 - Statistics includes total data amount, client throughput, back-end throughput and client connection. For the data acquisition of the total data amount, client throughput and back-end throughput, please refer to the corresponding content on [the home page of general users](#overview-of-data-amount-and-throughput).
 - Total data volume: the value is the total data volume of the current cluster, and the pie chart on the left is the proportion of data volume of TOP10 LogicDB.
@@ -101,7 +101,7 @@ The basic data includes the cluster configuration and license information, etc.
 
 ### Peak data
 
-![](/assets/img/en/hotdb-management/image7.png)
+![](../../assets/img/en/hotdb-management/image7.png)
 
 - On the index page, you can view the cluster peak data within 24 hours and within 30 minutes, mainly with two objects: compute node and data source, and three dimensions: connections, QPS and TPS.
 - Peak data includes the highest peak data and the time point within the selected time range. If there are multiple peak data, the latest peak data will be taken.
@@ -111,7 +111,7 @@ The basic data includes the cluster configuration and license information, etc.
 
 ### Running data
 
-![](/assets/img/en/hotdb-management/image8.png)
+![](../../assets/img/en/hotdb-management/image8.png)
 
 - Under the running data, cluster starting time, cluster running time, failover times (cumulative), failure recovery time (cumulative), cluster availability, slow SQL are consistent with [the home page of general users](#home).
 - The compute node status shows the number of compute nodes running normally (the connection of the management port is normal) and abnormally in the current cluster. Green is for the normal compute nodes; red and blue are for the abnormal compute nodes, among which red will be displayed when the number of exceptions is greater than 0, and blue when there is no exception.
@@ -120,7 +120,7 @@ The basic data includes the cluster configuration and license information, etc.
 
 ### Configuration data
 
-![](/assets/img/en/hotdb-management/image9.png)
+![](../../assets/img/en/hotdb-management/image9.png)
 
 - Configuration data mainly shows the configuration of some key parameters including management platform, compute node and data source.
 - For the parameter configuration display of the management platform, please refer to the corresponding parameter explanation on [the home page of general users](#cluster-security). When the management platform parameters are not enabled, the page will alert with red font, and if not all of them are enabled, the page will alert with orange font.
@@ -147,7 +147,7 @@ The user management table is the platform user record that has been added by the
 - Comment: displays the comments entered by users when adding or editing.
 - Operation: "Disable", "Enable", "Reset password", "Edit" and "Delete" operations of users can be performed. The admin user cannot perform "Disable" and "Delete".
 
-![](/assets/img/en/hotdb-management/image10.png)
+![](../../assets/img/en/hotdb-management/image10.png)
 
 ### Add user information
 
@@ -167,14 +167,14 @@ Adding a platform user needs to fill in two parts of content information: User B
 - There are two kinds of compute node cluster privileges:** access** and **control**. Users assigned with "access privileges" can only query after entering the cluster. All operations that affect the data will trigger a prompt of "insufficient privileges". Users assigned with "control privileges" automatically have "access privileges" and can perform all operations on the cluster.
 - you can enter "comments" on the adding and editing page. It is not required.
 
-![](/assets/img/en/hotdb-management/image11.png)
+![](../../assets/img/en/hotdb-management/image11.png)
 
 **User Menu Privilege:** The menu privileges for users when they enter the cluster management through accessing the general user interface can be configured.
 
 - When there is no special requirement, all menu privileges are granted by default. If it needs to mask the menu of a user, directly remove the checked item from the menu.
 - If HotDB Management has been upgraded, the menu privileges of historical platform users need to be checked to see whether the menu privileges in the new version need to be assigned. **Currently, due to the menu function security problem, the new function menu privileges in the new version will not be assigned to historical users by default, and need to be added by the users.**
 
-![](/assets/img/en/hotdb-management/image12.png)
+![](../../assets/img/en/hotdb-management/image12.png)
 
 ### User password
 
@@ -188,9 +188,9 @@ The login history displays the history of login and logout of the management pla
 
 **Function entry:** User Management > Login history
 
-![](/assets/img/en/hotdb-management/image13.png)
+![](../../assets/img/en/hotdb-management/image13.png)
 
-![](/assets/img/en/hotdb-management/image14.png)
+![](../../assets/img/en/hotdb-management/image14.png)
 
 - "Logout time" of the current online user is empty.
 - The login history of all users will not be accumulated. A single login and logout is a record, in which a single "online time" is recorded. The user login history can record the user login within 6 months at most.
@@ -230,7 +230,7 @@ The cluster management page displays the compute node clusters deployed or added
 - Cluster Operation: If the cluster is added by the "Cluster Deployment" function on the current management platform, the \[Deployment Topology] button will be displayed in the cluster operation bar. Click to view the component topology framework of the deployed cluster; if the cluster mode is "Master/Slave Node", the operation column will display the \[Rebuilding] or \[Switch] button according to whether the current high availability rebuilding environment of the cluster meets the switching conditions.
 - Buttons of \[Switch the active center], \[Remove the IDC], \[Repair the IDC] can be seen in the cluster with DR mode enabled and conditions satisfied. You can refer to the [Cross IDC Disaster Recovery Management](cross-idc-disaster-recovery-management.md) document.
 
-![](/assets/img/en/hotdb-management/image15.png)
+![](../../assets/img/en/hotdb-management/image15.png)
 
 **Function button description:**
 
@@ -247,7 +247,7 @@ Because the compute node clusters manually deployed by some users offline need t
 
 Click \[Add Cluster] on the cluster management page to enter the "Add Compute Node Cluster" page.
 
-![](/assets/img/en/hotdb-management/image16.png)
+![](../../assets/img/en/hotdb-management/image16.png)
 
 **Filling instructions:**
 
@@ -279,9 +279,9 @@ The fields without red \* may not be filled in, but when **the compute node clus
 
 After filling in the compute node name, test whether the compute node can be connected via the \[Test] button. The connection exception and successful connection are shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image17.png)
+![](../../assets/img/en/hotdb-management/image17.png)
 
-![](/assets/img/en/hotdb-management/image18.png)
+![](../../assets/img/en/hotdb-management/image18.png)
 
 When the number of existing compute node clusters (including those with stopped monitoring and normal monitoring) has reached the number of available compute node clusters authorized by the platform license, if you click \[Add Cluster] on the cluster management page, it will prompt: `"Add is not allowed because the number of available compute node cluster groups authorized by the platform is exceeded."`
 
@@ -293,7 +293,7 @@ When the number of existing compute node clusters (including those with stopped 
 
 In the master/slave mode cluster, if the cluster meets the high availability switch conditions, click the \[Switch] button in the "Cluster Operation" column of cluster record to manually perform the Master/Slave switching operation of compute node.
 
-![](/assets/img/en/hotdb-management/image19.png)
+![](../../assets/img/en/hotdb-management/image19.png)
 
 **High availability switch operation instructions**
 
@@ -301,7 +301,7 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 
 **(I) Confirmation of SSH and configuration file location**
 
-![](/assets/img/en/hotdb-management/image20.png)
+![](../../assets/img/en/hotdb-management/image20.png)
 
 - This step mainly confirms whether the SSH connection information and configuration file (server. XML and keepalived. conf) storage address of master/slave compute node configuration is filled in correctly.
 - SSH login mode may choose Login with User Password or Sign in without Password, the information will be saved after successful connection, and the information will not be saved if one-time login is chosen.
@@ -314,14 +314,14 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 
 **(2) Pre-inspection of switching**
 
-![](/assets/img/en/hotdb-management/image21.png)
+![](../../assets/img/en/hotdb-management/image21.png)
 
 - Click \[Start Detection] to check whether the current cluster high availability environment meets the requirements before high availability switch.
 - This step requires all detection items to pass the test before proceeding to the next step. Otherwise, it is necessary to manually intervene to solve the abnormal problem of the failed item.
 
 **(3) High-availability switch**
 
-![](/assets/img/en/hotdb-management/image22.png)
+![](../../assets/img/en/hotdb-management/image22.png)
 
 - This step is a high availability switch execution step. The high availability switch is successful only when all execution items are completed normally.
 - The slave compute node randomly will be set before switch (no setting for below V2.4.8). After the switch is successful, the setting will be canceled automatically.
@@ -330,7 +330,7 @@ High availability switch mainly includes four steps: Confirmation of SSH and Con
 
 **(4) Switch complete**
 
-![](/assets/img/en/hotdb-management/image23.png)
+![](../../assets/img/en/hotdb-management/image23.png)
 
 Reaching this step means that the high availability switch has been completed. The current VIP drift position and the opening and closing of master/slave compute node service port can be viewed.
 
@@ -338,7 +338,7 @@ Reaching this step means that the high availability switch has been completed. T
 
 The master/slave mode clusters identify the master/slave role mainly through the server.xml and keepalived.conf configuration files. The high availability switch only allows the switch from the Master role to the Slave role. After the failover or manual switch of compute node, in order to ensure the compute node can be smoothly switched back in the next failure, high availability reconstruction must be performed to ensure correct master/slave compute node configuration.
 
-![](/assets/img/en/hotdb-management/image24.png)
+![](../../assets/img/en/hotdb-management/image24.png)
 
 The master/slave mode cluster not meeting the high availability switch condition displays the \[Rebuilding] button in the "Cluster Operation" bar. At the same time, the cluster name will display an alert with a yellow background.
 
@@ -348,7 +348,7 @@ Click the \[Rebuilding] button to enter the high availability reconstruction pro
 
 **(I) Test of SSH and configuration file location**
 
-![](/assets/img/en/hotdb-management/image25.png)
+![](../../assets/img/en/hotdb-management/image25.png)
 
 Before configuration test, attention shall be paid to the following points:
 
@@ -362,7 +362,7 @@ Before configuration test, attention shall be paid to the following points:
 
 **(2) Environment rebuild inspection**
 
-![](/assets/img/en/hotdb-management/image26.png)
+![](../../assets/img/en/hotdb-management/image26.png)
 
 Attentions shall be paid when clicking \[Start Detection]:
 
@@ -372,14 +372,14 @@ Attentions shall be paid when clicking \[Start Detection]:
 
 **(3) Rebuild the high availability environment**
 
-![](/assets/img/en/hotdb-management/image27.png)
+![](../../assets/img/en/hotdb-management/image27.png)
 
 The reconstruction is mainly to modify the relevant configuration information as follows:
 
 - Modify the (haState, haNodeHost) role information in the master/slave compute node server.xml
 - Modify the master/slave keepalived configuration files. The keepalived configuration file modification points are as follows:
 
-![](/assets/img/en/hotdb-management/image28.png)
+![](../../assets/img/en/hotdb-management/image28.png)
 
 Notes for high availability reconstruction:
 
@@ -389,7 +389,7 @@ Notes for high availability reconstruction:
 
 **(4) Rebuild complete**
 
-![](/assets/img/en/hotdb-management/image29.png)
+![](../../assets/img/en/hotdb-management/image29.png)
 
 - When the high availability reconstruction is completed, the master/slave compute node services are running normally. Click \[Immediate Switch] and manually perform the [High Availability Switch](#high-availability-switch) operation to complete the reconstruction page.
 
@@ -454,7 +454,7 @@ Deployment grade Examination is a set of operation environment examination grade
 
 **Examination panel:**
 
-![](/assets/img/en/hotdb-management/image30.png)
+![](../../assets/img/en/hotdb-management/image30.png)
 
 **Examination panel content description**
 
@@ -480,7 +480,7 @@ Click \[Environment Examination] button on the deployment environment examinatio
 
 **Examination report detail:**
 
-A successful examination task will generate a examination report. Click ![](/assets/img/en/hotdb-management/image31.png) detail button in the task record operation column to access the "Examination report detail page".
+A successful examination task will generate a examination report. Click ![](../../assets/img/en/hotdb-management/image31.png) detail button in the task record operation column to access the "Examination report detail page".
 
 **Examination report description**
 
@@ -493,7 +493,7 @@ The examination report defaults to display unqualified and warning examination i
 - Prompt: unqualified and warning examination items inform users of the risks that exist or suggestions
 - Evaluation criteria: the program evaluation criteria for judging whether an item passes the detection
 
-![](/assets/img/en/hotdb-management/image32.png)
+![](../../assets/img/en/hotdb-management/image32.png)
 
 > !Note
 >
@@ -507,7 +507,7 @@ This function is used to view and manage the master-slave relation of the instan
 
 **Function Entry:** Login Management User Interface -> Instance Management
 
-![](/assets/img/en/hotdb-management/image33.png)
+![](../../assets/img/en/hotdb-management/image33.png)
 
 The instance management information displays a record in the form of a MySQL instance, and performs operations such as "Remove Master", "Add Slave", and "Setup High-privilege User" of specific MySQL instances.
 
@@ -515,11 +515,11 @@ The instance management information displays a record in the form of a MySQL ins
 
 - **Add Master:** Click \[Add Master] to add a slave to this instance and set this instance as a host when performing a "change master" operation on the slave. When selecting a slave, only instances without master can be selected and instances have been configured with master shall first remove the Master.
 
-![](/assets/img/en/hotdb-management/image34.png)
+![](../../assets/img/en/hotdb-management/image34.png)
 
 - **Setup High-privileges User:** Mainly used for users configured with "change master/slave" privileges to perform "Remove Master" and "Add Slave" operations. High-privilege users need to have "super, replication slave, replication client, create user, reload" privileges. If the data source does not have these privileges, they need to be added to the instance.
 
-![](/assets/img/en/hotdb-management/image35.png)
+![](../../assets/img/en/hotdb-management/image35.png)
 
 Click the \[Replication] button to replicate and add the SQL statement of high-privilege user to the instance for execution.
 
@@ -535,7 +535,7 @@ The operation of all manager users on the management platform can be viewed. The
 
 **Function Entry:** Login Management User Interface->Audit Logs->Manager Operation
 
-![](/assets/img/en/hotdb-management/image36.png)
+![](../../assets/img/en/hotdb-management/image36.png)
 
 **Table information description:**
 
@@ -553,13 +553,13 @@ The operations of all general users on the management platform can be viewed. Th
 
 **Function Entry:** Login Management User Interface->Audit Logs->General User Operation
 
-![](/assets/img/en/hotdb-management/image37.png)
+![](../../assets/img/en/hotdb-management/image37.png)
 
 #### Platform operation
 
 The operations of all general users on the management platform can be viewed. The operation type specifically recorded can be viewed in the operation type drop-down box on the page. Access IP and operation content input boxes support fuzzy query. If the compute node group is selected, only the operation records of the selected compute node group are displayed, and all compute node groups are displayed by default.
 
-![](/assets/img/en/hotdb-management/image38.png)
+![](../../assets/img/en/hotdb-management/image38.png)
 
 **Table information description:**
 
@@ -576,7 +576,7 @@ The operations of all general users on the management platform can be viewed. Th
 
 The operation logs related to security protection performed by all general users can be viewed. The operation type specifically recorded can be viewed in the operation type drop-down box on the page. Access IP and Intercept Details input boxes support fuzzy query. If the compute node group is selected, only the operation records of the selected compute node group are displayed, and all compute node groups are displayed by default. A specific compute node can be selected, and all compute nodes are selected by default.
 
-![](/assets/img/en/hotdb-management/image39.png)
+![](../../assets/img/en/hotdb-management/image39.png)
 
 **Table information description:**
 
@@ -596,7 +596,7 @@ The operation logs related to security protection performed by all general users
 
 The operation records of all general users on the management port can be viewed. The operation type specifically recorded can be viewed in the operation type drop-down box on the page. Access IP and Intercept Details input boxes support fuzzy query. If the compute node group is selected, only the operation records of the selected compute node group are displayed, and a specific compute node can also be selected. All compute nodes are selected by default.
 
-![](/assets/img/en/hotdb-management/image40.png)
+![](../../assets/img/en/hotdb-management/image40.png)
 
 **Table information description:**
 
@@ -624,31 +624,31 @@ Provide users with operations such as platform license, compute node license, up
 
 - "License Management" in the [Tool](#tool) menu under admin role.
 
-![](/assets/img/en/hotdb-management/image41.png)
+![](../../assets/img/en/hotdb-management/image41.png)
 
 - The "[license management](#license-management)" hyperlink in the "certified" menu of management platform.
 
-![](/assets/img/en/hotdb-management/image42.png)
+![](../../assets/img/en/hotdb-management/image42.png)
 
 ##### Generate fingerprint
 
 - Enter the license management page, select \[Generate license] for operation type, select \[Platform license] for license type, and click \[Generate].
 
-![](/assets/img/en/hotdb-management/image43.png)
+![](../../assets/img/en/hotdb-management/image43.png)
 
 - Click the \[Download Fingerprint File] hyperlink to download the fingerprint file (the fingerprint file is saved under the directory hotdb-management/keys by default, and the format is: management-fingerprint-year-month-day-hour-minute-second).
 
 - Fill in the information of the applicant and license properties (not required), and copy the application information.
 
-![](/assets/img/en/hotdb-management/image44.png)
+![](../../assets/img/en/hotdb-management/image44.png)
 
 - Click the default address hyperlink of supplier（[service@hotdb.com](mailto:service@hotdb.com)）, and call the local mailbox.
 
-![](/assets/img/en/hotdb-management/image45.png)
+![](../../assets/img/en/hotdb-management/image45.png)
 
 - Paste the application information to the email, upload the fingerprint file to the email attachment and send it to the supplier to obtain the new license file.
 
-![](/assets/img/en/hotdb-management/image46.png)
+![](../../assets/img/en/hotdb-management/image46.png)
 
 ##### Update license
 
@@ -656,17 +656,17 @@ Provide users with operations such as platform license, compute node license, up
 
 - Click \[Update] to update the license, and then refresh the page to make the new license take effect.
 
-![](/assets/img/en/hotdb-management/image47.png)
+![](../../assets/img/en/hotdb-management/image47.png)
 
 - When the name of the newly uploaded license file is consistent with that of the currently used license file, click \[Update], it will prompt that license file already exists and whether to replace it. Click \[Confirm to replace] to replace the existing license file and enter the Update process.
 
-![](/assets/img/en/hotdb-management/image48.png)
+![](../../assets/img/en/hotdb-management/image48.png)
 
 ##### Obtain existing license information
 
 Enter the license management page, select \[Obtain the existing license information] for operation type, select \[Platform license] for license type, and click \[Acquire] to obtain the existing license information.
 
-![](/assets/img/en/hotdb-management/image49.png)
+![](../../assets/img/en/hotdb-management/image49.png)
 
 The license information is as follows:
 
@@ -681,13 +681,13 @@ The license information is as follows:
 
 When there are multiple license files in the management platform, the license marked in blue is the license currently being used.
 
-![](/assets/img/en/hotdb-management/image51.png)
+![](../../assets/img/en/hotdb-management/image51.png)
 
 ##### Other instructions
 
 **(1) The default address of the supplier can be configured.**
 
-![](/assets/img/en/hotdb-management/image52.png)
+![](../../assets/img/en/hotdb-management/image52.png)
 
 Connect to the ConfigDB of management platform, and configure SQL for the first time as follows:
 
@@ -715,29 +715,29 @@ update `hotdb_setting` set `value` ='new_email@xx.cn' where `key`='emailAddress'
 
 If the number of existing compute node clusters (including those with stopped monitoring and normal monitoring) has reached the number of available compute node cluster groups authorized by the platform license, the user has enabled the "Automatically generate basic configuration" and the started list includes clusters recorded in the high availability setup of compute nodes, then click \[Enable with one click] on the single-IDC deployment page, and a pop-up window will be displayed: "It is not allowed to start and generate basic configuration because the number of available compute node cluster groups authorized by the platform is exceeded."
 
-![](/assets/img/en/hotdb-management/image53.png)
+![](../../assets/img/en/hotdb-management/image53.png)
 
 **(4) Restrictions of platform license on cluster deployment**
 
 In normal mode deployment, when the number of compute node cluster groups has reached the number of available compute node cluster groups authorized by the license, a prompt of 3s will be given when clicking \[Parameter configuration]: Cluster addition through parameter configuration is not allowed because the number of available compute node cluster groups authorized by the platform is exceeded.
 
-![](/assets/img/en/hotdb-management/image54.png)
+![](../../assets/img/en/hotdb-management/image54.png)
 
 The deployment of the master center in the DR mode is the same as that in the ordinary mode. That is, when the number of the current compute node cluster groups has reached the license limit, the deployment of the master center will not be allowed.
 Because the deployment of the DR center in the DR mode is in the same cluster group with the master center, the deployment of the DR center is not limited by the number of compute node cluster groups, but limited only by the number of available compute nodes in each group.
 The deployment of DR center is limited by the number of available compute nodes in each cluster. When the number of remaining available compute nodes is less than the number of compute nodes in the DR center to be deployed, deployment is not allowed.
 
-![](/assets/img/en/hotdb-management/image55.png)
+![](../../assets/img/en/hotdb-management/image55.png)
 
 **(5) Restrictions of platform license on cluster editing**
 
 When the number of compute nodes in the group has reached the number of available compute nodes in each cluster of the license limit, click \[Add compute nodes], it will prompt: Add is not allowed because the number of available compute nodes authorized by the platform is exceeded.
 
-![](/assets/img/en/hotdb-management/image56.png)
+![](../../assets/img/en/hotdb-management/image56.png)
 
 When DR mode is enabled on the Edit Compute Node Cluster page, if the number of compute nodes in the group exceeds the number of available compute nodes in each group limited by the license, the current cluster will not be saved when you click \[Save], and it will prompt: "Add is not allowed because the number of available compute nodes authorized by the platform is exceeded."
 
-![](/assets/img/en/hotdb-management/image57.png)
+![](../../assets/img/en/hotdb-management/image57.png)
 
 #### Compute node license
 
@@ -745,19 +745,19 @@ When DR mode is enabled on the Edit Compute Node Cluster page, if the number of 
 
 - "License Management" in the [Tool](#tool) menu under admin role.
 
-![](/assets/img/en/hotdb-management/image58.png)
+![](../../assets/img/en/hotdb-management/image58.png)
 
 - "License Management" in the [Tool](#tool) menu under general role.
 
-![](/assets/img/en/hotdb-management/image59.png)
+![](../../assets/img/en/hotdb-management/image59.png)
 
 - The "license management" hyperlink in the "certified" menu of management platform under general role.
 
-![](/assets/img/en/hotdb-management/image60.png)
+![](../../assets/img/en/hotdb-management/image60.png)
 
 ##### Generate fingerprint
 
-![](/assets/img/en/hotdb-management/image61.png)
+![](../../assets/img/en/hotdb-management/image61.png)
 
 **Step 1:** select the \[Compute node license] for License Type;
 
@@ -773,17 +773,17 @@ When DR mode is enabled on the Edit Compute Node Cluster page, if the number of 
 
 **Step 7:** if you want to apply for custom license information, you can fill in the information of the applicant and license properties (not required);
 
-![](/assets/img/en/hotdb-management/image62.png)
+![](../../assets/img/en/hotdb-management/image62.png)
 
 **Step 8:** click \[Copy the above application information] to copy the filled information to the cutting board;
 
 **Step 9:** click the hyperlink of the email address, the existing local mailbox will be automatically opened. Paste the information copied in the previous step into the email body, and send the email with fingerprint file as an attachment to the supplier.
 
-![](/assets/img/en/hotdb-management/image63.png)
+![](../../assets/img/en/hotdb-management/image63.png)
 
 ##### Update license
 
-![](/assets/img/en/hotdb-management/image64.png)
+![](../../assets/img/en/hotdb-management/image64.png)
 
 **Step 1:** select the \[Compute node license] for License Type;
 
@@ -801,7 +801,7 @@ When DR mode is enabled on the Edit Compute Node Cluster page, if the number of 
 
 ##### Obtain existing license information
 
-![](/assets/img/en/hotdb-management/image65.png)
+![](../../assets/img/en/hotdb-management/image65.png)
 
 **Step 1:** select the \[Compute node license] for License Type;
 
@@ -821,21 +821,21 @@ When DR mode is enabled on the Edit Compute Node Cluster page, if the number of 
 
 - If the compute node is not running normally, you need to manually specify the installation directory of the compute node. The entered directory needs to end with /. Then click \[Continue to Update];
 
-![](/assets/img/en/hotdb-management/image66.png)
+![](../../assets/img/en/hotdb-management/image66.png)
 
 - If an activation file with the same name is found under the key/ directory of the installation directory of the compute node, it will prompt whether to replace. Click \[Confirm to Replace], the old activation file will be replaced and the new file will be put in the /key directory;
 
-![](/assets/img/en/hotdb-management/image67.png)
+![](../../assets/img/en/hotdb-management/image67.png)
 
 - When the license is updated, the validity of the license will be checked. The check items include whether the license is available, whether the number of authorized nodes meets the current number of existing nodes, and whether the number of authorized LogicDBs meets the current number of existing LogicDBs. If the new license does not meet the validity check, it will prompt that the update is invalid;
 
-![](/assets/img/en/hotdb-management/image68.png)
+![](../../assets/img/en/hotdb-management/image68.png)
 
 - If sudo mode is used for license management, sudo users and privileges should be configured in advance. In particular, the java environment variables of sudo users also need to be configured.
 
 #### Update record
 
-![](/assets/img/en/hotdb-management/image69.png)
+![](../../assets/img/en/hotdb-management/image69.png)
 
 - The update record is primarily the user's update and authorization operation records of the compute node license and the platform license.
 
@@ -851,7 +851,7 @@ When DR mode is enabled on the Edit Compute Node Cluster page, if the number of 
 
 The platform ConfigDB supports the high availability mode. When the platform ConfigDB fails, it can switch to the slave ConfigDB. Function entry: admin > Tool > Platform Configuration Data Management.
 
-![](/assets/img/en/hotdb-management/image70.png)
+![](../../assets/img/en/hotdb-management/image70.png)
 
 #### ConfigDB file management
 
@@ -876,7 +876,7 @@ When starting the management platform service program, if the master ConfigDB is
 
 Users can perform switching, enabling, disabling, deletion and other operations to the platform ConfigDB on the platform configuration data management page.
 
-![](/assets/img/en/hotdb-management/image71.png)
+![](../../assets/img/en/hotdb-management/image71.png)
 
 **(1) Switch**
 
@@ -895,19 +895,19 @@ spring.datasource.bakpassword=hotdb_cloud
 
 After the switching of master-slave ConfigDB, the original slave ConfigDB will be updated to the master ConfigDB, and the original master ConfigDB will be updated to the slave ConfigDB, and the slave ConfigDB status will be updated to "unavailable".
 
-![](/assets/img/en/hotdb-management/image72.png)
+![](../../assets/img/en/hotdb-management/image72.png)
 
 **(2) Disable**
 
 Click "Disable", the availability status of the ConfigDB will be updated to "unavailable" and marked in red, the master-slave replication status will be "abnormal", and "Disable" will be updated to "Enable".
 
-![](/assets/img/en/hotdb-management/image73.png)
+![](../../assets/img/en/hotdb-management/image73.png)
 
 **(3) Enable**
 
 Click "Enable", the availability status, master-slave replication status and operation button will be restored to the previous status.
 
-![](/assets/img/en/hotdb-management/image74.png)
+![](../../assets/img/en/hotdb-management/image74.png)
 
 > !Note
 > 
@@ -917,21 +917,21 @@ Click "Enable", the availability status, master-slave replication status and ope
 > 
 > If the replication latency exceeds 10 seconds, it will prompt "the master-slave replication latency of the current ConfigDB exceeds 10 seconds, manual switch is not allowed.".
 > 
-> ![](/assets/img/en/hotdb-management/image75.png)
+> ![](../../assets/img/en/hotdb-management/image75.png)
 > 
 > When enabling the slave ConfigDB, if the data of the master and slave ConfigDBs are inconsistent, switch is not allowed.
 > 
-> ![](/assets/img/en/hotdb-management/image76.png)
+> ![](../../assets/img/en/hotdb-management/image76.png)
 
 #### Platform configuration backup data
 
 The function supports manual and scheduled backup for the platform ConfigDB and ConfigDB files. For scheduled backup, the backup task is performed by the scheduled plan instead of manual operation.
 
-![](/assets/img/en/hotdb-management/image77.png)
+![](../../assets/img/en/hotdb-management/image77.png)
 
 **(1) Platform server connection configuration**
 
-![](/assets/img/en/hotdb-management/image78.png)
+![](../../assets/img/en/hotdb-management/image78.png)
 
 - Connection configuration is required before backup. The configured server host name must be consistent with the server host name where the service program runs.
 
@@ -943,21 +943,21 @@ For manual backup, ConfigDB and backup basic data only are selected by default. 
 
 - When "backup basic data only" is selected, it will prompt that " when only the basic data is backed up, the backed-up tables can be used when the platform recovers the basic data. Special large tables will not be backed up. For example, tables related to functions such as reports, monitoring, intelligent query of operation logs, and compute node logs will not be backed up.".
 
-![](/assets/img/en/hotdb-management/image79.png)
+![](../../assets/img/en/hotdb-management/image79.png)
 
 - When "full backup" is selected, it will prompt that "full backup may take a long time, please be patient."
 
-![](/assets/img/en/hotdb-management/image80.png)
+![](../../assets/img/en/hotdb-management/image80.png)
 
 When "ConfigFile" is selected, the file appalication.properties is mainly backed up. The default format of the backup file name is ManagementConfigDatabase+year+month+day+hour+minute+second+backup type. "Backup to remote simultaneously" is checked compulsorily, and a corresponding prompt will be given when the cursor moves in.
 
-![](/assets/img/en/hotdb-management/image81.png)
+![](../../assets/img/en/hotdb-management/image81.png)
 
 **(3) Scheduled backup**
 
 Add a scheduled backup task, and backup the platform ConfigDB and ConfigFile regularly.
 
-![](/assets/img/en/hotdb-management/image82.png)
+![](../../assets/img/en/hotdb-management/image82.png)
 
 For backup data, you can select ConfigDB and ConfigFile. When "ConfigDB" is selected, you shall select the "Backup range" and "Backup to remote simultaneously"; when "ConfigFile" is selected, you shall fill in the remote backup server information.
 
@@ -965,17 +965,17 @@ For backup data, you can select ConfigDB and ConfigFile. When "ConfigDB" is sele
 
 When a manual or scheduled task is performed, the corresponding backup record will be generated. After the backup succeeds, the backup can be restored.
 
-![](/assets/img/en/hotdb-management/image83.png)
+![](../../assets/img/en/hotdb-management/image83.png)
 
 **(1) Backup record**
 
 Backup record includes: Data type, ConfigFile name, Backup range, Starting time, time consuming, Backup to remote simultaneously, backup status. After the backup succeeds, the ConfigDB backup file will be saved in the corresponding data/HotDB_Management_Backup of the management platform, and the ConfigFile will be saved in the /conf directory, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image84.png) ![](/assets/img/en/hotdb-management/image85.png)
+![](../../assets/img/en/hotdb-management/image84.png) ![](../../assets/img/en/hotdb-management/image85.png)
 
 During the backup, the backup status displays "backup in progress"; after the backup, the backup status displays "success" or "failure". When the backup fails, it will prompt the specific reason of the failure. If the local backup is successful but the remote backup fails, a warning prompt will also be given, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image86.png)
+![](../../assets/img/en/hotdb-management/image86.png)
 
 **(2) Backup restore**
 
@@ -987,7 +987,7 @@ After the backup, find the corresponding record and click Restore to restore the
 >
 > When restoring, if the configuration library of the management platform is changed, you will be prompted that "the currently restored ConfigDB is inconsistent with the original ConfigDB. Are you sure to continue the restore?".
 >
-> ![](/assets/img/en/hotdb-management/image87.png)
+> ![](../../assets/img/en/hotdb-management/image87.png)
 > 
 > During the restore, if the backup file is deleted, the restore will fail and a prompt will be given "restore file does not exist".
 
@@ -1001,13 +1001,13 @@ Click Delete to delete the backup record. After deletion, the corresponding back
 
 Click Notice on the top navigation bar and click the [Setting](#setting) button to enable or disable the notice alert of "platform ConfigDB status detection and platform configuration data backup detection".
 
-![](/assets/img/en/hotdb-management/image88.png)
+![](../../assets/img/en/hotdb-management/image88.png)
 
 - When the ConfigDB is in single-node mode, the "platform ConfigDB status detection" will be hidden:
 
 - After the notice alert setting is enabled, the notice alert will give a reminder when the ConfigDB status is abnormal, the replication relations between the master-slave ConfigDBs is abnormal, or the latest backup record shows that the configuration backup is abnormal.
 
-![](/assets/img/en/hotdb-management/image89.png)
+![](../../assets/img/en/hotdb-management/image89.png)
 
 - After the exception is recovered, reminders will disappear automatically.
 
@@ -1017,21 +1017,21 @@ Click Notice on the top navigation bar and click the [Setting](#setting) button 
 
 Check ConfigDB replication status and Replication delay, you will receive an email reminder when the ConfigDB status or replication status is abnormal.
 
-![](/assets/img/en/hotdb-management/image90.png)
+![](../../assets/img/en/hotdb-management/image90.png)
 
 - The email reminder for abnormal status of ConfigDB replication is as follows:
 
-![](/assets/img/en/hotdb-management/image91.png)
+![](../../assets/img/en/hotdb-management/image91.png)
 
 - The email reminder for abnormal replication relations of ConfigDB is as follows:
 
-![](/assets/img/en/hotdb-management/image92.png)
+![](../../assets/img/en/hotdb-management/image92.png)
 
 **(3) Cluster deployment**
 
 When the platform ConfigDB is in single-node mode, the switch "Do you want to add a slave for the existing platform ConfigDB" will be displayed on the cluster deployment parameter configuration page; if the current ConfigDB is already in standby master mode or master-slave mode, this switch will not be displayed.
 
-![](/assets/img/en/hotdb-management/image93.png)
+![](../../assets/img/en/hotdb-management/image93.png)
 
 - The deployment version is consistent with the existing platform ConfigDB and cannot be modified.
 
@@ -1043,13 +1043,13 @@ When the platform ConfigDB is in single-node mode, the switch "Do you want to ad
 
 For the single-IDC deployment, when selecting to deploy compute node or data source servers, the switch "Do you want to add a slave for the existing platform ConfigDB" will be displayed among the ConfigDB MySQL instance options. This option is only displayed when the platform ConfigDB is in single-node mode, and it is checked by default.
 
-![](/assets/img/en/hotdb-management/image94.png)
+![](../../assets/img/en/hotdb-management/image94.png)
 
 After the single-IDC deployment, you can set up platform ConfigDB high availability in the ConfigDB high availability setup.
 
 - By default, replication type and platform ConfigDB instance are not displayed. When "Set up the high available replication relations of the platform ConfigDB" is checked, the select replication type (master-master or master/slave) and ConfigDB instance information are displayed.
 
-![](/assets/img/en/hotdb-management/image95.png)
+![](../../assets/img/en/hotdb-management/image95.png)
 
 - Before setting up replication, data of the original master ConfigDB needs to be imported to the new slave ConfigDB.
 
@@ -1061,11 +1061,11 @@ The upgrade center provides HotDB Management with the online upgrade function fo
 
 **Function Entry:** Login Management User Interface -> "Upgrade Center" in the upper right corner of the page
 
-![](/assets/img/en/hotdb-management/image96.png)
+![](../../assets/img/en/hotdb-management/image96.png)
 
 Click the \[Add Upgrade Task] button to enter the upgrade center to Start an upgrade task. Details are as follows:
 
-![](/assets/img/en/hotdb-management/image97.png)
+![](../../assets/img/en/hotdb-management/image97.png)
 
 - Select the compute node cluster that needs to be upgraded.
 
@@ -1083,11 +1083,11 @@ After selecting the cluster, the cluster will be automatically checked to see wh
 
 - When it is in the master/slave mode, the message "whether to switch back after upgrading" will be displayed. If "Yes", it will switch back to the original master compute node after the upgrading; if "No", the status of the master and slave nodes after the exchange will be maintained (the master/slave high availability switch will be performed during the upgrading)
 
-![](/assets/img/en/hotdb-management/image98.png)
+![](../../assets/img/en/hotdb-management/image98.png)
 
 - When the selected compute node cluster is in multi-node mode, the page will display the "Wait Timeout Setting" (QPS needs to be detected when the multi-node cluster shuts down the compute node service. If it is less than 100, the compute node service will be directly closed. If it is greater than or equal to 100, shutdown will be executed after QPS drops to less than 100). If a custom timeout waiting time or a forced shutdown is set, the program can execute a forced shutdown after the custom time or a direct shutdown without waiting.
 
-![](/assets/img/en/hotdb-management/image99.png)
+![](../../assets/img/en/hotdb-management/image99.png)
 
 - If the selected cluster is a DR mode cluster, the DR mode will be ON, otherwise it is not.
 
@@ -1095,11 +1095,11 @@ After selecting the cluster, the cluster will be automatically checked to see wh
 
 - If the uploaded version is less than the current existing version, it will prompt "the updated version must be greater than or equal to the current version".
 
-![](/assets/img/en/hotdb-management/image100.png)
+![](../../assets/img/en/hotdb-management/image100.png)
 
 - If the uploaded version is higher than the current version, it will prompt "the updated version can not be higher than the current version".
 
-![](/assets/img/en/hotdb-management/image101.png)
+![](../../assets/img/en/hotdb-management/image101.png)
 
 - Before clicking \[Start Update], the "status" is "wait for update"; after clicking \[Start Update], "status" is "updating"; after the update completed, "status" is "successful update or update failed".
 
@@ -1107,11 +1107,11 @@ After selecting the cluster, the cluster will be automatically checked to see wh
 
 - After satisfying the legitimate upgrade logic, click \[Start Update] to perform the upgrade task. During the execution of upgrade task, the log box will display the upgrade task log in real time. You can download the detailed update log to view more detailed log info.
 
-![](/assets/img/en/hotdb-management/image102.png)
+![](../../assets/img/en/hotdb-management/image102.png)
 
 - Clusters that fail to upgrade will perform a rollback process, and the program will try to restore the cluster to the status before initial upgrade. If the rollback fails, manual intervention is required to restore the cluster. In case of manual intervention, **Detailed Update Log** can be used to view the commands executed by the program and the stage of upgrade or rollback to help restore the cluster.
 
-![](/assets/img/en/hotdb-management/image103.png)
+![](../../assets/img/en/hotdb-management/image103.png)
 
 > !Note
 >
@@ -1123,21 +1123,21 @@ After selecting the cluster, the cluster will be automatically checked to see wh
 >
 > 1. When the version of the uploaded update package is greater than or equal to 2.5.6 and the current version of is less than 2.5.6, if you click "start update" after the upload succeeds, a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade", and "JDK version upgrade option" will be given at the same time.
 >
-> ![](/assets/img/en/hotdb-management/image104.png)
+> ![](../../assets/img/en/hotdb-management/image104.png)
 >
-> 2. If "manual upload" is selected for JDK version upgrade, when the uploaded file does not match "OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz", it will prompt that "the uploaded file does not meet the standard, please upload again". ![](/assets/img/en/hotdb-management/image105.png)3) When the uploaded JDK file does not meet the standard, if you still click "Start Update", a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade".
+> 2. If "manual upload" is selected for JDK version upgrade, when the uploaded file does not match "OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz", it will prompt that "the uploaded file does not meet the standard, please upload again". ![](../../assets/img/en/hotdb-management/image105.png)3) When the uploaded JDK file does not meet the standard, if you still click "Start Update", a 3s message will appear that "Update is not allowed temporarily, please pay attention to the content of JDK version upgrade".
 >
-> ![](/assets/img/en/hotdb-management/image106.png)
+> ![](../../assets/img/en/hotdb-management/image106.png)
 >
 > 3. When "specify the storage directory of existing installation package" is selected for "JDK version upgrade", if no JDK upgrade matching file is found in the corresponding directory, click "Start Update", a 3s message will appear that "No matching file is found in the directory corresponding to JDK version upgrade, please fill in again".
 >
-> ![](/assets/img/en/hotdb-management/image107.png)
+> ![](../../assets/img/en/hotdb-management/image107.png)
 >
 > license file upgrade: the self-developed license starts to be used in v2.5.6, and the license file is in the keys directory by default. In upgrading, it is necessary to ensure that the authorization is available and the number of authorized nodes is not less than the number of existing nodes and the number of authorized ConfigDBs is not less than the number of existing ConfigDBs.
 >
-> 4. When the user uploads the authorization file, if it is invalid (that is, the new authorization is not available or the number of authorized nodes is less than the number of existing nodes，the number of authorized ConfigDBs is not less than the number of existing ConfigDBs), a warning will be given on the page "the authorization uploaded by the compute node is invalid, please re-upload available new authorization license file". ![](/assets/img/en/hotdb-management/image108.png)when the uploaded update package, JDK version and license of the compute node are valid and available, the upgrade page is as follows
+> 4. When the user uploads the authorization file, if it is invalid (that is, the new authorization is not available or the number of authorized nodes is less than the number of existing nodes，the number of authorized ConfigDBs is not less than the number of existing ConfigDBs), a warning will be given on the page "the authorization uploaded by the compute node is invalid, please re-upload available new authorization license file". ![](../../assets/img/en/hotdb-management/image108.png)when the uploaded update package, JDK version and license of the compute node are valid and available, the upgrade page is as follows
 >
-> ![](/assets/img/en/hotdb-management/image109.png)
+> ![](../../assets/img/en/hotdb-management/image109.png)
 
 ## OEM management
 
@@ -1145,45 +1145,45 @@ To facilitate the replacement of the product logo and product name of the manage
 
 **Function entry:** manager users can enter the function page through the hyperlink of OEM management after logging in to the platform. The hyperlink path is http://192.168.240.147 :3324/page/ index.html?page=oem, i.e. url of the original page plus ?page=oem.
 
-![](/assets/img/en/hotdb-management/image110.png)
+![](../../assets/img/en/hotdb-management/image110.png)
 
 ### Modify the system name
 
 Click the edit button of System Name and edit, then click Confirm to save the name. With the system name saved successfully, the name displayed on the management platform login page and the upper left corner of the menu page are modified synchronously.
 
-![](/assets/img/en/hotdb-management/image111.png)
+![](../../assets/img/en/hotdb-management/image111.png)
 
 ### Modify the product logo
 
 The preview area displays the default logo image of the management platform, as shown below:
 
-![](/assets/img/en/hotdb-management/image112.png)
+![](../../assets/img/en/hotdb-management/image112.png)
 
 Click \[Upload] to open the file selection window, and select the logo image.
 
-![](/assets/img/en/hotdb-management/image113.png)
+![](../../assets/img/en/hotdb-management/image113.png)
 
 > !Note
 >
 > the image is required to be no more than 1024KB and the suffix should be ".png/.jpg/.svg". With the image requirements met, the preview area will display the effect picture of the uploaded image, as shown in the following figure:
 > 
-> ![](/assets/img/en/hotdb-management/image114.png)
+> ![](../../assets/img/en/hotdb-management/image114.png)
 > 
-> ![](/assets/img/en/hotdb-management/image115.png)
+> ![](../../assets/img/en/hotdb-management/image115.png)
 > 
 > The check box "Consistent with the login page" for the navigation bar logo and the browser tab logo is not checked by default. When it is checked, the Upload button will be grayed and cannot be operated, and the corresponding logo preview will display the same as the login page logo.
 
-![](/assets/img/en/hotdb-management/image116.png)
+![](../../assets/img/en/hotdb-management/image116.png)
 
 ### Retain the original product information
 
 When it is Yes by default, the logo and copyright declaration of HotDB will be displayed at the bottom of the management platform login page and cluster selection page; when No is selected, the logo and copyright declaration of HotDB will be hidden at the bottom of the management platform login page and cluster selection page. As shown below:
 
-![](/assets/img/en/hotdb-management/image117.png)
+![](../../assets/img/en/hotdb-management/image117.png)
 
 Click Restore the defaults. After the setting takes effect, image files under the logo directory of the management platform will be cleared. Meanwhile, the system name on pages will be reset to the "Distributed Transactional Database Platform"; the logo preview will restore the default logo of the management platform, and the switch Retain the original product information will be changed to yes.
 
-![](/assets/img/en/hotdb-management/image118.png)
+![](../../assets/img/en/hotdb-management/image118.png)
 
 ## General user login
 
@@ -1191,7 +1191,7 @@ Click Restore the defaults. After the setting takes effect, image files under th
 
 General users are created by the manager user in the "[User Management](#user-management)" of the management interface, and the access mode is the same as that of the manager user.
 
-![](/assets/img/en/hotdb-management/image119.png)
+![](../../assets/img/en/hotdb-management/image119.png)
 
 For general users logging in for the first time, HotDB Management forces the password change and the initial password is `hotdb@hotpu.cn` by default.
 
@@ -1201,29 +1201,29 @@ General users enter the Cluster Selection page after logging into HotDB Manageme
 
 The compute node cluster displayed is the compute node cluster with access or control privilege owned by the login user. Click on a specific cluster to enter the cluster for viewing and management operations. When the cluster compute node and configDB are running normally, the page icon is green (as shown below) and the cluster can be accessed normally.
 
-![](/assets/img/en/hotdb-management/image120.png)
+![](../../assets/img/en/hotdb-management/image120.png)
 
 When the cluster slave compute node cannot be connected but the configDB is connected properly, the cluster slave compute node is red and abnormal.
 
-![](/assets/img/en/hotdb-management/image121.png)
+![](../../assets/img/en/hotdb-management/image121.png)
 
 When the configDB cannot be connected and the compute node is running normally, the bottom configDB connection will display an exception. When the configDB cannot be connected partially, move the mouse cursor to the "Partial Exception" to display the specific configDB connection exception information.
 
-![](/assets/img/en/hotdb-management/image122.png)
+![](../../assets/img/en/hotdb-management/image122.png)
 
 When all compute nodes in the cluster and the configDB cannot be connected, the cluster panel is displayed in red. When clicking on the cluster panel with the mouse, "Unable to connect" will be displayed and it is unable to enter the cluster.
 
-![](/assets/img/en/hotdb-management/image123.png)
+![](../../assets/img/en/hotdb-management/image123.png)
 
 ## Home
 
 HotDB Management displays real-time user-concerned information such as data volume, access flow, cluster component status, warning event, and security prevention and control of compute node cluster in the home page function through data visualization.
 
-![](/assets/img/en/hotdb-management/image124.png)
+![](../../assets/img/en/hotdb-management/image124.png)
 
 ### Cluster security
 
-![](/assets/img/en/hotdb-management/image125.png)
+![](../../assets/img/en/hotdb-management/image125.png)
 
 - **Email Notification:** Judge according to whether the monitoring switch in the notification setting is turned on, which can be divided into: Enable All, Not Enable and Partially Enable. Click to jump to the notification setting page.
 - **System Periodical Detection:** Judge according to whether all switches on the periodical detection setting page are turned on, which can be divided into: Enable All, Not Enable and Partially Enable. Click to jump to the periodical detection setting page.
@@ -1232,28 +1232,28 @@ HotDB Management displays real-time user-concerned information such as data volu
 
 ### Summary of important information
 
-![](/assets/img/en/hotdb-management/image126.png)
+![](../../assets/img/en/hotdb-management/image126.png)
 
 - **Table:** The first row "Table Configuration" is the number of all tables on the [Table Configuration](#table-configuration) page, and the second row "Definition Warning" is the number of tables detected to be abnormal in the "Table Structure＆Index Detection".
-- **Optimization:** The first row "SQL Log" is the number of SQL records recorded in the [Slow Query Log Analysis](#slow-query-log-analysis) function of HotLog Management. The second row "Slow SQL" is the SQL marked with ![](/assets/img/en/hotdb-management/image127.png) in the [Slow Query Log Analysis](#slow-query-log-analysis) function of HotLog Management. ("SQL Log" and "Slow SQL" are displayed are not enabled when the Slow Query Log Analysis does not enable SQL statistics)
+- **Optimization:** The first row "SQL Log" is the number of SQL records recorded in the [Slow Query Log Analysis](#slow-query-log-analysis) function of HotLog Management. The second row "Slow SQL" is the SQL marked with ![](../../assets/img/en/hotdb-management/image127.png) in the [Slow Query Log Analysis](#slow-query-log-analysis) function of HotLog Management. ("SQL Log" and "Slow SQL" are displayed are not enabled when the Slow Query Log Analysis does not enable SQL statistics)
 - **Backup:** The first row "Totals of Backup" is the number of all backup records in the "Backup Task" function of HotDB Management, and the second row "Failure Backup" is the number of task records with backup status as "Backup Failed".
 - **Log:** The first row "Cluster Log" is the total number of logs in the "Compute Node Log" function of HotDB Management. The second row "Unread" is the number of logs with status as "Unread" in the compute node log. When the number of logs is greater than 999, the page displays 999+.
 
 ### Data node throughput
 
-![](/assets/img/en/hotdb-management/image128.png)
+![](../../assets/img/en/hotdb-management/image128.png)
 
 Display the real-time throughput of all data nodes in the cluster. Throughput types include: SELECT/INSERT/UPDATE/DELETE/OTHER. Click on the title to jump to the "Data Node Throughput" report function page.
 
 ### Event notice
 
-![](/assets/img/en/hotdb-management/image129.png)
+![](../../assets/img/en/hotdb-management/image129.png)
 
 The events are the history events with event warning mark in the upper right corner of HotDB Management. Click \[More] to link to "Historical Event" for more notice details.
 
 ### Cluster throughput
 
-![](/assets/img/en/hotdb-management/image130.png)
+![](../../assets/img/en/hotdb-management/image130.png)
 
 Display the number of transactions per second (TPS: Transactions Per Second) and the query per second (QPS: Query Per Second) in the cluster.
 
@@ -1267,7 +1267,7 @@ Display the number of transactions per second (TPS: Transactions Per Second) and
 
 #### Client throughput today
 
-![](/assets/img/en/hotdb-management/image131.png)
+![](../../assets/img/en/hotdb-management/image131.png)
 
 The client throughput is the operations (SELECT, INSERT, UPDATE, DELETE, OTHER) sent by front-end application to compute node
 
@@ -1278,7 +1278,7 @@ The client throughput is the operations (SELECT, INSERT, UPDATE, DELETE, OTHER) 
 
 #### Back-end throughput today
 
-![](/assets/img/en/hotdb-management/image132.png)
+![](../../assets/img/en/hotdb-management/image132.png)
 
 The back-end throughput is the operations (SELECT, INSERT, UPDATE, DELETE, OTHER) sent by compute node to the underlying data node.
 
@@ -1289,7 +1289,7 @@ The back-end throughput is the operations (SELECT, INSERT, UPDATE, DELETE, OTHER
 
 #### New data amount today
 
-![](/assets/img/en/hotdb-management/image133.png)
+![](../../assets/img/en/hotdb-management/image133.png)
 
 The new data amount today is a description of the change of business data volume in the cluster from 0 a.m. today to the current time. If it is negative, it means that the data amount is less than that at 0 a.m.
 
@@ -1300,7 +1300,7 @@ The new data amount today is a description of the change of business data volume
 
 #### Total data amount
 
-![](/assets/img/en/hotdb-management/image134.png)
+![](../../assets/img/en/hotdb-management/image134.png)
 
 Display the current total data amount of all data nodes in the cluster, that is, the sum of data amounts of all tables in the normal data source.
 
@@ -1310,13 +1310,13 @@ Display the current total data amount of all data nodes in the cluster, that is,
 
 ### Sharding grade
 
-![](/assets/img/en/hotdb-management/image135.png)
+![](../../assets/img/en/hotdb-management/image135.png)
 
 It uses grading to reflect the sharing advantages and disadvantages of the sharding table in the cluster. When the compute node starts for less than 24 hours, the grade cannot be calculated and the page is not displayed. Click on the title to jump to the "[Sharding Grade](#sharding-grade)" details screen. The grade trend graph displays the changes of the recent sharding rationality grade, which can be viewed by day and by hour.
 
 ### TOP 10 table today
 
-![](/assets/img/en/hotdb-management/image136.png)
+![](../../assets/img/en/hotdb-management/image136.png)
 
 Display the top 10 business tables with the largest change in daily data amount and the highest throughput in the cluster.
 
@@ -1327,7 +1327,7 @@ Display the top 10 business tables with the largest change in daily data amount 
 
 ### Throughput rate
 
-![](/assets/img/en/hotdb-management/image137.png)
+![](../../assets/img/en/hotdb-management/image137.png)
 
 Display the operation frequency of the real-time front-end (sent by front-end application to compute node) and back-end (sent by compute node to data node) SELECT, INSERT, UPDATE and DELETE in times/s.
 
@@ -1340,11 +1340,11 @@ Display the operation frequency of the real-time front-end (sent by front-end ap
 
 **Overview of master/slave node mode clusters:**
 
-![](/assets/img/en/hotdb-management/image138.png)
+![](../../assets/img/en/hotdb-management/image138.png)
 
 **Overview of multi-node mode clusters:**
 
-![](/assets/img/en/hotdb-management/image139.png)
+![](../../assets/img/en/hotdb-management/image139.png)
 
 - Cluster Starting Time: Display the actual starting time of the current master compute node.
 - Cluster Running Time: Display the current running time of the master compute node since starting.
@@ -1370,7 +1370,7 @@ If the DR mode is enabled, please refer to the [Node management](cross-idc-disas
 
 Click [Configuration](#configuration) -> "[Node Management](#node-management)" on the management platform page
 
-![](/assets/img/en/hotdb-management/image140.png)
+![](../../assets/img/en/hotdb-management/image140.png)
 
 **Table information description:**
 
@@ -1412,7 +1412,7 @@ Check the parameter items that need to be used by the data source and have the s
 - Min Idle Connections: Minimum idle connections of the MySQL database, which is 32 by default
 - Idle Examination Period (second): Idle examination period of the MySQL database, which is 600 by default
 
-![](/assets/img/en/hotdb-management/image141.png)
+![](../../assets/img/en/hotdb-management/image141.png)
 
 #### Add node
 
@@ -1426,7 +1426,7 @@ Click on [Configuration](#configuration) -> "[Node Management](#node-management)
 
 The Add Node function is displayed taking adding 4 data nodes (dn_01, dn_02, dn_03, dn_04) and 8 data sources (master-master: ds_01, ds_02, single database: ds_03, master/slave: ds_04, ds_05, MGR: ds_06, ds_07, ds_08) for example as follows.
 
-![](/assets/img/en/hotdb-management/image142.png)
+![](../../assets/img/en/hotdb-management/image142.png)
 
 **Generation of example data:**
 
@@ -1434,15 +1434,15 @@ The Add Node function is displayed taking adding 4 data nodes (dn_01, dn_02, dn_
 
 **Step 2:** Click the "Generate" button to generate the data into the list
 
-**Step 3:** Click the ![](/assets/img/en/hotdb-management/image143.png) button in the "Operation" column to delete the excessive records generated in the dn_02 data node.
+**Step 3:** Click the ![](../../assets/img/en/hotdb-management/image143.png) button in the "Operation" column to delete the excessive records generated in the dn_02 data node.
 
 **Step 4:** Modify "Date Source Type" under dn_03 data node to "Standby Slave"
 
-**Step 5:** Click the ![](/assets/img/en/hotdb-management/image144.png) button in the "Operation" column of dn_04 data node record to add a record under dn_04.
+**Step 5:** Click the ![](../../assets/img/en/hotdb-management/image144.png) button in the "Operation" column of dn_04 data node record to add a record under dn_04.
 
 **Step 6:** Modify "Date Source Type" under three records of dn_04 to MGR
 
-![](/assets/img/en/hotdb-management/image145.png)
+![](../../assets/img/en/hotdb-management/image145.png)
 
 **Configure data source data:**
 
@@ -1466,7 +1466,7 @@ The Add Node function is displayed taking adding 4 data nodes (dn_01, dn_02, dn_
 
 **Step 8:** Click the "Save and Return" button to save the configured node data
 
-![](/assets/img/en/hotdb-management/image146.png)
+![](../../assets/img/en/hotdb-management/image146.png)
 
 #### Master/slave setup
 
@@ -1476,7 +1476,7 @@ Master/Slave Setup function can set up a replication relation for a data source 
 
 Click [Configuration](#configuration) -> "[Node Management](#node-management)" -> "High Availability Setting" -> "Master/Slave Setup" on the management platform page to enter the "Master/Slave Setup" function page.
 
-![](/assets/img/en/hotdb-management/image147.png)
+![](../../assets/img/en/hotdb-management/image147.png)
 
 After entering the Master/Slave Setup page, it will automatically display the data nodes that need to be set up. If it is NULL,it means there is no data node to be set up.
 
@@ -1491,7 +1491,7 @@ After entering the Master/Slave Setup page, it will automatically display the da
 - If the data source selected adopts the GTID mode for replication setup, GTID shall have no breakpoints
 - The data source selected shall have no traffic flow currently
 
-![](/assets/img/en/hotdb-management/image148.png)
+![](../../assets/img/en/hotdb-management/image148.png)
 
 **Master/slave setup process:**
 
@@ -1515,7 +1515,7 @@ After entering the Master/Slave Setup page, it will automatically display the da
 
 1. For the master/slave setup of master-master with slave(s) data node, the master of the standby slave is the active master by default. If it needs to set up standby master, it needs to edit the "Master Data Source Name" to be standby master in the "Data Source Management" before setup, as shown below:
 
-    ![](/assets/img/en/hotdb-management/image149.png)
+    ![](../../assets/img/en/hotdb-management/image149.png)
 
 2. If the user enters other menu pages or exits the login in the setup process, the master/slave setup task will still run in the background. The setup can be viewed in the "Master/Slave Status" on the "Node Management" function page. The detailed master/slave status is as follows:
 
@@ -1534,7 +1534,7 @@ Configuring switching rule provides users with a guarantee of high availability 
 
 Click [Configuration](#configuration) -> "[Node Management](#node-management)" -> "High Availability Setting" -> "Switching Rule" on the management platform page to enter the "Data Node Switch Configuration" function page.
 
-![](/assets/img/en/hotdb-management/image150.png)
+![](../../assets/img/en/hotdb-management/image150.png)
 
 **Function description:** 
 
@@ -1549,7 +1549,7 @@ Generally, when "Auto Adaptation of Switching Rule" is selected in "[Add Node](#
 5. Set the switching priority. The smaller the moving number displayed, the higher the switching priority.
 6. Click on the "√"button to save the switching rule record. Click on the "×" button to cancel the record.
 
-![](/assets/img/en/hotdb-management/image151.png)
+![](../../assets/img/en/hotdb-management/image151.png)
 
 **Auto Adaptation operation instructions**
 
@@ -1557,7 +1557,7 @@ Generally, when "Auto Adaptation of Switching Rule" is selected in "[Add Node](#
 2. Click the ">>"full right-shift button or double-click the data nodes displayed on the left to choose options needing to be automatically adapted.
 3. Click the "OK and Return" button. The program will automatically adapt the switching rule for the selected data node.
 
-![](/assets/img/en/hotdb-management/image152.png)
+![](../../assets/img/en/hotdb-management/image152.png)
 
 **Auto Adaptation rule description**
 
@@ -1575,7 +1575,7 @@ Generally, when "Auto Adaptation of Switching Rule" is selected in "[Add Node](#
 
 **Function Entry:** Click [Configuration](#configuration) -> "[Node Management](#node-management)" -> "High Availability Setting" -> [Heartbeat paused](#heartbeat-paused) on the management platform page to enter the [Heartbeat paused](#heartbeat-paused) function page.
 
-![](/assets/img/en/hotdb-management/image153.png)
+![](../../assets/img/en/hotdb-management/image153.png)
 
 Function operation instructions:
 
@@ -1583,7 +1583,7 @@ Function operation instructions:
 2. Click the "Pause" button and the pop-up box prompts "whether to pause the selected Data Node?" After clicking the "Confirm" button, the program will perform the heartbeat paused operation and the "Pause Status" recorded on the page is "Pause Succeeded". After clicking the "Cancel" button, the program will not perform the heartbeat paused operation and return to the previous level.
 3. After the pause period, the data node will automatically respond to the heartbeat detection.
 
-![](/assets/img/en/hotdb-management/image154.png)
+![](../../assets/img/en/hotdb-management/image154.png)
 
 #### Master/Slave switch
 
@@ -1599,19 +1599,19 @@ Click [Configuration](#configuration) -> "[Node Management](#node-management)" -
 - The master/slave and master-master replication relations under the node have been set up, and the replication latency time shall not exceed 10s.
 - MGR node does not support manual switching, and the active master is selected by MySQL
 
-![](/assets/img/en/hotdb-management/image155.png)
+![](../../assets/img/en/hotdb-management/image155.png)
 
 **Function description:**
 
 1. If the data node is the master/slave architecture, the highest priority is selected when switching manually. After switching, the master data source and other slaves will set by HotDB Server to be unavailable and cannot be switched again.
 2. In case of master-master, the active master will not be unavailable after switch and can be further switched manually.
 3. If the delay setting of master_delay is detected during switching, the value of master_delay will be automatically cancelled. After the switching, the delay setting will be restored. If the replication latency is still greater than 10s after cancelling master_delay, switching will not be allowed, and the previously set value of master_delay will be restored.
-    ![](/assets/img/en/hotdb-management/image156.png)
+    ![](../../assets/img/en/hotdb-management/image156.png)
 4. If the highest priority standby slave is unavailable or delayed for more than 10s, the program will select the remaining standby slaves with higher priority to switch manually. If none is available or delayed for more than 10s, no switch will be performed and an error will be prompted (the switch failure log prompts: switch datasource datasource id failed due to: no available backup found).
 5. After the switch is completed, other data sources need to be manually made available, and the active master will be reused after reloading. However, it is recommended to perform the "Master/Slave Consistency Detection" to ensure data consistency before manually setting them available.
 6. During the switch process, the program will wait for standby slave catching up with copy.
 7. Add "switching" button. You can cancel the switch operation midway by clicking the button.
-    ![](/assets/img/en/hotdb-management/image157.png)
+    ![](../../assets/img/en/hotdb-management/image157.png)
 8. After the switch is successful, HotDB Server will record the switch process log.
 
 #### Data node management
@@ -1620,7 +1620,7 @@ Each data node has its own details page, where the user can manage the basic inf
 
 **Function Entry:** 
 
-Click [Configuration](#configuration) -> "[Node Management](#node-management)" -> "![](/assets/img/en/hotdb-management/image158.png)" -> on the management platform page.
+Click [Configuration](#configuration) -> "[Node Management](#node-management)" -> "![](../../assets/img/en/hotdb-management/image158.png)" -> on the management platform page.
 
 **Function description:**
 
@@ -1633,7 +1633,7 @@ Click [Configuration](#configuration) -> "[Node Management](#node-management)" -
 7. The data source configuration is a data source configured under the data node.
 8. The data node switch includes the switching rule that has been configured under the data node, and the switching rule can be added or automatically adapted for a newly configured data source. The "Auto Adaptation of Node Switching" can be checked to perform the auto adaptation of switching rules for newly added data sources under the data node in the future.
 
-![](/assets/img/en/hotdb-management/image159.png)
+![](../../assets/img/en/hotdb-management/image159.png)
 
 #### Enable/Disable data source
 
@@ -1643,7 +1643,7 @@ Special maintenance for a data source can be operated by disabling the data sour
 
 **Function Entry:**
 
-Click [Configuration](#configuration) -> "[Node Management](#node-management)" -> "![](/assets/img/en/hotdb-management/image160.png)" -> on the management platform page.
+Click [Configuration](#configuration) -> "[Node Management](#node-management)" -> "![](../../assets/img/en/hotdb-management/image160.png)" -> on the management platform page.
 
 **Function operation:**
  
@@ -1653,7 +1653,7 @@ On the data source management page, click the "Disable" button to confirm, then 
 > 
 > Data sources of the MGR type shall not be arbitrarily disabled, otherwise the data source switch will be abnormal.
 
-![](/assets/img/en/hotdb-management/image161.png)
+![](../../assets/img/en/hotdb-management/image161.png)
 
 **Enable data source**
 
@@ -1661,15 +1661,15 @@ If the abnormal status of the data source is restored after the failure or manua
 
 **Function Entry:** 
 
-Click [Configuration](#configuration) -> "[Node Management](#node-management)" -> "![](/assets/img/en/hotdb-management/image162.png)" -> on the management platform page.
+Click [Configuration](#configuration) -> "[Node Management](#node-management)" -> "![](../../assets/img/en/hotdb-management/image162.png)" -> on the management platform page.
 
 **Function description:**
 
 1. Single database and MGR data source can be directly enabled.
 2. When a single or a batch of data sources with master/slave or master-master architecture is enabled, the enabled data source shall have at least one record of passing master/slave data consistency detection according to the data source dimension after it is marked as unavailable for the last time, or a prompt window is popped up to remind the user.
-    ![](/assets/img/en/hotdb-management/image163.png)
+    ![](../../assets/img/en/hotdb-management/image163.png)
 3. Click "Start Detection" to jump to the master/slave consistency detection page. The enabled data source is selected by default. Manually click to Start a detection. If "Directly Enable it" is selected, it is necessary to manually ensure that the enabled data source is consistent with the data of other data sources under the data node.
-    ![](/assets/img/en/hotdb-management/image164.png)
+    ![](../../assets/img/en/hotdb-management/image164.png)
 
 ### LogicDB
 
@@ -1683,13 +1683,13 @@ Click [Configuration](#configuration) -> [LogicDB](#logicdb) on the Distributed 
 
 On the logicDB page, enter the logicDB name and click "Search" to search the corresponding information.
 
-![](/assets/img/en/hotdb-management/image165.png)
+![](../../assets/img/en/hotdb-management/image165.png)
 
 #### Add LogicDB
 
 **Function Entry:** "Configuration -> LogicDB -> Add LogicDB"
 
-![](/assets/img/en/hotdb-management/image166.png)
+![](../../assets/img/en/hotdb-management/image166.png)
 
 LogicDB name is unique and not empty.
 
@@ -1699,21 +1699,21 @@ Click "√", then the logicDB is added successfully (at this time, the logicDB i
 
 When the number of existing LogicDBs exceeds the number of authorized LogicDBs, it is not allowed to add new LogicDBs.
 
-![](/assets/img/en/hotdb-management/image167.png)
+![](../../assets/img/en/hotdb-management/image167.png)
 
 #### Edit LogicDB
 
 Select [Configuration](#configuration) -> [LogicDB](#logicdb) -> [Edit LogicDB](#edit-logicdb) in HotDB Management. When changing the logicDB name, it will prompt: "Changing the name may change user privileges associated with the logicDB", so the logicDB name shall be changed with caution.
 
-![](/assets/img/en/hotdb-management/image168.png)
+![](../../assets/img/en/hotdb-management/image168.png)
 
 Click "√", then the logicDB is edited successfully.
 
 #### Delete LogicDB
 
-![](/assets/img/en/hotdb-management/image169.png)
+![](../../assets/img/en/hotdb-management/image169.png)
 
-![](/assets/img/en/hotdb-management/image170.png)
+![](../../assets/img/en/hotdb-management/image170.png)
 
 Deleting the logicDB will delete all tables under the logicDB that have not created the table structure, but if there is any table without "drop table" in the background, a pop-up window will prompt that the logicDB cannot be deleted.
 
@@ -1731,7 +1731,7 @@ Click [Configuration](#configuration) -> "Table Configuration" on the Distribute
 
 Global Table, Child Table, Sharding Table and Vertical Sharding Table
 
-![](/assets/img/en/hotdb-management/image171.png)
+![](../../assets/img/en/hotdb-management/image171.png)
 
 #### Add new table configuration
 
@@ -1741,7 +1741,7 @@ Add New Table Configuration currently supports adding: Sharding Table, Vertical 
 
 Auto Sharding can add sharding tables of AUTO_CRC32 and AUTO_MOD types and AUTO_CRC32 is the default sharding type used by the page. For the difference between them, please refer to the "Mode Description" on the page. For a more detailed introduction, please refer to the "Sharding Function" chapter.
 
-![](/assets/img/en/hotdb-management/image172.png)
+![](../../assets/img/en/hotdb-management/image172.png)
 
 **Step 1:** Select the logicDB to which the created sharding table belongs
 
@@ -1767,7 +1767,7 @@ Auto Sharding can add sharding tables of AUTO_CRC32 and AUTO_MOD types and AUTO_
 
 Select LogicDB, fill in Default Sharding Key, select "Advanced Sharding" in Sharding Mode, select Sharding Function (in case of no sharding function, refer to Add New Sharding Function), fill in the Table Name, click "Generate Preview", click "Save" and Reload.
 
-![](/assets/img/en/hotdb-management/image173.png)
+![](../../assets/img/en/hotdb-management/image173.png)
 
 Multiple tables with the same function can be added at one time.
 
@@ -1785,7 +1785,7 @@ Multiple tables with the same function can be added at one time.
 
 1. Select [Configuration](#configuration) -> "Table Configuration" -> "Add Table" on the Distributed Transactional Database Management Platform page. select child table on the Add Table Configuration page.
 2. Under the child table, select LogicDB and Parent Table, enter the Parent Table Associated Field and the number of child tables to be added, and click on "+" to generate the input field with LogicDB, Parent Table, and Parent Table Associated Field.
-    ![](/assets/img/en/hotdb-management/image174.png)
+    ![](../../assets/img/en/hotdb-management/image174.png)
 3. Then enter the Child Table Name and Child Table Associated Field, and click "Save" to add the child table successfully.
 
 **Add a child table under the parent table record on the table configuration page:**
@@ -1798,7 +1798,7 @@ Multiple tables with the same function can be added at one time.
 > 
 > If multiple child tables need to be added under the parent table, the Parent Table Association Field filled in must be consistent. No child table shall be added under the parent table with created table structure.
 
-![](/assets/img/en/hotdb-management/image175.png)
+![](../../assets/img/en/hotdb-management/image175.png)
 
 #### Edit table configuration
 
@@ -1808,19 +1808,19 @@ Select [Configuration](#configuration) -> "[Table Configuration](#table-configur
 
 Tables can be divided into two statuses: Created and Not Created. When table structure type is Not Created, the table name, logicDB, sharding key, sharding mode and data node can be changed by editing.
 
-![](/assets/img/en/hotdb-management/image176.png)
+![](../../assets/img/en/hotdb-management/image176.png)
 
 Click "Save" to edit the table configuration successfully. When the table structure type is Created, it is not allowed to modify the table definition but the table can be modified using "Modify Table Structure" or "Modify Table Configuration".
 
-![](/assets/img/en/hotdb-management/image177.png)
+![](../../assets/img/en/hotdb-management/image177.png)
 
 Click "Modify Table Structure" to jump to [Online DDL](#online-ddl) function page, and click "Modify Table Configuration" to jump to "Sharding Plan Online Modification" function page.
 
 #### Table record export
 
-![](/assets/img/en/hotdb-management/image178.png)
+![](../../assets/img/en/hotdb-management/image178.png)
 
-![](/assets/img/en/hotdb-management/image179.png)
+![](../../assets/img/en/hotdb-management/image179.png)
 
 Click the "Export" button on the table configuration page to export the checked records. If not checked, all table configuration records are exported by default.
 
@@ -1839,7 +1839,7 @@ Select [Configuration](#configuration) -> "
 
 Click the "Delete" button, then the pop-up box will prompt: "Confirm to Delete?". Click "Confirm" to delete the uncreated table successfully.
 
-![](/assets/img/en/hotdb-management/image180.png)
+![](../../assets/img/en/hotdb-management/image180.png)
 
 > !Note
 > 
@@ -1851,7 +1851,7 @@ Click the "Delete" button, then the pop-up box will prompt: "Confirm to Delete?"
 
 HotDB Server after V2.4.6 dropped HASH (including HASH23) and AUTO sharding function. Subsequent new tables will no longer support the use of dropped sharding function, except for tables that have historically used HASH (including HASH23) and AUTO, but attention shall be paid to: "If String-type Sharding Key Operation is Applied in SQL, the Case Sensitivity shall be Paid Attention to (That is to Ensure that the case in SQL, Sharding Key is Consistent with Data Input). At the same time, if the management platform detects tables which cite HASH (including HASH23) and AUTO in the system, Table Configuration, Add Table and Edit Table pages will have corresponding prompt information, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image181.png)
+![](../../assets/img/en/hotdb-management/image181.png)
 
 **Data migration description:** 
 
@@ -1867,7 +1867,7 @@ Select [Configuration](#configuration) -> [Sharding Function](#sharding-function
 
 **Seven sharding types are described in detail as follows:**
 
-![](/assets/img/en/hotdb-management/image182.png)
+![](../../assets/img/en/hotdb-management/image182.png)
 
 **Description of historical changes of the sharding function:**
 
@@ -1895,13 +1895,13 @@ In v.2.5.6 and above, "Match by Digit Number" is added (not checked by default) 
 
 **Example:**
 
-![](/assets/img/en/hotdb-management/image183.png)
+![](../../assets/img/en/hotdb-management/image183.png)
 
 For example, if the express delivery order number "YTQSXXXX4587XXX" needs to be matched according to the first four letters YTQS, you can set the matching rule as: Start from the first on the left to match 4 digits, and enter the value "YTQS". If you need to match from the last four numbers"4587", you can set the matching rule as: start from the seventh on the right to match 4 digits backward, and enter the value "4587".
 
 When "Match by Digit Number" is checked, the digit number of the input value must be the same as the number of matching digit number. Otherwise, it will prompt that the preview cannot be saved when previewing. For example, as shown in the figure below, if the matching digit number is 2 and the input value has more than 2 digits, it is will not be allowed to save.
 
-![](/assets/img/en/hotdb-management/image184.png)
+![](../../assets/img/en/hotdb-management/image184.png)
 
 **Step 6:** Enter the value matching each data node, which can be spaced by line breaks, English commas or English space.
 
@@ -1909,7 +1909,7 @@ When "Match by Digit Number" is checked, the digit number of the input value mus
 
 **Step 8:** Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
 
-![](/assets/img/en/hotdb-management/image185.png)
+![](../../assets/img/en/hotdb-management/image185.png)
 
 ##### Add sharding function of MATCH type in manual setting mode
 
@@ -1917,7 +1917,7 @@ When "Match by Digit Number" is checked, the digit number of the input value mus
 
 Select "Automatic Generation of Sharding Function Name" by default, select MATCH sharding type, set "Manul Setting" mode, check "Match by Digit Number" and fill the matching rule or not, click "+" to add records, select data nodes and matching values, click "Save and Return" and Reload
 
-![](/assets/img/en/hotdb-management/image186.png)
+![](../../assets/img/en/hotdb-management/image186.png)
 
 > !Note
 > 
@@ -1951,7 +1951,7 @@ When it is in 2.5.6 and above, "Automatically distribute route nodes to the maxi
 
 **Step 9:** Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
 
-![](/assets/img/en/hotdb-management/image187.png)
+![](../../assets/img/en/hotdb-management/image187.png)
 
 ##### Add sharding function of RANGE type in manual setting mode
 
@@ -1959,7 +1959,7 @@ When it is in 2.5.6 and above, "Automatically distribute route nodes to the maxi
 
 Select "Automatic Generation of Sharding Function Name" by default, select RANGE sharding type, set "Manul Setting" mode, select data nodes and range of matching values (value range is represented by an English colon, such as 10:20), click "+" to add records, and click "Save and Return"
 
-![](/assets/img/en/hotdb-management/image188.png)
+![](../../assets/img/en/hotdb-management/image188.png)
 
 > Note: 
 > 
@@ -1993,7 +1993,7 @@ The same as MATCH type. When it is v.2.5.6 and above, you can also select "Match
 
 **Step 9:** Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
 
-![](/assets/img/en/hotdb-management/image189.png)
+![](../../assets/img/en/hotdb-management/image189.png)
 
 ##### Add sharding function of ROUTE type in manual setting mode
 
@@ -2001,7 +2001,7 @@ The same as MATCH type. When it is v.2.5.6 and above, you can also select "Match
 
 Select "Automatic Generation of Sharding Function Name" by default, select ROUTE sharding type, set "Manul Setting" mode, check "Match by Digit Number" and fill the matching rule or not, select data nodes and matching values, click "+" to add records, and click "Save and Return".
 
-![](/assets/img/en/hotdb-management/image190.png)
+![](../../assets/img/en/hotdb-management/image190.png)
 
 > !Note
 > 
@@ -2031,7 +2031,7 @@ Adding sharding function with sharding type of SIMPLE_MOD is displayed taking th
 
 **Step 8:** Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
 
-![](/assets/img/en/hotdb-management/image191.png)
+![](../../assets/img/en/hotdb-management/image191.png)
 
 ##### Add sharding function of SIMPLE_MOD type in manual setting mode
 
@@ -2039,7 +2039,7 @@ Adding sharding function with sharding type of SIMPLE_MOD is displayed taking th
 
 Select "Automatic Generation of Sharding Function Name" by default, select SIMPLE_MOD sharding type, set "Manul Setting" mode, set the module value, select data nodes and matching values, click "+" to add records, and click "Save and Return"
 
-![](/assets/img/en/hotdb-management/image192.png)
+![](../../assets/img/en/hotdb-management/image192.png)
 
 > !Note
 > 
@@ -2067,7 +2067,7 @@ Adding sharding function with sharding type of CRC32_MOD is displayed taking the
 
 **Step 7:** Click the "Save and Return" button to save the new sharding function to the configDB. Reload is also required if it needs to take effect immediately into the compute node.
 
-![](/assets/img/en/hotdb-management/image193.png)
+![](../../assets/img/en/hotdb-management/image193.png)
 
 ##### Add sharding function of CRC32_MOD type in manual setting mode
 
@@ -2075,7 +2075,7 @@ Adding sharding function with sharding type of CRC32_MOD is displayed taking the
 
 Select "Automatic Generation of Sharding Function Name" by default, select CRC32_MOD sharding type, set "Manul Setting" mode, set the module value, select data nodes and matching values, click "+" to add records, and click "Save and Return"
 
-![](/assets/img/en/hotdb-management/image194.png)
+![](../../assets/img/en/hotdb-management/image194.png)
 
 > !Note
 > 
@@ -2091,7 +2091,7 @@ Select [Configuration](#configuration) -> "Sharding Function" -> [Edit sharding 
  
 On the Edit sharding function page, change the Sharding Function Name, Sharding Type, Setting Mode, etc., and click "Save and Return" to edit the sharding function successfully.
 
-![](/assets/img/en/hotdb-management/image195.png)
+![](../../assets/img/en/hotdb-management/image195.png)
 
 **Modification notes:**
 
@@ -2112,7 +2112,7 @@ Select [Configuration](#configuration) -> "Sharding Function" -> on the Distribu
 
 Click the "Delete" button and then a pop-up box will prompt: "Confirm to Delete?" Click "Confirm" to delete the sharding function successfully.
 
-![](/assets/img/en/hotdb-management/image196.png)
+![](../../assets/img/en/hotdb-management/image196.png)
 
 > !Note
 > 
@@ -2122,13 +2122,13 @@ Click the "Delete" button and then a pop-up box will prompt: "Confirm to Delete?
 
 **Function Entry:** 
 
-Select [Configuration](#configuration) -> "[Sharding Function](#sharding-function)" -> "Replication![](/assets/img/en/hotdb-management/image197.png)" on the Distributed Transactional Database Platform page.
+Select [Configuration](#configuration) -> "[Sharding Function](#sharding-function)" -> "Replication![](../../assets/img/en/hotdb-management/image197.png)" on the Distributed Transactional Database Platform page.
 
 **Function description:** 
 
 Click the "Replicate" button on the sharding function page to pop up the new sharding function name input box, enter the new function name and click "Confirm" to replicate the sharding function successfully.
 
-![](/assets/img/en/hotdb-management/image198.png)
+![](../../assets/img/en/hotdb-management/image198.png)
 
 **Replication notes:**
 
@@ -2139,7 +2139,7 @@ Click the "Replicate" button on the sharding function page to pop up the new sha
 
 When the sharding key is of string type and the sharding type is AUTO or HASH, HotDB Server has different route results for string case, that is, when the sharding key is of string type, it is sensitive to case. When using sharding key in SQL, its case shall be consistent with that when storing data to query the corresponding data. Therefore, the AUTO and HASH sharding types have been dropped in V2.4.7. For the new version, it is recommended to replace HASH\AUTO with partition types such as CRC32_MOD\AUTO_CRC32, while sharding tables of HASH\AUTO type are still allowed for the thought of smooth transition. If historical data contains partition types like AUTO or HASH, the page will give the following prompt, which requires extra attention when using.
 
-![](/assets/img/en/hotdb-management/image199.png)
+![](../../assets/img/en/hotdb-management/image199.png)
 
 ### Config checking
 
@@ -2151,7 +2151,7 @@ DR mode explanation: when the DR mode is enabled, please refer to the [Config ch
 
 Select [Configuration](#configuration) -> "[Config Checking](#config-checking)" on the Distributed Transactional Database Platform page.
 
-![](/assets/img/en/hotdb-management/image200.png)
+![](../../assets/img/en/hotdb-management/image200.png)
 
 **Operation description:** 
 
@@ -2161,7 +2161,7 @@ Click the \[Start Checking] button to directly Start Config checking. When all c
 
 Config checking failures are divided into ERROR (red font display) and WARNING (orange font display) generally. When ERROR level information appears, users need to modify and solve the related problems immediately, otherwise [Reload](#reload) cannot be performed. WARNING information indicates a failure to which attention shall be paid and which does not affect the operation of compute nodes.
 
-![](/assets/img/en/hotdb-management/image201.png)
+![](../../assets/img/en/hotdb-management/image201.png)
 
 **Config Checking Items:**
 
@@ -2227,11 +2227,11 @@ Config checking failures are divided into ERROR (red font display) and WARNING (
 >
 > After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table." is a newly added verification rule for management platforms of v.2.5.5 and above, as shown in the following figure:
 > 
-> ![](/assets/img/en/hotdb-management/image202.png)
+> ![](../../assets/img/en/hotdb-management/image202.png)
 > 
 > When in cluster mode and autoIncrement is set to 2 (auto-increment and unique), if there is historical auto-increment sequence of type smallint, tinyint, mediamin, int, the dynamic loading will be affected and "After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table." will be prompted, as shown below:
 >
-> ![](/assets/img/en/hotdb-management/image203.png)
+> ![](../../assets/img/en/hotdb-management/image203.png)
 >
 > This verification rule verifies tables with auto-increment columns enabled under all LogicDBs only when autoIncrement is set to 2, that is, "global auto-increment and unique" and the compute node mode is multi-node cluster. The displayed information includes: LogicDB, table name, field name of auto-increment column and current type of auto-increment column that does not conform to the verified table.
 
@@ -2241,11 +2241,11 @@ Config metadata refers to compute node configDB data and configuration files. Ho
 
 #### Cluster metadata backup
 
-![](/assets/img/en/hotdb-management/image204.png)
+![](../../assets/img/en/hotdb-management/image204.png)
 
 **Manual Backup**
 
-![](/assets/img/en/hotdb-management/image205.png)
+![](../../assets/img/en/hotdb-management/image205.png)
 
 Metadata Backup can be divided into the "ConfigDB" or "ConfigFile". ConfigDB is the data in the master configDB currently used by the compute node; ConfigFile is all files under the bin, conf, and lib directories of the current master compute node, and the master/slave mode clusters also include backup `keepalived.conf` file.
 
@@ -2255,7 +2255,7 @@ When backing up the "ConfigFile", it needs to configure the SSH connection infor
 
 **Remote Backup**
 
-![](/assets/img/en/hotdb-management/image206.png)
+![](../../assets/img/en/hotdb-management/image206.png)
 
 To improve the backup metadata security, this function also backs up the backup metadata to a remote server. Check "Backup to Remote Simultaneously" to manually Start a backup. Select "Yes" for "Backup to Remote Simultaneously" in the plan of periodical backup.
 
@@ -2269,7 +2269,7 @@ Using the remote backup function requires configuring remote server related para
 
 **Periodical Backup**
 
-![](/assets/img/en/hotdb-management/image207.png)
+![](../../assets/img/en/hotdb-management/image207.png)
 
 Periodical Backup time can be set to 3 types: daily, weekly and monthly, but the [Cluster metadata backup and restore](#cluster-metadata-backup-and-restore) function in HotDB Management can only add up to 6 periodical backup plans.
 
@@ -2279,7 +2279,7 @@ Periodical tasks can periodically back up configDB or configFile. When configuri
 
 **Cluster metadata restore**
 
-![](/assets/img/en/hotdb-management/image208.png)
+![](../../assets/img/en/hotdb-management/image208.png)
 
 Currently, only the configDB data restore is supported. The configuration file restore needs to be manually replaced.
 
@@ -2297,25 +2297,25 @@ Function entry: log in to the management platform, enter the "Configuration -> P
 
 #### Basic functions and notes
 
-![](/assets/img/en/hotdb-management/image209.png)
+![](../../assets/img/en/hotdb-management/image209.png)
 
 Through the compute node drop-down box, you can view all the compute nodes in the current cluster. The current active compute node is displayed at the top of the drop-down box, format: (IP the current active). And other compute nodes are displayed in the drop-down box in turn, format: compute node name (IP). The synchronization box "Slave compute node automatically synchronized" is checked by default. Adding or modifying parameters will be automatically synchronized to other slave compute nodes (no synchronization in single-node mode), including seven parameters `[haMode: DR mode]`, `[idcId: ID of IDC]`, `[idcNodeHost: master compute node information of the corresponding IDC]`, `[ServerId: cluster node number]`, `[clusterHost: IP where the compute node is located]`, `[hsaState: configuration of master/slave roles in high availability mode of compute node]`, `[HaNodeHost: connection information of the current active compute node in the high availability mode of compute node]`, which are controlled by respective compute nodes and will not be modified synchronously.
 
 For the list, you can search by parameter name and parameter description, or filter by "Basic configuration, High availability setting, Database features, SQL grammar and function, Database performance, Database operation and maintenance", as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image210.png)
+![](../../assets/img/en/hotdb-management/image210.png)
 
 At the same time, parameters can be modified, reset, batch modified, and batch reset. After these operations, Status of parameter will not be "Worked" immediately. You can make it "Work" through reload or restarting the service (refer to the description of "The way to work")
 
-![](/assets/img/en/hotdb-management/image211.png)
+![](../../assets/img/en/hotdb-management/image211.png)
 
 Click the hyperlink of parameter name, the page will jump to the "Parameter Details Explanation" page and navigate to the parameter, which gives a detailed description of the parameter.
 
-![](/assets/img/en/hotdb-management/image212.png)
+![](../../assets/img/en/hotdb-management/image212.png)
 
 Click the "Add parameters" button at the upper right corner to jump to the Add parameters page. It displays all the uncommon parameters of the compute node, which need to be modified and added according to the actual need.
 
-![](/assets/img/en/hotdb-management/image213.png)
+![](../../assets/img/en/hotdb-management/image213.png)
 
 > !Note
 >
@@ -2344,13 +2344,13 @@ When the configDB mode used by compute node cluster is master/slave or master-ma
 
 1. After the failure of the master ConfigDB, the Parameter Configuration page is shown as follows:
 
-![](/assets/img/en/hotdb-management/image214.png)
+![](../../assets/img/en/hotdb-management/image214.png)
 
 2. If the master configDB is restored and consistent with the slave configDB data, the master configDB can be enabled by clicking the enable button on the compute node Configuration page.
 
-3. After clicking the ![](/assets/img/en/hotdb-management/image215.png) button, click the \[Reload] button to re-enable the master configDB.
+3. After clicking the ![](../../assets/img/en/hotdb-management/image215.png) button, click the \[Reload] button to re-enable the master configDB.
 
-![](/assets/img/en/hotdb-management/image216.png)
+![](../../assets/img/en/hotdb-management/image216.png)
 
 For the DR mode, attention should be paid to:
 
@@ -2358,7 +2358,7 @@ For the DR mode, attention should be paid to:
 - When the DR center is the current standby IDC, it is necessary to confirm that the current master ConfigDB is available when enabling the slave ConfigDB of the DR center. Otherwise, the slave ConfigDB of the DR center cannot be enabled, that is, the master ConfigDB of the DR center must be enabled before enabling the slave ConfigDB of the DR center.
 - If you want to enable any ConfigDB in two IDCs, you need to ensure that the replication status of the current IDC and between the IDC is normal. If any replication status is abnormal, dynamic loading will succeed with alert prompt, as follows:
 
-![](/assets/img/en/hotdb-management/image217.png)
+![](../../assets/img/en/hotdb-management/image217.png)
 
 ### Database user management
 
@@ -2366,7 +2366,7 @@ HotDB Server controls compute node user privileges to the table level, and has S
 
 #### Query by username
 
-![](/assets/img/en/hotdb-management/image218.png)
+![](../../assets/img/en/hotdb-management/image218.png)
 
 The page displays the compute node database user records added, which support fuzzy search by username or hostname.
 
@@ -2376,7 +2376,7 @@ The "root" on the page is the built-in user when the HotDB Management installati
 
 Click the \[Add Users] button to enter the Add User information page. There are three modules on the Add User information page: Basic Information, logicDB privilege and Table level privilege.
 
-![](/assets/img/en/hotdb-management/image219.png)
+![](../../assets/img/en/hotdb-management/image219.png)
 
 **(1) Basic Information:** including required items "Username", "Password", optional items "Host", "Max User Connections", "super privilege" and "Global privilege"
 
@@ -2392,7 +2392,7 @@ Click the \[Add Users] button to enter the Add User information page. There are 
 
 - Username and host can determine the uniqueness of user, that is, username + host represents an independent user. This rule is consistent with MySQL privilege system.
 
-![](/assets/img/en/hotdb-management/image220.png)
+![](../../assets/img/en/hotdb-management/image220.png)
 
 **(2) LogicDB privilege:** Select the corresponding logicDB to set the corresponding privileges, or create a new logicDB and set the privilege.
 
@@ -2440,7 +2440,7 @@ Configuration of table privilege denied is consistent with configuration of tabl
 
 When logging in to the server to read the user tables, they are first sorted by the most specific Host value (hostname and IP are the most specific), and the entries with the same Host value are matched by the most specific username first, for example, adding two users with the same username and different Host values, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image221.png)
+![](../../assets/img/en/hotdb-management/image221.png)
 
 User test logs in through host 192.168.200.51 and performs INSERT/ALTER operation. Because the most specific Host is matched, the ALTER unprivileged operation is denied, shown in the following figure:
 
@@ -2454,11 +2454,11 @@ ERROR 1045 (HY000): [ALTER] command denied to user 'test' to logic database 'TES
 
 The configured table-level privilege allowed do not conflict with the global, logicDB, and table-level privilege allowed, and the priority is higher than all. For example, the test user sets the global privilege ALL, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image222.png)
+![](../../assets/img/en/hotdb-management/image222.png)
 
 Test user sets test_ct.test_temp table privileges denied DELETE, DROP
 
-![](/assets/img/en/hotdb-management/image223.png)
+![](../../assets/img/en/hotdb-management/image223.png)
 
 The user test logs into the service port to perform DELETE and DROP operations on the test_temp table, which are denied. The privilege matching is as follows:
 
@@ -2477,7 +2477,7 @@ ERROR 1045 (HY000): [DELETE] command refused to user 'test' to table 'TEST_TEMP'
 
 Server menu mainly provides server SSH information for users to configure all components in the cluster on HotDB Management to facilitate HotDB Management to monitor the server status. In addition, it also supports adding servers outside the cluster to HotDB Management for monitoring.
 
-![](/assets/img/en/hotdb-management/image224.png)
+![](../../assets/img/en/hotdb-management/image224.png)
 
 #### Obtain server IP automatically
 
@@ -2485,19 +2485,19 @@ The server page automatically displays the server IP of all components in the cl
 
 **(I) Single node cluster mode**
 
-![](/assets/img/en/hotdb-management/image225.png)
+![](../../assets/img/en/hotdb-management/image225.png)
 
 HotDB Management automatically obtains the server IP information of the compute node, data source, and configDB components.
 
 **(2) Master/slave node mode cluster**
 
-![](/assets/img/en/hotdb-management/image226.png)
+![](../../assets/img/en/hotdb-management/image226.png)
 
 HotDB Management automatically obtains the server IP information of the compute node, data source, configDB and keepalived components.
 
 **(3) Multi-node mode cluster**
 
-![](/assets/img/en/hotdb-management/image227.png)
+![](../../assets/img/en/hotdb-management/image227.png)
 
 HotDB Management automatically obtains the server IP information of the compute node, data source, and configDB components. If the cluster is manually added, a prompt appears at the bottom of the page: The program cannot obtain the server IP of LVS components which shall be configured by the user in \[Add Server].
 
@@ -2505,7 +2505,7 @@ HotDB Management automatically obtains the server IP information of the compute 
 
 Click the \[Add Server] button to add a server outside the cluster.
 
-![](/assets/img/en/hotdb-management/image228.png)
+![](../../assets/img/en/hotdb-management/image228.png)
 
 - Login Method: Password and Sign in without password. If "Sign in without password" is selected, it needs to be set in advance. For details, refer to the [Instructions for Sign in without Password](installation-and-deployment.md#description-of-implementing-password-free-login) chapter of the [Installation and Deployment](installation-and-deployment.md) document.
 - Hostname: Server ip.
@@ -2519,7 +2519,7 @@ Click the \[Add Server] button to add a server outside the cluster.
 
 By default, the SSH connection status of cluster component server is "Not Connected". Users need to manually configure SSH information to HotDB Management. Monitoring will be automatically turned on when the configuration is complete.
 
-![](/assets/img/en/hotdb-management/image229.png)
+![](../../assets/img/en/hotdb-management/image229.png)
 
 Configure SSH information by simply filling in: Port (22 by default), Username and Password (not applicable for Sign in without password).
 
@@ -2545,7 +2545,7 @@ HotDB Management fully displays the physical and logic components such as front-
 
 #### Topological graph component description
 
-![](/assets/img/en/hotdb-management/image230.png)
+![](../../assets/img/en/hotdb-management/image230.png)
 
 The topological graph consists of five layers of components from top to bottom: front-end application, logicDB, compute node, data node, and data source.
 
@@ -2597,15 +2597,15 @@ The front-end application layer is the front-end application client that connect
 
 1. When the master/slave data consistency detection is not performed in the selected node, the master/slave data consistency will be shown as "--"
 
-![](/assets/img/en/hotdb-management/image231.png)
+![](../../assets/img/en/hotdb-management/image231.png)
 
 2. When the detection result of the selected node is "unable to detect" or "inconsistent": the master/slave data consistency will be shown as "abnormal", with a hyperlink in orange. Click the hyperlink to jump to the details page of the master/ slave consistency detection result.
 
-![](/assets/img/en/hotdb-management/image232.png)
+![](../../assets/img/en/hotdb-management/image232.png)
 
 3. When the detection result of the selected node is "consistent": the master/slave data consistency will be shown as "normal".
 
-![](/assets/img/en/hotdb-management/image233.png)
+![](../../assets/img/en/hotdb-management/image233.png)
 
 4. When the detection result of the selected node is "consistent"， with a prompt "There are conditions which cannot be detected." (i.e. multiple detection nodes): the master/slave data consistency will be shown according to the actual detection results. For the "consistent" nodes, it will be shown as "normal", and for the nodes that cannot be detected, it will be shown as "abnormal" with a hyperlink in orange.
 
@@ -2627,7 +2627,7 @@ The front-end application layer is the front-end application client that connect
 
 - The ConfigDB components of the compute nodes in the cluster are always displayed on the left of the storage layer.
 
-- ![](/assets/img/en/hotdb-management/image234.png) is a non-status icon, which connects one or two ConfigDBs ![](/assets/img/en/hotdb-management/image235.png), respectively representing a single node ConfigDB and a master-master ConfigDB. In single-IDC mode, if three or more ConfigDBs are connected, it represents the ConfigDB in MGR mode. ![](/assets/img/en/hotdb-management/image234.png) will be in orange when all ConfigDBs are not available.
+- ![](../../assets/img/en/hotdb-management/image234.png) is a non-status icon, which connects one or two ConfigDBs ![](../../assets/img/en/hotdb-management/image235.png), respectively representing a single node ConfigDB and a master-master ConfigDB. In single-IDC mode, if three or more ConfigDBs are connected, it represents the ConfigDB in MGR mode. ![](../../assets/img/en/hotdb-management/image234.png) will be in orange when all ConfigDBs are not available.
 
 - Similar to the data source, icon of ConfigDB in red means a failure exists; moving the cursor over the red icon, the failure cause can be displayed. Orange means an abnormal replication status exists, moving the cursor over the orange icon, the abnormality cause can be displayed.
 
@@ -2645,7 +2645,7 @@ The data source icon can quickly replicate connection information of the data so
 
 #### Interface adjustment function
 
-![](/assets/img/en/hotdb-management/image236.png)
+![](../../assets/img/en/hotdb-management/image236.png)
 
 **(I) Visual switching**
 
@@ -2669,7 +2669,7 @@ The information recorded in the Topological Graph Info Panel cannot be deleted m
 
 2.5D topological graph is a visual upgrade based on the original basic topological graph content. The component and component information displayed by this function are consistent with that of the above-mentioned "General View" topological graph, and the functions are similar.
 
-![](/assets/img/en/hotdb-management/image237.png)
+![](../../assets/img/en/hotdb-management/image237.png)
 
 **Special description of 2.5D topological graph:**
 
@@ -2691,7 +2691,7 @@ Physical topological graph mainly displays the relation between cluster componen
 
 **(1) Overview of physical topological graph**
 
-![](/assets/img/en/hotdb-management/image238.png)
+![](../../assets/img/en/hotdb-management/image238.png)
 
 Total servers: The total number of cluster servers (servers of associated cluster service programs) shown in the "Configuration -> Server" page list.
 
@@ -2705,7 +2705,7 @@ Service program health status: The running status of corresponding service progr
 
 **(2) Physical Topological Graph page**
 
-![](/assets/img/en/hotdb-management/image239.png)
+![](../../assets/img/en/hotdb-management/image239.png)
 
 **Page description:**
 
@@ -2719,7 +2719,7 @@ The servers that have been configured on the "Configuration -> Server" page and 
 
 **(3) Server details panel**
 
-![](/assets/img/en/hotdb-management/image240.png)
+![](../../assets/img/en/hotdb-management/image240.png)
 
 **Server Resource Details:**
 
@@ -2745,13 +2745,13 @@ The monitoring panel displays the data collected within 24 hours (it shall be en
 
 #### Add and set monitoring item
 
-![](/assets/img/en/hotdb-management/image241.png)
+![](../../assets/img/en/hotdb-management/image241.png)
 
 Click \[Add Monitoring Item] first when entering this function for the first time.
 
 Click the \[Switch] button to adjust the monitored items or select other compute nodes (multi-node mode cluster) to be displayed.
 
-![](/assets/img/en/hotdb-management/image242.png)
+![](../../assets/img/en/hotdb-management/image242.png)
 
 In multi-node mode cluster, "Switch Monitoring Display of Compute Nodes" can be selected to display the monitoring data of master compute node of the cluster by default. Single-node and master/slave node mode clusters can only view the monitoring data of the current master compute node.
 
@@ -2765,7 +2765,7 @@ The settings of other monitoring items are similar to the above description, and
 
 **(I) Compute node service status**
 
-![](/assets/img/en/hotdb-management/image243.png)
+![](../../assets/img/en/hotdb-management/image243.png)
 
 - **Total Number of Client Connection:** It displays the number of connections actually established between the current "Front-end Application" and the compute node, in unit of pcs.
 - **Thread Usage of Compute Nodes:** It displays the total number of threads, the occupied thread and the idle thread used by the current connection to the compute node, in unit of pcs.
@@ -2776,7 +2776,7 @@ The settings of other monitoring items are similar to the above description, and
 
 **(2) Compute node throughout**
 
-![](/assets/img/en/hotdb-management/image244.png)
+![](../../assets/img/en/hotdb-management/image244.png)
 
 - **Network traffic monitoring:** It displays the inflow and outflow of the whole cluster, including front-end traffic in/out and back-end traffic in/out in Bps.
 - **TPS:** It displays the number of transactions executed per second for the whole cluster, in unit of pcs.
@@ -2786,7 +2786,7 @@ The settings of other monitoring items are similar to the above description, and
 
 **(3) Compute node server resources**
 
-![](/assets/img/en/hotdb-management/image245.png)
+![](../../assets/img/en/hotdb-management/image245.png)
 
 - **Server memory usage:** It displays the current memory usage of the server where the compute node is located. The total memory, used memory and remaining memory can be viewed. The server memory usage of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
 - **Server disk space usage:** It displays the current disk space usage of the server where the compute node is located. The total disk space, used disk space and remaining disk space can be viewed. The server disk space usage of master compute node is monitored by default, and the multi-node mode cluster can be switched to view other compute nodes in [Setting](#setting).
@@ -2804,17 +2804,17 @@ The management platform can evaluate the data capacity growth trend of data sour
 
 The total data of ConfigDB and data nodes (current active ConfigDB and master data source) is collected at two o'clock each morning and recorded in the ConfigDB of the management platform. After 21 days of record, a prediction curve of data increment will be drew using polynomial fitting method, based on the history data amount.
 
-![](/assets/img/en/hotdb-management/image246.png)
+![](../../assets/img/en/hotdb-management/image246.png)
 
 If the history data of compute node ConfigDB, management platform ConfigDB and all data nodes is less than 21 days, the prediction curve will not be generated, and the page will give an orange reminder.
 
-![](/assets/img/en/hotdb-management/image247.png)
+![](../../assets/img/en/hotdb-management/image247.png)
 
 **（2）Select prediction time**
 
 You can select the prediction time, and the minimum unit is day. The timeline of the curve is based on the selected prediction time.
 
-![](/assets/img/en/hotdb-management/image248.png)
+![](../../assets/img/en/hotdb-management/image248.png)
 
 The prediction time is today one year later by default.
 
@@ -2824,27 +2824,27 @@ Time range: Dates within three years from today. If today is May.15, 2020, only 
 
 The page is divided into three parts: data node, data source and the data increment prediction. Five pieces of information are displayed on a single page in descending order of data capacity. The data node or ConfigDB whose history data record is less than 21 days will be displayed at the bottom, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image249.png)
+![](../../assets/img/en/hotdb-management/image249.png)
 
 - Display of data node: Data node/ConfigDB name + prediction result. For the data node plate, move the cursor over the plate, you can view the hyperlink effect; click the plate, you can jump to the data node details page. For the ConfigDB plate, there is no special effect. The prediction result displayed is the data capacity of the selected prediction time.
 - Display of data source: IP_Port_Data source name. It displays all data sources under the data node and identifies the current active data source. If the number of data sources exceeds five, only five data sources will be displayed. Click ">> View more" to jump to the data node details page.
-	![](/assets/img/en/hotdb-management/image250.png)
+	![](../../assets/img/en/hotdb-management/image250.png)
 - Increment prediction: the prediction curve calculated by the management platform according to the history data amount and time of the current active data source or ConfigDB.
 
 **(4) Prediction curve**
 
 The prediction curve has two parts: one is the history data amount collected every day, which is displayed in the form of blue scatter; the other is the curve generated by fitting the collected history data, which is displayed in green solid line.
 
-![](/assets/img/en/hotdb-management/image251.png)
+![](../../assets/img/en/hotdb-management/image251.png)
 
 - X-axis: The prediction time. The starting time is the recording time of history data capacity within two years, and the ending time is the selected prediction time plus six months. If the recording time is Feb.6, 2019, today is Jan.23, 2020, the selected prediction time is Dec.23, 2020, which after plus six months is Jun.23, 2021, and the final length of this X-axis is Feb.6, 2019 to Jun.23, 2021.
 - Y-axis: The data capacity. The unit size is from B to TB, and the unit changes automatically according to the value size.
 - History data amount: Displayed in blue scatter. When the cursor is moved above the scatter position, the time and the corresponding data amount will be displayed.
-	![](/assets/img/en/hotdb-management/image252.png)
+	![](../../assets/img/en/hotdb-management/image252.png)
 - Increment prediction curve: Displayed in green solid line. Move the cursor above the curve, the specific time and corresponding prediction value will be displayed. A scroll bar is under the curve to facilitate the viewing of specific time periods. Click the zoom in button at the upper right to display the chart in full screen.
-	![](/assets/img/en/hotdb-management/image253.png)
+	![](../../assets/img/en/hotdb-management/image253.png)
 - Click View the current data, the curve will only display the prediction value of current prediction time, which is consistent with the prediction result displayed in the data node.
-	![](/assets/img/en/hotdb-management/image254.png)
+	![](../../assets/img/en/hotdb-management/image254.png)
 
 > !Note
 >
@@ -2858,7 +2858,7 @@ When the server SSH information is configured on the "Configuration -> Server" p
 
 **(I) Page information description**
 
-![](/assets/img/en/hotdb-management/image255.png)
+![](../../assets/img/en/hotdb-management/image255.png)
 
 When there is a record of server not configured with SSH information on the "Configuration -> Server" page, the monitoring page will provide a monitoring reminder, and server monitoring can be enabled by clicking the hyperlink to the [Server](#server) configuration page.
 
@@ -2868,9 +2868,9 @@ The page displays the failure and warning records first by default with a priori
 
 The server can select multiple servers by the fuzzy search box in the filtering drop-down box; and the servers can also filter by status. The filtering items include: "Normal, Warning and Failure".
 
-![](/assets/img/en/hotdb-management/image256.png)
+![](../../assets/img/en/hotdb-management/image256.png)
 
-![](/assets/img/en/hotdb-management/image257.png)
+![](../../assets/img/en/hotdb-management/image257.png)
 
 Click the "Status Box" to enter the details page, as shown above.
 
@@ -2882,7 +2882,7 @@ The management platform can monitor the network quality in the cluster operation
 
 ###### Network quality topology
 
-![](/assets/img/en/hotdb-management/image258.png)
+![](../../assets/img/en/hotdb-management/image258.png)
 
 **（1）Page information description**
 
@@ -2890,7 +2890,7 @@ Triggering network quality detection manually will obtain the detection data of 
 
 The filter server is a multi-selection drop-down box with a search box. All servers in the current cluster (servers associated with the cluster service program) are displayed in the drop-down box, among which the check box of the current active compute node server should be checked by default and grayed. As shown below:
 
-![](/assets/img/en/hotdb-management/image259.png)
+![](../../assets/img/en/hotdb-management/image259.png)
 
 **Network status descriptions:**
 
@@ -2909,13 +2909,13 @@ Data is above the threshold (edges in orange), detection failed to ping or the p
 
 Right click to jump to "Monitoring -> Physical Topological Graph" to view the resources of the corresponding server.
 
-![](/assets/img/en/hotdb-management/image260.png)
+![](../../assets/img/en/hotdb-management/image260.png)
 
 ###### Network quality overview
 
 When entering the network quality page for the first time, the priority of the overview display of server network quality status is, by default, failure>alert>normality, and the data on the panel will not be automatically refreshed no matter you manually refresh the detection, switch the status filter label on the topology, filter the server or other operations. Click the corresponding server, and the network quality from the active compute node to the server will be displayed.
 
-![](/assets/img/en/hotdb-management/image261.png)
+![](../../assets/img/en/hotdb-management/image261.png)
 
 **Descriptions of network quality overview:**
 
@@ -2925,20 +2925,20 @@ When entering the network quality page for the first time, the priority of the o
 
 - If there is an exception in the latest network quality detection, click the abnormal server, the time of the latest detection exception will automatically appear in "orange" on the monitoring quality overview page; if the latest network quality detection is in the normal status, the time of the latest detection exception will also appear in "blue".
 
-![](/assets/img/en/hotdb-management/image262.png)
+![](../../assets/img/en/hotdb-management/image262.png)
 
 ###### Network quality panel
 
 The network quality panel displays the corresponding network quality detection data. The data within 24 hours will be displayed by default. If it is less than 24 hours, the drag block will be hidden. By dragging the block towards left and right you can control the display of data within 7 days. Move the cursor into the line chart to view the data of specific time points. Click button in the upper left corner to switch the ping packet type, for which "ping small packets" is selected by default. Click "packet loss rate", "average latency", "max latency" to see the corresponding data. Data acquisition frequency of the monitoring panel is the same as data acquisition frequency controlled by the parameter pingPeriod in server.xml. In the case of network quality failure, the acquisition frequency will be automatically increased to once per minute (for the standard of network quality failure, please refer to the function description of relevant parameters of pingPeriod).
 
-![](/assets/img/en/hotdb-management/image263.png)
+![](../../assets/img/en/hotdb-management/image263.png)
 
 > !Note
 > the threshold displayed in the network quality monitoring should be set through Monitoring Panel Setting>Cluster resource monitoring>Network quality. The switch is OFF by default. When it is OFF, the data threshold warning will not be displayed. If the switch is ON, the page will display and judge according to the specific value in the threshold setting, as shown in the following figure:
 > 
-> ![](/assets/img/en/hotdb-management/image264.png)
+> ![](../../assets/img/en/hotdb-management/image264.png)
 > 
-> ![](/assets/img/en/hotdb-management/image265.png)
+> ![](../../assets/img/en/hotdb-management/image265.png)
 
 ###### Cross-IDC network quality
 
@@ -2946,7 +2946,7 @@ The cross-IDC network quality overview and network quality panel are the same as
 
 However, there are differences between the cross-IDC network quality topology and that of the single IDC.
 
-![](/assets/img/en/hotdb-management/image266.png)
+![](../../assets/img/en/hotdb-management/image266.png)
 
 **Page Description:**
 
@@ -2960,11 +2960,11 @@ The cross-IDC network replication relation requires the network quality link con
 
 The network quality from the current active data source/ConfigDB in the master center to the target standby data source/ConfigDB in the DR center can obtain the monitoring data only after SSH privilege is configured.
 
-![](/assets/img/en/hotdb-management/image267.jpeg)
+![](../../assets/img/en/hotdb-management/image267.jpeg)
 
 **IDC switching instructions:**
 
-![](/assets/img/en/hotdb-management/image268.png)
+![](../../assets/img/en/hotdb-management/image268.png)
 
 If the IDC switching happens, that is, the compute node of the current DR center provides service, only the network quality monitoring status of the DR center will be displayed; all components in the master center will be displayed gray with no monitoring. There will be no network connection from the DR center to the master center, and the network connection relation of the DR center degenerates to be consistent with that of the single IDC.
 
@@ -2972,19 +2972,19 @@ If the IDC switching happens, that is, the compute node of the current DR center
 
 Add a new monitoring item Network Quality through Event -> Email Alert Setting -> Add Notification Strategy, enable Cluster Resource Monitoring in Email Sender Setting and set the notification frequency of the monitoring item. If the network quality is above the set threshold, an alert email will be sent.
 
-![](/assets/img/en/hotdb-management/image269.png)
+![](../../assets/img/en/hotdb-management/image269.png)
 
-![](/assets/img/en/hotdb-management/image270.png)
+![](../../assets/img/en/hotdb-management/image270.png)
 
 ###### Network quality information collection
 
 Add network quality detection data through Tool -> Information Collection.
 
-![](/assets/img/en/hotdb-management/image271.png)
+![](../../assets/img/en/hotdb-management/image271.png)
 
 The detection data is added to the "server related information. txt" file in the corresponding server, as shown below:
 
-![](/assets/img/en/hotdb-management/image272.png)
+![](../../assets/img/en/hotdb-management/image272.png)
 
 ### Monitoring management
 
@@ -2992,7 +2992,7 @@ The "Monitoring Management" function is to execute the compute node management p
 
 #### Instructions before use
 
-![](/assets/img/en/hotdb-management/image273.png)
+![](../../assets/img/en/hotdb-management/image273.png)
 
 Multi-node mode cluster can choose the scope of executing query commands, and all compute nodes are selected by default. Single-node and master/slave node mode clusters do not need to select compute nodes, and query commands are executed on the current master compute node by default.
 
@@ -3002,7 +3002,7 @@ The "host" configured for the login user must contain the IP address of the serv
 
 The commands that can be queried online currently only include a part of the actual management port. The specific executable commands are shown in the following drop-down box.
 
-![](/assets/img/en/hotdb-management/image274.png)
+![](../../assets/img/en/hotdb-management/image274.png)
 
 The command can be sent to port 3323 or port 3325 for execution after login, the query result is displayed in the query panel, and the latest data can be obtained in real time through the \[Refresh] button.
 
@@ -3012,7 +3012,7 @@ The command can be sent to port 3323 or port 3325 for execution after login, the
 
 This function is similar to the `show processlist` function of MySQL, which is used to view the current compute node server connection processing.
 
-![](/assets/img/en/hotdb-management/image275.png)
+![](../../assets/img/en/hotdb-management/image275.png)
 
 - Click \[Refresh] to re-execute the selected query command. If a filter condition is added, refresh to display the records that meet the filter criteria.
 
@@ -3020,11 +3020,11 @@ This function is similar to the `show processlist` function of MySQL, which is u
 
 	If jing01 is the user, you need to enter the complete search keyword jing01 in the user input box before filter.
 	
-	![](/assets/img/en/hotdb-management/image276.png)
+	![](../../assets/img/en/hotdb-management/image276.png)
 	
 	If jing is entered, you cannot get the record information of user jing01.
 	
-	![](/assets/img/en/hotdb-management/image277.png)
+	![](../../assets/img/en/hotdb-management/image277.png)
 
 - After entering the search keywords in the box, click Search to trigger a filter query. Click \[Reset] to clear the search box.
 
@@ -3032,145 +3032,145 @@ This function is similar to the `show processlist` function of MySQL, which is u
 
 - When moving the mouse cursor into the connection link in the operation bar, the prompt is displayed as below. Click the link to obtain the ID of this record and perform filtering query in command "display @@connection" (that is, Front-end Link Status). Note: If the login information of the node user expires, it needs to log in again.
 
-![](/assets/img/en/hotdb-management/image278.png)
+![](../../assets/img/en/hotdb-management/image278.png)
 
 ##### Front-end Connection Status `show @@connection`
 
 It displays the connection status of the compute node front-end connection (including the server and the management).
 
-![](/assets/img/en/hotdb-management/image279.png)
+![](../../assets/img/en/hotdb-management/image279.png)
 
 - After the command completes the query, select the connection ID and manually close the corresponding connection through the\[Close Connection] button.
 
 - When moving the mouse cursor into the session link in the operation bar, the prompt is displayed as below. The [Current Session Information show @@session](#current-session-information-show-session) of the connection ID can be viewed. Click the link to obtain the connection ID of this record and jump to the session information viewing window.
 
-![](/assets/img/en/hotdb-management/image280.png)
+![](../../assets/img/en/hotdb-management/image280.png)
 
-![](/assets/img/en/hotdb-management/image281.png)
+![](../../assets/img/en/hotdb-management/image281.png)
 
 - After entering the condition value in the filter input box and the drop-down box, click the \[Search] button to trigger the filtering action. Multiple filters are connected with "and".
 
 - If the input box prompts "Fuzzy Search", the back-end uses fuzzy match. If the input box prompts "Search", the back-end uses exact match.
 
-![](/assets/img/en/hotdb-management/image282.png)
+![](../../assets/img/en/hotdb-management/image282.png)
 
 - Click the \[Reset] button to clear all values in the filter boxes.
 
-![](/assets/img/en/hotdb-management/image283.png)
+![](../../assets/img/en/hotdb-management/image283.png)
 
 - Click \[More] to expand search fields:
 
-![](/assets/img/en/hotdb-management/image284.png)
+![](../../assets/img/en/hotdb-management/image284.png)
 
 ##### Current Session Information `show @@session`
 
 It displays the current session processing information of the compute node.
 
-![](/assets/img/en/hotdb-management/image285.png)
+![](../../assets/img/en/hotdb-management/image285.png)
 
 - When moving the mouse cursor into the connection, backend, and lastsql links in the operation bar, the following prompt is displayed: "View the [Front-end Connection Status](#front-end-connection-status-show-connection), [Back-end Connection Status](#back-end-connection-status-show-backend), and [Finally Executed SQL](#borrowed-connection-finally-executed-sql-information) corresponding to the session ID. Click the link to obtain the id value of this record and jump to the related query command.
 
 - Click connection to obtain the id value of this record and jump to `show @@connection`
 
-![](/assets/img/en/hotdb-management/image286.png)
+![](../../assets/img/en/hotdb-management/image286.png)
 
 - Click backend to obtain the bk_id field value and jump to `show @@backend`
 
-![](/assets/img/en/hotdb-management/image287.png)
+![](../../assets/img/en/hotdb-management/image287.png)
 
-![](/assets/img/en/hotdb-management/image288.png)
+![](../../assets/img/en/hotdb-management/image288.png)
 
 - Click lastsql to obtain the bk_id field value and jump to `show @@lastsql`
 
-![](/assets/img/en/hotdb-management/image289.png)
+![](../../assets/img/en/hotdb-management/image289.png)
 
-![](/assets/img/en/hotdb-management/image290.png)
+![](../../assets/img/en/hotdb-management/image290.png)
 
 ##### Back-end Connection Status `show @@backend`
 
 It displays the back-end connection of the compute node (that is, between compute node and data source).
 
-![](/assets/img/en/hotdb-management/image291.png)
+![](../../assets/img/en/hotdb-management/image291.png)
 
 - After the command is executed, click the \[Rebuild Connection Pool] button in the panel to rebuild the back-end connection. As with the management `rebuild @@pool` command, it prompt "Rebuild Succeeded/Failed" after the execution.
 
 - When moving the mouse cursor into the session and lastsql links in the operation bar, the following prompt is displayed: "View the corresponding session information, view the finally executed SQL". click the link to obtain the id field value of this record and filter in the command `show @@session`, `show @@lastsql`. (the bk_id in `show @@session` record and the id in display@@lastsql record correspond to it). Click the session button in the operation bar:
 
-![](/assets/img/en/hotdb-management/image292.png)
+![](../../assets/img/en/hotdb-management/image292.png)
 
-![](/assets/img/en/hotdb-management/image293.png)
+![](../../assets/img/en/hotdb-management/image293.png)
 
 - Click the lastsql button in the operation bar:
 
-![](/assets/img/en/hotdb-management/image294.png)
+![](../../assets/img/en/hotdb-management/image294.png)
 
-![](/assets/img/en/hotdb-management/image295.png)
+![](../../assets/img/en/hotdb-management/image295.png)
 
 ##### Data Node Information `show @@datanode`
 
 It displays information about all data nodes in the current compute node. The query results include: "Current Data Source of Node", "Active Connection", and "Node Status".
 
-![](/assets/img/en/hotdb-management/image296.png)
+![](../../assets/img/en/hotdb-management/image296.png)
 
 ##### Data Source Information `show @@datasource`
 
 It displays information about all data sources in the current cluster. The query results include: "Host IP Address", "Port", "Database Name", and "Unavailable Reason of Data Source".
 
-![](/assets/img/en/hotdb-management/image297.png)
+![](../../assets/img/en/hotdb-management/image297.png)
 
 ##### Back-end Heartbeat Status `show @@heartbeat`
 
 It displays the back-end heartbeat status of the current cluster. The query results include: Data Source Type, Host Address, Database Name, Heartbeat Status, and Heartbeat Period.
 
-![](/assets/img/en/hotdb-management/image298.png)
+![](../../assets/img/en/hotdb-management/image298.png)
 
 ##### Synchronization Delay `show @@latency`
 
 It displays the synchronization delay. The query results include "Current Data Source Path", "Slave Data Source Path", and "Synchronization Delay Time (in ms)".
 
-![](/assets/img/en/hotdb-management/image299.png)
+![](../../assets/img/en/hotdb-management/image299.png)
 
 ##### Buffer Pool Status `show @@bufferpool`
 
 It queries the buffer pool status. The query results include "Thread Name", "Buffer Pool Size", and "Local Cache Thread Application Buffer".
 
-![](/assets/img/en/hotdb-management/image300.png)
+![](../../assets/img/en/hotdb-management/image300.png)
 
 ##### TeoThread Information `show @@processor`
 
 It displays the current TeoThread Information. The query results include "Thread Name", "Byte Received by Front/Back End", and "Byte Sent by Front/Back End".
 
-![](/assets/img/en/hotdb-management/image301.png)
+![](../../assets/img/en/hotdb-management/image301.png)
 
 ##### Thread Pool Status `show @@threadpool`
 
 It displays the current thread pool status. The query results include "Thread Pool Name", "Thread Pool Size", and "Active Thread". Chinese prompt will be displayed when moving the mouse cursor to the column name.
 
-![](/assets/img/en/hotdb-management/image302.png)
+![](../../assets/img/en/hotdb-management/image302.png)
 
 ##### Long-lived Transaction `show @@longtransaction`
 
 It displays the long-lived transaction and the query results include "Host IP Address", "Port", and "Long-Lived Transaction id". Chinese prompt will be displayed when moving the mouse cursor to the column name.
 
-![](/assets/img/en/hotdb-management/image303.png)
+![](../../assets/img/en/hotdb-management/image303.png)
 
 ##### Compute node server status `show @@server`
 
 It displays the compute node server status. The query results include the running startup information of the compute node server, such as "Memory Usage", "Read/ Write Mode", "Starting Time", and "High Availability Role". Chinese prompt will be displayed when moving the mouse cursor to the column name.
 
-![](/assets/img/en/hotdb-management/image304.png)
+![](../../assets/img/en/hotdb-management/image304.png)
 
 ##### Borrowed Connection Finally Executed SQL Information
 
 Queries of the borrowed connection finally executed SQL information is usually used to view the connection exception information. The results include: "Finally Executed SQL Statement", "Back-end mysql Connection id", "Host", and "Node".
 
-![](/assets/img/en/hotdb-management/image305.png)
+![](../../assets/img/en/hotdb-management/image305.png)
 
 ##### Acquire the File under conf Directory and the Last Modification Time
 
 It displays the modification record of configuration file.
 
-![](/assets/img/en/hotdb-management/image306.png)
+![](../../assets/img/en/hotdb-management/image306.png)
 
 ### JOIN correlation analysis
 
@@ -3186,11 +3186,11 @@ To view the JOIN correlation diagram, the following prerequisites shall be met:
 
 #### JOIN correlation diagram
 
-After selecting a logicDB and table name, all JOIN correlation diagrams (as shown below) or cross-node cross JOIN correlation diagrams can be viewed. The management platform refreshes the parse results at 0 a.m every day, or you can click ![](/assets/img/en/hotdb-management/image307.png) to manually refresh the parse results.
+After selecting a logicDB and table name, all JOIN correlation diagrams (as shown below) or cross-node cross JOIN correlation diagrams can be viewed. The management platform refreshes the parse results at 0 a.m every day, or you can click ![](../../assets/img/en/hotdb-management/image307.png) to manually refresh the parse results.
 
 **Description of vertices and edges in the JOIN correlation diagram:**
 
-The vertexes represent tables and are divided into four colors according to the table type（![](/assets/img/en/hotdb-management/image308.png)）.
+The vertexes represent tables and are divided into four colors according to the table type（![](../../assets/img/en/hotdb-management/image308.png)）.
 
 The edge between vertex A and vertex B represents the JOIN/cross-node no-cross JOIN correlation between table A and table B, and the yellow edge indicates that there is an associated key rather than sharding key in the JOIN correlation.
 
@@ -3202,7 +3202,7 @@ The table without JOIN correlation is displayed as scatter on the diagram, that 
 
 Click on the vertex to display the JOIN Correlation Details;
 
-![](/assets/img/en/hotdb-management/image309.png)
+![](../../assets/img/en/hotdb-management/image309.png)
 
 **Cross-node cross JOIN query judgment logic:**
 
@@ -3213,7 +3213,7 @@ JOIN query that does not satisfy the following conditions is judged to be a cros
 - If a global table exists in JOIN query, the node where the global table resides must contain all nodes where other sharding tables reside.
 - If there is only a vertical sharding table in JOIN query, the nodes of these tables must be on the same node.
 
-![](/assets/img/en/hotdb-management/image310.png)
+![](../../assets/img/en/hotdb-management/image310.png)
 
 > !Note
 >
@@ -3244,7 +3244,7 @@ JOIN query that does not satisfy the following conditions is judged to be a cros
 
 Click on the vertex to display all/cross-node cross JOIN correlation details. This document takes All JOIN correlation details as an example. The table parameters are as follows:
 
-- **JOIN Correlation Table:** A table with a JOIN correlation with the current table. The table name color is consistent with the vertex color according to the table type (![](/assets/img/en/hotdb-management/image308.png)). Click on the table name to jump to the JOIN Correlation Details page for the table.
+- **JOIN Correlation Table:** A table with a JOIN correlation with the current table. The table name color is consistent with the vertex color according to the table type (![](../../assets/img/en/hotdb-management/image308.png)). Click on the table name to jump to the JOIN Correlation Details page for the table.
 - **Current Table Association Key:** The associated key of the current table in JOIN query statement. Multiple associated keys are indicated by parentheses, such as (a, b, c).
 - **JOIN Correlation Table Association Key:** The associated key of the JOIN correlation table in JOIN query statement. Multiple associated keys are indicated by parentheses, such as (a, b, c).
 - **Execution Condition:** The JOIN query statements with identical JOIN correlation table, current table associated key and JOIN correlation table associated key are displayed. Click \[Click to Expand] to view the execution details of all collapsed JOIN query statements.
@@ -3255,13 +3255,13 @@ Click on the vertex to display all/cross-node cross JOIN correlation details. Th
 >
 > **Associated field description:** The table uses the field associated with the JOIN query, for example: SELECT * FROM Persons INNER JOIN Orders ON Persons.id = Orders.oid, then the id is the associated key of Persons, and oid is the associated key of Orders
 
-![](/assets/img/en/hotdb-management/image311.jpeg)
+![](../../assets/img/en/hotdb-management/image311.jpeg)
 
 Click \[Click to Expand] to view the execution details of all collapsed JOIN query statements. Click on the details under Compute Node Average Execution Time to jump up to the Slow Query Log Analysis page.
 
-![](/assets/img/en/hotdb-management/image312.jpeg)
+![](../../assets/img/en/hotdb-management/image312.jpeg)
 
-![](/assets/img/en/hotdb-management/image313.png)
+![](../../assets/img/en/hotdb-management/image313.png)
 
 ## Report
 
@@ -3275,13 +3275,13 @@ The data amount distributions of data nodes, logicDB and tables for all members 
 
 The graph mode has four dimensions. The data volume reports of all members in the cluster are displayed by default. The data volume reports of data nodes, logicDB and tables to be displayed can be selected.
 
-![](/assets/img/en/hotdb-management/image314.png)
+![](../../assets/img/en/hotdb-management/image314.png)
 
 - The default displayed compute node cluster level is divided into 4 graph areas. The data statistics of 4 graph areas are unified, and the statistical made can be [data row or data capacity](#statistical-mode-descriptions).
 
 **(I) Cluster DataAmount Change Trend Chart**
 
-![](/assets/img/en/hotdb-management/image315.png)
+![](../../assets/img/en/hotdb-management/image315.png)
 
 - This chart describes the change trend of data amount in the whole compute node cluster in a certain period of time.
 - This chart is a line chart with two coordinate axes for time and data volume respectively.
@@ -3290,9 +3290,9 @@ The graph mode has four dimensions. The data volume reports of all members in th
 
 **(2) Cluster Data Amount Distribution Map**
 
-![](/assets/img/en/hotdb-management/image316.png)
+![](../../assets/img/en/hotdb-management/image316.png)
 
-![](/assets/img/en/hotdb-management/image317.png)
+![](../../assets/img/en/hotdb-management/image317.png)
 
 - It depicts the distribution of data volume in the whole compute node cluster in the data node dimension at a certain time point.
 - It may be a bar graph or a pie graph which can be switched. The coordinate axes are data node and data volume.
@@ -3303,9 +3303,9 @@ The graph mode has four dimensions. The data volume reports of all members in th
 
 **(3) LogicDB Data Amount Distribution Map**
 
-![](/assets/img/en/hotdb-management/image318.png)
+![](../../assets/img/en/hotdb-management/image318.png)
 
-![](/assets/img/en/hotdb-management/image319.png)
+![](../../assets/img/en/hotdb-management/image319.png)
 
 - It depicts the distribution of data volume in the whole compute node cluster in the logicDB dimension at a certain time point.
 - It may be a bar graph or a pie graph which can be switched. The coordinate axes are logicDB and data volume.
@@ -3316,9 +3316,9 @@ The graph mode has four dimensions. The data volume reports of all members in th
 
 **(4) Table Data Amount Distribution Map**
 
-![](/assets/img/en/hotdb-management/image320.png)
+![](../../assets/img/en/hotdb-management/image320.png)
 
-![](/assets/img/en/hotdb-management/image321.png)
+![](../../assets/img/en/hotdb-management/image321.png)
 
 - It depicts the distribution of data volume in the whole compute node cluster in the table dimension at a certain time point.
 - It may be a bar graph or a pie graph which can be switched.
@@ -3332,7 +3332,7 @@ The graph mode has four dimensions. The data volume reports of all members in th
 
 In addition to the "Graph Mode", Cluster Data Volume can also view the data distribution of each table under each data node in the whole cluster through the "Table Mode".
 
-![](/assets/img/en/hotdb-management/image322.png)
+![](../../assets/img/en/hotdb-management/image322.png)
 
 - The interface record can export the table data volume information to the local through the \[Export] button. Currently, the file in the "CSV" or "XLS" format can be exported.
 
@@ -3354,7 +3354,7 @@ Compute node throughput is the operations sent by the front-end application to t
 
 The graph mode has four dimensions, including the whole cluster throughput. The operation type, logicDB, and table throughput can also be displayed.
 
-![](/assets/img/en/hotdb-management/image323.png)
+![](../../assets/img/en/hotdb-management/image323.png)
 
 - The statistical scale and statistical mode of all throughput charts are consistent.
 - Statistical scales include: month, day, hour and minute.
@@ -3362,7 +3362,7 @@ The graph mode has four dimensions, including the whole cluster throughput. The 
 
 **(I) Compute Node Throughput Change Trend Chart**
 
-![](/assets/img/en/hotdb-management/image324.png)
+![](../../assets/img/en/hotdb-management/image324.png)
 
 - It describes the change trend of throughput in the whole compute node cluster in a certain period of time and the proportion of each operation in the total throughput.
 - This chart is area chart with two coordinate axes for time and throughput respectively. Different color bars in the area indicate the throughput of different operations.
@@ -3371,7 +3371,7 @@ The graph mode has four dimensions, including the whole cluster throughput. The 
 
 **(3) Compute Node Throughput Type Comparison Chart**
 
-![](/assets/img/en/hotdb-management/image325.png)
+![](../../assets/img/en/hotdb-management/image325.png)
 
 - It describes the proportion of each operation in the throughput of the whole compute node cluster over a period of time.
 - It may be a bar graph or a pie graph which can be switched, and is a pie graph by default. The coordinate axes are operation type and throughput.
@@ -3381,7 +3381,7 @@ The graph mode has four dimensions, including the whole cluster throughput. The 
 
 **(3) LogicDB throughput Comparison Chart**
 
-![](/assets/img/en/hotdb-management/image326.png)
+![](../../assets/img/en/hotdb-management/image326.png)
 
 - It describes the comparison of throughput in the whole compute node cluster in the logicDB dimension at a certain time point.
 - It is a stacked bar graph with values displayed at each layer. The coordinate axes are logicDB and throughput.
@@ -3392,7 +3392,7 @@ The graph mode has four dimensions, including the whole cluster throughput. The 
 
 **(4) Table Throughput Comparison Chart**
 
-![](/assets/img/en/hotdb-management/image327.png)
+![](../../assets/img/en/hotdb-management/image327.png)
 
 - It describes the comparison of throughput in the whole compute node cluster in the table dimension at a certain time point.
 - It is a stacked bar graph with values displayed at each layer. The coordinate axes are table and throughput.
@@ -3403,13 +3403,13 @@ The graph mode has four dimensions, including the whole cluster throughput. The 
 
 #### LogicDB Dimension Throughput Report
 
-![](/assets/img/en/hotdb-management/image328.png)
+![](../../assets/img/en/hotdb-management/image328.png)
 
 LogicDB level is divided into three graph areas. The statistical time scale and statistical mode of the three graph areas are consistent. It supports filtering the logicDB. The \[Back to Compute Node View] throughput report button is in the upper right corner.
 
 #### Table Dimension Throughput Report
 
-![](/assets/img/en/hotdb-management/image329.png)
+![](../../assets/img/en/hotdb-management/image329.png)
 
 The table level is divided into three graph areas. The statistical time scale and statistical mode of the three graph areas are consistent. It supports switching tables and logicDB through the checkbox. When switching logicDB, it switches to the table with the smallest id under the logicDB by default. The \[Back to Compute Node View] throughput report button is in the upper right corner.
 
@@ -3417,7 +3417,7 @@ The table level is divided into three graph areas. The statistical time scale an
 
 In addition to the "Graph Mode", Compute Node Throughput can also view the SELECT, UPDATE, DELETE, INSERT and OTHER operations of each table in the whole cluster through the "Table Mode".
 
-![](/assets/img/en/hotdb-management/image330.png)
+![](../../assets/img/en/hotdb-management/image330.png)
 
 - Statistical modes include: total throughput and average throughput rate.
 - Statistical scale: month, day, hour and minute.
@@ -3433,11 +3433,11 @@ The data node throughput is the operation quantity statistics of the compute nod
 
 The data node throughput graph mode includes five dimensions: data node throughput total comparison graph, data node throughput change trend comparison graph, cluster throughput type comparison graph, logicDB throughput comparison graph, and table throughput comparison graph.
 
-![](/assets/img/en/hotdb-management/image331.png)
+![](../../assets/img/en/hotdb-management/image331.png)
 
 **Total Data Node Throughput Comparison Chart**
 
-![](/assets/img/en/hotdb-management/image332.png)
+![](../../assets/img/en/hotdb-management/image332.png)
 
 - It describes the total throughput of each node, and only calculates the throughput of master data source under the current data node.
 - The operation amount is accumulated from the start of the compute node. The data is stored in the ConfigDB of the management platform and is retained for 365 days by default. You can adjust the parameter " hotdb.management.dataExpired.day " in the management platform configuration file application.properties.
@@ -3446,7 +3446,7 @@ The data node throughput graph mode includes five dimensions: data node throughp
 
 **(2) Data Node Throughput Change Trend**
 
-![](/assets/img/en/hotdb-management/image333.png)
+![](../../assets/img/en/hotdb-management/image333.png)
 
 - It describes the change trend of throughput of all data nodes in a certain period of time and the proportion of each operation in the total throughput.
 - This chart is area chart with two coordinate axes for time and throughput respectively. Different color bars in the area indicate the throughput of different operations
@@ -3456,7 +3456,7 @@ The data node throughput graph mode includes five dimensions: data node throughp
 
 **(3) Cluster Throughput Type Comparison Chart**
 
-![](/assets/img/en/hotdb-management/image334.png)
+![](../../assets/img/en/hotdb-management/image334.png)
 
 - It describes the proportion of each operation in the throughput of all data nodes at a certain time period.
 - It may be a bar graph or a pie graph which can be switched, and is a pie graph by default. The coordinate axes are operation type and throughput.
@@ -3466,7 +3466,7 @@ The data node throughput graph mode includes five dimensions: data node throughp
 
 **(4) LogicDB throughput Comparison Chart**
 
-![](/assets/img/en/hotdb-management/image335.png)
+![](../../assets/img/en/hotdb-management/image335.png)
 
 - It describes the comparison of throughput of all data nodes in the logicDB dimension at a certain time point.
 - It is a stacked bar graph with values displayed at each layer. The coordinate axes are logicDB and throughput.
@@ -3477,7 +3477,7 @@ The data node throughput graph mode includes five dimensions: data node throughp
 
 **(5) Table Throughput Comparison Chart**
 
-![](/assets/img/en/hotdb-management/image336.png)
+![](../../assets/img/en/hotdb-management/image336.png)
 
 - It describes the comparison of throughput of all data nodes in the table dimension at a certain time point.
 - It is a stacked bar graph with values displayed at each layer. The coordinate axes are table and throughput.
@@ -3491,7 +3491,7 @@ The data node throughput graph mode includes five dimensions: data node throughp
 
 In addition to the "[Graph Mode](#graph-mode)", Data Node Throughput can also view the SELECT, UPDATE, DELETE, INSERT and OTHER operations of each table in the whole cluster on each node through the "[Table Mode](#table-mode)".
 
-![](/assets/img/en/hotdb-management/image337.png)
+![](../../assets/img/en/hotdb-management/image337.png)
 
 - Statistical modes include: total throughput and average throughput rate.
 - Statistical scale: month, day, hour and minute.
@@ -3507,7 +3507,7 @@ The Compute Node Connection Report function displays the status of all connectio
 
 The graph mode mainly displays the total application connections of the current compute node, three TOP1 connections (connection with the longest connection duration, connection with the most operations, and connection with the most connection times), proportion of total connection duration, proportion of total connection times, proportion of number of operations, front-end application IP connection distribution map, connection user distribution map, and logicDB distribution map.
 
-![](/assets/img/en/hotdb-management/image338.png)
+![](../../assets/img/en/hotdb-management/image338.png)
 
 Connections in the selected range can be filtered according to the time range, and all connections in the last three months are displayed by default. This time range is valid for all data in graph mode, and is the primary condition for all query result reports.
 
@@ -3605,7 +3605,7 @@ The chart title of this module will change with the switch of filter box "Query 
 
 In addition to displaying connection information in graph mode, the details of each connection can be viewed in table mode and can be exported for local storage.
 
-![](/assets/img/en/hotdb-management/image339.png)
+![](../../assets/img/en/hotdb-management/image339.png)
 
 - The record displayed is the front-end application information (IP+Connection User+LogicDB Identification) of each connection to compute nodes, and the same connection information is aggregated into one.
 - The multi-node mode cluster supports querying the compute node service through which each connection connects to the logicDB.
@@ -3632,13 +3632,13 @@ To use the data backup function of HotDB Management, it needs to install the Hot
 
 **(1) Start backup**
 
-![](/assets/img/en/hotdb-management/image340.png)
+![](../../assets/img/en/hotdb-management/image340.png)
 
 Click "Manage -> Data Backup -> Backup Task -> \[Start Backup]" to manually start a backup task.
 
 **(2) Select backup method**
 
-![](/assets/img/en/hotdb-management/image341.png)
+![](../../assets/img/en/hotdb-management/image341.png)
 
 - **LogicDB:** Backup is performed in unit of logicDB, and one or more logicDB can be selected for backup at a time.
 - **Backup Type:** Full Backup and Incremental Backup. "Full Backup" is to backup all data in the current logicDB, and "Incremental Backup" is to continue backing up the new binlog based on the last full or incremental backup. Note: In the first incremental backup, it needs to ensure that the logicDB to be backed up has had a full backup, otherwise the incremental backup cannot be started.
@@ -3647,7 +3647,7 @@ Click "Manage -> Data Backup -> Backup Task -> \[Start Backup]" to manually star
 
 **(3) Backup setting**
 
-![](/assets/img/en/hotdb-management/image342.png)
+![](../../assets/img/en/hotdb-management/image342.png)
 
 - **Backup the binlog from last Full Backup to now simultaneously:** It is checked by default, and is used to backup the binlog from last full backup to the current full backup. Note: This is an insurance measure, but the last full backup will not be found during the first full backup, so this option is meaningless for the first full backup.
 - **Local Backup Root Directory:** It is the local directory of the server where each data source resides and backup file is stored. This directory needs to be created in advance on the server where each node resides, and the directory of each server shall be consistent. Otherwise, the backup fails and the backup failure message prompts: Failed to create backup directory.
@@ -3667,7 +3667,7 @@ Click "Manage -> Data Backup -> Backup Task -> \[Start Backup]" to manually star
 
 **(4) Backup task record**
 
-![](/assets/img/en/hotdb-management/image343.png)
+![](../../assets/img/en/hotdb-management/image343.png)
 
 The backup task completed or being executed are displayed on the Backup Task page.
 
@@ -3681,7 +3681,7 @@ The backup task completed or being executed are displayed on the Backup Task pag
 - **Backup status:** displays the status of the current backup task, including backup failed, backup invalid, backup completed, backup in progress, cancelling, manually cancelled, automatically cancelled, and delayed. The backup task being executed will display the backup progress in the form of progress bar.
 - **Operation:** click "details" to display the backup details of the current backup task, failure reason, etc.
 
-Failed and invalid backup will be displayed in the backup list with the ![](/assets/img/en/hotdb-management/image344.png)and ![](/assets/img/en/hotdb-management/image345.png)marks. When moving the mouse cursor to them, the specific reason will be displayed.
+Failed and invalid backup will be displayed in the backup list with the ![](../../assets/img/en/hotdb-management/image344.png)and ![](../../assets/img/en/hotdb-management/image345.png)marks. When moving the mouse cursor to them, the specific reason will be displayed.
 
 Click \[Delete Record] to delete the backup record on the page. Whether the backup file in the server is deleted simultaneously can also be checked, but the backup file on the remote server will not be deleted. (for example, setting up a backup to a remote server).
 
@@ -3689,11 +3689,11 @@ Click \[Delete Record] to delete the backup record on the page. Whether the back
 
 The backup plan can set periodical backup task for HotDB Management. After setting the periodical backup plan, all backup tasks are performed by the periodical plan on time without manually starting the backup task.
 
-![](/assets/img/en/hotdb-management/image346.png)
+![](../../assets/img/en/hotdb-management/image346.png)
 
 **(1) Add backup plan**
 
-![](/assets/img/en/hotdb-management/image347.png)
+![](../../assets/img/en/hotdb-management/image347.png)
 
 Click "Manage -> Data Backup -> Backup Plan -> \[Add New Plan] in HotDB Management to enter the Add Backup Plan page.
 
@@ -3724,7 +3724,7 @@ The added backup plan can postpone the "next backup task". Click "Management -> 
 
 After setting \[Delay the Next Backup Time], the program will automatically check "whether there are periodical backup tasks between the last backup task completion time and the next task delay time". If there is no interval, successful modification will be prompted directly. If there are periodical backup tasks, a prompt will pop up to inform the user as shown below:
 
-![](/assets/img/en/hotdb-management/image348.png)
+![](../../assets/img/en/hotdb-management/image348.png)
 
 Click \[Unified Delay and Save] to set the periodical task to the delay state in the background. When the next backup task is completed, the periodical task will be executed according to the set backup period. After clicking \[Automatic Cancel and Save], the periodical task will be canceled by default and the backup task will not be executed in the background.
 
@@ -3787,11 +3787,11 @@ When business data is damaged or lost, Data Restore function can be used to rest
 
 **Data restore sequence diagram:**
 
-![](/assets/img/en/hotdb-management/image349.jpeg)
+![](../../assets/img/en/hotdb-management/image349.jpeg)
 
 #### Start restore
 
-![](/assets/img/en/hotdb-management/image350.png)
+![](../../assets/img/en/hotdb-management/image350.png)
 
 **(I) Start instructions**
 
@@ -3812,7 +3812,7 @@ For data security reasons, if there is no data backup for more than 3 h before t
 
 **(3) Restore to the user-defined time point**{#restore-to-user-defined-time-point}
 
-![](/assets/img/en/hotdb-management/image351.png)
+![](../../assets/img/en/hotdb-management/image351.png)
 
 After selecting "restore to the user-defined time point", select any time point within the restorable time range through the second-level time selector. The restorable time range is from the earliest time point when the current LogicDB backup succeeds and has not been cleared till the latest time point.
 
@@ -3824,9 +3824,9 @@ When a user-defined time point is selected, the full backup and incremental back
 
 #### Instructions for executing data restore
 
-![](/assets/img/en/hotdb-management/image352.png)
+![](../../assets/img/en/hotdb-management/image352.png)
 
-![](/assets/img/en/hotdb-management/image353.png)
+![](../../assets/img/en/hotdb-management/image353.png)
 
 Input the correct restore information into the restore page, and jump to the restore page after submitting the restore task. The task status displays Restore in Progress and the restore process update. If the deletion operation is triggered at this time, it prompts "Restore in Progress, Cannot be Deleted".
 
@@ -3844,7 +3844,7 @@ If the configDB is backed up when backing up, the configDB is not restored in re
 
 #### Recovery task details
 
-![](/assets/img/en/hotdb-management/image354.png)
+![](../../assets/img/en/hotdb-management/image354.png)
 
 Completed data recovery tasks can be viewed for recovery task details.
 
@@ -3878,7 +3878,7 @@ If the recovery fails, the backup or recovery operation is executed again after 
 
 #### Recovery log description
 
-![](/assets/img/en/hotdb-management/image355.png)
+![](../../assets/img/en/hotdb-management/image355.png)
 
 - `Connected to server successfully!` means that connection is established normally between program and Management.
 - `Got a quit signal from user, will quit after recovery is finished` means that the program will quit after the recovery.
@@ -3894,7 +3894,7 @@ DR mode explanation: when the DR mode is enabled, please refer to the [Data sour
 
 #### Data source migration preparation
 
-![](/assets/img/en/hotdb-management/image356.png)
+![](../../assets/img/en/hotdb-management/image356.png)
 
 Click HotDB Management "Management -> Data Source Migration" to enter the "Data Source Migration" function page. Attention shall be paid to the following before using the Data Source Migration function:
 
@@ -3905,13 +3905,13 @@ If the data sources under multiple data nodes are different databases in the sam
 
 Example Scenario: Data sources built by data node dn_3 are different databases in the instance 192.168.210.46:3307. If only the data in database db_qianku is replicated to the target data source before migration, an exception will occur when building the replication relation from old data source to new data sources.
 
-![](/assets/img/en/hotdb-management/image357.png)
+![](../../assets/img/en/hotdb-management/image357.png)
 
-![](/assets/img/en/hotdb-management/image358.png)
+![](../../assets/img/en/hotdb-management/image358.png)
 
 At this point, it needs to add Replicate_Wild_Do_Table and Replicate_Wild_Ignore_Table parameters when building the instance replication relation to filter out the replication of other databases and ensure that only the database currently in use is replicated.
 
-![](/assets/img/en/hotdb-management/image359.png)
+![](../../assets/img/en/hotdb-management/image359.png)
 
 The parameters of the new data source need to be consistent with those of the old data source. A Reload is recommended before data source migration. Data source migration will fail if the Reload of the modified data in configDB is not performed.
 
@@ -3919,7 +3919,7 @@ Configured target new database instances cannot coincide with existing database 
 
 #### Source data node and target data source
 
-![](/assets/img/en/hotdb-management/image360.png)
+![](../../assets/img/en/hotdb-management/image360.png)
 
 After selecting the data node to be migrated and the source data node, the interface will automatically display all data sources under the node.
 
@@ -3941,7 +3941,7 @@ Click \[Next Step] to verify the above information, and all shall pass the verif
 
 #### Data source migration preparation
 
-![](/assets/img/en/hotdb-management/image361.png)
+![](../../assets/img/en/hotdb-management/image361.png)
 
 "Execute change master by the system" can choose whether the change master is executed by the compute node. Checking this option will allow the compute node to perform the replication building operation. The compute node will calculate the data source that needs to perform the change master according to the master-slave relation. It can also be configured manually. (Users who perform replication need Reload operation privileges and can be the same users as data sources or other users can be filled in, in which case the usernames and passwords of all data sources shall be the same.)
 
@@ -3953,7 +3953,7 @@ Select whether to delete the database on old data source after the completion of
 
 #### Pre-check
 
-![](/assets/img/en/hotdb-management/image362.png)
+![](../../assets/img/en/hotdb-management/image362.png)
 
 Pre-check will check the following information. If the check fails, it needs to modify the configuration information according to prompts before data source migration.
 
@@ -3987,15 +3987,15 @@ Detect the replication latency to ensure that the delay of all new data source a
 
 #### Data source migration
 
-![](/assets/img/en/hotdb-management/image363.png)
+![](../../assets/img/en/hotdb-management/image363.png)
 
 After clicking \[Start Data Source Migration] when the check is completed, the compute node starts to perform the data source migration task. In Data Source Migration is displayed during the execution process, and Migration completed is prompted after the execution is completed. If an exception occurs, a corresponding prompt is given and manual processing is required.
 
-![](/assets/img/en/hotdb-management/image364.png)
+![](../../assets/img/en/hotdb-management/image364.png)
 
 Data Source Migration completed is also displayed in the [Notice](#notice).
 
-![](/assets/img/en/hotdb-management/image365.png)
+![](../../assets/img/en/hotdb-management/image365.png)
 
 ### Table structure change
 
@@ -4005,7 +4005,7 @@ HotDB Management provides users with an entry point to execute DDL statements on
 
 Ordinary DDL is a data definition type statement, such as CREATE\DROP\TRUNCATE\RENAME.
 
-![](/assets/img/en/hotdb-management/image366.png)
+![](../../assets/img/en/hotdb-management/image366.png)
 
 Enter "Management -> Table Structure Change -> Ordinary DDL" to enter the Ordinary DDL operation interface.
 
@@ -4021,7 +4021,7 @@ Currently, the number of columns in single table created by table creation state
 
 Click the \[Import] button on Ordinary DDL page to import external txt or sql type files. After the file is imported into the input box, manually click to execute with the same execution effect as manual input of DDL statement.
 
-![](/assets/img/en/hotdb-management/image367.png)
+![](../../assets/img/en/hotdb-management/image367.png)
 
 All general change records executed can be viewed in the General Change History Record.
 
@@ -4029,7 +4029,7 @@ All general change records executed can be viewed in the General Change History 
 
 Online DDL is the change statement executed by the Online DDL algorithm on the management end of HotDB Management (3325 by default). The change does not affect the execution of IUD (INSERT, UPDATE, DELETE) statements, has little impact on the system, does not affect the business, and reduce the probability of slave delay. However, online DDL execution is much slower than Ordinary DDL, and the execution may take tens to hundreds of hours for large tables.
 
-![](/assets/img/en/hotdb-management/image368.png)
+![](../../assets/img/en/hotdb-management/image368.png)
 
 Enter the online DDL operation interface through "Data Management -> Table Structure Change -> Online DDL".
 
@@ -4041,7 +4041,7 @@ Currently, the number of columns in single table created by table creation state
 
 If "skip master-slave data consistency detection during the execution" is checked, the master-slave data consistency detection will not be performed before online DDL execution. It is not checked by default.
 
-![](/assets/img/en/hotdb-management/image369.png)
+![](../../assets/img/en/hotdb-management/image369.png)
 
 All executed online change records can be viewed in the online change history record. "Online Change Statement under Execution" is used to view the online DDL task under execution and the progress of the task under execution. "Online Change Statement History Execution Record" is used to view the online DDL that has been executed.
 
@@ -4051,7 +4051,7 @@ When there is an online DDL statement under execution, click the Filter button t
 
 In the HotDB Management, the route of SQL statement executed by the compute node can be parsed through the "View SQL Routing Plan" function.
 
-![](/assets/img/en/hotdb-management/image370.png)
+![](../../assets/img/en/hotdb-management/image370.png)
 
 Enter the correct username and password and select the logicDB where the table executing SQL is located.
 
@@ -4065,7 +4065,7 @@ It provides online change support for the table type, sharding function, shardin
 
 #### Sharding Plan Online Modification
 
-![](/assets/img/en/hotdb-management/image371.png)
+![](../../assets/img/en/hotdb-management/image371.png)
 
 The page displays the record of modification task that has been executed or is being executed. The rollback operation of modification task under execution is allowed through \[Cancel Execution].
 
@@ -4076,24 +4076,24 @@ The task record can be filtered by [LogicDB](#logicdb), "Table Name", and "Statu
 The task record "**Status**" usually includes 9 types, which are:
 
 1. Successful: The task is completed normally without data inconsistency.
-2. Successful![](/assets/img/en/hotdb-management/image372.png): The task is completed normally with some inconsistent data automatically restored by the program. The warning sign displays: "The data consistency detection after the change found that a small amount of data is inconsistent and has been automatically restored by the program".
-3. Successful![](/assets/img/en/hotdb-management/image372.png): The task is completed normally and the inconsistent data is fixed by the program, but there are still some inconsistencies, and the user chooses to ignore the inconsistent data and complete the modification task. The warning tag prompts: "After the program automatically has restored the inconsistent data, the data still has inconsistencies, and the user chooses to allow partial data inconsistency".
-4. Failed![](/assets/img/en/hotdb-management/image373.png): The task fails because the user manually cancels the task. Error mark prompts: "Manually cancel modification task execution".
-5. Failed![](/assets/img/en/hotdb-management/image373.png): The task fails because the data inconsistency still exists after automatic restore by the program, and the user chooses to abandon this modification task. Error tag prompts: "data inconsistency still exists after automatic restore by the program, and the user chooses to abandon this modification task".
-6. Failed![](/assets/img/en/hotdb-management/image373.png): The task fails because the data is found inconsistent after the change is completed and data inconsistency still exists after automatic restore by the program which shall be confirmed by the user. The user fails to process within the set waiting time which causes the task to fail. Error tag prompts: "The data inconsistency has not been processed within the set time range, and the modification task automatically fails".
-7. Failed![](/assets/img/en/hotdb-management/image373.png): The task fails because the modification plan fails the "[Modification plan pre-detection](#modification-plan-pre-detection)" after the task is started in batches. Error tag prompts: "After the task is started in batches, the modification plan fails the pre-check, causing the task to fail."
+2. Successful![](../../assets/img/en/hotdb-management/image372.png): The task is completed normally with some inconsistent data automatically restored by the program. The warning sign displays: "The data consistency detection after the change found that a small amount of data is inconsistent and has been automatically restored by the program".
+3. Successful![](../../assets/img/en/hotdb-management/image372.png): The task is completed normally and the inconsistent data is fixed by the program, but there are still some inconsistencies, and the user chooses to ignore the inconsistent data and complete the modification task. The warning tag prompts: "After the program automatically has restored the inconsistent data, the data still has inconsistencies, and the user chooses to allow partial data inconsistency".
+4. Failed![](../../assets/img/en/hotdb-management/image373.png): The task fails because the user manually cancels the task. Error mark prompts: "Manually cancel modification task execution".
+5. Failed![](../../assets/img/en/hotdb-management/image373.png): The task fails because the data inconsistency still exists after automatic restore by the program, and the user chooses to abandon this modification task. Error tag prompts: "data inconsistency still exists after automatic restore by the program, and the user chooses to abandon this modification task".
+6. Failed![](../../assets/img/en/hotdb-management/image373.png): The task fails because the data is found inconsistent after the change is completed and data inconsistency still exists after automatic restore by the program which shall be confirmed by the user. The user fails to process within the set waiting time which causes the task to fail. Error tag prompts: "The data inconsistency has not been processed within the set time range, and the modification task automatically fails".
+7. Failed![](../../assets/img/en/hotdb-management/image373.png): The task fails because the modification plan fails the "[Modification plan pre-detection](#modification-plan-pre-detection)" after the task is started in batches. Error tag prompts: "After the task is started in batches, the modification plan fails the pre-check, causing the task to fail."
 8. Waiting: The task is not completed, and data inconsistency needs to be confirmed by the user. Warning tag prompts: "Inconsistent data still exists after the program automatically has restored the inconsistent data, waiting for the user to confirm and process".
-9. Pause![](/assets/img/en/hotdb-management/image374.png): After the task is started, because the user sets the pause replication period, after the task enters the period, the page displays the task status as Pause, and "The modification task is in the pause data replication period" is prompted when moving the mouse cursor into it.
+9. Pause![](../../assets/img/en/hotdb-management/image374.png): After the task is started, because the user sets the pause replication period, after the task enters the period, the page displays the task status as Pause, and "The modification task is in the pause data replication period" is prompted when moving the mouse cursor into it.
 
 #### Start modification task
 
-![](/assets/img/en/hotdb-management/image375.png)
+![](../../assets/img/en/hotdb-management/image375.png)
 
 Click the \[Start Modification Task] button on the "Management->Online Change of Sharding Plan" page to enter the "[Start Modification Task](#start-modification-task)" configuration page.
 
 #### Fill in modification plan
 
-![](/assets/img/en/hotdb-management/image376.png)
+![](../../assets/img/en/hotdb-management/image376.png)
 
 Select the logicDB where the modification table is located and the table name to be changed. (Selecting a parent table or a table without table structure is not supported)
 
@@ -4109,7 +4109,7 @@ Click the \[Start Modification Task] button on the “Management->Online Change 
 
 Modification plan pre-detection is mainly to check whether the pre-selected modification plan for the source table meets the modification requirements and whether the data consistency can be guaranteed. Click \[Start Detection] to perform the modification plan pre-detection.
 
-![](/assets/img/en/hotdb-management/image377.png)
+![](../../assets/img/en/hotdb-management/image377.png)
 
 **Special pre-detection item description**
 
@@ -4133,7 +4133,7 @@ If "Open Global Unique Constraint" in "[Fill in Modification Plan](#fill-in-modi
 
 Check the modification table configuration and modification plan information, and set the special settings of the modification task at execution.
 
-![](/assets/img/en/hotdb-management/image378.png)
+![](../../assets/img/en/hotdb-management/image378.png)
 
 The source table configuration and modification plan information cannot be modified. If modification is needed, click \[Previous Step] to return to the "[Fill in Modification Plan](#fill-in-modification-plan)", and perform a detection after the modification.
 
@@ -4151,13 +4151,13 @@ After clicking the \[Submission] button, the system submits the sharding modific
 
 **(1) Start mode**
 
-![](/assets/img/en/hotdb-management/image379.png)
+![](../../assets/img/en/hotdb-management/image379.png)
 
 Click "\[Batch Operation]->\[Start Modification Task in Batches]" on the "[Online Change of Sharding Plan](#online-change-of-sharding-plan)" page, or select multiple sharding recommendation plan records in the "[Sharding Plan Recommendation](#sharding-plan-recommendation)" function to start modification task in batches through \[Online Modification] .
 
 **(2) Filling instructions for starting modification task in batches**
 
-![](/assets/img/en/hotdb-management/image380.png)
+![](../../assets/img/en/hotdb-management/image380.png)
 
 If the pre-detection of batch started modification task fails, the entire task fails. During the pre-detection process, if the LogicDB to which the source table belong has executed the master/slave consistency detection within 24 hours and the results are consistent, the "Master/Slave Data Consistency Detection" item will not be executed in the table pre-detection.
 
@@ -4165,7 +4165,7 @@ If the pre-detection of batch started modification task fails, the entire task f
 
 **(3) Execute batch task**
 
-![](/assets/img/en/hotdb-management/image381.png)
+![](../../assets/img/en/hotdb-management/image381.png)
 
 If any of the multiple tasks started in the same batch is manually canceled, other tasks will fail even if no exception occurs, and "Because one of the tasks started in the same batch is manually canceled, the current task is automatically canceled" is prompted.
 
@@ -4177,31 +4177,31 @@ It refers to the case that the data of new table and source table after modifica
 
 - When a small amount of data is lost during modification, HotDB Management will prompt the range of lost data and automatically compensate for the lost data, as shown below:
 
-![](/assets/img/en/hotdb-management/image382.png)
+![](../../assets/img/en/hotdb-management/image382.png)
 
 - When there is a small amount of excessive data during modification, HotDB Management will prompt the range of excessive data and automatically delete the excessive data, as shown below:
 
-![](/assets/img/en/hotdb-management/image383.png)
+![](../../assets/img/en/hotdb-management/image383.png)
 
 - When there is a small amount of inconsistent data during modification, HotDB Management will prompt the range of inconsistent data and automatically restore the inconsistent data, as shown below:
 
-![](/assets/img/en/hotdb-management/image383.png)
+![](../../assets/img/en/hotdb-management/image383.png)
 
 - When there is a large amount of inconsistent data during modification, HotDB Management will prompt the range of inconsistent data, but will not restore such a large number of inconsistent data, as shown below:
 
-![](/assets/img/en/hotdb-management/image384.png)
+![](../../assets/img/en/hotdb-management/image384.png)
 
 - When a small amount of inconsistent (lost or excessive) data occurs during modification for the first time, HotDB Management will actively restore the inconsistent data. If inconsistent data occurs again after the restore is completed, HotDB Management will prompt that the data is still inconsistent after automatic restore, give the range of inconsistent (lost or excessive) data, and wait for the user to choose: \[Ignore Inconsistency] or \[Discard Modification] rather than automatically restoring them.
 
-![](/assets/img/en/hotdb-management/image385.png)
+![](../../assets/img/en/hotdb-management/image385.png)
 
 When selecting \[Discard Modification], the modification task fails and "The data is still inconsistent after the program has automatically restored the inconsistent data and the user chooses to discard the modification task" is prompted, as shown below:
 
-![](/assets/img/en/hotdb-management/image386.png)
+![](../../assets/img/en/hotdb-management/image386.png)
 
 When selecting \[Ignore Inconsistency], the task is successful but there is some inconsistent data, and "Online modification is completed, and the user allows the existence of some inconsistency after modification" is prompted, as shown below:
 
-![](/assets/img/en/hotdb-management/image387.png)
+![](../../assets/img/en/hotdb-management/image387.png)
 
 ### Table Recycle Bin
 
@@ -4219,7 +4219,7 @@ The following requirements shall be met for using Table Recycle Bin:
 
 #### Table Recycle Bin
 
-![](/assets/img/en/hotdb-management/image388.png)
+![](../../assets/img/en/hotdb-management/image388.png)
 
 The page displays the temporary table which entered the recycle bin after the server (3323 by default) performed three operations.
 
@@ -4231,13 +4231,13 @@ After the table retention time, table in the recycle bin will be automatically d
 
 **(1) Click Restore**
 
-![](/assets/img/en/hotdb-management/image389.jpeg)
+![](../../assets/img/en/hotdb-management/image389.jpeg)
 
 - Click the Restore button of the temporary table on the "Management -> Table Recycle Bin" page, and the input box for connection information will pop up.
 
 **(2) Fill in the connection information**
 
-![](/assets/img/en/hotdb-management/image390.png)
+![](../../assets/img/en/hotdb-management/image390.png)
 
 - Select a database user.
 - Enter user password.
@@ -4245,7 +4245,7 @@ After the table retention time, table in the recycle bin will be automatically d
 
 **(3) Confirm the restore**
 
-![](/assets/img/en/hotdb-management/image391.png)
+![](../../assets/img/en/hotdb-management/image391.png)
 
 - After the restore, the execution result will be displayed, including the number of successes, the number of failures, and the history record.
 - Click History Record to jump to history record page.
@@ -4254,20 +4254,20 @@ After the table retention time, table in the recycle bin will be automatically d
 
 **(1) Click Delete**
 
-![](/assets/img/en/hotdb-management/image392.png)
+![](../../assets/img/en/hotdb-management/image392.png)
 
 - Click the Delete button of the temporary table on the "Management -> Table Recycle Bin" page, the deletion confirmation box will pop up. Click Confirm, the input box for connection information will pop up.
 
 **(2) Fill in connection information**
 
-![](/assets/img/en/hotdb-management/image393.png)
+![](../../assets/img/en/hotdb-management/image393.png)
 
 - Select a database user.
 - Enter user password.
 
 **(3) Confirm the deletion**
 
-![](/assets/img/en/hotdb-management/image394.png)
+![](../../assets/img/en/hotdb-management/image394.png)
 
 - After the deletion, the execution result will be displayed, including the number of successes, the number of failures and the history record.
 - Click History Record to jump to history record page.
@@ -4276,13 +4276,13 @@ After the table retention time, table in the recycle bin will be automatically d
 
 **(1) Click Batch restore**
 
-![](/assets/img/en/hotdb-management/image395.png)
+![](../../assets/img/en/hotdb-management/image395.png)
 
 - Check tables to be restored, and click "Batch Operation -> Batch restore" on the "Management -> Table Recycle Bin" page.
 
 **(2) Batch restore connection information**
 
-![](/assets/img/en/hotdb-management/image396.png)
+![](../../assets/img/en/hotdb-management/image396.png)
 
 - If the checked tables all belong to the same LogicDB, only one piece of connection information needs to be filled in.
 - If the checked tables belong to multiple LogicDBs, connection information need to be filled in separately.
@@ -4291,7 +4291,7 @@ After the table retention time, table in the recycle bin will be automatically d
 
 **(3) Confirm the batch restore**
 
-![](/assets/img/en/hotdb-management/image397.png)
+![](../../assets/img/en/hotdb-management/image397.png)
 
 - After the batch restore, the execution result will be displayed, including the number of successes, the number of failures, and the history record.
 - Click History Record to jump to history record page.
@@ -4300,13 +4300,13 @@ After the table retention time, table in the recycle bin will be automatically d
 
 **(1) Click Batch deletion**
 
-![](/assets/img/en/hotdb-management/image398.png)
+![](../../assets/img/en/hotdb-management/image398.png)
 
 - Check tables to be deleted, and click "Batch Operation -> Batch deletion" on the "Management -> Table Recycle Bin" page.
 
 **(2) Batch deletion connection information*8
 
-![](/assets/img/en/hotdb-management/image399.png)
+![](../../assets/img/en/hotdb-management/image399.png)
 
 - If the checked tables all belong to the same LogicDB, only one piece of connection information needs to be filled in.
 
@@ -4316,7 +4316,7 @@ After the table retention time, table in the recycle bin will be automatically d
 
 **(3) Confirm the batch deletion**
 
-![](/assets/img/en/hotdb-management/image400.png)
+![](../../assets/img/en/hotdb-management/image400.png)
 
 - After the batch deletion, the execution result is displayed, including the number of successes, the number of failures and the history record.
 
@@ -4328,56 +4328,56 @@ Some special situations that may occur in the recycle bin are described here.
 
 - After a table with advanced sharding function enters the recycle bin, the table configuration will be deleted while the sharding function cannot be edited or deleted until the table in the recycle bin is deleted. On the sharding function page, a temporary table will be displayed. Click the temporary table to jump to the table recycle bin page. As shown below:
 
-![](/assets/img/en/hotdb-management/image401.png)
+![](../../assets/img/en/hotdb-management/image401.png)
 
 - Restore failures include, but may not be limited to:
 
 - The configuration of the original table is inconsistent with that of the restored table (including table type, sharding key, sharding function and data node). As shown below:
 
-![](/assets/img/en/hotdb-management/image402.png)
+![](../../assets/img/en/hotdb-management/image402.png)
 
 - The LogicDB of the original table is inconsistent with that of the restored table. As shown below:
 
-![](/assets/img/en/hotdb-management/image403.png)
+![](../../assets/img/en/hotdb-management/image403.png)
 
 - When the original table is restored with another table name, the table name is already created. As shown below:
 
-![](/assets/img/en/hotdb-management/image404.png)
+![](../../assets/img/en/hotdb-management/image404.png)
 
 - Among two tables of parent-child relation, the parent table has been deleted when the child table is restored. As shown below:
 
-![](/assets/img/en/hotdb-management/image405.png)
+![](../../assets/img/en/hotdb-management/image405.png)
 
 - Among two tables of parent-child relation, the parent table has deleted part of the data associated with the child table when the child table is restored. As shown below:
 
-![](/assets/img/en/hotdb-management/image406.png)
+![](../../assets/img/en/hotdb-management/image406.png)
 
 - Among two tables of foreign key relation, the parent table has been deleted when the child table is restored. As shown below:
 
-![](/assets/img/en/hotdb-management/image407.png)
+![](../../assets/img/en/hotdb-management/image407.png)
 
 - Among two tables of foreign key relation, the parent table has deleted part of the data associated with the child table when the child table is restored. As shown below:
 
-![](/assets/img/en/hotdb-management/image408.png)
+![](../../assets/img/en/hotdb-management/image408.png)
 
 - If the restored table has existed, a prompt box "The restored table is already defined. Whether to delete the existing table before restore?" will pop up during the restore. Click Confirm to delete the existing table to the recycle bin, as shown below:
 
-![](/assets/img/en/hotdb-management/image409.png)
+![](../../assets/img/en/hotdb-management/image409.png)
 
 - Table with foreign key relation, if data status is normal, will reestablish the foreign key relation after restore.
 
 #### History record
 
-![](/assets/img/en/hotdb-management/image410.png)
+![](../../assets/img/en/hotdb-management/image410.png)
 
-![](/assets/img/en/hotdb-management/image411.png)
+![](../../assets/img/en/hotdb-management/image411.png)
 
 - Click [History Record](#history-record) on the "Management -> Table Recycle Bin" page to enter the table recycle bin operation history page.
 - You can view the history record by filtering through [LogicDB](#logicdb) and original table name.
 
 #### Delete history record
 
-![](/assets/img/en/hotdb-management/image412.png)
+![](../../assets/img/en/hotdb-management/image412.png)
 
 - Check the history records you want to delete and click Batch deletion.
 
@@ -4389,7 +4389,7 @@ The security menu is mainly used for the security protection of the connection a
 
 HOTDB Management supports the white list function which restricts hosts outside the white list from connecting to compute node services.
 
-![](/assets/img/en/hotdb-management/image413.png)
+![](../../assets/img/en/hotdb-management/image413.png)
 
 To use the white list function, it needs to enable the white list switch in "Security->White list" first.
 
@@ -4409,7 +4409,7 @@ After adding a host that can access the compute node, the host outside the white
 
 The [SQL Firewall](#sql-firewall) function provided by HotDB Management can intercept high-risk SQL, mis-operation SQL, etc. for users to improve system security.
 
-![](/assets/img/en/hotdb-management/image414.png)
+![](../../assets/img/en/hotdb-management/image414.png)
 
 SQL Firewall currently only supports the interceptable SQL templates provided by HotDB Management, and does not support custom SQL.
 
@@ -4421,11 +4421,11 @@ In v.2.5.5 and above, an interception rule is added to the SQL firewall to suppo
 
 The management platform displays the rule "Not allowed to use WHERE without sharding key" on Security -> SQL Firewall, as shown below:
 
-![](/assets/img/en/hotdb-management/image415.png)
+![](../../assets/img/en/hotdb-management/image415.png)
 
 This rule is closed by default. After it is opened, it requires the dynamic loading to take effect and the status will change to "Intercept in progress":
 
-![](/assets/img/en/hotdb-management/image416.png)
+![](../../assets/img/en/hotdb-management/image416.png)
 
 When the status is "Intercept in progress", all WHERE without sharding key (associated field for the child table) executed on the service end of the compute node with the operation table of sharding table or child table will be intercepted.
 
@@ -4433,11 +4433,11 @@ When the status is "Intercept in progress", all WHERE without sharding key (asso
 
 Create a sharding table "teacher" with id as the sharding key. When the rule is opened, WHERE without sharding key is as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image417.png)
+![](../../assets/img/en/hotdb-management/image417.png)
 
 At the same time, you can see the relevant interception log through Event -> Audit logs -> safety protection:
 
-![](/assets/img/en/hotdb-management/image418.png)
+![](../../assets/img/en/hotdb-management/image418.png)
 
 ### Password security management
 
@@ -4451,7 +4451,7 @@ Password security management can provide users with password validity monitoring
 
 **(I) In-station alert description**
 
-![](/assets/img/en/hotdb-management/image419.png)
+![](../../assets/img/en/hotdb-management/image419.png)
 
 When a database user password expires, the login page will pop up a reminder window to prompt how many users need to change the password in time, and the corresponding reminder will be given in the "Event Notice" in the upper right corner.
 
@@ -4461,7 +4461,7 @@ Users can also click the \[No Alert] button to close the pop-up window. The wind
 
 **(2) Password modification**
 
-![](/assets/img/en/hotdb-management/image420.png)
+![](../../assets/img/en/hotdb-management/image420.png)
 
 By default, the page only displays "To be Expired" and "Expired" database user records. In the Expired records, a red mark is displayed in the upper right corner of the "User Name" field, and "To be Expired" records have a yellow mark.
 
@@ -4479,7 +4479,7 @@ Modifying the password of the exclusive user **root** account of HotDB Managemen
 
 **(I) In-station alert description**
 
-![](/assets/img/en/hotdb-management/image421.png)
+![](../../assets/img/en/hotdb-management/image421.png)
 
 When there is a data source user to be expired or has expired, a prompt window will pop up when the user logs in to HotDB Management to select the compute node cluster and enters the home page, and a corresponding reminder will be given in the "Event Notice" in the upper right corner.
 
@@ -4489,7 +4489,7 @@ Users can also click the \[No Alert] button to close the pop-up window. The wind
 
 **(2) Password modification**
 
-![](/assets/img/en/hotdb-management/image422.png)
+![](../../assets/img/en/hotdb-management/image422.png)
 
 **Display description**
 
@@ -4523,7 +4523,7 @@ When a data source or a compute node ConfigDB is running in a "master-master" or
 
 #### Start a detection
 
-![](/assets/img/en/hotdb-management/image423.png)
+![](../../assets/img/en/hotdb-management/image423.png)
 
 **Step 1:** Select the detection range, which is LogicDB by default.
 
@@ -4539,7 +4539,7 @@ When a data source or a compute node ConfigDB is running in a "master-master" or
 
 **View Results**
 
-![](/assets/img/en/hotdb-management/image424.png)
+![](../../assets/img/en/hotdb-management/image424.png)
 
 After the task is executed, click \[View Results] to view the specific detection details. If the detection results are inconsistent, the inconsistent data result records will be displayed. If there are a large number of inconsistent records, the inconsistencies will be displayed in the form of data intervals. If the number of inconsistencies exceeds 100,000 lines, manual positioning is required.
 
@@ -4551,13 +4551,13 @@ When data source is selected in the detection range, if the data source selected
 
 If data node of the detected table is not configured with the corresponding "[switching rule](#switching-rule)" or data source of the detected table is unavailable, the master/slave consistency detection cannot be performed for the table.
 
-![](/assets/img/en/hotdb-management/image425.png)
+![](../../assets/img/en/hotdb-management/image425.png)
 
 #### Periodical plan{#masterslave-data-consistency-detection.periodical-plan}
 
 In addition to manually starting the master/slave data consistency detection task, detection can also be executed automatically by adding a periodical task. Click \[Periodical Plan] to manage the current periodical plan record.
 
-![](/assets/img/en/hotdb-management/image426.png)
+![](../../assets/img/en/hotdb-management/image426.png)
 
 - At most six periodical plans can be added. The detection period includes "Daily", "Weekly" and "Monthly".
 
@@ -4582,7 +4582,7 @@ It detects whether all global tables in the cluster have the same table structur
 
 #### Start a detection task
 
-![](/assets/img/en/hotdb-management/image427.png)
+![](../../assets/img/en/hotdb-management/image427.png)
 
 **Step 1:** Select the logicDB and the global table under the logicDB to be detected.
 
@@ -4592,9 +4592,9 @@ It detects whether all global tables in the cluster have the same table structur
 
 #### View detection details
 
-![](/assets/img/en/hotdb-management/image428.png)
+![](../../assets/img/en/hotdb-management/image428.png)
 
-![](/assets/img/en/hotdb-management/image429.png)
+![](../../assets/img/en/hotdb-management/image429.png)
 
 - Click the \[View Detection Details] button of the detection task to view the detailed results of detection task.
 
@@ -4624,7 +4624,7 @@ It detects whether all global tables in the cluster have the same table structur
 
 #### Data restore
 
-![](/assets/img/en/hotdb-management/image430.png)
+![](../../assets/img/en/hotdb-management/image430.png)
 
 Data Restore currently supports the restore of the following seven types of data inconsistencies:
 
@@ -4650,7 +4650,7 @@ For the global table data detection periodical plan, please refer to the [Period
 
 Table Structure＆Index Detection can be used to compare whether the table structures and index definitions in the compute node are consistent under each data node. Meanwhile, by detecting the table structure and the execution plan and execution time of the SQL statements related to the table, the optimization suggestions of the table structure or table index are provided.
 
-![](/assets/img/en/hotdb-management/image431.png)
+![](../../assets/img/en/hotdb-management/image431.png)
 
 #### Start a detection
 
@@ -4666,7 +4666,7 @@ Tables with normal table structure, tables with abnormal table structure, tables
 
 Table structure&index optimization suggestions are only provided for tables with "normal" table status or " undefined table index ". Tables with table status of "table structure definition exception", "table index definition exception" and "table structure undefined" will be given specific location of data node over definition exception in the optimization suggestions.
 
-![](/assets/img/en/hotdb-management/image432.png)
+![](../../assets/img/en/hotdb-management/image432.png)
 
 - Table structure optimization suggestions are listed as follows:
 
@@ -4702,13 +4702,13 @@ Table index optimization suggestions are as follows:
 
 - When in multi-node cluster mode and autoIncrement is set to 2 (auto-incremental and unique), if there is an auto-increment sequence in the table with the type of smallint, tinyint, mediumim, int, the table status column will be defined as "table structure definition exception". At the same time, the table structure optimization suggestion column will prompt that "After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table, so it is recommended that the type of id of auto-increment column be changed from tinyint to bigint", Click "Global auto-increment and unique" to jump to the parameter configuration page of compute node, as shown below:
 
-![](/assets/img/en/hotdb-management/image433.png)
+![](../../assets/img/en/hotdb-management/image433.png)
 
 - this verification rule verifies all tables with auto-increment columns enabled under all LogicDBs only when autoIncrement is set to 2, that is, "global auto-increment and unique" and the compute node mode is multi-node cluster.
 
 #### Table structure details
 
-![](/assets/img/en/hotdb-management/image434.png)
+![](../../assets/img/en/hotdb-management/image434.png)
 
 - On the "Table Structure&Index Detection" page, click "Table Name" to view the table structure details.
 
@@ -4724,7 +4724,7 @@ Sharding grade provides a reasonable score for a table after splitting. It can a
 
 #### Description of grade dimensions
 
-![](/assets/img/en/hotdb-management/image435.png)
+![](../../assets/img/en/hotdb-management/image435.png)
 
 **Sharding grade is divided into five dimensions:**
 
@@ -4760,7 +4760,7 @@ Calculate the score according to the number of times the query cannot find the n
 
 #### Record export
 
-![](/assets/img/en/hotdb-management/image436.png)
+![](../../assets/img/en/hotdb-management/image436.png)
 
 - Click the "Export" button on the "Sharding Grade" page to export the page record.
 
@@ -4788,13 +4788,13 @@ In order to help users find the appropriate table sharding solution through the 
 
 **(2) Steps for starting a recommendation**
 
-![](/assets/img/en/hotdb-management/image437.png)
+![](../../assets/img/en/hotdb-management/image437.png)
 
 - Click the \[Start Task] button to start a sharding plan recommendation task, but if no SQL logs are recorded in the "Event -> Slow Query Log Analysis", the task cannot be started.
 
 - It is not allowed to start a task if there are recommendation tasks uncompleted currently.
 
-![](/assets/img/en/hotdb-management/image438.png)
+![](../../assets/img/en/hotdb-management/image438.png)
 
 - By default, all the tables in all logicDB of the cluster will be calculated and recommended when the task is started. Tables that do not need to be calculated and recommended can be filtered according to actual needs.
 
@@ -4826,7 +4826,7 @@ Example 1: If a table has 1000 lines in the simulated pressure measurement envir
 
 #### Sharding plan recommendation
 
-![](/assets/img/en/hotdb-management/image439.png)
+![](../../assets/img/en/hotdb-management/image439.png)
 
 The page displays the results of the most recent successful recommendation, and the newly started record will overwrite the previous record.
 
@@ -4872,7 +4872,7 @@ The sharding route correctness verification function can quickly solve problems 
 
 #### Start a detection
 
-![](/assets/img/en/hotdb-management/image440.png)
+![](../../assets/img/en/hotdb-management/image440.png)
 
 - Select the logicDB and sharding table to be detected (excluding the table whose table type is child table), and click the \[Start Detection] button for immediate detection.
 
@@ -4880,7 +4880,7 @@ The sharding route correctness verification function can quickly solve problems 
 
 #### Detection record details
 
-![](/assets/img/en/hotdb-management/image441.png)
+![](../../assets/img/en/hotdb-management/image441.png)
 
 - "Detection Record Details" mainly displays the detection records of all detection tables in the detection task. By default, table records with abnormal "Detection Result" are displayed.
 
@@ -4888,13 +4888,13 @@ The sharding route correctness verification function can quickly solve problems 
 
 - Click the \[Export Record] button to save tables with abnormal route to the local. **Note: The export function currently only supports exporting route records with abnormal detection results.**
 
-![](/assets/img/en/hotdb-management/image442.png)
+![](../../assets/img/en/hotdb-management/image442.png)
 
-![](/assets/img/en/hotdb-management/image443.png)
+![](../../assets/img/en/hotdb-management/image443.png)
 
 #### Route abnormal details
 
-![](/assets/img/en/hotdb-management/image444.png)
+![](../../assets/img/en/hotdb-management/image444.png)
 
 - The correct route node and the actual route node in the table are displayed in the form of "Node ID value".
 
@@ -4908,7 +4908,7 @@ Data unique constraint detection can check the uniqueness of the historical data
 
 #### Start a detection
 
-![](/assets/img/en/hotdb-management/image445.png)
+![](../../assets/img/en/hotdb-management/image445.png)
 
 **Steps for starting a detection**
 
@@ -4929,7 +4929,7 @@ Click \[Delete Record] to delete the history detection record on the page. If th
 
 #### Detection record details
 
-![](/assets/img/en/hotdb-management/image446.png)
+![](../../assets/img/en/hotdb-management/image446.png)
 
 1. The detection record details page shows the detection results of the corresponding table in the detection task. By default, only the table records with abnormal "detection results" are displayed.
 2. The unique key column in the displayed record displays the fields with unique constraints in the table. When there are multiple unique keys, they are separated by commas; if there are unique constraints composed of multiple field associations, they are shown in brackets.
@@ -4939,7 +4939,7 @@ Click \[Delete Record] to delete the history detection record on the page. If th
 6. Click \[Export Record] to export all or part of the selected records on the page. Please note that the exported record does not include the record of normal "detection result".
 7. If the unique constraint set in the table is prefix index, it can still be detected when the compute node version 2.5.6 and above.
 
-![](/assets/img/en/hotdb-management/image447.png)
+![](../../assets/img/en/hotdb-management/image447.png)
 
 ## Events
 
@@ -4947,7 +4947,7 @@ Click \[Delete Record] to delete the history detection record on the page. If th
 
 History events record and display history information at the HotDB Management platform level, including: task execution completion notification, periodical detection exception notification, and platform triggering alert prompt.
 
-![](/assets/img/en/hotdb-management/image448.png)
+![](../../assets/img/en/hotdb-management/image448.png)
 
 #### Alert type description
 
@@ -5005,7 +5005,7 @@ History events recorded when a compute node management port (3325 by default) or
 
 It records the log information generated by the compute node during the running process to help the user know the running status of the current compute node in real time.
 
-![](/assets/img/en/hotdb-management/image449.png)
+![](../../assets/img/en/hotdb-management/image449.png)
 
 #### View log
 
@@ -5099,7 +5099,7 @@ HotDB Management provides the Slow Query Log Analysis of the execution time and 
 
 #### Slow query log record description
 
-![](/assets/img/en/hotdb-management/image450.png)
+![](../../assets/img/en/hotdb-management/image450.png)
 
 **(1) Slow query log list field description**
 
@@ -5147,7 +5147,7 @@ The optimization suggestions for SQL query are given based on the internal algor
 
 **(2) Compute time distribution**
 
-![](/assets/img/en/hotdb-management/image451.png)
+![](../../assets/img/en/hotdb-management/image451.png)
 
 Click \[View Compute Time Distribution] to view the execution time distribution of SQL statements of the template in compute node or back-end data source.
 
@@ -5155,17 +5155,17 @@ Execution compute time distribution is represented by a bar chart, which can be 
 
 **(3) SQL to be optimized**
 
-![](/assets/img/en/hotdb-management/image452.png)
+![](../../assets/img/en/hotdb-management/image452.png)
 
 The SQL statement to be optimized is the SQL abstract with yellow snail mark on the page. In general, attention shall be paid to the SQL statement with this mark and low SQL execution efficiency shall be checked.
 
 For the standard for judging whether the SQL statement needs to be optimized, click the \[SQL To-be-Optimized Setting] button to view or edit the standard setting to be optimized.
 
-![](/assets/img/en/hotdb-management/image453.png)
+![](../../assets/img/en/hotdb-management/image453.png)
 
 **(4) SQL query optimization suggestions**
 
-![](/assets/img/en/hotdb-management/image454.png)
+![](../../assets/img/en/hotdb-management/image454.png)
 
 Based on the internal algorithm of the management platform, this function checks the SQL statement structure, execution time, execution plan, etc., filters out unreasonable SQL statements, and gives optimization suggestions.
 
@@ -5181,11 +5181,11 @@ SQL suggestions are as follows:
 
 For example: this cross-node SQL JOIN query does not use the sharding key as the associated field. In this case, the compute node needs to cross-compare the data across the data nodes, which takes a lot of time. Therefore, suggestions are given for such SQL statements.
 
-![](/assets/img/en/hotdb-management/image455.png)
+![](../../assets/img/en/hotdb-management/image455.png)
 
 **(5) Average execution time is too long**
 
-![](/assets/img/en/hotdb-management/image456.png)
+![](../../assets/img/en/hotdb-management/image456.png)
 
 For the compute node average execution time or the data source average execution time, if it is found that the average execution time from 00:00 to 24:00 yesterday is twice the average execution time of the history, a message with a triangle identification will appear.
 
@@ -5195,7 +5195,7 @@ Check the item "only view the data from 00:00 to 24:00 yesterday " to refresh th
 
 HotDB Management provides SQL performance tracking function, which visually shows the execution plan of SQL statements (HotDB Profiles). It can be used to compare and view the execution plan of a SQL statement before and after optimization, or to view the execution plan of a SQL statement separately.
 
-![](/assets/img/en/hotdb-management/image457.png)
+![](../../assets/img/en/hotdb-management/image457.png)
 
 Input the username and password (the username and password are of the [database users](#database-user-management) of the compute node), and select the LogicDB for query.
 
@@ -5207,11 +5207,11 @@ Enter SQL query statements, which can be entered up to three at a time. Click \[
 
 The execution plan will display the relative time point and time consumption (μ s) of each step. For details, please refer to the HotDB Profiles related sections in the [Standard](hotdb-server-standard-operations.md) document.
 
-![](/assets/img/en/hotdb-management/image458.png)
+![](../../assets/img/en/hotdb-management/image458.png)
 
 Click \[View execution time graph] to view the visualized results of execution plan. Only one execution time graph can be viewed at a time.
 
-![](/assets/img/en/hotdb-management/image459.png)
+![](../../assets/img/en/hotdb-management/image459.png)
 
 ### Notification strategy
 
@@ -5221,9 +5221,9 @@ DR mode explanation: when the DR mode is enabled, please refer to the [Notificat
 
 #### Add notification strategy
 
-![](/assets/img/en/hotdb-management/image460.png)
+![](../../assets/img/en/hotdb-management/image460.png)
 
-![](/assets/img/en/hotdb-management/image461.png)
+![](../../assets/img/en/hotdb-management/image461.png)
 
 **Add notification strategy parameter**
 
@@ -5243,25 +5243,25 @@ DR mode explanation: when the DR mode is enabled, please refer to the [Notificat
 
 The failure status monitoring item sends an email reminder of the most recent exception detected within the notification frequency. If the failure is not repaired, the email will send repeated reminder until the failure has been repaired.
 
-![](/assets/img/en/hotdb-management/image462.png)
+![](../../assets/img/en/hotdb-management/image462.png)
 
 **Email example:** The prompt information for compute node service failure or switching is as follows:
 
-![](/assets/img/en/hotdb-management/image463.jpeg)
+![](../../assets/img/en/hotdb-management/image463.jpeg)
 
 **Email example:** The prompt information for data source service failure or switching is as follows:
 
-![](/assets/img/en/hotdb-management/image464.png)
+![](../../assets/img/en/hotdb-management/image464.png)
 
 ##### Compute node service resource monitoring
 
 The compute node server resource monitoring item notice is about the most recent time when the threshold is exceeded during the notification time.
 
-![](/assets/img/en/hotdb-management/image465.png)
+![](../../assets/img/en/hotdb-management/image465.png)
 
 **Threshold setting:** To monitor the corresponding item of the compute node service resources, it shall be ensured that the monitoring item has been opened in "Setting -> Monitoring Panel Setting" and the corresponding thresholds have been set, as shown below:
 
-![](/assets/img/en/hotdb-management/image466.png)
+![](../../assets/img/en/hotdb-management/image466.png)
 
 > !Note
 > 
@@ -5269,17 +5269,17 @@ The compute node server resource monitoring item notice is about the most recent
 
 **Email example:** The prompt information of real-time monitoring alert reminder of compute node server resources is as follows:
 
-![](/assets/img/en/hotdb-management/image467.png)
+![](../../assets/img/en/hotdb-management/image467.png)
 
 ##### Compute node service status
 
 The compute node service status notice is about the most recent time when the threshold is exceeded during the notification time.
 
-![](/assets/img/en/hotdb-management/image468.png)
+![](../../assets/img/en/hotdb-management/image468.png)
 
 **Threshold setting:** To monitor the corresponding item of the compute node service status, it shall be ensured that the monitoring item has been opened in "Setting -> Monitoring Panel Setting" and the corresponding thresholds have been set, as shown below:
 
-![](/assets/img/en/hotdb-management/image469.png)
+![](../../assets/img/en/hotdb-management/image469.png)
 
 > !Note
 > 
@@ -5287,17 +5287,17 @@ The compute node service status notice is about the most recent time when the th
 
 **Email example:** The prompt information of compute node service status monitoring alert reminder is as follows:
 
-![](/assets/img/en/hotdb-management/image470.png)
+![](../../assets/img/en/hotdb-management/image470.png)
 
 ##### Other server resource monitoring
 
 Other Server Resource status notification is about the most recent time when the threshold is exceeded during the notification time.
 
-![](/assets/img/en/hotdb-management/image471.png)
+![](../../assets/img/en/hotdb-management/image471.png)
 
 **Threshold setting:** To monitor the corresponding item of the compute node service resources, it shall be ensured that the monitoring item has been opened in "Setting -> [Monitoring Panel Setting](#monitoring-panel-setting)" and "Setting -> [Periodical Detection Setting](#periodical-detection-setting)" and the corresponding thresholds have been set, as shown below:
 
-![](/assets/img/en/hotdb-management/image472.png)
+![](../../assets/img/en/hotdb-management/image472.png)
 
 > !Note
 > 
@@ -5305,17 +5305,17 @@ Other Server Resource status notification is about the most recent time when the
 
 **Email example:** The prompt information of other server resource monitoring exception reminder is as follows:
 
-![](/assets/img/en/hotdb-management/image473.png)
+![](../../assets/img/en/hotdb-management/image473.png)
 
 ##### Data source information monitoring
 
 The data source information monitoring notification is bout the most recent exception during the notification time.
 
-![](/assets/img/en/hotdb-management/image474.png)
+![](../../assets/img/en/hotdb-management/image474.png)
 
 **Threshold setting:** To monitor the corresponding item of the data source, it shall be ensured that the monitoring item has been opened in "Setting -> \[Topological Graph Alert Setting]" and the corresponding thresholds have been set, as shown below:
 
-![](/assets/img/en/hotdb-management/image475.png)
+![](../../assets/img/en/hotdb-management/image475.png)
 
 > !Note
 > 
@@ -5323,17 +5323,17 @@ The data source information monitoring notification is bout the most recent exce
 
 **Email example:** The prompt information of data source related monitoring alert reminder is as follows:
 
-![](/assets/img/en/hotdb-management/image476.png)
+![](../../assets/img/en/hotdb-management/image476.png)
 
 ##### ConfigDB monitoring
 
 the ConfigDB monitoring notification takes the latest exception within the notification time.
 
-![](/assets/img/en/hotdb-management/image477.png)
+![](../../assets/img/en/hotdb-management/image477.png)
 
 **Threshold setting:** to monitor the corresponding items in the ConfigDB, you must first ensure that the monitoring items are opened in "Setting -> [Topological graph alert setting](#topological-graph-alert-setting)" and the corresponding thresholds are set as follows:
 
-![](/assets/img/en/hotdb-management/image478.png)
+![](../../assets/img/en/hotdb-management/image478.png)
 
 > !Note
 > 
@@ -5341,23 +5341,23 @@ the ConfigDB monitoring notification takes the latest exception within the notif
 
 **Email example:** ConfigDB monitoring alert reminders; the prompt information is as follows:
 
-![](/assets/img/en/hotdb-management/image479.png)
+![](../../assets/img/en/hotdb-management/image479.png)
 
 ##### Periodical detection abnormal monitoring
 
 The periodical detection abnormal monitoring notification is bout the most recent exception (except for backup/restore failure) during the notification time.
 
-![](/assets/img/en/hotdb-management/image480.png)
+![](../../assets/img/en/hotdb-management/image480.png)
 
 **Threshold setting:** To monitor the corresponding item of the data source, it shall be ensured that the monitoring item has been opened in "Setting -> [Periodical Detection Setting](#periodical-detection-setting)" and the corresponding thresholds have been set, as shown below:
 
-![](/assets/img/en/hotdb-management/image481.png)
+![](../../assets/img/en/hotdb-management/image481.png)
 
 > !Note
 > 
 > The above thresholds are the test environment settings and are for reference only.
 > 
-> ![](/assets/img/en/hotdb-management/image482.png)
+> ![](../../assets/img/en/hotdb-management/image482.png)
 > 
 > Backup/restore failure is alerted only if it occurs within the notification time range. This failures only includes those caused by abnormal conditions after normal backup/restore.
 
@@ -5365,7 +5365,7 @@ The periodical detection abnormal monitoring notification is bout the most recen
 
 When the compute node license authorization expires, if the detection switch is turned on and the reminder conditions are met, the notification email will be sent according to the set reminder frequency.
 
-![](/assets/img/en/hotdb-management/image483.png)
+![](../../assets/img/en/hotdb-management/image483.png)
 
 **License authorization monitoring description:**
 
@@ -5379,17 +5379,17 @@ License Authorization Expired means that the current license has a certain perio
 
 **Email example:** The license authorization expiration email reminder is as follows:
 
-![](/assets/img/en/hotdb-management/image484.png)
+![](../../assets/img/en/hotdb-management/image484.png)
 
 If the current license validity is permanent, the "License Authorization Expired" check box will be automatically hidden.
 
-![](/assets/img/en/hotdb-management/image485.png)
+![](../../assets/img/en/hotdb-management/image485.png)
 
 If the current license is an expired license, the HotDB Server will stop serving.
 
-![](/assets/img/en/hotdb-management/image486.png)
+![](../../assets/img/en/hotdb-management/image486.png)
 
-![](/assets/img/en/hotdb-management/image487.png)
+![](../../assets/img/en/hotdb-management/image487.png)
 
 Click the \[I got it] button to retract the pop-up window. Refresh the current page to activate the pop-up window again.
 
@@ -5397,11 +5397,11 @@ r License authorization detection exception includes "exception occurred to obta
 
 **The license authorization expiration reminder pop-up prompt is as follows:**
 
-![](/assets/img/en/hotdb-management/image488.png)
+![](../../assets/img/en/hotdb-management/image488.png)
 
 **The pop-up prompt for exception occurred to obtain license authorization information is as follows:**
 
-![](/assets/img/en/hotdb-management/image489.png)
+![](../../assets/img/en/hotdb-management/image489.png)
 
 **Operation instructions:**
 
@@ -5413,7 +5413,7 @@ Click the \[Not Prompt] button to retract the pop-up window, and the pop-up wind
 
 **Email example:** The email prompt for "License authorization information cannot be updated" is as follows:
 
-![](/assets/img/en/hotdb-management/image490.png)
+![](../../assets/img/en/hotdb-management/image490.png)
 
 ### Audit logs
 
@@ -5423,7 +5423,7 @@ The Audit Logs function is mainly used to view the operation records of HotDB Ma
 
 It can be used to view the operations of all general users in the cluster on the management platform. The specific types of operations recorded can be viewed in the operation type drop-down box on the page. Access IP and operation content input box support fuzzy search.
 
-![](/assets/img/en/hotdb-management/image491.png)
+![](../../assets/img/en/hotdb-management/image491.png)
 
 **Table information description:**
 
@@ -5439,7 +5439,7 @@ It can be used to view the operations of all general users in the cluster on the
 
 It can be used to view the operation logs related to security protection performed by all ordinary users. The specific types of operations are recorded. You can view them in the operation type drop-down box on the page. Access IP and interception details input box support fuzzy search.
 
-![](/assets/img/en/hotdb-management/image492.png)
+![](../../assets/img/en/hotdb-management/image492.png)
 
 **Table information description:**
 
@@ -5455,7 +5455,7 @@ It can be used to view the operation logs related to security protection perform
 
 It can be used to view the operations of all general users on the management port. The specific types of operations recorded can be viewed in the operation type drop-down box on the page. Access IP and interception details input box support fuzzy search. If a compute node group is selected, only the operation records for the selected compute node group are displayed. A specific compute node can be selected, and all compute nodes are selected by default.
 
-![](/assets/img/en/hotdb-management/image493.png)
+![](../../assets/img/en/hotdb-management/image493.png)
 
 **Table information description:**
 
@@ -5479,7 +5479,7 @@ The audit object of audit log can be configured in "Setting -> Audit Log Setting
 
 The periodical detection setting is the function provided by HotDB Management for switch and related parameter setting of background execution periodical detection thread.
 
-![](/assets/img/en/hotdb-management/image516.png)
+![](../../assets/img/en/hotdb-management/image516.png)
 
 Turn on the button (the button dot is turned to the right) to enable the background periodical detection thread, and turn off the button to stop operation.
 
@@ -5491,29 +5491,29 @@ If the periodical detection task is closed, the email alert in "Event -> Notific
 
 **Description:** It provides the entry for setting the periodical plan window. The effect after setting is the same as the periodical plan entry in the original function. The following are available currently: Config data periodical backup plan, global table data periodical detection plan, master/slave data consistency periodical detection plan, table structure and table index periodical detection plan, data sharding route periodical detection plan, data unique constraint periodical detection plan. For the specific setting method, refer to the Periodical Plan description in "Detection -> Master/Slave Data Consistency Detection".
 
-![](/assets/img/en/hotdb-management/image517.png)
+![](../../assets/img/en/hotdb-management/image517.png)
 
 ### Topological graph alert setting
 
 It can set the threshold for alerts for monitoring items at each layer in "Monitoring -> [Logic Topological Graph](#logic-topological-graph)". When the threshold is exceeded, the topological graph displays the corresponding warning information. You can restore the default setting by clicking the Reset button.
 
-![](/assets/img/en/hotdb-management/image518.png)
+![](../../assets/img/en/hotdb-management/image518.png)
 
 ### Monitoring panel setting
 
 It is used to enable or disable the monitoring items of "Compute Node Service Status", "Compute Node Traffic", "Compute Node Server Resource" and "Other Server Resources" panels in "Monitoring->[Monitoring Panel](#monitoring-panel)". the data refresh frequency and the server parameter status threshold can also be set.
 
-![](/assets/img/en/hotdb-management/image519.png)
+![](../../assets/img/en/hotdb-management/image519.png)
 
-![](/assets/img/en/hotdb-management/image520.png)
+![](../../assets/img/en/hotdb-management/image520.png)
 
-![](/assets/img/en/hotdb-management/image521.png)
+![](../../assets/img/en/hotdb-management/image521.png)
 
 - Choose whether to enable each monitoring item.
 - It allows to set the refresh frequency.
 - When the button is turned off, the monitor panel needs to be opened for monitoring.
 
-![](/assets/img/en/hotdb-management/image522.png)
+![](../../assets/img/en/hotdb-management/image522.png)
 
 ### Notification setting
 
@@ -5523,7 +5523,7 @@ It sets the email sender parameter of email alert function in "Event->[Notificat
 
 In the email sender setting, enter the correct email sender parameter information for connection test, as shown below:
 
-![](/assets/img/en/hotdb-management/image523.png)
+![](../../assets/img/en/hotdb-management/image523.png)
 
 **Email sender parameter description**
 
@@ -5541,15 +5541,15 @@ After inputting the correct parameters, click Test to verify whether the current
 
 - Enter the correct parameters and click Test to pop up the mail test window, as shown below:
 
-![](/assets/img/en/hotdb-management/image524.png)
+![](../../assets/img/en/hotdb-management/image524.png)
 
 - **Email:** Enter the inbox address (in case of intranet, the corresponding inbox address needs to be filled in), click the "Send a test email" button to check the email sender parameter settings and inbox parameters, the inbox parameters are filled in When the error occurs, the window prompts. "Test mail sending failed" is prompted when the email sender parameter is set incorrectly. "Email is sent successfully, please check it" when the email sender parameter is set correctly (the "Send a test email" button is gray and email cannot be sent again within 1 minute after successful sending). If the email sender parameter is set incorrectly, the pop-up window displays an error message, as shown below.
 
-![](/assets/img/en/hotdb-management/image525.png)
+![](../../assets/img/en/hotdb-management/image525.png)
 
 - Mail Test content is as shown below:
 
-![](/assets/img/en/hotdb-management/image526.png)
+![](../../assets/img/en/hotdb-management/image526.png)
 
 - **Mailbox Verification Code:** Correctly fill in the received email verification code and click the Confirm button, "Verification successful" is prompted. If the email verification code is filled in incorrectly, "Verification code error" is prompted (the verification code is not case sensitive, but please pay attention to whether there is any space)
 
@@ -5557,7 +5557,7 @@ After inputting the correct parameters, click Test to verify whether the current
 
 The monitoring notification frequency controls the email sending interval (also can be understood as the monitoring detection frequency) of monitoring items in the email alert, as shown below:
 
-![](/assets/img/en/hotdb-management/image527.png)
+![](../../assets/img/en/hotdb-management/image527.png)
 
 Closing the corresponding monitoring item may affect the email alert in "Event -> [Notification Strategy](#notification-strategy)" . When closing, check whether there is a notification strategy added and whether a sub-item of the monitoring item is checked.
 
@@ -5565,7 +5565,7 @@ Closing the corresponding monitoring item may affect the email alert in "Event -
 
 The operation function menu of audit log records and the audit log record retention time can be set in "Event -> [Audit Logs](#audit-logs)".
 
-![](/assets/img/en/hotdb-management/image528.png)
+![](../../assets/img/en/hotdb-management/image528.png)
 
 ## Tool
 
@@ -5575,7 +5575,7 @@ There are many HotDB Server cluster components, and the operation mechanism is c
 
 **Function Entry:** Click "[Tools](#tool) -> [Data Collection](#data-collection)" in the management platform to enter the "[Data Collection](#data-collection)" page.
 
-![](/assets/img/en/hotdb-management/image529.png)
+![](../../assets/img/en/hotdb-management/image529.png)
 
 **Collection scenario:**
 
@@ -5620,7 +5620,7 @@ Data collection shall focus on the following steps and issues.
 
 7. For the collected files stored on the management platform server, the management platform provides a 30-day retention period by default. For files that are not in the file window period, the program performs the deletion task every morning and in the retention period.
 
-    ![](/assets/img/en/hotdb-management/image530.png)
+    ![](../../assets/img/en/hotdb-management/image530.png)
 
 8. When deleting the page record, the program will also delete the file content in the /opt directory of the management platform server.
 
@@ -5628,7 +5628,7 @@ Data collection shall focus on the following steps and issues.
 
 10. For the data cannot be collected or abnormal data collected, the "Task Collection Abnormal Report.txt" record is uniformly used in the compressed packet.
 
-    ![](/assets/img/en/hotdb-management/image531.png)
+    ![](../../assets/img/en/hotdb-management/image531.png)
 
 ### License management
 
@@ -5640,7 +5640,7 @@ Business data reporting provides annual reports of the cluster for users, which 
 
 **Function entry:** enter the Business data reporting page through [Tool](#tool) -> [Business data reporting](#business-data-reporting) on the management platform, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image532.png)
+![](../../assets/img/en/hotdb-management/image532.png)
 
 Each time entering the page, the business data will be automatically obtained. "By month" is selected by default and the business data of the "current month" will be displayed. The statistical cycle can be selected as "By month", "By quarter", and "By year".
 
@@ -5648,11 +5648,11 @@ Each time entering the page, the business data will be automatically obtained. "
 - By quarter: the selection range is from the quarter of the starting time to the current quarter, format: "year + quarter".
 - By year: the selection range is from the year of the start time to the current year, format: "year + year".
 
-![](/assets/img/en/hotdb-management/image533.png)
+![](../../assets/img/en/hotdb-management/image533.png)
 
 When you reselect the time range for business data statistics, the page will automatically refresh the matching data. Click Export to export the data report, format: PDF/WORD. The exported file name is: cluster name + business data report + time range (i.e. the selected time range)
 
-![](/assets/img/en/hotdb-management/image534.png)
+![](../../assets/img/en/hotdb-management/image534.png)
 
 #### Cluster scale
 
@@ -5668,7 +5668,7 @@ The Cluster scale shows the number of servers and components in the cluster, whi
 
 The data of cluster scale is updated regularly in the early hours of each day, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image535.png)
+![](../../assets/img/en/hotdb-management/image535.png)
 
 > !Note
 > 
@@ -5687,7 +5687,7 @@ Cluster data consists of four parts: cluster data volume, peak curve of single d
 
 The data is updated regularly at zero every day for statistics and display, including the total data volume of the cluster, max LogicDB and its data volume, max data node and its data volume, max table and its data volume, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image536.png)
+![](../../assets/img/en/hotdb-management/image536.png)
 
 >!Note
 > 
@@ -5697,7 +5697,7 @@ The data is updated regularly at zero every day for statistics and display, incl
 
 The data is regularly updated at 0:00 every day, and the date with the largest peak amount of single day data addition within the statistical range, the corresponding data amount and the data of the day before and after will be displayed. If there is no corresponding data in the day before and after, the closest date and data will be selected for display, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image537.png)
+![](../../assets/img/en/hotdb-management/image537.png)
 
 If there are multiple time points with the same peak value in the selected time range, the data closest to the selecting time will be displayed.
 
@@ -5711,11 +5711,11 @@ The data capacity planning prediction includes growth prediction of the cluster 
 
 The data is regularly updated at 0:00 every day. The cluster data volume, compute node ConfigDB data volume and management platform ConfigDB data volume are counted respectively. If the statistical data in the current increment prediction is less than 21 days, "The data recorded currently is less than 21 days, so the increment prediction is temporarily unavailable." will be prompted, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image538.png)
+![](../../assets/img/en/hotdb-management/image538.png)
 
 Click the zoom in icon at the upper right of the graph to view the curve on a full screen. When the cursor hovers over the graph, the current corresponding date and its historical data capacity statistics and capacity trend prediction will be displayed. Click the zoom in/out button again to go back to the business data reporting page, as shown below:
 
-![](/assets/img/en/hotdb-management/image539.png)
+![](../../assets/img/en/hotdb-management/image539.png)
 
 > !Note
 > 
@@ -5732,7 +5732,7 @@ Data operations include the number of effective data backups, the number of succ
 
 At present, the execution times of different operations will be counted by month. When the new month comes, the operation times will be accumulated again from zero, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image540.png)
+![](../../assets/img/en/hotdb-management/image540.png)
 
 > !Note
 > 
@@ -5742,7 +5742,7 @@ At present, the execution times of different operations will be counted by month
 
 The data displayed in the cluster performance is the peak value and corresponding time of the compute node within the selected time range, including two parts of data: the QPS, TPS and the number of connections of the compute node, and the QPS and the number of connections of the data source. The data will be updated regularly at 0:00 every day, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image541.png)
+![](../../assets/img/en/hotdb-management/image541.png)
 
 > !Note
 > 
@@ -5768,13 +5768,13 @@ Cluster support calculates the high available data of the current cluster's comp
 
 **Reliability** = (1 - (cumulative failure time in the selected range/total time of the selected range)) * 100%. If the cumulative failure time is 0, the reliability will be 100% without calculation.
 
-![](/assets/img/en/hotdb-management/image542.png)
+![](../../assets/img/en/hotdb-management/image542.png)
 
 > !Note
 > 
 > when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-". When the compute node, data node or ConfigDB is a single node, "a single node with no statistics for now" will be displayed.
 
-![](/assets/img/en/hotdb-management/image543.png)
+![](../../assets/img/en/hotdb-management/image543.png)
 
 #### Cluster operation and maintenance
 
@@ -5787,25 +5787,25 @@ It includes five types of detection, including master/slave data consistency det
 1. Proportion of exception tables = (number of exception tables / total number of detected tables) * 100%
 2. In the detection submenu, master/slave data consistency detection, global table data detection, table structure&index detection, route correctness verification, and data unique constraint detection can be performed. Real-time statistics of detection data will be displayed, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image544.png)
+![](../../assets/img/en/hotdb-management/image544.png)
 
 **(2) Deployment upgrade**
 
 Display the number of cluster upgrades and license updates that have been successfully completed within the selected time range. When there are upgrade and update operations, the data will be counted and displayed in real time, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image545.png)
+![](../../assets/img/en/hotdb-management/image545.png)
 
 **(3) Alert optimization**
 
 It shows the number of alert emails successfully sent, the number of optimized slow queries and the number of tables with sharding plan modification in the selected time range. Real time statistics will be displayed as follows:
 
-![](/assets/img/en/hotdb-management/image546.png)
+![](../../assets/img/en/hotdb-management/image546.png)
 
 **(4) safety protection**
 
 It shows the number of intercepted IP, the number of intercepted SQL and the number of intercepted wrong password login (wrong password of login server / management end) within the selected time range, as shown in the following figure:
 
-![](/assets/img/en/hotdb-management/image547.png)
+![](../../assets/img/en/hotdb-management/image547.png)
 
 > !Note
 > 
@@ -5821,11 +5821,11 @@ For details, you can refer to the [Intelligent Inspection](intelligent-inspectio
 
 The navigation is at the top of HotDB Management and is displayed globally. For the above operations, menu privilege control is currently not supported.
 
-![](/assets/img/en/hotdb-management/image548.png)
+![](../../assets/img/en/hotdb-management/image548.png)
 
 ### Version
 
-![](/assets/img/en/hotdb-management/image549.png)
+![](../../assets/img/en/hotdb-management/image549.png)
 
 It displays the current compute node cluster: cluster name, compute node version number, license authorization information (license type: beta or permanent version, remaining time), limit of number of nodes, limit of number of ConfigDBs.
 
@@ -5835,13 +5835,13 @@ Click on "License Management" to hyperlink to the "[License Management](#license
 
 When the compute node cannot be connected, there will be a red dot mark. When clicking "Version No.", it will prompt "Unable to connect to the compute node", as shown below:
 
-![](/assets/img/en/hotdb-management/image550.png)
+![](../../assets/img/en/hotdb-management/image550.png)
 
 **License status detection:**
  
 When the license information is abnormal, the information bar displays the corresponding exception reminder information (orange dot reminder), as shown below:
 
-![](/assets/img/en/hotdb-management/image551.png)
+![](../../assets/img/en/hotdb-management/image551.png)
 
 **Other forms of license exception notification:**
 
@@ -5855,7 +5855,7 @@ In case of license information detection exception, in addition to the correspon
 
 On the Compute Node Cluster Selection page, click the \[Back to Compute Node Cluster Selection] button to enter the Compute Node Cluster Selection page.
 
-![](/assets/img/en/hotdb-management/image552.jpeg)
+![](../../assets/img/en/hotdb-management/image552.jpeg)
 
 ### Help
 
@@ -5863,7 +5863,7 @@ On the Compute Node Cluster Selection page, click the \[Back to Compute Node Clu
 
 In the navigation bar, click on the Help and select \[Tutorial] to enter the tutorial guide page.
 
-![](/assets/img/en/hotdb-management/image553.png)
+![](../../assets/img/en/hotdb-management/image553.png)
 
 ### Reload
 
@@ -5875,35 +5875,35 @@ When the compute node related configDB parameters are modified in HotDB Manageme
 
 When there is a scenario triggering reload in the management platform, a To Be Loaded mark appears on the \[Reload] button. After the user clicks \[Reload] and "Synchronization Complete" is prompted, the To Be Loaded mark will disappear automatically. If the user does not click \[Reload], the mark still appears after logging out and logging in again. The mark is specifically in the cluster of compute nodes, and when different users enter the same compute node cluster, all To Be Loaded marks can be displayed, as shown below:
 
-![](/assets/img/en/hotdb-management/image559.png)
+![](../../assets/img/en/hotdb-management/image559.png)
 
 **Reload special scenario description**
 
 If master/slave configDB and master/slave data source switch occur during Reload, the page will prompt the user and provide two options: \[Forced Switch Stop] and \[Cancel Reload]. The details are as follows:
 
-![](/assets/img/en/hotdb-management/image560.png)
+![](../../assets/img/en/hotdb-management/image560.png)
 
 Click the \[Confirm] button to forcibly cancel the current switch and perform synchronous loading, and then successful synchronous loading is prompted. Click the \[Cancel] button to cancel the synchronous loading operation.
 
 #### Function exercise
 
-![](/assets/img/en/hotdb-management/image561.png)
+![](../../assets/img/en/hotdb-management/image561.png)
 
 **Step 1:** Click the \[Reload] button in the navigation bar. The pop-up box prompts: "Are you sure to synchronize the configuration data to SERVER port?"
 
-![](/assets/img/en/hotdb-management/image562.png)
+![](../../assets/img/en/hotdb-management/image562.png)
 
 **Step 2:** Click \[Confirm] to check whether there is an error in the contents of the "Configuration->[Config Checking](#config-checking)" module. "Synchronization succeeded" is prompted when all detection items are normal. "Configuration verification failed" is prompted when there is an error.
 
-![](/assets/img/en/hotdb-management/image563.png)
+![](../../assets/img/en/hotdb-management/image563.png)
 
 **Step 3 (in case of an exception):** After the config checking fails, click \[Config Checking] to jump to the "Configuration->[Config Checking](#config-checking)" module to view the specific error information.
 
-![](/assets/img/en/hotdb-management/image564.png)
+![](../../assets/img/en/hotdb-management/image564.png)
 
 #### Reload triggering scenario
 
-![](/assets/img/en/hotdb-management/image565.png)
+![](../../assets/img/en/hotdb-management/image565.png)
 
 The function operations that trigger Reload are as follows:
 
@@ -5924,13 +5924,13 @@ The function operations that trigger Reload are as follows:
 
 This function is used to display various alert types of notification items and other notification items. When there is a notification item, the total number of notifications is displayed in the upper right corner. If there is no notification item, it is not displayed;
 
-![](/assets/img/en/hotdb-management/image566.png)
+![](../../assets/img/en/hotdb-management/image566.png)
 
 The content of notice is consistent with the content of "Event" on the [Home](#home).
 
 Click on the specific event in the Notice to jump to "Event -> History Event" or specific function to view the details.
 
-The Notice content is divided into three levels: ERROR, WARNING and INFO, displayed with the icons of ![](/assets/img/en/hotdb-management/image567.png), ![](/assets/img/en/hotdb-management/image568.png) and ![](/assets/img/en/hotdb-management/image569.png) respectively.
+The Notice content is divided into three levels: ERROR, WARNING and INFO, displayed with the icons of ![](../../assets/img/en/hotdb-management/image567.png), ![](../../assets/img/en/hotdb-management/image568.png) and ![](../../assets/img/en/hotdb-management/image569.png) respectively.
 
 Click the \[Setting] button in the Notice to set whether to prompt the event.
 
@@ -5938,7 +5938,7 @@ Click the \[Setting] button in the Notice to set whether to prompt the event.
 
 In the navigation bar, click \[Theme] to change the theme style of the current HotDB Management.
 
-![](/assets/img/en/hotdb-management/image570.png)
+![](../../assets/img/en/hotdb-management/image570.png)
 
 ### User information
 
@@ -5950,7 +5950,7 @@ If the HotDB Management login user is "Manager User", it can be switched to the 
 
 In the Modify User Information page, only the personal password can be changed, and the username and compute node cluster privileges can be viewed. In the navigation bar, click \[Modify User Information] to enter the personal information page.
 
-![](/assets/img/en/hotdb-management/image571.png)
+![](../../assets/img/en/hotdb-management/image571.png)
 
 On the Personal Information page, enter the current password, enter the new password and confirm the new password. Click \[Save] to successfully change the user password.
 
@@ -5958,29 +5958,29 @@ The new password shall not be the same as the current password.
 
 If the password is forgotten, please contact super administrator to reset the password.
 
-![](/assets/img/en/hotdb-management/image572.png)
+![](../../assets/img/en/hotdb-management/image572.png)
 
 High-risk operation qualification switch requires password checking by users when it is turned on or off.
 
-![](/assets/img/en/hotdb-management/image573.png)
+![](../../assets/img/en/hotdb-management/image573.png)
 
 When the high-risk operation switch is turned on, the page needs to confirm the advanced password if the user performs dangerous operations, such as data source password change, normal DDL and online DDL execution of SQL containing dangerous operation instructions such as "drop" and "truncate".
 
-![](/assets/img/en/hotdb-management/image574.png)
+![](../../assets/img/en/hotdb-management/image574.png)
 
-![](/assets/img/en/hotdb-management/image575.png)
+![](../../assets/img/en/hotdb-management/image575.png)
 
 ### Sign out
 
 In the navigation bar, click \[Sign Out] to exit successfully. After signing out successfully, the program will jump to the login page.
 
-![](/assets/img/en/hotdb-management/image576.png)
+![](../../assets/img/en/hotdb-management/image576.png)
 
 ### Language
 
 The management platform supports both Chinese and English; the default language is Chinese. If you want to switch to English, you can change the language parameters in application.properties under the installation `conf/directory` on the management platform.
 
-![](/assets/img/en/hotdb-management/image577.png)
+![](../../assets/img/en/hotdb-management/image577.png)
 
 Currently, the language parameter only supports Chinese and English.
 
@@ -5994,11 +5994,11 @@ The management platform supports encrypted access using HTTPS.
 
 Under `conf/application.properties` of the management platform installation directory, HTTPS configuration is commented by default. If you want to enable it, delete the annotation and restart the management platform.
 
-![](/assets/img/en/hotdb-management/image578.png)
+![](../../assets/img/en/hotdb-management/image578.png)
 
-![](/assets/img/en/hotdb-management/image579.png)
+![](../../assets/img/en/hotdb-management/image579.png)
 
-![](/assets/img/en/hotdb-management/image580.png)
+![](../../assets/img/en/hotdb-management/image580.png)
 
 The meaning of HTTPS parameter is as follows:
 
@@ -6041,9 +6041,9 @@ keytool -genkey -alias test -keypass 123456 -keyalg RSA -keysize 1024 -validity 
 
 2. Modify `https.keystore-password` and `https.keystore-file` in `application.xml` to be the newly generated value and restart the management platform to access the management platform using HTTPS.
 
-> ![](/assets/img/en/hotdb-management/image581.png)
+> ![](../../assets/img/en/hotdb-management/image581.png)
 >
-> ![](/assets/img/en/hotdb-management/image582.png)
+> ![](../../assets/img/en/hotdb-management/image582.png)
 >
-> ![](/assets/img/en/hotdb-management/image583.png)
+> ![](../../assets/img/en/hotdb-management/image583.png)
 

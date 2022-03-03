@@ -1,5 +1,5 @@
 <a class="navicon" href="https://hotdb.com" target="_blank">
-<img src="/assets/img/navicon-colorful.png" alt="hotdb.com"/>
+<img src="assets/img/navicon-colorful.png" alt="hotdb.com"/>
 </a>
 
 * [Official Website](https://www.hotdb.com)

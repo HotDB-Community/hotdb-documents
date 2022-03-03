@@ -26,11 +26,11 @@ HotDB Server提供数据库服务自动切换功能，可有效地解决数据�
 
 #### 计算节点组件架构
 
-![](/assets/img/zh/hotdb-server-standard-operations/image3.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image3.png)
 
 图 1.1.1-1 HotDB Server的功能组件架构图
 
-![](/assets/img/zh/hotdb-server-standard-operations/image4.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image4.png)
 
 图1.1.1-2 HotDB Server的组件架构图
 
@@ -125,7 +125,7 @@ mysql> show tables;
 
 如：`http://192.168.200.191:3324/login`，访问页面如下所示：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image5.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image5.png)
 
 管理员用户名与密码都默认为：admin，其他用户账号由管理员创建，初始密码为`service_hotdb@hotdb.com`。
 
@@ -213,7 +213,7 @@ server.xml的部分参数修改后需要重新启动计算节点才能生效，�
 
 输入完成后，点击测试，连接成功后则可以将此计算节点集群分配给管理平台用户来配置管理。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image6.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image6.png)
 
 ### 添加管理平台用户
 
@@ -223,7 +223,7 @@ server.xml的部分参数修改后需要重新启动计算节点才能生效，�
 
 登录管理平台，在管理平台用户页面点击 "添加新用户" 输入用户名称，分配计算节点集群的控制权限。添加完成后，该用户登录后可以对计算节点进行管理。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image7.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image7.png)
 
 ### 创建MySQL数据库与存储节点用户
 
@@ -261,7 +261,7 @@ show databases;
 
 登录管理平台页面，选择"配置"->"逻辑库"->[添加逻辑库](#添加逻辑库)，输入"test"逻辑库名称，点击"**√**"，保存配置，逻辑库即添加成功。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image8.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image8.png)
 
 ### 赋予用户逻辑库权限
 
@@ -273,7 +273,7 @@ show databases;
 >
 > 管理平台安装后，系统默认创建一个平台用户root（密码root）。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image9.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image9.png)
 
 ### 添加存储节点组
 
@@ -281,7 +281,7 @@ show databases;
 
 登录分布式事务数据库可视化管理平台页面，选择"配置"->"节点管理"->"存储节点组"->"添加组"：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image10.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image10.png)
 
 参数包括：
 
@@ -302,7 +302,7 @@ show databases;
 
 在添加节点时应用在若干个存储节点上，会自动填充组内预设的参数值；修改组内某一参数时，组内所有存储节点的该条参数被批量修改。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image11.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image11.png)
 
 ### 添加数据节点与存储节点
 
@@ -310,17 +310,17 @@ show databases;
 
 登录管理平台页面，选择"配置"->"节点管理"->"添加节点":
 
-![](/assets/img/zh/hotdb-server-standard-operations/image12.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image12.png)
 
 可以批量添加新的数据节点与其对应存储节点，也可以为已有的数据节点添加存储节点，此处仅介绍批量添加新的数据节点和存储节点，操作演示如下：
 
 1. 填写数据节点参数：在此例子中，需要添加数据节点个数为3个，数据节点类型为双主（也可以选择其他类型）。此例子中，存储节点组选择不使用组，你也可以在下拉菜单中选择使用上小节添加的[存储节点组](#添加存储节点组)，以此批量添加或修改相似参数。没有特殊要求时，节点前缀、编码位数、起始编码可使用默认值。填入参数后点击【生成】。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image13.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image13.png)
 
 2. 根据提示信息填写存储节点配置参数
 
-![](/assets/img/zh/hotdb-server-standard-operations/image14.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image14.png)
 
 参数包括：
 
@@ -343,11 +343,11 @@ show databases;
 
 点击【...】展开更多参数，包括：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image15.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image15.png)
 
 3. 填写完参数后，点击【测试连接】验证输入无误且所有存储节点连接成功后，点击【保存并返回】，成功添加3个数据节点及其分别对应的6个存储节点。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image16.jpeg)
+![](../../assets/img/zh/hotdb-server-standard-operations/image16.jpeg)
 
 ### 添加分片规则
 
@@ -355,7 +355,7 @@ show databases;
 
 登录管理平台页面，选择"配置"->"分片规则"->[添加分片规则](#添加分片规则)。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image17.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image17.png)
 
 根据业务场景，输入配置参数，包括：
 
@@ -365,11 +365,11 @@ show databases;
 - 数据节点：选择分片的数据节点
 - 值范围：输入分片字段的全部值范围，管理平台结合选择的节点数自动计算步长
 
-![](/assets/img/zh/hotdb-server-standard-operations/image18.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image18.png)
 
 点击【预览】查看生成结果，点击【修改】可修改值范围或数据节点，以解决数据倾斜问题。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image19.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image19.png)
 
 点击【保存并返回】添加分片规则。
 
@@ -377,7 +377,7 @@ show databases;
 
 登录管理平台页面，选择"配置"->"表信息"->[添加表信息](#添加表信息)
 
-![](/assets/img/zh/hotdb-server-standard-operations/image20.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image20.png)
 
 根据业务场景，选择表类型后输入配置参数，在此例子中，在水平分片表页面下，添加参数配置如下：
 
@@ -387,7 +387,7 @@ show databases;
 - 数据节点：选择分片的数据节点，此例子中，选择3.8节添加的[数据节点](#添加数据节点与存储节点)
 - 请填写表名称：输入"customer"，添加多表但不同分片字段时，可以输入"customer:provinceid"表示。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image21.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image21.png)
 
 点击【保存】，成功添加customer自动分片表。注：该表引用的分片规则是AUTO_CRC32类型(AUTO_MOD 与 AUTO_CRC32分片类型区别可查看页面中的"方式说明")。
 
@@ -401,7 +401,7 @@ show databases;
 
 在页面中点击"动态加载"，若页面提示"动态加载成功"，则配置信息在计算节点中已经成功生效：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image22.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image22.png)
 
 ### 登录计算节点并开始使用
 
@@ -446,11 +446,11 @@ CREATE TABLE `customer`(
 
 或在管理平台"配置"->"表信息"页面，找到上节添加的[表配置](#添加表信息)，在表结构一列中点击【未创建】跳转到普通DDL页面。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image23.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image23.png)
 
 输入[数据库用户名密码](#赋予用户逻辑库权限)，并选择test逻辑库后，输入建表语句，点击【执行】添加表结构。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image24.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image24.png)
 
 分片表customer创建成功后，可以连接计算节点执行下面的SQL语句，操作数据：
 
@@ -535,13 +535,13 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
    - 如果innodb_rollback_on_timeout参数全为off， 则计算节点允许加载成功，但计算节点的行为将等同于innodb_rollback_on_timeout参数为on时的事务回滚方式，且配置校验时给出如下提示：
 
-   ![](/assets/img/zh/hotdb-server-standard-operations/image25.jpeg)
+   ![](../../assets/img/zh/hotdb-server-standard-operations/image25.jpeg)
 
    且动态加载时日志输出：innodb_rollback_on_timeout=off is not supported, HotDB behavior will be equivalent to innodb_rollback_on_timeout = on.
 
    - 如果innodb_rollback_on_timeout参数存储节点间不一致，动态加载失败，且配置校验时提示如下:
 
-   ![](/assets/img/zh/hotdb-server-standard-operations/image26.jpeg)
+   ![](../../assets/img/zh/hotdb-server-standard-operations/image26.jpeg)
 
    且动态加载时，为off的存储节点日志输出，MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is OFF ,neet to bu changed to ON , 为on的存储节点日志输出MySQL variables 'innodb_rollback_on_timeout' is not consistent,the current value is ON
 
@@ -567,7 +567,7 @@ INSERT INTO customer VALUES (100,'尹杭州','13912340100',34,'Zhejiang','杭州
 
 考虑到客户端发送超大SQL会有威胁到HotDB Server的可能（目前尚未发现实际案例），HotDB Server可以同MySQL一样配置MAX_ALLOWED_PACKET，控制客户端发送给计算节点的SQL最大包大小，该参数可在server.xml中通过参数名maxAllowedPacket预置，如果计算节点的maxAllowedPacket默认值比MySQL大，日志会给warning提示，且管理平台配置校验会给出提示：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image27.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image27.png)
 
 ### 管理端信息监控
 
@@ -713,7 +713,7 @@ mysql> select * from datasource where dn=11;
 
 若要了解管理平台错误码详情，可以点击"帮助中心">>"API接口说明"页面中的【状态码】查看错误码详情。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image28.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image28.png)
 
 ### 动态加载（RELOAD）
 
@@ -721,23 +721,23 @@ mysql> select * from datasource where dn=11;
 
 动态加载有两种方式，一种是登录[管理端（3325）](#管理端信息监控)执行：`reload @@config`命令；一种是登录管理平台，点击菜单栏右上角"动态加载"按钮，将新增配置项目动态加载到计算节点中进行使用。如下图所示：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image29.jpeg)
+![](../../assets/img/zh/hotdb-server-standard-operations/image29.jpeg)
 
 为了保证计算节点正确加载配置信息，在执行动态加载前，可先校验配置信息。动态加载过程中，若遇到主备配置库、主备存储节点切换，提示用户并提供强制停止切换并动态加载和取消动态加载两种选择方案。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image30.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image30.png)
 
 ### 配置校验
 
 登录管理平台，选择"配置"->[配置校验](#配置校验)进入配置校验面板，点击"开始校验"按钮，将校验分布式事务数据库可视化管理平台中[配置校验](#配置校验)菜单中的配置项。如下图所示：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image31.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image31.png)
 
 上图显示，所有配置都正常通过。
 
 若有配置项不正确，可根据错误提示，修改相应的配置：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image32.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image32.png)
 
 通过计算节点管理端执行reload @@config命令动态加载时，默认也会先进行配置校验，校验通过后才允许动态加载。
 
@@ -942,15 +942,15 @@ HotDB Server有两类用户，一类是计算节点数据库用户，用于操�
 
 - 全局权限：拥有全局权限的user对所有逻辑库下的所有对象都拥有指定的权限。例如：勾选全局权限：SELECT，UPDATE，INSERT，CREATE，点击保存则当前用户可对所有逻辑库及表进行S/U/I/C操作。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image33.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image33.png)
 
 - 逻辑库权限：拥有逻辑库权限的user对该逻辑库下的所有对象拥有指定权限。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image34.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image34.png)
 
 - 表权限：表权限又分为表允许权限和表拒绝权限。拥有表允许权限的用户对该表拥有勾选的权限；拥有表拒绝权限的用户将拒绝勾选的权限，对于没有勾选的权限，需要在表允许权限下勾选后方能拥有。拥有表拒绝权限的用户对该表拥有除了勾选的权限以外的其他所有权限；例如：勾选表拒绝权限：SELECT，UPDATE，INSERT，CREATE，点击保存则当前用户不可对该表进行S/U/I/C操作，若该用户勾选了表允许权限：DELETE,DROP，则当前用户拥有DELETE和DROP权限。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image35.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image35.png)
 
 SUPER权限不指定特定逻辑库。只有持有SUPER权限的user可以执行管理端的语句，管理端具体功能可参考[管理端信息监控](#管理端信息监控)章节。
 
@@ -972,7 +972,7 @@ HotDB-Server 2.5.5版本开始支持SSL加密连接方式登录计算节点。
 mysql_ssl_rsa_setup --datadir=/usr/local/crt/
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image36.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image36.png)
 
 其中，客户端需要的秘钥有：ca.pem、client-cert.pem、client-key.pem；
 
@@ -982,7 +982,7 @@ mysql_ssl_rsa_setup --datadir=/usr/local/crt/
 >
 > MySQL自带命令生成的证书无法进行CA认证，参考链接：<https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html>
 
-![](/assets/img/zh/hotdb-server-standard-operations/image37.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image37.png)
 
 如果需要生成能够进行CA认证的自签名证书，需要使用openssl工具，可参考下列步骤进行：
 
@@ -1009,7 +1009,7 @@ openssl pkcs12 -export -out server.pfx -inkey server-key.pem -in server-cert.pem
 
 输入密码SDcrtest
 
-![](/assets/img/zh/hotdb-server-standard-operations/image38.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image38.png)
 
 2. 用Java提供的keytool工具将pfx转换为jks文件：
 
@@ -1019,7 +1019,7 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 
 输入密码SDcrtest
 
-![](/assets/img/zh/hotdb-server-standard-operations/image39.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image39.png)
 
 #### 配置TLS秘钥
 
@@ -1045,7 +1045,7 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 
 配置好的参数如下图：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image40.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image40.png)
 
 参数的修改无需重启计算节点服务， 动态加载时会重新读取`server.jks`文件。若SSL相关逻辑初始化失败，动态加载不会失败，但后续的SSL连接无法正常建立，非SSL连接不受影响。
 
@@ -1053,15 +1053,15 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 >
 > - 若计算节点找不到任何可用的`server.jks`文件，则启动或同步加载时会输出以下报错信息
 >
-> ![](/assets/img/zh/hotdb-server-standard-operations/image41.png)
+> ![](../../assets/img/zh/hotdb-server-standard-operations/image41.png)
 >
 > - 若`keyStorePass`配置错误，则启动或者同步加载时输出以下报错信息
 >
-> ![](/assets/img/zh/hotdb-server-standard-operations/image42.png)
+> ![](../../assets/img/zh/hotdb-server-standard-operations/image42.png)
 >
 > - 若证书配置错误，登录时会输出以下报错信息
 >
-> ![](/assets/img/zh/hotdb-server-standard-operations/image43.png)
+> ![](../../assets/img/zh/hotdb-server-standard-operations/image43.png)
 
 #### TLS连接登录
 
@@ -1073,11 +1073,11 @@ keytool -importkeystore -srckeystore server.pfx -destkeystore server.jks -srcsto
 mysql -ujing01 -p123456 -h192.168.240.117 -P3323 --ssl-ca=/usr/local/crt/ca.pem --ssl-cert=/usr/local/crt/client-cert.pem --ssl-key=/usr/local/crt/client-key.pem --ssl-mode=verify_ca
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image44.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image44.png)
 
 查看SSl是否开启：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image45.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image45.png)
 
 ##### JDBC方式
 
@@ -1089,7 +1089,7 @@ mysql -ujing01 -p123456 -h192.168.240.117 -P3323 --ssl-ca=/usr/local/crt/ca.pem 
 keytool -importcert -alias MySQLCACert -file ca.pem -keystore truststore
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image46.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image46.png)
 
 则JDBC连接时使用truststore文件， 例如：
 
@@ -1104,7 +1104,7 @@ openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name "mysqlcli
 keytool -importkeystore -srckeystore client-keystore.p12 -srcstoretype pkcs12 -destkeystore keystore -deststoretype JKS
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image47.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image47.png)
 则JDBC连接时使用keystore文件， 例如：
 
 ```properties
@@ -1115,7 +1115,7 @@ jdbc:mysql://192.168.240.117:3323/smoketest?clientCertificateKeyStoreUrl=file:/u
 
 对于Navicat等类似的客户端， 可以在客户端设置中配置相关的文件位置进行连接：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image48.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image48.png)
 
 > !Note
 >
@@ -1309,7 +1309,7 @@ mydumper -h 192.168.210.130 -P 3323 -u root -p root -G -E -R -t 4 -c -o /usr/loc
 
 备份完成后，在对应存放目录下可见备份文件格式如下：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image156.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image156.png)
 
 更多详细参数请参考`mydumper --help`
 
@@ -1600,13 +1600,13 @@ Can't reset XA in reloading, please restart the hotdb to enable XA
 2020-10-30 15:42:29.859 [INFO] [CONNECTION] [$NIOExecutor-2-10] cn.hotpu.hotdb.server.b(3599) - [thread=$NIOExecutor-2-10,id=17,user=root,host=127.0.0.1,port=3323,localport=58902,schema=TEST_CT] will be closed because a kill command.
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image49.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image49.png)
 
-![](/assets/img/zh/hotdb-server-standard-operations/image50.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image50.png)
 
 > !Important
 >
-> ![](/assets/img/zh/hotdb-server-standard-operations/image51.png)
+> ![](../../assets/img/zh/hotdb-server-standard-operations/image51.png)
 >
 > - **disconnect_reason：**连接断开原因，如kill前端连接（kill）、TCP连接断开（program err:java.io.IOException: Connection reset by peer）、SQL执行超时（stream closed,read return -1）、空闲超时（idle timeout）等。
 > - **trx_state：**连接断开时的事务状态，包括：
@@ -1677,7 +1677,7 @@ HotDB Server 2.5.3将全局唯一约束优化精确到表级别，默认为所�
 <property name="globalUniqueConstraint">false</property><!--全局唯一约束-->
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image52.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image52.png)
 
 > !Note
 >
@@ -1689,7 +1689,7 @@ HotDB Server 2.5.3将全局唯一约束优化精确到表级别，默认为所�
 
 1. 在管理平台上添加表信息时，根据计算节点参数默认显示全局唯一约束开关状态，可手动修改：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image53.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image53.png)
 
 垂直分片表与全局表没有此入口，因为不需要对唯一约束做额外处理。添加完表配置后即可使用建表语句添加表结构后使用。
 
@@ -1752,11 +1752,11 @@ create table test02(id not null auto_increment primary key,a char(8),b decimal(4
 
 1. 可以在管理平台的表信息管理页面修改表配置：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image54.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image54.png)
 
 若表结构为已创建的表，全局唯一约束修改为开启状态后，点击动态加载并刷新页面，若出现如下图提示，说明需要到管理端口执行unique @@create，检查此表唯一约束键的历史数据，返回结果是唯一后，计算节点自动创建辅助索引，全局唯一约束方能生效，此命令详情请参考[计算节点管理命令](hotdb-server-manager-commands.md)文档：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image55.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image55.png)
 
 2. 在计算节点通过ALTER TABLE使用GLOBAL_UNIQUE语法，开启全局唯一，同理，出现warning信息说明需要执行`unique @@create`后方能生效：
 
@@ -1776,11 +1776,11 @@ mysql> show warnings;
 
 分片方案在线变更时也可以为变更后的表手动开启或关闭全局唯一约束。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image56.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image56.png)
 
 开启后，在变更方案预检会检测此表唯一约束键的历史数据是否唯一，若唯一，则通过测试。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image57.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image57.png)
 
 #### 查询时通过辅助索引定位
 
@@ -1823,7 +1823,7 @@ SELECT * FROM table01 WHERE unique_col = 100; # unique_col是唯一约束列
 >
 > 且管理平台中的主备状态会显示异常，鼠标悬浮显示如图提示信息：
 >
-> ![](/assets/img/zh/hotdb-server-standard-operations/image58.png)
+> ![](../../assets/img/zh/hotdb-server-standard-operations/image58.png)
 >
 > 若故障切换完成后，主从库未开启GTID或存在未接收的事务，但此参数为关闭状态，计算节点也会记录warning级别的报警日志如下：
 > `DBA is required to deal with the new master, which is the original slave before switching and decide whether to stop replication or continue replication regardless. In addition, there is risk of data error caused by automatic reconnection of replication after manual or unexpected restart of the new master.`
@@ -1897,31 +1897,31 @@ MySQL数据库主从的配置方式，请参考MySQL的官方网站（注意对�
 
 在下述操作中，生成一个数据节点"dn_08"，并为该数据节点添加了一个主存储节点"ds_failover_master"和一个从存储节点"ds_failover_slave"：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image59.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image59.png)
 
 可直接勾选"自动适配切换规则"，添加节点同时自动适配故障切换优先级。或在管理平台页面中选择"配置"->"节点管理"->"高可用配置"->"切换规则"->"添加切换规则"，在数据节点下拉框中选择"dn_08"，在存储节点的下拉框中选择主存储节点"ds_failover_master，在备用存储节点下拉框中选择"ds_failover_slave"，在故障切换优先级选择高：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image60.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image60.png)
 
 或点击"自动适配"，选择dn_08节点，保存即可。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image61.jpeg)
+![](../../assets/img/zh/hotdb-server-standard-operations/image61.jpeg)
 
 主从复制关系搭建：
 
 虽然在节点dn_08下添加了一对主从存储节点，但若这2个存储节点实际并没有搭建主从复制关系，此时可以在"配置"->"节点管理"->"高可用配置"->"主从搭建"中，选择"dn_08"节点。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image62.jpeg)
+![](../../assets/img/zh/hotdb-server-standard-operations/image62.jpeg)
 
 点击"开始搭建"后，系统会自动对存储节点搭建主从复制关系。当搭建成功后，列表中主从状态会正常显示:
 
-![](/assets/img/zh/hotdb-server-standard-operations/image63.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image63.png)
 
 ##### 手动切换
 
 在"配置"->"节点管理"，点击某个数据节点的切换即可完成：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image64.jpeg)
+![](../../assets/img/zh/hotdb-server-standard-operations/image64.jpeg)
 
 如果是主从，选择优先级最高的进行切换，切换后计算节点会将原主机和原主机的其他从机置为不可用，不能再进行切换。
 
@@ -2147,7 +2147,7 @@ HotDB Server支持多计算节点集群的节点自治。以下简称计算节�
 
 HotDB Server支持负载均衡：可选择使用LVS等方式，进行SQL请求的分发。应用端可借助LVS的VIP访问HotDB Server的数据库服务，同时保证使用透明与服务不间断。也可使用其余负载均衡方案进行处理，例如F5加自定义检测；应用直连计算节点，但发生异常时更换节点等方式。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image65.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image65.png)
 
 ##### 启动说明
 
@@ -2160,21 +2160,21 @@ sh hotdb_server start
 
 查看HotDB Server启动状态：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image66.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image66.png)
 
 计算节点启动后不开放服务端口，会暂时将自己的角色状态设置为Started。当集群中所有计算节点都启动后，有一个计算节点会变为Primary,其余计算节点变为Secondary，且所有计算节点均开放数据服务端口，整个集群进入正常运行状态，示例：
 
 Primary节点：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image67.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image67.png)
 
 Secondary节点：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image68.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image68.png)
 
 管理端3325状态查看：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image69.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image69.png)
 
 当Primary服务异常时，剩余Secondary中的一个会变为新的Primary，原Primary会被踢出集群。
 
@@ -2185,15 +2185,15 @@ cd /usr/local/hotdb-2.5.0/hotdb-server/bin
 sh hotdb_server stop
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image70.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image70.png)
 
 新Primary：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image71.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image71.png)
 
 管理端状态查看：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image72.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image72.png)
 
 若原Primary服务重新启动（相当于新节点加入），当前Primary发现Started的节点，新节点会加入该集群变为Secondary。
 
@@ -2204,17 +2204,17 @@ cd /usr/local/hotdb-2.5.0/hotdb-server/bin
 sh hotdb_server start
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image73.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image73.png)
 
-![](/assets/img/zh/hotdb-server-standard-operations/image74.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image74.png)
 
 管理端状态查看：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image75.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image75.png)
 
 多计算节点集群启动后通过VIP访问数据库服务，即可实现透明的负载均衡，可保证服务不间断。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image76.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image76.png)
 
 多计算节点集群注意事项：
 
@@ -2254,11 +2254,11 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 以添加1组双主类型的数据节点为例：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image77.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image77.png)
 
 步骤1~4按照以往规则填写存储节点的主机名和端口号，连接用户和密码，物理库等。若该组存储节点需要绑定Listener，在步骤5中，填写好监听程序相关信息（Listener中文为监听程序）。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image78.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image78.png)
 
 填写规则如下：
 
@@ -2268,7 +2268,7 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 填写完毕后，点击测试连接，测试通过后点击保存并返回。
 
-执行动态加载，若节点管理列表的状态列为绿色可用![](/assets/img/zh/hotdb-server-standard-operations/image79.png)，代表监听程序可以连接；若状态为橙色可用![](/assets/img/zh/hotdb-server-standard-operations/image80.png)，代表监听程序无法连接，需检查：enableXA是否为true，enableListener是否为true。
+执行动态加载，若节点管理列表的状态列为绿色可用![](../../assets/img/zh/hotdb-server-standard-operations/image79.png)，代表监听程序可以连接；若状态为橙色可用![](../../assets/img/zh/hotdb-server-standard-operations/image80.png)，代表监听程序无法连接，需检查：enableXA是否为true，enableListener是否为true。
 
 验证Listener服务是否被启用：在3325端口执行show @@datasource即可查看。
 
@@ -2278,17 +2278,17 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 在节点管理页面，以dn_26数据节点为例：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image81.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image81.png)
 
 点击操作栏中的i图标，即详情，进入该存储节点管理页。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image82.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image82.png)
 
 对于未绑定监听程序的存储节点，最后三项信息默认为空。
 
 点击编辑，添加监听程序相关信息。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image83.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image83.png)
 
 填写规则如下：
 
@@ -2298,7 +2298,7 @@ HotDB-Listener是HotDB Server的一个可拔插组件，使用JAVA语言开发�
 
 填写完毕后，点击测试连接，测试通过后点击保存并返回。
 
-执行动态加载，若节点管理列表的状态列为绿色可用![](/assets/img/zh/hotdb-server-standard-operations/image79.png)，代表监听程序可以连接；若状态为橙色可用![](/assets/img/zh/hotdb-server-standard-operations/image80.png)，代表监听程序无法连接，需检查：enableXA是否为true，enableListener是否为true。
+执行动态加载，若节点管理列表的状态列为绿色可用![](../../assets/img/zh/hotdb-server-standard-operations/image79.png)，代表监听程序可以连接；若状态为橙色可用![](../../assets/img/zh/hotdb-server-standard-operations/image80.png)，代表监听程序无法连接，需检查：enableXA是否为true，enableListener是否为true。
 
 验证Listener服务是否被启用：在3325端口执行show @@datasource即可查看。
 
@@ -2344,13 +2344,13 @@ HA模式扩展到集群多节点，主要在于如何将keepalived切换到LVS�
 | LVS服务    | 192.168.210.136          | VIP:192.168.210.218 |
 | 新计算节点 | 192.168.210.134          | HotDB_03            |
 
-![](/assets/img/zh/hotdb-server-standard-operations/image84.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image84.png)
 
 **第一步：停备计算节点/备keepalived服务**
 
 停止HotDB_02的keepalived和计算节点服务。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image85.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image85.png)
 
 **第二步：部署并启动LVS**
 
@@ -2384,19 +2384,19 @@ service keepalived start
 
 HotDB_01的参数参考框选区域的配置：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image86.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image86.png)
 
 HotDB_02的参数参考框选区域的配置：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image87.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image87.png)
 
 HotDB_03的参数参考框选区域的配置：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image88.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image88.png)
 
 2. HotDB_01管理端执行reload @@config操作，show @@cluster可看到HotDB_01作为PRIMARY角色加入集群。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image89.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image89.png)
 
 （3）停止HotDB_01服务器keepalived服务
 
@@ -2404,19 +2404,19 @@ HotDB_03的参数参考框选区域的配置：
 service keepalived stop
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image90.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image90.png)
 
 3. 启动HotDB_02、HotDB_03，然后在HotDB_01管理端执行show @@cluster;可看到集群成员全部加入。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image91.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image91.png)
 
 **第四步：管理平台适配调整**
 
 适配方式同"集群模式扩展计算节点"一致，编辑计算节点集群将新引入的计算节点纳入管理，使其HA模式转换成集群模式，如下图：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image92.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image92.png)
 
-![](/assets/img/zh/hotdb-server-standard-operations/image93.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image93.png)
 
 ###### 集群模式扩展更多计算节点
 
@@ -2440,7 +2440,7 @@ ipvsadm -a -t 192.168.210.216:3323 -r 192.168.210.134
 
 （2）主备LVS配置文件keepalived.conf中添加HotDB_04的服务信息，如下图：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image94.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image94.png)
 
 **第二步：新计算节点服务器配置LVS**
 
@@ -2457,17 +2457,17 @@ sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-
 
 1. 修改所有计算节点服务器（HotDB_01/HotDB_02/HotDB_03/HotDB_04）server.xml的ClusterSize参数值，保证ClusterSize等于实际集群成员个数（此处为4）。其他参数无需调整，但需注意clusterName、clusterSize、clusterNetwork、clusterPort在同一集群内参数值一致。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image95.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image95.png)
 
 2. 新计算节点服务器（HotDB_04）调整server.xml中其他集群参数并启动服务，如下图：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image96.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image96.png)
 
 **第四步：Reload操作使配置生效**
 
 主计算节点（HotDB_01）管理端执行reload @@config，可看到HotDB_04加入集群：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image97.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image97.png)
 
 **第五步：管理平台适配调整**
 
@@ -2475,7 +2475,7 @@ sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-
 
 编辑计算节点集群，通过计算节点右侧操作栏的"+"按钮可添加新引入的计算节点，保存后管理平台会根据计算节点个数自动识别计算节点模式，如下图：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image98.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image98.png)
 
 > !Note
 >
@@ -2501,13 +2501,13 @@ sh hotdbinstall_v*.sh --dry-run=no --lvs-real-server-startup-type=service --lvs-
 
 本小节主要描述正常提供服务的集群缩减为HA的操作，涉及的组件同[HA模式扩展集群多节点模式](#ha模式扩展集群多节点)一致
 
-![](/assets/img/zh/hotdb-server-standard-operations/image93.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image93.png)
 
 **第一步：关闭集群备计算节点服务**
 
 依次关闭HotDB_02、HotDB_03计算节点服务，此过程会触发集群选举，若此时有压测任务，将出现闪断，几秒后恢复正常。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image99.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image99.png)
 
 **第二步：部署keepalived并调整计算节点配置**
 
@@ -2531,21 +2531,21 @@ sh hotdbinstall_v*.sh --dry-run=no --install-keepalived=backup --keepalived-vip-
 
 3. 修改HotDB_01、HotDB_02计算节点的`server.xml`，相关参数配置成HA模式，如下图：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image100.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image100.png)
 
-![](/assets/img/zh/hotdb-server-standard-operations/image101.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image101.png)
 
 4. 启动HotDB_01服务器的keepalived，直到keepalived的VIP挂载好。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image102.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image102.png)
 
 5. HotDB_01服务器管理端执行reload @@config操作，使当前剩余的计算节点成为HA主计算节点。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image103.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image103.png)
 
 此时若有压测任务，会出现闪断，几秒后恢复正常。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image104.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image104.png)
 
 **第三步：停掉LVS服务器的LVS服务**
 
@@ -2574,17 +2574,17 @@ rm -rf lvsrs
 
 启动HotDB_02计算节点和keepalived服务
 
-![](/assets/img/zh/hotdb-server-standard-operations/image105.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image105.png)
 
 **第六步：管理平台适配调整**
 
 适配方式同"集群模式扩展计算节点"一致，编辑计算节点集群将缩容的计算节点进行删除，使其集群模式转换成HA模式，如下图：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image106.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image106.png)
 
-![](/assets/img/zh/hotdb-server-standard-operations/image107.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image107.png)
 
-![](/assets/img/zh/hotdb-server-standard-operations/image108.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image108.png)
 
 **注意事项**
 
@@ -4249,11 +4249,11 @@ create database if not exists zjj_d3 default datanode '1,4';
 
 - 关联不存在的数据节点
 
-![](/assets/img/zh/hotdb-server-standard-operations/image109.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image109.png)
 
 - 指定字符集时，给出warning提醒如下
 
-![](/assets/img/zh/hotdb-server-standard-operations/image110.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image110.png)
 
 > !Note
 >
@@ -4403,19 +4403,19 @@ create user 'jingjingjing'@'%' identified by 'jing' with max_user_connections 3;
 
 - 执行用户不具有super权限创建用户，提示如下：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image111.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image111.png)
 
 - 空密码创建时，提示如下：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image112.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image112.png)
 
 - 用户名超过限制，提示如下：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image113.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image113.png)
 
 - 重复创建用户，提示如下：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image114.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image114.png)
 
 ##### 删除用户
 
@@ -4435,11 +4435,11 @@ drop user 'jingjingjing'@'%';
 
 - 执行用户不具有super权限删除用户，提示如下：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image115.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image115.png)
 
 - 删除不存在的用户时，提示如下：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image116.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image116.png)
 
 ##### GRANT赋权
 
@@ -4496,27 +4496,27 @@ grant update on test_ct.test_aa to 'test_ct'@'localhost' identified by 'test_ct'
 
 - 执行赋权操作的用户不具有super权限，提示如下：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image117.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image117.png)
 
 - 赋权时同步创建用户
 
-![](/assets/img/zh/hotdb-server-standard-operations/image118.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image118.png)
 
 - 赋权时同步创建用户不带密码，提示如下：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image119.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image119.png)
 
 - super只能赋全局权限，不支持库和表级别授权，如下图：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image120.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image120.png)
 
 - file权限只能赋全局权限，不支持库和表级别授权
 
-![](/assets/img/zh/hotdb-server-standard-operations/image121.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image121.png)
 
 - all权限只能单独授权，不能和其他权限项同时授权
 
-![](/assets/img/zh/hotdb-server-standard-operations/image122.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image122.png)
 
 ##### REVOKE删除权限
 
@@ -4541,29 +4541,29 @@ revoke select,update,delete,insert,create,drop,alter,file,super on *.* from jing
 
 - 执行用户没有super权限时删除权限，提示如下：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image123.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image123.png)
 
 - 支持移除部分权限
 
-![](/assets/img/zh/hotdb-server-standard-operations/image124.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image124.png)
 
 - 支持移除所有权限
 
-![](/assets/img/zh/hotdb-server-standard-operations/image125.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image125.png)
 
 - 支持移除库级别权限
 
-![](/assets/img/zh/hotdb-server-standard-operations/image126.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image126.png)
 
 - 支持移除表级别权限
 
-![](/assets/img/zh/hotdb-server-standard-operations/image127.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image127.png)
 
 - 移除权限后再次使用该权限，报错提示如下
 
-![](/assets/img/zh/hotdb-server-standard-operations/image128.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image128.png)
 
-![](/assets/img/zh/hotdb-server-standard-operations/image129.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image129.png)
 
 #### 表维护语句
 
@@ -4840,7 +4840,7 @@ HotDB Server对MySQL部分variables及status的显示结果做了支持，可通
 
 **使用前提：**逻辑库已设置分片节点。为逻辑库设置分片节点的方法如下：登录分布式事务数据库管理平台,选择"配置"->"逻辑库"，给逻辑库设置默认分片节点，然后点动态加载。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image130.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image130.png)
 
 **功能说明：**为逻辑库设置默认分片节点后，登录计算节点可以直接建表，HotDB Server将根据分片节点的数量为创建的表自动设置分片规则信息。具体的分片规则如下：
 
@@ -4848,7 +4848,7 @@ HotDB Server对MySQL部分variables及status的显示结果做了支持，可通
 
 如果逻辑库设置了多个分片节点，则HotDB Server对创建的表进行水平分片，分片算法是对每行数据分片字段的值进行AUTO_CRC32从而确定该行数据应被存储在哪个分片节点中，分片字段选取顺序：主键字段 -> 唯一键字段 ->第一个整型字段（BIGINT、INT、MEDIUMINT、SMALLINT、TINYINT） ->没有整型字段时取字符串类型字段（CHAR、VARCHAR），以上类型全部没有时默认随机选择一个字段作为分片字段。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image131.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image131.png)
 
 **注意：**
 
@@ -4877,7 +4877,7 @@ Database changed
 mysql> create table test02(id not null auto_increment primary key,a char(8),b decimal(4,2),c int);
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image132.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image132.png)
 
 #### 已有分片规则建表
 
@@ -4885,7 +4885,7 @@ mysql> create table test02(id not null auto_increment primary key,a char(8),b de
 
 **功能说明：**根据管理平台已添加好的分片规则，在计算节点服务端利用特殊语句直接建表，无需再配置表分片信息。利用已有分片规则所建的表，删除表后，管理平台相关表配置信息会同步被删除。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image133.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image133.png)
 
 利用[服务端口命令](#使用已有分片规则建表相关命令)查看分片规则的functionid | functionname| functiontype| ruleid | rulename等信息，根据相关字段信息创建表。
 
@@ -4957,7 +4957,7 @@ Query OK, 0 rows affected (0.09 sec)
 
 执行成功，管理平台会显示该表为已定义状态：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image134.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image134.png)
 
 对于此语法规则建表，需要注意以下几点:
 
@@ -5034,7 +5034,7 @@ mysql> CREATE TABLE rt_table shard by ruleid '17'(id int not null auto_increment
 Query OK, 0 rows affected (0.07 sec)
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image135.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image135.png)
 
 对于此语法规则建表，需要注意以下几点：
 
@@ -5092,7 +5092,7 @@ mysql> CREATE TABLE tb_vertical shard by vertical on datanode'9'( id INT UNSIGNE
 Query OK, 0 rows affected(0.07 sec)
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image136.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image136.png)
 
 未指定datanode：
 
@@ -5128,7 +5128,7 @@ mysql> CREATE TABLE tb_quan shard by global(id int not null auto_increment prima
 Query OK, 0 rows affected (0.07 sec)
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image137.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image137.png)
 
 语法规则里的global是创建全局表的标志，'datanodeid'为节点ID，可以逗号间隔，且支持区间形式指定，如:'1,3,4,5-10,12-40'，使用该语法创建分片规则的全局表，该表的节点应该包括逻辑库下所有节点。
 
@@ -5940,11 +5940,11 @@ server.xml中clientFoundRows参数配置 如下配置：
 
 如：jdbc传入useAffectedRows=false，返回匹配行数
 
-![](/assets/img/zh/hotdb-server-standard-operations/image138.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image138.png)
 
 jdbc传入useAffectedRows=true，返回影响行数
 
-![](/assets/img/zh/hotdb-server-standard-operations/image139.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image139.png)
 
 #### clusterElectionTimeoutMs
 
@@ -6425,7 +6425,7 @@ select count(*) from B.b;
 
 结果：`count (*)`得出的结果不一定全为0或1000
 
-![](/assets/img/zh/hotdb-server-standard-operations/image140.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image140.png)
 
 **场景二、crossDbXa 开启时，保证数据强一致：**
 
@@ -6451,7 +6451,7 @@ select count(*) from B.b;
 
 结果：Count (*)得出的结果为0或1000
 
-![](/assets/img/zh/hotdb-server-standard-operations/image141.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image141.png)
 
 **场景三、crossDbXa 关闭时，事务内加入节点会报错：**
 
@@ -6466,7 +6466,7 @@ select * from B.b;
 
 结果：`select * from B.b;`执行会报错
 
-![](/assets/img/zh/hotdb-server-standard-operations/image142.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image142.png)
 
 **场景四、crossDbXa 开启时，事务内加入节点正常执行：**
 
@@ -6481,7 +6481,7 @@ select * from B.b;
 
 结果：`select * from B.b;`正常执行
 
-![](/assets/img/zh/hotdb-server-standard-operations/image143.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image143.png)
 
 #### cryptMandatory
 
@@ -6682,15 +6682,15 @@ ddlForDbNeedSuper参数指针对DATABASE的DDL语句是否需要配置额外的S
 
 以创建逻辑库为例，设置成true时，需要同时拥有super权限和create全局权限才支持建库，否则创建报错：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image143-1.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image143-1.png)
 
 设置成false时，只需要create全局权限即可建库：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image143-2.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image143-2.png)
 
 若设置成false时，未配置create全局权限也会创建失败：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image143-3.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image143-3.png)
 
 #### drBakUrl & drBakUsername & drBakPassword
 
@@ -7291,13 +7291,13 @@ rownum用以对结果各行生成序列号。在WHERE条件中，可以对结果
 SELECT * FROM (SELECT rownum,* FROM join_cross_a_cxd WHERE adnid in (101,102)) WHERE adnid=101;
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image143-4.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image143-4.png)
 
 ```sql
 SELECT * FROM join_cross_a_cxd a INNER JOIN join_cross_b_jwy b ON a.adnid=b.adnid WHERE rownum >= 1 ORDER BY a.id;
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image143-5.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image143-5.png)
 
 #### errorsPermittedInTransaction
 
@@ -7985,11 +7985,11 @@ lockWaitTimeout此参数指获取元数据锁的超时时间(s)，允许值1-315
 
 session A执行：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image144.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image144.png)
 
 session B执行：等待超过lockWaitTimeout设置参数值，则给出如下提示：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image145.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image145.png)
 
 #### masterSourceInitWaitTimeout
 
@@ -8374,7 +8374,7 @@ server.xml中maxReconnectConfigDBTimes参数如下配置：
 
 执行的SQL语句超过设置的长度后，会自动截取，用省略号...代替，如下图所示：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image146.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image146.png)
 
 #### ndbSqlAddr & ndbSqlUser & ndb SqlPass
 
@@ -8538,13 +8538,13 @@ recordSqlAuditlog
 
 operateMode为隐藏参数，默认为正常模式，即operateMode=0，在启动计算节点时会在hotdb.log内输出相应的日志信息，如下所示：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image147.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image147.png)
 
 在正常模式下，计算节点按照server.xml文件的参数配置进行启动，不受operateMode参数影响。
 
 当设置计算节点工作模式为性能最大化模式时，即修改server.xml文件，添加operateMode=1配置参数，然后在3325端口执行reload @@config使之生效，此时计算节点会在hotdb.log中输出相应的信息，如下所示：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image148.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image148.png)
 
 在性能最大化模式下，计算节点会主动将影响计算节点性能的参数强制关闭，例如：
 
@@ -8552,7 +8552,7 @@ prefetchBatchMax
 
 当计算节点工作模式为调试模式时，计算节点会在hotdb.log中输出相应的信息，如下所示：
 
-![](/assets/img/zh/hotdb-server-standard-operations/image149.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image149.png)
 
 在调试模式下，计算节点会将与调试功能相关的参数强制开启，例如：
 
@@ -9235,10 +9235,10 @@ mysql> update account set Account_number="$!''##";
 1. 通过管理平台操作日志智能分析页面查看：
 
    - 关闭状态
-     ![](/assets/img/zh/hotdb-server-standard-operations/image150.png)
+     ![](../../assets/img/zh/hotdb-server-standard-operations/image150.png)
 
    - 开启并允许一段时间后
-     ![](/assets/img/zh/hotdb-server-standard-operations/image151.png)
+     ![](../../assets/img/zh/hotdb-server-standard-operations/image151.png)
 
 2. 通过server配置库查看SQL执行统计情况
 
@@ -9845,13 +9845,13 @@ ERROR 1003 (HY000): query timeout, transaction rollbacked automatically and a ne
 
 在server.xml中打开enableSSL和sslUseSM4开关，可以使客户端访问计算节点的过程处于国密验证的加密状态。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image152.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image152.png)
 
 该功能对于用户来说只能通过抓包查看，示例：抓包可见TLS握手包中存在HotDB Server国密SM4定义的加密套件编号：0xff01，说明SM4加解密套件已生效。
 
-![](/assets/img/zh/hotdb-server-standard-operations/image153.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image153.png)
 
-![](/assets/img/zh/hotdb-server-standard-operations/image154.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image154.png)
 
 #### statisticsUpdatePeriod
 
@@ -9886,7 +9886,7 @@ mysql> select * from tid;
 Empty set (0.03 sec)
 ```
 
-![](/assets/img/zh/hotdb-server-standard-operations/image155.png)
+![](../../assets/img/zh/hotdb-server-standard-operations/image155.png)
 
 #### strategyForRWSplit
 
