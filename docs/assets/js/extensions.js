@@ -1,5 +1,5 @@
-//BUG 为什么extensions不生效？
-//BUG window.$docsify.markdown = function(){...} 会使":id=foo"这样的语法不生效
+//为什么extensions不生效？
+//window.$docsify.markdown = function(){...} 会使":id=foo"这样的语法不生效
 
 const renderer = {
   //渲染rowspan和colspan
@@ -142,20 +142,22 @@ window.$docsify.plugins = [
 
 //地址重定向
 function redirectLocation() {
-  let defaultVersion = window.$docsify.properties.defaultVersion
-  let defaultVersionSuffix = defaultVersion ? defaultVersion + "/" : ""
+  let latestVersion = window.$docsify.properties.latestVersion
+  let latestVersionSuffix = latestVersion ? latestVersion + "/" : ""
   let locale = inferLocale()
   let url = window.location.href
   if(url.charAt(url.length - 1) === "/") url = url.substring(0, url.length - 1)
   if(url.indexOf("/#") === -1) {
-    window.location.replace(`${url}/#/${locale}/${defaultVersionSuffix}`)
+    window.location.replace(`${url}/#/${locale}/${latestVersionSuffix}`)
   } else if(url.endsWith("/#")) {
-    window.location.replace(`${url}/${locale}/${defaultVersionSuffix}`)
+    window.location.replace(`${url}/${locale}/${latestVersionSuffix}`)
   } else{
     const locales = window.$docsify.locales
     locales.forEach(it=>{
       if(url.endsWith(`/#/${it}`)){
-        window.location.replace(`${url}/${defaultVersionSuffix}`)
+        window.location.replace(`${url}/${latestVersionSuffix}`)
+      }else if(url.endsWith(`/#/${it}/latest`)){
+        window.location.replace(`${url.substring(0, url.length - 7)}/${latestVersionSuffix}`)
       }
     })
   }

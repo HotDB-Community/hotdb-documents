@@ -20,7 +20,7 @@ window.$docsify = {
   },
 
   properties: {
-    defaultVersion: "2.5.7",
+    latestVersion: "2.5.7",
     fileName: null,
     filePath: null,
     fileUrl: null,
