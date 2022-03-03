@@ -16,7 +16,7 @@ window.$docsify = {
   topMargin: 80,
 
   properties: {
-    latestVersion: "2.5.6.1",
+    defaultVersion: "2.5.6.1",
     fileName: null,
     filePath: null,
     fileUrl: null,

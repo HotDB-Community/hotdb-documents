@@ -142,22 +142,20 @@ window.$docsify.plugins = [
 
 //地址重定向
 function redirectLocation() {
-  let latestVersion = window.$docsify.properties.latestVersion
-  let latestVersionSuffix = latestVersion ? latestVersion + "/" : ""
+  let defaultVersion = window.$docsify.properties.defaultVersion
+  let defaultVersionSuffix = defaultVersion ? defaultVersion + "/" : ""
   let locale = inferLocale()
   let url = window.location.href
   if(url.charAt(url.length - 1) === "/") url = url.substring(0, url.length - 1)
   if(url.indexOf("/#") === -1) {
-    window.location.replace(`${url}/#/${locale}/${latestVersionSuffix}`)
+    window.location.replace(`${url}/#/${locale}/${defaultVersionSuffix}`)
   } else if(url.endsWith("/#")) {
-    window.location.replace(`${url}/${locale}/${latestVersionSuffix}`)
+    window.location.replace(`${url}/${locale}/${defaultVersionSuffix}`)
   } else{
     const locales = window.$docsify.locales
     locales.forEach(it=>{
       if(url.endsWith(`/#/${it}`)){
-        window.location.replace(`${url}/${latestVersionSuffix}`)
-      }else if(url.endsWith(`/#/${it}/latest`)){
-        window.location.replace(`${url.substring(0, url.length - 7)}/${latestVersionSuffix}`)
+        window.location.replace(`${url}/${defaultVersionSuffix}`)
       }
     })
   }
