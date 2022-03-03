@@ -14,13 +14,9 @@ window.$docsify = {
   subMaxLevel: 4,
   notFoundPage: true,
   topMargin: 80,
-  alias: {
-    "/zh/.*/_navbar.md": "/zh/_navbar.md",
-    "/en/.*/_navbar.md": "/en/_navbar.md"
-  },
 
   properties: {
-    latestVersion: "2.5.7",
+    latestVersion: "2.5.6.1",
     fileName: null,
     filePath: null,
     fileUrl: null,

@@ -59,7 +59,7 @@ customer info: hotdb.com
 
 或者在管理平台启动后，使用浏览器登录管理平台，在页面上将鼠标放置在版本号旁"已认证"字样上，即可查看到许可证详细信息，如下如所示：
 
-![](assets/service-license/image3.png)
+![](../../assets/img/zh/service-license/image3.png)
 
 ### 正式许可证
 
@@ -120,7 +120,7 @@ customer info: poc_license_for_bank_of_256test
 
 或者在管理平台启动后，使用浏览器登录管理平台，在页面上将鼠标放置在版本号旁"已认证"字样上，即可查看到许可证详细信息，如下如所示：
 
-![](assets/service-license/image4.png)
+![](../../assets/img/zh/service-license/image4.png)
 
 ### 查看正在使用的许可证
 

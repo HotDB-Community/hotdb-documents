@@ -39,7 +39,7 @@ With the data source instances under the data nodes as the unit, the DR mode wil
 
 ### Architecture of data transfer
 
-![](assets/cross-idc-disaster-recovery-deployment/image1.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image1.png)
 
 The user performs business SQL operation through the service port of the master compute node in the master center; the compute node parses the SQL statements and determines and distributes them to the master data sources corresponding to each data node for execution based on the sharding rules.
 
@@ -77,7 +77,7 @@ For configuration requirements and recommendations of cluster operation environm
 
 This section will take the following deployment architecture in master/slave mode as an example to explain the deployment related functions:
 
-![](assets/cross-idc-disaster-recovery-deployment/image2.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image2.png)
 
 The actual connection information corresponding to each component is listed as follows:
 
@@ -116,7 +116,7 @@ This section only describes in detail what should be paid attention to in the au
 1. Log in to the management platform as the management user, enter "Cluster Management -> Compute Node Cluster", and click the \[Cluster Deployment] button to enter the cluster deployment function page.
 2. Choose the compute node mode, click to enable "deploy by DR mode", choose "master center" in "IDC type" and click \[Parameter Configuration] to enter the cluster deployment parameter configuration page.
 
-![](assets/cross-idc-disaster-recovery-deployment/image3.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image3.png)
 
 **(2) Parameter configuration：**
 
@@ -127,36 +127,36 @@ The parameter configuration of the master center is basically the same as the si
 - Over "More" button of the data source and ConfigDB, GTID and semi-synchronous replication are enabled by default, and GTID is not allowed to be disabled;
 - A new time zone setting module is added to configure the time zone of the operating system to ensure that the deployed component time zone is consistent with the operating system time zone. You can fill in the valid time zone under system directory /usr/share/zoneinfo/. The default time zone is Asia/Shanghai.
 
-![](assets/cross-idc-disaster-recovery-deployment/image4.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image4.png)
 
 Therefore, the parameter configuration of the master center is as follows ([deployment architecture](#deployment-architecture)):
 
-![](assets/cross-idc-disaster-recovery-deployment/image5.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image5.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image6.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image6.png)
 
 **(3) Start deployment:**
 
 1. Click \[Check and save] to verify the validity and integrity of the configuration parameters, and send a detection scripts to the target server to verify whether it meets the hardware requirements of the cluster deployment. If it does not meet the requirements, a pop-up prompt will appear. Before deployment, all clusters need to pass \[Check and save] before installation.
 2. After check and accept of the management platform, click \[Start deployment] to enter the installation process.
 
-![](assets/cross-idc-disaster-recovery-deployment/image7.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image7.png)
 
 While a step "set up disaster recovery replication" is added in the installation and deployment process of management platform, there are no additional operations in this step when deploying the master center. Therefore, the installation process of the master center deployment is the same as that of a cluster deployment in single-IDC mode.
 
-![](assets/cross-idc-disaster-recovery-deployment/image8.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image8.png)
 
 **(4) Cluster management:**
 
 When the monitoring of cluster is enabled, a deployed master center with no DR center deployed or added can be regarded as a compute node cluster in single-IDC mode, and can be managed by single-IDC mode.
 
-![](assets/cross-idc-disaster-recovery-deployment/image9.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image9.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image10.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image10.png)
 
 That is, the DR mode of the cluster will be OFF at this time after the master center is deployed, which can be seen on the compute node details page of the IDC via cluster management page.
 
-![](assets/cross-idc-disaster-recovery-deployment/image11.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image11.png)
 
 At this time, you can either deploy the corresponding DR center through the cluster deployment function, or after the DR center is deployed manually, click "Enable DR mode" on the Edit Compute Node Cluster page to add the DR center information to the cluster.
 
@@ -171,7 +171,7 @@ At this time, you can either deploy the corresponding DR center through the clus
 >
 > It is recommended to deploy the DR center at the low peak of the master center business, otherwise it may affect the data migration time when setting up the disaster recovery replication.
 
-![](assets/cross-idc-disaster-recovery-deployment/image12.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image12.png)
 
 **(2) Parameter configuration:**{#dr-center-parameter-configuration}
 
@@ -181,15 +181,15 @@ While the parameter configuration of the DR center is roughly the same as that o
 - `--character-set-server`, `--collation-server`, `--innodb-buffer-pool-size-mb` in "More Parameters" of ConfigDB and data source must be consistent with the master center;
 - The DR center will automatically generate all data nodes that have existed in the master center by default, and the data node type is the same as that in the master center (in this example, a master-master data node is automatically generated). You can choose other data source types and click Generate to regenerate, but the number and name of data nodes must be consistent with the master center;
 
-![](assets/cross-idc-disaster-recovery-deployment/image13.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image13.png)
 
 - The time synchronization address and operating system time zone must be consistent with the master center.
 
 The parameter configuration of the DR center reference is as follows ( [Deployment architecture](#deployment-architecture) ):
 
-![](assets/cross-idc-disaster-recovery-deployment/image14.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image14.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image15.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image15.png)
 
 **(3) Start deployment:**
 
@@ -201,19 +201,19 @@ The parameter configuration of the DR center reference is as follows ( [Deployme
 >
 > Due to the data import, you may wait a long time if the master center data source has a large data amount.
 
-![](assets/cross-idc-disaster-recovery-deployment/image16.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image16.png)
 
 ###### Cluster management
 
 After the successful installation and deployment of the DR center, you can see a compute node cluster with two sets of IDCs and with the DR mode enabled on the cluster management page.
 
-![](assets/cross-idc-disaster-recovery-deployment/image17.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image17.png)
 
-- The IDC types include the master center and the DR center. According to the IDC status, the icon ![](assets/cross-idc-disaster-recovery-deployment/image18.png) next to the IDC type indicates that type of the IDC is current active center;
+- The IDC types include the master center and the DR center. According to the IDC status, the icon ![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image18.png) next to the IDC type indicates that type of the IDC is current active center;
 - The two IDCs have their own component configuration and deployment, among which the current standby center does not provide the access to \[Switch] and \[Rebuild], that is, the current standby center does not allow to manually switch compute nodes;
 - The two IDCs in a cluster temporarily do not support separate monitoring pause or start, and the user privilege also regards the two IDCs as a cluster and manages uniformly;
 
-![](assets/cross-idc-disaster-recovery-deployment/image19.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image19.png)
 
 - If the cluster with DR mode enabled is deleted, the master center and the DR center will be deleted at the same time;
 - On the compute node cluster editing page, if the "Enable DR mode" is ON, it is not allowed to be OFF; if it is OFF, it is allowed to be ON.The existing cluster information is used as the master center configuration, and the DR center configuration can be added to it.
@@ -224,7 +224,7 @@ The disaster recovery deployment of the multi-node cluster mode is basically the
 
 1. For disaster recovery deployment of the multi-node cluster mode, the version of compute node must be 2.5.6 and above, and "multi node" must be selected at the entrance of cluster deployment. On this basis, the master center and DR center of disaster recovery mode can be deployed.
 
-![](assets/cross-idc-disaster-recovery-deployment/image20.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image20.png)
 
 2. For the multi-node cluster, the master center should be deployed before the DR center.
 
@@ -269,7 +269,7 @@ The corresponding host names of all components in the DR center cannot be consis
 
 The information of multi-node cluster after normal deployment is shown in the list as follows:
 
-![](assets/cross-idc-disaster-recovery-deployment/image21.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image21.png)
 
 #### Disaster recovery environment deployment based on a running cluster
 
@@ -450,34 +450,34 @@ If the clusters have been successfully deployed offline, you can add the compute
 
 Click "Enable DR mode", and fill in two sets of compute node information of the master center and the DR center. The numbers of compute nodes in two IDCs are selected respectively by two "compute node modes". Select according to different compute node modes. If it is master/slave mode, select master/slave node. If it is multi-node mode, select multi node.
 
-![](assets/cross-idc-disaster-recovery-deployment/image22.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image22.png)
 
 > !Note
 >
 > 1. In the multi-node mode, you need to add the configuration of cluster communication ports. If the compute nodes are distributed on different servers and the communication ports are consistent, you can fill in only one port (3326 by default). If the compute nodes are deployed on the same or multiple servers with different ports, you can use English commas to separate the communication ports, for example, 3326,3327,3328, and the order of the communication ports should correspond to the order of adding the compute nodes. Otherwise, when saving the verification, it will refuse to save and remind "the compute nodes are on the same server, the communication ports must match the compute nodes in numbers and cannot be repeated.".
 > 2. If multiple compute nodes in the cluster are deployed on the same server, the communication port+ service port+ management port should be unique to each other, and there can't be the same port combination.
 
-![](assets/cross-idc-disaster-recovery-deployment/image23.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image23.png)
 
 3. When the cluster mode of the added compute node does not match the real compute node mode, the configuration verification will synchronously verify the current status and give an error reminder.
 
-![](assets/cross-idc-disaster-recovery-deployment/image24.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image24.png)
 
 **（2）ConfigDB:**
 
 If the management port of the compute node is connectable, the management platform will automatically obtain the ConfigDB information without the need of manually filling in the ConfigDB; if the management port of the compute node is not connectable, the management platform cannot obtain the ConfigDB information and needs to manually add the ConfigDB information. Check "Manually setting ConfigDB" and fill in the ConfigDB information of two IDCs respectively.
 
-![](assets/cross-idc-disaster-recovery-deployment/image25.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image25.png)
 
 **（3）Connection detection:**
 
 Click Detect to detect whether the connection of compute nodes is normal.
 
-![](assets/cross-idc-disaster-recovery-deployment/image26.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image26.png)
 
 Example of normal connection
 
-![](assets/cross-idc-disaster-recovery-deployment/image27.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image27.png)
 
 Example of abnormal connection
 
@@ -488,7 +488,7 @@ Disaster recovery status detection of ConfigDB is added, including two items:
 - ConfigDB replication status: detect whether the master-master (master-slave) replication relation between ConfigDBs in the two IDCs is normal and whether the disaster recovery relation between master ConfigDBs in the two IDCs is normal. If the disaster recovery relation between master ConfigDBs in the two IDCs is abnormal, the replication status of ConfigDB in the IDC will not be detected.
 - metadata consistency: whether the data of all ConfigDBs in the two IDCs are consistent with the current active ConfigDB in the master center.
 
-![](assets/cross-idc-disaster-recovery-deployment/image28.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image28.png)
 
 When the DR center is switched to the current active IDC after the failure of the master center, the \[Detect] here will detect based on the IDC status, that is, detect the port connection status of the current active center; detect the data consistency of all other ConfigDBs with the current active ConfigDB in the current active center as a standard; detect the replication status internal the IDC or between IDCs, etc.
 
@@ -621,13 +621,13 @@ ConfigDB and data source are essentially standard MySQL instances, so the princi
 
 If clusters in the DR center have been successfully deployed offline, you can modify the DR mode status of the running cluster through management platform, fill in the configuration information of DR center, and add the DR center to the cluster.
 
-![](assets/cross-idc-disaster-recovery-deployment/image29.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image29.png)
 
 1. On the cluster management page, click the name of a running cluster to enter the compute node cluster editing page.
 
 2. Click "Enable DR mode" to take the existing cluster information as configuration information of the master center, and add configuration information of the DR center for it. For details, please refer to [add compute node clusters to management platform](#add-compute-node-clusters-to-management-platform).
 
-![](assets/cross-idc-disaster-recovery-deployment/image30.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image30.png)
 
 ##### Add data source for DR centers
 
@@ -643,25 +643,25 @@ Log in to HotDB Management as a general user and enter the " compute node cluste
 
 - If the user has the privilege of accessing or controlling a cluster with DR mode enabled and the cluster runs normally, the current active center is displayed in green, with the current standby center in blue. When the master center is the current active center, the DR center is the current standby center, and both of them are connected normally, it is as shown in the figure below.
 
-![](assets/cross-idc-disaster-recovery-deployment/image31.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image31.png)
 
 - Click either IDC module to enter the management platform. Pages not specifically mentioned in this document will display or control information of the current active center. For example, when one IDC fails to connect and switches to the other IDC, click any IDC module you will enter the management platform page that monitors the current active center, that is, the DR center after the switch.
 
 - Each IDC module will display the connection status of its own IDC, which is displayed the same way as that of the cluster in single-IDC mode, including: when the compute node is unable to connect, the compute node is marked red and abnormal; when the ConfigDB is unable to connect, the connection of the bottom ConfigDB is displayed abnormal; when part of the ConfigDB is unable to connect, move the cursor over the word "partially abnormal" to display the specific ConfigDB connection abnormal information, etc.
 
-![](assets/cross-idc-disaster-recovery-deployment/image32.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image32.png)
 
 > In the above screenshot, the DR center is switched to be the current active center after the master center fails.
 
 - If all compute nodes in master center cannot be connected, click either IDC panel, it will display the prompt message that the current master center cannot provide services. Please ensure that DR center will be manually enabled after all compute nodes in master center are disabled. If it is necessary to enable the DR center, please refer to the [Switch to the DR center after master center fails](#master-center-fails-and-dr-center-is-switched-as-the-active-idc).
 
-![](assets/cross-idc-disaster-recovery-deployment/image33.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image33.png)
 
 - After manual switching, DR center is the current active center, which is displayed in green. Click either IDC panel to enter the management platform where the DR center is identified as the current active center. If you need to restart the master center after manual repair, please refer to [cross-IDC failure repair and switching back](#idc-failure-repair-and-failover).
 
 - The cluster selection page in cluster mode is shown in the following figure, and its status is similar to that of the master/slave mode.
 
-![](assets/cross-idc-disaster-recovery-deployment/image34.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image34.png)
 
 ### Deployment environment examination
 
@@ -669,7 +669,7 @@ The deployment environment examination not only supports the current active cent
 
 - Click \[Initiate Examination], if you choose the cluster of DR mode, you can continue to choose the master center or the DR center for examination.
 
-![](assets/cross-idc-disaster-recovery-deployment/image35.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image35.png)
 
 - Several examination items for the current standby center are skipped due to the inability to connect to the service port. The skipped items are listed as follows:
 
@@ -689,7 +689,7 @@ The deployment environment examination not only supports the current active cent
 
 The node management page will manage all data nodes and all data sources of master center and DR center at the same time. For data nodes added in the master center and the DR center, it is required that the number of the data nodes is the same, and the names correspond one by one.
 
-![](assets/cross-idc-disaster-recovery-deployment/image36.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image36.png)
 
 **（1）Descriptions of the added list information:**
 
@@ -747,36 +747,36 @@ The function can quickly configure data nodes and data sources for two IDCs, or 
 - It is allowed to delete data sources in any IDCs, however the deletion of data nodes must synchronize with the master center the DR center, that is, separate deletion of data nodes of DR center is not allowed.
 - Check "Automatically build DR relation" to automatically set up a replication relation between the corresponding data nodes of the two added IDCs.
 
-![](assets/cross-idc-disaster-recovery-deployment/image37.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image37.png)
 
 **(2) Add data source only:**
 
 - Check "Add data source only" to add data sources to data nodes that already exist in the master center or DR center.
 - Addition of only data sources will not affect the logical structure of data nodes in two IDCs. Therefore, when only adding data sources, the number of data sources added under any IDC module will not be limited. For example, if you want to add data sources to a data node in the master center separately, you can delete the automatically generated data source under the DR center module.
 
-![](assets/cross-idc-disaster-recovery-deployment/image38.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image38.png)
 
 **(3) Add missing data nodes:**{#add-missing-data-nodes}
 
 Click \[Add Node]. When the master center is the current active center, management platform will check whether the current logical structure of the two IDCs is consistent. If it is found that there are more data nodes in the master center than in the DR center, management platform will ask users to add corresponding nodes for the DR center, otherwise the function Add Node cannot be used. This function is used to separately supplement the data nodes which correspond to the production environment for the DR center after a DR center is added to an existing production environment, which can avoid the situation where the node information is manually modified in the ConfigDB.
 
-![](assets/cross-idc-disaster-recovery-deployment/image39.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image39.png)
 
 Click \[Confirm], then management platform will automatically generate missing nodes in the DR center of the same node type as that of the master center. You can modify the "Data Node Type" or "Data Source Group" and regenerate it, but the data node name and number cannot be modified which are consistent with the master center.
 
-![](assets/cross-idc-disaster-recovery-deployment/image40.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image40.png)
 
 **(4) Import function:**
 
 When using the Import function, you need to ensure that the logical structure of the imported data nodes in the master center and the DR center is the same, that is, the number of data nodes is the same, and the names correspond to each other. Otherwise, the import will fail.
 
-![](assets/cross-idc-disaster-recovery-deployment/image41.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image41.png)
 
 ##### Master-slave setup
 
 Master-slave setup can set up replication relations not only for the data sources in a single IDC that have not yet set up a replication relation, but also for the master data sources of the two IDCs.
 
-![](assets/cross-idc-disaster-recovery-deployment/image42.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image42.png)
 
 **（1）Setup instructions:**
 
@@ -790,7 +790,7 @@ Master-slave setup can set up replication relations not only for the data source
 
 IDC type is added uniformly to the error message of setting up to identify which IDC the data source that reports errors belongs to.
 
-![](assets/cross-idc-disaster-recovery-deployment/image43.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image43.png)
 
 If the master center fails, the DR center will be switched to the be current active center, and the master-slave setup function will not provide the setup of disaster recovery relations.
 
@@ -802,7 +802,7 @@ If the data source fails and no relevant switching rules are configured, automat
 
 (1) **Add switching rules:**
 
-![](assets/cross-idc-disaster-recovery-deployment/image44.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image44.png)
 
 Select the IDC type and add switching rules for the data sources in a single IDC.
 
@@ -810,7 +810,7 @@ The data sources in the DR center still need to be configured with intra-IDC swi
 
 (2) **Automatic adaption:**
 
-![](assets/cross-idc-disaster-recovery-deployment/image45.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image45.png)
 
 Select the IDC type and the switching rules will be automatically adapted for the data nodes in a single IDC. The automatic adaptation rules of the DR center remain unchanged.
 
@@ -818,7 +818,7 @@ Select the IDC type and the switching rules will be automatically adapted for th
 
 Configuration checking mainly provides checking function for relevant configurations of compute nodes to prevent abnormal operation caused by manual error settings or offline modification of relevant configurations of compute nodes. In the DR mode, the following adaptations are made:
 
-![](assets/cross-idc-disaster-recovery-deployment/image46.jpeg)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image46.jpeg)
 
 - The IDC type is added to the error message related to the checking of the data source, which can clearly identify which IDC's data source fails the checking, so as to troubleshoot the problem.
 - The checking item \[Data source connection is normal] is changed to the checking of warning level. For example, if any data source in the master center or the DR center is connected abnormally, a warning message will appear in the configuration checking, which however will not affect the dynamic loading. When the master center or the DR center fails as the current standby center, this checking item will still check whether all data sources in the two IDCs are connected normally, which however will not affect the dynamic loading.
@@ -827,28 +827,28 @@ Configuration checking mainly provides checking function for relevant configurat
 - In \[ConfigDB status], \[ConfigDB connection is normal] is modified as a warning-level checking item. Similar to \[Data source connection is normal], check whether all ConfigDBs in the two IDCs are connected normally.
 - A warning-level checking item in \[ConfigDB] is added: whether the replication status between ConfigDBs is normal, that is, whether the replication status of the internal ConfigDBs of a single IDC is normal and whether the replication status of the master ConfigDB between two IDCs is normal.
 
-![](assets/cross-idc-disaster-recovery-deployment/image47.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image47.png)
 
 #### Compute node parameter configuration
 
 The compute node parameter configuration can configure the server.xml parameters of two IDCs in a visualized manner.
 
-![](assets/cross-idc-disaster-recovery-deployment/image48.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image48.png)
 
 - The server.xml parameter information of the master compute node of the current active center is displayed by default.
 - The compute node parameters in the current active center are switched and checked through the TAB page.
 - Click \[switch] to switch to the parameter configuration page of the other IDC.
 - If the compute node fails or the connection failure of compute nodes due to the IDC switching, the parameter configuration page of the compute node cannot be displayed.
 
-![](assets/cross-idc-disaster-recovery-deployment/image49.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image49.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image50.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image50.png)
 
 **(1) Parameter synchronization:**
 
 If you check "Automatically synchronize to other compute nodes", the modified or added parameters will be synchronized to other compute nodes. If the DR center is the current active center, the master compute node parameters of the DR center will be displayed and synchronized on the page by default.
 
-![](assets/cross-idc-disaster-recovery-deployment/image49.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image49.png)
 
 > !Note
 >
@@ -858,7 +858,7 @@ If you check "Automatically synchronize to other compute nodes", the modified or
 
 If there is compute node failure, then the failed compute node will not be displayed in the compute node selection box.
 
-![](assets/cross-idc-disaster-recovery-deployment/image51.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image51.png)
 
 **(3) Enable the ConfigDB:**
 
@@ -866,13 +866,13 @@ When the ConfigDB mode used by the master center or DR center is master-slave or
 
 1. When the master ConfigDB fails, the compute node parameter configuration page is displayed as the following figure:
 
-![](assets/cross-idc-disaster-recovery-deployment/image52.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image52.png)
 
 2. If it is determined that the master ConfigDB has returned to normal and consistent with the data of the slave ConfigDB and is up-to-date, click the enable button on the [Compute node parameter configuration](#compute-node-parameter-configuration) page to enable the master ConfigDB.
 
-3. Click the enable button ![](assets/cross-idc-disaster-recovery-deployment/image53.png), and then click the \[Dynamic loading] button to re-enable the master ConfigDB.
+3. Click the enable button ![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image53.png), and then click the \[Dynamic loading] button to re-enable the master ConfigDB.
 
-![](assets/cross-idc-disaster-recovery-deployment/image54.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image54.png)
 
 **Notes:**
 
@@ -880,13 +880,13 @@ When the ConfigDB mode used by the master center or DR center is master-slave or
 - When the DR center is the current standby center, when enabling the slave ConfigDB, you need to confirm that the current active ConfigDB is available; otherwise, the slave ConfigDB cannot be enabled, that is, you can enable the slave ConfigDB only after the master ConfigDB is enabled.
 - If you want to enable either ConfigDB in the two IDCs, you need to ensure that the current replication status inside the IDC and between the IDCs is normal. If any of the replication status is abnormal, there will be a warning message though the dynamic loading may succeed.
 
-![](assets/cross-idc-disaster-recovery-deployment/image55.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image55.png)
 
 **(4) New parameters:**{#new-parameters}
 
 1. Configure the DR center ConfigDB
 
-![](assets/cross-idc-disaster-recovery-deployment/image56.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image56.png)
 
 Add the ConfigDB configuration of the DR center, including the address of the master-slave ConfigDB of DR center and the corresponding user name and password. The master center and the DR center refer to the IDC type, which does not change with the IDC status.
 
@@ -961,19 +961,19 @@ The Logic topological graph not only provides the topological graph of the curre
 
 - The ConfigDB components are always displayed on the far left of the topology of master center.
 
-![](assets/cross-idc-disaster-recovery-deployment/image57.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image57.png)
 
 The ConfigDB components are also added in the 2.5D topology of master center, with the same functions as that of the topology of master center.
 
-![](assets/cross-idc-disaster-recovery-deployment/image58.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image58.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image59.png) is a non-status icon, which connects one or two ConfigDBs ![](assets/cross-idc-disaster-recovery-deployment/image60.png), respectively representing a single node ConfigDB and a master-master ConfigDB. In single-IDC mode, if three or more ConfigDBs are connected, it represents the ConfigDB in MGR mode. ![](assets/cross-idc-disaster-recovery-deployment/image59.png) will be in orange when all ConfigDBs are not available.
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image59.png) is a non-status icon, which connects one or two ConfigDBs ![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image60.png), respectively representing a single node ConfigDB and a master-master ConfigDB. In single-IDC mode, if three or more ConfigDBs are connected, it represents the ConfigDB in MGR mode. ![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image59.png) will be in orange when all ConfigDBs are not available.
 
 Similar to the data source, icon of ConfigDB in red means a failure exists; moving the cursor over the red icon, the failure cause can be displayed. Orange means an abnormal replication status exists, moving the cursor over the orange icon, the abnormality cause can be displayed.
 
 The monitoring information of "Replication latency" is displayed in the ConfigDB. Similar to the data source, the alert threshold of replication latency can be set under ConfigDB module in "Setting ---> Topological Graph Alert Setting".
 
-![](assets/cross-idc-disaster-recovery-deployment/image61.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image61.png)
 
 2. Monitoring information of ConfigDB is added to the Topological Graph Info Panel
 
@@ -987,35 +987,35 @@ For example, when the master center is switched to the DR center, the message ab
 
 The IDC switching message can be used as a dividing line of history information. In this example, the history information before the IDC switching message is the of the master center, and the history information after the IDC switching message is of the DR center.
 
-![](assets/cross-idc-disaster-recovery-deployment/image62.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image62.png)
 
 **(2) Topology of DR center:**
 
-On the topology of master center or the 2.5D topology of master center page, click ![](assets/cross-idc-disaster-recovery-deployment/image63.png) to switch to the topology of DR center; click again to switch back to the topology of master center or 2.5D topology of master center page.
+On the topology of master center or the 2.5D topology of master center page, click ![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image63.png) to switch to the topology of DR center; click again to switch back to the topology of master center or 2.5D topology of master center page.
 
-The icon ![](assets/cross-idc-disaster-recovery-deployment/image63.png) means that in the topology of DR center, the number of components in the DR center currently in error status and not repaired is also the number of messages of errors that are still not repaired in the Topological Graph Info Panel, including the number of components that cannot be connected and the abnormal replication status of the data source or ConfigDB between the two IDCs.
+The icon ![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image63.png) means that in the topology of DR center, the number of components in the DR center currently in error status and not repaired is also the number of messages of errors that are still not repaired in the Topological Graph Info Panel, including the number of components that cannot be connected and the abnormal replication status of the data source or ConfigDB between the two IDCs.
 
-![](assets/cross-idc-disaster-recovery-deployment/image64.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image64.png)
 
 If the master center fails and the DR center is switched to be the current active center, the topology of master center will be replaced by the topology of DR center, and the icon of the topology of DR center will still display the current error number of the DR center.
 
 In the topology of DR center, there are six layers of components from left to right. Layers 1-3 from left to right represent the compute node, data node (ConfigDB) and data source (ConfigDB) of the master center in turn. Layers 4-6 represent the data source (ConfigDB), data node (ConfigDB) and compute node of the DR center in turn.
 
-![](assets/cross-idc-disaster-recovery-deployment/image65.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image65.png)
 
 Edges inside one IDC in the topological graph are consistent with the topology of master center. If the master ConfigDB or the master data source service of the DR center is abnormal, all data sources under the corresponding data nodes of the DR center are also set as red and unavailable. The edge is set as gray.
 
-![](assets/cross-idc-disaster-recovery-deployment/image66.png)The graph shows the abnormal replication ConfigDB service in the DR center.
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image66.png)The graph shows the abnormal replication ConfigDB service in the DR center.
 
 Edges between two IDCs, that is, the edges of the current active data sources between the master center and the DR center, indicates the disaster recovery status. If the DR center status is abnormal, edges between the two IDCs are set as gray.
 
-![](assets/cross-idc-disaster-recovery-deployment/image67.png)The graph shows the abnormal replication between ConfigDBs in the DR center.
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image67.png)The graph shows the abnormal replication between ConfigDBs in the DR center.
 
 The data sources with replication latency in the master center and DR center will display monitoring information of the replication latency. If the replication latency is 0, it will not be displayed. Same as that of the topology of master center, the alert threshold for the replication latency is set under the ConfigDB or data source module in "Setting ---> Topological Graph Alert Setting".
 
-The current active compute node in the DR center will display monitoring information of the disaster recovery latency. The alert threshold for the disaster recovery latency of the ConfigDB and the data source is set uniformly in ![](assets/cross-idc-disaster-recovery-deployment/image68.png) on the topology of DR center page.
+The current active compute node in the DR center will display monitoring information of the disaster recovery latency. The alert threshold for the disaster recovery latency of the ConfigDB and the data source is set uniformly in ![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image68.png) on the topology of DR center page.
 
-![](assets/cross-idc-disaster-recovery-deployment/image69.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image69.png)
 
 The display order of the ConfigDB and the data source from top to bottom is: the ConfigDB at the top, the data source failure (in red), the data source warning (in yellow), the data source with the replication latency warning or the disaster recovery latency warning, and the normal node at the bottom.
 
@@ -1023,15 +1023,15 @@ If the master center fails and the DR center is switched to be the current activ
 
 At this time, the disaster recovery status of the master data sources between the master center and the DR center is no longer detected, so the edges of the disaster recovery status are not displayed.
 
-![](assets/cross-idc-disaster-recovery-deployment/image70.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image70.png)
 
 The disaster recovery architecture in the multi-node mode is shown in the following figure, and its function is similar to that of the master/slave mode.
 
-![](assets/cross-idc-disaster-recovery-deployment/image71.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image71.png)
 
 **(3) Topological Graph Info Panel of topology of DR center:**
 
-![](assets/cross-idc-disaster-recovery-deployment/image72.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image72.png)
 
 No matter whether the IDC fails or not, the Topological Graph Info Panel will monitor the status of the two IDCs. If the master center fails and the DR center is switched to be the current active center, other status will still be monitored except the disaster recovery relation between the two IDCs.
 
@@ -1060,7 +1060,7 @@ No matter whether the IDC fails or not, the Topological Graph Info Panel will mo
 
 The physical topological graph adds a toggle button for the IDC switching, through which you can view the relations between the components of the master center or the DR center and the server, the use of server resources, and the running status of the services of each component.
 
-![](assets/cross-idc-disaster-recovery-deployment/image73.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image73.png)
 
 #### Other monitoring items
 
@@ -1068,7 +1068,7 @@ The physical topological graph adds a toggle button for the IDC switching, throu
 
 You can select to monitor all compute nodes that can connect to the management port whether in the master center or in the DR center on the compute node server resources function page. In \[Add Monitoring Item], you can select the compute nodes of the master center or DR center you want to monitor. while the master compute node of the current active center is selected by default.
 
-![](assets/cross-idc-disaster-recovery-deployment/image74.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image74.png)
 
 If the management port of compute nodes cannot be connected, for example, if the compute node fails or the compute node of DR center does not enable the management port, you cannot check and monitor the compute node.
 
@@ -1078,13 +1078,13 @@ For other server resources, you can view detailed information about all server r
 
 (It is a prerequisite to configure the server's SSH information in "Configuration-> Server")
 
-![](assets/cross-idc-disaster-recovery-deployment/image75.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image75.png)
 
 **（3）Network quality:**
 
 You can refer to the cross-IDC network quality monitoring information. There are some differences between the cross-IDC network quality topology and that of the single IDC.
 
-![](assets/cross-idc-disaster-recovery-deployment/image76.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image76.png)
 
 **Page Description:**
 
@@ -1095,7 +1095,7 @@ You can refer to the cross-IDC network quality monitoring information. There are
 
 **IDC switching instructions:**
 
-![](assets/cross-idc-disaster-recovery-deployment/image77.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image77.png)
 
 If the IDC switching happens, that is, the compute node of the current DR center provides service, only the network quality monitoring status of the DR center will be displayed; all components in the master center will be displayed gray with no monitoring. There will be no network connection from the DR center to the master center, and the network connection relation of the DR center degenerates to be consistent with that of the single IDC.
 
@@ -1103,11 +1103,11 @@ If the IDC switching happens, that is, the compute node of the current DR center
 
 Monitoring management page can be used to check the relations between the front-end and back-end connections of compute nodes in the two IDCs and other effective management through the compute node management port.
 
-![](assets/cross-idc-disaster-recovery-deployment/image78.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image78.png)
 
 For example, if you select "Server Connection Information: show processlist" in "Query Command", the server connection information of the master compute node server in the current active center is displayed by default:
 
-![](assets/cross-idc-disaster-recovery-deployment/image79.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image79.png)
 
 ### Management
 
@@ -1115,17 +1115,17 @@ For example, if you select "Server Connection Information: show processlist" in 
 
 The management platform does not provide the data backup function for the DR center. If you want to restore the data backup of the current active center to another IDC, you can check the item "Backup to Remote Path simultaneously" in "Start Backup" to transfer all the backup files of each data source in the current IDC to a remote path through scp command before restoring the backup files to the corresponding data sources one by one according to the correspondence of the data sources offline.
 
-![](assets/cross-idc-disaster-recovery-deployment/image80.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image80.png)
 
 #### Data source migration
 
 The management platform supports the migration of data sources in the master center or DR center to new data sources, and the re-setup of disaster recovery relations.
 
-![](assets/cross-idc-disaster-recovery-deployment/image81.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image81.png)
 
 - You can choose whether to migrate the data source of the master center or the data source of the DR center by selecting the IDC type, however, you still need to meet the prerequisites of using the migration function, for example, you need to manually import the data of the old data source to the new data source and set up the replication relations from the old data source to the new data source. It needs attention that the configured target new database instance cannot coincide with the existing instance in the DR center, that is, the instance filled in by the detection cannot coincide with all the existing data source instances in the ConfigDB.
 
-![](assets/cross-idc-disaster-recovery-deployment/image82.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image82.png)
 
 - In \[Step 4: Data Source Migration], a replication relation will be set up of the current active data sources between the master center and the DR center. For example, if to migrate the data nodes of the master center, the management platform will set up a replication relation between the target master data source of the master center and the current active data source of the DR center.
 
@@ -1135,13 +1135,13 @@ The management platform supports the migration of data sources in the master cen
 
 The IDC type is a multiple choice drop-down box, that is, you can select a central IDC or a disaster recovery IDC or two IDCs at the same time.
 
-![](assets/cross-idc-disaster-recovery-deployment/image83.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image83.png)
 
 **(1) Choose IDC:**
 
 The Choose IDC item is a drop-down box with multiple choices, that is, you can select a master center, a DR center or the two IDCs both.
 
-![](assets/cross-idc-disaster-recovery-deployment/image84.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image84.png)
 
 For detection range of LogicDB or detection range of data source:
 
@@ -1151,13 +1151,13 @@ For detection range of LogicDB or detection range of data source:
 
 **(2) Detection range of ConfigDB:**
 
-![](assets/cross-idc-disaster-recovery-deployment/image85.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image85.png)
 
 - In detection range of ConfigDB, select the ConfigDB address you want to detect and fill in the concurrency number (the default is 2)
 - Click \[Start a Detection] to check the data consistency between the selected ConfigDB and the master ConfigDB of the current active center.
 - Click \[View Results] to view the details of detection results. If there are inconsistencies, locations and details of the inconsistencies will be displayed in the detection results.
 
-![](assets/cross-idc-disaster-recovery-deployment/image86.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image86.png)
 
 ### Event
 
@@ -1169,11 +1169,11 @@ After adding notification strategy, it can alert you by email to the failure or 
 
 Added email information: whether to enable the DR mode, type of the current active center, and compute node information of two IDCs.
 
-![](assets/cross-idc-disaster-recovery-deployment/image87.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image87.png)
 
 **(2) Data source information monitoring:**
 
-![](assets/cross-idc-disaster-recovery-deployment/image88.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image88.png)
 
 In the data source information monitoring, for \[Replication Delay] and \[Data Source Replication Status], in addition to alerting the abnormality of the internal data source in the current active center, it also alerts the disaster recovery latency and the abnormal disaster recovery status between the current active data source in the master center and the current active data source in the DR center.
 
@@ -1182,11 +1182,11 @@ In the data source information monitoring, for \[Replication Delay] and \[Data S
 - The replication latency still corresponds to the replication latency under the data source module in "Setting -> Topological Graph Alert Setting"
 - The disaster recovery latency corresponds to the disaster recovery latency setting of the topology in DR center in "Monitoring-> [Logical Topological Graph](#logic-topological-graph)"
 
-![](assets/cross-idc-disaster-recovery-deployment/image69.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image69.png)
 
 **(3) ConfigDB information monitoring:**
 
-![](assets/cross-idc-disaster-recovery-deployment/image89.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image89.png)
 
 In ConfigDB information monitoring, alert is added of the replication latency and abnormal replication status between ConfigDBs in the current active center and between the master ConfigDBs in the two IDCs.
 
@@ -1195,7 +1195,7 @@ In ConfigDB information monitoring, alert is added of the replication latency an
 - The replication latency corresponds to the replication latency under the ConfigDB module in "Setting -> Topological graph alert setting"
 - The disaster recovery latency corresponds to the disaster recovery latency setting of the topology in the DR center in "Monitoring -> [Logical Topological Graph](#logic-topological-graph)"
 
-![](assets/cross-idc-disaster-recovery-deployment/image69.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image69.png)
 
 #### Others
 
@@ -1203,13 +1203,13 @@ In ConfigDB information monitoring, alert is added of the replication latency an
 
 The history events will display the history events that occurred in the current active center recorded by the management platform. Contents include: notification of completed task, notification of abnormal periodical detection, and early warnings triggered by the platform, etc. The IDC type is displayed as the IDC type when the history event occurs.
 
-![](assets/cross-idc-disaster-recovery-deployment/image90.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image90.png)
 
 **(2) Compute Node Logs:**
 
 The compute node logs record the log information generated by the compute nodes in the master center and the DR center during operation. By default, the log information of the master compute node in the current active center is displayed. You can select or view other compute node log information.
 
-![](assets/cross-idc-disaster-recovery-deployment/image91.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image91.png)
 
 ### Others
 
@@ -1217,19 +1217,19 @@ The compute node logs record the log information generated by the compute nodes 
 
 The server is added with the IDC type, which manages the server SSH information of all components in the cluster. When configuring or adding server SSH information, you need to select the IDC type corresponding to the server.
 
-![](assets/cross-idc-disaster-recovery-deployment/image92.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image92.png)
 
 **(2) Data source password:**
 
 The data source password is also added with the IDC type, and displays the IDC type corresponding to all data sources.
 
-![](assets/cross-idc-disaster-recovery-deployment/image93.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image93.png)
 
 **(3) Information collection:**
 
 The information collection tool of management platform supports the collection of logs and configuration files for abnormality analysis of all components of the two IDCs.
 
-![](assets/cross-idc-disaster-recovery-deployment/image94.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image94.png)
 
 If there is a server in the two IDCs that cannot be connected, you can choose to skip the collection of server information or cancel the collection task. If there are compute node services that cannot be connected in the two IDCs, you can manually enter the compute node installation directory and continue the collection task. That is, neither the failure of the IDC or the unopened service port of the compute node of the DR center will affect the information collection task.
 
@@ -1239,11 +1239,11 @@ The upgrade center also supports cross-version or minor-version upgrade, that is
 
 Select the compute node cluster that needs to be upgraded. If the cluster has the DR mode enabled, the color green will be used to mark the master center, and blue to mark the DR center for the items Cluster Mode and the Compute Node. After uploading the upgrade package, click \[Start Update] to enter the upgrade process.
 
-![](assets/cross-idc-disaster-recovery-deployment/image95.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image95.png)
 
 After the upgrade is complete, you can view the detailed update logs:
 
-![](assets/cross-idc-disaster-recovery-deployment/image96.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image96.png)
 
 > !Note
 >
@@ -1332,7 +1332,7 @@ A master-master replication relation is set up between hc01 and hc02; a master-s
 
 Graph representation (edge arrow indicates data flow direction):
 
-![](assets/cross-idc-disaster-recovery-deployment/image97.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image97.png)
 
 All MySQL instance versions are 5.7.25, GTID enabled, and semi-synchronous replication is enabled by default for all replication relations. Other parameter configurations and system parameter settings are the same as the default installation and deployment conditions.
 
@@ -1369,7 +1369,7 @@ This section mainly describes the function usage when high-availability switchin
 
 ##### Manual switching
 
-![](assets/cross-idc-disaster-recovery-deployment/image98.jpeg)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image98.jpeg)
 
 Enter the "Cluster Management"-> "Compute Node Cluster" page. When you manually click the \[Switch] button corresponding to the compute node group with the master-slave relation to perform manual compute node switching operations, switching will only occur in the master center, which has no effect on the compute node services of the DR center. The logic of high-availability switching and re-setup operations in all master center compute node services is the same as that of the ordinary single IDC mode.
 
@@ -1391,7 +1391,7 @@ When the failed master ConfigDB of the master center is restored, if the master-
 
 Click \[Switch] button corresponding to the master center on the "Node Management" page of the management platform, the compute node will automatically detect whether the replication relations between the master nodes of the current master center and the standby master nodes or the slave nodes are normal and whether the replication latency is within 10s. The switching can be successful when the conditions are met. At the same time, the master data sources of the DR center will be automatically set up with replication relations with the standby master nodes or slave nodes in the switched master center, without manual intervention. That is, after switching from ds01 to ds02, the replication relation between ds01 and ds03 will be cleared, and ds03 as a slave will reset up a replication relation with ds02.
 
-![](assets/cross-idc-disaster-recovery-deployment/image99.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image99.png)
 
 > !Note
 >
@@ -1476,11 +1476,11 @@ Step 1: Make a data backup of the ConfigDB of the management platform that is cu
 
 Step 2: Delete the original cluster in the DR mode through the "Cluster Management"-> "Computer Node Cluster" page of the administrator interface in the management platform;
 
-![](assets/cross-idc-disaster-recovery-deployment/image100.jpeg)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image100.jpeg)
 
 Step 3: Still through the "Cluster Management"-> "Compute Node Cluster" page, click \[Add Cluster] to add the active IDC as a new compute node cluster and add the ConfigDB information after the disaster recovery switchover (as long as the compute node management port is currently connectable, no manual configuration is required here by default).
 
-![](assets/cross-idc-disaster-recovery-deployment/image101.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image101.png)
 
 Step 4: Add user privileges to the new cluster for general users
 
@@ -1488,17 +1488,17 @@ Step 5: Log in to the management platform as a general user, select the newly-ad
 
 Step 6: Go to the [Configuration](#configuration)-> "Parameter Configuration" page and modify the related configuration parameters as shown in red below: select HA as cluster mode and select master center as IDC ID (here is the preparation for [scenario two](#scenario-two-make-the-original-master-center-as-the-standby-idc)). The ConfigDB connection information should be filled and saved according to the actual current ConfigDB information;
 
-![](assets/cross-idc-disaster-recovery-deployment/image102.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image102.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image103.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image103.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image104.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image104.png)
 
 Step 7: Go to the [Configuration](#configuration)-> "Node Management" page to delete the data stored for the original master center.(You can choose to search by IP, or you can choose to search by unavailable status, but you need to be careful not to delete the data used by the current active IDC by mistake)
 
-![](assets/cross-idc-disaster-recovery-deployment/image105.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image105.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image106.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image106.png)
 
 Step 8: Enter the master ConfigDB of the current active IDC and replace all the IDC ID related in the hotdb_datasource table with 1 (1 represents the master center, which has no practical meaning without disaster recovery)
 
@@ -1613,17 +1613,17 @@ Step 6: Start the services of the active and standby compute nodes of the origin
 
 Step 7: Log in to the management platform as a manager user and go to the "Cluster Management"-> "Compute Node Cluster" page to turn on the DR mode for this cluster, and configure the original master center as the current standby IDC. Save after passing test.
 
-![](assets/cross-idc-disaster-recovery-deployment/image107.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image107.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image108.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image108.png)
 
 Step 8: Log in to the management platform as a general user account and select the newly added cluster in DR mode.
 
 Step 9: Go to the [Configuration](#configuration)-> "Node Management" page to add data nodes and data sources in the DR center.
 
-![](assets/cross-idc-disaster-recovery-deployment/image109.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image109.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image110.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image110.png)
 
 Step 10: Check whether the replication status or DR replication status in the current active IDC is abnormal. You can check whether the replication status of the data sources or ConfigDBs are normal through the "Node Management" and "Configuration Verification" pages.
 
@@ -1759,11 +1759,11 @@ UPDATE mslog t1 JOIN mslog t2 ON (t1.group_id = ? and t2.group_id = ? and t1.roo
 
 Example of page display after replacement:
 
-![](assets/cross-idc-disaster-recovery-deployment/image111.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image111.png)
 
 Step 8: Log in to the management platform and enable the data sources in the original master center (current DR center) that is automatically disabled:
 
-![](assets/cross-idc-disaster-recovery-deployment/image112.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image112.png)
 
 Step 9: Check whether the replication status and DR replication status in the current active IDC is abnormal. You can check the replication status of data sources and ConfigDBs through the "Node Management" and "Configuration Checking" pages.
 
@@ -1771,11 +1771,11 @@ Step 10: Reload
 
 Step 11: Check whether the topologic graph and various monitoring indicators are normal, and check whether all the heartbeat is monitored by executing the `show @@heartbeat` command through management port of compute node in the current active IDC and check whether IDC type has been swapped by executing the `show @@configurl` or `show @@datanode` command.For example:
 
-![](assets/cross-idc-disaster-recovery-deployment/image113.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image113.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image114.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image114.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image115.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image115.png)
 
 ##### Special Instructions
 
@@ -1827,19 +1827,19 @@ It is recommended to set a periodic plan for [master/slave consistency detection
 
 It is recommended that you set an email alert including monitoring the service status of all compute nodes and data sources in order to be aware of error information of each core component in time. And newly-added item, replication status of ConfigDB, can be set on the "Events"-> "Email Alert Setting"-> "Add Notification Strategy" page. For example, the following figure shows an example of setting up for monitoring replication status of ConfigDB:
 
-![](assets/cross-idc-disaster-recovery-deployment/image116.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image116.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image117.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image117.png)
 
 The content of the email alert will explain the specific IDC type where the problem occurred:
 
-![](assets/cross-idc-disaster-recovery-deployment/image118.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image118.png)
 
 #### Environment Examination
 
 After cluster deployment is completed without any errors, it is recommended to use the manager account of management platform to enter the "Cluster Management"-> "Deployment Environment Examination" page to perform environment examinations for both master center and DR center, and follow the suggestions to optimize unqualified configuration.
 
-![](assets/cross-idc-disaster-recovery-deployment/image119.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image119.png)
 
 #### Data Backup
 
@@ -1853,7 +1853,7 @@ When the serviced of failed data sources or ConfigDB are started, you must make 
 
 It is recommended to configure the server SSH information on the [Configuration](#configuration)-> "Server" page when you start to use it, so as to assist the management platform to complete some simple maintenance and monitoring operations.
 
-![](assets/cross-idc-disaster-recovery-deployment/image120.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image120.png)
 
 #### Master/Slave Data Consistency Detection
 
@@ -1895,9 +1895,9 @@ After the DR mode is enabled, you must pay attention to some abnormal log alerts
 
 - The number of acks returned by the slave that is set for the semi-synchronous replication of slave data source is inconsistent with the actual number (possibly cause that RPO is not 0):
 
-![](assets/cross-idc-disaster-recovery-deployment/image121.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image121.png)
 
-![](assets/cross-idc-disaster-recovery-deployment/image122.png)
+![](../../assets/img/en/cross-idc-disaster-recovery-deployment/image122.png)
 
 ```log
 2019-12-10 12:16:00.634 [WARN] [TIMER] [$NIOExecutor-5-1] cn.hotpu.hotdb.manager.handler.LoggerHandler(25) - datasource: 169([id:169,nodeId:43 192.168.220.181:3307/db2531 status:1,charset:utf8mb4])'s RPL_SEMI_SYNC_MASTER_WAIT_FOR_SLAVE_COUNT=2, real slave count=1

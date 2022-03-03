@@ -18,7 +18,7 @@ Distributed Relational Database Service, or DRDS, refers to a logically unified 
 
 HotDB Server is a distributed transactional database product of high reliability, high throughput and strong consistency, and focuses on MySQL database service. It provides the operation experience similar to the centralized database for the application in the distributed environment, and supports the business system with massive data, massive users, high concurrency, high availability and high performance. What's more, it has the characteristics of strong transparency, easy expansion and zero learning cost. The data service port of HotDB Server can be accessed like MySQL database, and the data service port of HotDB Server can be connected by application in the same way as MySQL. To replace MySQL with HotDB Server, you only need to modify the host, port, database, user, and password information in the database configuration file of the application. It also supports MySQL database driver and connection pool in different development languages, such as JDBC driver of JAVA, c3p0, DHCP, and DRUID connection pool.
 
-![](assets/white-paper/image3.png)
+![](../../assets/img/en/white-paper/image3.png)
 
 HotDB Server Architecture Diagram
 
@@ -258,13 +258,13 @@ HotDB Server is compatible with MySQL user privilege system, and supports multi-
 
 HotDB Server provides seven data sharding algorithms to meet the sharding requirements of most scenarios of users. Detailed descriptions of the seven sharding algorithms are as follow:
 
-![](assets/white-paper/image4.png)
+![](../../assets/img/en/white-paper/image4.png)
 
 #### Types of table
 
 HotDB Server provides four types of table for users to choose. Users can choose the appropriate types of database table based on the actual business scenarios. Detailed descriptions of the four table types are as follow:
 
-![](assets/white-paper/image5.png)
+![](../../assets/img/en/white-paper/image5.png)
 
 #### Compatible with Oracle function and Sequence syntax
 
@@ -304,7 +304,7 @@ Multi-source replication is compatible with HotDB Server, but does not support d
 
 In the high availability of data sources in the distributed transactional database, when the master data source goes down, the compute node will execute switch according to the priority of slave data source, and ensure that the service is switched to the slave data source only after the available slave data sources catch up with all applicable relaylogs. Combined with semi-synchronous replication, it can ensure that "the transaction that has received the commit ok will not be lost, and the transaction that has not issued commit will be rolled back"; on this basis, by enabling the strong consistency mode of HotDB Server, it can additionally guarantee that "the transaction that has issued commit but has not received commit ok will be all committed or rolled back".
 
-![](assets/white-paper/image6.png)
+![](../../assets/img/en/white-paper/image6.png)
 
 Data source failover process diagram
 
@@ -316,37 +316,37 @@ HotDB Server provides intelligent operation and maintenance services in multiple
 
 The management platform provides the master/slave data consistency detection for the LogicDB, data sources and ConfigDB. The master/slave data consistency detection can detect whether the table structure and table data between the master and slave data sources are consistent. When a small number of data inconsistencies are detected, the master/slave data consistency detection can locate the primary key value of inconsistent data rows; when there is a large number of inconsistencies, the inconsistent primary key value range or the prompt of a large number of inconsistencies in the whole table will be displayed. In addition, you can add a schedule to regularly detect the data consistency in the selected LogicDB.
 
-![](assets/white-paper/image7.png)
+![](../../assets/img/en/white-paper/image7.png)
 
 #### Global table data detection
 
 The management platform provides the function of global table data detection. You can select a global table in a specific LogicDB and detect whether the data in the table is consistent in all data nodes. If there is inconsistent data, data can be repaired through the repair function. In addition, the consistency of global table data can be detected regularly by adding a regular detection plan. If an exception is found in the detection, the user will be informed in the event notification.
 
-![](assets/white-paper/image8.png)
+![](../../assets/img/en/white-paper/image8.png)
 
 #### Sharding route detection
 
 HotDB Server supports route detection of historical data in sharding table, which can detect whether the business data is correctly routed according to the configured sharding rules, and can also check whether the sharding data imported from other distributed transactional database systems to HotDB Server has the problem of routing errors.
 
-![](assets/white-paper/image9.png)
+![](../../assets/img/en/white-paper/image9.png)
 
 #### Data unique constraint detection
 
 HotDB Server supports data unique constraint detection on sharding tables or sub tables. It can discover in time whether the history data of the tables with unique constraints enabled in the cluster is not unique. The duplicate data of the table which violates the unique constraint is visualized and displayed, which facilitates users to repair.
 
-![](assets/white-paper/image10.png)
+![](../../assets/img/en/white-paper/image10.png)
 
 #### Sharding plan recommendation
 
 HotDB Server supports sharding plan calculation and recommendation based on SQL logs generated by simulated pressure measurement to help users find appropriate table sharding keys through actual business scenarios. Combined with a small amount of manual optimization, such as changing sharding algorithm, business table sharding plan suitable for the production environment can be generated eventually.
 
-![](assets/white-paper/image11.png)
+![](../../assets/img/en/white-paper/image11.png)
 
 #### Sharding plan online modification
 
 It provides online modification support for four dimensions of business table, namely table types, sharding rules, sharding keys and data node to which the sharding belongs. At the same time, single or batch table modification can be performed in combination with the sharding plan recommendation results. In addition, it supports setting data replication pause period when business table modifications are made to avoid business peak and reduce the impact on system performance.
 
-![](assets/white-paper/image12.png)
+![](../../assets/img/en/white-paper/image12.png)
 
 #### Table structure modification
 
@@ -354,31 +354,31 @@ It provides online modification support for four dimensions of business table, n
 
 The management platform supports the execution of Regular DDL and the creation and modification of database tables. At the same time, for sensitive operations, such as "drop, truncate" and other SQL, the second password verification is carried out to prevent misoperation and malicious operation.
 
-![](assets/white-paper/image13.png)
+![](../../assets/img/en/white-paper/image13.png)
 
 ###### Online DDL
 
 The management platform supports the execution of Online DDL to ensure that online business reading and writing will not be blocked when table modifications are made. And all the records of modification in progress or completed can be viewed on the online modification detection page.
 
-![](assets/white-paper/image14.png)
+![](../../assets/img/en/white-paper/image14.png)
 
 #### View SQL routing plan
 
 HotDB Server provides SQL routing plan view function. You can view the routing plan of the executed SQL statement, displays the specific data nodes distributed after the routing analysis of the compute node, and provides the user with the SQL distribution prediction information.
 
-![](assets/white-paper/image15.png)
+![](../../assets/img/en/white-paper/image15.png)
 
 #### Config checking
 
 HotDB Server supports one key detection of currently configured data nodes, data sources, LogicDBs, sharding rules, database users and other information. If there is an exception or error, it will prompt the error message and locate the specific error source.
 
-![](assets/white-paper/image16.png)
+![](../../assets/img/en/white-paper/image16.png)
 
 #### Multi-cluster service management
 
 The management platform supports the management of multiple sets of compute node clusters. After logging in to the management platform, users can select specific clusters on the "compute node selection" page to enter the management. At the same time, the "compute node selection" page supports real-time display of the running status of all compute node instances in the cluster and all instances in the ConfigDB.
 
-![](assets/white-paper/image17.png)
+![](../../assets/img/en/white-paper/image17.png)
 
 #### Logic topological graph
 
@@ -392,15 +392,15 @@ It supports topological graph switching between 2D and 2.5D.
 
 The users can execute manual high availability switch to the data nodes with master-slave or master-master replication relations through the topological graph, or copy the database connection information of each data source.
 
-![](assets/white-paper/image18.png)
+![](../../assets/img/en/white-paper/image18.png)
 
-![](assets/white-paper/image19.png)
+![](../../assets/img/en/white-paper/image19.png)
 
 #### Physical topological graph
 
 Physical topological graph mainly displays the relation between cluster components and servers from the perspective of server. At the same time, the usage of server resources and the running status of cluster component services can be viewed. Before using, it is necessary to configure the available SSH connection information for the server. Otherwise, only the relation between the server and the cluster component can be viewed, and the status of the server resources used and the component program cannot be viewed.
 
-![](assets/white-paper/image20.png)
+![](../../assets/img/en/white-paper/image20.png)
 
 #### Monitoring panel
 
@@ -408,29 +408,29 @@ The management platform supports monitoring of compute node service status, comp
 
 - Monitoring of compute node service status: total number of client connections, usage of compute node threads, backend connection status, usage rate of compute node direct memory, real-time data volume, and usage rate of compute node heap memory.
 
-![](assets/white-paper/image21.png)
+![](../../assets/img/en/white-paper/image21.png)
 
 - Compute node throughput: network traffic monitoring, TPS, QPS, client operation rate, back-end operation rate.
 
-![](assets/white-paper/image22.png)
+![](../../assets/img/en/white-paper/image22.png)
 
 - Compute node server resources: server memory usage, server disk space usage, server CPU load, server CPU usage, server disk read/write, server network traffic in/out, and server disk IO bandwidth utilization.
 
-![](assets/white-paper/image23.png)
+![](../../assets/img/en/white-paper/image23.png)
 
 - Cluster resources monitoring: including data sources and other servers with SSH access privileges. Monitoring items include: CPU usage, memory usage, disk usage, network traffic in/out. Alert the server that exceeds the configured monitoring threshold and display the failure of the server that cannot be connected.
 
-![](assets/white-paper/image24.png)
+![](../../assets/img/en/white-paper/image24.png)
 
 - Data increment prediction: data capacity of data source/ ConfigDB can be planned in advance according to history data amount.
 
-![](assets/white-paper/image25.png)
+![](../../assets/img/en/white-paper/image25.png)
 
 #### JOIN correlation analysis
 
 Based on the SQL logs recorded by the compute node, the management platform uses the SQL logs in line with the JOIN query scenario to visualize the relations between business tables. Through graphical display, users can quickly locate the tables with high frequency JOIN in the business, and locate the SQL with cross JOIN Correlation over cross-modes for various reasons. It provides reliable basis for users to adjust sharding rules and optimize JOIN query SQL and improve system performance.
 
-![](assets/white-paper/image26.png)
+![](../../assets/img/en/white-paper/image26.png)
 
 #### Report
 
@@ -438,49 +438,49 @@ It supports report display of cluster data volume, compute node throughput, data
 
 - Cluster data volume report: trend chart of cluster data volume change, distribution chart of cluster data volume, distribution chart of LogicDB data volume, distribution chart of table data volume.
 
-![](assets/white-paper/image27.png)
+![](../../assets/img/en/white-paper/image27.png)
 
 - Compute node throughput report: compute node throughput change trend chart, compute node throughput type comparison chart, LogicDB throughput comparison chart, table throughput comparison chart.
 
-![](assets/white-paper/image28.png)
+![](../../assets/img/en/white-paper/image28.png)
 
 - Data node throughput report: comparison chart of total throughput of data nodes, trend chart of throughput change of data nodes, comparison chart of cluster throughput types, comparison chart of LogicDB throughput, and comparison chart of table throughput.
 
-![](assets/white-paper/image29.png)
+![](../../assets/img/en/white-paper/image29.png)
 
 - Compute node connection report: total connections, the connection with the longest connection time, the connection with the most operation times, the connection with the most connection times, the proportion of total connection time, the proportion of total connection times, the proportion of operation times, the distribution diagram of front-end application IP connection, the distribution diagram of connection users, and the distribution diagram of LogicDB.
 
-![](assets/white-paper/image30.png)
+![](../../assets/img/en/white-paper/image30.png)
 
 #### Table structure＆index detection
 
 The management platform supports LogicDB detection of whether the table structure and index definition of tables under multiple data nodes are consistent. The reason for inconsistency will be displayed in the detection results once inconsistency is detected. In addition, you can add a scheduled task to monitor the status of the business table, and the system will immediately alert the user in the event notification if there is any definition exception in the table structure or index, so as to help the user find the table in question in time.
 
-![](assets/white-paper/image31.png)
+![](../../assets/img/en/white-paper/image31.png)
 
 #### Audit logs
 
 The management platform supports audit records of user operations, including: basic operation of management platform, security operation, management port command operation, etc. It is helpful for troubleshooting and analysis when the system is abnormal.
 
-![](assets/white-paper/image32.png)
+![](../../assets/img/en/white-paper/image32.png)
 
-![](assets/white-paper/image33.png)
+![](../../assets/img/en/white-paper/image33.png)
 
-![](assets/white-paper/image34.png)
+![](../../assets/img/en/white-paper/image34.png)
 
 #### Slow Query Log Analysis
 
 HotDB Management provides the Slow Query Log Analysis function to account details of execution time consuming and execution times of SQL statements such as select, insert, update, delete, transaction open, submission, and rollback. The internal algorithm is used to automatically analyze the SQL statement that needs to be optimized and assist users to optimize business SQL through the To-Be-Optimized mark and SQL optimization suggestions. Users can also query the page statistics to obtain the actual SQL execution condition and SQL statements to be optimized to help improve system performance.
 
-![](assets/white-paper/image35.png)
+![](../../assets/img/en/white-paper/image35.png)
 
-![](assets/white-paper/image36.png)
+![](../../assets/img/en/white-paper/image36.png)
 
 #### Business data reporting
 
 Business data reporting can summarize and report the key data of annual cluster running status to let users understand the cluster running status.
 
-![](assets/white-paper/image37.png)
+![](../../assets/img/en/white-paper/image37.png)
 
 #### History events and compute node logs
 
@@ -488,13 +488,13 @@ Business data reporting can summarize and report the key data of annual cluster 
 
 It mainly records server time difference, parameter awareness, data sources being shared, master/slave data consistency detection, data source migration, global table data detection, table structure and table index detection, backup failure caused by configuration modification, global unique constraint exception and other related event information. Different alarm levels corresponding to different event information include ERROR, WARNING, INFO, UNKNOW.
 
-![](assets/white-paper/image38.png)
+![](../../assets/img/en/white-paper/image38.png)
 
 ###### Compute node logs
 
 It mainly provides the log information generated during the operation of the compute node. By default, the management platform only obtains the log information of ERROR level in the compute node (you can customize the log level). You can filter log information by time range, log type, log level, view status, and log content. Multi-node mode cluster can support viewing log information on multiple compute nodes. At the same time, it supports exporting log files to local.
 
-![](assets/white-paper/image39.png)
+![](../../assets/img/en/white-paper/image39.png)
 
 #### Sharding grade
 
@@ -508,13 +508,13 @@ The management platform provides a reasonable score for the sharding plan of the
 - **Score of IUD operations:** Calculate the score according to whether the IUD operation of each node is uniform and the single-node IUD operation proportion
 - **Score of other dimensions:** Calculate the score according to the number of times the query cannot find the node and whether the sharding key definition is reasonable.
 
-![](assets/white-paper/image40.png)
+![](../../assets/img/en/white-paper/image40.png)
 
 #### Email sender setting
 
 After configuring outbox parameters, add information about email receiver and check the monitoring item through the management platform, you can use the email sender function. At present, the monitoring scope includes: failure or switch between compute node and data source, resource status of compute node server, service status of compute node, related detection of data source, system timing task detection, license authorization monitoring. If the local cannot receive email normally, the content of the alarm log can also be output to the local text.
 
-![](assets/white-paper/image41.png)
+![](../../assets/img/en/white-paper/image41.png)
 
 #### Multi-thread backup
 
@@ -531,31 +531,31 @@ HotDB Server provides HotDB Backup, a multi-thread backup tool similar to Mydump
 - The data backup is supported to be restored a specified time point in XA (strong consistency) mode.
 - In addition, HotDB Backup also supports functions such as encrypting backup files, calculating file MD5 values, and backing up to remote.
 
-![](assets/white-paper/image42.png)
+![](../../assets/img/en/white-paper/image42.png)
 
 Here is a comparison chart between HotDB Backup and several traditional backup tools:
 
-![](assets/white-paper/image43.png)
+![](../../assets/img/en/white-paper/image43.png)
 
 #### Data restore
 
 HotDB Server supports data restore request in the interface after data backup. The backup data can be restored according to the recovery time point to ensure data integrity. The data restore automatically brings out the full backup and incremental backup files available for the selected time point. SQL execution errors during rec restore overy can be viewed in the interface detailed log.
 
-![](assets/white-paper/image44.png)
+![](../../assets/img/en/white-paper/image44.png)
 
 #### SQL firewall and white list
 
 Users can set SQL firewall to intercept suspicious operations, such as "DELETE without WHERE condition, and UPDATE without WHERE condition."; they can also set IP access white list to limit the range of IP addresses allowed to connect to HotDB Server service.
 
-![](assets/white-paper/image45.png)
+![](../../assets/img/en/white-paper/image45.png)
 
-![](assets/white-paper/image46.png)
+![](../../assets/img/en/white-paper/image46.png)
 
 #### Data source migration
 
 HotDB Server supports online data source migration. When the hardware configuration of the server where the data source is located is insufficient or the MySQL version needs to be shut down and upgraded, the data of the data source can be migrated to the new data source server through the data source migration function. In essence, data source migration is to replace the data sources under the data nodes with other data sources that have MySQL replication relations and have the same data.
 
-![](assets/white-paper/image47.png)
+![](../../assets/img/en/white-paper/image47.png)
 
 #### Overload protection/current limits
 
@@ -575,7 +575,7 @@ HotDB Server supports intelligent flow control of all kinds of SQL statements ex
 
 The management platform supports the execution of management commands in the management port (default 3325) of some compute nodes through the interface. For example, you can check the connection status of the front and back end of the compute node, the connection information of the current session, the running status of SQL, and the thread resources of the compute node. It facilitates users to troubleshoot problems and quickly solve system faults or hidden dangers.
 
-![](assets/white-paper/image48.png)
+![](../../assets/img/en/white-paper/image48.png)
 
 #### Hot reload of configuration parameter
 
@@ -594,15 +594,15 @@ Management platform users, users of the distributed transactional database platf
 
 LogicDB users are the users who access the compute node service. HotDB Server's user privilege system is compatible with MySQL and provides multi-dimensional configuration of global privilege, LogicDB privilege, and table privilege. Besides, the table denied privilege is added to facilitate the manager user to quickly isolate users from operating the business tables with higher security level.
 
-![](assets/white-paper/image49.png)
+![](../../assets/img/en/white-paper/image49.png)
 
 #### High availability environment switch and reconstruction
 
 HotDB Server supports visualized manual high availability switch for the compute node cluster in active/standby mode through the management platform. It can also reconstruct the high availability environment after the high availability switch (manual or failover) of the compute node, so as to ensure the normal switch of the program in the next failure of the active compute node.
 
-![](assets/white-paper/image50.png)
+![](../../assets/img/en/white-paper/image50.png)
 
-![](assets/white-paper/image51.png)
+![](../../assets/img/en/white-paper/image51.png)
 
 #### Installation and deployment
 
@@ -610,55 +610,55 @@ HotDB Server supports visualized manual high availability switch for the compute
 
 Cluster deployment function is an overall solution for rapid deployment of the distributed transactional database cluster, which supports rapid deployment of single compute node, active/standby compute nodes, and multiple compute nodes. It can install the components required by the cluster, such as compute node service, ConfigDB instance, Keepalived, LVS, NTPD, backup program, and data source instance. Through cluster deployment, we can quickly complete the components installation, relation building between components, service startup, and component topology generation required by the whole cluster.
 
-![](assets/white-paper/image52.png)
+![](../../assets/img/en/white-paper/image52.png)
 
-![](assets/white-paper/image53.png)
+![](../../assets/img/en/white-paper/image53.png)
 
-![](assets/white-paper/image54.png)
+![](../../assets/img/en/white-paper/image54.png)
 
 ###### Single Component Deployment
 
 Single component deployment can add data source instances or other required components to the deployed distributed transactional database cluster, and can realize the relation building and service startup of new components.
 
-![](assets/white-paper/image55.png)
+![](../../assets/img/en/white-paper/image55.png)
 
-![](assets/white-paper/image56.png)
+![](../../assets/img/en/white-paper/image56.png)
 
 ###### Online upgrade
 
 Online upgrade supports online version upgrade of HotDB Server through management platform, including upgrades of cross version or small version for single node, active/standby nodes, and multi-node cluster mode, it also provides users with automatic rollback mechanism in case of exception during the upgrade. The program tries to ensure that the cluster is rolled back to the state before the upgrade to reduce the impact on online business.
 
-![](assets/white-paper/image57.png)
+![](../../assets/img/en/white-paper/image57.png)
 
 #### Deployment environment examination
 
 Deployment environment examination is a set of examination and scoring function tailor-made for HotDB Server cluster. This function can be used to evaluate the running environment of the cluster, whether it is a cluster deployed through manual installation or management platform installation. After the evaluation, it will display the examination results of nearly 140 items in the five dimensions of the whole cluster, to provide more comprehensive standard reference information for the optimization of cluster running environment.
 
-![](assets/white-paper/image58.png)
+![](../../assets/img/en/white-paper/image58.png)
 
 #### Information collection
 
 HotDB Server has many cluster components and complex running mechanism, thus it will be difficult to analyze and troubleshoot the abnormality or failure with incomplete information. With information tool, the required log and configuration file information can be quickly collected and analyzed when problems occur, so as to improve the speed and efficiency of troubleshooting.
 
-![](assets/white-paper/image59.png)
+![](../../assets/img/en/white-paper/image59.png)
 
 #### License management
 
 The management platform supports online update or activation of compute node licenses. It can provide functional support for various scenarios such as trial license activated as official license, trial license update, official license update, and first license activation.
 
-![](assets/white-paper/image60.png)
+![](../../assets/img/en/white-paper/image60.png)
 
 #### Network awareness
 
 The compute node supports the regular detection of the network quality from the compute node to the server where data sources and ConfigDBs are located in the cluster. Record the links that do not conform to the network quality into the ConfigDB and logs and display it on the management platform, so as to facilitate the user to troubleshoot the abnormal operation or failure of the cluster caused by network problems.
 
-![](assets/white-paper/image61.png)
+![](../../assets/img/en/white-paper/image61.png)
 
 #### Intelligent inspection
 
 It supports the visualized periodical inspection of the running status of the compute node cluster to avoid the online hidden trouble in time.
 
-![](assets/white-paper/image62.png)
+![](../../assets/img/en/white-paper/image62.png)
 
 ### Database security control
 
@@ -693,11 +693,11 @@ HotDB Server read/write splitting is completely transparent to application devel
 
 HotDB Server supports Navicat, Workbench and other third-party tools for database management.
 
-![](assets/white-paper/image63.png)
+![](../../assets/img/en/white-paper/image63.png)
 
 Diagram of Navicat Connecting to HotDB Server Data Service Port
 
-![](assets/white-paper/image64.png)
+![](../../assets/img/en/white-paper/image64.png)
 
 Diagram of Workbench Connecting to HotDB Server Data Service Port
 
@@ -705,15 +705,15 @@ Diagram of Workbench Connecting to HotDB Server Data Service Port
 
 HotDB Server products and supporting management platform support both Chinese and English language modes, and can switch online according to the actual requirements of users. In addition, we provide the product function manual in English to help the overseas users to use the product.
 
-![](assets/white-paper/image65.png)
+![](../../assets/img/en/white-paper/image65.png)
 
 ## Product Deployment and Configuration
 
-![](assets/white-paper/image66.png)
+![](../../assets/img/en/white-paper/image66.png)
 
 Cluster of HA Mode Deployment Architecture Diagram
 
-![](assets/white-paper/image67.png)
+![](../../assets/img/en/white-paper/image67.png)
 
 Cluster of Load Balancing Mode Deployment Architecture Diagram
 
@@ -832,7 +832,7 @@ After years of grinding and overcoming difficulties, HotDB Server has built a go
 
 YTO Express's original Jingang core system went down when its capacity peaked at 6.5 million units / day. After being transformed into the distributed transactional database, it successfully supported 13.5 million units / day in 2013, 23 million units / day in 2014, 53 million units / day in 2015 and 89 million units / day in 2016. The core components of Jingang system, namely high-end minicomputer, high-end storage device, WAS middleware and Oracle database are transformed into a distributed architecture composed of X86 server, JBOSS middleware, Redis, distributed transactional database HotDB Server and Hadoop big data platform, which supports the rapid growth of business volume.
 
-![](assets/white-paper/image68.png)
+![](../../assets/img/en/white-paper/image68.png)
 
 ### The People's Bank of China（PBC）
 
@@ -844,7 +844,7 @@ YTO Express's original Jingang core system went down when its capacity peaked at
 
 Focusing on the technical requirements of MySQL database of credit reference center of PBC, from multiple dimensions such as the distributed transactional database architecture design, data sharding design, data architecture governance principles, installation and deployment of MySQL database, standard initialization, operating system customization, development specification, monitoring and alarm customization, configuration specification, data migration, performance optimization, parameter optimization, high availability design, and R&D support, HotDB Server guarantees the stability, reliability and efficiency of MySQL database service of the business system, and establish a MySQL database operation and maintenance management system in line with the features of credit reference center. It has realized the monitoring of six data centers, more than 8000 physical servers and more than 3 million monitoring items. Moreover, it breaks through the NVPS bottleneck of Zabbix monitoring software and improves the data processing efficiency and throughput of Zabbix.
 
-![](assets/white-paper/image69.png)
+![](../../assets/img/en/white-paper/image69.png)
 
 ### China UnionPay Merchant Services Co., Ltd. （ China UMS）
 
@@ -856,7 +856,7 @@ Focusing on the technical requirements of MySQL database of credit reference cen
 
 The transformation of BBS system, internal management and office system, open API system, etc. are in the early stage of distributed transactional database transformation, after the distributed transactional database HotDB Server is introduced into China UMS. Based on the features of China UMS system, Hotpu technology provides solutions such as distributed transactional database architecture design, data sharding design, data architecture governance principles, and database installation and deployment. Besides, HotDB Server distributed transactional database provides functions such as complete high availability solutions, read/write splitting, DR backup, monitoring and alarm, to help China UMS successfully migrate data from heterogeneous databases and establish MySQL operation and maintenance system.
 
-![](assets/white-paper/image70.png)
+![](../../assets/img/en/white-paper/image70.png)
 
 ### China Development Bank (CDB)
 
@@ -868,5 +868,5 @@ The transformation of BBS system, internal management and office system, open AP
 
 The original student loan system of China Development Bank cannot undertake the high concurrency and high throughput at the beginning of the school year. Therefore, the domestic-developed HotDB Server is introduced. Through multiple rounds of testing, it appears that HotDB Server can ensure strong consistency of distributed transactions, strong consistency of master/slave data under abnormal scenarios, strong consistency of backup, data service stability, intelligent operation and maintenance platform, etc., and ensure the stable operation of the whole system, supports data access of TB-PB level, high concurrency, and high throughput, and greatly improve the ability of serving massive users and processing massive data.
 
-![](assets/white-paper/image71.png)
+![](../../assets/img/en/white-paper/image71.png)
 

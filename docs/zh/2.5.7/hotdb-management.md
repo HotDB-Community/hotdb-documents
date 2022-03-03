@@ -573,7 +573,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **状态：**显示各服务组件当前运行状态，组件对应的SSH未配置或服务器无法连接时显示警告提示“服务器无法连接或未配置SSH连接信息”，可排序。
 
-**操作：**【启动】![](assets/hotdb-management/image36-4.png)【关闭】![img]![](assets/hotdb-management/image36-5.png)【重启】![img]![](assets/hotdb-management/image36-6.png)，组件不同状态下显示对应的图标按钮。
+**操作：**【启动】![](assets/hotdb-management/image36-4.png)【关闭】![]![](assets/hotdb-management/image36-5.png)【重启】![]![](assets/hotdb-management/image36-6.png)，组件不同状态下显示对应的图标按钮。
 
 #### 关闭服务
 

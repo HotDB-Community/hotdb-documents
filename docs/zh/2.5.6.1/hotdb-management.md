@@ -43,7 +43,7 @@ HotDB Management包含较多特殊名词，使用前请提前阅读[名词解释
 
 HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接分布式事务数据库计算节点，为计算节点提供配置、监控、运维等服务。通过JDBC方式连接HotDB Management配置库，通过TCP/IP方式连接分布式事务数据库备份程序。浏览器的功能数据交互通过JSON方式进行传输，由HotDB Management服务层提供业务逻辑支持。
 
-![](assets/hotdb-management/image1.png)
+![](../../assets/img/zh/hotdb-management/image1.png)
 
 ### 访问方式
 
@@ -59,7 +59,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 连接成功后可出现HotDB Management登录页面。
 
-![](assets/hotdb-management/image2.png)
+![](../../assets/img/zh/hotdb-management/image2.png)
 
 **登录用户：**初次登录可使用HotDB Management默认内置的管理用户（**账户：admin密码：admin**）进入管理端界面。
 
@@ -67,11 +67,11 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 管理员首页功能主要为管理员用户提供全局视角查看所管理的集群业务数据、流量数据、峰值数据、统计数据、配置数据等。
 
-![](assets/hotdb-management/image3.png)
+![](../../assets/img/zh/hotdb-management/image3.png)
 
 ### 集群切换
 
-![](assets/hotdb-management/image4.png)
+![](../../assets/img/zh/hotdb-management/image4.png)
 
 管理员可在首页查看所有"已开启监控"的计算节点集群业务数据情况。
 
@@ -79,7 +79,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 ### 基础数据
 
-![](assets/hotdb-management/image5.png)
+![](../../assets/img/zh/hotdb-management/image5.png)
 
 基础数据为集群数据配置情况、许可证信息等。
 
@@ -91,7 +91,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 ### 统计数据
 
-![](assets/hotdb-management/image6.png)
+![](../../assets/img/zh/hotdb-management/image6.png)
 
 - 统计数据包含：总数据量、今日客户端吞吐量、今日后端吞吐量、客户端连接。总数据量、今日客户端吞吐量、今日后端吞吐量数据获取逻辑可参考[普通用户首页](#数据量与吞吐量概览)对应内容说明
 - 总数据量：显示的数值为当前集群的总数据容量，左侧的环状图为数据量TOP10的逻辑库占比情况
@@ -101,7 +101,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 ### 峰值数据
 
-![](assets/hotdb-management/image7.png)
+![](../../assets/img/zh/hotdb-management/image7.png)
 
 - 首页可查看24小时与30分钟两个时间范围的集群峰值数据，主要有计算节点与存储节点两个对象，以及连接数、QPS、TPS三个维度
 - 峰值数据包括选择的该时间范围内出现的最高峰值数据以及出现的时间点，若存在多个时间点都出现峰值数据则取最近一次出现峰值的时间
@@ -111,7 +111,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 ### 运行数据
 
-![](assets/hotdb-management/image8.png)
+![](../../assets/img/zh/hotdb-management/image8.png)
 
 - 运行数据中：集群启动时间、集群运行时间、故障切换次数（累计）、故障恢复时间（累计）、集群可用性、慢SQL与[普通用户首页](#首页)中对应显示逻辑一致
 - 计算节点状态显示当前集群内运行正常（管理端口连接正常）与异常的计算节点个数。正常时显示为绿色，异常数大于0时显示红色，没有异常时显示蓝色
@@ -120,7 +120,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 ### 配置数据
 
-![](assets/hotdb-management/image9.png)
+![](../../assets/img/zh/hotdb-management/image9.png)
 
 - 配置数据主要展示管理平台、计算节点、存储节点部分重点参数的配置情况
 - 管理平台的参数配置展示可参考，[普通用户首页](#集群安全)对应参数说明。当管理平台参数未开启时，页面会红色字体警示，若未全部开启则橙色字体警示
@@ -147,7 +147,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 - 备注：展示用户添加或编辑时输入的备注信息
 - 操作：可对用户进行"停用"、"启用""重置密码"、"编辑"、"删除"操作，超级管理员admin不能进行禁用、删除操作
 
-![](assets/hotdb-management/image10.png)
+![](../../assets/img/zh/hotdb-management/image10.png)
 
 ### 添加用户信息
 
@@ -167,14 +167,14 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 - 计算节点集群权限有**访问**与**控制**两种，只赋予"访问权限"的用户进入该集群后只能进行查询操作，对数据有影响的操作一概提示"权限不足"。赋予"控制权限"的用户自动拥有"访问权限"并可对集群进行所有操作。
 - 添加、编辑用户信息页面都可以输入"备注"信息，该备注信息非必填。
 
-![](assets/hotdb-management/image11.png)
+![](../../assets/img/zh/hotdb-management/image11.png)
 
 **用户菜单权限：**可为用户配置当访问普通用户界面进入集群管理时拥有的菜单权限。
 
 - 无特殊要求时默认赋予全部菜单权限，若需要对某个用户进行菜单屏蔽则直接去除该菜单的勾选项即可。
 - 如果HotDB Management进行过版本升级，则对历史平台用户的菜单权限需要进行检查是否需要将新版本中的菜单权限对其赋予。**目前介于菜单功能安全问题，新版本的新功能菜单权限不会默认赋予历史用户，需要用户自行添加。**
 
-![](assets/hotdb-management/image12.png)
+![](../../assets/img/zh/hotdb-management/image12.png)
 
 ### 用户密码
 
@@ -188,9 +188,9 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **功能入口：**用户管理->用户登录流水
 
-![](assets/hotdb-management/image13.png)
+![](../../assets/img/zh/hotdb-management/image13.png)
 
-![](assets/hotdb-management/image14.png)
+![](../../assets/img/zh/hotdb-management/image14.png)
 
 - 用户若当前在线，管理平台登出时间为空。
 - 所有用户的登录流水不会累加记录，单次登入、登出为一条记录，记录一次"共计时长"，用户登录流水最多可记录6个月以内的用户登录情况。
@@ -207,9 +207,9 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 集群管理页面显示已部署或已添加的计算节点集群信息。可以通过左上角搜索框模糊搜索计算节点集群名称进行快速查找。同时也可以通过右侧展开展开/隐藏更多按钮控制集群列表所需展示的信息内容。
 
-![](assets/hotdb-management/image15.png)
+![](../../assets/img/zh/hotdb-management/image15.png)
 
-![](assets/hotdb-management/image16.png)
+![](../../assets/img/zh/hotdb-management/image16.png)
 
 **表格字段说明：**
 
@@ -221,7 +221,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 > 
 > **集群名称颜色说明：**红色代表该集群已被HotDB Management停止监控；黄色代表主备模式的群高可用环境需要进行重建；蓝色代表HotDB Management正常开启监控的集群。
 
-![](assets/hotdb-management/image17.png)
+![](../../assets/img/zh/hotdb-management/image17.png)
 
 - IP地址：计算节点部署的服务器IP
 - 服务端口：计算节点对外提供数据服务的端口号，可在server.xml配置文件中修
@@ -236,7 +236,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 - 集群操作：若集群是在当前管理平台通过"集群部署"功能添加的则在集群操作栏中会显示【部署拓扑】按钮，点击可查看部署集群的组件拓扑架构；若集群模式为"主备节点"则操作栏会根据集群当前高可用重建环境是否满足切换条件来显示【重建】或【切换】按钮
 - 开启容灾模式并符合条件的集群，会现实【切换为主机房】、【移除机房】、【修复机房】等按钮，均可参考[跨机房容灾管理](cross-idc-disaster-recovery-management.md)文档
 
-![](assets/hotdb-management/image18.png)
+![](../../assets/img/zh/hotdb-management/image18.png)
 
 **功能按钮说明：**
 
@@ -253,7 +253,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 在集群管理页面点击【集群添加】进入"添加计算节点集群"页面。
 
-![](assets/hotdb-management/image19.png)
+![](../../assets/img/zh/hotdb-management/image19.png)
 
 **填写说明：**
 
@@ -285,13 +285,13 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 填写完成计算节点信息后，可通过【测试】按钮测试计算节点是否可连接。连接异常与连接成功效果如下图所示：
 
-![](assets/hotdb-management/image20.png)
+![](../../assets/img/zh/hotdb-management/image20.png)
 
-![](assets/hotdb-management/image21.png)
+![](../../assets/img/zh/hotdb-management/image21.png)
 
 若当前已有的计算节点集群数量（包括停止监控和正常监控的）已经达到平台许可证授权的可用计算节点集群组数，则计算节点集群管理页面点击【集群添加】按钮时，3s即逝提醒：`"超过平台授权的可用计算节点集群组数，禁止添加"`
 
-![](assets/hotdb-management/image22.png)
+![](../../assets/img/zh/hotdb-management/image22.png)
 
 > !Note
 >
@@ -301,7 +301,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 在主备模式集群中，如果集群满足高可用切换的条件，则在集群记录"集群操作"一栏中可点击【切换】按钮进行手动计算节点主备切换操作。
 
-![](assets/hotdb-management/image23.png)
+![](../../assets/img/zh/hotdb-management/image23.png)
 
 **高可用切换操作说明**
 
@@ -309,7 +309,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **(1) SSH与配置文件位置确认**
 
-![](assets/hotdb-management/image24.png)
+![](../../assets/img/zh/hotdb-management/image24.png)
 
 - 此步骤主要确认主备计算节点配置的SSH连接信息与配置文件（server.xml与keepalived.conf）存放地址是否填写正确
 - SSH登录方式可选择用户密码登录或免密登录，测试连接成功会自动保存连接信息
@@ -322,14 +322,14 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **(2) 切换预检测**
 
-![](assets/hotdb-management/image25.png)
+![](../../assets/img/zh/hotdb-management/image25.png)
 
 - 点击【开始检测】则对当前集群高可用环境进行检验，判断是否符合高可用切换前的要求
 - 此步骤要求所有检测项都通过检测才能进行下一步骤，否则必须人工介入解决不通过项的异常问题
 
 **(3) 高可用切换**
 
-![](assets/hotdb-management/image26.png)
+![](../../assets/img/zh/hotdb-management/image26.png)
 
 - 此步骤为高可用切换执行步骤，所有执行项正常完成才代表高可用切换成功
 - 切换前会对备计算节点设置readonly（V2.4.8以下的不会设置），切换成功后会自动取消设置
@@ -338,7 +338,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **(4) 完成切换**
 
-![](assets/hotdb-management/image27.png)
+![](../../assets/img/zh/hotdb-management/image27.png)
 
 - 到达此步骤则代表高可用切换已完成，可查看当前VIP漂移位置以及主备计算节点服务端口开启关闭情况
 
@@ -346,7 +346,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 主备模式的集群主要通过server.xml以及keepalived.conf配置文件来标识主备的角色。高可用切换只能从主角色切换至备角色，当计算节点发生过故障切换或手动切换后，为了下次计算节点故障还能顺利回切，除修复故障外，还需要通过高可用重建操作使主备计算节点的配置恢复到可切换状态。
 
-![](assets/hotdb-management/image28.png)
+![](../../assets/img/zh/hotdb-management/image28.png)
 
 不符合高可用切换条件的主备模式集群在"集群操作"栏会显示【重建】按钮。同时集群名称会以黄色背景显示告警。
 
@@ -356,7 +356,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **(1) SSH与配置文件位置检测**
 
-![](assets/hotdb-management/image29.png)
+![](../../assets/img/zh/hotdb-management/image29.png)
 
 在配置检测前，需要注意以下要点：
 
@@ -370,7 +370,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **(2) 环境重建检查**
 
-![](assets/hotdb-management/image30.png)
+![](../../assets/img/zh/hotdb-management/image30.png)
 
 点击【开始检测】需注意事项：
 
@@ -380,14 +380,14 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **(3) 高可用环境重建**
 
-![](assets/hotdb-management/image31.png)
+![](../../assets/img/zh/hotdb-management/image31.png)
 
 重建主要为修改相关配置信息具体如下说明：
 
 - 修改主备计算节点server.xml中的（haState、haNodeHost）角色信息
 - 修改主备keepalived配置文件，keepalived配置文件修改点如下：
 
-![](assets/hotdb-management/image32.png)
+![](../../assets/img/zh/hotdb-management/image32.png)
 
 高可用重建注意事项：
 
@@ -397,7 +397,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **(4) 完成重建**
 
-![](assets/hotdb-management/image33.png)
+![](../../assets/img/zh/hotdb-management/image33.png)
 
 高可用重建完成，主备计算节点服务运行正常，完成重建页面可点击【立即切换】进行手动[高可用切换](#高可用切换)操作。
 
@@ -462,7 +462,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **体检面板：**
 
-![](assets/hotdb-management/image34.png)
+![](../../assets/img/zh/hotdb-management/image34.png)
 
 **体检面板内容说明**
 
@@ -488,7 +488,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **体检报告详情：**
 
-成功完成的体检任务会生成一份体检报告，可通过点击任务记录中操作栏的![](assets/hotdb-management/image35.png)详情按钮进入"体检报告详情页面"。
+成功完成的体检任务会生成一份体检报告，可通过点击任务记录中操作栏的![](../../assets/img/zh/hotdb-management/image35.png)详情按钮进入"体检报告详情页面"。
 
 **体检报告说明**
 
@@ -501,7 +501,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 - 提示：未达标或警示的体检项告知用户该项存在的风险或建议
 - 评判标准：是否通过检测的程序评判标准
 
-![](assets/hotdb-management/image36.png)
+![](../../assets/img/zh/hotdb-management/image36.png)
 
 > !Note
 >
@@ -515,18 +515,18 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **功能入口：**登录管理用户界面->实例管理
 
-![](assets/hotdb-management/image37.png)
+![](../../assets/img/zh/hotdb-management/image37.png)
 
 实例管理信息以一个MySQL实例为单位显示一条记录，可对具体的MySQL实例进行"解除Master、添加Slave、配置高权限账号"等操作。
 
 - **解除Master：**点击【解除Master】，程序将停止此实例的复制，并且执行清空复制信息操作（stop slave; reset slave all;）
 - **添加Slave：**点击【添加Slave】可为此实例添加从机，在从机上执行"change master"操作时将此实例设置为主机。选择从机时只可以勾选没有master的实例，已经配置了master的实例需要先解除Master
 
-![](assets/hotdb-management/image38.png)
+![](../../assets/img/zh/hotdb-management/image38.png)
 
 - **配置高权限账号：**主要用于配置具备更改主从权限的账号用于解除master和添加slave操作。高权限账号需要拥有"super, replication slave, replication client, create user, reload"权限，如果存储节点没有具备这些权限的账户则需要去实例中添加
 
-![](assets/hotdb-management/image39.png)
+![](../../assets/img/zh/hotdb-management/image39.png)
 
 可点击【复制】按钮，复制添加高权限账户的SQL语句到实例中执行。
 
@@ -542,7 +542,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **功能入口：**登录管理用户界面->审计日志->管理员操作
 
-![](assets/hotdb-management/image40.png)
+![](../../assets/img/zh/hotdb-management/image40.png)
 
 **表格信息说明：**
 
@@ -560,13 +560,13 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 **功能入口：**登录管理用户界面->审计日志->普通用户操作
 
-![](assets/hotdb-management/image41.png)
+![](../../assets/img/zh/hotdb-management/image41.png)
 
 #### 平台操作
 
 可以查看所有普通用户在管理平台的操作，具体记录哪些类型的操作，可以在页面的操作类型下拉框中查看。访问IP和操作内容输入框，支持模糊查找。如果选择了计算节点组，只显示选中的计算节点组的操作记录，默认显示所有计算节点组。
 
-![](assets/hotdb-management/image42.png)
+![](../../assets/img/zh/hotdb-management/image42.png)
 
 **表格信息说明：**
 
@@ -583,7 +583,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 可以查看所有数据库用户执行安全防护相关的操作日志，具体记录哪些类型的操作，可以在页面的操作类型下拉框中查看。访问IP和拦截详情输入框，支持模糊查找。如果选择了计算节点组，只显示选中的计算节点组的操作记录，默认显示所有计算节点组。可以选择具体的计算节点，默认选中所有计算节点。
 
-![](assets/hotdb-management/image43.png)
+![](../../assets/img/zh/hotdb-management/image43.png)
 
 **表格信息说明：**
 
@@ -603,7 +603,7 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 可查看所有数据库用户在管理端口的操作记录。具体记录的操作类型，可以在页面的操作类型下拉框中查看。访问IP和拦截详情输入框，支持模糊查找。若选择了计算节点组，则只显示选中的计算节点组的操作记录，同时也可以选择具体的计算节点，默认选中所有计算节点。
 
-![](assets/hotdb-management/image44.png)
+![](../../assets/img/zh/hotdb-management/image44.png)
 
 **表格信息说明：**
 
@@ -631,31 +631,31 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 - 管理员角色下工具菜单栏的许可证管理
 
-![](assets/hotdb-management/image45.png)
+![](../../assets/img/zh/hotdb-management/image45.png)
 
 - 管理平台认证标识中的[许可证管理](#许可证管理)超链接
 
-![](assets/hotdb-management/image46.png)
+![](../../assets/img/zh/hotdb-management/image46.png)
 
 ##### 生成机器指纹
 
 - 进入许可证管理页面，操作类型选择【生成许可证】，许可证类型选择【平台许可证】，点击【生成】按钮
 
-![](assets/hotdb-management/image47.png)
+![](../../assets/img/zh/hotdb-management/image47.png)
 
 - 点击下载指纹文件超链接下载机器指纹文件（指纹文件默认保存在hotdb-management/keys目录下，格式为：management-fingerprint-年-月日-时-分-秒）
 
 - 填写申请单位信息及许可证属性（选填），并复制申请信息
 
-![](assets/hotdb-management/image48.png)
+![](../../assets/img/zh/hotdb-management/image48.png)
 
 - 点击供应商默认收件地址超链接（[service@hotdb.com](mailto:service@hotdb.com)，调用本地邮箱
 
-![](assets/hotdb-management/image49.png)
+![](../../assets/img/zh/hotdb-management/image49.png)
 
 - 粘贴申请信息到邮件，并将指纹文件上传至邮件附件发送给供应商以获取新的许可证授权文件
 
-![](assets/hotdb-management/image50.png)
+![](../../assets/img/zh/hotdb-management/image50.png)
 
 ##### 更新许可证
 
@@ -663,17 +663,17 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 - 点击【更新】按钮更新许可证，更新后刷新页面使新的许可证生效
 
-![](assets/hotdb-management/image51.png)
+![](../../assets/img/zh/hotdb-management/image51.png)
 
 - 当新上传的授权文件和当前正在使用的授权文件名一致时，点击更新按钮提示当前已存在授权文件，是否替换，点击确认替换，则替换已有的许可证授权文件进入更新流程
 
-![](assets/hotdb-management/image52.png)
+![](../../assets/img/zh/hotdb-management/image52.png)
 
 ##### 获取已有许可证信息
 
 - 进入许可证管理页面，操作类型选择【获取已有许可证信息】，许可证类型选择【平台许可证】，点击【获取】按钮获取当前管理平台许可证信息
 
-![](assets/hotdb-management/image53.png)
+![](../../assets/img/zh/hotdb-management/image53.png)
 
 许可证信息含义：
 
@@ -688,13 +688,13 @@ HotDB Management是一款B/S结构的管控产品，底层通过JDBC方式连接
 
 管理平台存在多个授权文件时，蓝色标记的许可证为当前使用的许可证
 
-![](assets/hotdb-management/image54.png)
+![](../../assets/img/zh/hotdb-management/image54.png)
 
 ##### 其他说明
 
 **(1) 供应商默认收件地址可配置**
 
-![](assets/hotdb-management/image55.png)
+![](../../assets/img/zh/hotdb-management/image55.png)
 
 连接管理平台配置库，首次配置SQL如下：
 
@@ -722,13 +722,13 @@ update `hotdb_setting` set `value``key`='emailAddress'; ='new_email@xx.cn' where
 
 若当前已有的计算节点集群数量（包括停止监控和正常监控的）已经达到平台许可证授权的可用计算节点集群组数，用户开启了"自动生成基础配置开关"且被启动的列表中包括计算节点高可用搭建记录的集群，则点击单机部署页面的【一键启动】按钮时，弹窗提醒："超过平台授权的可用计算节点集群组数，禁止启动并生成基础配置"
 
-![](assets/hotdb-management/image56.png)
+![](../../assets/img/zh/hotdb-management/image56.png)
 
 **(4) 平台许可证对集群部署的限制**
 
 普通模式部署，当计算节点集群组数已经达到许可证授权限制的可用计算节点集群组数，则集群部署在点击"参数配置"时会给出3s即逝提示：超过平台授权的可用计算节点集群组数，禁止通过参数配置功能添加集群
 
-![](assets/hotdb-management/image57.png)
+![](../../assets/img/zh/hotdb-management/image57.png)
 
 容灾模式中心机房部署和普通模式一致，即当前计算节点集群组数已达许可证限制时，不允许部署中心机房
 
@@ -736,17 +736,17 @@ update `hotdb_setting` set `value``key`='emailAddress'; ='new_email@xx.cn' where
 
 容灾机房部署受限于每组集群可用的计算节点个数，当剩余可用计算节点个数小于需要部署的容灾机房的计算节点个数时，则不允许部署。
 
-![](assets/hotdb-management/image58.png)
+![](../../assets/img/zh/hotdb-management/image58.png)
 
 **(5) 平台许可证对集群编辑的限制**
 
 当组内计算节点个数已经达到许可证授权限制的每组集群可用计算节点个数，则在点击添加计算节点图标按钮时提示：超过平台授权的可用计算节点个数，禁止添加
 
-![](assets/hotdb-management/image59.png)
+![](../../assets/img/zh/hotdb-management/image59.png)
 
 编辑集群开启容灾模式时，若组内计算节点个数超过许可证限制的每组计算节点可用个数，则在点击【保存】按钮时不保存当前集群并提示："超过平台授权的可用计算节点个数。禁止添加"
 
-![](assets/hotdb-management/image60.png)
+![](../../assets/img/zh/hotdb-management/image60.png)
 
 #### 计算节点许可证
 
@@ -754,19 +754,19 @@ update `hotdb_setting` set `value``key`='emailAddress'; ='new_email@xx.cn' where
 
 - 管理员角色下工具菜单栏的许可证管理
 
-![](assets/hotdb-management/image61.png)
+![](../../assets/img/zh/hotdb-management/image61.png)
 
 - 普通角色下关于计算节点的许可证管理
 
-![](assets/hotdb-management/image62.jpeg)
+![](../../assets/img/zh/hotdb-management/image62.jpeg)
 
 - 普通角色下工具菜单栏的许可证管理
 
-![](assets/hotdb-management/image63.png)
+![](../../assets/img/zh/hotdb-management/image63.png)
 
 ##### 生成机器指纹
 
-![](assets/hotdb-management/image64.png)
+![](../../assets/img/zh/hotdb-management/image64.png)
 
 **第一步：**选择许可证类型为【计算节点许可证】；
 
@@ -782,17 +782,17 @@ update `hotdb_setting` set `value``key`='emailAddress'; ='new_email@xx.cn' where
 
 **第七步：**若需要申请自定义许可证信息，可填写申请单位信息及许可证属性（非必须）；
 
-![](assets/hotdb-management/image65.png)
+![](../../assets/img/zh/hotdb-management/image65.png)
 
 **第八步：**点击【复制以上申请信息】，可将填写的信息复制到剪切板；
 
 **第九步：**点击邮箱地址所在的超链接，会自动打开本地已有的电子邮箱软件，然后将上一步复制的信息粘贴到邮件正文，并将机器指纹文件作为邮件附件，发送给供应商。
 
-![](assets/hotdb-management/image66.png)
+![](../../assets/img/zh/hotdb-management/image66.png)
 
 ##### 更新许可证
 
-![](assets/hotdb-management/image67.png)
+![](../../assets/img/zh/hotdb-management/image67.png)
 
 **第一步：**选择许可证类型为【计算节点许可证】；
 
@@ -810,7 +810,7 @@ update `hotdb_setting` set `value``key`='emailAddress'; ='new_email@xx.cn' where
 
 ##### 获取已有许可证信息
 
-![](assets/hotdb-management/image68.png)
+![](../../assets/img/zh/hotdb-management/image68.png)
 
 **第一步：**选择许可证类型为【计算节点许可证】；
 
@@ -830,21 +830,21 @@ update `hotdb_setting` set `value``key`='emailAddress'; ='new_email@xx.cn' where
 
 - 若计算节点未正常运行则需要手动指定计算节点安装目录，输入的目录需要以/结尾，然后点击【继续更新】；
 
-![](assets/hotdb-management/image69.png)
+![](../../assets/img/zh/hotdb-management/image69.png)
 
 - 若在计算节点安装目录key/目录下发现有同名的激活文件，则会提示是否进行替换，点击【确认替换】后会将原有的旧激活文件覆盖并将新文件放入key目录中；
 
-![](assets/hotdb-management/image70.png)
+![](../../assets/img/zh/hotdb-management/image70.png)
 
 - 更新许可证时会对许可证有效性进行校验，校验项包括许可证是否可用、授权节点数是否满足当前已有节点数、授权逻辑库数是否满足当前已有逻辑库数等。若新许可证不满足有效性校验，会提示本次更新无效；
 
-![](assets/hotdb-management/image71.png)
+![](../../assets/img/zh/hotdb-management/image71.png)
 
 - 若使用sudo方式进行许可证管理，需提前配置好sudo用户及权限，特别注意sudo用户的java环境变量也需要配置。
 
 #### 更新记录
 
-![](assets/hotdb-management/image72.png)
+![](../../assets/img/zh/hotdb-management/image72.png)
 
 - 更新记录主要记录用户对计算节点、管理平台的许可证更新授权的操作历史；
 
@@ -860,7 +860,7 @@ update `hotdb_setting` set `value``key`='emailAddress'; ='new_email@xx.cn' where
 
 管理平台的配置库支持高可用模式，当平台配置库发生故障时，可以切换至备用配置库。操作入口：管理员 -> 工具 ->平台配置数据管理
 
-![](assets/hotdb-management/image73.png)
+![](../../assets/img/zh/hotdb-management/image73.png)
 
 #### 配置库文件管理
 
@@ -885,7 +885,7 @@ spring.datasource.bakpassword=hotdb_cloud
 
 管理平台配置数据管理界面，可以对平台配置库进行切换、启用、停用、删除等管理操作。
 
-![](assets/hotdb-management/image74.png)
+![](../../assets/img/zh/hotdb-management/image74.png)
 
 **(1) 切换**
 
@@ -904,19 +904,19 @@ spring.datasource.bakpassword=hotdb_cloud
 
 主从类型的配置库切换后，原从库变为主库，原主库变为从库，且从库状态显示为"不可用"。
 
-![](assets/hotdb-management/image75.png)
+![](../../assets/img/zh/hotdb-management/image75.png)
 
 **(2) 停用**
 
 点击停用操作，配置库可用状态会更新为"不可用"并红色标识，主从复制状态为"异常"，同时停用按钮变为启用。
 
-![](assets/hotdb-management/image76.png)
+![](../../assets/img/zh/hotdb-management/image76.png)
 
 3**(3) 启用**
 
 点击启用操作，可用状态、主从复制状态、操作按钮恢复之前状态。
 
-![](assets/hotdb-management/image77.png)
+![](../../assets/img/zh/hotdb-management/image77.png)
 
 > !Note
 > 
@@ -926,21 +926,21 @@ spring.datasource.bakpassword=hotdb_cloud
 >
 > 复制延迟超过10秒，切换会提示"当前配置库主从复制延迟超过10秒，不允许执行手动切换"。
 >
-> ![](assets/hotdb-management/image78.png)
+> ![](../../assets/img/zh/hotdb-management/image78.png)
 >
 > 启用备库时，若主备配置库数据不一致，不允许切换。
 >
-> ![](assets/hotdb-management/image79.png)
+> ![](../../assets/img/zh/hotdb-management/image79.png)
 
 #### 平台配置备份数据
 
 平台配置备份数据，可以对平台配置库、配置库文件进行手动备份和定时备份。定时备份设置好定时备份计划后无需人为手动发起备份任务，由定时计划按时执行备份任务。
 
-![](assets/hotdb-management/image80.png)
+![](../../assets/img/zh/hotdb-management/image80.png)
 
 **(1) 平台服务器连接信息配置**
 
-![](assets/hotdb-management/image81.png)
+![](../../assets/img/zh/hotdb-management/image81.png)
 
 - 备份前需要配置连接信息，配置的服务器主机名必须和平台服务程序所运行服务器主机名一致。
 
@@ -952,21 +952,21 @@ spring.datasource.bakpassword=hotdb_cloud
 
 - 仅备份基础数据时，提示"仅备份基础数据时，其备份的表可以保障平台恢复基础数据时使用，特殊大表将不做备份，例如：报表、监控、操作日志智能查询、计算节点日志等功能相关的表不会被备份"。
 
-![](assets/hotdb-management/image82.png)
+![](../../assets/img/zh/hotdb-management/image82.png)
 
 - 选择备份范围为全量备份，提示"全量备份时，可能耗时会比较久，需耐心等待 "：
 
-![](assets/hotdb-management/image83.png)
+![](../../assets/img/zh/hotdb-management/image83.png)
 
 当选择配置文件备份时，主要备份appalication.properties文件,备份文件名称格式默认为ManagemetConfigFile+年月日时分秒+备份类型。且会强制勾选同时备份至远程，鼠标悬停会给出相应提示。
 
-![](assets/hotdb-management/image84.png)
+![](../../assets/img/zh/hotdb-management/image84.png)
 
 **(3) 定时备份**
 
 添加定时备份任务，定时备份平台配置库、配置文件。
 
-![](assets/hotdb-management/image85.png)
+![](../../assets/img/zh/hotdb-management/image85.png)
 
 备份数据可以选择配置库、配置文件。选择备份配置库时，选择备份范围、是否需要备份至远程；选择备份配置文件时，需填写远程备份服务器信息。
 
@@ -974,17 +974,17 @@ spring.datasource.bakpassword=hotdb_cloud
 
 手动或定时任务执行备份时，生成相应的备份记录。备份成功后，支持对备份进行还原操作。
 
-![](assets/hotdb-management/image86.png)
+![](../../assets/img/zh/hotdb-management/image86.png)
 
 **(1) 备份记录**
 
 备份记录显示包括：数据类型、备份文件名称、备份范围、发起时间、耗时、备份至远程、备份状态。备份成功后，配置库备份文件保存在管理平台对应的data/HotDB_Management_Backup目录下，配置文件保存在conf目录下，如下图：
 
-![](assets/hotdb-management/image87.png) ![](assets/hotdb-management/image88.png)
+![](../../assets/img/zh/hotdb-management/image87.png) ![](../../assets/img/zh/hotdb-management/image88.png)
 
 备份中，备份状态显示"备份中"；备份结束，备份状态显示"成功"或"失败"。当备份失败时，鼠标悬停会提示失败具体原因，可根据失败原因进行排查。若本地备份成功，远程备份失败也会给出warning提示，如下图：
 
-![](assets/hotdb-management/image89.png)
+![](../../assets/img/zh/hotdb-management/image89.png)
 
 **(2) 备份还原**
 
@@ -996,7 +996,7 @@ spring.datasource.bakpassword=hotdb_cloud
 > 
 > 还原时，若管理平台配置库发生变更，会提示"当前被还原的目标配置库同备份时的配置库不一致，是否确认继续还原"。
 > 
-> ![](assets/hotdb-management/image90.png)
+> ![](../../assets/img/zh/hotdb-management/image90.png)
 > 
 > 还原时，如果该备份文件被删除，还原失败，提示"还原文件不存在"。
 
@@ -1010,13 +1010,13 @@ spring.datasource.bakpassword=hotdb_cloud
 
 点击顶部导航栏事件通知，点击[设置](#设置)按钮，可开启或关闭"平台配置库状态检测、平台配置数据备份情况检测"的事件提醒。
 
-![](assets/hotdb-management/image91.png)
+![](../../assets/img/zh/hotdb-management/image91.png)
 
 - 当配置库为单库模式时，会隐藏"平台配置库状态检测"：
 
 - 开启事件提醒后，当配置库状态异常、主备配置库复制关系异常、以及最新一次备份记录显示配置备份异常，事件通知均给出提醒项。
 
-![](assets/hotdb-management/image92.png)
+![](../../assets/img/zh/hotdb-management/image92.png)
 
 - 异常恢复后，事件提醒自动消失。
 
@@ -1026,21 +1026,21 @@ spring.datasource.bakpassword=hotdb_cloud
 
 普通用户添加了通知策略，并且勾选了配置库复制状态、复制延迟监控项，发生配置库状态异常、复制状态异常时，可以收到邮件提醒。
 
-![](assets/hotdb-management/image93.png)
+![](../../assets/img/zh/hotdb-management/image93.png)
 
 - 配置库复制状态异常邮件提醒内容如下：
 
-![](assets/hotdb-management/image94.png)
+![](../../assets/img/zh/hotdb-management/image94.png)
 
 - 配置库复制关系异常邮件提醒内容如下：
 
-![](assets/hotdb-management/image95.png)
+![](../../assets/img/zh/hotdb-management/image95.png)
 
 **(3) 集群部署相关**
 
 管理平台配置库为单库模式时，集群部署参数配置页面显示"是否要为已有的平台配置库添加备库"开关；若当前配置库已经是双主备库或主备模式，则部署页面不显示此开关。
 
-![](assets/hotdb-management/image96.png)
+![](../../assets/img/zh/hotdb-management/image96.png)
 
 - 部署版本与已有平台配置库保持一致，不允许修改
 
@@ -1052,13 +1052,13 @@ spring.datasource.bakpassword=hotdb_cloud
 
 单机部署，选择部署计算节点或存储节点服务器时，在配置库MySQL实例选项中会显示"为已有的平台配置库添加备库"勾选框。仅在平台配置库为单库模式时才显示该勾选项且默认勾选。
 
-![](assets/hotdb-management/image97.png)
+![](../../assets/img/zh/hotdb-management/image97.png)
 
 单机部署成功后，可在配置库高可用搭建中进行平台配置库高可用搭建。
 
 - 默认不显示复制类型和平台配置库实例信息，当勾选搭建平台配置库高可用复制关系时，显示选择复制类型：双主或主从；配置库实例信息。
 
-![](assets/hotdb-management/image98.png)
+![](../../assets/img/zh/hotdb-management/image98.png)
 
 - 搭建复制前，新的备库需要导入原主配置库的数据
 
@@ -1070,11 +1070,11 @@ spring.datasource.bakpassword=hotdb_cloud
 
 **功能入口：**登录管理用户界面->页面右上角[升级中心](#升级中心)
 
-![](assets/hotdb-management/image99.png)
+![](../../assets/img/zh/hotdb-management/image99.png)
 
 点击【添加升级任务】按钮可进入升级中心发起一次升级任务，具体如下：
 
-![](assets/hotdb-management/image100.png)
+![](../../assets/img/zh/hotdb-management/image100.png)
 
 - 选择需要升级的计算节点集群
 
@@ -1092,11 +1092,11 @@ spring.datasource.bakpassword=hotdb_cloud
 
 - 当前为主备集群模式时：会显示"升级后是否会切"信息，选择"是"，则升级完毕后回切到原来的主计算节点;若选择"否"，则保持计算节点主备互换后的状态（升级过程中会执行主备高可用切换）
 
-![](assets/hotdb-management/image101.png)
+![](../../assets/img/zh/hotdb-management/image101.png)
 
 - 当前为多节点集群模式时：页面会显示"等待超时设置"（多节点集群关闭计算节点服务时需要检测计算节点上的QPS，若小于100可直接关闭，大于等于100需要等待QPS下降到小于100后才执行关闭）。若设置自定义超时等待时间或强制关闭则程序可在超过自定义时间后强制关闭或不等待直接关闭计算节点服务
 
-![](assets/hotdb-management/image102.png)
+![](../../assets/img/zh/hotdb-management/image102.png)
 
 - 当选择的集群为容灾模式集群时，容灾模式为开启状态,否则为未开启状态
 
@@ -1104,11 +1104,11 @@ spring.datasource.bakpassword=hotdb_cloud
 
 - 若上传的计算节点版本小于当前已有的计算节点版本，则会提示"更新的计算节点版本必须大于等于当前计算节点版本"
 
-![](assets/hotdb-management/image103.png)
+![](../../assets/img/zh/hotdb-management/image103.png)
 
 - 若上传的计算节点版本高于当前的管理平台的版本，则会提示"更新的计算节点版本不能高于当前管理平台版本"
 
-![](assets/hotdb-management/image104.png)
+![](../../assets/img/zh/hotdb-management/image104.png)
 
 - 【开始更新】前，"状态"都为等待更新；【开始更新】后，"状态"为正在更新；更新任务完成后"状态"为更新成功或更新失败
 
@@ -1116,11 +1116,11 @@ spring.datasource.bakpassword=hotdb_cloud
 
 - 满足合法的升级逻辑后，点击【开始更新】将执行升级任务，升级过程中日志框实时输出升级日志，若要查看更详细的日志信息可以下载详细更新日志
 
-![](assets/hotdb-management/image105.png)
+![](../../assets/img/zh/hotdb-management/image105.png)
 
 - 升级失败的集群会执行回滚流程，程序尽量保证恢复到集群最初始升级前的状态。若回滚失败则需要人工干预恢复集群。人工介入时可通过详细更新日志查看程序执行的命令与升级或回滚的阶段，帮助恢复集群
 
-![](assets/hotdb-management/image106.png)
+![](../../assets/img/zh/hotdb-management/image106.png)
 
 > !Note
 >
@@ -1132,40 +1132,40 @@ spring.datasource.bakpassword=hotdb_cloud
 >
 > 1. 当上传的计算节点更新包版本大于等于2.5.6且当前的计算节点版本小于2.5.6时，上传成功且点击“开始更新”时，跳出3秒即逝提醒“暂不允许更新，请注意JDK版本升级内容”，同时给出“JAVA8版本升级”选项
 >
-> ![](assets/hotdb-management/image107.png)
+> ![](../../assets/img/zh/hotdb-management/image107.png)
 >
 > 
 >
 > 2. JAVA8版本升级选择“手动上传”，当上传的文件不匹配“OpenJDK8U-jdk_x64_linux_hotspot_8u252b09.tar.gz” 时则提示“上传的文件不符合规范，请重新上传”
 >
-> ![](assets/hotdb-management/image108.png)
+> ![](../../assets/img/zh/hotdb-management/image108.png)
 >
 > 3. 若上传的JDK文件不符合名称规范、依旧强制性点击“开始更新”按钮时，跳出3秒即逝提醒“暂不允许更新，请注意JDK版本升级内容”
 >
-> ![](assets/hotdb-management/image109.png)
+> ![](../../assets/img/zh/hotdb-management/image109.png)
 >
 > 4. 若“JAVA8版本升级”选择“指定已有安装包存放目录”，当在对应的目录下没有找到JDK升级匹配文件时，点击“开始更新”按钮会跳出5秒即逝提醒“JDK版本升级对应的目录下没有找到匹配文件，请重新填写”
 >
-> ![](assets/hotdb-management/image110.png)
+> ![](../../assets/img/zh/hotdb-management/image110.png)
 >
 > 5. 若上传的计算节点更新tar包文件名中带有“jdk11”关键词，且文件有效，此时给出“JAVA11版本升级”入口
 > 6. JAVA11版本升级选择“手动上传”，当上传的文件不匹配“OpenJDK11U-jdk_x64_linux_hotspot_11.0.11_9.tar.gz” 时则提示“上传的文件不符合规范，请重新上传”
 >
-> ![](assets/hotdb-management/image110-1.png)
+> ![](../../assets/img/zh/hotdb-management/image110-1.png)
 >
 > 7. 与JAVA8版本升级相同，JAVA11版本升级也可选择指定已有安装包存放目录，当在对应的目录下没有找到JDK升级匹配文件时，点击“开始更新”按钮会跳出5秒即逝提醒“JDK版本升级对应的目录下没有找到匹配文件，请重新填写”
 >
-> ![](assets/hotdb-management/image110-2.png)
+> ![](../../assets/img/zh/hotdb-management/image110-2.png)
 >
 > - 授权文件升级：V2.5.6版本开始使用自研的授权，授权文件默认在计算节点的keys目录下。升级时需保证该授权可用且授权节点数不小于当前已有的节点数、授权逻辑库数不小于当前已有逻辑库数
 >
 > - 当用户上传授权文件后，若为无效授权（即该新授权不可用或者授权节点数小于当前已有的节点数、授权逻辑库数不小于当前已有逻辑库数），则页面给出提醒"计算节点上传的授权无效，请重新上传可用的新授权许可证文件"
 >
-> ![](assets/hotdb-management/image111.png)
+> ![](../../assets/img/zh/hotdb-management/image111.png)
 >
 > 当上传的计算节点更新包、JDK版本和License都有效且可用时，升级界面如下：
 >
-> ![](assets/hotdb-management/image112.png)
+> ![](../../assets/img/zh/hotdb-management/image112.png)
 
 ## OEM管理
 
@@ -1173,45 +1173,45 @@ spring.datasource.bakpassword=hotdb_cloud
 
 **功能入口：**具有管理权限的用户登录平台，通过 OEM管理的超链接进入功能页面，超链接路径需要在原访问页面url的基础上添加?page=oem，示例：<http://192.168.240.147:3324/page/index.html?page=oem>
 
-![](assets/hotdb-management/image113.png)
+![](../../assets/img/zh/hotdb-management/image113.png)
 
 ### 变更系统名称
 
 点击系统名称编辑按钮，编辑系统名称确定保存。系统名称保存成功后，管理平台登录页面与菜单页面左上角显示的名称同步修改。
 
-![](assets/hotdb-management/image114.png)
+![](../../assets/img/zh/hotdb-management/image114.png)
 
 ### 变更产品Logo
 
 页面预览区域自动显示管理平台默认的Logo图片信息，如下图：
 
-![](assets/hotdb-management/image115.png)
+![](../../assets/img/zh/hotdb-management/image115.png)
 
 点击【上传】按钮自动弹出文件选择窗口，选择需要替换的Logo图片
 
-![](assets/hotdb-management/image116.png)
+![](../../assets/img/zh/hotdb-management/image116.png)
 
 > !Note
 >
 > 要求图片大小不超过1024KB，后缀名需为".png/.jpg/.svg"。满足图片检测要求时，预览区域自动显示上传图片的效果图，如下图所示：
 > 
-> ![](assets/hotdb-management/image117.png)
+> ![](../../assets/img/zh/hotdb-management/image117.png)
 > 
-> ![](assets/hotdb-management/image118.png)
+> ![](../../assets/img/zh/hotdb-management/image118.png)
 > 
 > 导航栏Logo与浏览器页签Logo，有【与登录界面一致】的勾选框，默认不勾选。选择勾选后上传按钮会置灰不可操作，同时对应的Logo预览自动显示与【登录页面Logo】一致。
 > 
-> ![](assets/hotdb-management/image119.png)
+> ![](../../assets/img/zh/hotdb-management/image119.png)
 
 ### 保留原产品信息
 
 默认开启是，管理平台登录页面及集群选择页面底部显示HotDB的Logo与版权申明信息；选择否时，管理平台登录与集群选择页面底部隐藏HotDB的Logo与版权申明信息。如下图：
 
-![](assets/hotdb-management/image120.png)
+![](../../assets/img/zh/hotdb-management/image120.png)
 
 点击【恢复默认】，设置成功后，会将管理平台安装logo目录下的图片文件清除。同时页面系统名称自动重置为"分布式事务数据库平台"，Logo预览图恢复管理平台的默认Logo，且保留原产品信息开关自动变更为是。
 
-![](assets/hotdb-management/image121.png)
+![](../../assets/img/zh/hotdb-management/image121.png)
 
 ## 普通用户登录
 
@@ -1219,7 +1219,7 @@ spring.datasource.bakpassword=hotdb_cloud
 
 普通用户由管理用户在管理端界面的"[用户管理](#用户管理)"中创建，访问方式与管理用户登录方式一致。
 
-![](assets/hotdb-management/image122.png)
+![](../../assets/img/zh/hotdb-management/image122.png)
 
 对于首次登录的普通用户，HotDB Management强制要求修改密码，初始密码默认为`hotdb@hotpu.cn`。
 
@@ -1229,29 +1229,29 @@ spring.datasource.bakpassword=hotdb_cloud
 
 展示的计算节点集群为登录用户所拥有访问或控制权限的计算节点集群。点击具体集群可进入该集群进行查看与管理操作。当集群计算节点与配置库运行状态正常时，页面图标均为绿色（如下图），可以正常进入集群
 
-![](assets/hotdb-management/image123.png)
+![](../../assets/img/zh/hotdb-management/image123.png)
 
 当集群备计算节点不可连接但配置库连接正常时，该集群备计算节点标红且为异常
 
-![](assets/hotdb-management/image124.png)
+![](../../assets/img/zh/hotdb-management/image124.png)
 
 当配置库无法连接，计算节点运行正常时，底部配置库连接会显示异常。当部分配置库无法连接时，鼠标移入"部分异常"字样会显示具体配置库连接异常信息
 
-![](assets/hotdb-management/image125.png)
+![](../../assets/img/zh/hotdb-management/image125.png)
 
 当集群中所有计算节点与配置库都不可连接时，集群面板显示为全红。鼠标点击集群面板会显示"无法连接"，即无法进入集群
 
-![](assets/hotdb-management/image126.png)
+![](../../assets/img/zh/hotdb-management/image126.png)
 
 ## 首页
 
 HotDB Management通过数据可视方式在首页功能中实时展示计算节点集群的数据量、访问流量、集群组件状态、报警事件、安全防控等用户关心的信息。
 
-![](assets/hotdb-management/image127.jpeg)
+![](../../assets/img/zh/hotdb-management/image127.jpeg)
 
 ### 集群安全
 
-![](assets/hotdb-management/image128.png)
+![](../../assets/img/zh/hotdb-management/image128.png)
 
 - *8邮件通知：**根据通知设置中监控开关是否打开判断，分为：全部开启、未开启、部分开启，点击跳转到通知设置页面
 - **系统定时检测：**根据定时检测设置页面所有开关是否打开判断，分为：全部开启、部分开启、未开启，点击跳转到定时检测设置页面
@@ -1260,28 +1260,28 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 ### 重要信息摘要
 
-![](assets/hotdb-management/image129.png)
+![](../../assets/img/zh/hotdb-management/image129.png)
 
 - **表：**第一行表信息为"[表信息](#表信息)"页面中所有表的数量，第二行"定义异常"为在"[表结构与表索引检测](#表结构与表索引检测)"中检测状态非正常的表数量
-- **优化：**第一行"SQL日志"为HotDB Management"[操作日志智能分析](#操作日志智能分析)"功能中已记录的SQL数量。第二行"慢SQL"为HotDB Management[操作日志智能分析](#操作日志智能分析)功能中标记![](assets/hotdb-management/image130.png)的SQL。（当操作日志智能分析未开启SQL统计时，"SQL日志"与"慢SQL"显示未开启）
+- **优化：**第一行"SQL日志"为HotDB Management"[操作日志智能分析](#操作日志智能分析)"功能中已记录的SQL数量。第二行"慢SQL"为HotDB Management[操作日志智能分析](#操作日志智能分析)功能中标记![](../../assets/img/zh/hotdb-management/image130.png)的SQL。（当操作日志智能分析未开启SQL统计时，"SQL日志"与"慢SQL"显示未开启）
 - **备份：**第一行"备份总数"为HotDB Management"[备份任务](#数据备份)"功能中所有备份记录数，第二行"失败备份"为备份状态为"备份失败"的任务记录数
 - **日志：**第一行"集群日志"为HotDB Management"[计算节点日志](#计算节点日志)"功能中的总日志数量。第二行"未读"为计算节点日志中状态为"未读"的日志数量。当日志数量大于999时，页面显示999+
 
 ### 数据节点吞吐量
 
-![](assets/hotdb-management/image131.png)
+![](../../assets/img/zh/hotdb-management/image131.png)
 
 显示集群中所有数据节点的实时吞吐量，吞吐类型包括：SELECT/INSERT/UPDATE/DELETE/OTHER。点击标题可跳转至"[数据节点吞吐量](#数据节点吞吐量)"报表功能页面。
 
 ### 事件通知
 
-![](assets/hotdb-management/image132.png)
+![](../../assets/img/zh/hotdb-management/image132.png)
 
 事件来源于HotDB Management右上角事件提醒标志的历史事件。点击【更多】可链接至"[历史事件](#历史事件)"查看更多更详细的通知内容。
 
 ### 集群吞吐量
 
-![](assets/hotdb-management/image133.png)
+![](../../assets/img/zh/hotdb-management/image133.png)
 
 显示集群中计算节点每秒事务数（TPS：Transactions Per Second）和每秒查询率（QPS：Query Per Second）。
 
@@ -1295,7 +1295,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 #### 今日客户端吞吐量
 
-![](assets/hotdb-management/image134.png)
+![](../../assets/img/zh/hotdb-management/image134.png)
 
 客户端吞吐量为前端应用发往计算节点的操作（SELECT、INSERT、UPDATE、DELETE、OTHER）量统计。
 
@@ -1306,7 +1306,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 #### 今日后端吞吐量
 
-![](assets/hotdb-management/image135.png)
+![](../../assets/img/zh/hotdb-management/image135.png)
 
 后端吞吐量为计算节点发往底层数据节点的操作（SELECT、INSERT、UPDATE、DELETE、OTHER）量统计。
 
@@ -1317,7 +1317,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 #### 今日新增数据量
 
-![](assets/hotdb-management/image136.png)
+![](../../assets/img/zh/hotdb-management/image136.png)
 
 今日新增数据量为集群从今日零点起至当前时间业务数据量变化展示。若为负数则代表数据量较零点时减少了。
 
@@ -1328,7 +1328,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 #### 总数据量
 
-![](assets/hotdb-management/image137.png)
+![](../../assets/img/zh/hotdb-management/image137.png)
 
 显示集群中所有数据节点的当前总数据量数据，即所有表在正常存储节点中的数据量之和。
 
@@ -1338,13 +1338,13 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 ### 数据分片评分
 
-![](assets/hotdb-management/image138.png)
+![](../../assets/img/zh/hotdb-management/image138.png)
 
 通过打分的方式体现集群中水平分片表的拆分优劣情况，当计算节点启动不足24小时得分无法计算，页面不予显示。点击标题处会跳转到"[数据分片评分](#数据分片评分)"详情界面。评分趋势图显示近期分片合理性评分变化情况，可以选择按天查看和按小时查看。
 
 ### 今日TOP 10表
 
-![](assets/hotdb-management/image139.png)
+![](../../assets/img/zh/hotdb-management/image139.png)
 
 显示集群中当日数据量变化最大与吞吐量最高的前十业务表。
 
@@ -1355,7 +1355,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 ### 吞吐速率
 
-![](assets/hotdb-management/image140.png)
+![](../../assets/img/zh/hotdb-management/image140.png)
 
 显示前端（前端应用发往计算节点）与后端（计算节点发往数据节点）实时的SELECT、INSERT、UPDATE、DELETE的操作频率，单位（次/s）。
 
@@ -1368,11 +1368,11 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 **主备节点模式集群概览：**
 
-![](assets/hotdb-management/image141.png)
+![](../../assets/img/zh/hotdb-management/image141.png)
 
 **多节点模式集群概览：**
 
-![](assets/hotdb-management/image142.png)
+![](../../assets/img/zh/hotdb-management/image142.png)
 
 - 集群启动时间：显示当前主计算节点的实际启动时间
 - 集群运行时长：显示当前主计算节点从启动至今运行时间
@@ -1398,7 +1398,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 在管理平台页面中点击[配置](#配置)->[节点管理](#节点管理)
 
-![](assets/hotdb-management/image143.png)
+![](../../assets/img/zh/hotdb-management/image143.png)
 
 **表格信息说明：**
 
@@ -1440,7 +1440,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 - 最小空闲连接数：MySQL物理库最小空闲连接数，默认32
 - 空闲检查周期（秒）：MySQL物理库空闲检查周期，默认600
 
-![](assets/hotdb-management/image144.png)
+![](../../assets/img/zh/hotdb-management/image144.png)
 
 #### 添加节点
 
@@ -1454,7 +1454,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 以下将以添加4个数据节点（dn_01,dn_02,dn_03,dn_04）,8个存储节点（双主：ds_01,ds_02、单库：ds_03、主从：ds_04,,ds_05、MGR:ds_06,ds_07,ds_08）为例演示添加节点功能。
 
-![](assets/hotdb-management/image145.png)
+![](../../assets/img/zh/hotdb-management/image145.png)
 
 **生成示例数据：**
 
@@ -1462,15 +1462,15 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 **第二步：**点击"生成"按钮，将数据生成至表格中
 
-**第三步：**点击"操作"栏中![](assets/hotdb-management/image146.png)按钮，删除dn_02数据节点中多生成的记录
+**第三步：**点击"操作"栏中![](../../assets/img/zh/hotdb-management/image146.png)按钮，删除dn_02数据节点中多生成的记录
 
 **第四步：**将dn_03数据节点下中的"存储节点类型"修改成"从库"
 
-**第五步：**点击dn_04数据节点记录"操作"栏中![](assets/hotdb-management/image147.png)按钮，在dn_04下添加一条记录
+**第五步：**点击dn_04数据节点记录"操作"栏中![](../../assets/img/zh/hotdb-management/image147.png)按钮，在dn_04下添加一条记录
 
 **第六步：**将dn_04三条记录下的"存储节点类型"都改成MGR
 
-![](assets/hotdb-management/image148.png)
+![](../../assets/img/zh/hotdb-management/image148.png)
 
 **配置存储节点数据：**
 
@@ -1494,7 +1494,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 **第八步：**点击"保存并返回"按钮，保存配置的节点数据
 
-![](assets/hotdb-management/image149.png)
+![](../../assets/img/zh/hotdb-management/image149.png)
 
 #### 主从搭建
 
@@ -1504,7 +1504,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 在管理平台页面中点击[配置](#配置)->[节点管理](#节点管理)->"高可用配置"->[主从搭建](#主从搭建)进入主从搭建功能页面。
 
-![](assets/hotdb-management/image150.png)
+![](../../assets/img/zh/hotdb-management/image150.png)
 
 进入主从搭建页面将自动展示需要搭建的数据节点，为空则代表没有需要搭建的数据节点。
 
@@ -1519,7 +1519,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 - 选择搭建的存储节点若使用GTID方式搭建复制则要求GTID不存在断点
 - 选择搭建的存储节点当前无业务流量
 
-![](assets/hotdb-management/image151.png)
+![](../../assets/img/zh/hotdb-management/image151.png)
 
 **主从搭建流程：**
 
@@ -1543,7 +1543,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 1. 若是双主带从的数据节点进行主从搭建 则默认从库的master为主库，如果需要设置为双主备库，则需要在"存储节点管理"中编辑 "主存储节点名"字段为双主备库，然后再搭建，具体如下图：
 
-    ![](assets/hotdb-management/image152.png)
+    ![](../../assets/img/zh/hotdb-management/image152.png)
 
 2. 搭建过程中，用户进入其他菜单页面或退出登录，主从搭建任务依旧会在后台运行。可在[节点管理](#节点管理)功能页面的"主备状态"中查看搭建情况。主备状态详细说明如下：
 
@@ -1562,7 +1562,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 在管理平台页面中点击[配置](#配置)->[节点管理](#节点管理)->"高可用配置"->[切换规则](#切换规则)进入"数据节点切换配置"功能页面。
 
-![](assets/hotdb-management/image153.png)
+![](../../assets/img/zh/hotdb-management/image153.png)
 
 **功能说明：**
 
@@ -1577,7 +1577,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 5. 设置切换优先级，移动显示的数字越小则代表切换的优先级越高
 6. 点击"√"按钮保存切换规则记录，若点击"×"按钮则代表取消保存该条记录
 
-![](assets/hotdb-management/image154.png)
+![](../../assets/img/zh/hotdb-management/image154.png)
 
 **自动适配操作说明**
 
@@ -1585,7 +1585,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 2. 点击">>"全右移按钮或双击左侧显示的数据节点选择需要自动适配的选项
 3. 点击"确定并返回"按钮，程序自动为所选的数据节点适配切换规则
 
-![](assets/hotdb-management/image155.png)
+![](../../assets/img/zh/hotdb-management/image155.png)
 
 **自动适配规则说明**
 
@@ -1603,7 +1603,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 **功能入口：**在管理平台页面中点击[配置](#配置)->[节点管理](#节点管理)->"高可用配置"->[心跳暂停](#心跳暂停)进入[心跳暂停](#心跳暂停)功能页面。
 
-![](assets/hotdb-management/image156.png)
+![](../../assets/img/zh/hotdb-management/image156.png)
 
 **功能操作说明：**
 
@@ -1611,7 +1611,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 2. 点击"暂停"按钮，弹出框提示："是否暂停所选数据节点的心跳检测？"点击"确定"，程序执行心跳暂停操作且页面中该条记录的"暂停状态"为"暂停成功"；点击"取消"，程序不执行心跳暂停操作，并返回上一层
 3. 暂停时段过后，数据节点将自动恢复心跳检测
 
-![](assets/hotdb-management/image157.png)
+![](../../assets/img/zh/hotdb-management/image157.png)
 
 #### 主备切换
 
@@ -1627,19 +1627,19 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 - 节点下主从、双主的复制关系已经搭建好，且复制延时时间不得超过10秒
 - MGR节点不支持手动切换，primary由MySQL选举
 
-![](assets/hotdb-management/image158.png)
+![](../../assets/img/zh/hotdb-management/image158.png)
 
 **功能说明：**
 
 1. 主从架构的数据节点，手动切换时按照优先级最高的切换规则进行切换，切换后HotDB Server会将主和其他直连主的从存储节点置为不可用，且不能再进行切换。
 2. 双主架构的数据节点，切换后不会将主存储节点置为不可用，且可以继续手动来回切换。
 3. 当切换时检测到有master_delay的延时设置，会自动取消当前master_delay数值，切换成功后恢复延时复制的设置。若取消master_delay后的复制延迟仍大于10s，则不允许切换，master_delay也会恢复之前设置的值。
-    ![](assets/hotdb-management/image159.png)
+    ![](../../assets/img/zh/hotdb-management/image159.png)
 4. 如果优先级最高的从存储节点不可用或延迟超过10秒，程序将从剩余切换规则中依次选择优先级最高的进行切换，如果均不可用或延迟超过10秒，则切换失败，提示错误（切换失败日志提示 switch datasource datasource id failed due to: no available backup found）。
 5. 切换完成后，需要手动将其他存储节点置为可用，动态加载后会重新使用主库。但手动置为可用前建议先进行"主备一致性检测"保证数据一致性。
 6. 在切换过程中，程序会等待从存储节点追上复制。
 7. 新增"切换中..."的按钮状态，点击该按钮可以中途取消本次切换操作。
-    ![](assets/hotdb-management/image160.png)
+    ![](../../assets/img/zh/hotdb-management/image160.png)
 8. 如果成功发起了手动切换，切换时，HotDB Server会记录切换过程日志。
 
 #### 数据节点管理
@@ -1648,7 +1648,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 **功能入口：**
 
-在管理平台页面中点击[配置](#配置)->[节点管理](#节点管理)->"![](assets/hotdb-management/image161.png)"
+在管理平台页面中点击[配置](#配置)->[节点管理](#节点管理)->"![](../../assets/img/zh/hotdb-management/image161.png)"
 
 **功能说明：**
 
@@ -1661,9 +1661,9 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 7. 存储节点信息为该数据节点下配置的存储节点。
 8. 数据节点切换包括已在该数据节点下配置的切换规则。以及可为新配置的存储节点新增切换规则。也可以勾选"自动适配节点切换"为未来在该数据节点下新添加的存储节点自动适配切换规则。
 
-![](assets/hotdb-management/image162.png)
+![](../../assets/img/zh/hotdb-management/image162.png)
 
-![](assets/hotdb-management/image163.png)
+![](../../assets/img/zh/hotdb-management/image163.png)
 
 #### 启用/停用存储节点
 
@@ -1673,7 +1673,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 **功能入口：**
 
-在管理平台页面中点击[配置](#配置)->[节点管理](#节点管理)->"![](assets/hotdb-management/image164.png)"
+在管理平台页面中点击[配置](#配置)->[节点管理](#节点管理)->"![](../../assets/img/zh/hotdb-management/image164.png)"
 
 **功能操作：**
 
@@ -1683,7 +1683,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 > 
 > 请不要随意停用MGR类型的存储节点，否则会导致存储节点切换异常。
 
-![](assets/hotdb-management/image165.png)
+![](../../assets/img/zh/hotdb-management/image165.png)
 
 **启用存储节点**
 
@@ -1691,15 +1691,15 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 **功能入口：**
 
-在管理平台页面中点击[配置](#配置)->[节点管理](#节点管理)->"![](assets/hotdb-management/image166.png)"
+在管理平台页面中点击[配置](#配置)->[节点管理](#节点管理)->"![](../../assets/img/zh/hotdb-management/image166.png)"
 
 **功能说明：**
 
 1. 单库、MGR的存储节点可以直接启用。
 2. 主备或者双主架构的存储节点，在单个或批量启用存储节点时，要求被启用的存储节点在最后一次被标记为不可用后，至少有一次按照存储节点维度进行主备数据一致性检测且通过的记录，无则弹出提示窗提醒用户。
-    ![](assets/hotdb-management/image167.png)
+    ![](../../assets/img/zh/hotdb-management/image167.png)
 3. 点击[发起检测](#发起检测)会跳转到主备一致性检测页面，默认选择启用的存储节点，手动点击发起检测。若选择"直接启用"则需要人为保证启用的存储节点与该数据节点下的其他存储节点数据一致。
-    ![](assets/hotdb-management/image168.png)
+    ![](../../assets/img/zh/hotdb-management/image168.png)
 
 ### 逻辑库
 
@@ -1713,13 +1713,13 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 在逻辑库页面，输入逻辑库名称，点击"搜索"，即可搜索到相应的信息。
 
-![](assets/hotdb-management/image169.png)
+![](../../assets/img/zh/hotdb-management/image169.png)
 
 #### 添加逻辑库
 
 **功能入口：**"配置->逻辑库->添加逻辑库"
 
-![](assets/hotdb-management/image170.png)
+![](../../assets/img/zh/hotdb-management/image170.png)
 
 逻辑库名称唯一且不为空
 
@@ -1729,23 +1729,23 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 当前已有逻辑库数超过授权逻辑库数时，不允许继续添加新逻辑库。
 
-![](assets/hotdb-management/image171.png)
+![](../../assets/img/zh/hotdb-management/image171.png)
 
-![](assets/hotdb-management/image172.png)
+![](../../assets/img/zh/hotdb-management/image172.png)
 
 #### 编辑逻辑库
 
 在HotDB Management中选择[配置](#配置)->[逻辑库](#逻辑库)->[编辑逻辑库](#编辑逻辑库)，更改逻辑库名称会提示："修改名称可能导致该逻辑库相关的用户权限变更"，所以应该谨慎修改逻辑库名称。
 
-![](assets/hotdb-management/image173.png)
+![](../../assets/img/zh/hotdb-management/image173.png)
 
 点击"√"，逻辑库即编辑完成，但要生效到计算节点必须点击[动态加载](#动态加载)按钮才算编辑成功。
 
 #### 删除逻辑库
 
-![](assets/hotdb-management/image174.png)
+![](../../assets/img/zh/hotdb-management/image174.png)
 
-![](assets/hotdb-management/image175.png)
+![](../../assets/img/zh/hotdb-management/image175.png)
 
 删除逻辑库会将逻辑库下所有未创建表结构的表信息一起删除，但如果有任何一张表结构为"已创建"的表，则会弹窗提示无法删除逻辑库。
 
@@ -1763,7 +1763,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 全局表、子表、水平分片表、垂直分片表
 
-![](assets/hotdb-management/image176.png)
+![](../../assets/img/zh/hotdb-management/image176.png)
 
 #### 添加表信息
 
@@ -1773,11 +1773,11 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 自动分片可引用AUTO_CRC32，AUTO_MOD分片类型进行水平分片表添加，页面默认使用AUTO_CRC32分片类型，两者用法区别可参考页面给予的"方式说明"。更详细介绍可参照"[分片规则](#分片规则)"章节。
 
-![](assets/hotdb-management/image177.png)
+![](../../assets/img/zh/hotdb-management/image177.png)
 
 **第一步：**选择创建的水平分片表所属的逻辑库
 
-![](assets/hotdb-management/image178.png)
+![](../../assets/img/zh/hotdb-management/image178.png)
 
 **第二步：**填写水平分片表使用的分片字段
 
@@ -1801,7 +1801,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 选择逻辑库、填写默认分片字段、分片方式选择"高级分片"、选择分片规则（如果没有分片规则则参考[新增分片规则](#分片规则)）、填写表名称、点击"生成预览"、点击"保存"、[动态加载](#动态加载)。
 
-![](assets/hotdb-management/image179.png)
+![](../../assets/img/zh/hotdb-management/image179.png)
 
 可以一次性同时新增多张相同规则的表。
 
@@ -1819,7 +1819,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 1. 在分布式事务数据库平台页面中选择[配置](#配置)->[表信息](#表信息)->"添加表"。在添加表信息页面，选择子表。
 2. 在子表下，选择逻辑库、父表，输入父表关联字段，和所需要添加的子表数量，点击"+"号，即可生成带有逻辑库、父表、父表关联字段的输入栏。
-     ![](assets/hotdb-management/image180.png)
+     ![](../../assets/img/zh/hotdb-management/image180.png)
 3. 然后输入子表的名称、子表关联字段，点击"保存"，即添加了子表的配置信息。
 
 **表信息页面父表记录下添加子表：**
@@ -1832,7 +1832,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 >
 > 假如该父表下需要添加多张子表，则填写的父表关联字段必须一致。表结构已创建的父表不允许添加子表。
 
-![](assets/hotdb-management/image181.png)
+![](../../assets/img/zh/hotdb-management/image181.png)
 
 #### 编辑表信息
 
@@ -1842,19 +1842,19 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 表分为已创建和未创建两种状态，当表结构类型是未创建时可以编辑表名称、逻辑库、分片字段、分片方式、数据节点等信息
 
-![](assets/hotdb-management/image182.png)
+![](../../assets/img/zh/hotdb-management/image182.png)
 
 点击"保存"，则编辑表信息配置成功。当表结构类型是已创建时，则不允许再修改表定义，但支持通过"修改表结构"或"修改表配置"来变更表。
 
-![](assets/hotdb-management/image183.png)
+![](../../assets/img/zh/hotdb-management/image183.png)
 
 点击"修改表结构"将跳转至"[在线DDL](#在线ddl)"功能页面，点击"修改表配置"将跳转至"[分片方案在线变更](#分片方案在线变更)"功能页面。
 
 #### 表记录导出
 
-![](assets/hotdb-management/image184.png)
+![](../../assets/img/zh/hotdb-management/image184.png)
 
-![](assets/hotdb-management/image185.png)
+![](../../assets/img/zh/hotdb-management/image185.png)
 
 点击表信息页面"导出"按钮，即可对勾选的记录进行导出。若未勾选则默认导出所有表信息记录。
 
@@ -1872,7 +1872,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 点击"删除"按钮，弹出框提示："确认要删除吗？"，点击"确定"，则未创建的表的表信息配置删除成功。
 
-![](assets/hotdb-management/image186.png)
+![](../../assets/img/zh/hotdb-management/image186.png)
 
 > !Note
 > 
@@ -1884,7 +1884,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 在V2.4.6之后的版本HotDB Server弃用了HASH（包括HASH23）与AUTO分片规则。后续新增表时不再支持使用已废弃的分片规则，但历史已使用HASH（包括HASH23）与AUTO的表仍可继续使用。但需要注意："SQL中若使用字符串类型的分片字段操作，需注意大小写敏感问题（即保证SQL中分片字段大小写与数据存入时一致）"。同时管理平台若检测到系统中存在引用HASH（包括HASH23）与AUTO的表，表信息、表添加、表编辑页面会有相应提示信息。具体如下图所示：
 
-![](assets/hotdb-management/image187.png)
+![](../../assets/img/zh/hotdb-management/image187.png)
 
 **数据迁移说明：**
 
@@ -1900,7 +1900,7 @@ HotDB Management通过数据可视方式在首页功能中实时展示计算节�
 
 **以下为七种分片类型的详细介绍：**
 
-![](assets/hotdb-management/image188.png)
+![](../../assets/img/zh/hotdb-management/image188.png)
 
 **分片规则的历史变迁说明：**
 
@@ -1928,13 +1928,13 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **示例：**
 
-![](assets/hotdb-management/image189.png)
+![](../../assets/img/zh/hotdb-management/image189.png)
 
 例如快递单号，需要按单号"YTQSXXXX4587XXX"的前四位YTQS开始匹配，那么可以设置匹配规则为左起第1位开始匹配4位数，输入值填写YTQS。如果需要从末尾倒数"4587"开始匹配，则可以设置匹配规则为右起倒数第7位开始向后匹配4位数，输入值填写4587。
 
 开启按位数匹配规则时，其输入值的位数必须与匹配位数一致，否则预览时，会给出提示不允许进行预览保存。例如下图：匹配位数为2，输入值填写有超过2位数的值，则不允许保存。
 
-![](assets/hotdb-management/image190.png)
+![](../../assets/img/zh/hotdb-management/image190.png)
 
 **第六步：**输入每个数据节点匹配的值，可用换行、英文逗号、英文空格任一方式隔开
 
@@ -1946,9 +1946,9 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **第八步：**点击"保存并返回"按钮将新增分片规则保存至配置库。若需要立即生效到计算节点中还需要执行[动态加载](#动态加载)
 
-![](assets/hotdb-management/image191.png)
+![](../../assets/img/zh/hotdb-management/image191.png)
 
-![](assets/hotdb-management/image192.png)
+![](../../assets/img/zh/hotdb-management/image192.png)
 
 ##### 手动设置方式添加MATCH类型的分片规则
 
@@ -1956,7 +1956,7 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 默认选择"自动生成分片规则名"、选择MATCH分片类型、设置"手动设置"方式、选择是否按位数匹配并填写匹配规则、点击"+"添加记录、选择数据节点与匹配的值、点击"保存并返回"、[动态加载](#动态加载)
 
-![](assets/hotdb-management/image193.png)
+![](../../assets/img/zh/hotdb-management/image193.png)
 
 > !Note
 >
@@ -1982,7 +1982,7 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 在计算节点版本高于（包含）2.5.6时，增加"自动为最大/最小边界值分配路由节点"勾选项（默认不勾选），若勾选将自动按用户填写的值范围生成最大最小值边界。例如：填写1--100， 且勾选"自动为最大/最小边界值分配路由节点"，则小于1，大于100 的边界数据会自动进行分片，无需担心边界值出现无法路由的情况
 
-![](assets/hotdb-management/image194.png)
+![](../../assets/img/zh/hotdb-management/image194.png)
 
 **第六步：**输入值范围即分片字段值的范围（只允许输入整数）
 
@@ -1992,9 +1992,9 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **第九步：**点击"保存并返回"按钮，将分片规则保存至配置库中，若需要立即生效到计算节点中还需要执行[动态加载](#动态加载)
 
-![](assets/hotdb-management/image195.png)
+![](../../assets/img/zh/hotdb-management/image195.png)
 
-![](assets/hotdb-management/image196.png)
+![](../../assets/img/zh/hotdb-management/image196.png)
 
 ##### 手动设置方式添加RANGE类型的分片规则
 
@@ -2002,7 +2002,7 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 默认选择"自动生成分片规则名"、选择RANGE分片类型、设置"手动设置"方式、选择数据节点与匹配的值范围（值范围用英文冒号表示如 10:20）、点击"+"添加记录、点击"保存并返回"
 
-![](assets/hotdb-management/image197.png)
+![](../../assets/img/zh/hotdb-management/image197.png)
 
 > !Note
 >
@@ -2036,9 +2036,9 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **第九步：**点击"保存并返回"按钮，将分片规则保存至配置库中，若需要立即生效到计算节点中还需要执行[动态加载](#动态加载)
 
-![](assets/hotdb-management/image198.png)
+![](../../assets/img/zh/hotdb-management/image198.png)
 
-![](assets/hotdb-management/image199.png)
+![](../../assets/img/zh/hotdb-management/image199.png)
 
 ##### 手动设置方式添加ROUTE类型的分片规则
 
@@ -2046,7 +2046,7 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 默认选择"自动生成分片规则名"、选择ROUTE分片类型、设置"手动设置"方式、选择是否按位数匹配并填写匹配规则、选择数据节点与匹配的值、点击"+"添加记录、点击"保存并返回"
 
-![](assets/hotdb-management/image200.png)
+![](../../assets/img/zh/hotdb-management/image200.png)
 
 > !Note
 >
@@ -2076,9 +2076,9 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **第八步：**点击"保存并返回"按钮，将分片规则保存至配置库中，若需要立即生效到计算节点中还需要执行[动态加载](#动态加载)
 
-![](assets/hotdb-management/image201.png)
+![](../../assets/img/zh/hotdb-management/image201.png)
 
-![](assets/hotdb-management/image202.png)
+![](../../assets/img/zh/hotdb-management/image202.png)
 
 ##### 手动设置方式添加SIMPLE_MOD类型的分片规则
 
@@ -2086,7 +2086,7 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 默认选择"自动生成分片规则名"、选择SIMPLE_MOD分片类型、设置"手动设置"方式、设置模值、选择数据节点与匹配的值、点击"+"添加记录、点击"保存并返回"
 
-![](assets/hotdb-management/image203.png)
+![](../../assets/img/zh/hotdb-management/image203.png)
 
 > !Note
 >
@@ -2116,9 +2116,9 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **第八步：**点击"保存并返回"按钮，将分片规则保存至配置库中，若需要立即生效到计算节点中还需要执行[动态加载](#动态加载)
 
-![](assets/hotdb-management/image204.png)
+![](../../assets/img/zh/hotdb-management/image204.png)
 
-![](assets/hotdb-management/image205.png)
+![](../../assets/img/zh/hotdb-management/image205.png)
 
 ##### 手动设置方式添加CRC32_MOD类型的分片规则
 
@@ -2126,7 +2126,7 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 默认选择"自动生成分片规则名"、选择CRC32_MOD分片类型、设置"手动设置"方式、设置模值、选择数据节点与匹配的值、点击"+"添加记录、点击"保存并返回"。
 
-![](assets/hotdb-management/image206.png)
+![](../../assets/img/zh/hotdb-management/image206.png)
 
 > !Note
 >
@@ -2136,13 +2136,13 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **功能入口：**
 
-在分布式事务数据库平台页面中选择[配置](#配置)->[分片规则](#分片规则)->"编辑分片规则![](assets/hotdb-management/image207.png)"
+在分布式事务数据库平台页面中选择[配置](#配置)->[分片规则](#分片规则)->"编辑分片规则![](../../assets/img/zh/hotdb-management/image207.png)"
 
 **功能操作：**
 
 在编辑分片规则页面，更改分片规则名称、分片类型、设置方式等信息，点击"保存并返回"，则分片规则配置信息编辑完成。
 
-![](assets/hotdb-management/image208.png)
+![](../../assets/img/zh/hotdb-management/image208.png)
 
 **修改注意事项：**
 
@@ -2157,12 +2157,12 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **功能入口：**
 
-在分布式事务数据库平台页面中选择[配置](#配置)->[分片规则](#分片规则)->"删除![](assets/hotdb-management/image209.png)"
+在分布式事务数据库平台页面中选择[配置](#配置)->[分片规则](#分片规则)->"删除![](../../assets/img/zh/hotdb-management/image209.png)"
 **功能说明：**
 
 点击"删除"按钮弹出框提示："确认要删除吗？" 点击"确认"，则分片规则配置信息删除。
 
-![](assets/hotdb-management/image210.png)
+![](../../assets/img/zh/hotdb-management/image210.png)
 
 > !Note
 > 
@@ -2172,13 +2172,13 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **功能入口：**
 
-在分布式事务数据库平台页面中选择[配置](#配置)->[分片规则](#分片规则)->"复制![](assets/hotdb-management/image211.png)"
+在分布式事务数据库平台页面中选择[配置](#配置)->[分片规则](#分片规则)->"复制![](../../assets/img/zh/hotdb-management/image211.png)"
 
 **功能说明：**
 
 在分片规则页面，点击"复制"按钮，弹出新分片规则名称输入框，输入新规则名称点击"确认"，则复制分片规则成功。
 
-![](assets/hotdb-management/image212.png)
+![](../../assets/img/zh/hotdb-management/image212.png)
 
 **复制注意事项：**
 
@@ -2189,7 +2189,7 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 当分片字段为字符串类型且分片类型为AUTO或HASH时，HotDB Server对字符串大小写路由结果不同，即分片字段为字符串类型时对大小写敏感。SQL中使用分片字段时需保持与数据存入时的大小写一致才能查询出对应数据，故AUTO、HASH分片类型在2.4.7版本中已弃用。新版本建议用CRC32_MOD/AUTO_CRC32等分片类型代替HASH/AUTO分片类型。从平稳过渡角度出发，新版本容许采用HASH/AUTO分片类型的分片表，当历史数据含有AUTO、HASH相关分片方式时，页面会给出如下提示，使用时需注意。
 
-![](assets/hotdb-management/image213.png)
+![](../../assets/img/zh/hotdb-management/image213.png)
 
 ### 配置校验
 
@@ -2201,7 +2201,7 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 在分布式事务数据库平台页面中选择[配置](#配置)->[配置校验](#配置校验)：
 
-![](assets/hotdb-management/image214.png)
+![](../../assets/img/zh/hotdb-management/image214.png)
 
 **操作说明：**
 
@@ -2211,9 +2211,9 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 配置校验失败分两种类型：ERROR（红色字体显示）、WARNING（橙色字体显示）。出现ERROR级别信息需要用户立即修改解决相关问题，否则无法进行[动态加载](#动态加载)操作。当出现WARNING信息时，则代表需要关注，但不影响计算节点运行。
 
-![](assets/hotdb-management/image215.png)
+![](../../assets/img/zh/hotdb-management/image215.png)
 
-![](assets/hotdb-management/image216.png)
+![](../../assets/img/zh/hotdb-management/image216.png)
 
 **配置检验项：**
 
@@ -2280,11 +2280,11 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 >
 > 开启全局自增且唯一配置后，表中的自增序列仅允许为bigint类型"为2.5.5版本及以上的管理平台增加校验规则，如下图：
 >
-> ![](assets/hotdb-management/image217.png)
+> ![](../../assets/img/zh/hotdb-management/image217.png)
 >
 > 在集群模式且autoIncrement参数设置为2（自增仅唯一）时，若存在历史数据自增序列为smallint、tinyint 、mediumin、int类型的，会影响动态加载且提示"开启全局自增且唯一"配置后，自增序列仅允许为bigint类型。如下图：
 >
-> ![](assets/hotdb-management/image218.png)
+> ![](../../assets/img/zh/hotdb-management/image218.png)
 >
 > 该校验规则仅在计算节点参数"全局自增序列号"设置为2即"全局自增仅唯一"且计算节点模式为多节点集群时，对所有逻辑库下所有开启自增列的表进行校验。展示信息包括：不符合校验表所属的逻辑库、表名称、自增列字段名称、自增列当前类型。
 
@@ -2294,11 +2294,11 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 #### 集群元数据备份
 
-![](assets/hotdb-management/image219.png)
+![](../../assets/img/zh/hotdb-management/image219.png)
 
 **手动备份**
 
-![](assets/hotdb-management/image220.png)
+![](../../assets/img/zh/hotdb-management/image220.png)
 
 备份元数据可选择"配置库"或"配置文件"。配置库为计算节点当前使用的主配置库中的数据；配置文件为当前主计算节点中的bin、conf、lib目录下的所有文件，主备模式集群还包括备份`keepalived.conf`文件
 
@@ -2308,7 +2308,7 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **远程备份**
 
-![](assets/hotdb-management/image221.png)
+![](../../assets/img/zh/hotdb-management/image221.png)
 
 为提高备份的元数据的安全性，本功能还提供将备份的元数据同时拷贝到远程服务器中。手动发起备份时只需勾选"同时备份至远程"即可。定时备份时在计划中选择备份至远程为"是"。
 
@@ -2322,7 +2322,7 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **定时备份**
 
-![](assets/hotdb-management/image222.png)
+![](../../assets/img/zh/hotdb-management/image222.png)
 
 定时备份时间可以设置3种：每日，每周，每月，但HotDB Management中[集群元数据备份还原](#集群元数据备份还原)功能最多只能添加6条定时备份计划
 
@@ -2332,7 +2332,7 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 **集群元数据还原**
 
-![](assets/hotdb-management/image223.png)
+![](../../assets/img/zh/hotdb-management/image223.png)
 
 目前只支持对配置库数据进行还原操作，配置文件还原需要手动进行
 
@@ -2350,25 +2350,25 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 #### 基础功能及注意事项说明
 
-![](assets/hotdb-management/image224.png)
+![](../../assets/img/zh/hotdb-management/image224.png)
 
 通过计算节点下拉框可以查看当前集群内的所有计算节点，当前主计算节点显示在下拉框的最顶端，其它计算节点依次展示在下拉框中，格式为：计算节点名称（IP当前主），其它计算节点格式：计算节点名称（IP）。同步框"参数自动同步到备计算节点"默认勾选，添加或修改参数会自动同步到其他备计算节点（单计算节点模式无该同步操作），其中：【haMode:容灾模式】、【idcId:机房ID】、【idcNodeHost:对应机房主计算节点信息】、【ServerId:集群节点编号】、【clusterHost:节点所在IP】、【hsaState:计算节点高可用模式下的主备角色配置】、【HaNodeHost：计算节点高可用模式下对应的当前主计算节点连接信息】总共七个参数由各自计算节点控制，不会同步修改。
 
 对于列表可按参数名称、参数说明搜索，也可按照"基础配置、高可用配置、数据库特性、SQL语法与功能、数据库特性、数据库运维"类型进行筛选，如下图：
 
-![](assets/hotdb-management/image225.png)
+![](../../assets/img/zh/hotdb-management/image225.png)
 
 同时可对参数进行修改、重置、批量修改、批量重置操作，操作完毕后参数状态为未生效，此时可通过动态加载或重启服务的方式生效（参照生效方式列说明）
 
-![](assets/hotdb-management/image226.png)
+![](../../assets/img/zh/hotdb-management/image226.png)
 
 点击参数名超链接，会跳转到"参数详情说明"页并定位到该参数，该页面对该参数进行了详细说明。
 
-![](assets/hotdb-management/image227.png)
+![](../../assets/img/zh/hotdb-management/image227.png)
 
 点击右上角"添加参数"按钮，跳转至添加参数页面，展示计算节点所有不常用参数，不常用参数需按实际需求调整添加。
 
-![](assets/hotdb-management/image228.png)
+![](../../assets/img/zh/hotdb-management/image228.png)
 
 > !Note
 >
@@ -2397,19 +2397,19 @@ HASH（2.4.6版本之后开始弃用）、CRC32_MOD（2.4.7版本新增）、AUT
 
 1. 当主配置库发生故障后，计算节点参数配置页面显示如下：
 
-![](assets/hotdb-management/image229.png)
+![](../../assets/img/zh/hotdb-management/image229.png)
 
 2.若确定主配置库已恢复正常且与备配置库数据一致且最新时，可点击[计算节点参数配置](#计算节点参数配置)页面启用按钮对主配置库进行启用。
 
-3.点击![](assets/hotdb-management/image230.png)启用按钮后，再点击【动态加载】按钮，即可将主配置库重新启用
+3.点击![](../../assets/img/zh/hotdb-management/image230.png)启用按钮后，再点击【动态加载】按钮，即可将主配置库重新启用
 
-![](assets/hotdb-management/image231.png)
+![](../../assets/img/zh/hotdb-management/image231.png)
 
 但针对容灾模式需注意 :
 
 - 当容灾机房为当前备机房时，主配置库故障后，计算节点会将容灾机房主从配置库级联置为不可用状态。
 - 当容灾机房为当前备机房时，启用容灾机房从配置库时需要确认当前主配置库为可用状态，否则无法启用容灾机房从配置库，即启用容灾机房从配置库前必须先启用容灾机房主配置库。
-- 若要启用两个机房中任意一个配置库，需要保证当前机房内与机房间的复制状态都正常。若任一一条复制状态存在异常，动态加载会成功但有告警信息，则如下：![](assets/hotdb-management/image232.png)
+- 若要启用两个机房中任意一个配置库，需要保证当前机房内与机房间的复制状态都正常。若任一一条复制状态存在异常，动态加载会成功但有告警信息，则如下：![](../../assets/img/zh/hotdb-management/image232.png)
 
 ### 数据库用户管理
 
@@ -2417,7 +2417,7 @@ HotDB Server对计算节点用户权限控制到表级别，支持配置计算�
 
 #### 数据库用户管理信息
 
-![](assets/hotdb-management/image233.png)
+![](../../assets/img/zh/hotdb-management/image233.png)
 
 页面显示已添加的计算节点数据库用户记录，可通过用户名或者主机名的方式进行模糊查找
 
@@ -2427,13 +2427,13 @@ HotDB Server对计算节点用户权限控制到表级别，支持配置计算�
 
 点击【添加新用户】按钮，进入添加用户信息页面。添加用户信息有三个模块，分别为"基本信息"、"逻辑库权限"、"表级权限"，分三个Tab展示 。
 
-![](assets/hotdb-management/image234.png)
+![](../../assets/img/zh/hotdb-management/image234.png)
 
 **(1) 基本信息：**包含必填项"用户名"、"密码"，选填项"主机"、"用户最大连接数"、"super权限"、"全局权限"。
 
 - "用户名"、"密码"为登录计算节点时所用的数据库账户信息，"用户名"要求不能带有中文，密码必须符合规范
 
-![](assets/hotdb-management/image235.png)
+![](../../assets/img/zh/hotdb-management/image235.png)
 
 - "主机"为选填项，为空时默认为"%"，即任意IP可连接。若开启白名单限制，连接时，客户端IP需要同时在用户主机范围和"安全->[白名单](#白名单)"设置的IP范围内
 
@@ -2445,7 +2445,7 @@ HotDB Server对计算节点用户权限控制到表级别，支持配置计算�
 
 - 用户名和主机可确定用户的唯一性，即用户名+主机代表一个独立的用户。此规则与MySQL权限体系一致
 
-![](assets/hotdb-management/image236.png)
+![](../../assets/img/zh/hotdb-management/image236.png)
 
 （二）**逻辑库权限：**选择对应逻辑库设置相应权限，或者新建逻辑库并赋予权限。
 
@@ -2493,7 +2493,7 @@ HotDB Server对计算节点用户权限控制到表级别，支持配置计算�
 
 登录服务端匹配用户表时，首先以最具体的Host值排序（主机名和IP最为具体的），有相同Host值的条目再以最具体的用户名匹配。例如: 添加两个用户，用户名相同Host不同，如下图：
 
-![](assets/hotdb-management/image237.png)
+![](../../assets/img/zh/hotdb-management/image237.png)
 
 用户test通过主机192.168.200.51登录，执行INSERT/ALTER操作，由于匹配最具体的Host，ALTER无权限操作被拒绝，如下图：
 
@@ -2507,11 +2507,11 @@ ERROR 1045 (HY000): [ALTER] command denied to user 'test' to logic database 'TES
 
 配置的表级拒绝权限与全局、逻辑库、表级允许权限不冲突且优先级高于全部，例如：test用户设置了全局权限ALL，如下图：
 
-![](assets/hotdb-management/image238.png)
+![](../../assets/img/zh/hotdb-management/image238.png)
 
 test用户设置了test_ct.test_temp表拒绝权限DELETE,DROP
 
-![](assets/hotdb-management/image239.png)
+![](../../assets/img/zh/hotdb-management/image239.png)
 
 用户test登录服务端口对test_temp表进行DELETE,DROP操作被拒绝，示例如下：
 
@@ -2530,7 +2530,7 @@ ERROR 1045 (HY000): [DELETE] command refused to user 'test' to table 'TEST_TEMP'
 
 服务器菜单可配置集群中所有服务器的SSH信息，方便HotDB Management对服务器进行各种状态监控。此外也支持添加集群外的服务器到HotDB Management中进行监控。
 
-![](assets/hotdb-management/image240.png)
+![](../../assets/img/zh/hotdb-management/image240.png)
 
 #### 自动获取服务器IP
 
@@ -2538,19 +2538,19 @@ ERROR 1045 (HY000): [DELETE] command refused to user 'test' to table 'TEST_TEMP'
 
 **单节点集群模式**
 
-![](assets/hotdb-management/image241.png)
+![](../../assets/img/zh/hotdb-management/image241.png)
 
 HotDB Management自动获取：计算节点、存储节点、配置库组件的服务器IP信息。
 
 **主备节点模式集群**
 
-![](assets/hotdb-management/image242.png)
+![](../../assets/img/zh/hotdb-management/image242.png)
 
 HotDB Management自动获取：计算节点、存储节点、配置库、keepalived组件的服务器IP信息。
 
 **多节点模式集群**
 
-![](assets/hotdb-management/image243.png)
+![](../../assets/img/zh/hotdb-management/image243.png)
 
 HotDB Management自动获取：计算节点、存储节点、配置库组件的服务器IP信息。如果该集群是手动添加的，页面底部增加提示：程序无法获取LVS组件的服务器IP，请用户自行在【添加服务器】中配置。
 
@@ -2558,7 +2558,7 @@ HotDB Management自动获取：计算节点、存储节点、配置库组件的�
 
 点击添加服务器按钮，可以添加集群外的服务器。
 
-![](assets/hotdb-management/image244.png)
+![](../../assets/img/zh/hotdb-management/image244.png)
 
 - 登录方式：密码、免密，若选择免密登录需要提前设置免密通道，具体可参照[安装部署](installation-and-deployment.md)文档的"免密实现说明"模块
 - 主机名：服务器IP地址
@@ -2572,7 +2572,7 @@ HotDB Management自动获取：计算节点、存储节点、配置库组件的�
 
 默认获取的服务器的SSH连接状态为"未连接"，需要用户手动配置SSH信息，配置完成后将自动开启监控。
 
-![](assets/hotdb-management/image245.png)
+![](../../assets/img/zh/hotdb-management/image245.png)
 
 配置SSH信息只需填写：端口（默认22）、用户名、密码（免密则不用输入）
 
@@ -2598,7 +2598,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 #### 拓扑图组件说明
 
-![](assets/hotdb-management/image246.png)
+![](../../assets/img/zh/hotdb-management/image246.png)
 
 拓扑图由五层组件组成，按从上到下的位置分别为：前端应用、逻辑库、计算节点、数据节点、存储节点。
 
@@ -2637,15 +2637,15 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 1. 当所选节点未进行主备数据一致性检测时：主备数据一致显示为"--"
 
-![](assets/hotdb-management/image247.png)
+![](../../assets/img/zh/hotdb-management/image247.png)
 
 2. 当所选节点检测结果为"无法检测"或"不一致"时：主备数据一致显示"异常"且为橙色超链接，点击超链接跳转至主备一致性检测结果详情页
 
-![](assets/hotdb-management/image248.png)
+![](../../assets/img/zh/hotdb-management/image248.png)
 
 3. 当所选节点检测结果为"一致"时：主备数据一致显示为"正常"
 
-![](assets/hotdb-management/image249.png)
+![](../../assets/img/zh/hotdb-management/image249.png)
 
 4. 当所选节点检测结果为"一致"且有"存在无法检测的情况"时（即多个检测节点）：主备数据一致根据实际的检测结果匹配，检测结果一致的节点显示为"正常"，无法检测的节点显示"异常"且为橙色超链接
 
@@ -2675,7 +2675,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 #### 界面调整功能
 
-![](assets/hotdb-management/image250.png)
+![](../../assets/img/zh/hotdb-management/image250.png)
 
 **(1) 视觉切换**
 
@@ -2696,7 +2696,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 2.5D拓扑图是在原有基础拓扑图上进行视觉升级的功能。该功能显示的组件与组件信息与上述"普通视觉"拓扑图一致，功能也大致相似。
 
-![](assets/hotdb-management/image251.png)
+![](../../assets/img/zh/hotdb-management/image251.png)
 
 **2.5D拓扑图特殊说明：**
 
@@ -2714,7 +2714,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(1) 智能物理拓扑总览**
 
-![](assets/hotdb-management/image252.png)
+![](../../assets/img/zh/hotdb-management/image252.png)
 
 - 服务器总数：集群中所有组件使用的服务器个数
 - 服务器健康状态：状态有正常、预警、故障，统计图中分别对应绿色、橙色、红色显示。服务器故障原因有：服务器SSH连接信息有误、服务器网络连接异常、服务器无法正常连接；服务器预警原因有：服务器资源使用参数值达到"设置-监控面板设置-[计算节点/其他服务器资源设置](#监控面板设置)"的阈值
@@ -2724,7 +2724,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(2) 智能物理拓扑图页面**
 
-![](assets/hotdb-management/image253.png)
+![](../../assets/img/zh/hotdb-management/image253.png)
 
 **页面说明：**
 
@@ -2735,7 +2735,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(3) 服务器详情面板**
 
-![](assets/hotdb-management/image254.png)
+![](../../assets/img/zh/hotdb-management/image254.png)
 
 **服务器资源详情：**
 
@@ -2758,12 +2758,12 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 #### 添加与设置监控项
 
-![](assets/hotdb-management/image255.png)
+![](../../assets/img/zh/hotdb-management/image255.png)
 
 - 首次进入该功能需要先【添加监控项】
 - 若想对已监控的项目进行调整或者选择展示其他计算节点（多计算节点集群模式下）的监控信息可在【切换】按钮中进行设置
 
-![](assets/hotdb-management/image256.png)
+![](../../assets/img/zh/hotdb-management/image256.png)
 
 - 在多节点模式集群中可选择"切换计算节点监控显示"，默认展示集群主计算节点的监控数据。单节点与主备节点模式集群只能查看当前主计算节点监控数据
 - 用户可根据实际情况勾选展示的监控项，默认全部勾选展示。（去除勾选不会对监控数据造成影响）
@@ -2774,7 +2774,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(1) 计算节点服务状态**
 
-![](assets/hotdb-management/image257.png)
+![](../../assets/img/zh/hotdb-management/image257.png)
 
 - **客户端连接总数：**显示当前"前端应用"连接到计算节点实际建立连接的数量，单位：个
 - **计算节点线程使用情况：**显示当前连接到计算节点的连接使用的线程总数、占用线程、空闲线程，单位：个
@@ -2785,7 +2785,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(2) 计算节点流量**
 
-![](assets/hotdb-management/image258.png)
+![](../../assets/img/zh/hotdb-management/image258.png)
 
 - **网络流量监控：**显示整个集群的流量进出情况，包括前端进出流量与后端进出流量，用Bps表示。
 - **TPS：**显示整个集群每秒执行事务数量，单位：个。
@@ -2795,13 +2795,13 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(3) 计算节点服务器资源**
 
-![](assets/hotdb-management/image259.png)
+![](../../assets/img/zh/hotdb-management/image259.png)
 
 - **服务器内存使用情况：**显示计算节点所在服务器当前内存使用情况，可查看内存总量、已使用量、剩余量。
 - **服务器磁盘空间使用情况：**显示计算节点所在服务器当前磁盘空间使用情况，可查看磁盘空间总量、已使用磁盘空间量、剩余磁盘空间量。
 - **服务器CPU负载情况：**显示计算节点所在服务器CPU负载情况，具体可展示1、5、15分钟负载平均值。
 - **服务器CPU/CPU0使用率/状态信息：**显示计算节点所在服务器CPU/CPU0的使用率/状态信息情况，默认监控主计算节点CPU使用率情况。用户可点击"服务器CPU使用率"监控面板右上角【设置】按钮切换监控对象与监控视角。
-    ![](assets/hotdb-management/image260.png)
+    ![](../../assets/img/zh/hotdb-management/image260.png)
 - **服务器磁盘读写情况：**显示计算节点所在服务器的磁盘IO读写情况。
 - **服务器网络流量进出情况：**显示计算节点所在服务器的网络进出流量情况，用KBps显示。
 - **服务器磁盘IO带宽利用率：**显示计算节点所在服务器磁盘IO带宽利用率，用百分号表示。
@@ -2814,17 +2814,17 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 每日凌晨两点收集配置库和数据节点（当前主配置库和主存储节点）的数据总量，记录在管理平台的配置库中。历史数据记录满足21天后，依据历史数据记录采用多项式拟合方法，从而描绘出未来增量数据的曲线图。
 
-![](assets/hotdb-management/image261.png)
+![](../../assets/img/zh/hotdb-management/image261.png)
 
 如果计算节点配置库和管理平台配置库以及所有数据节点的历史数据记录均没有满足21天，将不会生成预测曲线，页面给出橙色提醒。
 
-![](assets/hotdb-management/image262.jpeg)
+![](../../assets/img/zh/hotdb-management/image262.jpeg)
 
 **(2) 选择预测时间**
 
 用户可以选择预测时间，最小单位为日。曲线图根据选择的预测时间来显示预测曲线的时间轴。
 
-![](assets/hotdb-management/image263.png)
+![](../../assets/img/zh/hotdb-management/image263.png)
 
 默认选择预测时间为一年后的今天。
 
@@ -2834,27 +2834,27 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 页面展示分为3个部分：数据节点，存储节点，增量预测。单页显示5条信息后分页展示。按照预测数据量降序排列，若有的数据节点或者配置库记录满21天，有的没满，则没满21天的数据节点或配置库如下图显示，并排序排在最后：
 
-![](assets/hotdb-management/image264.png)
+![](../../assets/img/zh/hotdb-management/image264.png)
 
 - 数据节点显示：数据节点/配置库名称+预测结果，鼠标悬浮至整个板块，显示超链接效果，点击整个板块，可跳转至该数据节点详情页面。配置库板块鼠标悬浮无特殊效果，点击后不会跳转。预测结果为当前选择的预测时间的预测值。
 - 存储节点显示：IP_端口_存储节点名称，显示数据节点下所有的存储节点，并标识当前主存储节点。若存储节点个数超过5个，则仅显示5个并显示超链接">>查看更多"，点击后可跳转到该数据节点详情页面。
-	![](assets/hotdb-management/image265.png)
+	![](../../assets/img/zh/hotdb-management/image265.png)
 - 增量预测：由管理平台根据当前主存储节点或主配置库的总数据量和时间计算得出预测曲线。
 
 **(4) 预测曲线**
 
 预测曲线有两个部分，一个是实际每天采集的历史数据容量，以蓝色散点形式展示；一个是根据采集的历史数据拟合生成的曲线图，以绿色实线展示。
 
-![](assets/hotdb-management/image266.png)
+![](../../assets/img/zh/hotdb-management/image266.png)
 
 - X轴：对应预测时间。由两年内的历史数据开始记录时间为起始时间，至选择预测时间加6个月为结束时间。例如：2019-02-06开始记录数据，今天是2020-01-23，选择预测时间为2020-12-23，加6个月后是2021-06-23，最终这个时间轴的长度为2019-02-06到2021-06-23。
 - Y轴：对应数据容量值。单位大小由B到TB，单位根据数值大小自动变更。
 - 历史数据记录：以蓝色散点展示，鼠标放置散点位置时，显示数据采集的时间和对应的数据容量。
-	![](assets/hotdb-management/image267.png)
+	![](../../assets/img/zh/hotdb-management/image267.png)
 - 增量预测曲线：以绿色实线展示，鼠标放置曲线上，显示具体时间和对应的预测值。曲线图下发有滚动条，方便查看具体时间段。点击右上方的放大按钮，可将图表全屏展示。
-	![](assets/hotdb-management/image268.png)
+	![](../../assets/img/zh/hotdb-management/image268.png)
 - 点击查看当前按钮，曲线只显示当前预测时间对应的预测值，与数据节点显示的预测结果一致。
-	![](assets/hotdb-management/image269.png)
+	![](../../assets/img/zh/hotdb-management/image269.png)
 
 > !Note
 >
@@ -2868,7 +2868,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **页面信息说明**
 
-![](assets/hotdb-management/image270.png)
+![](../../assets/img/zh/hotdb-management/image270.png)
 
 - 当在"配置->[服务器](#服务器)"页面有未配置SSH信息的服务器记录时，监控页面会
 
@@ -2880,9 +2880,9 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 - 通过[服务器](#服务器)筛选下拉框的模糊搜索框，可多选服务器；也可以通过状态筛选服务器，筛选项有："正常、预警、故障"
 
-![](assets/hotdb-management/image271.png)
+![](../../assets/img/zh/hotdb-management/image271.png)
 
-![](assets/hotdb-management/image272.png)
+![](../../assets/img/zh/hotdb-management/image272.png)
 
 - 点击"状态框"可进入详情页面，如上图所示
 
@@ -2894,7 +2894,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 ###### 网络质量拓扑
 
-![](assets/hotdb-management/image273.png)
+![](../../assets/img/zh/hotdb-management/image273.png)
 
 **(1) 页面信息说明**
 
@@ -2902,7 +2902,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 筛选服务器搜索框的多选下拉框。下拉框选项中为当前集群内的所有服务器（关联集群服务程序的服务器）。当前主计算节点的服务器勾选框默认勾选且置灰不可编辑。如下图：
 
-![](assets/hotdb-management/image274.png)
+![](../../assets/img/zh/hotdb-management/image274.png)
 
 **网络状态说明：**
 
@@ -2921,13 +2921,13 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 右键每台服务器可以查看服务器详情，点击跳转至"监控->物理智能拓扑"，可查看对应服务器的资源情况
 
-![](assets/hotdb-management/image275.png)
+![](../../assets/img/zh/hotdb-management/image275.png)
 
 ###### 网络质量概览
 
 默认首次进入网络质量页面时，概览展示服务器网络质量状况优先级分别是：故障>预警>正常，且无论是手动刷新检测、切换拓扑图上的状态筛选标签、筛选服务器等操作，概览面板上的数据都不会自动刷新，除非点击对应的服务器，才会展示主计算节点到该服务器的网络质量情况。
 
-![](assets/hotdb-management/image276.png)
+![](../../assets/img/zh/hotdb-management/image276.png)
 
 概览说明：
 
@@ -2935,21 +2935,21 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 - 网络质量数据为最近一次检测数据与24小时内的数据统计，分为ping小包与ping大包两类。最近一次检测数据显示最大延迟、平均延迟、丢包率。若丢包率为100%即全丢包，max、avg为"-"显示；最大延迟、平均延迟、丢包率任意一值超过管理平台设置阈值则红色显示。24小时内的数据统计显示最大延迟>2ms、平均延迟>1ms、丢包率>0%在24小时内超过阈值的次数。
 - 若最新一次检测网络质量时出现异常，则点击异常的服务器，可自动带出最新一次检测异常的时间，显示在监控质量概览页面，颜色呈"橙色"；若最近一次检测网络质量时为正常状态，也会带出该次检测时间，颜色呈"蓝色"。
 
-![](assets/hotdb-management/image277.png)
+![](../../assets/img/zh/hotdb-management/image277.png)
 
 ###### 网络质量面板
 
 网络质量面板显示对应的网络质量检测数据，默认展示当前24小时内的数据，不满24小时会隐藏拖动块，左右拖动可控制展示7天内的数据，鼠标移入折线图内可查看具体时间点的数据展示。点击左上角单选按钮，可切换ping包类型的数据展示，默认选择"ping小包"，点击"丢包率"、"平均延迟"、"最大延迟"进行隐藏或显示。该监控面板的数据采集频率与计算节点server.xml参数pingPeriod参数控制的采集频率一致，同时在网络质量故障的场景下，采集频率会自动提升为1分钟一次（网络质量故障的标准可参考pingPeriod相关参数功能描述）。
 
-![](assets/hotdb-management/image278.png)
+![](../../assets/img/zh/hotdb-management/image278.png)
 
 > !Note
 >
 > 网络质量监控显示的阈值数据，需根据[监控面板](#监控面板)设置->[集群资源监控](#集群资源监控)->网络质量进行设置，该开关默认关闭，关闭的情况下不进行数据阈值预警展示，若开关开启，页面展示依据阈值设置中的具体值进行显示以及判断，如下图：
 > 
-> ![](assets/hotdb-management/image279.png)
+> ![](../../assets/img/zh/hotdb-management/image279.png)
 > 
-> ![](assets/hotdb-management/image280.png)
+> ![](../../assets/img/zh/hotdb-management/image280.png)
 
 ###### 跨机房网络质量
 
@@ -2957,7 +2957,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 跨机房网络质量拓扑与单机房网络质量拓扑有区别。
 
-![](assets/hotdb-management/image281.png)
+![](../../assets/img/zh/hotdb-management/image281.png)
 
 **页面说明：**
 
@@ -2971,11 +2971,11 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 中心机房当前主存储节点/配置库到容灾机房的目标备存储节点/配置库之间的网络质量情况，需配置SSH权限之后才能获取监控数据，页面提示如下；
 
-![](assets/hotdb-management/image282.png)
+![](../../assets/img/zh/hotdb-management/image282.png)
 
 *8机房切换说明：**
 
-![](assets/hotdb-management/image283.png)
+![](../../assets/img/zh/hotdb-management/image283.png)
 
 如果发生机房切换，即当前容灾机房的计算节点提供服务，则仅展示容灾机房的网络质量监控状态， 中心机房所有组件均置灰显示不做任何监控。且不存在容灾机房到中心机房的网络连线，同时容灾机房的网络连线关系退化成单机房一致。
 
@@ -2983,21 +2983,21 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 事件->通知策略->添加通知策略中新增网络质量监控项，在邮件设置中开启集群资源监控，设置监控项的通知频率，网络质量超过设置的阈值，将会发出异常邮件。
 
-![](assets/hotdb-management/image284.png)
+![](../../assets/img/zh/hotdb-management/image284.png)
 
-![](assets/hotdb-management/image285.png)
+![](../../assets/img/zh/hotdb-management/image285.png)
 
 ###### 网络质量信息收集
 
 工具->信息收集功能增加网络质量检测数据。
 
-![](assets/hotdb-management/image286.png)
+![](../../assets/img/zh/hotdb-management/image286.png)
 
 检测的数据追加到对应服务器中的"服务器相关信息.txt"文件中，如下图：
 
-![](assets/hotdb-management/image287.png)
+![](../../assets/img/zh/hotdb-management/image287.png)
 
-![](assets/hotdb-management/image288.png)
+![](../../assets/img/zh/hotdb-management/image288.png)
 
 ### 监控信息管理
 
@@ -3005,7 +3005,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 #### 使用前说明
 
-![](assets/hotdb-management/image289.png)
+![](../../assets/img/zh/hotdb-management/image289.png)
 
 多节点模式集群可选择执行查询命令的范围，默认选择全部计算节点。单节点与主备节点模式集群无需选择计算节点，默认在当前主计算节点上执行
 
@@ -3015,7 +3015,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 目前可在线查询的命令只包括实际管理端口命令中的一部分，具体可执行的命令以下拉框显示为准
 
-![](assets/hotdb-management/image290.png)
+![](../../assets/img/zh/hotdb-management/image290.png)
 
 登录后可以将命令下发到3323或3325端口执行，查询结果在页面中显示，并可以通过【刷新】按钮实时获取最新数据
 
@@ -3025,7 +3025,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 功能和MySQL的`show processlist`功能类似，用来查看当前计算节点服务端连接处理情况。
 
-![](assets/hotdb-management/image291.png)
+![](../../assets/img/zh/hotdb-management/image291.png)
 
 - 点击【刷新】则重新执行一次选中的查询命令，如果新增筛选条件则刷新会显示符合筛选条件的记录
 
@@ -3033,11 +3033,11 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
     如user为jing01,user输入框需要填写完整的搜索条件jing01来筛选。
 	
-	![](assets/hotdb-management/image292.png)
+	![](../../assets/img/zh/hotdb-management/image292.png)
 	
 	若输入jing则筛选不到user为jing01的记录信息。
 	
-	![](assets/hotdb-management/image293.png)
+	![](../../assets/img/zh/hotdb-management/image293.png)
 
 - 输入框填写搜索条件后，点击【搜索】按钮触发筛选查询。点击【重置】按钮自动将搜索框输入内容清除。
 
@@ -3045,143 +3045,143 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 - 操作栏中的connection链接：鼠标悬停提示如下图所示，点击链接将取该连接的ID到命令`show @@connection`[（即前端链接状态）](#前端连接状态show-connection)中做筛选查询，注意：计算节点用户的登录信息若过期，需要重新登录
 
-![](assets/hotdb-management/image294.png)
+![](../../assets/img/zh/hotdb-management/image294.png)
 
 ##### 前端连接状态`show @@connection`
 
 显示计算节点前端连接（包括服务端、管理端）的连接状态。
 
-![](assets/hotdb-management/image295.png)
+![](../../assets/img/zh/hotdb-management/image295.png)
 
 - 该命令完成查询后，可选择连接ID，通过【关闭连接】按钮手动关闭对应连接
 
 - 操作栏session链接：鼠标悬停显示提示如下图，可查看该connection ID的[当前会话信息show @@session](#当前会话信息show-session)，点击链接取该连接的connection ID值跳转到会话信息查看窗口
 
-![](assets/hotdb-management/image296.png)![](assets/hotdb-management/image297.png)
+![](../../assets/img/zh/hotdb-management/image296.png)![](../../assets/img/zh/hotdb-management/image297.png)
 
 - 筛选的输入框与下拉框填充条件值后点击【搜索】按钮触发筛选动作，多个筛选都以and拼接
 
 - 输入框内如果提示"模糊搜索"则后端用模糊匹配，如果提示"搜索"则为精准匹配
 
-![](assets/hotdb-management/image298.png)
+![](../../assets/img/zh/hotdb-management/image298.png)
 
 - 点击【重置】按钮，清空所有筛选框的值
 
-![](assets/hotdb-management/image299.png)
+![](../../assets/img/zh/hotdb-management/image299.png)
 
 - 点击【更多搜索】可扩展更多搜索字段：
 
-![](assets/hotdb-management/image300.png)
+![](../../assets/img/zh/hotdb-management/image300.png)
 
 ##### 当前会话信息show @@session
 
 显示计算节点当前会话处理信息。
 
-![](assets/hotdb-management/image301.png)
+![](../../assets/img/zh/hotdb-management/image301.png)
 
 - 操作栏中connection、backend、lastsql链接：鼠标悬停提示："查看该会话ID对应的[前端连接状态](#前端连接状态show-connection)、[后端连接状态](#后端连接状态show-backend)、[最后执行的SQL](#borrowed连接最后执行的sql信息)。点击链接取该会话的关联信息跳转到对应查询命令
 
 - 点击connection取该记录的id值跳转到`show @@connection`
 
-![](assets/hotdb-management/image302.png)
+![](../../assets/img/zh/hotdb-management/image302.png)
 
 - 点击backend取bk_id字段值跳转到`show @@backend`
 
-![](assets/hotdb-management/image303.png)
+![](../../assets/img/zh/hotdb-management/image303.png)
 
-![](assets/hotdb-management/image304.png)
+![](../../assets/img/zh/hotdb-management/image304.png)
 
 - 点击lastsql取bk_id字段值跳转到`show @@lastsql`
 
-![](assets/hotdb-management/image305.png)
+![](../../assets/img/zh/hotdb-management/image305.png)
 
-![](assets/hotdb-management/image306.png)
+![](../../assets/img/zh/hotdb-management/image306.png)
 
 ##### 后端连接状态`show @@backend`
 
 显示计算节点的后端（即计算节点与存储节点之间）的连接情况。
 
-![](assets/hotdb-management/image307.png)
+![](../../assets/img/zh/hotdb-management/image307.png)
 
 - 该命令执行后，可通过面板中【重建连接池】按钮重建后端连接，同管理端`rebuild @@pool`命令，执行后提示："重建成功/失败"
 
 - 操作栏中session、lastsql链接：鼠标悬停提示提示："查看对应的会话信息、查看最后执行SQL"，点击链接取该后端连接的id字段值到命令`show @@session`、`show @@lastsql`中进行筛选。（`show @@session`记录中bk_id与之对应、`show @@lastsql`记录中id与之对应）。点击操作栏中session按钮：
 
-![](assets/hotdb-management/image308.png)
+![](../../assets/img/zh/hotdb-management/image308.png)
 
-![](assets/hotdb-management/image309.png)
+![](../../assets/img/zh/hotdb-management/image309.png)
 
 - 点击操作栏中lastsql按钮：
 
-![](assets/hotdb-management/image310.png)
+![](../../assets/img/zh/hotdb-management/image310.png)
 
-![](assets/hotdb-management/image311.png)
+![](../../assets/img/zh/hotdb-management/image311.png)
 
 ##### 数据节点信息`show @@datanode`
 
 显示当前集群中所有数据节点的信息：查询结果信息包含："节点的当前数据源信息"、"活动的连接数"、"节点状态"等信息。
 
-![](assets/hotdb-management/image312.png)
+![](../../assets/img/zh/hotdb-management/image312.png)
 
 ##### 存储节点信息`show @@datasource`
 
 显示当前集群中所有存储节点的信息：查询结果包含："主机IP地址"、"端口"、"物理数据库名"、"数据源不可用原因"等。
 
-![](assets/hotdb-management/image313.png)
+![](../../assets/img/zh/hotdb-management/image313.png)
 
 ##### 后端心跳状态`show @@heartbeat`
 
 显示当前集群后端心跳状态：查询结果数据源类型、主机地址、物理数据库名、心跳状态、心跳周期等。
 
-![](assets/hotdb-management/image314.png)
+![](../../assets/img/zh/hotdb-management/image314.png)
 
 ##### 同步延迟情况`show @@latency`
 
 显示同步延迟情况，查询结果包含 "当前数据源路径"、"备库数据源路径"、"同步延迟时间(单位ms)"。
 
-![](assets/hotdb-management/image315.png)
+![](../../assets/img/zh/hotdb-management/image315.png)
 
 ##### 缓冲池状态`show @@bufferpool`
 
 查询缓冲池状态，查询结果包含 "线程名"、"缓冲池大小"、"线程从本地缓存池申请缓存次数"等。
 
-![](assets/hotdb-management/image316.png)
+![](../../assets/img/zh/hotdb-management/image316.png)
 
 ##### 处理线程信息`show @@processor`
 
 显示当前处理线程信息：查询结果包含 "线程名"、"前/后端接收字节数"、"前/后端发送字节数"等 。
 
-![](assets/hotdb-management/image317.png)
+![](../../assets/img/zh/hotdb-management/image317.png)
 
 ##### 线程池状态`show @@threadpool`
 
 显示当前线程池状态：查询结果包含 "线程池名称"、"线程池大小"、"活跃线程数"等,鼠标移动到列名上会有中文提示。
 
-![](assets/hotdb-management/image318.png)
+![](../../assets/img/zh/hotdb-management/image318.png)
 
 ##### 长事物信息`show @@longtransaction`
 
 显示长事务信息，查询结果包含 "主机IP地址"、"端口"、"长事物id"等,鼠标移动到列名上会有中文提示。
 
-![](assets/hotdb-management/image319.png)
+![](../../assets/img/zh/hotdb-management/image319.png)
 
 ##### 计算节点服务器状态`show @@server
 
 显示计算节点服务器状态：查询结果包含计算节点服务器的运行启动信息，有："内存使用情况"、"读写模式"、"启动用时"、"高可用使用角色"等,鼠标移动到列名上会有中文提示。
 
-![](assets/hotdb-management/image320.png)
+![](../../assets/img/zh/hotdb-management/image320.png)
 
 ##### Borrowed连接最后执行的SQL信息
 
 查询Borrowed连接最后执行的SQL信息，通常用于查看连接异常信息时使用，结果包含："最后执行的SQL语句"、"后端mysql连接id"、"主机信息"、"节点信息"等。
 
-![](assets/hotdb-management/image321.png)
+![](../../assets/img/zh/hotdb-management/image321.png)
 
 ##### 获取conf目录下文件及最后修改的时间说明
 
 显示配置文件的修改记录。
 
-![](assets/hotdb-management/image322.png)
+![](../../assets/img/zh/hotdb-management/image322.png)
 
 ### JOIN关系分析
 
@@ -3197,11 +3197,11 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 #### JOIN关系图
 
-选择一个逻辑库和表名称后，可查看所有JOIN关系图（如下图）或跨库有交叉JOIN关系图。管理平台在每天零点刷新解析结果，也可点击![](assets/hotdb-management/image323.png)手动刷新解析结果。
+选择一个逻辑库和表名称后，可查看所有JOIN关系图（如下图）或跨库有交叉JOIN关系图。管理平台在每天零点刷新解析结果，也可点击![](../../assets/img/zh/hotdb-management/image323.png)手动刷新解析结果。
 
 **JOIN关系图中的顶点与边说明：**
 
-顶点表示表，根据表类型分为四种颜色（![](assets/hotdb-management/image324.png)）
+顶点表示表，根据表类型分为四种颜色（![](../../assets/img/zh/hotdb-management/image324.png)）
 
 顶点A到顶点B之间的边表示表A与表B之间的所有／跨库有交叉JOIN（根据过滤选项）关系；黄色的边表示表之间存在因关联字段不是分片字段等原因，属于跨库有交叉JOIN的查询语句
 
@@ -3213,7 +3213,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 点击顶点显示[JOIN关系详情](#join关系详情)
 
-![](assets/hotdb-management/image325.png)
+![](../../assets/img/zh/hotdb-management/image325.png)
 
 **跨库有交叉JOIN查询判断逻辑：**
 
@@ -3224,7 +3224,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 - JOIN查询中存在全局表，这些全局表所在节点必须包含所有其他分片表、子表所在的节点
 - 若一个JOIN查询中仅有垂直分片表，这些表的节点都必须在同一个节点中
 
-![](assets/hotdb-management/image326.png)
+![](../../assets/img/zh/hotdb-management/image326.png)
 
 > !Note
 >
@@ -3255,7 +3255,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 点击顶点显示所有／跨库有交叉JOIN关系详情。此文档以所有JOIN关系详情为例，表格信息格式说明如下：
 
-- **JOIN关系表：**与当前表有JOIN关系的表。表名称颜色根据表类型与顶点颜色一致（![](assets/hotdb-management/image324.png)）。点击表名称，跳转到该表的JOIN关系详情页面
+- **JOIN关系表：**与当前表有JOIN关系的表。表名称颜色根据表类型与顶点颜色一致（![](../../assets/img/zh/hotdb-management/image324.png)）。点击表名称，跳转到该表的JOIN关系详情页面
 - **当前表关联字段：**JOIN查询语句中当前表的关联字段。多个关联字段用括号表示如（a,b,c）
 - **JOIN关系表关联字段：**JOIN查询语句中JOIN关系表的关联字段。多个关联字段用括号表示如（a,b,c）
 - **执行情况：**合并显示JOIN关系表、当前表关联字段和JOIN关系表关联字段完全相同的JOIN查询语句。点击【点击展开】查看被折叠的所有JOIN查询语句的执行详情
@@ -3266,13 +3266,13 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 >
 > **关联字段说明：**该表中用于JOIN关联查询的字段，例如：SELECT * FROM Persons INNER JOIN Orders ON Persons.id = Orders.oid，则id为Persons的关联字段，oid为Orders的关联字段
 
-![](assets/hotdb-management/image327.png)
+![](../../assets/img/zh/hotdb-management/image327.png)
 
 点击【点击展开】查看被折叠的所有JOIN查询语句的执行详情。点击计算节点平均时间下的查看详情将跳转到[操作日志智能分析页面](#操作日志智能分析)。
 
-![](assets/hotdb-management/image328.png)
+![](../../assets/img/zh/hotdb-management/image328.png)
 
-![](assets/hotdb-management/image329.png)
+![](../../assets/img/zh/hotdb-management/image329.png)
 
 ## 报表
 
@@ -3286,13 +3286,13 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 图形模式有四个维度，默认显示集群中所有成员的数据量报表，也可以选择显示数据节点、逻辑库和表的数据量报表。
 
-![](assets/hotdb-management/image330.png)
+![](../../assets/img/zh/hotdb-management/image330.png)
 
 - 默认显示计算节点集群中所有成员的数据量，分为4个图形区。4个图形区数据统计方式统一，统计单位可选择[数据行数或数据容量](#统计单位说明)。
 
 **(1) 集群数据量变化趋势图**
 
-![](assets/hotdb-management/image331.png)
+![](../../assets/img/zh/hotdb-management/image331.png)
 
 - 此图展示整个计算节点集群中数据量在一定时间内的变化趋势
 - 图形为折线图，两个坐标轴分别为时间和数据量
@@ -3301,9 +3301,9 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(2) 集群数据量分布图**
 
-![](assets/hotdb-management/image332.png)
+![](../../assets/img/zh/hotdb-management/image332.png)
 
-![](assets/hotdb-management/image333.png)
+![](../../assets/img/zh/hotdb-management/image333.png)
 
 - 此图展示某个时间点时，整个计算节点集群中数据量在数据节点维度上的分布情况
 - 图形支持柱图和饼图，可以选择切换。坐标轴为数据节点和数据量
@@ -3314,9 +3314,9 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(3) 逻辑库数据量分布图**
 
-![](assets/hotdb-management/image334.png)
+![](../../assets/img/zh/hotdb-management/image334.png)
 
-![](assets/hotdb-management/image335.png)
+![](../../assets/img/zh/hotdb-management/image335.png)
 
 - 此图展示某个时间点时，整个计算节点集群中数据量在逻辑库维度上的分布情况
 - 图形支持柱图和饼图，可以选择切换。坐标轴为逻辑库和数据量
@@ -3327,9 +3327,9 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(4) 集群表数据量分布图**
 
-[](assets/hotdb-management/image336.png)
+[](../../assets/img/zh/hotdb-management/image336.png)
 
-![](assets/hotdb-management/image337.png)
+![](../../assets/img/zh/hotdb-management/image337.png)
 
 - 此图展示某个时间点时，整个计算节点集群中数据量在表维度上的分布情况
 - 图形支持柱图和饼图，可以选择切换
@@ -3343,7 +3343,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 集群数据量除了使用[图形模式](#图形模式)表示外，还可以通过[表格模式](#表格模式)查看整个集群中每张表在每个数据节点下的数据分布情况。
 
-![](assets/hotdb-management/image338.png)
+![](../../assets/img/zh/hotdb-management/image338.png)
 
 - 界面记录可通过【导出】按钮将表数据量信息导出到本地，目前支持导出格式为"CSV"或"XLS"的文件
 - 统计方式分为：[数据行数或数据容量](#统计单位说明)。统计方式为数据行数时1K=1000,1M=1000*1000；统计方式为数据容量时 1KB = 1024B，1MB = 1024B * 1024以此类推
@@ -3363,7 +3363,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 图形模式有四个维度，可显示整个集群的吞吐量情况，也可以选择显示操作类型、逻辑库和表的吞吐量情况。
 
-![](assets/hotdb-management/image339.png)
+![](../../assets/img/zh/hotdb-management/image339.png)
 
 - 各吞吐量图表的统计刻度与统计方式一致
 - 统计刻度可选择：月、日、小时、分
@@ -3371,7 +3371,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(1) 计算节点吞吐量变化趋势图**
 
-![](assets/hotdb-management/image340.png)
+![](../../assets/img/zh/hotdb-management/image340.png)
 
 - 展示整个计算节点集群中吞吐量在一定时间内的变化趋势。以及各个操作在总吞吐量中的占比
 - 图为堆积图，两个坐标轴分别为时间和吞吐量。面积中不同色条表示不同操作的吞吐量
@@ -3380,7 +3380,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(2) 计算节点吞吐类型对比图**
 
-![](assets/hotdb-management/image341.png)
+![](../../assets/img/zh/hotdb-management/image341.png)
 
 - 描绘某个时间段内，整个计算节点集群吞吐量中各个操作的占比情况
 - 支持柱图和饼图，默认为饼图，可以选择切换。坐标轴为操作类型和吞吐量
@@ -3390,7 +3390,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(3) 逻辑库吞吐量对比图**
 
-![](assets/hotdb-management/image342.png)
+![](../../assets/img/zh/hotdb-management/image342.png)
 
 - 展示某个时间段内，整个计算节点集群中吞吐量在逻辑库维度上的对比情况
 - 图为堆积柱图，各个层均显示数值。坐标轴为逻辑库和吞吐量
@@ -3401,7 +3401,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(4) 表吞吐量对比图**
 
-![](assets/hotdb-management/image343.png)
+![](../../assets/img/zh/hotdb-management/image343.png)
 
 - 展示某个时间段内，整个计算节点集群中吞吐量在表维度上的对比情况
 - 图为堆积柱图，各个层均显示数值。坐标轴为表和吞吐量
@@ -3412,13 +3412,13 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 #### 逻辑库维度吞吐量报表
 
-![](assets/hotdb-management/image344.png)
+![](../../assets/img/zh/hotdb-management/image344.png)
 
 逻辑库维度分为3个图形区。3个图形区统计时间刻度和统计方式一致，支持逻辑库筛选，右上角有【返回计算节点视图】吞吐量报表按钮
 
 #### 表维度吞吐量报表
 
-![](assets/hotdb-management/image345.png)
+![](../../assets/img/zh/hotdb-management/image345.png)
 
 表维度分为3个图形区。3个图形区统计时间刻度和统计方式一致，支持通过选框切换表和逻辑库，切换逻辑库时默认切换到该逻辑库下id最小的表，右上角有返回计算节点视图维度吞吐量报表按钮
 
@@ -3426,7 +3426,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 计算节点吞吐量除了使用[图形模式](#图形模式)展示外，还可以通过[表格模式](#表格模式)查看。包括整个集群每张表的SELECT、UPDATE、DELETE、INSERT、OTHER五种类型的操作次数。
 
-![](assets/hotdb-management/image346.png)
+![](../../assets/img/zh/hotdb-management/image346.png)
 
 - 统计方式包含：总吞吐量、平均吞吐速率
 - 统计刻度：月、日、小时、分
@@ -3442,13 +3442,13 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 数据节点吞吐量图形模式包含数据节点吞吐总量对比图、数据节点吞吐量变化趋势、集群吞吐类型对比图、逻辑库吞吐量对比图、表吞吐量对比图五个维度。
 
-![](assets/hotdb-management/image347.png)
+![](../../assets/img/zh/hotdb-management/image347.png)
 
-![](assets/hotdb-management/image348.png)
+![](../../assets/img/zh/hotdb-management/image348.png)
 
 **(1) 数据节点吞吐总量对比图**
 
-![](assets/hotdb-management/image349.png)
+![](../../assets/img/zh/hotdb-management/image349.png)
 
 - 展示各个节点吞吐总量，只计算当前数据节点下主存储节点的吞吐量
 - 操作量从计算节点启动开始累计，数据存储在管理平台配置库内。默认数据保留365天，也可以在管理平台配置文件application.properties中调整"hotdb.management.dataExpired.day"参数
@@ -3457,7 +3457,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(2) 数据节点吞吐量变化趋势**
 
-![](assets/hotdb-management/image350.png)
+![](../../assets/img/zh/hotdb-management/image350.png)
 
 - 展示所有数据节点吞吐量在一定时间内的变化趋势，以及各个操作在总吞吐量中的占比
 - 图为堆积图，两个坐标轴分别为时间和吞吐量。面积中不同色条表示不同操作的吞吐量
@@ -3467,7 +3467,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(3) 集群吞吐类型对比图**
 
-![](assets/hotdb-management/image351.png)
+![](../../assets/img/zh/hotdb-management/image351.png)
 
 - 展示某个时间段内所有数据节点的吞吐量中各个操作的占比情况
 - 支持柱图和饼图，默认为饼图，可以选择切换。坐标轴为操作类型和吞吐量
@@ -3477,7 +3477,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(4) 逻辑库吞吐量对比图**
 
-![](assets/hotdb-management/image352.png)
+![](../../assets/img/zh/hotdb-management/image352.png)
 
 - 展示某个时间段内所有数据节点节点的吞吐量在逻辑库维度上的对比情况
 - 图为堆积柱图，各个层均显示数值。坐标轴为逻辑库和吞吐量
@@ -3488,7 +3488,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 **(5) 表吞吐量对比图**
 
-![](assets/hotdb-management/image353.png)
+![](../../assets/img/zh/hotdb-management/image353.png)
 
 - 展示某个时间段内所有数据节点的吞吐量在表维度上的对比情况
 - 图为堆积柱图，各个层均显示数值。坐标轴为表和吞吐量
@@ -3502,7 +3502,7 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 数据节点吞吐量除了使用[图形模式](#图形模式)展示外，还可以通过[表格模式](#表格模式)查看。包括整个集群每张表在每个节点中的SELECT、UPDATE、DELETE、INSERT、OTHER五种类型的操作次数。
 
-![](assets/hotdb-management/image354.png)
+![](../../assets/img/zh/hotdb-management/image354.png)
 
 - 统计方式包含：总吞吐量、平均吞吐速率
 - 统计刻度：月、日、小时、分
@@ -3518,9 +3518,9 @@ HotDB Management通过可视化方式将集群中前端应用、逻辑库、计�
 
 图形模式主要显示当前计算节点总应用连接数、三个TOP1连接（连接时长最长的连接、操作次数最多的连接、连接次数最多的连接）、连接总时长占比、连接总次数占比、操作次数占比、连接前端应用IP分布图、连接用户分布图、连接逻辑库分布图。
 
-![](assets/hotdb-management/image355.png)
+![](../../assets/img/zh/hotdb-management/image355.png)
 
-![](assets/hotdb-management/image356.png)
+![](../../assets/img/zh/hotdb-management/image356.png)
 
 可按时间范围筛选所选范围内的连接情况，默认显示最近三个月的所有连接信息。该时间范围对图形模式下所有图标有效
 
@@ -3619,7 +3619,7 @@ Y轴默认显示"连接总时长"，可通过"按连接属性查询"筛选框将
 
 除了通过图形模式展示连接信息以外，还可以通过表格模式查看每一条连接信息的详细情况，并支持导出到本地保存
 
-![](assets/hotdb-management/image357.png)
+![](../../assets/img/zh/hotdb-management/image357.png)
 
 - 显示的记录为具体每一组连接计算节点的前端应用信息（IP+连接用户+逻辑库标识），相同的连接信息会聚合显示成一条
 - 多节点模式集群支持查询每个连接，具体是通过哪个计算节点服务连接到逻辑库的
@@ -3648,13 +3648,13 @@ MySQL自身的mysqldump工具是通过单线程工作依次导出多个表，缺
 
 **(1) 发起备份**
 
-![](assets/hotdb-management/image358.png)
+![](../../assets/img/zh/hotdb-management/image358.png)
 
 点击"管理->数据备份->备份任务->【发起备份】"可手动发起一次备份任务
 
 **(2) 选择备份方式**
 
-![](assets/hotdb-management/image359.png)
+![](../../assets/img/zh/hotdb-management/image359.png)
 
 - **逻辑库：**备份以逻辑库为单位进行备份，可一次选择一个或多个逻辑库进行备份
 - **备份类型：**分为完整备份和增量备份。"完整备份"是备份当前逻辑库中的所有数据，"增量备份"是在上一次完整或增量备份的基础上继续备份新的binlog。注意：第一次增量备份时，必须保证选择备份的逻辑库之前已有完整备份，否则无法发起增量备份
@@ -3663,7 +3663,7 @@ MySQL自身的mysqldump工具是通过单线程工作依次导出多个表，缺
 
 **(3) 备份设置**
 
-![](assets/hotdb-management/image360.png)
+![](../../assets/img/zh/hotdb-management/image360.png)
 
 - **同时备份上一次备份到现在的binlog：**默认勾选，用于备份上一次完整备份到当前完整备份的binlog。注意：这是一个保险措施，但在第一次进行完整备份时会找不到上一次完整备份，故该选项第一次完整备份时无意义
 - **本地备份根目录：**即备份文件存储在各个存储节点所在服务器的本地目录，该目录需要提前在各个节点所在的服务器创建好，且要求各个服务器目录一致，否则备份失败，备份失败信息提示：Failed to create backup directory
@@ -3683,7 +3683,7 @@ MySQL自身的mysqldump工具是通过单线程工作依次导出多个表，缺
 
 **(4) 备份任务记录**
 
-![](assets/hotdb-management/image361.png)
+![](../../assets/img/zh/hotdb-management/image361.png)
 
 已完成或正在执行的备份任务会显示在"备份任务"页面
 
@@ -3697,7 +3697,7 @@ MySQL自身的mysqldump工具是通过单线程工作依次导出多个表，缺
 - **备份状态：**显示当前备份任务的进行状态，分备份失败、备份失效、备份完成、备份中、取消中、手动取消、自动取消、延迟完成。正在执行的备份任务，会以进度条的形式显示备份进度
 - **操作：**点击"详情"，可显示当前备份任务的备份详情，失败原因等
 
-备份失败、备份失效会在备份表格分别以![](assets/hotdb-management/image362.png)、![](assets/hotdb-management/image363.png) 标记显示，鼠标悬停后会显示具体原因
+备份失败、备份失效会在备份表格分别以![](../../assets/img/zh/hotdb-management/image362.png)、![](../../assets/img/zh/hotdb-management/image363.png) 标记显示，鼠标悬停后会显示具体原因
 
 点击【删除记录】可删除页面的备份记录，也可以勾选是否同时删除服务器中的备份文件，但不会删除远程服务器上的备份文件
 
@@ -3705,11 +3705,11 @@ MySQL自身的mysqldump工具是通过单线程工作依次导出多个表，缺
 
 备份计划可为HotDB Management设置定时备份任务，设置好定时备份计划后无需人为手动发起备份任务，由定时计划按时执行备份任务。
 
-![](assets/hotdb-management/image364.png)
+![](../../assets/img/zh/hotdb-management/image364.png)
 
 **(1) 添加备份计划**
 
-![](assets/hotdb-management/image365.png)
+![](../../assets/img/zh/hotdb-management/image365.png)
 
 点击HotDB Management中"管理->数据备份->备份计划->【添加新计划】"可进入添加备份计划页面
 
@@ -3738,7 +3738,7 @@ MySQL自身的mysqldump工具是通过单线程工作依次导出多个表，缺
 
 设置完【延迟下一次备份任务时间】后程序会自动校验"上一个备份任务完成时间至下一个任务延迟时间之间是否有间隔备份任务"，如果没有间隔则直接提示修改成功，若有间隔备份会弹出信息告示用户 如下图：
 
-![](assets/hotdb-management/image366.png)
+![](../../assets/img/zh/hotdb-management/image366.png)
 
 点击【统一延迟并保存】则后台将间隔任务设置为延迟状态，当执行完延迟的备份任务后，间隔任务按照设置的备份周期时间依次执行，点击【自动取消并保存】后间隔任务默认取消，后台不执行备份任务
 
@@ -3803,11 +3803,11 @@ HotDB-Management关闭或重启，无需重启HotDB-Backup
 
 **数据恢复时序图：**
 
-![](assets/hotdb-management/image367.png)
+![](../../assets/img/zh/hotdb-management/image367.png)
 
 #### 发起恢复
 
-![](assets/hotdb-management/image368.jpeg)
+![](../../assets/img/zh/hotdb-management/image368.jpeg)
 
 **(1) 发起说明**
 
@@ -3828,7 +3828,7 @@ HotDB-Management关闭或重启，无需重启HotDB-Backup
 
 **(3) 恢复到自定义时间点**{#恢复到自定义时间点}
 
-![](assets/hotdb-management/image369.jpeg)
+![](../../assets/img/zh/hotdb-management/image369.jpeg)
 
 勾选"恢复到自定义时间点"后，通过秒级别的时间选择器，选择可恢复时间范围内的任意时间点。可恢复时间范围指当前逻辑库备份成功且未被清理的最早时间点到最晚时间点
 
@@ -3840,9 +3840,9 @@ HotDB-Management关闭或重启，无需重启HotDB-Backup
 
 #### 执行数据恢复说明
 
-![](assets/hotdb-management/image370.png)
+![](../../assets/img/zh/hotdb-management/image370.png)
 
-![](assets/hotdb-management/image371.png)
+![](../../assets/img/zh/hotdb-management/image371.png)
 
 恢复页面输入正确的恢复信息，提交恢复任务后跳转到恢复页面，任务状态显示恢复中且有进度更新显示，此时若触发删除操作，则提示"恢复执行中不能删除"
 
@@ -3860,7 +3860,7 @@ HotDB-Management关闭或重启，无需重启HotDB-Backup
 
 #### 恢复任务详情说明
 
-![](assets/hotdb-management/image372.png)
+![](../../assets/img/zh/hotdb-management/image372.png)
 
 已完成的数据恢复任务可查看恢复任务详情
 
@@ -3896,7 +3896,7 @@ HotDB-Management关闭或重启，无需重启HotDB-Backup
 
 #### 恢复日志说明
 
-![](assets/hotdb-management/image373.png)
+![](../../assets/img/zh/hotdb-management/image373.png)
 
 - `Connected to server successfully!` - 程序与Management正常建立连接
 - `Got a quit signal from user, will quit after recovery is finished` - 恢复完成后退出
@@ -3912,7 +3912,7 @@ HotDB-Management关闭或重启，无需重启HotDB-Backup
 
 #### 迁库前准备
 
-![](assets/hotdb-management/image374.png)
+![](../../assets/img/zh/hotdb-management/image374.png)
 
 点击HotDB Management"管理->一键迁库"进入[一键迁库](#一键迁库)功能页面。使用迁库功能前需要注意以下几点：
 
@@ -3923,13 +3923,13 @@ HotDB-Management关闭或重启，无需重启HotDB-Backup
 
 例如场景：数据节点zjj0_qianku所搭建的存储节点为192.168.210.45/192.168.210.46:3308实例下的不同物理库。若迁库前只复制zjj_qianku这个物理库的数据到目标存储节点，在搭建新旧存储节点复制关系时，会出现异常。
 
-![](assets/hotdb-management/image375.png)
+![](../../assets/img/zh/hotdb-management/image375.png)
 
-![](assets/hotdb-management/image376.png)
+![](../../assets/img/zh/hotdb-management/image376.png)
 
 这时候，需要在搭建实例复制关系时加上Replicate_Wild_Do_Table，Replicate_Wild_Ignore_Table参数过滤掉其他库的复制，确保只复制当前使用的物理库。
 
-![](assets/hotdb-management/image377.png)
+![](../../assets/img/zh/hotdb-management/image377.png)
 
 新存储节点的参数需要同旧存储节点的参数保持一致，在迁库前最好做一次动态加载，配置库中修改的数据没有动态加载可能导致迁库失败
 
@@ -3937,7 +3937,7 @@ HotDB-Management关闭或重启，无需重启HotDB-Backup
 
 #### 源数据节点和目标存储节点
 
-![](assets/hotdb-management/image378.png)
+![](../../assets/img/zh/hotdb-management/image378.png)
 
 选择要迁移的数据节点，选择完源数据节点，界面会自动显示出该节点下的所有存储节点
 
@@ -3959,7 +3959,7 @@ HotDB-Management关闭或重启，无需重启HotDB-Backup
 
 #### 迁库资料准备
 
-![](assets/hotdb-management/image379.png)
+![](../../assets/img/zh/hotdb-management/image379.png)
 
 "由系统执行change master"：可选择是否由计算节点执行change master操作。勾选此选项将由计算节点执行复制搭建操作，计算节点会根据主从关系计算出需要执行change master的存储节点，也可以手动进行配置。（执行复制的用户需要有Reload操作权限，可以使用和存储节点相同的用户，也可以自行填写其他用户，自行填写的必须保证所有存储节点的用户名和密码相同）
 
@@ -3971,7 +3971,7 @@ HotDB-Management关闭或重启，无需重启HotDB-Backup
 
 #### 预检测
 
-![](assets/hotdb-management/image380.png)
+![](../../assets/img/zh/hotdb-management/image380.png)
 
 预检测会校验以下信息，如果校验未通过，需要根据提示修改配置信息，通过后才能进行迁库。
 
@@ -4005,7 +4005,7 @@ HotDB-Management关闭或重启，无需重启HotDB-Backup
 
 #### 执行迁库
 
-![](assets/hotdb-management/image381.png)
+![](../../assets/img/zh/hotdb-management/image381.png)
 
 校验通过后点击【开始迁库】，计算节点开始执行迁库任务。执行过程中显示正在迁库中，执行完成后会提示迁库成功，如果发生异常，会给出相应提示，需要人工进行处理
 
@@ -4019,7 +4019,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 普通DDL即直接执行数据定义类型语句，例如CREATE/DROP/TRUNCATE/RENAME等。
 
-![](assets/hotdb-management/image382.png)
+![](../../assets/img/zh/hotdb-management/image382.png)
 
 进入"管理->表结构变更->普通DDL"进入普通DDL操作界面
 
@@ -4035,7 +4035,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 普通DDL页面点击【导入】按钮，可导入外部txt或sql类型的文件，文件导入输入框后需要手动点击执行，执行效果和手动输入DDL语句效果一致
 
-![](assets/hotdb-management/image383.png)
+![](../../assets/img/zh/hotdb-management/image383.png)
 
 所有执行的普通变更记录均可以在普通变更历史记录内查看到
 
@@ -4043,7 +4043,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 在线DDL即在HotDB Management的管理端（默认3325）使用Online DDL算法执行的变更语句，变更期间保证不影响执行IUD（INSERT、UPDATE、DELETE）语句，对系统冲击小，不影响业务，且可以使从机延迟的概率减小。但在线DDL的执行速度远远慢于普通DDL，对于大表，执行时间可能需要数十到数百小时。
 
-![](assets/hotdb-management/image384.png)
+![](../../assets/img/zh/hotdb-management/image384.png)
 
 通过"数据管理->表结构变更->在线DDL"进入在线DDL操作界面
 
@@ -4055,7 +4055,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 勾选“执行过程跳过主备数据一致性检测”，则执行在线DDL前，不会进行主备一致性检测，默认不勾选
 
-![](assets/hotdb-management/image385.png)
+![](../../assets/img/zh/hotdb-management/image385.png)
 
 所有执行的在线变更记录均可以在"在线变更历史记录"内查看到："当前正在执行的在线变更语句"用于查看正在执行的在线DDL任务，同时可以看到该任务正在执行的进度。"在线变更语句执行历史记录"，用于查看已经执行完成的在线DDL情况
 
@@ -4065,7 +4065,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 在HotDB Management中可通过[SQL路由计划查看](#SQL路由计划查看)功能解析在计算节点执行的SQL语句的路由下发情况。
 
-![](assets/hotdb-management/image386.png)
+![](../../assets/img/zh/hotdb-management/image386.png)
 
 输入正确的用户名、密码，选择执行SQL的表所在的逻辑库
 
@@ -4079,7 +4079,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 #### 分片方案在线变更记录
 
-![](assets/hotdb-management/image387.png)
+![](../../assets/img/zh/hotdb-management/image387.png)
 
 页面显示已执行完成或正在执行的变更任务记录，正在变更的任务允许通过【取消执行】来取消并回滚操作
 
@@ -4090,24 +4090,24 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 任务记录"**状态**"通常有9种，依次为：
 
 1. 成功：任务正常完成且未出现数据不一致情况。
-2. 成功![](assets/hotdb-management/image388.png)：任务正常完成但出现部分数据不一致且由程序自动修复。警告标志显示："变更后数据一致性检测发现少量数据不一致，程序已自动修复"。
-3. 成功![](assets/hotdb-management/image388.png)：任务正常完成且由程序修复了不一致的数据，但仍然还有部分数据不一致，用户选择忽略不一致的数据完成变更任务。告警标记提示："程序自动修复不一致数据后数据仍然存在不一致，用户选择允许部分数据不一致情况"。
-4. 失败![](assets/hotdb-management/image389.png)：任务失败结束，原因为用户手动取消执行任务。错误标记提示："手动取消变更任务执行"。
-5. 失败![](assets/hotdb-management/image389.png)：任务失败结束，原因为程序自动修复后仍出现数据不一致，用户选择放弃此任务。错误标记提示："程序自动修复不一致数据后数据仍然存在不一致，用户选择放弃本次变更任务"
-6. 失败![](assets/hotdb-management/image389.png)：任务失败结束，原因为变更完成后发现数据不一致，程序自动修复后依旧含有不一致数据，需要用户做出确认，用户未在设定等待时间处理导致任务失败。错误标记提示："未在设置时间范围内对数据不一致情况作出处理，变更任务自动失败"
-7. 失败![](assets/hotdb-management/image389.png)：任务失败结束，原因为批量发起任务后，变更方案未通过[变更方案预检](#变更方案预检)检查导致失败。错误标记提示："批量发起任务后，变更方案未通过预检测阶段导致任务失败"
-8. 等待![](assets/hotdb-management/image388.png)：任务未完成，处于数据不一致时需要用户做出确认处理。告警标志提示："程序自动修复不一致数据后依旧存在不一致数据，等待用户确认处理"
-9. 暂停![](assets/hotdb-management/image390.png)：任务发起后，由于用户设置了暂停复制时段，任务进入该时段后，页面显示该任务状态为暂停，且鼠标移入后提示："变更任务处于暂停数据复制时段"
+2. 成功![](../../assets/img/zh/hotdb-management/image388.png)：任务正常完成但出现部分数据不一致且由程序自动修复。警告标志显示："变更后数据一致性检测发现少量数据不一致，程序已自动修复"。
+3. 成功![](../../assets/img/zh/hotdb-management/image388.png)：任务正常完成且由程序修复了不一致的数据，但仍然还有部分数据不一致，用户选择忽略不一致的数据完成变更任务。告警标记提示："程序自动修复不一致数据后数据仍然存在不一致，用户选择允许部分数据不一致情况"。
+4. 失败![](../../assets/img/zh/hotdb-management/image389.png)：任务失败结束，原因为用户手动取消执行任务。错误标记提示："手动取消变更任务执行"。
+5. 失败![](../../assets/img/zh/hotdb-management/image389.png)：任务失败结束，原因为程序自动修复后仍出现数据不一致，用户选择放弃此任务。错误标记提示："程序自动修复不一致数据后数据仍然存在不一致，用户选择放弃本次变更任务"
+6. 失败![](../../assets/img/zh/hotdb-management/image389.png)：任务失败结束，原因为变更完成后发现数据不一致，程序自动修复后依旧含有不一致数据，需要用户做出确认，用户未在设定等待时间处理导致任务失败。错误标记提示："未在设置时间范围内对数据不一致情况作出处理，变更任务自动失败"
+7. 失败![](../../assets/img/zh/hotdb-management/image389.png)：任务失败结束，原因为批量发起任务后，变更方案未通过[变更方案预检](#变更方案预检)检查导致失败。错误标记提示："批量发起任务后，变更方案未通过预检测阶段导致任务失败"
+8. 等待![](../../assets/img/zh/hotdb-management/image388.png)：任务未完成，处于数据不一致时需要用户做出确认处理。告警标志提示："程序自动修复不一致数据后依旧存在不一致数据，等待用户确认处理"
+9. 暂停![](../../assets/img/zh/hotdb-management/image390.png)：任务发起后，由于用户设置了暂停复制时段，任务进入该时段后，页面显示该任务状态为暂停，且鼠标移入后提示："变更任务处于暂停数据复制时段"
 
 #### 发起变更任务
 
-![](assets/hotdb-management/image391.png)
+![](../../assets/img/zh/hotdb-management/image391.png)
 
 点击"管理->分片方案在线变更"页面的【发起变更任务】按钮，进入[发起变更任务](#发起变更任务)配置页面
 
 #### 填写变更方案
 
-![](assets/hotdb-management/image392.png)
+![](../../assets/img/zh/hotdb-management/image392.png)
 
 选择变更表所在逻辑库，以及需要变更的表名称。（不支持选择父表或未创建表结构的表）
 
@@ -4123,7 +4123,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 变更方案预检主要是为源表检测预选的变更方案是否符合变更要求以及能否保证数据一致性。点击【开始检测】进行变更方案预检。
 
-![](assets/hotdb-management/image393.png)
+![](../../assets/img/zh/hotdb-management/image393.png)
 
 **特殊预检项说明**
 
@@ -4147,7 +4147,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 检查变更表信息与变更方案信息，同时可设置变更任务在执行时的特殊设定。
 
-![](assets/hotdb-management/image394.png)
+![](../../assets/img/zh/hotdb-management/image394.png)
 
 源表信息与变更方案信息都不能修改，如果需要修改可点击【上一步】返回[填写变更方案](#填写变更方案)中，修改完还需要执行一次检测
 
@@ -4165,13 +4165,13 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 **(1) 发起方式**
 
-![](assets/hotdb-management/image395.png)
+![](../../assets/img/zh/hotdb-management/image395.png)
 
 可在[分片方案在线变更](#分片方案在线变更)页面点击"【批量操作】->【批量发起变更任务】"，或在"[数据分片方案推荐](#数据分片方案推荐)"功能中选中多个分片推荐方案记录进行【在线修改】批量发起变更。
 
 **(2) 批量发起填写说明**
 
-![](assets/hotdb-management/image396.png)
+![](../../assets/img/zh/hotdb-management/image396.png)
 
 批量发起的任务中，如果某个任务预检测失败则整个任务失败。预检测过程中，如果源表所在逻辑库在24小时内已发起过主备一致性检测且结果一致，则该表预检测不再执行"主备数据一致性"检测项
 
@@ -4179,7 +4179,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 **(3) 执行批量任务**
 
-![](assets/hotdb-management/image397.png)
+![](../../assets/img/zh/hotdb-management/image397.png)
 
 如果批量发起的多个任务中任意一个任务被手动取消执行，其他任务即使没有发生异常，也会变成失败状态，并提示"因同一批次发起的任务中存在某一任务被人为取消导致当前任务自动被取消"
 
@@ -4191,31 +4191,31 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 - 当变更过程中出现少量数据丢失时，HotDB Management会提示丢失的数据所在的区间范围，并自动弥补丢失的数据，如下图：
 
-![](assets/hotdb-management/image398.png)
+![](../../assets/img/zh/hotdb-management/image398.png)
 
 - 当变更过程中出现多出少量数据时，HotDB Management会提示多出的数据所在的区间范围，并自动删除多出的数据，如下图：
 
-![](assets/hotdb-management/image399.png)
+![](../../assets/img/zh/hotdb-management/image399.png)
 
 - 当变更过程中出现少量数据不一致时，HotDB Management会提示不一致的数据所在的区间范围，并自动修复不一致的数据，如下图：
 
-![](assets/hotdb-management/image400.png)
+![](../../assets/img/zh/hotdb-management/image400.png)
 
 - 当变更过程中出现大量数据不一致时，HotDB Management会提示不一致的数据所在的区间范围，但不会修复大量不一致的数据，如下图：
 
-![](assets/hotdb-management/image401.png)
+![](../../assets/img/zh/hotdb-management/image401.png)
 
 - 当变更过程中第一次出现少量数据不一致（或缺失、超出）时，HotDB Management会主动修复不一致的数据，如果在修复完成后再出现数据不一致，HotDB Management会提示自动修复后依旧不一致，给出不一致（或缺失、超出）数据所在的区间范围，且不会再自动修复，同时等待用户选择：【忽略不一致】或者【放弃变更】
 
-![](assets/hotdb-management/image402.png)
+![](../../assets/img/zh/hotdb-management/image402.png)
 
 选择【放弃变更】，则变更任务失败，并提示"程序自动修复不一致数据后数据仍然不一致，用户选择放弃本次变更任务"，如下图：
 
-![](assets/hotdb-management/image403.png)
+![](../../assets/img/zh/hotdb-management/image403.png)
 
 选择【忽略不一致】，则任务成功但存在部分不一致数据，并提示"在线变更完成，用户选择允许变更后部分数据不一致"，如下图：
 
-![](assets/hotdb-management/image404.png)
+![](../../assets/img/zh/hotdb-management/image404.png)
 
 ### 表回收站
 
@@ -4231,7 +4231,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 #### 表回收站
 
-![](assets/hotdb-management/image405.png)
+![](../../assets/img/zh/hotdb-management/image405.png)
 
 页面显示服务端（默认3323）执行3种操作后进入回收站的临时表
 
@@ -4243,13 +4243,13 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 **(1) 点击还原**
 
-![](assets/hotdb-management/image406.png)
+![](../../assets/img/zh/hotdb-management/image406.png)
 
 - 点击"管理->表回收站"页面中需要还原临时表，弹出填写连接信息输入框。
 
 **(2) 填写连接信息**
 
-![](assets/hotdb-management/image407.png)
+![](../../assets/img/zh/hotdb-management/image407.png)
 
 - 选择数据库用户
 - 输入数据库用户密码
@@ -4257,7 +4257,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 **(3) 确认还原**
 
-![](assets/hotdb-management/image408.png)
+![](../../assets/img/zh/hotdb-management/image408.png)
 
 - 表还原后，显示执行结果，包括成功数量，失败数量，历史记录
 - 点击历史记录，可跳转至历史记录页面
@@ -4266,20 +4266,20 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 **(1) 点击删除**
 
-![](assets/hotdb-management/image409.png)
+![](../../assets/img/zh/hotdb-management/image409.png)
 
 - 点击"管理->表回收站"页面中需要删除的临时表，弹出删除提示确认框，点击确定，弹出填写连接信息输入框。
 
 **(2) 填写连接信息**
 
-![](assets/hotdb-management/image410.png)
+![](../../assets/img/zh/hotdb-management/image410.png)
 
 - 选择数据库用户
 - 输入数据库用户密码
 
 **(3) 确认删除**
 
-![](assets/hotdb-management/image411.png)
+![](../../assets/img/zh/hotdb-management/image411.png)
 
 - 表删除后，显示执行结果，包括成功数量，失败数量，历史记录
 - 点击历史记录，可跳转至历史记录页面
@@ -4288,13 +4288,13 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 **(1) 发起批量还原**
 
-![](assets/hotdb-management/image412.png)
+![](../../assets/img/zh/hotdb-management/image412.png)
 
 - 进入"管理->表回收站"页面，勾选需要还原的表，点击"【批量操作】->【批量还原】"。
 
 **(2) 批量还原连接信息**
 
-![](assets/hotdb-management/image413.png)
+![](../../assets/img/zh/hotdb-management/image413.png)
 
 - 若勾选的表都属于一个逻辑库，则只需要填写一份连接信息
 - 若勾选的表属于多个逻辑库，则需要分别填写连接信息
@@ -4303,7 +4303,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 **(3) 确认还原**
 
-![](assets/hotdb-management/image414.png)
+![](../../assets/img/zh/hotdb-management/image414.png)
 
 - 表还原后，显示执行结果，包括成功数量，失败数量，历史记录
 - 点击历史记录，可跳转至历史记录页面
@@ -4312,20 +4312,20 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 **(1) 发起批量删除**
 
-![](assets/hotdb-management/image415.png)
+![](../../assets/img/zh/hotdb-management/image415.png)
 
 - 进入"管理->表回收站"页面，勾选需要删除的表，点击"【批量操作】->【批量删除】"。
 
 **(2) 批量删除连接信息**
 
-![](assets/hotdb-management/image416.png)
+![](../../assets/img/zh/hotdb-management/image416.png)
 
 - 若勾选的表都属于一个逻辑库，则只需要填写一份连接信息；若勾选的表属于多个逻辑库，则需要分别填写连接信息
 - 存在一个连接信息错误，则全都无法删除
 
 **(3) 确认删除**
 
-![](assets/hotdb-management/image417.png)
+![](../../assets/img/zh/hotdb-management/image417.png)
 
 - 表删除后，显示执行结果，包括成功数量，失败数量，历史记录
 - 点击历史记录，可跳转至历史记录页面
@@ -4336,56 +4336,56 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 - 引用高级分片规则的表，进入回收站后，删除管理平台表配置信息，分片规则仍无法编辑或者删除，需要把回收站中的表删除后，才可编辑或删除。分片规则页面，该分片规则显示临时表，点击临时表跳转至表回收站页面。如下图：
 
-![](assets/hotdb-management/image418.png)
+![](../../assets/img/zh/hotdb-management/image418.png)
 
 - 还原失败包括，但可能不限于：
 
 - 原表与还原后的表配置信息不一致的（包括表类型、分片字段、分片方式、数据节点）。如下图：
 
-![](assets/hotdb-management/image419.png)
+![](../../assets/img/zh/hotdb-management/image419.png)
 
 - 原表与还原后的表逻辑库不一致的。如下图：
 
-![](assets/hotdb-management/image420.png)
+![](../../assets/img/zh/hotdb-management/image420.png)
 
 - 原表还原成其他表名时，其他表已创建的。如下图：
 
-![](assets/hotdb-management/image421.png)
+![](../../assets/img/zh/hotdb-management/image421.png)
 
 - 父子表关系的两张表，子表还原时，父表已被删除的。如下图：
 
-![](assets/hotdb-management/image422.png)
+![](../../assets/img/zh/hotdb-management/image422.png)
 
 - 父子表关系的两张表，子表还原时，父表删除部分子表关联数据的。如下图：
 
-![](assets/hotdb-management/image423.png)
+![](../../assets/img/zh/hotdb-management/image423.png)
 
 - 外键关系的表，子表还原时，父表被删除的。如下图：
 
-![](assets/hotdb-management/image424.png)
+![](../../assets/img/zh/hotdb-management/image424.png)
 
 - 外键关系的表，子表还原时，父表删除部分子表关联数据的。如下图：
 
-![](assets/hotdb-management/image425.png)
+![](../../assets/img/zh/hotdb-management/image425.png)
 
 - 若还原后的表已创建，则在还原时，弹出提示框"被还原的表当前已被定义，是否先删除已存在的表再进行还原操作"，点击确认，自动删除已存在的表并进入回收站，如下图：
 
-![](assets/hotdb-management/image426.png)
+![](../../assets/img/zh/hotdb-management/image426.png)
 
 - 存在外键关系的表，数据正常情况下，还原后，重新建立外键关系。
 
 #### 历史记录
 
-![](assets/hotdb-management/image427.png)
+![](../../assets/img/zh/hotdb-management/image427.png)
 
-![](assets/hotdb-management/image428.png)
+![](../../assets/img/zh/hotdb-management/image428.png)
 
 - 进入"管理->表回收站"页面，点击[历史记录](#历史记录)。进入表回收站操作历史记录页面。
 - 可通过[逻辑库](#逻辑库)、"原表名称"来筛选查看历史记录
 
 #### 删除历史记录
 
-![](assets/hotdb-management/image429.png)
+![](../../assets/img/zh/hotdb-management/image429.png)
 
 - 勾选需要删除的历史记录，点击批量删除
 
@@ -4397,7 +4397,7 @@ HotDB Management通过[表结构变更](#表结构变更)功能为用户提供�
 
 HotDB Management支持白名单功能，可限制白名单之外的主机连接计算节点服务。
 
-![](assets/hotdb-management/image430.png)
+![](../../assets/img/zh/hotdb-management/image430.png)
 
 使用白名单功能需要先在"安全->白名单"中开启白名单开关
 
@@ -4417,7 +4417,7 @@ HotDB Management支持白名单功能，可限制白名单之外的主机连接�
 
 HotDB Management提供的[SQL防火墙](#sql防火墙)功能可为用户拦截高危SQL、误操作SQL等，提升系统安全性。
 
-![](assets/hotdb-management/image431.png)
+![](../../assets/img/zh/hotdb-management/image431.png)
 
 SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模板，暂不支持自定义SQL
 
@@ -4429,15 +4429,15 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 管理平台在安全->SQL防火墙对应显示" 不允许where条件不带分片字段"SQL防火墙规则，如下图：
 
-![](assets/hotdb-management/image432.png)
+![](../../assets/img/zh/hotdb-management/image432.png)
 
-![](assets/hotdb-management/image433.png)
+![](../../assets/img/zh/hotdb-management/image433.png)
 
 该规则默认关闭，打开后需动态加载生效且状态变为"拦截中"：
 
-![](assets/hotdb-management/image434.png)
+![](../../assets/img/zh/hotdb-management/image434.png)
 
-![](assets/hotdb-management/image435.png)
+![](../../assets/img/zh/hotdb-management/image435.png)
 
 若该规则拦截中，则在计算节点服务端执行的所有where条件未带分片字段（子表为关联字段）的SQL且操作的表为水平分片表或子表时都会拦截。
 
@@ -4445,11 +4445,11 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 创建水平分片表teacher，分片字段为id，当该规则拦截中，where条件不带分片字段如下图：
 
-![](assets/hotdb-management/image436.png)
+![](../../assets/img/zh/hotdb-management/image436.png)
 
 同时事件->审计日志->安全防护界面可以看到相关拦截日志:
 
-![](assets/hotdb-management/image437.png)![](assets/hotdb-management/image438.png)
+![](../../assets/img/zh/hotdb-management/image437.png)![](../../assets/img/zh/hotdb-management/image438.png)
 
 ### 密码安全管理
 
@@ -4463,7 +4463,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 **(1) 站内提醒说明**
 
-![](assets/hotdb-management/image439.png)
+![](../../assets/img/zh/hotdb-management/image439.png)
 
 当有数据库用户密码过期时，登录页面会弹出提醒窗口提示当前有多少个用户需要及时修改密码，且右上角的"[事件提醒](#事件通知)"中也会给出相应提醒。
 
@@ -4473,7 +4473,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 **(2) 密码修改**
 
-![](assets/hotdb-management/image440.png)
+![](../../assets/img/zh/hotdb-management/image440.png)
 
 页面默认只出现"已过期"或"将过期"的数据库用户记录。已过期的记录在"用户名"字段右上角会显示红色已过期标志，将过期的记录显示黄色将过期标志
 
@@ -4491,7 +4491,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 **(1) 站内提醒说明**
 
-![](assets/hotdb-management/image441.png)
+![](../../assets/img/zh/hotdb-management/image441.png)
 
 当存在密码将过期或已过期的存储节点用户时，用户登录HotDB Management选择计算节点集群进入首页后，会弹出提示窗口，且右上角的"[事件提醒](#事件通知)"中也会给出相应提醒
 
@@ -4501,7 +4501,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 **(2) 密码修改**
 
-![](assets/hotdb-management/image442.png)
+![](../../assets/img/zh/hotdb-management/image442.png)
 
 **显示说明**
 
@@ -4535,7 +4535,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 #### 发起检测任务
 
-![](assets/hotdb-management/image443.png)
+![](../../assets/img/zh/hotdb-management/image443.png)
 
 **第一步：**选择检测维度，默认为逻辑库维度。
 
@@ -4551,7 +4551,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 **查看结果**
 
-![](assets/hotdb-management/image444.png)
+![](../../assets/img/zh/hotdb-management/image444.png)
 
 任务执行完可点击【查看结果】查看具体检测详情，如果检测结果不一致则会展示不一致的数据结果记录，若出现大量不一致记录，则通过数据区间的形式展示不一致情况。若不一致的数量超过100000行则需要人工手动定位
 
@@ -4563,13 +4563,13 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 检测的表所在的数据节点未配置对应的[切换规则](#切换规则)或所在的存储节点不可用时，该表无法进行主备一致性检测
 
-![](assets/hotdb-management/image445.png)
+![](../../assets/img/zh/hotdb-management/image445.png)
 
 #### 定时计划{#主备数据一致性检测.定时计划}
 
 除了手动发起主备一致性检测任务外，也可以通过添加定时任务自动执行检测。点击【定时计划】可管理当前的定时计划任务。
 
-![](assets/hotdb-management/image446.png)
+![](../../assets/img/zh/hotdb-management/image446.png)
 
 - 定时计划最多只能加六条，可按照检测周期选择"每日"、"每周"、"每月"
 
@@ -4594,9 +4594,9 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 #### 发起检测任务
 
-![](assets/hotdb-management/image447.png)
+![](../../assets/img/zh/hotdb-management/image447.png)
 
-![](assets/hotdb-management/image448.png)
+![](../../assets/img/zh/hotdb-management/image448.png)
 
 **第一步：**选择需要检测的逻辑库以及逻辑库下的全局表。
 
@@ -4606,9 +4606,9 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 #### 查看检测详情
 
-![](assets/hotdb-management/image449.png)
+![](../../assets/img/zh/hotdb-management/image449.png)
 
-![](assets/hotdb-management/image450.png)
+![](../../assets/img/zh/hotdb-management/image450.png)
 
 - 点击检测任务的【查看检测详情】按钮可查看检测任务的详情结果。
 
@@ -4638,7 +4638,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 #### 数据修复
 
-![](assets/hotdb-management/image451.png)
+![](../../assets/img/zh/hotdb-management/image451.png)
 
 数据修复目前支持修复以下七类数据不一致类型的情况：
 
@@ -4664,7 +4664,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 表结构与表索引检测可用于对比计算节点中表结构与索引定义在各个数据节点中是否一致。同时，通过检测表结构以及与表相关的SQL语句的执行计划、执行时间等，提供表结构或表索引的优化建议。
 
-![](assets/hotdb-management/image452.png)
+![](../../assets/img/zh/hotdb-management/image452.png)
 
 #### 发起检测
 
@@ -4680,7 +4680,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 仅对表状态为"正常"或"表索引未定义"的表提供表结构或表索引优化建议，表状态为"表结构定义异常"、"表索引定义异常"、"表结构未定义" 的表将在优化建议中给出具体在哪个数据节点上定义异常：
 
-![](assets/hotdb-management/image453.png)
+![](../../assets/img/zh/hotdb-management/image453.png)
 
 表结构优化建议列举如下：
 
@@ -4716,13 +4716,13 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 >
 > 在多计算节点集群模式下且autoIncrement参数设置为2（自增仅唯一），若表中有自增序列且类型是smallint、tinyint 、mediumin、int类型时，则表状态列会定义为"表结构定义异常"，同时表结构优化建议列提示"开启全局自增且唯一配置后，表中的自增序列仅允许为bigint类型，建议自增列字段id类型由tinyint改为bigint",点击"全局自增且唯一"可跳转至计算节点参数配置页面，如下图：
 
-![](assets/hotdb-management/image454.png)
+![](../../assets/img/zh/hotdb-management/image454.png)
 
 - 该校验规则仅在计算节点参数"全局自增序列号"设置为2即"全局自增仅唯一"且计算节点模式为多节点集群时，对所有逻辑库下所有开启自增列的表进行校验。
 
 #### 表结构明细
 
-![](assets/hotdb-management/image455.png)
+![](../../assets/img/zh/hotdb-management/image455.png)
 
 - 在[表结构与表索引检测](#表结构与表索引检测)页面点击"查看表结构"的【详情】按钮可查看表结构明细
 
@@ -4738,7 +4738,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 #### 评分维度说明
 
-![](assets/hotdb-management/image456.png)
+![](../../assets/img/zh/hotdb-management/image456.png)
 
 **数据分片评分分五个维度进行：**
 
@@ -4776,7 +4776,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 #### 记录导出
 
-![](assets/hotdb-management/image457.png)
+![](../../assets/img/zh/hotdb-management/image457.png)
 
 - 点击[数据分片评分](#数据分片评分)页面"导出"按钮对页面记录进行导出
 
@@ -4804,13 +4804,13 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 **(2) 发起推荐步骤**
 
-![](assets/hotdb-management/image458.png)
+![](../../assets/img/zh/hotdb-management/image458.png)
 
 - 点击【发起任务】按钮可发起一次数据分片方案推荐任务，但如果在"事件->操作日志智能分析"中未记录任何SQL日志，则无法发起任务。
 
 - 若当前存在未完成的推荐任务，则不允许再次发起
 
-![](assets/hotdb-management/image459.png)
+![](../../assets/img/zh/hotdb-management/image459.png)
 
 - 发起任务时默认将计算推荐集群所有逻辑库中的所有表，可根据实际需要选择过滤不需要计算推荐的表
 
@@ -4842,7 +4842,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 #### 分片方案推荐结果
 
-![](assets/hotdb-management/image460.png)
+![](../../assets/img/zh/hotdb-management/image460.png)
 
 页面展示最近计算成功的推荐结果，新发起的任务结果会覆盖之前记录的结果
 
@@ -4888,7 +4888,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 #### 发起检测
 
-![](assets/hotdb-management/image461.png)
+![](../../assets/img/zh/hotdb-management/image461.png)
 
 - 选择需要检测的逻辑库与分片表（不包含表类型为子表的表），点击【发起检测】按钮即可立即进行检测
 
@@ -4896,7 +4896,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 #### 检测记录详情
 
-![](assets/hotdb-management/image462.png)
+![](../../assets/img/zh/hotdb-management/image462.png)
 
 - [检测记录详情](#检测记录详情)主要展示该检测任务中所有检测表的检测记录情况，默认显示"检测结果"为异常的表记录
 
@@ -4908,13 +4908,13 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 >
 > 导出功能目前只导出检测结果异常的数据行信息**
 
-![](assets/hotdb-management/image463.png)
+![](../../assets/img/zh/hotdb-management/image463.png)
 
-![](assets/hotdb-management/image464.png)
+![](../../assets/img/zh/hotdb-management/image464.png)
 
 #### 路由异常详情
 
-![](assets/hotdb-management/image465.png)
+![](../../assets/img/zh/hotdb-management/image465.png)
 
 - 表格中正确路由节点与实际路由节点以"节点ID值"形式显示
 
@@ -4928,7 +4928,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 #### 发起检测
 
-![](assets/hotdb-management/image466.png)
+![](../../assets/img/zh/hotdb-management/image466.png)
 
 **发起检测流程**
 
@@ -4949,7 +4949,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 #### 检测详情
 
-![](assets/hotdb-management/image467.png)
+![](../../assets/img/zh/hotdb-management/image467.png)
 
 1. 检测记录详情展示检测任务中对应表的检测结果，默认只展示"检测结果"异常的表记录。
 2. 展示记录中"唯一键"列会显示该表中具有唯一约束的字段。当存在多个唯一键时会使用逗号隔开；若存在唯一约束由多个字段联合组成，则用括号显示。
@@ -4959,7 +4959,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 6. 点击【导出记录】支持导出全部或页面中选中的部分记录，需注意的是导出记录中不包括"检测结果"正常的记录信息。
 7. 若表内设置唯一约束为前缀索引，在计算节点版本高于（包含）2.5.6时，仍旧可以被检测出。
 
-![](assets/hotdb-management/image468.png)
+![](../../assets/img/zh/hotdb-management/image468.png)
 
 ## 事件
 
@@ -4967,7 +4967,7 @@ SQL防火墙功能目前只支持开启HotDB Management提供的可拦截SQL模�
 
 历史事件是记录与展示HotDB Management平台级的历史信息的功能，包括：任务执行完成通知、定时检测异常通报、平台触发预警提示等。
 
-![](assets/hotdb-management/image469.png)
+![](../../assets/img/zh/hotdb-management/image469.png)
 
 #### 报警类型说明
 
@@ -5025,7 +5025,7 @@ HotDB Management会定时检测存储节点服务器与计算节点服务器的�
 
 记录计算节点在运行过程中产生的日志信息，帮助用户实时了解当前计算节点的运行状况。
 
-![](assets/hotdb-management/image470.png)
+![](../../assets/img/zh/hotdb-management/image470.png)
 
 #### 日志查看
 
@@ -5118,7 +5118,7 @@ HotDB Management提供统计：select、insert、update、delete、事务开启�
 
 #### 操作日志记录说明
 
-![](assets/hotdb-management/image471.png)
+![](../../assets/img/zh/hotdb-management/image471.png)
 
 **(1) 操作日志表格字段说明**
 
@@ -5166,7 +5166,7 @@ insert/replace的values子句2列表、insert set/insert onduplicate set的set�
 
 **(2) 查询耗时分布**
 
-![](assets/hotdb-management/image472.png)
+![](../../assets/img/zh/hotdb-management/image472.png)
 
 可点击【查看耗时分布】了解在计算节点或后端存储节点中该类型SQL语句的执行时间分布情况
 
@@ -5174,17 +5174,17 @@ insert/replace的values子句2列表、insert set/insert onduplicate set的set�
 
 **(3) 待优化SQL**
 
-![](assets/hotdb-management/image473.jpeg)
+![](../../assets/img/zh/hotdb-management/image473.jpeg)
 
 待优化SQL语句为页面中带有黄色蜗牛标志的SQL。一般带此标志的SQL语句需要重视，并分析具体执行情况，尽力优化
 
 评判SQL语句是否需要优化的标准可点击【待优化SQL标准设置】按钮，查看或编辑
 
-![](assets/hotdb-management/image474.png)
+![](../../assets/img/zh/hotdb-management/image474.png)
 
 **(4) SQL查询优化建议**
 
-![](assets/hotdb-management/image475.jpeg)
+![](../../assets/img/zh/hotdb-management/image475.jpeg)
 
 根据管理平台内部算法，检查SQL语句结构、执行时间、执行计划等，筛选出不合理的SQL语句，并给出优化建议
 
@@ -5200,11 +5200,11 @@ SQL建议内容列举如下：
 
 例如：此条跨库SQL JOIN查询未使用分片字段作为关联字段，在这样的情况下，计算节点需要跨数据节点交叉比对数据，耗时较大，因此对此类SQL语句给出建议。
 
-![](assets/hotdb-management/image476.png)
+![](../../assets/img/zh/hotdb-management/image476.png)
 
 **(5) 平均执行时间过长的告警**
 
-![](assets/hotdb-management/image477.png)
+![](../../assets/img/zh/hotdb-management/image477.png)
 
 针对计算节点平均执行时间或存储节点平均执行时间，若发现昨日00：00 ~ 24：00内平均执行时间高于历史平均执行时间的两倍，会出现三角标识的提示信息
 
@@ -5214,7 +5214,7 @@ SQL建议内容列举如下：
 
 HotDB Management提供SQL性能追踪功能，可视化地展示SQL语句的执行计划（HotDB Profiles）。可用于对比查看一条SQL语句在优化前和优化后的执行计划，也可单独查看一条SQL的执行计划。
 
-![](assets/hotdb-management/image478.png)
+![](../../assets/img/zh/hotdb-management/image478.png)
 
 输入用户名，密码（用户名密码为计算节点[数据库用户](#数据库用户管理)），并选择需要查询的逻辑库。
 
@@ -5226,11 +5226,11 @@ HotDB Management提供SQL性能追踪功能，可视化地展示SQL语句的执�
 
 执行计划将显示每一个步骤的相对时间点和耗时（μs为单位），详情请参[计算节点标准操作](hotdb-server-standard-operations.md)文档的HotDB Profiles相关章节
 
-![](assets/hotdb-management/image479.jpeg)
+![](../../assets/img/zh/hotdb-management/image479.jpeg)
 
 点击【查看执行时间图解】查看执行计划可视化结果。每次只能查看一条执行时间图解
 
-![](assets/hotdb-management/image480.jpeg)
+![](../../assets/img/zh/hotdb-management/image480.jpeg)
 
 ### 通知策略
 
@@ -5240,9 +5240,9 @@ HotDB Management支持通过邮件的方式对集群运行中发生的故障或�
 
 #### 添加通知策略
 
-![](assets/hotdb-management/image481.png)
+![](../../assets/img/zh/hotdb-management/image481.png)
 
-![](assets/hotdb-management/image482.png)
+![](../../assets/img/zh/hotdb-management/image482.png)
 
 **添加通知策略参数说明**
 
@@ -5262,25 +5262,25 @@ HotDB Management支持通过邮件的方式对集群运行中发生的故障或�
 
 故障状态监控项取通知频率期间检测到的最新一次的异常情况，进行邮件提醒。若故障未恢复邮件将重复提醒，恢复正常后将不再提醒。
 
-![](assets/hotdb-management/image483.png)
+![](../../assets/img/zh/hotdb-management/image483.png)
 
 **邮件示例：**计算节点服务发生故障或切换，提示信息如下:
 
-![](assets/hotdb-management/image484.png)
+![](../../assets/img/zh/hotdb-management/image484.png)
 
 **邮件示例：**存储节点服务发生故障或切换，提示信息如下:
 
-![](assets/hotdb-management/image485.png)
+![](../../assets/img/zh/hotdb-management/image485.png)
 
 ##### 计算节点服务资源监控
 
 计算节点服务器资源监控项的数据取通知频率期间最近一次超出阈值的情况。
 
-![](assets/hotdb-management/image486.png)
+![](../../assets/img/zh/hotdb-management/image486.png)
 
 **阈值设置：**要进行计算节点服务器资源相应项的监控，需先在"设置->[监控面板设置](#监控面板设置)"中打开监控项并设置相应的阈值，如下图：
 
-![](assets/hotdb-management/image487.png)
+![](../../assets/img/zh/hotdb-management/image487.png)
 
 > !Note
 >
@@ -5288,17 +5288,17 @@ HotDB Management支持通过邮件的方式对集群运行中发生的故障或�
 
 **邮件示例：**计算节点服务器资源实时监控报警提醒，提示信息如下:
 
-![](assets/hotdb-management/image488.png)
+![](../../assets/img/zh/hotdb-management/image488.png)
 
 ##### 计算节点件服务状态
 
 计算节点服务状态监控项的数据取通知频率期间最近一次超出阈值的情况。
 
-![](assets/hotdb-management/image489.png)
+![](../../assets/img/zh/hotdb-management/image489.png)
 
 **阈值设置：**要进行计算节点服务状态相应项的监控，需先在"设置->[拓扑图报警设置](#拓扑图报警设置)"中打开监控项并设置相应的阈值，如下图：
 
-![](assets/hotdb-management/image490.png)
+![](../../assets/img/zh/hotdb-management/image490.png)
 
 > !Note
 >
@@ -5306,17 +5306,17 @@ HotDB Management支持通过邮件的方式对集群运行中发生的故障或�
 
 **邮件示例：**计算节点服务状态监控报警提醒，提示信息如下:
 
-![](assets/hotdb-management/image491.png)
+![](../../assets/img/zh/hotdb-management/image491.png)
 
 ##### 其他服务器资源监控
 
 [其他服务器资源](#集群资源监控)监控项数据取通知频率期间最近一次超出阈值的情况。
 
-![](assets/hotdb-management/image492.png)
+![](../../assets/img/zh/hotdb-management/image492.png)
 
 **阈值设置：**要进行其他服务器资源相应项的监控，需先在"设置->监控面板设置"中打开监控项并设置相应的阈值，如下图：
 
-![](assets/hotdb-management/image493.png)
+![](../../assets/img/zh/hotdb-management/image493.png)
 
 > !Note
 >
@@ -5324,17 +5324,17 @@ HotDB Management支持通过邮件的方式对集群运行中发生的故障或�
 
 **邮件示例：**其他服务器资源监控异常提醒，提示信息如下:
 
-> ![](assets/hotdb-management/image494.png)
+> ![](../../assets/img/zh/hotdb-management/image494.png)
 
 ##### 存储节点相关监控
 
 存储节点相关监控项数据取通知频率期间最近一次的异常情况。
 
-![](assets/hotdb-management/image495.png)
+![](../../assets/img/zh/hotdb-management/image495.png)
 
 **阈值设置：**要进行存储节点相应项的监控，需先在"设置->[定时检测设置](#定时检测设置)"与"设置->[拓扑图报警设置](#拓扑图报警设置)"中打开监控项并设置相应的阈值，如下所示：
 
-![](assets/hotdb-management/image496.png)
+![](../../assets/img/zh/hotdb-management/image496.png)
 
 > !Note
 >
@@ -5342,19 +5342,19 @@ HotDB Management支持通过邮件的方式对集群运行中发生的故障或�
 
 **邮件示例：**存储节点相关监控报警提醒，提示信息如下:
 
-![](assets/hotdb-management/image497.png)
+![](../../assets/img/zh/hotdb-management/image497.png)
 
 ##### 定时检测异常监控
 
 定时检测异常监控通知取通知频率期间最近一次的异常情况（备份/还原失败除外）
 
-![](assets/hotdb-management/image498.png)
+![](../../assets/img/zh/hotdb-management/image498.png)
 
 **阈值设置：**要进行存储节点相应项的监控，需先在"设置->[定时检测设置](#定时检测设置)"
 
 中打开监控项并设置相应的阈值
 
-![](assets/hotdb-management/image499.png)
+![](../../assets/img/zh/hotdb-management/image499.png)
 
 > !Note
 >
@@ -5364,11 +5364,11 @@ HotDB Management支持通过邮件的方式对集群运行中发生的故障或�
 
 配置库相关监控通知取通知时间内最近一次的异常情况。
 
-![](assets/hotdb-management/image500.png)
+![](../../assets/img/zh/hotdb-management/image500.png)
 
 **阈值设置：**要进行配置库相应项的监控，需先确保监控项在"设置->[拓扑图报警设置](#拓扑图报警设置)"中打开且已设置相应的阈值如下所示：
 
-![](assets/hotdb-management/image501.png)
+![](../../assets/img/zh/hotdb-management/image501.png)
 
 > !Note
 >
@@ -5376,13 +5376,13 @@ HotDB Management支持通过邮件的方式对集群运行中发生的故障或�
 
 **邮件示例：**配置库相关监控报警提醒，提示信息如下:
 
-![](assets/hotdb-management/image502.png)
+![](../../assets/img/zh/hotdb-management/image502.png)
 
 ##### 许可证授权监控
 
 检测计算节点许可证授权是否即将过期。在检测开关打开时，如果授权检测符合提醒条件，会按照设置的提醒频率发送邮件。
 
-![](assets/hotdb-management/image503.png)
+![](../../assets/img/zh/hotdb-management/image503.png)
 
 **许可证授权监控说明：**
 
@@ -5396,17 +5396,17 @@ HotDB Management支持通过邮件的方式对集群运行中发生的故障或�
 
 **邮件示例：**许可证授权到期邮件提醒内容如下：
 
-![](assets/hotdb-management/image504.png)
+![](../../assets/img/zh/hotdb-management/image504.png)
 
 若当前许可证有限期为永久，则"许可证授权到期"勾选框不会显示
 
-![](assets/hotdb-management/image505.png)
+![](../../assets/img/zh/hotdb-management/image505.png)
 
 若当前许可证为已过期的许可证，则HotDB Server将停止服务
 
-![](assets/hotdb-management/image506.jpeg)
+![](../../assets/img/zh/hotdb-management/image506.jpeg)
 
-![](assets/hotdb-management/image507.png)
+![](../../assets/img/zh/hotdb-management/image507.png)
 
 点击【我知道了】按钮弹窗关闭，若刷新当前页面会再次激活弹窗。
 
@@ -5414,15 +5414,15 @@ rr- 许可证授权检测异常包含"获取许可证信息发生异常"和"许�
 
 **许可证授权过期提醒弹窗提示如下：**
 
-![](assets/hotdb-management/image508.png)
+![](../../assets/img/zh/hotdb-management/image508.png)
 
 **获取许可证信息发生异常弹窗提示如下：**
 
-![](assets/hotdb-management/image509.jpeg)
+![](../../assets/img/zh/hotdb-management/image509.jpeg)
 
 **许可证授权信息无法更新弹窗如下：**
 
-![](assets/hotdb-management/image510.jpeg)
+![](../../assets/img/zh/hotdb-management/image510.jpeg)
 
 **按钮说明：**
 
@@ -5434,11 +5434,11 @@ rr- 许可证授权检测异常包含"获取许可证信息发生异常"和"许�
 
 **邮件示例：**获取许可证信息发生异常邮件提醒内容如下：
 
-![](assets/hotdb-management/image511.png)
+![](../../assets/img/zh/hotdb-management/image511.png)
 
 **邮件示例：**许可证授权信息无法更新异常邮件提醒内容如下：
 
-![](assets/hotdb-management/image512.png)
+![](../../assets/img/zh/hotdb-management/image512.png)
 
 ### 审计日志
 
@@ -5448,7 +5448,7 @@ rr- 许可证授权检测异常包含"获取许可证信息发生异常"和"许�
 
 可以查看集群内所有普通用户在管理平台的操作。该功能具体记录哪些类型的操作，可以在页面的操作类型下拉框中查看。访问IP和操作内容输入框，支持模糊查找。
 
-![](assets/hotdb-management/image513.png)
+![](../../assets/img/zh/hotdb-management/image513.png)
 
 **表格信息说明：**
 
@@ -5464,7 +5464,7 @@ rr- 许可证授权检测异常包含"获取许可证信息发生异常"和"许�
 
 可以查看计算节点安全防护相关的拦截日志具体被拦截的原因类型，可以在页面的拦截类型下拉框中查看。访问IP和拦截详情输入框，支持模糊查找
 
-![](assets/hotdb-management/image514.png)
+![](../../assets/img/zh/hotdb-management/image514.png)
 
 **表格信息说明：**
 
@@ -5480,7 +5480,7 @@ rr- 许可证授权检测异常包含"获取许可证信息发生异常"和"许�
 
 可以查看所有计算节点数据库用户（含管理平台使用计算节点数据库用户时）在管理端口的操作。该功能具体记录哪些类型的操作，可以在页面的操作类型下拉框中查看。访问IP和拦截详情输入框，支持模糊查找。如果选择了计算节点组，只显示选中的计算节点组的操作记录。可以选择具体的计算节点，默认选中所有计算节点。
 
-![](assets/hotdb-management/image515.png)
+![](../../assets/img/zh/hotdb-management/image515.png)
 
 **表格信息说明：**
 
@@ -5504,7 +5504,7 @@ rr- 许可证授权检测异常包含"获取许可证信息发生异常"和"许�
 
 定时检测设置是HotDB Management为后台定时任务提供开关控制与相关参数设定的功能。
 
-![](assets/hotdb-management/image516.png)
+![](../../assets/img/zh/hotdb-management/image516.png)
 
 打开按钮（按钮圆点靠右为打开）可开启后台定时检测线程，关闭则不执行。
 
@@ -5516,30 +5516,30 @@ rr- 许可证授权检测异常包含"获取许可证信息发生异常"和"许�
 
 此处提供集中设置定时计划任务的入口设置后的效果与原功能中定时计划入口一致。目前提供：集群元数据定时备份计划、全局表数据定时检测计划、主备数据一致性定时检测计划、表结构与表索引定时检测计划、数据分片路由定时检测计划、数据唯一约束定时检测计划。具体设置方式可参照对应功能章节中的说明。
 
-![](assets/hotdb-management/image517.png)
+![](../../assets/img/zh/hotdb-management/image517.png)
 
 ### 拓扑图报警设置
 
 可以对"监控->[智能逻辑拓扑](#智能逻辑拓扑)"中每一层监控项进行报警的阈值设置，当超出阈值时，拓扑图将显示对应的警告信息。 重置按钮点击可恢复默认报警设置。
 
-![](assets/hotdb-management/image518.png)
+![](../../assets/img/zh/hotdb-management/image518.png)
 
-![](assets/hotdb-management/image519.png)
+![](../../assets/img/zh/hotdb-management/image519.png)
 
 ### 监控面板设置
 
 对应"监控->[监控面板](#监控面板)"中"计算节点服务状态"、"计算节点流量"、"计算节点服务器资源"、"其他服务器资源"各大面板的监控项开关。还可以设置数据刷新频率以及服务器参数的报警阈值。
 
-![](assets/hotdb-management/image520.png)
+![](../../assets/img/zh/hotdb-management/image520.png)
 
-![](assets/hotdb-management/image521.png)
+![](../../assets/img/zh/hotdb-management/image521.png)
 
 - 每个监控项都可以选择是否开启该监控
 - 允许设置刷新频率
 - 允许重置
 - 按钮关闭时，监控面板将提示需要开启监控才可以使用
 
-![](assets/hotdb-management/image522.png)
+![](../../assets/img/zh/hotdb-management/image522.png)
 
 ### 通知设置
 
@@ -5549,7 +5549,7 @@ rr- 许可证授权检测异常包含"获取许可证信息发生异常"和"许�
 
 发件箱设置，可输入发件箱参数并测试连接，如下图：
 
-![](assets/hotdb-management/image523.png)
+![](../../assets/img/zh/hotdb-management/image523.png)
 
 **发件箱参数说明**
 
@@ -5565,15 +5565,15 @@ rr- 许可证授权检测异常包含"获取许可证信息发生异常"和"许�
 
 - 输入正确的参数并点击测试校验，弹出邮件测试窗口，如下图所示：
 
-![](assets/hotdb-management/image524.png)
+![](../../assets/img/zh/hotdb-management/image524.png)
 
 - **邮箱：**收件箱地址（内网则需要填写对应的内网收件箱地址）。点击【发送测试邮件】按钮会对发件箱参数设置及收件箱参数进行校验。参数填写有误时弹窗提示"测试邮件发送失败"；各类设置无误时提示"邮件发送成功，请注意查收"；若填写的邮件验证码有误时弹窗显示错误信息，如下图所示：
 
-![](assets/hotdb-management/image525.png)
+![](../../assets/img/zh/hotdb-management/image525.png)
 
 - 测试邮件内容如下图所示：
 
-![](assets/hotdb-management/image526.png)
+![](../../assets/img/zh/hotdb-management/image526.png)
 
 - **邮箱验证码：**正确填写收到的邮箱验证码，点击确定按钮将保存配置并提示"验证通过"；填写错误则提示"验证码错误"（验证码不区分大小写，但需注意输入是否有空格）
 
@@ -5581,7 +5581,7 @@ rr- 许可证授权检测异常包含"获取许可证信息发生异常"和"许�
 
 监控通知频率控制邮件报警中对应项的邮件发送间隔时间（也可理解为邮件报警检测频率），如下图：
 
-![](assets/hotdb-management/image527.png)
+![](../../assets/img/zh/hotdb-management/image527.png)
 
 关闭对应监控项会导致"事件->[通知策略](#通知策略)"中对应项的邮件报警不会报警。关闭前请检查是否有勾选了该监控项的通知策略。
 
@@ -5589,7 +5589,7 @@ rr- 许可证授权检测异常包含"获取许可证信息发生异常"和"许�
 
 可设置"事件->[审计日志](#审计日志)"中审计日志记录的操作功能菜单，以及审计日志记录的保留时间。
 
-![](assets/hotdb-management/image528.png)
+![](../../assets/img/zh/hotdb-management/image528.png)
 
 ## 工具
 
@@ -5599,7 +5599,7 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 **功能入口：**在管理平台中点击[工具](#工具)->[信息收集](#信息收集)进入[信息收集](#信息收集)页面
 
-![](assets/hotdb-management/image529.png)
+![](../../assets/img/zh/hotdb-management/image529.png)
 
 **收集场景：**
 
@@ -5644,7 +5644,7 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 7. 存放在管理平台服务器上的收集文件，管理平台默认保留30天。对过期文件，程序会在每天凌晨以及设置文件窗口期时执行删除任务。
 
-    ![](assets/hotdb-management/image530.png)
+    ![](../../assets/img/zh/hotdb-management/image530.png)
 
 8. 删除页面记录，程序也会对应删除在管理平台服务器/opt目录下的文件内容
 
@@ -5652,7 +5652,7 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 10. 对于无法收集或收集异常的信息，压缩包内统一用"任务收集异常报告.txt"记录：
 
-    ![](assets/hotdb-management/image531.png)
+    ![](../../assets/img/zh/hotdb-management/image531.png)
 
 ### 许可证管理
 
@@ -5664,7 +5664,7 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 **功能入口：**登录管理平台[工具](#工具)->[业务数据汇报](#业务数据汇报)进入业务数据汇报页面,如下图：
 
-![](assets/hotdb-management/image532.png)
+![](../../assets/img/zh/hotdb-management/image532.png)
 
 页面每次进入时，自动获取业务数据，默认按照统计周期："按月份"选择"当前月份"数据展示，统计周期可选择："按月份、按季度、按年度"。
 
@@ -5672,11 +5672,11 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 - 按季度：选择范围为起始时间所在的季度至当前季度，格式为"年份+季度"
 - 按年度：选择范围为起始时间所在的年度至当前年度，格式为"年份+年度"
 
-![](assets/hotdb-management/image533.png)
+![](../../assets/img/zh/hotdb-management/image533.png)
 
 在重新选择时间范围进行业务数据统计时，页面会自动刷新匹配数据。点击【导出】按钮，可进行数据报表的导出，导出的数据格式可选PDF/WORD文件，导出的文件名称为：集群名称+业务数据汇报+时间维度（即筛选的时间维度）
 
-![](assets/hotdb-management/image534.png)
+![](../../assets/img/zh/hotdb-management/image534.png)
 
 #### 集群规模
 
@@ -5692,7 +5692,7 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 集群规模的数据每天凌晨进行定时更新，如下图：
 
-![](assets/hotdb-management/image535.png)
+![](../../assets/img/zh/hotdb-management/image535.png)
 
 > !Note
 >
@@ -5711,7 +5711,7 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 数据每天零点进行定时更新，进行统计和展示。页面显示包括：集群总数据容量、数据量最大的逻辑库及其数据量、数据量最大的数据节点及其数据量、数据量最大的表及其数据量，如下图：
 
-![](assets/hotdb-management/image536.png)
+![](../../assets/img/zh/hotdb-management/image536.png)
 
 > !Note
 >
@@ -5721,7 +5721,7 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 数据每天零点进行定时更新，统计范围内单日数据新增峰值量最大的日期和对应的数据量及其前后一天的数据进行展示，如果前后一天之内没有对应的数据，那么会依次顺延，选取离峰值数据最近的日期和其数据进行展示，如下图：
 
-![](assets/hotdb-management/image537.png)
+![](../../assets/img/zh/hotdb-management/image537.png)
 
 如果在筛选的时间范围内出现多个峰值相同的时间点，会优先筛取离当前筛选时间最近的一次数据作为展示
 
@@ -5735,11 +5735,11 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 数据每天凌点定时更新，将当天的集群数据量、计算节点配置库数据量和管理平台配置库数据量进行分别统计，若当前增量预测中的统计数据未满21天，则提示："当前数据记录尚未满21天，暂时无法进行增量预测"，如下图：
 
-![](assets/hotdb-management/image538.png)
+![](../../assets/img/zh/hotdb-management/image538.png)
 
 点击曲线图右上方的放大图标，可对曲线图进行全屏查看，当鼠标悬浮到曲线图上时，会具体显示当前对应日期及其历史容量统计和容量趋势预测数据量，再次点击放大缩小按钮可以回退到业务数据汇报页面，如下图：
 
-![](assets/hotdb-management/image539.png)
+![](../../assets/img/zh/hotdb-management/image539.png)
 
 > !Note
 >
@@ -5753,7 +5753,7 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 当前会按照月份分别统计不同操作的执行次数，当月的操作次数会进行累加，至新一个月时，会重新开始进行操作次数的累加统计，如下图：
 
-![](assets/hotdb-management/image540.png)
+![](../../assets/img/zh/hotdb-management/image540.png)
 
 > !Note
 >
@@ -5763,7 +5763,7 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 集群性能显示的数据为筛选时间范围内计算节点的峰值及时间，包括两部分的数据：计算节点的QPS、TPS、连接数，存储节点的QPS、连接数。数据每天凌点定时更新，如下图：
 
-![](assets/hotdb-management/image541.png)
+![](../../assets/img/zh/hotdb-management/image541.png)
 
 > !Note
 >
@@ -5789,13 +5789,13 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 **可靠性** = （1-（筛选范围内故障累计时间/ 筛选范围的总时间））* 100%。若故障累计时间为0，则可靠性不计算直接为100%。
 
-![](assets/hotdb-management/image542.png)
+![](../../assets/img/zh/hotdb-management/image542.png)
 
 > !Note
 >
 > 初始系统还未进行数据统计时，均会以"---"展示。当计算节点/数据节点/配置库为单节点/单库时，展示：单节点/单库，暂无统计，如下图：
 
-![](assets/hotdb-management/image543.png)
+![](../../assets/img/zh/hotdb-management/image543.png)
 
 #### 集群运维
 
@@ -5808,25 +5808,25 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 1. 异常表占比 = （异常表数量 / 检测表总数量 ） * 100%
 2. 检测子菜单中，可以进行主备数据一致性检测、全局表数据检测、表结构与表索引检测，路由正确性校验和数据唯一约束检测，检测数据实时统计并进行展示，如下图：
 
-![](assets/hotdb-management/image544.png)
+![](../../assets/img/zh/hotdb-management/image544.png)
 
 **(2) 部署升级**
 
 展示在筛选时间范围内，成功完成的集群升级次数和许可证更新次数，当有升级和更新操作发生时，数据进行实时统计和展示，如下图：
 
-![](assets/hotdb-management/image545.png)
+![](../../assets/img/zh/hotdb-management/image545.png)
 
 **(3) 告警优化**
 
 展示在筛选时间范围内，成功发送的告警邮件数、慢查询优化的条数以及分片方案变更的表数目。数据进行实时统计和展示，如下图：
 
-![](assets/hotdb-management/image546.png)
+![](../../assets/img/zh/hotdb-management/image546.png)
 
 **(4) 安全防护**
 
 展示在筛选时间范围内拦截IP的个数、拦截SQL的条数以及错误密码的登陆次数（登录服务端/管理端的错误密码），如下图：
 
-![](assets/hotdb-management/image547.png)
+![](../../assets/img/zh/hotdb-management/image547.png)
 
 > !Note
 >
@@ -5842,11 +5842,11 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 导航内容在HotDB Management顶部，始终显示其内容。对其中功能目前暂不支持菜单权限控制。
 
-![](assets/hotdb-management/image548.png)
+![](../../assets/img/zh/hotdb-management/image548.png)
 
 ### 版本显示
 
-![](assets/hotdb-management/image549.png)
+![](../../assets/img/zh/hotdb-management/image549.png)
 
 显示目前所选计算节点集群基本信息：集群名称、计算节点版本号，许可证授权信息（许可证类型：测试版或永久、剩余时间）、节点限制数、逻辑库数限制。
 
@@ -5856,13 +5856,13 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 当计算节点无法连接时，该处会有红色小圆点标识，点击"版本信息"会提示"无法连接到计算节点"。如下图所示：
 
-![](assets/hotdb-management/image550.png)
+![](../../assets/img/zh/hotdb-management/image550.png)
 
 **许可证状态检测：**
 
 当许可证信息出现异常时，信息栏显示相应的异常提醒信息（橙色小圆点提示），如下图所示：
 
-![](assets/hotdb-management/image551.png)
+![](../../assets/img/zh/hotdb-management/image551.png)
 
 **许可证异常的其他形式通知：**
 
@@ -5876,7 +5876,7 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 在导航栏中，点击【返回计算节点集群选择】按钮，进入计算节点集群选择页面。
 
-![](assets/hotdb-management/image552.png)
+![](../../assets/img/zh/hotdb-management/image552.png)
 
 ### 帮助中心
 
@@ -5884,23 +5884,23 @@ HotDB Server集群组件较多，运行机制较为复杂。当出现异常问�
 
 在导航栏处，点击帮助中心，选择【新手导航】可进入新手导航指引页面。
 
-![](assets/hotdb-management/image553.png)
+![](../../assets/img/zh/hotdb-management/image553.png)
 
 #### API接口说明
 
 在导航栏处，点击帮助中心，选择【API接口说明】可进入API使用说明页面。
 
-![](assets/hotdb-management/image554.png)
+![](../../assets/img/zh/hotdb-management/image554.png)
 
 API使用说明包含平台角色说明，格式接口说明，平台接入说明，状态码说明，管理平台用户认证。
 
-![](assets/hotdb-management/image555.png)
+![](../../assets/img/zh/hotdb-management/image555.png)
 
-![](assets/hotdb-management/image556.png)
+![](../../assets/img/zh/hotdb-management/image556.png)
 
-![](assets/hotdb-management/image557.png)
+![](../../assets/img/zh/hotdb-management/image557.png)
 
-![](assets/hotdb-management/image558.png)
+![](../../assets/img/zh/hotdb-management/image558.png)
 
 > !Note
 >
@@ -5916,35 +5916,35 @@ API使用说明包含平台角色说明，格式接口说明，平台接入说�
 
 在管理平台中进行了需要动态加载的修改后，【动态加载】按钮上出现待加载的标志。用户点击【动态加载】并提示"同步完成"后，待加载标志自动消失。该提示计算节点集群为单位，不同用户进入同一计算节点集群，待加载标志都会按需显示。具体如下图显示：
 
-![](assets/hotdb-management/image559.png)
+![](../../assets/img/zh/hotdb-management/image559.png)
 
 **动态加载特殊场景说明：**
 
 动态加载过程中，如果遇到主备配置库、主备存储节点切换，页面会提示用户并提供【强制停止切换】和【取消动态加载】两种选择方案。具体如下图所示：
 
-![](assets/hotdb-management/image560.png)
+![](../../assets/img/zh/hotdb-management/image560.png)
 
 点击【确定】按钮则强制取消当前切换并进行同步加载，成功后提示同步加载成功；点击【取消】按钮则取消本次同步加载操作。
 
 #### 功能演练
 
-![](assets/hotdb-management/image561.png)
+![](../../assets/img/zh/hotdb-management/image561.png)
 
 **第一步：**在导航栏处点击【动态加载】按钮，页面弹出框提示："是否确认将配置数据同步到计算节点"？
 
-![](assets/hotdb-management/image562.png)
+![](../../assets/img/zh/hotdb-management/image562.png)
 
 **第二步：**点击【确定】会先检测"配置->[配置校验](#配置校验)"模块下内容是否有错误。当全部检测通过时，将实际执行动态加载，成功将提示："同步成功"。当有错误时，则提示："配置校验失败"。
 
-![](assets/hotdb-management/image563.png)
+![](../../assets/img/zh/hotdb-management/image563.png)
 
 **第三步（异常情况时）：**当配置校验失败后，点击【检查配置】则会跳转到"配置->[配置校验](#配置校验)"模块下，可查看具体报错信息。
 
-![](assets/hotdb-management/image564.png)
+![](../../assets/img/zh/hotdb-management/image564.png)
 
 #### 需要动态加载以生效的场景
 
-![](assets/hotdb-management/image565.png)
+![](../../assets/img/zh/hotdb-management/image565.png)
 
 需要动态加载以生效的功能操作如下：
 
@@ -5965,13 +5965,13 @@ API使用说明包含平台角色说明，格式接口说明，平台接入说�
 
 展示各种报警通知及其他事件通知。有通知信息时右上角显示通知总条数，没有则不显示；
 
-![](assets/hotdb-management/image566.png)
+![](../../assets/img/zh/hotdb-management/image566.png)
 
 事件通知内容与[首页](#首页)的[事件通知](#事件通知)内容一致。
 
 点击事件通知中的具体事件可跳转至"事件->[历史事件](#历史事件)"或具体功能查看详细情况。
 
-事件通知内容分为三个等级：ERROR、WARNING、INFO；图标分别为![](assets/hotdb-management/image567.png)、![](assets/hotdb-management/image568.png)、![](assets/hotdb-management/image569.png)
+事件通知内容分为三个等级：ERROR、WARNING、INFO；图标分别为![](../../assets/img/zh/hotdb-management/image567.png)、![](../../assets/img/zh/hotdb-management/image568.png)、![](../../assets/img/zh/hotdb-management/image569.png)
 
 可在事件通知中点击【设置】按钮，为相应事件设置是否显示提示。
 
@@ -5979,7 +5979,7 @@ API使用说明包含平台角色说明，格式接口说明，平台接入说�
 
 在导航栏处，点击【主题切换】可更换当前HotDB Management的主题风格。
 
-![](assets/hotdb-management/image570.png)
+![](../../assets/img/zh/hotdb-management/image570.png)
 
 ### 用户信息
 
@@ -5991,7 +5991,7 @@ HotDB Management当前用户如果为"管理用户"，可在普通用户视角�
 
 修改用户信息中只能修改个人的密码，查看自己的用户名和计算节点集群权限。在导航栏处，点击【修改用户信息】进入个人信息页面。
 
-![](assets/hotdb-management/image571.png)
+![](../../assets/img/zh/hotdb-management/image571.png)
 
 在个人信息页面，输入当前密码，输入新密码及确认新密码，点击【保存】可修改用户密码。
 
@@ -5999,29 +5999,29 @@ HotDB Management当前用户如果为"管理用户"，可在普通用户视角�
 
 若忘记密码，请联系超级管理员重置密码。
 
-![](assets/hotdb-management/image572.png)
+![](../../assets/img/zh/hotdb-management/image572.png)
 
 高危操作验证开关的打开或关闭都需要进行口令校验。
 
-![](assets/hotdb-management/image573.png)
+![](../../assets/img/zh/hotdb-management/image573.png)
 
 如果高危操作验证开关开启，用户进行危险操作时需要高级密码的确认。如：存储节点密码修改、普通DDL与在线DDL执行的SQL中包含"DROP"、"TRUNCATE"等危险操作指令时。
 
-![](assets/hotdb-management/image574.png)
+![](../../assets/img/zh/hotdb-management/image574.png)
 
-![](assets/hotdb-management/image575.png)
+![](../../assets/img/zh/hotdb-management/image575.png)
 
 ### 退出登录
 
 在导航栏处，点击【退出登录】可以退出账号。账号退出成功后，跳转到登录页面。
 
-![](assets/hotdb-management/image576.png)
+![](../../assets/img/zh/hotdb-management/image576.png)
 
 ### 语言切换
 
 管理平台支持中、英文显示，默认初始化为中文环境。若需要使用英文显示，可在管理平台安装目录下修改`conf/application.properties`中的language参数。
 
-![](assets/hotdb-management/image577.png)
+![](../../assets/img/zh/hotdb-management/image577.png)
 
 Language参数目前只支持Chinese与English两种。
 
@@ -6035,11 +6035,11 @@ Language参数目前只支持Chinese与English两种。
 
 HTTPS配置信息，在管理平台安装目录下的`conf/application.properties中`，默认是注释掉的，如需开启，去掉注释，重启管理平台。
 
-![](assets/hotdb-management/image578.png)
+![](../../assets/img/zh/hotdb-management/image578.png)
 
-![](assets/hotdb-management/image579.png)
+![](../../assets/img/zh/hotdb-management/image579.png)
 
-![](assets/hotdb-management/image580.png)
+![](../../assets/img/zh/hotdb-management/image580.png)
 
 HTTPS参数代表的含义如下：
 
@@ -6081,8 +6081,8 @@ keytool -genkey -alias test -keypass 123456 -keyalg RSA -keysize 1024 -validity 
 
 2. 在`application.xml`中修改`https.keystore-password`和`https.keystore-file`为新生成的值，重启管理平台，即可使用HTTPS方式访问管理平台。
 
-![](assets/hotdb-management/image581.png)
+![](../../assets/img/zh/hotdb-management/image581.png)
 
-![](assets/hotdb-management/image582.png)
+![](../../assets/img/zh/hotdb-management/image582.png)
 
-![](assets/hotdb-management/image583.png)
+![](../../assets/img/zh/hotdb-management/image583.png)

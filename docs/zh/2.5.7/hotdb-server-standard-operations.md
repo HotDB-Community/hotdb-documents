@@ -7046,15 +7046,15 @@ ddlForDbNeedSuper参数指针对DATABASE的DDL语句是否需要配置额外的S
 
 以创建逻辑库为例，设置成true时，需要同时拥有super权限和create全局权限才支持建库，否则创建报错：
 
-![img](assets/clip_image002.jpg)
+![](assets/hotdb-server-standard-operations/image143-1.png)
 
 设置成false时，只需要create全局权限即可建库：
 
-![img](assets/clip_image004.jpg)
+![](assets/hotdb-server-standard-operations/image143-2.png)
 
-若设置成false时，未配置create 全局权限也会创建失败：
+若设置成false时，未配置create全局权限也会创建失败：
 
-![img](assets/clip_image006.jpg)
+![](assets/hotdb-server-standard-operations/image143-3.png)
 
 #### drBakUrl & drBakUsername & drBakPassword
 
@@ -7655,13 +7655,13 @@ rownum用以对结果各行生成序列号。在WHERE条件中，可以对结果
 SELECT * FROM (SELECT rownum,* FROM join_cross_a_cxd WHERE adnid in (101,102)) WHERE adnid=101;
 ```
 
-![img](assets/clip_image002-1626058193879.jpg)
+![](assets/hotdb-server-standard-operations/image143-4.png)
 
 ```sql
 SELECT * FROM join_cross_a_cxd a INNER JOIN join_cross_b_jwy b ON a.adnid=b.adnid WHERE rownum >= 1 ORDER BY a.id;
 ```
 
-![img](assets/clip_image004-1626058193880.jpg)
+![](assets/hotdb-server-standard-operations/image143-5.png)
 
 #### enableDropDatabase
 
