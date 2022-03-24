@@ -4,7 +4,7 @@
   * [产品白皮书](white-paper.md)
   <!--* [What's New](whats-new.md)-->
 * **入门**
-  * [开始](./)
+  * [开始](README.md)
   * [快速上手指南](quick-start-guide.md)
   <!--* [基本操作](basic-operations.md)-->
 * **部署升级**

@@ -111,22 +111,8 @@ window.$docsify.plugins = [
     })
     hook.beforeEach(function(html) {
       redirectLocation()
+      html = prehandleMarkdown(html)
       bindProperties(vm)
-
-      //预处理markdown
-      let isCodeFence = false
-      html = html.split("```").map(snippet =>{
-        if(isCodeFence){
-          isCodeFence = false
-          return snippet
-        }else{
-          isCodeFence = true
-          snippet = escapeInCode(snippet)
-          snippet = resolveAnchor(snippet)
-          snippet = resolveFootNote(snippet)
-          return snippet
-        }
-      }).join("```")
       return html
     })
     hook.afterEach(function(html, next) {
@@ -161,17 +147,6 @@ function redirectLocation() {
   }
 }
 
-function bindProperties(vm) {
-  //绑定自定义属性
-  const properties = window.$docsify.properties
-  properties.filePath = vm.route.file //格式：xxx/xxx.md
-  properties.fileUrl = "#" + vm.route.path //格式：#/xxx/xxx
-  const strs = properties.filePath.split("/");
-  properties.fileName = strs.length > 1 ? strs[strs.length -1] : null;
-  properties.language = strs.length > 1 ? strs[0] : null;
-  properties.version = strs.length > 2 ? strs[1] : null;
-}
-
 //推断语言区域
 function inferLocale() {
   const locales = window.$docsify.locales
@@ -180,6 +155,23 @@ function inferLocale() {
     if(locale.startsWith(it)) return it
   })
   return "zh"
+}
+
+//预处理markdown
+function prehandleMarkdown(html){
+  let isCodeFence = false
+  return html.split("```").map(snippet =>{
+    if(isCodeFence){
+      isCodeFence = false
+      return snippet
+    }else{
+      isCodeFence = true
+      snippet = escapeInCode(snippet)
+      snippet = resolveAnchor(snippet)
+      snippet = resolveFootNote(snippet)
+      return snippet
+    }
+  }).join("```")
 }
 
 //需要转义表格单元格中的内联代码中的管道符
@@ -213,4 +205,20 @@ function resolveFootNote(html) {
 //绑定footNote对应的tooltip
 function bindFootNote() {
   $('[data-toggle="tooltip"]').tooltip()
+}
+
+//解析以{{expression}}格式表示的表达式（基于Vue实例）
+function resolveExpression(html){
+  return html.replace(/{{(\w+)}}/, (s, expression) => { return vm[expression]})
+}
+
+function bindProperties(vm) {
+  //绑定自定义属性
+  const properties = window.$docsify.properties
+  properties.filePath = vm.route.file //格式：xxx/xxx.md
+  properties.fileUrl = vm.route.path //格式：/xxx/xxx
+  const strs = properties.filePath.split("/");
+  properties.fileName = strs.length > 1 ? strs[strs.length -1] : null;
+  properties.language = strs.length > 1 ? strs[0] : null;
+  properties.version = strs.length > 2 ? strs[1] : null;
 }

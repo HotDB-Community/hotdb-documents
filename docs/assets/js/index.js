@@ -27,11 +27,13 @@ window.$docsify = {
   vueGlobalOptions: {
     data(){
       return {
-        ...window.$docsify.properties
+
       }
     },
     computed(){
-      return {}
+      return {
+        ...window.$docsify.properties
+      }
     },
     methods(){
       return {
@@ -40,7 +42,7 @@ window.$docsify = {
         },
         fileUrlWithVersion(version){
           return this.fileUrl.replace(this.version, version)
-        },
+        }
       }
     }
   },

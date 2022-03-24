@@ -4,7 +4,7 @@
   * [Product White Paper](white-paper.md)
   <!--* [What's New](whats-new.md)-->
 * **Introdution**
-  * [Getting Started](./)
+  * [Getting Started](README.md)
   * [Quick Start Guide](quick-start-guide.md)
   <!--* [Basic Operations](basic-operations.md)-->
 * **Deployment and Update**
