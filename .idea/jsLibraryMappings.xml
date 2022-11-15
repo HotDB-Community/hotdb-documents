@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$" libraries="{@fortawesome/fontawesome-free, @popperjs, docsify-copy-code, docsify-edit-on-github, docsify-fontawesome, docsify-glossary, docsify-pagination, docsify-pdf-embed, docsify-pdf-embed-plugin, docsify-plugin-flexible-alerts, docsify-sidebar-collapse, emoji, external-script, prismjs}" />
-    <file url="PROJECT" libraries="{jquery}" />
-  </component>
-</project>

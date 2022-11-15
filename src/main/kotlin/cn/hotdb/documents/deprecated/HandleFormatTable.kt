@@ -102,7 +102,7 @@ private fun List<List<String>>.joinToTable(): String {
 		for(row in this@joinToTable) {
 			indices.joinTo(this," | ", "| ", " |\n") { i ->
 				val column = row[i]
-				val fixedLength = column.charLength
+				val fixedLength = column.displayLength
 				val expectFixedLength = fixedLengths[i]
 				when{
 					fixedLength == expectFixedLength -> column
@@ -126,7 +126,7 @@ private fun List<List<String>>.getFixedLengths(): List<Int> {
 	return indices.map { i -> this.map {
 		//可能会报IndexOutOfBoundsException
 		try {
-			it[i].charLength
+			it[i].displayLength
 		} catch(e: Exception) {
 			println(it)
 			throw e

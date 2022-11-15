@@ -1,5 +1,7 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-	id("org.jetbrains.kotlin.jvm") version "1.6.0"
+	id("org.jetbrains.kotlin.jvm") version "1.7.0"
 }
 
 repositories {
@@ -12,13 +14,7 @@ version = "1.0"
 
 dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib")
-	testImplementation("org.jetbrains.kotlin:test-junit")
-}
-
-java {
-	toolchain {
-		languageVersion.set(JavaLanguageVersion.of(11))
-	}
+	testImplementation("org.jetbrains.kotlin:test")
 }
 
 kotlin {
@@ -28,25 +24,11 @@ kotlin {
 	}
 }
 
-val projectCompiler = javaToolchains.compilerFor {
-	languageVersion.set(JavaLanguageVersion.of(11))
-}
-
 tasks {
-	compileJava {
-		javaCompiler.set(projectCompiler)
-	}
-	compileTestJava {
-		javaCompiler.set(projectCompiler)
-	}
-	compileKotlin {
+	withType<KotlinCompile> {
 		kotlinOptions {
-			jvmTarget = "1.8"
-		}
-	}
-	compileTestKotlin {
-		kotlinOptions {
-			jvmTarget = "1.8"
+			jvmTarget = "11"
+			freeCompilerArgs = listOf("-Xjvm-default=all")
 		}
 	}
 	test {
