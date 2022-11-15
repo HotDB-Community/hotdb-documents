@@ -83,7 +83,7 @@ You can switch to the corresponding page of cluster by clicking the tabs of diff
 
 The basic data includes the cluster configuration and license information, etc.
 
-> !Note
+> **Note**
 > 
 > - The table quantity is the total quantity of all created and not created tables in the current cluster.
 > - If the license information type is permanent, the remaining available time is not displayed. If it is a beta version and the remaining time is less than 7 days, an alert will be given in red.
@@ -265,7 +265,7 @@ The communication port appears as the port used for communication between multip
 
 Set ConfigDB Manually specifies that configDB needs to select the configDB replication mode and the configDB address needs to be filled in according to the given example. The configDB username and configDB password refer to the account and password connecting configDB instance.
 
-> !Note
+> **Note**
 > 
 > Any configDB in the replication mode strongly requires that the configDB connection address in server.xml shall be consistent with the IP address of the server where the actual configDB is located. It cannot be configured as 127.0.0.1 or localhost, so as mainly to prevent the risk of misjudging the actual address when the management platform obtains multiple configDB addresses in case that the management platform and the compute node service are not on the same service..
 
@@ -285,7 +285,7 @@ After filling in the compute node name, test whether the compute node can be con
 
 When the number of existing compute node clusters (including those with stopped monitoring and normal monitoring) has reached the number of available compute node clusters authorized by the platform license, if you click \[Add Cluster] on the cluster management page, it will prompt: `"Add is not allowed because the number of available compute node cluster groups authorized by the platform is exceeded."`
 
-> !Note
+> **Note**
 > 
 > for more notes on DR mode and multi-node mode, you can refer to the supporting documents including [Installation and Deployment](installation-and-deployment.md), [Cross IDC Disaster Recovery Deployment](cross-idc-disaster-recovery-deployment.md).
 
@@ -474,7 +474,7 @@ Click \[Environment Examination] button on the deployment environment examinatio
 2. All related component programs in the cluster run normally
 3. The cluster is configured with at least one data node and one logicDB
 
-> !Note
+> **Note**
 > 
 > The status detection of all related component programs in the cluster depends on a 2-minute periodic detection task, so there may be a 2-minute detection error between the current detection status and the actual component status.
 
@@ -495,7 +495,7 @@ The examination report defaults to display unqualified and warning examination i
 
 ![](../../assets/img/en/hotdb-management/image32.png)
 
-> !Note
+> **Note**
 >
 > The deployment environment examination function has no requirement for HotDB Server version. However, when the Server version used for examination is below 2.5.3, the "10 s performance test" and "master/slave or MGR configDB data consistency" examination items are not supported.
 
@@ -588,7 +588,7 @@ The operation logs related to security protection performed by all general users
 - Operation Time: Record the actual operation time, and support the selection of time range to display log records. The time range of record here is determined by the default retention days in the settings.
 - Operation Result: Record the actual operation results. Log records can be filtered by the operation results.
 
-> !Note
+> **Note**
 > 
 > If the compute node version is below V2.5.0, the page does not display the security audit log record.
 
@@ -608,7 +608,7 @@ The operation records of all general users on the management port can be viewed.
 - Operation Time: Record the actual operation time, and support the selection of time range to display log records. The time range of record here is determined by the default retention days in the settings.
 - Operation Result: Record the actual operation results. Log records can be filtered by the operation results.
 
-> !Note
+> **Note**
 > 
 > If the compute node version is below V2.5.0, the page does not display the management port operation audit log record.
 
@@ -909,7 +909,7 @@ Click "Enable", the availability status, master-slave replication status and ope
 
 ![](../../assets/img/en/hotdb-management/image74.png)
 
-> !Note
+> **Note**
 > 
 > In the single-node mode, there are no switching, disabling, deletion and other operations.
 > 
@@ -981,7 +981,7 @@ During the backup, the backup status displays "backup in progress"; after the ba
 
 After the backup, find the corresponding record and click Restore to restore the backup.
 
-> !Note
+> **Note**
 > 
 > During the restore, if you perform other operations on the management platform, it will prompt "Operations are not allowed temporarily because the management platform ConfigDB is being restored".
 >
@@ -1113,7 +1113,7 @@ After selecting the cluster, the cluster will be automatically checked to see wh
 
 ![](../../assets/img/en/hotdb-management/image103.png)
 
-> !Note
+> **Note**
 >
 > It supports the version upgrade of the compute nodes with NDB services installed. During the upgrade process, the management platform automatically copies the NDB installation directory of the former compute node to the directory of new compute node version. After the upgrade, the NDB service remains the same as before. Note that in this process the NDB version will not be upgraded.
 >
@@ -1163,7 +1163,7 @@ Click \[Upload] to open the file selection window, and select the logo image.
 
 ![](../../assets/img/en/hotdb-management/image113.png)
 
-> !Note
+> **Note**
 >
 > the image is required to be no more than 1024KB and the suffix should be ".png/.jpg/.svg". With the image requirements met, the preview area will display the effect picture of the uploaded image, as shown in the following figure:
 > 
@@ -1460,7 +1460,7 @@ The Add Node function is displayed taking adding 4 data nodes (dn_01, dn_02, dn_
 
 **Step 7:** Click the "Connection Test" button to verify the availability of connection of the configured data source information. If the configured information is unavailable, the "Hostname", "Port", "Connection User", "Connection User Password" and "Database Name" input boxes of the corresponding data source will be identified. If it is detected that the data source is connectable but the database does not exist, it prompts whether to create database for the user, but the configured connection user shall have create privilege.
 
-> !Note
+> **Note**
 > 
 > **Backup user test:** The availability testing of backup users depends on the backup program (HotDB) on the server where the data source is located. If the server where the data source is located is not installed with the backup program or the backup program is not started, the availability of backup user cannot be detected and the "Connection Test" cannot be passed.
 
@@ -1649,7 +1649,7 @@ Click [Configuration](#configuration) -> "[Node Management](#node-management)" -
  
 On the data source management page, click the "Disable" button to confirm, then the data source is disabled successfully, and the "Status" field on the node management page displays the corresponding data source unavailable. If the disabled master data source is reloaded, the data node switches to the standby data source.
 
-> !Note
+> **Note**
 > 
 > Data sources of the MGR type shall not be arbitrarily disabled, otherwise the data source switch will be abnormal.
 
@@ -1794,7 +1794,7 @@ Multiple tables with the same function can be added at one time.
 2. Click on "+", and then enter the Child Table Name, Child Table Association field, and Parent Table Association Field.
 3. Click on "√" to add the child table successfully.
 
-> !Note
+> **Note**
 > 
 > If multiple child tables need to be added under the parent table, the Parent Table Association Field filled in must be consistent. No child table shall be added under the parent table with created table structure.
 
@@ -1841,7 +1841,7 @@ Click the "Delete" button, then the pop-up box will prompt: "Confirm to Delete?"
 
 ![](../../assets/img/en/hotdb-management/image180.png)
 
-> !Note
+> **Note**
 > 
 > Tables with no table structure created can be deleted directly.
 >
@@ -1919,7 +1919,7 @@ Select "Automatic Generation of Sharding Function Name" by default, select MATCH
 
 ![](../../assets/img/en/hotdb-management/image186.png)
 
-> !Note
+> **Note**
 > 
 > Manual setting of input values supports the input of multiple values which shall be spaced by English commas or English space
 
@@ -2003,7 +2003,7 @@ Select "Automatic Generation of Sharding Function Name" by default, select ROUTE
 
 ![](../../assets/img/en/hotdb-management/image190.png)
 
-> !Note
+> **Note**
 > 
 > Manual setting of input values supports the input of multiple values which shall be spaced by English commas or English space
 
@@ -2041,7 +2041,7 @@ Select "Automatic Generation of Sharding Function Name" by default, select SIMPL
 
 ![](../../assets/img/en/hotdb-management/image192.png)
 
-> !Note
+> **Note**
 > 
 > Manual setting of input values supports the input of multiple values which shall be spaced by English commas or English space
 
@@ -2077,7 +2077,7 @@ Select "Automatic Generation of Sharding Function Name" by default, select CRC32
 
 ![](../../assets/img/en/hotdb-management/image194.png)
 
-> !Note
+> **Note**
 > 
 > Manual setting of input values supports the input of multiple values which shall be spaced by English commas or English space
 
@@ -2114,7 +2114,7 @@ Click the "Delete" button and then a pop-up box will prompt: "Confirm to Delete?
 
 ![](../../assets/img/en/hotdb-management/image196.png)
 
-> !Note
+> **Note**
 > 
 > The sharding function that has been cited by the table cannot be deleted.
 
@@ -2223,7 +2223,7 @@ Config checking failures are divided into ERROR (red font display) and WARNING (
 | ^                                               | The configDB connection user privilege configuration is normal (privilege shall not be lower than: select,insert,update,delete,create,drop,index,alter,create temporary tables,references,super,reload (only when the compute node version is greater than or equal to V2.5.3), lock tables,replication slave,replication client)                                                                                                                                    |
 | Compute node configuration                      | Whether the currently configured compute node mode matches the real compute node mode.                                                                                                                                                                                                                                                                                                                                                                               |
 
-> !Note
+> **Note**
 >
 > After the global auto-increment and unique is enabled, bigint is the only type allowed for the auto-increment sequence in the table." is a newly added verification rule for management platforms of v.2.5.5 and above, as shown in the following figure:
 > 
@@ -2317,7 +2317,7 @@ Click the "Add parameters" button at the upper right corner to jump to the Add p
 
 ![](../../assets/img/en/hotdb-management/image213.png)
 
-> !Note
+> **Note**
 >
 > The virtual IP parameter Keepalived is recommended to be configured when the cluster mode is the master/slave compute nodes (ignored in a single compute node), and it needs to be current actual.
 >
@@ -2406,7 +2406,7 @@ Click the \[Add Users] button to enter the Add User information page. There are 
 
 - LogicDB deletion only deletes the privilege record corresponding to the current logicDB, and does not affect the actual logicDB.
 
-> !Note
+> **Note**
 >
 > Changing the logicDB name may affect the logicDB privileges that some users have added and invalidate table privilege configuration. Therefore, the logicDB name change by logicDB list shall be used with caution.
 
@@ -2846,7 +2846,7 @@ The prediction curve has two parts: one is the history data amount collected eve
 - Click View the current data, the curve will only display the prediction value of current prediction time, which is consistent with the prediction result displayed in the data node.
 	![](../../assets/img/en/hotdb-management/image254.png)
 
-> !Note
+> **Note**
 >
 > The data capacity predicted by the current prediction method is only for reference, which needs further manual judgment based on the actual situation. The longer data prediction time, the more accurate the prediction results.
 
@@ -2933,7 +2933,7 @@ The network quality panel displays the corresponding network quality detection d
 
 ![](../../assets/img/en/hotdb-management/image263.png)
 
-> !Note
+> **Note**
 > the threshold displayed in the network quality monitoring should be set through Monitoring Panel Setting>Cluster resource monitoring>Network quality. The switch is OFF by default. When it is OFF, the data threshold warning will not be displayed. If the switch is ON, the page will display and judge according to the specific value in the threshold setting, as shown in the following figure:
 > 
 > ![](../../assets/img/en/hotdb-management/image264.png)
@@ -3215,7 +3215,7 @@ JOIN query that does not satisfy the following conditions is judged to be a cros
 
 ![](../../assets/img/en/hotdb-management/image310.png)
 
-> !Note
+> **Note**
 >
 > The judgmental logic of the management platform currently is simplified logic. Compared with a specific version of HotDB server, the judgmental results may be different under complex and special circumstances. For example, for the following two types of JOIN queries, the management platform may uniformly determine them to be cross JOIN correlation over cross-nodes, which may be a single-node query based on the value range:
 
@@ -3251,7 +3251,7 @@ Click on the vertex to display all/cross-node cross JOIN correlation details. Th
 - **Total Query:** The total accumulated queries of the collapsed JOIN query statements.
 - **Orange corner mark:** This associated key or this group of associated keys has no index. Please combine the key value distribution, key type and length, query execution frequency, query filter condition, existing index in the table, etc. to determine whether to adjust the index.
 
-> !Note
+> **Note**
 >
 > **Associated field description:** The table uses the field associated with the JOIN query, for example: SELECT * FROM Persons INNER JOIN Orders ON Persons.id = Orders.oid, then the id is the associated key of Persons, and oid is the associated key of Orders
 
@@ -3521,7 +3521,7 @@ It displays the connection with the longest duration of connection to the comput
 
 Duration calculation method: In the selected time range, the connection duration of same connections (consistent IP+connection user+logicDB) is accumulated. If a connection is not ended within the query period, the time at which the query range ends is used as the temporary end time of the connection for statistics.
 
-> !Note
+> **Note**
 >
 > If the statistical units, that is, IP + LogicDB + connection users are consistent, it will be counted as a connection. Thus, the connection duration of A (this connection has 1000 concurrencies at the same time and each concurrency duration is 1 minute) may be longer than the connection duration of B (this connection has only one concurrency and the concurrency duration is one hour)
 
@@ -3652,7 +3652,7 @@ Click "Manage -> Data Backup -> Backup Task -> \[Start Backup]" to manually star
 - **Backup the binlog from last Full Backup to now simultaneously:** It is checked by default, and is used to backup the binlog from last full backup to the current full backup. Note: This is an insurance measure, but the last full backup will not be found during the first full backup, so this option is meaningless for the first full backup.
 - **Local Backup Root Directory:** It is the local directory of the server where each data source resides and backup file is stored. This directory needs to be created in advance on the server where each node resides, and the directory of each server shall be consistent. Otherwise, the backup fails and the backup failure message prompts: Failed to create backup directory.
 
-> !Tip
+> **Tip**
 >
 > when the data is backed up under different directories due to different hardware specifications and configuration methods of servers, you can use the soft link to unify the directories used for backup.
 
@@ -4011,7 +4011,7 @@ Enter "Management -> Table Structure Change -> Ordinary DDL" to enter the Ordina
 
 In the Ordinary DDL operation interface, enter the username and password (the username and password are the compute node database user).
 
-> !Note
+> **Note**
 >
 > When selecting the compute node database user for login, the set "host" range must include the IP address of the server to which the current HotDB Management belongs. Otherwise, the compute node cannot be connected.
 
@@ -4125,7 +4125,7 @@ The modification of sharding function and sharding key may lead to data inconsis
 
 If "Open Global Unique Constraint" in "[Fill in Modification Plan](#fill-in-modification-plan)" is checked, the modification plan pre-detection will detect whether the historical data of the source table unique constraint key is unique. If it is not checked or the changed table is not a sharding table, the item passes directly without detection.
 
-> !Note
+> **Note**
 > 
 > Pre-detection item "3, 4, 6" is skipped when changing to global table or vertical sharding table type.
 
@@ -4397,7 +4397,7 @@ It needs to use [Reload](#reload) to enable or disable the white list or to add,
 
 After adding a host that can access the compute node, the host outside the white list will be intercepted when connecting to the compute node. Interception records can be viewed in "Event -> Audit Log -> Safety Protection".
 
-> !Important
+> **Important**
 >
 > Currently, only hosts in IP format can be configured, and the domain name format is not supported.
 >
@@ -5199,7 +5199,7 @@ HotDB Management provides SQL performance tracking function, which visually show
 
 Input the username and password (the username and password are of the [database users](#database-user-management) of the compute node), and select the LogicDB for query.
 
-> !Note
+> **Note**
 > 
 > host range set by User must contain IP address of the current HotDB Management service. Otherwise, the compute node cannot be connected normally.
 
@@ -5263,7 +5263,7 @@ The compute node server resource monitoring item notice is about the most recent
 
 ![](../../assets/img/en/hotdb-management/image466.png)
 
-> !Note
+> **Note**
 > 
 > The above thresholds are the test environment settings and are for reference only.
 
@@ -5281,7 +5281,7 @@ The compute node service status notice is about the most recent time when the th
 
 ![](../../assets/img/en/hotdb-management/image469.png)
 
-> !Note
+> **Note**
 > 
 > The above thresholds are the test environment settings and are for reference only.
 
@@ -5299,7 +5299,7 @@ Other Server Resource status notification is about the most recent time when the
 
 ![](../../assets/img/en/hotdb-management/image472.png)
 
-> !Note
+> **Note**
 > 
 > The above thresholds are the test environment settings and are for reference only..
 
@@ -5317,7 +5317,7 @@ The data source information monitoring notification is bout the most recent exce
 
 ![](../../assets/img/en/hotdb-management/image475.png)
 
-> !Note
+> **Note**
 > 
 > The above thresholds are the test environment settings and are for reference only.
 
@@ -5335,7 +5335,7 @@ the ConfigDB monitoring notification takes the latest exception within the notif
 
 ![](../../assets/img/en/hotdb-management/image478.png)
 
-> !Note
+> **Note**
 > 
 > the above thresholds are set for the test environment and are for reference only.
 
@@ -5353,7 +5353,7 @@ The periodical detection abnormal monitoring notification is bout the most recen
 
 ![](../../assets/img/en/hotdb-management/image481.png)
 
-> !Note
+> **Note**
 > 
 > The above thresholds are the test environment settings and are for reference only.
 > 
@@ -5371,7 +5371,7 @@ When the compute node license authorization expires, if the detection switch is 
 
 For "License Authorization Expired" and "Abnormal License Authorization Detection", there are 3 methods of notification: page pop-up prompt; top information bar prompt (license status is displayed by default); and email reminder (receiving and sending information shall be set, otherwise no email prompt will be given).
 
-> !Note
+> **Note**
 > 
 > The pop-up prompt and top information bar prompt are not affected by the email settings.
 
@@ -5588,7 +5588,7 @@ According to the collection scenario, data collection is divided into two types:
 
 The collection list contain files that need to be packed in one-key collection of data. The collection lists of different cluster modes are also different. For example, when the compute node is in the master/slave mode, the collection list will add keepalived component related data; when the compute node is in the multi-node load balancing mode, the collection list will add LVS component related data, and the page display list shall prevail.
 
-> !Note
+> **Note**
 > 
 > When collecting data in the "Cluster Running Status" scenario, if the configDB or data source instance version is MySQL8.0 or above, the `mysqld_auto.cnf` file will be collected according to the actual situation. This file is not displayed in the page list, and is only collected according to the actual situation after judging the version.
 
@@ -5670,7 +5670,7 @@ The data of cluster scale is updated regularly in the early hours of each day, a
 
 ![](../../assets/img/en/hotdb-management/image535.png)
 
-> !Note
+> **Note**
 > 
 > When the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-".
 
@@ -5701,7 +5701,7 @@ The data is regularly updated at 0:00 every day, and the date with the largest p
 
 If there are multiple time points with the same peak value in the selected time range, the data closest to the selecting time will be displayed.
 
-> !Note
+> **Note**
 > 
 > when the system is in initial status and has not carried out data statistics, the page displays no data temporarily.
 
@@ -5717,7 +5717,7 @@ Click the zoom in icon at the upper right of the graph to view the curve on a fu
 
 ![](../../assets/img/en/hotdb-management/image539.png)
 
-> !Note
+> **Note**
 > 
 > When the system is in initial status and has not carried out data statistics, the page displays no data temporarily.
 
@@ -5734,7 +5734,7 @@ At present, the execution times of different operations will be counted by month
 
 ![](../../assets/img/en/hotdb-management/image540.png)
 
-> !Note
+> **Note**
 > 
 > When the system is in initial status and has not carried out data statistics, the page displays no data temporarily.
 
@@ -5744,7 +5744,7 @@ The data displayed in the cluster performance is the peak value and correspondin
 
 ![](../../assets/img/en/hotdb-management/image541.png)
 
-> !Note
+> **Note**
 > 
 > when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-".
 
@@ -5770,7 +5770,7 @@ Cluster support calculates the high available data of the current cluster's comp
 
 ![](../../assets/img/en/hotdb-management/image542.png)
 
-> !Note
+> **Note**
 > 
 > when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-". When the compute node, data node or ConfigDB is a single node, "a single node with no statistics for now" will be displayed.
 
@@ -5807,7 +5807,7 @@ It shows the number of intercepted IP, the number of intercepted SQL and the num
 
 ![](../../assets/img/en/hotdb-management/image547.png)
 
-> !Note
+> **Note**
 > 
 > when the system is in initial status and has not carried out data statistics, the number of all components will be displayed with "-" or no data display temporarily.
 
@@ -5847,7 +5847,7 @@ When the license information is abnormal, the information bar displays the corre
 
 In case of license information detection exception, in addition to the corresponding prompt in the top information bar, an exception prompt will pop up when the user logging in to the management platform or refreshing the home page. In addition, the user can also configure the email [Notification Strategy](#notification-strategy) to obtain an email reminder when the license information is abnormal. Relevant exception information is also recorded in the compute node log.
 
-> !Important
+> **Important**
 > 
 > Currently, the abnormal license information will not cause the stop of compute node service, but it still needs to be noted. The problem can be solved by restarting the compute node service during the low peak period of service.
 

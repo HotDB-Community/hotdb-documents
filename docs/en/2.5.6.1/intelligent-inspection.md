@@ -463,7 +463,7 @@ If it is greater than or equal to the standard value, it will prompt in the patr
 
 If you have no privilege to view the file, it will prompt in the patrol result that the privilege is insufficient.
 
-> !Note
+> **Note**
 > 
 > items not mentioned above are only displayed and do not match the patrol indicators.
 

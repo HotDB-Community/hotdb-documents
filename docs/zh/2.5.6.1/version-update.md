@@ -34,7 +34,7 @@ mysqldump -S /data/mysql/mysqldata3316/sock/mysql.sock --set-gtid-purged=off ---
 
 #### 执行配置库升级脚本
 
-> !Important
+> **Important**
 > 
 > 若管理平台升级的目标版本大于等于V2.5.3，此步骤无需手动执行，可在管理平台替换好新版本程序包并更新完配置文件后，由程序完成配置库的升级操作。半自动升级管理平台配置库可参考[管理平台](hotdb-management.md)文档的升级中心->管理平台配置库升级功能说明。
 
@@ -50,7 +50,7 @@ mysql -uhotdb_cloud -p -P3306 -Dhotdb_cloud_config -h127.0.0.1
 
 根据具体升级脚本内容，执行变更SQL语句。
 
-> !Important
+> **Important**
 > 
 > - 配置库升级脚本可寻找产品供应商获取。
 > - 复制升级脚本内容时注意区分管理平台配置库升级SQL与计算节点配置库升级SQL。
@@ -204,7 +204,7 @@ sh hotdb_server stop
 
 #### 配置库升级
 
-> !Important
+> **Important**
 > 
 > 升级配置库前必须先备份好配置库数据，防止升级过程中出现异常情况。双主或MGR类型的配置库只备份当前主配置库的数据即可。部分版本升级时无配置库SQL变更（例如：同版本号中不同日期的版本更新升级），上述场景无需关注配置库升级模块。
 
@@ -451,7 +451,7 @@ service keepalived start
 <property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
 ```
 
-> !Note
+> **Note**
 > 
 > 上述IP地址需填写当前主计算节点所在服务器IP地址，端口号为当前主计算节点管理端口
 
@@ -631,7 +631,7 @@ cd /usr/local/hotdb/hotdb-server/conf/
 vi server.xml
 ```
 
-> !Note
+> **Note**
 > 
 > 参考修改内容此处不再赘述，可查看[单节点集群模式升级中更新server.xml配置文件](#单节点更新server.xml配置文件)说明。
 
@@ -644,7 +644,7 @@ cd /usr/local/hotdb/hotdb-server/bin/
 vi hotdb_server
 ```
 
-> !Note
+> **Note**
 > 
 > 参考修改内容此处不再赘述，可查看[单节点集群模式升级中更新计算节点启动脚本](#单节点更新计算节点启动脚本)说明。
 
@@ -659,7 +659,7 @@ cd /usr/local/hotdb/hotdb-server/bin
 sh hotdb_server start
 ```
 
-> !Note
+> **Note**
 > 
 > 备计算节点服务启动后服务端口（默认3323）是关闭的，管理端口（默认3325）是开启的才算正常。
 
@@ -679,7 +679,7 @@ sh hotdb_server stop
 
 且在备计算节点服务器上执行`ip addr`命令可查看**keepalived配置的虚拟IP地址已漂移**过来。
 
-> !Note
+> **Note**
 > 
 > 若以上任一要求未满足则代表高可用切换失败，则需要由非停机升级转为[停机升级](#多节点集群模式停机升级)。
 
@@ -721,7 +721,7 @@ cd /usr/local/hotdb/hotdb-server/conf/
 vi server.xml
 ```
 
-> !Note
+> **Note**
 > 
 > 参考修改内容此处不再赘述，可查看[单节点集群模式升级中更新server.xml配置文件](#单节点更新server.xml配置文件)说明。
 
@@ -734,7 +734,7 @@ cd /usr/local/hotdb/hotdb-server/bin/
 vi hotdb_server
 ```
 
-> !Note
+> **Note**
 > 
 > 参考修改内容此处不再赘述，可查看[单节点集群模式升级中更新计算节点启动脚本](#单节点更新计算节点启动脚本)说明。
 
@@ -746,7 +746,7 @@ vi hotdb_server
 
 为保证当前备计算节点启动正常，需进行手动执行高可用环境重建操作。若使用的管理平台为V2.4.8及以上版本时可使用"高可用重建"功能替代以下操作。
 
-> !Note
+> **Note**
 > 
 > 以下操作说明使用的"当前备"为计算节点服务器没有VIP（keepalived虚拟IP）的计算节点，"当前主"为VIP所在的计算节点。可在主备计算节点服务器上执行"ip addr"命令查看当前VIP漂移位置，以确定当前计算节点的主备状态。
 
@@ -826,7 +826,7 @@ vrrp_instance VI_1 {
 <property name="haNodeHost">192.168.200.190:3325</property><HA 角色，其他节点 IP:PORT>
 ```
 
-> !Note
+> **Note**
 > 
 > 上述IP地址需填写当前主计算节点所在服务器IP地址，端口号为当前主计算节点管理端口
 
@@ -953,7 +953,7 @@ sh /usr/local/hotdb/hotdb-server/bin/hotdb_server stop
 
 升级集群中的secondary计算节点会导致连接在该secondary计算节点上的客户端连接中断，升级primary计算节点除对客户端连接会造成中断外还包括部分进行中的事务中断的问题，生产环境建议在业务低峰期进行升级操作。
 
-> !Important
+> **Important**
 > 
 > primary与secondary是计算节点在管理端口（默认3325）中执行`show @@cluster`命令显示的当前计算节点的角色。以下secondary1与secondary2代指三个计算节点集群中secondary属性的计算节点，末尾的数字标识不分先后顺序，可代指任一secondary计算节点。
 
@@ -978,7 +978,7 @@ cd /usr/local/hotdb/hotdb-server/bin
 sh hotdb_server stop
 ```
 
-> !Note
+> **Note**
 > 
 > 停止primary计算节点服务会导致集群发生一次换主动作，请保证停止primary计算节点前其余secondary计算节点服务运行正常。
 
@@ -1012,7 +1012,7 @@ sh hotdb_server stop
 
 若容灾机房的计算节点为多节点模式，请参考[多节点集群模式停机升级](#多节点集群模式停机升级)或[不停机升级](#多节点集群模式不停机升级)。
 
-> !Note
+> **Note**
 > 
 > 容灾机房升级过程种，无需对配置库进行升级。在中心机房配置库升级时会通过中心机房配置库与容灾机房配置库之间的MySQL复制关系自动同步。
 
@@ -1059,11 +1059,11 @@ cd /usr/local/hotdb/hotdb-backup/bin
 sh hotdb_backup start -h 192.168.220.104 -p 3322
 ```
 
-> !Note
+> **Note**
 > 
 > IP地址为备份程序所关联的管理平台服务器地址，端口号为管理平台配置文件application.properties中server.backup.port参数值
 
-> !Important
+> **Important**
 > 
 > 其余存储节点服务器上的备份程序升级只需按照上述流程操作即可。
 
@@ -1123,7 +1123,7 @@ cd /usr/local/hotdb/hotdb-listener/bin
 sh hotdb_listener start
 ```
 
-> !Important
+> **Important**
 > 
 > 其余存储节点服务器上的监听程序升级只需按照上述流程操作即可。
 

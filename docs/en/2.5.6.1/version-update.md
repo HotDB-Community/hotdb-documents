@@ -34,7 +34,7 @@ mysqldump -S /data/mysql/mysqldata3316/sock/mysql.sock --set-gtid-purged=off ---
 
 #### Execute ConfigDB Upgrade Script
 
-> !Important
+> **Important**
 > 
 > If the target version of the management platform upgrade is V2.5.3 or above, ConfigDB can be upgraded by program after the management platform replaces the new version program package and update the configuration file. Management platform ConfigDB can be semi-automatically upgraded by reference of Upgrade Center -> Management Platform ConfigDB Upgrade Function Specification in [HotDB Management](hotdb-management.md) document.
 
@@ -50,7 +50,7 @@ mysql -uhotdb_cloud -p -P3306 -Dhotdb_cloud_config -h127.0.0.1
 
 Execute Change SQL Statement according to the specific upgrade script content.
 
-> !Important
+> **Important**
 > 
 > - ConfigDB upgrade script can be obtained from product supplier.
 > - Note to distinguish SQL for management platform ConfigDB upgrade and SQL for compute node ConfigDB upgrade when copying upgrade script content.
@@ -204,7 +204,7 @@ sh hotdb_server stop
 
 #### ConfigDB Upgrade
 
-> !Important
+> **Important**
 > 
 > ConfigDB data must be backed up before ConfigDB is upgraded to prevent abnormal situation in upgrading process. Master-master or MGR ConfigDB can only back up data of current master ConfigDB. No ConfigDB SQL changes when some versions are upgraded (For example: update of versions with different dates in the same version number), and in such situations you do not need to pay attention to ConfigDB upgrade module.
 
@@ -451,7 +451,7 @@ High availability switch is required when compute node is upgraded. To ensure th
 <property name="haNodeHost">192.168.200.190:3325</property><HA role, other nodes IP:PORT>
 ```
 
-> !Note
+> **Note**
 > 
 > the above IP address shall be the IP address of server of the current master compute node, and the port number is the manager port of current master compute node
 
@@ -631,7 +631,7 @@ cd /usr/local/hotdb/hotdb-server/conf/
 vi server.xml
 ```
 
-> !Note
+> **Note**
 > 
 > The reference modification is not repeated here, please view the [Update server.xml Configuration File in single node cluster](#single-node-upgrade-configuration-file).
 
@@ -644,7 +644,7 @@ cd /usr/local/hotdb/hotdb-server/bin/
 vi hotdb_server
 ```
 
-> !Note
+> **Note**
 > 
 > The reference modification is not repeated here, please view the Update [Compute Node Start Script in single node cluster](#compute-node-start-script).
 
@@ -659,7 +659,7 @@ cd /usr/local/hotdb/hotdb-server/bin
 sh hotdb_server start
 ```
 
-> !Note
+> **Note**
 > 
 > When server port (3323 by default) is closed and manager port (3325 by default) is open after slave compute node service is started, it is normal.
 
@@ -679,7 +679,7 @@ When master compute node service is closed, high availability switch of the prog
 
 And when executing the command `ip addr` on slave compute node server, you can check that the **virtual IP address of** **keepalived has been drifted.**
 
-> !Note
+> **Note**
 > 
 > If any of the above requirement fails to be met, then the high availability switch fails, and you need to change the upgrade witout service stopped to the upgrade with service stopped.
 
@@ -721,7 +721,7 @@ cd /usr/local/hotdb/hotdb-server/conf/
 vi server.xml
 ```
 
-> !Note
+> **Note**
 > 
 > The reference modification is not repeated for details, please view [Update server.xml Configuration File in single node cluster](#single-node-upgrade-configuration-file).
 
@@ -734,7 +734,7 @@ cd /usr/local/hotdb/hotdb-server/bin/
 vi hotdb_server
 ```
 
-> !Note
+> **Note**
 > 
 > The reference modification is not repeated for details. Please view [Update Compute Node Start Script in single node cluster](#single-node-upgrade-configuration-file).
 
@@ -746,7 +746,7 @@ In addition to the values of compute node configuration in old version needing t
 
 To ensure the normal start of current slave compute node, high availability environment reconstruction needs to be manually executed. If the version of the management platform used is V2.4.8 and above, the "high availability reconstruction" can be used to replace the following operations.
 
-> !Note
+> **Note**
 > 
 > "current slave" in the following operation instruction is the compute node without VIP (keepalived virtual IP) on compute node server, "current master" is the compute node where VIP is located. The command "ip addr" can be executed on master/slave compute node servers to check the drift location of current VIP, so as to confirm the master/slave status of current compute node.
 
@@ -826,7 +826,7 @@ vrrp_instance VI_1 {
 <property name="haNodeHost">192.168.200.190:3325</property><HA role, other nodes IP:PORT>
 ```
 
-> !Note
+> **Note**
 > 
 > the above IP address shall be the IP address of server of the current master compute node, and the port number is the manager port of current master compute node
 
@@ -953,7 +953,7 @@ Upgrade without service stopped of multi-node cluster mode shall meet the follow
 
 Upgrading secondary compute node in cluster will cause interruption of client connection on the secondary compute node; upgrading primary compute node will cause interruption not only of client connection, but also of some transactions in progress. It is suggested to upgrade in production environment during the low peak of operation.
 
-> !Important
+> **Important**
 > 
 > primary and secondary are the roles of current compute node displayed when executing command `show @@cluster` in manager port (3325 by default). The secondary1 and secondary2 below represent the compute nodes with secondary attribute in three compute node clusters, whose numbers at the end are in no particular order and can represent any secondary compute node.
 
@@ -978,7 +978,7 @@ cd /usr/local/hotdb/hotdb-server/bin
 sh hotdb_server stop
 ```
 
-> !Note
+> **Note**
 > 
 > Stopping primary compute node service will cause switch of master node in cluster. Please ensure the normal operation of other secondary compute node services before the primary compute node is stopped.
 
@@ -1012,7 +1012,7 @@ If the compute nodes of the DR center are in the master/slave node mode, please 
 
 If the compute nodes of the master center are in the multi-node mode, please refer to the [Multi-node cluster upgrade with service stopped](#multi-node-cluster-upgrade-with-service-stopped) or the [Multi-node cluster upgrade without service stopped](#multi-node-cluster-upgrade-without-service-stopped).
 
-> !Note
+> **Note**
 > 
 > There is no need to upgrade ConfigDB during the upgrade the DR center. It will be automatically synchronized through the MySQL replication relation between ConfigDBs in the master center and DR center during the upgrade of the ConfigDB of the master center.
 
@@ -1059,11 +1059,11 @@ cd /usr/local/hotdb/hotdb-backup/bin
 sh hotdb_backup start -h 192.168.220.104 -p 3322
 ```
 
-> !Note
+> **Note**
 > 
 > IP address is the address of management platform server associated with HotDB Backup, and the port number is the parameter value of server.backup.port in the management platform configuration file application.properties
 
-> !Important
+> **Important**
 > 
 > The HotDB Backup upgrades in other data source servers just follow the above process.
 
@@ -1123,7 +1123,7 @@ cd /usr/local/hotdb/hotdb-listener/bin
 sh hotdb_listener start
 ```
 
-> !Important
+> **Important**
 > 
 > Listener upgrade on other data source servers only needs to follow the above process.
 

@@ -124,7 +124,7 @@ show @@clientquery;
 | `other`     | The count of other operations | `LONG/[number]`     |
 | `all`       | all                           | `LONG/[number]`     |
 
-> !Note
+> **Note**
 >
 > other counts the DDL statements executed by current client
 
@@ -346,7 +346,7 @@ show @@heartbeat;
 | `last_active_time` | lastest heartbeat success time                                    | `DATETIME/[yyyy-MM-dd HH:mm:ss]`                        |
 | `stop`             | heartbeat stops or not                                            | `BOOLEAN/[true/false]`                                  |
 
-> !Note
+> **Note**
 >
 > dn=-1 means configdb
 
@@ -1137,11 +1137,11 @@ show @@usbkey;
 | `exception_count`     | the total times of last throwed exception in detection | `INT/[number]`                  |
 | `comment`             | comment                                                | `STRING`                        |
 
-> !Note
+> **Note**
 > 
 > `left_time=0` means permanent or cancellation;
 
-> !Note
+> **Note**
 > 
 > `usbkey_check_stuck=1` means that thread is checked to be stuck. When the thread is checked to be stuck or the total times of last throwed exception in detection exceeds 1000, it prompts:
 
@@ -1381,7 +1381,7 @@ The functionid used for sharding plan modification can be viewed in the table ho
 
 ![](../../assets/img/en/hotdb-server-manager-commands/image70.png)
 
-> !Important
+> **Important**
 > 
 > - The functionid required for sharding rule modifiction has already existed in the table hotdb_function in configdb;
 > - When using the sharding rule to be modified, we must ensure that the number of data nodes specified is consistent with that of data nodes in function_id;
@@ -1832,7 +1832,7 @@ Add mapping relations from the database db01 to the LogicDB logic_db, so that ex
 dbremapping @@add@db01:logic_db;
 ```
 
-> !Note
+> **Note**
 > 
 > If you add mapping relation from the same name database to different LogicDB, the previous mapping relations will be overlaid. Mapping relations are allowed to be added from different databases to the same LogicDB.
 
@@ -1882,7 +1882,7 @@ For example:
 mysql> onlineddl "alter table mytb add column cl1 varchar(90) default '1'";
 ```
 
-> !Note
+> **Note**
 > 
 > When online modifying table structure, the data table structures on each sharding shall be consistent, and the data table to be modified has unique index.
 
@@ -1900,7 +1900,7 @@ For example:
 mysql> onlineddl_nocheck "alter table mytb add column cl1 varchar(90) default '1'";
 ```
 
-> !Note
+> **Note**
 > 
 > When online modifying table structure, the data table structures on each sharding shall be consistent, and the data table to be modified has unique index.
 

@@ -16,7 +16,7 @@ HotDB Server集群部署对服务器、操作系统、依赖软件等有一定�
 
 集群负载均衡模式部署架构示意图
 
-> !Note
+> **Note**
 >
 > 集群单节点模式部署架构示意图请参考"图 1-1 集群HA（主备）模式部署架构示意图"，单节点模式中无"HotDB Server （standby）、VIP"部分，其余与HA模式示意图一致。
 
@@ -64,7 +64,7 @@ HotDB Server集群部署对服务器、操作系统、依赖软件等有一定�
 | 配置库   | 1        |
 | 存储节点 | 4        |
 
-> !Note
+> **Note**
 >
 > 各组件名称说明可参考[名词解释](glossary.md)文档。
 
@@ -163,7 +163,7 @@ vi /usr/local/hotdb/hotdb-server/conf/server.xml
 <property name="managerPort">3325</property><!-- 管理端口 -->
 ```
 
-> !Note
+> **Note**
 >
 > 若配置库与计算节点安装在同一服务器上，`server.xml`中的配置库IP地址也需要写具体的IP值，不可用`127.0.0.1`代替。
 
@@ -185,7 +185,7 @@ kill 19833
 # 或者：sh hotdb_server stop
 ```
 
-> !Tip
+> **Tip**
 >
 > - 启动时若出现异常，可在安装目录`logs`下查看计算节点日志`hotdb.log`。执行日志查看命令：`tail -f /usr/local/hotdb/hotdb-server/logs/hotdb.log`。
 > - 若服务器未授权，或安装的计算节点服务未经授权许可都会导致计算节点服务启动失败。
@@ -269,7 +269,7 @@ kill 6595
 
 配置库实质上是一个标准的MySQL实例，用途主要为计算节点或管理平台存储相关配置信息。目前配置库支持以单库、双主、MGR三种形式运行。
 
-> !Tip
+> **Tip**
 >
 > 以下将以RPM方式安装一个端口号为3306的MySQL实例作为配置库。其他方式安装请参考MySQL官方安装说明。
 
@@ -504,7 +504,7 @@ netstat -npl |grep mysql
 
 命令有输出即代表启动成功。
 
-> !Note
+> **Note**
 >
 > 安装完成后请及时修改root用户密码
 
@@ -512,7 +512,7 @@ netstat -npl |grep mysql
 
 存储节点实质上是一个标准的MySQL实例，用途为整套集群提供底层业务数据的存储。安装数量与搭建复制关系根据实际业务场景而定。
 
-> !Tip
+> **Tip**
 >
 > 存储节点的手动安装过程请参照[配置库](#配置库)说明。批量安装存储节点建议使用管理平台[单机部署](#单机部署)或[集群部署](#集群部署)功能。
 
@@ -537,7 +537,7 @@ create database db01;
 #GRANT select,insert,update,delete,create,drop,index,alter,process,references,super,reload,lock tables,replication slave,replication client,trigger,show view,create view,create routine,create temporary tables,alter routine,execute,event ON *.* TO 'hotdb_datasource'@'%';
 ```
 
-> !Note
+> **Note**
 >
 > 当存储节点的MySQL版本大于等于8.0时，需要多加一个权限`xa_recover_admin`。
 
@@ -557,7 +557,7 @@ GRANT select,insert,update,delete,create,drop,index,alter,reload,process,referen
 
 备份程序（HotDB Backup）为热璞数据库自主研发的分布式数据库备份工具。通常部署在集群的存储节点服务器上，监听来自管理平台的数据备份请求。一台存储节点服务器只需部署一个备份程序即可。
 
-> !Note
+> **Note**
 >
 > - 仅支持备份MySQL 5.6及以上版本的数据。
 > - 被备份的存储节点实例必须开启binlog。
@@ -655,11 +655,11 @@ Got a quit signal from user, will quit after backup is finished # 备份程序�
 | 配置库     | 1        |
 | 存储节点   | 4        |
 
-> !Note
+> **Note**
 >
 > 各组件名称说明可参考[名词解释](glossary.md)文档。
 
-> !Info
+> **Info**
 >
 > 本章主要介绍在HA集群模式下的计算节点server.xml配置、Keepalived安装与配置、启动说明、高可用切换等。计算节点、管理平台、配置库、存储节点的安装步骤本章不再赘述，具体参照上一章：[单节点模式集群部署](#单节点模式集群部署)。
 
@@ -674,7 +674,7 @@ Got a quit signal from user, will quit after backup is finished # 备份程序�
 
 HA计算节点部署示意图
 
-> !Note
+> **Note**
 >
 > 主备计算节点服务器上再分别安装keepalived程序，选用VIP为：192.168.200.140
 
@@ -704,7 +704,7 @@ HA计算节点部署示意图
 <property name="VIP">192.168.200.140</property><!--虚拟IP地址-->
 ```
 
-> !Info
+> **Info**
 >
 > - 配置文件中的haNodeHost为主计算节点的IP+管理端口，只需在备计算节点上配置该参数即可。
 > - 启动主备服务时，如果haState的角色为master则会开启服务端口（3323）、管理端口（3325）；如果是 Backup 角色，则只会开启管理端口（3325）。
@@ -842,7 +842,7 @@ vrrp_instance VI_1 {
 }
 ```
 
-> !Note
+> **Note**
 >
 > 主备 keepalived 的相关配置也可参考计算节点安装目录 conf 目录下的keepalived.conf.master, keepalived.conf.backup 脚本，红色区域需要根据实际信息修改其他使用默认即可。
 
@@ -936,7 +936,7 @@ sh hotdbinstall_v2.42.sh --install-hotdb-server=yes --hotdb-version=2.5 --instal
 sh hotdbinstall_v2.xx.sh --install-ndbsql=yes --ntpdate-server-host=182.92.12.11
 ```
 
-> !Note
+> **Note**
 >
 > - 安装NDB SQL指定服务器时间同步地址时使用的时间同步参数需要与上一次安装计算节点时保持一致，即当时使用的是`ntpdate-server-ip`还是`ntpdate-server-host`参数，两次必须一致
 > - 时间同步地址参数值需与上一次安装计算节点时使用的时间同步地址一致，如果集群内已有NTP服务则参数值应该是NTP服务所在服务器的IP地址。
@@ -1108,7 +1108,7 @@ sh /usr/local/hotdb/hotdb-management/bin/hotdb_management start
 
 ##### 集群部署功能说明
 
-> !Info
+> **Info**
 >
 > 本次以**多节点**模式的集群部署为例，展示集群部署中的完整过程以及对应说明。
 
@@ -1230,7 +1230,7 @@ admin用户登录管理平台后进入"集群管理->计算节点集群"，点�
 2. 默认在主计算节点或多节点中的第一个计算节点所在服务器上安装NTP服务程序。若集群中已有可用的NTP服务，则可取消安装。
 3. 集群中其他服务器时间同步地址默认指向已安装有NTP服务器的计算节点服务器地址，若计算节点不安装NTP服务器则其他服务器与计算节点服务器所指向的时间同步地址保持一致。
 
-> !Tip
+> **Tip**
 >
 > 在实际应用场景中，除了软件方面的时钟同步配置以外，还需要关注硬件时钟是否同步，可使用hwclock查看（一般在虚拟机环境中存在差异的可能性较大）。
 
@@ -1244,7 +1244,7 @@ admin用户登录管理平台后进入"集群管理->计算节点集群"，点�
 2. 
 3. 检查并保存：点击【检查并保存】按钮，程序会校验配置参数的合法性和完整性，并推送一键部署安装包和对应的MD5值文件到目标服务器上以验证是否符合集群部署的要求，不符合要求时会弹窗提示。开始部署前的集群都必须通过【检查并保存】才能进入安装环节。
 
-> !Note
+> **Note**
 >
 > 若安装包在下载或推送过程中发生了损坏、变更，在"检查并保存"时会检测到安装包当前的MD5值和原对应的MD5值不一致，会弹窗提示"一键部署包完整性校验失败，请人工介入"，如下图：
 
@@ -1327,7 +1327,7 @@ admin用户登录管理平台后进入"集群管理->计算节点集群"，点�
 
 ##### 单机部署组件安装
 
-> !Info
+> **Info**
 >
 > 本次将通过[单机部署](#单机部署)功能为大家展示部署一个主备模式的集群。Keepalived虚拟地址（VIP）使用`192.168.200.112`；主备计算节点服务分别安装在`192.168.200.45`、`192.168.200.46`服务器上。同时在服务器`192.168.200.47`、`192.168.200.48`中各安装4个存储节点MySQL实例。
 
