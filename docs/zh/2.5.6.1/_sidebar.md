@@ -11,7 +11,7 @@
   * [安装部署](installation-and-deployment.md)
   * [许可授权](service-license.md)
   * [版本升级](version-update.md)
-  * [ 集群环境推荐](cluster-environment-recommendation.md)
+  * [集群环境推荐](cluster-environment-recommendation.md)
   * [硬件配置推荐](hardware-config-recommendation.md)
 * **计算节点操作手册**
   * [计算节点标准操作](hotdb-server-standard-operations.md)
