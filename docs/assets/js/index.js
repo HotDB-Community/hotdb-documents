@@ -48,17 +48,19 @@ window.$docsify = {
   },
 
   search: {
+    path: "auto",
     noData: {
       "/zh/": "没有结果！",
       "/en/": "No results!",
       "/": "没有结果！"
     },
-    path: "auto",
     placeholder: {
       "/zh/": "搜索文档",
       "/en/": "Search Document",
       "/": "搜索文档"
-    }
+    },
+    depth: 6,
+    hideOtherSidebarContent: false
   },
   pagination: {
     previousText: "Prev",
